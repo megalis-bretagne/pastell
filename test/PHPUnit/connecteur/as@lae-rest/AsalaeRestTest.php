@@ -1,7 +1,8 @@
 <?php
 
-require_once __DIR__ . "/../../../../connecteur/as@lae-rest/AsalaeREST.class.php";
+use Monolog\Logger;
 
+require_once __DIR__ . "/../../../../connecteur/as@lae-rest/AsalaeREST.class.php";
 class AsalaeRestTest extends PastellTestCase
 {
     private function getAsalaeRest($curl_response, $http_code = 200, $chunk_size_in_bytes = 0)
@@ -21,7 +22,7 @@ class AsalaeRestTest extends PastellTestCase
         $connecteurConfig = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
         $connecteurConfig->setData("url", "https://qualif.taact-api.fr/restservices/	");
         $connecteurConfig->setData("chunk_size_in_bytes", $chunk_size_in_bytes);
-        $asalaeRest =  new AsalaeREST($curlWrapperFactory, $this->getObjectInstancier()->getInstance('Monolog\Logger'));
+        $asalaeRest =  new AsalaeREST($curlWrapperFactory, $this->getObjectInstancier()->getInstance(Logger::class));
         $asalaeRest->setConnecteurConfig($connecteurConfig);
         return $asalaeRest;
     }

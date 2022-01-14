@@ -17,7 +17,7 @@ class DaemonControler extends PastellControler
      */
     public function getDaemonManager()
     {
-        return $this->getInstance('DaemonManager');
+        return $this->getInstance(DaemonManager::class);
     }
 
     /**
@@ -33,13 +33,13 @@ class DaemonControler extends PastellControler
      */
     public function getJobManager()
     {
-        return $this->getInstance("JobManager");
+        return $this->getInstance(JobManager::class);
     }
 
     /** @return ConnecteurFrequenceSQL */
     public function getConnecteurFrequenceSQL()
     {
-        return $this->getObjectInstancier()->getInstance("ConnecteurFrequenceSQL");
+        return $this->getObjectInstancier()->getInstance(ConnecteurFrequenceSQL::class);
     }
 
     public function indexAction()

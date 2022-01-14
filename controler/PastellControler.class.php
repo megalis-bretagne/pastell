@@ -1,5 +1,6 @@
 <?php
 
+use Monolog\Logger;
 use Pastell\Service\Droit\DroitService;
 
 class PastellControler extends Controler
@@ -150,13 +151,13 @@ class PastellControler extends Controler
     {
         $this->setBreadcrumbs();
         $this->{'all_module'} = $this->getAllModule();
-        $this->{'authentification'} = $this->getInstance("Authentification");
+        $this->{'authentification'} = $this->getInstance(Authentification::class);
         $this->{'roleUtilisateur'} = $this->getRoleUtilisateur();
         $this->{'sqlQuery'} = $this->getSQLQuery();
         $this->{'objectInstancier'} = $this->getObjectInstancier();
         $this->{'manifest_info'} = $this->getManifestFactory()->getPastellManifest()->getInfo();
 
-        $this->{'timer'} = $this->getInstance('PastellTimer');
+        $this->{'timer'} = $this->getInstance(PastellTimer::class);
         if (! $this->isViewParameter('menu_gauche_template')) {
             $this->{'menu_gauche_template'} = "DocumentMenuGauche";
             $this->{'menu_gauche_select'} = "";
@@ -175,7 +176,7 @@ class PastellControler extends Controler
         }
 
         /** @var DaemonManager $daemonManager */
-        $daemonManager = $this->getInstance('DaemonManager');
+        $daemonManager = $this->getInstance(DaemonManager::class);
 
         if (
                 $this->getRoleUtilisateur()->hasDroit($this->getId_u(), 'system:lecture', 0)
@@ -244,7 +245,7 @@ class PastellControler extends Controler
     protected function getAPIController($controllerName)
     {
         /** @var BaseAPIControllerFactory $baseAPIControllerFactory */
-        $baseAPIControllerFactory = $this->getInstance('BaseAPIControllerFactory');
+        $baseAPIControllerFactory = $this->getInstance(BaseAPIControllerFactory::class);
         $instance = $baseAPIControllerFactory->getInstance($controllerName, $this->getId_u());
         $instance->setCallerType('console');
         return $instance;
@@ -256,9 +257,9 @@ class PastellControler extends Controler
     public function apiCall($method, $ressource, $data)
     {
         if (! $this->internalAPI) {
-            $this->internalAPI = $this->getObjectInstancier()->getInstance("InternalAPI");
+            $this->internalAPI = $this->getObjectInstancier()->getInstance(InternalAPI::class);
             $this->internalAPI->setCallerType(InternalAPI::CALLER_TYPE_CONSOLE);
-            $this->internalAPI->setFileUploader($this->getObjectInstancier()->getInstance("FileUploader"));
+            $this->internalAPI->setFileUploader($this->getObjectInstancier()->getInstance(FileUploader::class));
             $this->internalAPI->setUtilisateurId($this->getId_u());
         }
         return $this->internalAPI->$method($ressource, $data);
@@ -291,7 +292,7 @@ class PastellControler extends Controler
      */
     public function getSQLQuery()
     {
-        return $this->getInstance('SQLQuery');
+        return $this->getInstance(SQLQuery::class);
     }
 
     /**
@@ -299,7 +300,7 @@ class PastellControler extends Controler
      */
     public function getEntiteSQL()
     {
-        return $this->getInstance('EntiteSQL');
+        return $this->getInstance(EntiteSQL::class);
     }
 
     /**
@@ -307,7 +308,7 @@ class PastellControler extends Controler
      */
     public function getRoleUtilisateur()
     {
-        return $this->getInstance('RoleUtilisateur');
+        return $this->getInstance(RoleUtilisateur::class);
     }
 
     /**
@@ -323,7 +324,7 @@ class PastellControler extends Controler
      */
     public function getAuthentification()
     {
-        return $this->getInstance("Authentification");
+        return $this->getInstance(Authentification::class);
     }
 
     public function getDonneesFormulaireFactory(): DonneesFormulaireFactory
@@ -336,7 +337,7 @@ class PastellControler extends Controler
      */
     public function getConnecteurEntiteSQL()
     {
-        return $this->getInstance('ConnecteurEntiteSQL');
+        return $this->getInstance(ConnecteurEntiteSQL::class);
     }
 
     /**
@@ -344,7 +345,7 @@ class PastellControler extends Controler
      */
     public function getWorkerSQL()
     {
-        return $this->getInstance('WorkerSQL');
+        return $this->getInstance(WorkerSQL::class);
     }
 
     /**
@@ -352,7 +353,7 @@ class PastellControler extends Controler
      */
     public function getJournal()
     {
-        return $this->getInstance('Journal');
+        return $this->getInstance(Journal::class);
     }
 
     /**
@@ -360,7 +361,7 @@ class PastellControler extends Controler
      */
     public function getDocumentTypeFactory()
     {
-        return $this->getInstance('DocumentTypeFactory');
+        return $this->getInstance(DocumentTypeFactory::class);
     }
 
     /**
@@ -368,7 +369,7 @@ class PastellControler extends Controler
      */
     public function getConnecteurFactory()
     {
-        return $this->getInstance('ConnecteurFactory');
+        return $this->getInstance(ConnecteurFactory::class);
     }
 
     /**
@@ -376,7 +377,7 @@ class PastellControler extends Controler
      */
     public function getUtilisateur()
     {
-        return $this->getInstance('Utilisateur');
+        return $this->getInstance(Utilisateur::class);
     }
 
     /**
@@ -384,7 +385,7 @@ class PastellControler extends Controler
      */
     public function getUtilisateurListe()
     {
-        return $this->getInstance('UtilisateurListe');
+        return $this->getInstance(UtilisateurListe::class);
     }
 
     /**
@@ -392,7 +393,7 @@ class PastellControler extends Controler
      */
     public function getActionExecutorFactory()
     {
-        return $this->getInstance('ActionExecutorFactory');
+        return $this->getInstance(ActionExecutorFactory::class);
     }
 
     /**
@@ -400,7 +401,7 @@ class PastellControler extends Controler
      */
     public function getActionPossible()
     {
-        return $this->getInstance('ActionPossible');
+        return $this->getInstance(ActionPossible::class);
     }
 
     /**
@@ -425,7 +426,7 @@ class PastellControler extends Controler
      */
     public function getDocumentEntite()
     {
-        return $this->getInstance('DocumentEntite');
+        return $this->getInstance(DocumentEntite::class);
     }
 
     /**
@@ -433,7 +434,7 @@ class PastellControler extends Controler
      */
     public function getActionChange()
     {
-        return $this->getInstance('ActionChange');
+        return $this->getInstance(ActionChange::class);
     }
 
     /**
@@ -441,7 +442,7 @@ class PastellControler extends Controler
      */
     public function getRoleSQL()
     {
-        return $this->getInstance("RoleSQL");
+        return $this->getInstance(RoleSQL::class);
     }
 
     /**
@@ -449,7 +450,7 @@ class PastellControler extends Controler
      */
     public function getEntiteListe()
     {
-        return $this->getInstance("EntiteListe");
+        return $this->getInstance(EntiteListe::class);
     }
 
     /**
@@ -457,7 +458,7 @@ class PastellControler extends Controler
      */
     public function getConnecteurDefinitionFiles()
     {
-        return $this->getInstance("ConnecteurDefinitionFiles");
+        return $this->getInstance(ConnecteurDefinitionFiles::class);
     }
 
     /**
@@ -465,7 +466,7 @@ class PastellControler extends Controler
      */
     public function getFluxEntiteSQL()
     {
-        return $this->getInstance("FluxEntiteSQL");
+        return $this->getInstance(FluxEntiteSQL::class);
     }
 
     /**
@@ -473,7 +474,7 @@ class PastellControler extends Controler
      */
     public function getFluxDefinitionFiles()
     {
-        return $this->getInstance("FluxDefinitionFiles");
+        return $this->getInstance(FluxDefinitionFiles::class);
     }
 
     /**
@@ -481,13 +482,13 @@ class PastellControler extends Controler
      */
     public function getZenMail()
     {
-        return $this->getInstance("ZenMail");
+        return $this->getInstance(ZenMail::class);
     }
 
     /** @return UtilisateurCreator */
     public function getUtilisateurCreator()
     {
-        return $this->getInstance('UtilisateurCreator');
+        return $this->getInstance(UtilisateurCreator::class);
     }
 
     public function getManifestFactory()
@@ -500,7 +501,7 @@ class PastellControler extends Controler
      */
     public function getExtensions()
     {
-        return $this->getInstance("Extensions");
+        return $this->getInstance(Extensions::class);
     }
 
     /**
@@ -508,7 +509,7 @@ class PastellControler extends Controler
      */
     public function getExtensionSQL()
     {
-        return $this->getInstance("ExtensionSQL");
+        return $this->getInstance(ExtensionSQL::class);
     }
 
     /**
@@ -516,6 +517,6 @@ class PastellControler extends Controler
      */
     public function getLogger()
     {
-        return $this->getInstance("Monolog\Logger");
+        return $this->getInstance(Logger::class);
     }
 }

@@ -10,7 +10,7 @@ $password = get_argv(2);
 $email = get_argv(3);
 
 /** @var AdminControler $adminControler */
-$adminControler = $objectInstancier->getInstance('AdminControler');
+$adminControler = $objectInstancier->getInstance(AdminControler::class);
 
 $result = $adminControler->createAdmin($login, $password, $email);
 

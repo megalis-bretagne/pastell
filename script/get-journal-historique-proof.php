@@ -4,7 +4,7 @@ require_once(__DIR__ . "/../init.php");
 
 $id_j = get_argv(1);
 
-$opensslTSWrapper = $objectInstancier->getInstance("OpensslTSWrapper");
+$opensslTSWrapper = $objectInstancier->getInstance(OpensslTSWrapper::class);
 
 $sql = "SELECT preuve FROM journal_historique WHERE id_j=?";
 

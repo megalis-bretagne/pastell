@@ -1,4 +1,3 @@
-
 <?php
 
 if ($id_e && $has_many_collectivite) : ?>

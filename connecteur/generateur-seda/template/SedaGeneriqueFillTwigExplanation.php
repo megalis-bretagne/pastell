@@ -1,4 +1,3 @@
-
 <div class="box">
     <a class="collapse-link" data-toggle="collapse" href="#collapse2">
         <h2> <em class="fa fa-plus-square"></em>Explications</h2>

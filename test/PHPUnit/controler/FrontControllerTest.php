@@ -9,7 +9,7 @@ class FrontControllerTest extends PastellTestCase
     {
         parent::setUp();
         $this->getObjectInstancier()->Authentification->Connexion('admin', 1);
-        $this->frontController = $this->getObjectInstancier()->getInstance("FrontController");
+        $this->frontController = $this->getObjectInstancier()->getInstance(FrontController::class);
     }
 
     public function testDispatch()

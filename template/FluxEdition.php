@@ -39,7 +39,7 @@
     <?php if ($connecteur_info['id_e'] != $id_e) : ?>
         &nbsp;(<em>hérité de <a href='Entite/detail?id_e=<?php echo $connecteur_info['id_e']?>'><?php hecho($connecteur_info['denomination'])?></a></em>)
     <?php endif;?>
-    
+
 <?php else :?>
 aucun connecteur sélectionné
 <?php endif;?>
@@ -86,8 +86,8 @@ aucun connecteur sélectionné
                 <?php else : ?>
                     non
                 <?php endif;?>
-            
-            
+
+
             </td>
         </tr>
     <?php endforeach;?>

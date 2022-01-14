@@ -63,7 +63,7 @@ class S2low extends TdtConnecteur
     public function __construct(ObjectInstancier $objectInstancier)
     {
         $this->objectInstancier = $objectInstancier; //C'est vraiment très MAL !
-        $this->curlWrapperFactory = $this->objectInstancier->getInstance('CurlWrapperFactory');
+        $this->curlWrapperFactory = $this->objectInstancier->getInstance(CurlWrapperFactory::class);
     }
 
 

@@ -33,7 +33,7 @@
     <td><?php hecho($extension_info['path']); ?></td>
 </tr>
 </table>
- 
+
 <a href='<?php $this->url("Extension/edition?id_extension={$extension_info['id_e']}"); ?>' class='btn btn-primary'>
         <i class="fa fa-pencil"></i>&nbsp;Modifier
 
@@ -130,7 +130,7 @@
 <?php endforeach;?>
 </table>
 </div>      
-        
+
 <div class="box">
 <h2>Flux</h2>
 <table class='table table-striped'>
@@ -152,4 +152,3 @@
 </table>
 </div>
 
-        

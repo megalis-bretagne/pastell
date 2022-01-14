@@ -7,7 +7,7 @@ class ConnecteurDisponibleTest extends PastellTestCase
      */
     private function getConnecteurDisponible()
     {
-        return $this->getObjectInstancier()->getInstance('ConnecteurDisponible');
+        return $this->getObjectInstancier()->getInstance(ConnecteurDisponible::class);
     }
 
     public function testGetConnecteurDisponible()

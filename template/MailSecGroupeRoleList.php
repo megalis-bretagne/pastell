@@ -22,7 +22,7 @@
 
 <table class="table table-striped">
     <tr>
-    
+
         <th>Nom</th>
         <th>Contact</th>
         <th>Partagé ?</th>
@@ -50,7 +50,7 @@
         </td>
     </tr>
 <?php endforeach;?>
-    
+
 </table>
 <?php if ($can_edit) : ?>
     <button type="submit" class="btn btn-danger" name="submit" value="Supprimer">
@@ -144,10 +144,10 @@
             <?php else : ?>
                 Ce groupe est vide
             <?php endif;?>  
-    
+
     </tr>
     <?php endforeach;?>
-    
+
 </table>
 </div>
 

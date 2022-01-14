@@ -62,7 +62,7 @@
                     <?php endforeach;?>
                 </ul> 
             <?php endif;?>
-            
+
         </td>
         <td>
             <?php hecho($extension['manifest']['pastell-version'])?>
@@ -100,7 +100,7 @@
                 </p>
             <?php endif;?>
         </td>
-        
+
     </tr>
 <?php endforeach;?>
 </table>

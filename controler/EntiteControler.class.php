@@ -214,7 +214,7 @@ class EntiteControler extends PastellControler
         $filename = "entite-pastell-$id_e.csv";
 
         /** @var CSVoutput $csvOutput */
-        $csvOutput = $this->getInstance("CSVoutput");
+        $csvOutput = $this->getInstance(CSVoutput::class);
         $csvOutput->send($filename, $result);
     }
 
@@ -345,14 +345,14 @@ class EntiteControler extends PastellControler
             // Pourquoi en modification, les sirens invalides sont acceptés ???
 
             /** @var Siren $siren */
-            $siren = $this->getInstance("Siren");
+            $siren = $this->getInstance(Siren::class);
             if (! ( $siren->isValid($siren) || ($id_e && $this->getEntiteSQL()->exists($id_e)))) {
                 throw new Exception("Votre siren ne semble pas valide");
             }
         }
 
         /** @var EntiteCreator $entiteCreator */
-        $entiteCreator = $this->getInstance("EntiteCreator");
+        $entiteCreator = $this->getInstance(EntiteCreator::class);
 
         $id_e = $entiteCreator->edit($id_e, $siren, $nom, $type, $entite_mere, $centre_de_gestion);
         return $id_e;
@@ -404,7 +404,7 @@ class EntiteControler extends PastellControler
         }
 
         /** @var AgentSQL $agentSQL */
-        $agentSQL = $this->getInstance("AgentSQL");
+        $agentSQL = $this->getInstance(AgentSQL::class);
 
         if ($id_e) {
             $this->{'nbAgent'} = $agentSQL->getNbAgent($siren, $search);

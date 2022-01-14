@@ -29,7 +29,7 @@ class Gabarit
     protected function getAPIController($controllerName)
     {
         /** @var BaseAPIControllerFactory $baseAPIControllerFactory */
-        $baseAPIControllerFactory = $this->objectInstancier->getInstance('BaseAPIControllerFactory');
+        $baseAPIControllerFactory = $this->objectInstancier->getInstance(BaseAPIControllerFactory::class);
         return $baseAPIControllerFactory->getInstance($controllerName, $this->Authentification->getId());
     }
 
@@ -106,7 +106,7 @@ class Gabarit
     public function urlWithBuildNumber($url)
     {
         /** @var ManifestFactory $manifestFactory */
-        $manifestFactory = $this->objectInstancier->getInstance('ManifestFactory');
+        $manifestFactory = $this->objectInstancier->getInstance(ManifestFactory::class);
         $this->url($url . "?build=" . $manifestFactory->getPastellManifest()->getRevision());
     }
 
@@ -115,7 +115,7 @@ class Gabarit
      */
     public function getCSRFToken()
     {
-        return $this->objectInstancier->getInstance('CSRFToken');
+        return $this->objectInstancier->getInstance(CSRFToken::class);
     }
 
     public function displayCSRFInput()

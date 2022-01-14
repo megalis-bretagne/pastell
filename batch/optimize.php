@@ -6,7 +6,7 @@
 require_once __DIR__ . "/../init.php";
 
 /** @var SQLQuery $sqlQuery */
-$sqlQuery = $objectInstancier->getInstance('SQLQuery');
+$sqlQuery = $objectInstancier->getInstance(SQLQuery::class);
 
 $list = array(
     "OPTIMIZE TABLE worker",

@@ -27,7 +27,7 @@
              <?php echo $infoEntite['type'] == $type ? 'selected="selected"' : ''?>> 
         <?php echo Entite::getNom($type) ?> </option>   
     <?php endforeach;?>
-        
+
     </select></td>
     </tr>
 <tr>

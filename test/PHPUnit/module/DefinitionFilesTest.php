@@ -8,9 +8,9 @@ class DefinitionFilesTest extends PastellTestCase
     public function testAllFlux()
     {
         $this->getObjectInstancier()->getInstance(MemoryCache::class)->flushAll();
-        $systemControler = $this->getObjectInstancier()->getInstance('SystemControler');
+        $systemControler = $this->getObjectInstancier()->getInstance(SystemControler::class);
 
-        $documentTypeFactory = $this->getObjectInstancier()->getInstance("DocumentTypeFactory");
+        $documentTypeFactory = $this->getObjectInstancier()->getInstance(DocumentTypeFactory::class);
         $all = $documentTypeFactory->getAllType();
 
         foreach ($all as $type) {

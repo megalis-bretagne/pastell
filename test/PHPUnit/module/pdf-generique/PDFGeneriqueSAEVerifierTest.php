@@ -82,7 +82,7 @@ class PDFGeneriqueSAEVerifierTest extends PastellTestCase
 
         $this->assertEquals(
             "Récupération de l'accusé de réception : Acknowledgement - Votre transfert d'archive a été pris en compte par la plate-forme as@lae",
-            $this->getObjectInstancier()->getInstance('ActionExecutorFactory')->getLastMessage()
+            $this->getObjectInstancier()->getInstance(ActionExecutorFactory::class)->getLastMessage()
         );
 
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
@@ -145,7 +145,7 @@ class PDFGeneriqueSAEVerifierTest extends PastellTestCase
 
         $this->assertEquals(
             "L'identifiant du transfert n'a pas été trouvé",
-            $this->getObjectInstancier()->getInstance('ActionExecutorFactory')->getLastMessage()
+            $this->getObjectInstancier()->getInstance(ActionExecutorFactory::class)->getLastMessage()
         );
 
         $documentActionEntite = $this->getObjectInstancier()->getInstance(DocumentActionEntite::class);
@@ -226,7 +226,7 @@ class PDFGeneriqueSAEVerifierTest extends PastellTestCase
 
         $this->assertEquals(
             "pas disponible erreur 500 - code d'erreur HTTP : 500",
-            $this->getObjectInstancier()->getInstance('ActionExecutorFactory')->getLastMessage()
+            $this->getObjectInstancier()->getInstance(ActionExecutorFactory::class)->getLastMessage()
         );
 
         $documentActionEntite = $this->getObjectInstancier()->getInstance(DocumentActionEntite::class);

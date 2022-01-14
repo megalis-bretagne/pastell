@@ -5,37 +5,37 @@ class AdminControler extends Controler
     /** @return UtilisateurCreator */
     private function getUtilisateurCreator()
     {
-        return $this->getInstance('UtilisateurCreator');
+        return $this->getInstance(UtilisateurCreator::class);
     }
 
     /** @return RoleDroit */
     private function getRoleDroit()
     {
-        return $this->getInstance('RoleDroit');
+        return $this->getInstance(RoleDroit::class);
     }
 
     /** @return RoleSQL */
     private function getRoleSQL()
     {
-        return $this->getInstance('RoleSQL');
+        return $this->getInstance(RoleSQL::class);
     }
 
     /** @return UtilisateurSQL */
     private function getUtilisateur()
     {
-        return $this->getInstance('Utilisateur');
+        return $this->getInstance(Utilisateur::class);
     }
 
     /** @return RoleUtilisateur */
     private function getRoleUtilisateur()
     {
-        return $this->getInstance('RoleUtilisateur');
+        return $this->getInstance(RoleUtilisateur::class);
     }
 
     /** @return EntiteCreator */
     private function getEntiteCreator()
     {
-        return $this->getInstance('EntiteCreator');
+        return $this->getInstance(EntiteCreator::class);
     }
 
     public function createAdmin($login, $password, $email)

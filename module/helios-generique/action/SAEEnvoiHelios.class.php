@@ -5,7 +5,7 @@ class SAEEnvoiHelios extends ActionExecutor
     public function go()
     {
         /** @var TmpFolder $tmpFolder */
-        $tmpFolder = $this->objectInstancier->getInstance('TmpFolder');
+        $tmpFolder = $this->objectInstancier->getInstance(TmpFolder::class);
         $tmp_folder = $tmpFolder->create();
 
         $result = false;

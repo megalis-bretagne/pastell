@@ -39,7 +39,7 @@ if ($nb_second_since_last_try > 3600) {
 
 
 /** @var JobQueueSQL $jobQueueSQL */
-$jobQueueSQL = $objectInstancier->getInstance("JobQueueSQL");
+$jobQueueSQL = $objectInstancier->getInstance(JobQueueSQL::class);
 $nb_lock = $jobQueueSQL->getNbLockSinceOneHour();
 if ($nb_lock) {
         mail_wrapper(

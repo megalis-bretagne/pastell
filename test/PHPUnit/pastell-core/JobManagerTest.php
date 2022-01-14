@@ -11,8 +11,8 @@ class JobManagerTest extends PastellTestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->jobManager = $this->getObjectInstancier()->getInstance("JobManager");
-        $this->jobQueueSQL = $this->getObjectInstancier()->getInstance("JobQueueSQL");
+        $this->jobManager = $this->getObjectInstancier()->getInstance(JobManager::class);
+        $this->jobQueueSQL = $this->getObjectInstancier()->getInstance(JobQueueSQL::class);
     }
 
     public function testSetJobForConnecteur()
@@ -117,7 +117,7 @@ class JobManagerTest extends PastellTestCase
 
     public function testNoConnecteurFrequence()
     {
-        $connecteurFrequenceSQL = $this->getObjectInstancier()->getInstance("ConnecteurFrequenceSQL");
+        $connecteurFrequenceSQL = $this->getObjectInstancier()->getInstance(ConnecteurFrequenceSQL::class);
         foreach ($connecteurFrequenceSQL->getAll() as $connecteurFrequence) {
             $connecteurFrequenceSQL->delete($connecteurFrequence->id_cf);
         }
@@ -132,7 +132,7 @@ class JobManagerTest extends PastellTestCase
     public function testDocumentFrequence()
     {
 
-        $connecteurFrequenceSQL = $this->getObjectInstancier()->getInstance("ConnecteurFrequenceSQL");
+        $connecteurFrequenceSQL = $this->getObjectInstancier()->getInstance(ConnecteurFrequenceSQL::class);
 
         $connecteurFrequence = new ConnecteurFrequence();
         $connecteurFrequence->type_connecteur = ConnecteurFrequence::TYPE_ENTITE;

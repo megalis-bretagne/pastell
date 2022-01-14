@@ -15,7 +15,7 @@ $etat_source = get_argv(3);
 $etat_cible = get_argv(4);
 
 /** @var JobManager $jobManager */
-$jobManager = $objectInstancier->getInstance('JobManager');
+$jobManager = $objectInstancier->getInstance(JobManager::class);
 
 try {
     $jobManager->setTraitementParLotBulk($id_e, $type, $etat_source, $etat_cible);

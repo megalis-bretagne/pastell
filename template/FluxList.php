@@ -13,7 +13,7 @@
     <input type='hidden' name='flux' value='<?php echo FluxEntiteHeritageSQL::ALL_FLUX?>' />
     <?php if ($all_herited) :?> 
         <em>Tous les types de dossier sont hérités de la mère</em>
-        
+
         <button type='submit' class='btn'><i class='fa fa-minus-circle'></i>&nbsp;Supprimer l'héritage</button>
     <?php else :?>
         <button type='submit' class='btn'><i class='fa fa-plus-circle'></i>&nbsp;Faire tout hériter</button>
@@ -31,13 +31,13 @@
                     <br/>
                     <em>#Id du type de dossier</em>
                 </th>
-                
+
                 <th>Type de connecteur</th>
                 <th>Connecteur</th>
                 <th>Hérité</th>
                 <th>&nbsp;</th>
         </tr>
-        
+
 <?php foreach ($flux_connecteur_list as $connecteur_info) : ?>
     <tr>
         <?php if ($connecteur_info['num_connecteur'] == 0) :?>

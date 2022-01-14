@@ -26,7 +26,7 @@ class PastellBootstrapTest extends PastellTestCase
     public function testTimestampCertificate()
     {
         /** @var ConnecteurEntiteSQL $connecteurEntiteSQL */
-        $connecteurEntiteSQL = $this->getObjectInstancier()->getInstance("ConnecteurEntiteSQL");
+        $connecteurEntiteSQL = $this->getObjectInstancier()->getInstance(ConnecteurEntiteSQL::class);
         $connecteurEntiteSQL->delete(10);
         $this->pastellBootstrap->installHorodateur();
         $this->assertEquals(

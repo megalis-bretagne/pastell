@@ -36,7 +36,7 @@ class GlaneurDocumentCreatorTest extends PastellTestCase
         $notification = $this->getObjectInstancier()->getInstance(Notification::class);
         $notification->add(1, 1, self::HELIOS_AUTOMATIQUE, self::IMPORTATION, false);
 
-        $glaneurLocalDocumentCreator = $this->getObjectInstancier()->getInstance('GlaneurDocumentCreator');
+        $glaneurLocalDocumentCreator = $this->getObjectInstancier()->getInstance(GlaneurDocumentCreator::class);
 
         $glaneurLocalDocumentInfo = new GlaneurDocumentInfo(1);
         $glaneurLocalDocumentInfo->nom_flux = self::HELIOS_AUTOMATIQUE;
@@ -66,7 +66,7 @@ class GlaneurDocumentCreatorTest extends PastellTestCase
      */
     public function testCreateDocumentFailed()
     {
-        $glaneurLocalDocumentCreator = $this->getObjectInstancier()->getInstance('GlaneurDocumentCreator');
+        $glaneurLocalDocumentCreator = $this->getObjectInstancier()->getInstance(GlaneurDocumentCreator::class);
 
         $glaneurLocalDocumentInfo = new GlaneurDocumentInfo(1);
         $glaneurLocalDocumentInfo->nom_flux = self::HELIOS_AUTOMATIQUE;

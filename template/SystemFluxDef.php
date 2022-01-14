@@ -1,5 +1,3 @@
-
-
 <?php
 
 foreach ($flux_definition as $part => $properties) :?>

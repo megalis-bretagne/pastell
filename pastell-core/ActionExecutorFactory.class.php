@@ -1,5 +1,6 @@
 <?php
 
+use Monolog\Logger;
 use Symfony\Component\Lock\LockFactory;
 use Symfony\Component\Lock\LockInterface;
 
@@ -39,10 +40,10 @@ class ActionExecutorFactory
         return $this->lastException;
     }
 
-    /** @return \Monolog\Logger */
+    /** @return Logger */
     public function getLogger()
     {
-        return $this->objectInstancier->getInstance('Monolog\Logger');
+        return $this->objectInstancier->getInstance(Logger::class);
     }
 
     /**
@@ -86,7 +87,7 @@ class ActionExecutorFactory
                 return $record;
             });
             /** @var WorkerSQL $workerSQL */
-            $workerSQL = $this->objectInstancier->getInstance("WorkerSQL");
+            $workerSQL = $this->objectInstancier->getInstance(WorkerSQL::class);
             $id_worker_en_cours  = $workerSQL->getActionEnCoursForConnecteur($id_ce, $action_name);
             if ($id_worker_en_cours != $id_worker) {
                 throw new Exception("Une action est déjà en cours de réalisation sur ce connecteur");

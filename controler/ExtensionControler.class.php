@@ -151,7 +151,7 @@ class ExtensionControler extends PastellControler
         }
 
         /** @var Extensions $extensions */
-        $extensions = $this->getInstance("Extensions");
+        $extensions = $this->getInstance(Extensions::class);
         $extension_info = $extensions->getById($extension_name);
 
         if (! $extension_info) {

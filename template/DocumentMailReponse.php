@@ -1,4 +1,3 @@
-
 <a class='btn btn-link' href='Document/detail?id_e=<?php
 
 echo $id_e?>&id_d=<?php echo $id_d ?>'>

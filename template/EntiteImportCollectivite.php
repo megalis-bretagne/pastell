@@ -16,7 +16,7 @@
             <td><?php hecho($entite_info['denomination']); ?></td>
         </tr>
         <?php endif;?>
-        
+
         <tr>
             <th class='w140'>Fichier CSV</th>
             <td><input type='file' name='csv_col' class="btn btn-outline-primary col-md-4"/></td>
@@ -31,7 +31,7 @@
         </button>
     </form>
     </div>
-    
+
     <div class="alert alert-info">
     <p><strong>Format du fichier</strong></p>
     <p>Le fichier CSV doit contenir une collectivité par ligne.</p>
