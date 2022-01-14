@@ -342,7 +342,7 @@ class CPPWrapper
                     $data['periodeDateHeureEtatCourantDu'] = $periodeDateHeureEtatCourantDu;
                 }
                 if ($periodeDateHeureEtatCourantAu) { // 2022-01-07T10:11:47.823Z
-                    $data['periodeDateHeureEtatCourantAu'] = $periodeDateHeureEtatCourantAu . " 23:59:59";
+                    $data['periodeDateHeureEtatCourantAu'] = $periodeDateHeureEtatCourantAu . "T23:59:59";
                 }
 
                 $call_result = $this->call(self::RECHERCHE_FACTURE_PAR_RECIPIENDAIRE, $data);
@@ -460,7 +460,7 @@ class CPPWrapper
                 $data['periodeDateHeureEtatCourantDu'] = $periodeDateHeureEtatCourantDu;
             }
             if ($periodeDateHeureEtatCourantAu) { // 2022-01-07T10:11:47.823Z
-                $data['periodeDateHeureEtatCourantAu'] = $periodeDateHeureEtatCourantAu . " 23:59:59";
+                $data['periodeDateHeureEtatCourantAu'] = $periodeDateHeureEtatCourantAu . "T23:59:59";
             }
 
             $call_result = $this->call(self::RECHERCHE_FACTURE_TRAVAUX, $data);
