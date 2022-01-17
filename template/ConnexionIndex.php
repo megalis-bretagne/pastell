@@ -4,6 +4,7 @@
  * @var Gabarit $this
  * @var string $request_uri
  * @var string $login_page_configuration
+ * @var SQLQuery $sqlQuery
  */
 
 ?>
@@ -19,6 +20,7 @@
 
         <?php elseif ($this->getLastError()->getLastError()) : ?>
             show-error="true"
+            error-message="<?php hecho($this->getLastError()->getLastError());?>"
         <?php endif; ?>
 >
 
