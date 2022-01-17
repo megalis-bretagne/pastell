@@ -288,14 +288,7 @@ class CPPWrapper
      */
     public function testConnexion()
     {
-        $data = array(
-            'typeDemandePaiement' => 'FACTURE',
-            'paramRecherche' => array(
-                'nbResultatsParPage' => 1,
-                'pageResultatDemandee' => 1,
-            )
-        );
-        $this->call(self::RECHERCHE_FACTURE_PAR_RECIPIENDAIRE, $data);
+        $this->call(self::RECUPERER_STRUCTURE_DESTINATAIRE, array());
         return true;
     }
 
