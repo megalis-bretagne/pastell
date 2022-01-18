@@ -20,7 +20,7 @@ class CPPListeFacture extends ActionExecutor
         $cpp = $this->getMyConnecteur();
         return $this->getUTF8Encoder()->decode(
             json_encode($this->getUTF8Encoder()->encode(
-                $cpp->rechercheFactureParRecipiendaire("", $cpp->getDateDepuisLe())
+                $cpp->rechercheFactureParRecipiendaire("", $cpp->getDateDepuisLe(), $cpp->getDateJusquAu())
             ))
         );
     }
@@ -38,7 +38,8 @@ class CPPListeFacture extends ActionExecutor
             $this->setLastMessage("La connexion cpp a échoué : " . $cpp->getLastError());
             return false;
         }
-        $this->setLastMessage("Liste des factures ayant changé de statut depuis le " . $cpp->getDateDepuisLe() . ": " . $result);
+        $this->setLastMessage("Liste des factures ayant changé de statut entre le " . $cpp->getDateDepuisLe() .
+            " et le " . $cpp->getDateJusquAu() . ": " . $result);
         return true;
     }
 }

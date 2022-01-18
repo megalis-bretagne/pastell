@@ -43,7 +43,7 @@ class ChorusProImportUtilService
             " JOIN document_entite de ON de.id_d=di.id_d " .
             " JOIN document_index di_integration ON de.id_d=di_integration.id_d AND di_integration.field_name = 'type_integration' AND di_integration.field_value =? " .
             " WHERE de.id_e=? AND di.field_name='date_statut_courant' " .
-            " ORDER BY di.field_value DESC LIMIT 1";
+            " ORDER BY di.field_value DESC LIMIT 1"; // date_statut_courant la plus récente
         $min_date_statut_courant = $this->SQLQuery->queryOne(
             $sql,
             $type_integration,
@@ -52,7 +52,9 @@ class ChorusProImportUtilService
         if (! $min_date_statut_courant) {
             return $date_get_depuis_le;
         }
-        return min($date_get_depuis_le, $min_date_statut_courant);
+        return min($date_get_depuis_le, $min_date_statut_courant); // Date la plus ancienne
+        // Exemples, avec 01/01/2021 et 01/01/2019, date_statut_courant la plus récente = 01/01/2021
+        // et (depuis le 01/01/2020 => 01/01/2020), (depuis le 01/01/2022 => 01/01/2021)
     }
 
     /**

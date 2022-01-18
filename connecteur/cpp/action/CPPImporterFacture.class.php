@@ -43,7 +43,10 @@ class CPPImporterFacture extends ActionExecutor
 
         /** @var CPP $connecteur_chorus */
         $connecteur_chorus = $this->getMyConnecteur();
-        $message = 'Récupération des factures ayant changé de statut depuis le ' . $connecteur_chorus->getDateDepuisLe() . ' et synchronisation des factures déja présentes:<br/>';
+        $message =
+            'Récupération des factures ayant changé de statut entre le ' . $connecteur_chorus->getDateDepuisLe() .
+            ' et le ' . $connecteur_chorus->getDateJusquAu() .
+            ' et synchronisation des factures déja présentes:<br/>';
         $message .= $this->getChorusProUtilService()->miseEnFormeResult($result);
         $this->setLastMessage($message);
         return true;
@@ -67,26 +70,50 @@ class CPPImporterFacture extends ActionExecutor
 
         // Chargement des factures présentes sur la plateforme chorus ayant changé de statut
 
-        $min_date_statut_courant_recues = $this->getChorusProUtilService()->getMinDateStatutCourant($this->id_e, $connecteur_chorus->getDateDepuisLe(), ChorusProImportUtilService::TYPE_INTEGRATION_CPP_VALEUR);
+        $min_date_statut_courant_recues = $this->getChorusProUtilService()->getMinDateStatutCourant(
+            $this->id_e,
+            $connecteur_chorus->getDateDepuisLe(),
+            ChorusProImportUtilService::TYPE_INTEGRATION_CPP_VALEUR
+        );
         $this->getLogger()->info("Date de dépôt minimum factures recues: $min_date_statut_courant_recues");
-        $liste_facture_recues = $connecteur_chorus->getListeFacturesRecipiendaire(false, $min_date_statut_courant_recues);
+        $liste_facture_recues = $connecteur_chorus->getListeFacturesRecipiendaire(
+            false,
+            $min_date_statut_courant_recues,
+            $connecteur_chorus->getDateJusquAu()
+        );
 
-        $min_date_statut_courant_travaux = $this->getChorusProUtilService()->getMinDateStatutCourant($this->id_e, $connecteur_chorus->getDateDepuisLe(), ChorusProImportUtilService::TYPE_INTEGRATION_CPP_TRAVAUX_VALEUR);
+        $min_date_statut_courant_travaux = $this->getChorusProUtilService()->getMinDateStatutCourant(
+            $this->id_e,
+            $connecteur_chorus->getDateDepuisLe(),
+            ChorusProImportUtilService::TYPE_INTEGRATION_CPP_TRAVAUX_VALEUR
+        );
         $this->getLogger()->info("Date de dépôt minimum factures travaux: $min_date_statut_courant_travaux");
-        $liste_facture_travaux = $connecteur_chorus->getListeFacturesTravaux($min_date_statut_courant_travaux);
+        $liste_facture_travaux = $connecteur_chorus->getListeFacturesTravaux(
+            $min_date_statut_courant_travaux,
+            $connecteur_chorus->getDateJusquAu()
+        );
 
         $liste_facture_chorus = array_merge($liste_facture_travaux, $liste_facture_recues);
 
         // Chargement des factures cpp présentes sur Pastell
-        $liste_facture_bus_recues = $this->getChorusProUtilService()->getListeFacturePastell($this->id_e, ChorusProImportUtilService::TYPE_INTEGRATION_CPP_VALEUR);
-        $liste_facture_bus_travaux = $this->getChorusProUtilService()->getListeFacturePastell($this->id_e, ChorusProImportUtilService::TYPE_INTEGRATION_CPP_TRAVAUX_VALEUR);
+        $liste_facture_bus_recues = $this->getChorusProUtilService()->getListeFacturePastell(
+            $this->id_e,
+            ChorusProImportUtilService::TYPE_INTEGRATION_CPP_VALEUR
+        );
+        $liste_facture_bus_travaux = $this->getChorusProUtilService()->getListeFacturePastell(
+            $this->id_e,
+            ChorusProImportUtilService::TYPE_INTEGRATION_CPP_TRAVAUX_VALEUR
+        );
         $liste_facture_bus = array_merge($liste_facture_bus_travaux, $liste_facture_bus_recues);
 
         $liste_facture_a_creer = array();
         $result_all = array();
         foreach ($liste_facture_chorus as $facture_chorus) {
             // Le document existe-t-il déjà sur le bus
-            $facture_bus = $this->getChorusProUtilService()->rechercherDocumentPastell($facture_chorus['id_facture_cpp'], $liste_facture_bus);
+            $facture_bus = $this->getChorusProUtilService()->rechercherDocumentPastell(
+                $facture_chorus['id_facture_cpp'],
+                $liste_facture_bus
+            );
             if ($facture_bus !== false) {
                 // La facture existe. Il faut l'actualiser
                 $result = $this->getChorusProSynchroService()->analyseOneFactureSynchro($facture_chorus, $facture_bus);
@@ -118,11 +145,13 @@ class CPPImporterFacture extends ActionExecutor
         /** @var CPP $connecteur_chorus */
         $connecteur_chorus = $this->getMyConnecteur();
 
-        // Si la date de statut courant est plus ancienne que "Factures ayant changé de statut depuis les X derniers jours" alors il ne faut pas la créer
+        // Si la date de statut courant est plus ancienne que "Factures ayant changé de statut depuis les X derniers jours"
+        // alors il ne faut pas la créer
         if ($facture_chorus['date_statut_courant'] < $connecteur_chorus->getDateDepuisLe()) {
             return false;
         }
-        // Si la facture vient de l'espace factures reçues et qu'elle n'est pas en statut courant alors il ne faut pas la créer
+        // Si la facture vient de l'espace factures reçues et qu'elle n'est pas en statut courant
+        // alors il ne faut pas la créer
         if (
             ($facture_chorus['type_integration'] == ChorusProImportUtilService::TYPE_INTEGRATION_CPP_CLE)
             && !(in_array($facture_chorus['statut'], $connecteur_chorus->getListeStatutCourant()))

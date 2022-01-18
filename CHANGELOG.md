@@ -6,6 +6,7 @@
 - Un indicateur permet de visualiser la force des mots de passe saisie lorsqu'on essaye de modifier le sien. #1421
 - Possibilité de fixer une entropie de mot de passe minimum au niveau de la plateforme PASSWORD_MIN_ENTROPY.
   Celle-ci est à 0 par défaut pour assurer la compatibilité. #1421
+- Ajout du parametre periodeDateHeureEtatCourantAu pour la récupération des factures Chorus (Factures ayant changé de statut avant les X derniers jours, jusqu'à aujourd'hui si non renseigné) #1444
 
 ## Corrections
 

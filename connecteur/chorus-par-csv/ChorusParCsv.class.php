@@ -159,22 +159,36 @@ class ChorusParCsv extends PortailFactureConnecteur
     /**
      * @param string $idFournisseur
      * @param string $periodeDateHeureEtatCourantDu
+     * @param string $periodeDateHeureEtatCourantAu
      * @return array|mixed
      * @throws Exception
      */
-    public function rechercheFactureParRecipiendaire($idFournisseur = "", $periodeDateHeureEtatCourantDu = "")
-    {
-        return $this->cppWrapper->rechercheFactureParRecipiendaire($idFournisseur, $periodeDateHeureEtatCourantDu);
+    public function rechercheFactureParRecipiendaire(
+        string $idFournisseur = "",
+        string $periodeDateHeureEtatCourantDu = "",
+        string $periodeDateHeureEtatCourantAu = ""
+    ) {
+        return $this->cppWrapper->rechercheFactureParRecipiendaire(
+            $idFournisseur,
+            $periodeDateHeureEtatCourantDu,
+            $periodeDateHeureEtatCourantAu
+        );
     }
 
     /**
      * @param string $periodeDateHeureEtatCourantDu
+     * @param string $periodeDateHeureEtatCourantAu
      * @return array|mixed
      * @throws Exception
      */
-    protected function rechercheFactureTravaux($periodeDateHeureEtatCourantDu = "")
-    {
-        return $this->cppWrapper->rechercheFactureTravaux($periodeDateHeureEtatCourantDu);
+    protected function rechercheFactureTravaux(
+        string $periodeDateHeureEtatCourantDu = "",
+        string $periodeDateHeureEtatCourantAu = ""
+    ) {
+        return $this->cppWrapper->rechercheFactureTravaux(
+            $periodeDateHeureEtatCourantDu,
+            $periodeDateHeureEtatCourantAu
+        );
     }
 
     /**

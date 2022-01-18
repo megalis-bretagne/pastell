@@ -15,11 +15,13 @@ require_once __DIR__ . "/lib/CPPWrapperFactory.class.php";
 class CPP extends PortailFactureConnecteur
 {
     private const DEPOSE_DEPUIS_NB_JOURS = 30;
+    private const DEPOSE_AVANT_NB_JOURS = 0;
 
     private $no_change_statut_chorus;
     private $no_recup_facture;
 
     private $depose_depuis_nb_jours;
+    private $depose_avant_nb_jours;
 
     /** @var DonneesFormulaire $globalConfig */
     private $globalConfig;
@@ -75,7 +77,7 @@ class CPP extends PortailFactureConnecteur
         $cppWrapperConfig->user_role = $donneesFormulaire->get('user_role');
         $cppWrapperConfig->identifiant_structure_cpp = $donneesFormulaire->get('identifiant_structure_cpp');
         $cppWrapperConfig->service_destinataire = $donneesFormulaire->get('service_destinataire');
-        $this->depose_depuis_nb_jours = $this->getDeposeDepuisNbJours($donneesFormulaire);
+        $this->setDeposeNbJours($donneesFormulaire);
 
         $this->cppWrapper = $this->cppWrapperFactory->newInstance();
         $this->cppWrapper->setCppWrapperConfig($cppWrapperConfig);
@@ -85,14 +87,26 @@ class CPP extends PortailFactureConnecteur
      * @param DonneesFormulaire $donneesFormulaire
      * @return array|int|string
      */
-    public function getDeposeDepuisNbJours(DonneesFormulaire $donneesFormulaire)
+    public function setDeposeNbJours(DonneesFormulaire $donneesFormulaire): void
     {
         $depose_depuis_nb_jours = $donneesFormulaire->get('depose_depuis_nb_jours');
         if (($depose_depuis_nb_jours) && (is_numeric($depose_depuis_nb_jours))) {
-            return $depose_depuis_nb_jours;
+            $this->depose_depuis_nb_jours = $depose_depuis_nb_jours;
+        } else {
+            $donneesFormulaire->setData('depose_depuis_nb_jours', self::DEPOSE_DEPUIS_NB_JOURS);
+            $this->depose_depuis_nb_jours = self::DEPOSE_DEPUIS_NB_JOURS;
         }
-        $donneesFormulaire->setData('depose_depuis_nb_jours', self::DEPOSE_DEPUIS_NB_JOURS);
-        return self::DEPOSE_DEPUIS_NB_JOURS;
+
+        $depose_avant_nb_jours = $donneesFormulaire->get('depose_avant_nb_jours');
+        if (
+            ($depose_avant_nb_jours) && (is_numeric($depose_avant_nb_jours))
+            && ($this->depose_depuis_nb_jours >= $depose_avant_nb_jours)
+        ) {
+            $this->depose_avant_nb_jours = $depose_avant_nb_jours;
+        } else {
+            $donneesFormulaire->setData('depose_avant_nb_jours', self::DEPOSE_AVANT_NB_JOURS);
+            $this->depose_avant_nb_jours = self::DEPOSE_AVANT_NB_JOURS;
+        }
     }
 
     /**
@@ -102,6 +116,15 @@ class CPP extends PortailFactureConnecteur
     {
         $time_debut = time() - ($this->depose_depuis_nb_jours * 86400);
         return date('Y-m-d', $time_debut);
+    }
+
+    /**
+     * @return false|string
+     */
+    public function getDateJusquAu()
+    {
+        $time_au = time() - ($this->depose_avant_nb_jours * 86400);
+        return date('Y-m-d', $time_au); //date('Y-m-d 23:59:59')
     }
 
     /**
@@ -191,22 +214,36 @@ class CPP extends PortailFactureConnecteur
     /**
      * @param string $idFournisseur
      * @param string $periodeDateHeureEtatCourantDu
+     * @param string $periodeDateHeureEtatCourantAu
      * @return array|mixed
      * @throws Exception
      */
-    public function rechercheFactureParRecipiendaire($idFournisseur = "", $periodeDateHeureEtatCourantDu = ""): array
-    {
-        return $this->cppWrapper->rechercheFactureParRecipiendaire($idFournisseur, $periodeDateHeureEtatCourantDu);
+    public function rechercheFactureParRecipiendaire(
+        string $idFournisseur = "",
+        string $periodeDateHeureEtatCourantDu = "",
+        string $periodeDateHeureEtatCourantAu = ""
+    ) {
+        return $this->cppWrapper->rechercheFactureParRecipiendaire(
+            $idFournisseur,
+            $periodeDateHeureEtatCourantDu,
+            $periodeDateHeureEtatCourantAu
+        );
     }
 
     /**
      * @param string $periodeDateHeureEtatCourantDu
+     * @param string $periodeDateHeureEtatCourantAu
      * @return array|mixed
      * @throws Exception
      */
-    public function rechercheFactureTravaux($periodeDateHeureEtatCourantDu = ""): array
-    {
-        return $this->cppWrapper->rechercheFactureTravaux($periodeDateHeureEtatCourantDu);
+    public function rechercheFactureTravaux(
+        string $periodeDateHeureEtatCourantDu = "",
+        string $periodeDateHeureEtatCourantAu = ""
+    ) {
+        return $this->cppWrapper->rechercheFactureTravaux(
+            $periodeDateHeureEtatCourantDu,
+            $periodeDateHeureEtatCourantAu
+        );
     }
 
     /**
