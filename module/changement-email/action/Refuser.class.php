@@ -7,7 +7,7 @@ class Refuser extends ActionExecutor
         $id_u = $this->getDonneesFormulaire()->get('id_u');
         $message = $this->getDonneesFormulaire()->get('message');
 
-        $utilisateur_info = $this->objectInstancier->Utilisateur->getInfo($id_u);
+        $utilisateur_info = $this->objectInstancier->getInstance(Utilisateur::class)->getInfo($id_u);
 
         $zenMail = $this->getZenMail();
         $zenMail->setEmetteur("Pastell", PLATEFORME_MAIL);

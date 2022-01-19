@@ -72,7 +72,7 @@ class Gabarit
         if (isset($this->viewParameter[$key])) {
             return $this->viewParameter[$key];
         }
-        return $this->objectInstancier->$key;
+        return $this->objectInstancier->getInstance($key);
     }
 
 

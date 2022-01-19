@@ -1,6 +1,10 @@
 <?php
 
-require_once(__DIR__ . "/../init.php");
+/**
+ * @var ObjectInstancier $objectInstancier
+ */
+
+require_once __DIR__ . '/../init.php';
 
 //update flux_entite set flux="document-a-signer" where flux="document-cdg85";
 //update role_droit set droit="document-a-signer:lecture" where droit="document-cdg85:lecture";
@@ -16,7 +20,7 @@ if (count($argv) != 3) {
 }
 
 
-$result = $objectInstancier->Document->getAllByType($old_flux_name);
+$result = $objectInstancier->getInstance(Document::class)->getAllByType($old_flux_name);
 
 if (!$result) {
     echo "Il n'y a pas de document de type $old_flux_name\n";
@@ -38,5 +42,5 @@ if ($entree != 'o') {
     exit;
 }
 
-$objectInstancier->Document->fixModule($old_flux_name, $new_flux_name);
+$objectInstancier->getInstance(Document::class)->fixModule($old_flux_name, $new_flux_name);
 echo "Les documents ont ete modifies\n";

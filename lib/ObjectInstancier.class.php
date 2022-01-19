@@ -10,11 +10,19 @@ class ObjectInstancier
         $this->objects = array('ObjectInstancier' => $this);
     }
 
+    /**
+     * @deprecated
+     * TODO: Remove in 4.0
+     */
     public function __get($name)
     {
         return $this->getInstance($name);
     }
 
+    /**
+     * @deprecated
+     * TODO: Remove in 4.0
+     */
     public function __set($name, $value)
     {
         $this->setInstance($name, $value);
@@ -57,7 +65,7 @@ class ObjectInstancier
             $param_name = $parameters->getClass() ? $parameters->getClass()->name : $parameters->name;
             $bind_value = null;
             try {
-                $bind_value = $this->$param_name;
+                $bind_value = $this->getInstance($param_name);
             } catch (Exception $e) {
                 // Do nothing, parameter doesn't exist
                 // If the parameter is optional, we return the default value

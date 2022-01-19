@@ -1,7 +1,11 @@
 #! /usr/bin/php
 <?php
 
-require_once(__DIR__ . "/../init.php");
+/**
+ * @var ObjectInstancier $objectInstancier
+ */
+
+require_once __DIR__ . '/../init.php';
 
 $flux = get_argv(1);
 
@@ -10,7 +14,7 @@ if (!$flux) {
     exit;
 }
 
-$result = $objectInstancier->Document->getAllByType($flux);
+$result = $objectInstancier->getInstance(Document::class)->getAllByType($flux);
 
 if (!$result) {
     echo "Il n'y a pas de document de type $flux\n";
@@ -20,10 +24,10 @@ if (!$result) {
 $all_job = [];
 foreach ($result as $document) {
     $id_d = $document['id_d'];
-    $doc_entite = $objectInstancier->DocumentEntite->getEntite($id_d);
+    $doc_entite = $objectInstancier->getInstance(DocumentEntite::class)->getEntite($id_d);
     foreach ($doc_entite as $entite) {
         $id_e = $entite['id_e'];
-        $id_job = $objectInstancier->JobQueueSQL->getJobIdForDocument($id_e, $id_d);
+        $id_job = $objectInstancier->getInstance(JobQueueSQL::class)->getJobIdForDocument($id_e, $id_d);
         if ($id_job) {
             echo 'Entite: ' . "{$id_e}" . ', document: ' . "{$id_d} \n";
             echo 'Le job: ' . "{$id_job} sera supprimé pour ce document\n";
@@ -50,7 +54,7 @@ if ($entree != 'o') {
 }
 
 foreach ($all_job as $id_job) {
-    $objectInstancier->JobQueueSQL->deleteJob($id_job);
+    $objectInstancier->getInstance(JobQueueSQL::class)->deleteJob($id_job);
     echo "Le job $id_job a été supprimé\n";
 }
 

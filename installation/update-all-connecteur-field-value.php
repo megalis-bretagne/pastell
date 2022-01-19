@@ -1,6 +1,10 @@
 <?php
 
-require_once(__DIR__ . "/../init.php");
+/**
+ * @var ObjectInstancier $objectInstancier
+ */
+
+require_once __DIR__ . '/../init.php';
 
 if (count($argv) < 4) {
     echo "{$argv[0]} : Modifie en masse tous les connecteurs du même type en mettant une nouvelle valeur\n";
@@ -13,8 +17,7 @@ $champs = get_argv(2);
 $valeur = get_argv(3);
 
 
-/** @var ConnecteurEntiteSQL $connecteurEntiteSQL */
-$connecteurEntiteSQL = $objectInstancier->{'ConnecteurEntiteSQL'};
+$connecteurEntiteSQL = $objectInstancier->getInstance(ConnecteurEntiteSQL::class);
 
 $all = $connecteurEntiteSQL->getAllById($connecteur);
 
@@ -33,8 +36,7 @@ if ($rep != 'OUI') {
     exit;
 }
 
-/** @var ConnecteurFactory $connecteurFactory */
-$connecteurFactory = $objectInstancier->{'ConnecteurFactory'};
+$connecteurFactory = $objectInstancier->getInstance(ConnecteurFactory::class);
 
 foreach ($all as $connecteur) {
     $connecteurConfig = $connecteurFactory->getConnecteurConfig($connecteur['id_ce']);

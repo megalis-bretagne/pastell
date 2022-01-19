@@ -1,6 +1,10 @@
 #! /usr/bin/php
 <?php
 
+/**
+ * TODO: Remove in 4.0
+ */
+
 require_once(dirname(__FILE__) . "/../init.php");
 
 $sql = "SELECT id_u,password,login FROM utilisateur";

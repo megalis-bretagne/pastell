@@ -1,9 +1,13 @@
 #! /usr/bin/php
 <?php
 
-require_once(dirname(__FILE__) . "/../init.php");
+/**
+ * @var ObjectInstancier $objectInstancier
+ */
 
-$id_ce = $objectInstancier->ConnecteurEntiteSQL->getGlobal('iParapheur');
-$objectInstancier->ActionExecutorFactory->executeOnConnecteur($id_ce, 0, 'update-all-iparapheur');
+require_once dirname(__FILE__) . '/../init.php';
 
-echo $objectInstancier->ActionExecutorFactory->getLastMessage();
+$id_ce = $objectInstancier->getInstance(ConnecteurEntiteSQL::class)->getGlobal('iParapheur');
+$objectInstancier->getInstance(ActionExecutorFactory::class)->executeOnConnecteur($id_ce, 0, 'update-all-iparapheur');
+
+echo $objectInstancier->getInstance(ActionExecutorFactory::class)->getLastMessage();

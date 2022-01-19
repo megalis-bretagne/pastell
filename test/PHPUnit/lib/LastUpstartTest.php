@@ -5,7 +5,7 @@ class LastUpstartTest extends PastellTestCase
     public function setUp()
     {
         parent::setUp();
-        $upstart_touch_file = $this->getObjectInstancier()->upstart_touch_file;
+        $upstart_touch_file = $this->getObjectInstancier()->getInstance('upstart_touch_file');
         if (file_exists($upstart_touch_file)) {
             unlink($upstart_touch_file);
         }
@@ -16,7 +16,7 @@ class LastUpstartTest extends PastellTestCase
      */
     public function getLastUpstart()
     {
-        return $this->getObjectInstancier()->LastUpstart;
+        return $this->getObjectInstancier()->getInstance(LastUpstart::class);
     }
 
     public function testConstuct()

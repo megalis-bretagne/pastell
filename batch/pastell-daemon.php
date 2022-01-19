@@ -1,11 +1,13 @@
 <?php
 
-require_once(__DIR__ . "/../init.php");
+/**
+ * @var ObjectInstancier $objectInstancier
+ * @var Monolog\Logger $logger
+ */
 
+require_once __DIR__ . '/../init.php';
 
-
-/** @var DaemonManager $daemonManager */
-$daemonManager = $objectInstancier->{'DaemonManager'};
+$daemonManager = $objectInstancier->getInstance(DaemonManager::class);
 
 $arg = get_argv(1);
 
@@ -15,7 +17,6 @@ if (! in_array($arg, array('start','stop','restart','status'))) {
     exit;
 }
 
-/** @var $logger Monolog\Logger */
 $logger->addInfo("Daemon <<$arg>> command called");
 
 if ($arg == 'start') {

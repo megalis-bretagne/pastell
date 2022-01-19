@@ -1,6 +1,10 @@
 #! /usr/bin/php
 <?php
 
-require_once(__DIR__ . "/../init.php");
+/**
+ * @var ObjectInstancier $objectInstancier
+ */
 
-$objectInstancier->NotificationMail->sendDailyDigest();
+require_once __DIR__ . '/../init.php';
+
+$objectInstancier->getInstance(NotificationMail::class)->sendDailyDigest();

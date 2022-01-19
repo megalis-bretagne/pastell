@@ -85,7 +85,12 @@ class CPPCreation extends ActionExecutor
         $this->setLastMessage('Création du document');
         // Valorisation de l'état suivant
         $this->getActionCreator()->addAction($this->id_e, $this->id_u, 'importation', "Traitement du document");
-        $this->objectInstancier->ActionExecutorFactory->executeOnDocument($this->id_e, $this->id_u, $this->id_d, 'orientation');
+        $this->objectInstancier->getInstance(ActionExecutorFactory::class)->executeOnDocument(
+            $this->id_e,
+            $this->id_u,
+            $this->id_d,
+            'orientation'
+        );
 
         return true;
     }

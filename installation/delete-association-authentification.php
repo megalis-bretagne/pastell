@@ -1,6 +1,10 @@
 <?php
 
-require_once(__DIR__ . "/../init.php");
+/**
+ * @var ObjectInstancier $objectInstancier
+ */
+
+require_once __DIR__ . '/../init.php';
 
 
 if (isset($_SERVER['REMOTE_ADDR'])) {
@@ -9,13 +13,15 @@ if (isset($_SERVER['REMOTE_ADDR'])) {
 }
 
 
-$connecteur_info = $objectInstancier->FluxEntiteSQL->getConnecteur(0, 'global', "authentification");
+$connecteur_info = $objectInstancier
+    ->getInstance(FluxEntiteSQL::class)
+    ->getConnecteur(0, 'global', "authentification");
 
 if (!$connecteur_info) {
     echo "Il n'y a pas de connecteur cas-authentification associé dans les connecteur globaux.\n";
     exit;
 }
 
-$objectInstancier->FluxEntiteSQL->deleteConnecteur(0, 'global', "authentification");
+$objectInstancier->getInstance(FluxEntiteSQL::class)->deleteConnecteur(0, 'global', "authentification");
 
 echo "L'association global avec le connecteur cas-authentification a été supprimée.\n";

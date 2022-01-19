@@ -1,6 +1,11 @@
 <?php
 
-require_once(__DIR__ . "/../../init.php");
+/**
+ * TODO: Delete file in V4, script is broken since 1.4
+ * @var ObjectInstancier $objectInstancier
+ */
+
+require_once __DIR__ . '/../../init.php';
 
 //Traite le cas des bordereaux de signature pour le flux document-cdg85
 
@@ -9,7 +14,7 @@ $old_field_name = 'document_signe';
 $new_field_name = 'bordereau';
 
 
-$result = $objectInstancier->Document->getAllByType($flux_name);
+$result = $objectInstancier->getInstance(Document::class)->getAllByType($flux_name);
 
 if (!$result) {
     echo "Il n'y a pas de document de type $flux_name\n";
@@ -21,7 +26,9 @@ echo "Les documents suivants vont etre modifies : \n";
 $nb = 0;
 
 foreach ($result as $document_info) {
-    $file_path = $objectInstancier->DonneesFormulaireFactory->getNewDirectoryPath($document_info['id_d']) . "{$document_info['id_d']}.yml";
+    $file_path = $objectInstancier
+            ->getInstance(DonneesFormulaireFactory::class)
+            ->getNewDirectoryPath($document_info['id_d']) . "{$document_info['id_d']}.yml";
 
     $old_name = $file_path . "_document_signe_0";
     $new_name = $file_path . "_bordereau_0";
@@ -44,7 +51,9 @@ if ($entree != 'o') {
 }
 
 foreach ($result as $document_info) {
-    $file_path = $objectInstancier->DonneesFormulaireFactory->getNewDirectoryPath($document_info['id_d']) . "{$document_info['id_d']}.yml";
+    $file_path = $objectInstancier
+            ->getInstance(DonneesFormulaireFactory::class)
+            ->getNewDirectoryPath($document_info['id_d']) . "{$document_info['id_d']}.yml";
 
     $old_name = $file_path . "_document_signe_0";
     $new_name = $file_path . "_bordereau_0";

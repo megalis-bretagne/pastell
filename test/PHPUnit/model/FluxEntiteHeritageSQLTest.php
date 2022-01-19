@@ -6,7 +6,7 @@ class FluxEntiteHeritageSQLTest extends PastellTestCase
 {
     public function getFluxEntiteHeritageSQL()
     {
-        $sqlQuery = $this->getObjectInstancier()->SQLQuery;
+        $sqlQuery = $this->getObjectInstancier()->getInstance(SQLQuery::class);
         return new FluxEntiteHeritageSQL($sqlQuery, new FluxEntiteSQL($sqlQuery), new EntiteSQL($sqlQuery));
     }
 
@@ -27,6 +27,7 @@ class FluxEntiteHeritageSQLTest extends PastellTestCase
         $all_flux = $this->getFluxEntiteHeritageSQL()->getAll(2);
         $this->assertEmpty($all_flux);
     }
+
     public function testGetAllNoFluxWithSameType()
     {
         $all_flux = $this->getFluxEntiteHeritageSQL()->getAllWithSameType(2);
@@ -119,7 +120,7 @@ class FluxEntiteHeritageSQLTest extends PastellTestCase
 
     public function testInheritNoFlux()
     {
-        $this->getObjectInstancier()->FluxEntiteSQL->deleteConnecteur(1, 'mailsec', 'mailsec');
+        $this->getObjectInstancier()->getInstance(FluxEntiteSQL::class)->deleteConnecteur(1, 'mailsec', 'mailsec');
         $this->getFluxEntiteHeritageSQL()->setInheritance(2, "mailsec");
         $result = $this->getFluxEntiteHeritageSQL()->getAllWithSameType(2);
         $this->assertEquals(1, $result['mailsec']['inherited_flux']);
@@ -130,9 +131,14 @@ class FluxEntiteHeritageSQLTest extends PastellTestCase
      */
     public function testInheritNoFluxBehindConnecteur()
     {
-        $this->getObjectInstancier()->FluxEntiteSQL->deleteConnecteur(1, 'mailsec', 'mailsec');
-        $id_ce = $this->getObjectInstancier()->ConnecteurEntiteSQL->addConnecteur(2, 'mailsec', 'mailsec', 'connecteur mailsec de test');
-        $this->getObjectInstancier()->FluxEntiteSQL->addConnecteur(2, 'mailsec', 'mailsec', $id_ce);
+        $this->getObjectInstancier()->getInstance(FluxEntiteSQL::class)->deleteConnecteur(1, 'mailsec', 'mailsec');
+        $id_ce = $this->getObjectInstancier()->getInstance(ConnecteurEntiteSQL::class)->addConnecteur(
+            2,
+            'mailsec',
+            'mailsec',
+            'connecteur mailsec de test'
+        );
+        $this->getObjectInstancier()->getInstance(FluxEntiteSQL::class)->addConnecteur(2, 'mailsec', 'mailsec', $id_ce);
         $this->assertEquals($id_ce, $this->getFluxEntiteHeritageSQL()->getConnecteurId(2, 'mailsec', 'mailsec'));
         $this->getFluxEntiteHeritageSQL()->setInheritance(2, "mailsec");
         $this->assertFalse($this->getFluxEntiteHeritageSQL()->getConnecteurId(2, 'mailsec', 'mailsec'));

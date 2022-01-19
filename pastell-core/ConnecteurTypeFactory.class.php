@@ -13,7 +13,7 @@ class ConnecteurTypeFactory
     /** @return Extensions */
     private function getExtensions()
     {
-        return $this->objectInstancier->{'Extensions'};
+        return $this->objectInstancier->getInstance(Extensions::class);
     }
 
     public function getActionExecutor($connecteur_type_name, $action_class_name)

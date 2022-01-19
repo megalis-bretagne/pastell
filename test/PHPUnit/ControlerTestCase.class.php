@@ -28,7 +28,7 @@ class ControlerTestCase extends PastellTestCase
 
     public function getControlerInstance($class_name)
     {
-        $this->getObjectInstancier()->Authentification->Connexion('admin', 1);
+        $this->getObjectInstancier()->getInstance(Authentification::class)->Connexion('admin', 1);
         $this->controler = $this->getObjectInstancier()->getInstance($class_name);
         $this->controler->setDontRedirect(true);
         $this->controler->setGetInfo(new Recuperateur($this->get_info));

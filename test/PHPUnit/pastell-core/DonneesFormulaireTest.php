@@ -49,7 +49,7 @@ class DonneesFormulaireTest extends PastellTestCase
      */
     private function getCustomDonneesFormulaire($path_to_yaml_definition): DonneesFormulaire
     {
-        $filePath = $this->getObjectInstancier()->{'workspacePath'} . "/YZZT.yml";
+        $filePath = $this->getObjectInstancier()->getInstance('workspacePath') . "/YZZT.yml";
         $ymlLoader = new YMLLoader(new MemoryCacheNone());
         $module_definition = $ymlLoader->getArray($path_to_yaml_definition);
         $documentType = new DocumentType("test-fichier", $module_definition);
@@ -79,7 +79,7 @@ class DonneesFormulaireTest extends PastellTestCase
         $donneesFormulaire = $this->getDonneesFormulaireChampsCache();
         $donneesFormulaire->setData("chaine", "12");
 
-        $file_path = $this->getObjectInstancier()->{'workspacePath'} . "/test.txt";
+        $file_path = $this->getObjectInstancier()->getInstance('workspacePath') . "/test.txt";
         file_put_contents($file_path, "texte");
 
         $files = array('fichier_visible' => array('tmp_name' => $file_path,'error' => UPLOAD_ERR_OK,'name' => 'test.txt'));
@@ -95,7 +95,7 @@ class DonneesFormulaireTest extends PastellTestCase
         $donneesFormulaire = $this->getDonneesFormulaireChampsCache();
         $donneesFormulaire->setData("chaine", "12");
 
-        $file_path = $this->getObjectInstancier()->{'workspacePath'} . "/test.txt";
+        $file_path = $this->getObjectInstancier()->getInstance('workspacePath') . "/test.txt";
         file_put_contents($file_path, "texte");
 
         $files = array('fichier_hidden' => array('tmp_name' => $file_path,'error' => UPLOAD_ERR_OK,'name' => 'test.txt'));
@@ -112,7 +112,7 @@ class DonneesFormulaireTest extends PastellTestCase
             __DIR__ . "/fixtures/definition-for-save-all.yml"
         );
 
-        $file_path = $this->getObjectInstancier()->{'workspacePath'} . "/test.txt";
+        $file_path = $this->getObjectInstancier()->getInstance('workspacePath') . "/test.txt";
         file_put_contents($file_path, "foo");
 
         $files = array('mon_fichier' => array('tmp_name' => $file_path,'error' => UPLOAD_ERR_OK,'name' => 'test.txt'));
@@ -122,7 +122,7 @@ class DonneesFormulaireTest extends PastellTestCase
         $donneesFormulaire->saveAllFile($fileUploader);
         $this->assertEquals("foo", $donneesFormulaire->getFileContent('mon_fichier'));
 
-        $file_path = $this->getObjectInstancier()->{'workspacePath'} . "/test.txt";
+        $file_path = $this->getObjectInstancier()->getInstance('workspacePath') . "/test.txt";
         file_put_contents($file_path, "bar");
 
         $donneesFormulaire->saveAllFile($fileUploader);

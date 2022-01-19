@@ -4,13 +4,13 @@ class AnnuaireImporterTest extends PastellTestCase
 {
     private function getAnnuaireSQL()
     {
-        $sqlQuery = $this->getObjectInstancier()->SQLQuery;
+        $sqlQuery = $this->getObjectInstancier()->getInstance(SQLQuery::class);
         return new AnnuaireSQL($sqlQuery);
     }
 
     private function getAnnuaireGroupsSQL()
     {
-        return new AnnuaireGroupe($this->getObjectInstancier()->SQLQuery, 1);
+        return new AnnuaireGroupe($this->getObjectInstancier()->getInstance(SQLQuery::class), 1);
     }
 
     private function annuaire_import($data)
@@ -32,7 +32,7 @@ class AnnuaireImporterTest extends PastellTestCase
     public function testOne()
     {
         $this->assertEquals(1, $this->annuaire_import("eric@sigmalis.com;Eric Pommateau"));
-        $annuaire = new AnnuaireSQL($this->getObjectInstancier()->SQLQuery);
+        $annuaire = new AnnuaireSQL($this->getObjectInstancier()->getInstance(SQLQuery::class));
         $mail_list  = $this->getAnnuaireSQL()->getUtilisateur(1);
         $this->assertEquals("eric@sigmalis.com", $mail_list[0]['email']);
         $this->assertEquals("Eric Pommateau", $mail_list[0]['description']);
@@ -41,7 +41,7 @@ class AnnuaireImporterTest extends PastellTestCase
     public function testTwo()
     {
         $this->assertEquals(2, $this->annuaire_import("eric@sigmalis.com;Eric Pommateau\ntoto@toto.fr;toto;"));
-        $annuaire = new AnnuaireSQL($this->getObjectInstancier()->SQLQuery);
+        $annuaire = new AnnuaireSQL($this->getObjectInstancier()->getInstance(SQLQuery::class));
         $mail_list  = $this->getAnnuaireSQL()->getUtilisateur(1);
     }
 

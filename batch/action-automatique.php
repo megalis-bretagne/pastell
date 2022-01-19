@@ -1,6 +1,10 @@
 #! /usr/bin/php
 <?php
 
+/**
+ * TODO: Remove in 4.0
+ */
+
 $start = time();
 $min_exec_time = 60;
 

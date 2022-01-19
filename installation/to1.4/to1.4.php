@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * TODO: Remove in 4.0
+ */
+
 /* Script à executer pour le passage 1.3 => 1.4 */
 /* Le script peut être executer plusieurs fois sans problème */
 

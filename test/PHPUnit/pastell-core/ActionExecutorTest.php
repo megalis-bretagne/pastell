@@ -35,7 +35,7 @@ class ActionExecutorTest extends PastellTestCase
 
     public function testGetConnecteur()
     {
-        $this->getObjectInstancier()->Document->save(42, 'mailsec');
+        $this->getObjectInstancier()->getInstance(Document::class)->save(42, 'mailsec');
         $concreteActionExecutor = $this->getActionExecutorMailSec();
         $connecteur = $concreteActionExecutor->getConnecteur('mailsec');
         $this->assertInstanceOf('MailSec', $connecteur);
@@ -43,7 +43,7 @@ class ActionExecutorTest extends PastellTestCase
 
     public function testGetConnecteurConfigByType()
     {
-        $this->getObjectInstancier()->Document->save(42, 'mailsec');
+        $this->getObjectInstancier()->getInstance(Document::class)->save(42, 'mailsec');
         $concreteActionExecutor = $this->getActionExecutorMailSec();
         $connecteur_config = $concreteActionExecutor->getConnecteurConfigByType('mailsec');
         $this->assertEquals('ne-pas-repondre@libriciel.coop', $connecteur_config->getWithDefault('mailsec_from'));

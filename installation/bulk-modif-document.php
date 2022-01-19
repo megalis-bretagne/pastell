@@ -1,6 +1,9 @@
 <?php
 
-require_once(__DIR__ . "/../init.php");
+/**
+ * @var ObjectInstancier $objectInstancier
+ */
+require_once __DIR__ . '/../init.php';
 
 
 if (count($argv) != 6) {
@@ -16,7 +19,9 @@ $field_name = get_argv(4);
 $field_value = get_argv(5);
 
 try {
-    $nb_doc = $objectInstancier->DocumentControler->bulkModification($id_e, $type, $etat, $field_name, $field_value);
+    $nb_doc = $objectInstancier
+        ->getInstance(DocumentControler::class)
+        ->bulkModification($id_e, $type, $etat, $field_name, $field_value);
     echo "$nb_doc documents ont été modifiés\n";
 } catch (Exception $e) {
     echo $e->getMessage() . "\n";

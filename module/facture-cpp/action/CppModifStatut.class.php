@@ -155,7 +155,16 @@ class CppModifStatut extends ActionExecutor
                     $synchronisationFacture = new SynchronisationFacture($portailFactureConnecteur);
                     $result_synchro = $synchronisationFacture->getSynchroDocumentFacture($this->getDonneesFormulaire(), true);
 
-                    $this->objectInstancier->{'Journal'}->addSQL(Journal::DOCUMENT_ACTION, $this->id_e, $this->id_u, $this->id_d, 'synchroniser-statut', $synchronisationFacture->formatResultSynchro($result_synchro));
+                    $this->objectInstancier
+                        ->getInstance(Journal::class)
+                        ->addSQL(
+                            Journal::DOCUMENT_ACTION,
+                            $this->id_e,
+                            $this->id_u,
+                            $this->id_d,
+                            'synchroniser-statut',
+                            $synchronisationFacture->formatResultSynchro($result_synchro)
+                        );
                 }
             }
         } catch (Exception $e) {

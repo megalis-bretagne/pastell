@@ -1,7 +1,11 @@
 #! /usr/bin/php
 <?php
 
-require_once(__DIR__ . "/../init.php");
+/**
+ * @var ObjectInstancier $objectInstancier
+ */
+
+require_once __DIR__ . '/../init.php';
 
 $flux = get_argv(1);
 
@@ -10,7 +14,7 @@ if (!$flux) {
     exit;
 }
 
-$result = $objectInstancier->Document->getAllByType($flux);
+$result = $objectInstancier->getInstance(Document::class)->getAllByType($flux);
 
 if (!$result) {
     echo "Il n'y a pas de document de type $flux\n";
@@ -21,7 +25,7 @@ $entite_list = array();
 
 foreach ($result as $document) {
     $id_d = $document['id_d'];
-    $doc_entite = $objectInstancier->DocumentEntite->getEntite($id_d);
+    $doc_entite = $objectInstancier->getInstance(DocumentEntite::class)->getEntite($id_d);
     foreach ($doc_entite as $entite) {
         $id_e = $entite['id_e'];
 
@@ -31,7 +35,7 @@ foreach ($result as $document) {
             $entite_list[] = $id_e;
         }
 
-        $id_job = $objectInstancier->JobQueueSQL->getJobIdForDocument($id_e, $id_d);
+        $id_job = $objectInstancier->getInstance(JobQueueSQL::class)->getJobIdForDocument($id_e, $id_d);
         if ($id_job) {
             echo 'Le job: ' . "{$id_job} sera supprimé pour ce document\n";
         }
@@ -44,7 +48,7 @@ echo "$nb_document documents vont être supprimés !\n\n";
 
 
 foreach ($entite_list as $id_e) {
-    $flux_list = $objectInstancier->FluxEntiteSQL->getAllFluxEntite($id_e, $flux);
+    $flux_list = $objectInstancier->getInstance(FluxEntiteSQL::class)->getAllFluxEntite($id_e, $flux);
     $nb_flux = count($flux_list);
     echo "$nb_flux association de flux vont être supprimés pour l'entité $id_e\n";
     echo "\n";
@@ -60,27 +64,27 @@ if ($entree != 'o') {
 
 foreach ($result as $document) {
     $id_d = $document['id_d'];
-    $doc_entite = $objectInstancier->DocumentEntite->getEntite($id_d);
+    $doc_entite = $objectInstancier->getInstance(DocumentEntite::class)->getEntite($id_d);
     foreach ($doc_entite as $entite) {
         $id_e = $entite['id_e'];
-        $id_job = $objectInstancier->JobQueueSQL->getJobIdForDocument($id_e, $id_d);
+        $id_job = $objectInstancier->getInstance(JobQueueSQL::class)->getJobIdForDocument($id_e, $id_d);
         if ($id_job) {
-            $objectInstancier->JobQueueSQL->deleteJob($id_job);
+            $objectInstancier->getInstance(JobQueueSQL::class)->deleteJob($id_job);
         }
     }
 
-    $info = $objectInstancier->Document->getInfo($id_d);
-    $objectInstancier->DonneesFormulaireFactory->get($id_d)->delete();
-    $objectInstancier->Document->delete($id_d);
+    $info = $objectInstancier->getInstance(Document::class)->getInfo($id_d);
+    $objectInstancier->getInstance(DonneesFormulaireFactory::class)->get($id_d)->delete();
+    $objectInstancier->getInstance(Document::class)->delete($id_d);
 
     $message = "Le document « {$info['titre']} » ($id_d) a été supprimé par un administrateur";
-    $objectInstancier->Journal->add(Journal::DOCUMENT_ACTION, 0, $id_d, "suppression", $message);
+    $objectInstancier->getInstance(Journal::class)->add(Journal::DOCUMENT_ACTION, 0, $id_d, "suppression", $message);
 }
 
 foreach ($entite_list as $id_e) {
-    $flux_list = $objectInstancier->FluxEntiteSQL->getAllFluxEntite($id_e, $flux);
+    $flux_list = $objectInstancier->getInstance(FluxEntiteSQL::class)->getAllFluxEntite($id_e, $flux);
     foreach ($flux_list as $flux) {
-        $objectInstancier->FluxEntiteSQL->removeConnecteur($flux['id_fe']);
+        $objectInstancier->getInstance(FluxEntiteSQL::class)->removeConnecteur($flux['id_fe']);
     }
 }
 

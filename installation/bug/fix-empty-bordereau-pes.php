@@ -2,10 +2,15 @@
 
 //Un bug mettait un nom de fichier sur les bordereau PES helios, mais pas le contenu du fichier (à prendre depuis le connecteur)
 
+/**
+ * TODO: Remove in 4.0
+ * @var ObjectInstancier $objectInstancier
+ * @var SQLQuery $sqlQuery
+ */
 
 $id_e = 1;
 
-require_once(__DIR__ . "/../../init.php");
+require_once __DIR__ . '/../../init.php';
 
 
 $sql = "SELECT document.id_d FROM document " .
@@ -48,5 +53,5 @@ foreach ($id_d_list as $id_d) {
 function getDonneesFormulaireFactory()
 {
     global $objectInstancier;
-    return $objectInstancier->DonneesFormulaireFactory;
+    return $objectInstancier->getInstance(DonneesFormulaireFactory::class);
 }
