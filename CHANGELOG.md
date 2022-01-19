@@ -19,7 +19,7 @@
 - L'accusé de reception technique devient facultatif pour l'envoi au SAE sur les flux actes-generique et actes-automatiques #1435
 - Le nombre de connexions échouées par minute est limité à 5 tentatives infructueuses #1423
 - Les flux GFC ne font plus partie du pack GFC et sont directement accessibles dans l'interface #1446
-- L'appel pour le test de connectivité Chorus se fait maintenant par "transverses/v1/recuperer/structures/actives/destinataire" #1211
+- L'appel pour le test de connectivité Chorus se fait maintenant par "transverses/v1/recuperer/tauxtva" #1211
 
 # [3.1.10] - 2022-01-10
 
