@@ -28,6 +28,7 @@ class CPPWrapper
 
     private const RECHERCHE_FACTURE_TRAVAUX = "facturesTravaux/%s/rechercher";
 
+    private const RECUPERER_TAUXTVA = "transverses/%s/recuperer/tauxtva";
     private const RECUPERER_STRUCTURE_DESTINATAIRE = "transverses/%s/recuperer/structures/actives/destinataire";
     private const RECHERCHER_STRUCTURE = "structures/%s/rechercher";
     private const RECHERCHER_SERVICE = "structures/%s/rechercher/services";
@@ -288,14 +289,7 @@ class CPPWrapper
      */
     public function testConnexion()
     {
-        $data = array(
-            'typeDemandePaiement' => 'FACTURE',
-            'paramRecherche' => array(
-                'nbResultatsParPage' => 1,
-                'pageResultatDemandee' => 1,
-            )
-        );
-        $this->call(self::RECHERCHE_FACTURE_PAR_RECIPIENDAIRE, $data);
+        $this->call(self::RECUPERER_TAUXTVA, array());
         return true;
     }
 
