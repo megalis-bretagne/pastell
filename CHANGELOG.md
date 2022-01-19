@@ -1,3 +1,10 @@
+# [4.0.0]
+
+## Suppressions
+
+- Suppression des méthodes magiques `__get()` et `__set()` sur la class `ObjectInstancier`, il convient d'utiliser respectivement
+`getInstance()` et `setInstance()`
+
 # [3.1.11]
 
 ## Ajouts

@@ -7,25 +7,7 @@ class ObjectInstancier
 
     public function __construct()
     {
-        $this->objects = array('ObjectInstancier' => $this);
-    }
-
-    /**
-     * @deprecated
-     * TODO: Remove in 4.0
-     */
-    public function __get($name)
-    {
-        return $this->getInstance($name);
-    }
-
-    /**
-     * @deprecated
-     * TODO: Remove in 4.0
-     */
-    public function __set($name, $value)
-    {
-        $this->setInstance($name, $value);
+        $this->objects = ['ObjectInstancier' => $this];
     }
 
     public function getInstance($class_name)
