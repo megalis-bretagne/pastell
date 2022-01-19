@@ -55,6 +55,7 @@ abstract class PastellTestCase extends TestCase
         $this->objectInstancier->setInstance('template_path', TEMPLATE_PATH);
 
         $this->objectInstancier->setInstance(MemoryCache::class, new StaticWrapper());
+        $this->objectInstancier->{'RedisWrapper'} = $this->createMock(RedisWrapper::class);
 
         $this->objectInstancier->setInstance(LockFactory::class, new LockFactory(new InMemoryStore()));
 

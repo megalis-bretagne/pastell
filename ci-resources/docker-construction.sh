@@ -3,11 +3,11 @@
 set -e -x
 
 # Create the data directory
-mkdir -p /data/{config,workspace,log,upload_chunk,html_purifier}
+mkdir -p /data/{config,workspace,log,upload_chunk,html_purifier,certificate}
 chown www-data: -R /data/
 
 # needed for validca
-mkdir -p /etc/apache2/ssl/
+mkdir -p /data/certificate/
 
 # Configuration of different system part
 cp /var/www/pastell/ci-resources/supervisord/*.conf /etc/supervisor/conf.d/

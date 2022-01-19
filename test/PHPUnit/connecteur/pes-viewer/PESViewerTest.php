@@ -10,6 +10,8 @@ class PESViewerTest extends PastellTestCase
      */
     public function testGetURL()
     {
+        $this->getObjectInstancier()->setInstance('pes_viewer_url', 'https://localhost/');
+
         $this->mockCurl([
             'https://localhost/bl-xemwebviewer/prepare' =>
                 "HTTP/1.1 302 

@@ -32,7 +32,6 @@ try {
     $utilisateurObject->login = $envWrapper->get('PASTELL_ADMIN_LOGIN', 'admin');
     $utilisateurObject->password = $envWrapper->get('PASTELL_ADMIN_PASSWORD', 'admin');
     $utilisateurObject->email = $envWrapper->get('PASTELL_ADMIN_EMAIL', 'noreply@libriciel.coop');
-
     $pastellBootstrap->bootstrap($utilisateurObject);
 } catch (Exception $e) {
     echo $e->getMessage();

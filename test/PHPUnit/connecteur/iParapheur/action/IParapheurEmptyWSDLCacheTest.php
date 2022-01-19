@@ -28,7 +28,9 @@ class IParapheurEmptyWSDLCacheTest extends PastellTestCase
     {
         $dir = ini_get("soap.wsdl_cache_dir") . "/foo/";
 
-        mkdir($dir);
+        if (! file_exists($dir)) {
+            mkdir($dir);
+        }
 
         $wsdl_cache_file = "$dir/wsdl-phpunit-test";
         file_put_contents($wsdl_cache_file, "test");
