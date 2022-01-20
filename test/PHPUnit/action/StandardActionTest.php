@@ -19,23 +19,23 @@ class StandardActionTest extends PHPUnit\Framework\TestCase
         $documentTypeFactory
             ->method("getFluxDocumentType")
             ->willReturn(new DocumentType("test", $type_definition));
-        $objectInstancier->{'DocumentTypeFactory'} = $documentTypeFactory;
+        $objectInstancier->setInstance(DocumentTypeFactory::class, $documentTypeFactory);
 
         $connecteurTypeActionExecutor = $this->getMockForAbstractClass(
             "ConnecteurTypeActionExecutor",
-            array($objectInstancier)
+            [$objectInstancier]
         );
         $connecteurTypeActionExecutor->method("go")->willReturn(true);
 
         $connecteurTypeFactory = $this->createMock('ConnecteurTypeFactory');
 
-        $map = array(
-            array("signature","SignatureEnvoie",$connecteurTypeActionExecutor),
-            array("signature","noExists",null)
-        );
+        $map = [
+            ["signature", "SignatureEnvoie", $connecteurTypeActionExecutor],
+            ["signature", "noExists", null],
+        ];
 
         $connecteurTypeFactory->method("getActionExecutor")->willReturnMap($map);
-        $objectInstancier->{'ConnecteurTypeFactory'} = $connecteurTypeFactory;
+        $objectInstancier->setInstance(ConnecteurTypeFactory::class, $connecteurTypeFactory);
 
         $this->standardAction = new StandardAction($objectInstancier);
         $this->standardAction->setAction("test");
@@ -72,7 +72,9 @@ class StandardActionTest extends PHPUnit\Framework\TestCase
     {
         $this->standardAction->setAction("no-connecteur-type-action");
         $this->expectException(RecoverableException::class);
-        $this->expectExceptionMessage("Aucune action n'a été défini pour l'action no-connecteur-type-action (connecteur-type : signature)");
+        $this->expectExceptionMessage(
+            "Aucune action n'a été défini pour l'action no-connecteur-type-action (connecteur-type : signature)"
+        );
         $this->standardAction->go();
     }
 }

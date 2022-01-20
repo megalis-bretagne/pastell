@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * TODO: Remove in 4.0
+ */
+
 //Permet d'utiliser un fichier de configuration nn.yml
 //afin de reconfigurer automatiquement une collectivité
 //Ne fonctionne que pour les TdT et iParapheur défini dans une collectivité !

@@ -12,10 +12,10 @@ class ConnecteurTypeFactoryTest extends TestCase
         $extensions = $this->createMock("Extensions");
         $extensions
             ->method("getAllConnecteurType")
-            ->willReturn(array("signature" => __DIR__ . "/fixtures/"));
+            ->willReturn(["signature" => __DIR__ . "/fixtures/"]);
 
-        $objectInstancier  = new ObjectInstancier();
-        $objectInstancier->{'Extensions'} = $extensions;
+        $objectInstancier = new ObjectInstancier();
+        $objectInstancier->setInstance(Extensions::class, $extensions);
         $this->connecteurTypeFactory = new ConnecteurTypeFactory($objectInstancier);
     }
 
@@ -49,6 +49,6 @@ class ConnecteurTypeFactoryTest extends TestCase
 
     public function testGetAllActionExecutor()
     {
-        $this->assertEquals(array("SignatureEnvoieMock"), $this->connecteurTypeFactory->getAllActionExecutor());
+        $this->assertEquals(["SignatureEnvoieMock"], $this->connecteurTypeFactory->getAllActionExecutor());
     }
 }

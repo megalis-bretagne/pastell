@@ -51,7 +51,7 @@ class ActionExecutorFactory
      */
     public function getJobManager()
     {
-        return $this->objectInstancier->JobManager;
+        return $this->objectInstancier->getInstance(JobManager::class);
     }
 
     private function getLock(string $lock_name): LockInterface
@@ -198,8 +198,10 @@ class ActionExecutorFactory
     public function displayChoice($id_e, $id_u, $id_d, $action_name, $from_api, $field, $page = 0)
     {
 
-        $infoDocument = $this->objectInstancier->Document->getInfo($id_d);
-        $documentType = $this->objectInstancier->DocumentTypeFactory->getFluxDocumentType($infoDocument['type']);
+        $infoDocument = $this->objectInstancier->getInstance(Document::class)->getInfo($id_d);
+        $documentType = $this->objectInstancier
+            ->getInstance(DocumentTypeFactory::class)
+            ->getFluxDocumentType($infoDocument['type']);
 
         $action_class_name = $this->getActionClassName($documentType, $action_name);
 
@@ -221,7 +223,7 @@ class ActionExecutorFactory
 
     public function getChoiceForSearch($id_e, $id_u, $type, $action_name, $field)
     {
-        $documentType = $this->objectInstancier->DocumentTypeFactory->getFluxDocumentType($type);
+        $documentType = $this->objectInstancier->getInstance(DocumentTypeFactory::class)->getFluxDocumentType($type);
         $action_class_name = $this->getActionClassName($documentType, $action_name);
         $this->loadDocumentActionFile($type, $action_class_name);
         /** @var ChoiceActionExecutor $actionClass */
@@ -236,10 +238,12 @@ class ActionExecutorFactory
     public function isChoiceEnabled($id_e, $id_u, $id_d, $action_name)
     {
 
-        $infoDocument = $this->objectInstancier->Document->getInfo($id_d);
+        $infoDocument = $this->objectInstancier->getInstance(Document::class)->getInfo($id_d);
 
 
-        $documentType = $this->objectInstancier->DocumentTypeFactory->getFluxDocumentType($infoDocument['type']);
+        $documentType = $this->objectInstancier
+            ->getInstance(DocumentTypeFactory::class)
+            ->getFluxDocumentType($infoDocument['type']);
 
         $action_class_name = $this->getActionClassName($documentType, $action_name);
 
@@ -254,11 +258,15 @@ class ActionExecutorFactory
     //TODO simplifier le action_name peut être déduit du field
     public function displayChoiceOnConnecteur($id_ce, $id_u, $action_name, $field, $is_api = false)
     {
-        $connecteur_entite_info = $this->objectInstancier->ConnecteurEntiteSQL->getInfo($id_ce);
+        $connecteur_entite_info = $this->objectInstancier->getInstance(ConnecteurEntiteSQL::class)->getInfo($id_ce);
         if ($connecteur_entite_info['id_e']) {
-            $documentType = $this->objectInstancier->documentTypeFactory->getEntiteDocumentType($connecteur_entite_info['id_connecteur']);
+            $documentType = $this->objectInstancier
+                ->getInstance(DocumentTypeFactory::class)
+                ->getEntiteDocumentType($connecteur_entite_info['id_connecteur']);
         } else {
-            $documentType = $this->objectInstancier->documentTypeFactory->getGlobalDocumentType($connecteur_entite_info['id_connecteur']);
+            $documentType = $this->objectInstancier
+                ->getInstance(DocumentTypeFactory::class)
+                ->getGlobalDocumentType($connecteur_entite_info['id_connecteur']);
         }
 
         $action_class_name = $this->getActionClassName($documentType, $action_name);
@@ -283,8 +291,10 @@ class ActionExecutorFactory
 
     public function goChoice($id_e, $id_u, $id_d, $action_name, $from_api, $field, $page = 0, $post_data = false)
     {
-        $infoDocument = $this->objectInstancier->Document->getInfo($id_d);
-        $documentType = $this->objectInstancier->DocumentTypeFactory->getFluxDocumentType($infoDocument['type']);
+        $infoDocument = $this->objectInstancier->getInstance(Document::class)->getInfo($id_d);
+        $documentType = $this->objectInstancier
+            ->getInstance(DocumentTypeFactory::class)
+            ->getFluxDocumentType($infoDocument['type']);
 
         $action_class_name = $this->getActionClassName($documentType, $action_name);
         $this->loadDocumentActionFile($infoDocument['type'], $action_class_name);
@@ -308,14 +318,16 @@ class ActionExecutorFactory
     public function goChoiceOnConnecteur($id_ce, $id_u, $action_name, $field, $is_api = false, $post_data = [])
     {
 
-        $connecteur_entite_info = $this->objectInstancier->ConnecteurEntiteSQL->getInfo($id_ce);
+        $connecteur_entite_info = $this->objectInstancier->getInstance(ConnecteurEntiteSQL::class)->getInfo($id_ce);
 
         if ($connecteur_entite_info['id_e']) {
             $documentType = $this->objectInstancier
-                ->documentTypeFactory->getEntiteDocumentType($connecteur_entite_info['id_connecteur']);
+                ->getInstance(DocumentTypeFactory::class)
+                ->getEntiteDocumentType($connecteur_entite_info['id_connecteur']);
         } else {
             $documentType = $this->objectInstancier
-                ->documentTypeFactory->getGlobalDocumentType($connecteur_entite_info['id_connecteur']);
+                ->getInstance(DocumentTypeFactory::class)
+                ->getGlobalDocumentType($connecteur_entite_info['id_connecteur']);
         }
 
         $action_class_name = $this->getActionClassName($documentType, $action_name);
@@ -352,8 +364,10 @@ class ActionExecutorFactory
 
     private function getActionClass($id_d, $id_e, $id_u, $action_name, $id_destinataire, $from_api, $action_params, $id_worker)
     {
-        $infoDocument = $this->objectInstancier->Document->getInfo($id_d);
-        $documentType = $this->objectInstancier->DocumentTypeFactory->getFluxDocumentType($infoDocument['type']);
+        $infoDocument = $this->objectInstancier->getInstance(Document::class)->getInfo($id_d);
+        $documentType = $this->objectInstancier
+            ->getInstance(DocumentTypeFactory::class)
+            ->getFluxDocumentType($infoDocument['type']);
 
         $action_class_name = $this->getActionClassName($documentType, $action_name);
         $this->loadDocumentActionFile($infoDocument['type'], $action_class_name);
@@ -372,11 +386,14 @@ class ActionExecutorFactory
 
     private function executeOnConnecteurThrow($id_ce, $id_u, $action_name, $from_api = false, $action_params = array())
     {
-        $connecteur_entite_info = $this->objectInstancier->ConnecteurEntiteSQL->getInfo($id_ce);
+        $connecteur_entite_info = $this->objectInstancier->getInstance(ConnecteurEntiteSQL::class)->getInfo($id_ce);
         if ($connecteur_entite_info['id_e']) {
-            $documentType = $this->objectInstancier->documentTypeFactory->getEntiteDocumentType($connecteur_entite_info['id_connecteur']);
+            $documentType = $this->objectInstancier
+                ->getInstance(DocumentTypeFactory::class)
+                ->getEntiteDocumentType($connecteur_entite_info['id_connecteur']);
         } else {
-            $documentType = $this->objectInstancier->documentTypeFactory->getGlobalDocumentType($connecteur_entite_info['id_connecteur']);
+            $documentType = $this->objectInstancier->getInstance(DocumentTypeFactory::class)
+                ->getGlobalDocumentType($connecteur_entite_info['id_connecteur']);
         }
 
         $action_class_name = $this->getActionClassName($documentType, $action_name);

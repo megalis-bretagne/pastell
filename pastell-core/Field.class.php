@@ -161,9 +161,11 @@ class Field
 
         /* C'est mal, mais je vois pas comment déméler ce truc... */
         $objectInstancier = ObjectInstancierFactory::getObjetInstancier();
-        $id_u = $objectInstancier->Authentification->getId();
+        $id_u = $objectInstancier->getInstance(Authentification::class)->getId();
         try {
-            return $objectInstancier->ActionExecutorFactory->isChoiceEnabled($id_e, $id_u, $id_d, $action_name);
+            return $objectInstancier
+                ->getInstance(ActionExecutorFactory::class)
+                ->isChoiceEnabled($id_e, $id_u, $id_d, $action_name);
         } catch (Exception $e) {
             return false;
         }

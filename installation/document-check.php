@@ -1,8 +1,10 @@
 <?php
 
+/**
+ * TODO: Remove in 4.0
+ */
+
 require_once(__DIR__ . "/../init.php");
-
-
 
 foreach ($objectInstancier->EntiteSQL->getAll() as $entite_info) {
     foreach ($objectInstancier->DocumentEntite->getAll($entite_info['id_e']) as $document_info) {

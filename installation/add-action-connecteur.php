@@ -1,7 +1,11 @@
 #! /usr/bin/php
 <?php
 
-require_once(__DIR__ . "/../init.php");
+/**
+ * @var ObjectInstancier $objectInstancier
+ */
+
+require_once __DIR__ . '/../init.php';
 
 //ex: php add-action-connecteur.php parametrage-flux-facture-cpp supprimer-factures
 
@@ -14,7 +18,7 @@ if (count($argv) != 3) {
     exit;
 }
 
-$result = $objectInstancier->ConnecteurEntiteSQL->getAllById($id_connecteur);
+$result = $objectInstancier->getInstance(ConnecteurEntiteSQL::class)->getAllById($id_connecteur);
 
 if (!$result) {
     echo "Il n'y a pas de connecteur de type $id_connecteur\n";
@@ -29,7 +33,7 @@ foreach ($result as $connecteur) {
     echo "\n";
     echo 'Entite: ' . "{$connecteur['id_e']}" . ', connecteur: ' . "{$connecteur['id_ce']} \n";
 
-    $actionPossible = $objectInstancier->ActionPossible;
+    $actionPossible = $objectInstancier->getInstance(ActionPossible::class);
     if (! $actionPossible->isActionPossibleOnConnecteur($id_ce, 1, $id_action)) {
         echo "L'action « $action »  n'est pas permise : " . $actionPossible->getLastBadRule() . "\n";
     } else {
@@ -54,12 +58,12 @@ foreach ($list_connecteur as $id_ce) {
     echo "\n";
     echo "connecteur $id_ce \n";
 
-    $actionPossible = $objectInstancier->ActionPossible;
+    $actionPossible = $objectInstancier->getInstance(ActionPossible::class);
     if (! $actionPossible->isActionPossibleOnConnecteur($id_ce, 1, $id_action)) {
         echo "L'action « $action »  n'est pas permise : " . $actionPossible->getLastBadRule() . "\n";
     } else {
-        $objectInstancier->ActionExecutorFactory->executeOnConnecteur($id_ce, 1, $id_action);
-        echo $objectInstancier->ActionExecutorFactory->getLastMessage();
+        $objectInstancier->getInstance(ActionExecutorFactory::class)->executeOnConnecteur($id_ce, 1, $id_action);
+        echo $objectInstancier->getInstance(ActionExecutorFactory::class)->getLastMessage();
     }
 
     echo "\n";

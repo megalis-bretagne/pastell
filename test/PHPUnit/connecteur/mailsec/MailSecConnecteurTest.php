@@ -41,7 +41,7 @@ class MailSecConnecteurTest extends PastellTestCase
             $zenMail,
             $this->getDocumentEmail(),
             $this->getJournal(),
-            $this->getObjectInstancier()->{'EntiteSQL'},
+            $this->getObjectInstancier()->getInstance(EntiteSQL::class),
             $this->getConnecteurFactory()
         );
 

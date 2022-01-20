@@ -79,7 +79,9 @@ class PieceMarcheParEtapeCreerPieces extends ActionExecutor
         $result = array();
         foreach ($pieces as $num => $file_name) {
             $file_path = $donneesFormulaire->getFilePath('piece', $num);
-            $result[] = $this->objectInstancier->{'PieceMarcheParEtapeCreationPiece'}->creerPieceMarche($pieceMarcheParEtapeData, array_shift($types_pj), $file_name, $file_path);
+            $result[] = $this->objectInstancier
+                ->getInstance(PieceMarcheParEtapeCreationPiece::class)
+                ->creerPieceMarche($pieceMarcheParEtapeData, array_shift($types_pj), $file_name, $file_path);
         }
 
         $message = count($result) . " dossier(s) Pièces de marché créé(s): " . '<br/>';

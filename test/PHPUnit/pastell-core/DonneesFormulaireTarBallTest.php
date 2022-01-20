@@ -7,7 +7,7 @@ class DonneesFormulaireTarBallTest extends PastellTestCase
      */
     private function getDonneesFormulaire()
     {
-        return $this->getObjectInstancier()->DonneesFormulaireFactory->get('toto', 'test');
+        return $this->getObjectInstancier()->getInstance(DonneesFormulaireFactory::class)->get('toto', 'test');
     }
 
     public function testExtract()

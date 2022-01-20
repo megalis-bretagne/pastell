@@ -129,7 +129,7 @@ class Controler
         if ($this->isViewParameter($key)) {
             return $this->viewParameter[$key];
         }
-        return $this->objectInstancier->$key;
+        return $this->objectInstancier->getInstance($key);
     }
 
     public function getObjectInstancier()

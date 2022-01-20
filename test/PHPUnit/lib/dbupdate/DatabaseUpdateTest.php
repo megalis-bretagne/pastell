@@ -27,8 +27,11 @@ class DatabaseUpdateTest extends PastellTestCase
     public function testWrite()
     {
         $databaseUpdate = new DatabaseUpdate(false, $this->getSQLQuery());
-        $databaseUpdate->writeDefinition($this->getObjectInstancier()->{'workspacePath'} . "/toto.bin", $this->getObjectInstancier()->{'workspacePath'} . "/toto.sql");
-        $content = file_get_contents($this->getObjectInstancier()->{'workspacePath'} . "/toto.bin");
+        $databaseUpdate->writeDefinition(
+            $this->getObjectInstancier()->getInstance('workspacePath') . "/toto.bin",
+            $this->getObjectInstancier()->getInstance('workspacePath') . "/toto.sql"
+        );
+        $content = file_get_contents($this->getObjectInstancier()->getInstance('workspacePath') . "/toto.bin");
         $result = json_decode($content, true);
         $this->assertInternalType('array', $result);
     }

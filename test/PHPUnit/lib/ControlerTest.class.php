@@ -11,7 +11,7 @@ class ControlerTest extends PHPUnit\Framework\TestCase
     protected function setUp()
     {
         $this->objectInstancier = new ObjectInstancier();
-        $this->controler = $this->getMockForAbstractClass("Controler", array($this->objectInstancier));
+        $this->controler = $this->getMockForAbstractClass("Controler", [$this->objectInstancier]);
     }
 
     public function testSetDontRedirect()
@@ -28,13 +28,13 @@ class ControlerTest extends PHPUnit\Framework\TestCase
 
     public function testMagicMethodFromObjectInstancier()
     {
-        $this->objectInstancier->{'foo'} = 'bar';
+        $this->objectInstancier->setInstance('foo', 'bar');
         $this->assertEquals('bar', $this->controler->{'foo'});
     }
 
     public function testSetAllViewParameter()
     {
-        $this->controler->setAllViewParameter(array('foo' => 'bar'));
+        $this->controler->setAllViewParameter(['foo' => 'bar']);
         $this->assertEquals('bar', $this->controler->getViewParameter()['foo']);
     }
 
@@ -63,14 +63,14 @@ class ControlerTest extends PHPUnit\Framework\TestCase
 
     public function testRender()
     {
-        $this->objectInstancier->template_path = __DIR__ . "/fixtures/";
+        $this->objectInstancier->setInstance('template_path', __DIR__ . "/fixtures/");
         $this->expectOutputString("OK");
         $this->controler->render("template");
     }
 
     public function testRenderDefault()
     {
-        $this->objectInstancier->template_path = __DIR__ . "/fixtures/";
+        $this->objectInstancier->setInstance('template_path', __DIR__ . "/fixtures/");
         $this->controler->template_milieu = "template";
         $this->expectOutputString("OK");
         $this->controler->renderDefault();

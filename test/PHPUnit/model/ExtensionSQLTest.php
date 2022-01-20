@@ -9,7 +9,7 @@ class ExtensionSQLTest extends PastellTestCase
      */
     private function getExtensionSQL()
     {
-        return $this->getObjectInstancier()->ExtensionSQL;
+        return $this->getObjectInstancier()->getInstance(ExtensionSQL::class);
     }
 
     public function testGetInfo()

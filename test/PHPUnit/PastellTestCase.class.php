@@ -12,7 +12,6 @@ use Symfony\Component\Lock\Store\InMemoryStore;
 define("FIXTURES_PATH", __DIR__ . "/fixtures/");
 define("FIXTURES_TYPE_DOSSIER_PATH", __DIR__ . "/pastell-core/type-dossier/fixtures/");
 
-
 abstract class PastellTestCase extends TestCase
 {
     public const ID_E_COL = 1;
@@ -27,35 +26,35 @@ abstract class PastellTestCase extends TestCase
     public static function getSQLQuery()
     {
         static $sqlQuery;
-        if (! $sqlQuery) {
+        if (!$sqlQuery) {
             $sqlQuery = new SQLQuery(BD_DSN_TEST, BD_USER_TEST, BD_PASS_TEST);
         }
         return $sqlQuery;
     }
 
-    public function __construct($name = null, array $data = array(), $dataName = '')
+    public function __construct($name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
         $this->objectInstancier = new ObjectInstancier();
         ObjectInstancierFactory::setObjectInstancier($this->objectInstancier);
 
-        $this->objectInstancier->{'site_base'} = SITE_BASE ?: 'https://localhost';
-        $this->objectInstancier->{'daemon_command'} = "/bin/date";
-        $this->objectInstancier->{'pid_file'} = "/tmp/test";
-        $this->objectInstancier->{'log_file'} = "/tmp/test";
+        $this->objectInstancier->setInstance('site_base', SITE_BASE ?: 'https://localhost');
+        $this->objectInstancier->setInstance('daemon_command', "/bin/date");
+        $this->objectInstancier->setInstance('pid_file', "/tmp/test");
+        $this->objectInstancier->setInstance('log_file', "/tmp/test");
         $this->objectInstancier->setInstance(
             'pes_viewer_url',
             $this->getObjectInstancier()->getInstance('site_base')
         );
 
         $daemonManager = new DaemonManager("/bin/date", "/tmp/test", "/tmp/test", 0);
-        $this->objectInstancier->{'DaemonManager'} = $daemonManager;
+        $this->objectInstancier->setInstance(DaemonManager::class, $daemonManager);
 
-        $this->objectInstancier->{'pastell_path'} = PASTELL_PATH;
-        $this->objectInstancier->{'SQLQuery'} = self::getSQLQuery();
-        $this->objectInstancier->{'template_path'} = TEMPLATE_PATH;
+        $this->objectInstancier->setInstance('pastell_path', PASTELL_PATH);
+        $this->objectInstancier->setInstance(SQLQuery::class, self::getSQLQuery());
+        $this->objectInstancier->setInstance('template_path', TEMPLATE_PATH);
 
-        $this->objectInstancier->{'MemoryCache'} = new StaticWrapper();
+        $this->objectInstancier->setInstance(MemoryCache::class, new StaticWrapper());
 
         $this->objectInstancier->setInstance(LockFactory::class, new LockFactory(new InMemoryStore()));
 
@@ -69,13 +68,16 @@ abstract class PastellTestCase extends TestCase
             )
         );
 
-        $this->objectInstancier->{'ManifestFactory'} = new ManifestFactory(__DIR__ . "/fixtures/", new YMLLoader(new MemoryCacheNone()));
+        $this->objectInstancier->setInstance(
+            ManifestFactory::class,
+            new ManifestFactory(__DIR__ . "/fixtures/", new YMLLoader(new MemoryCacheNone()))
+        );
 
-        $this->objectInstancier->{'temp_directory'} = sys_get_temp_dir();
-        $this->objectInstancier->{'upstart_touch_file'} = sys_get_temp_dir() . "/upstart.mtime";
-        $this->objectInstancier->{'upstart_time_send_warning'} = 600;
-        $this->objectInstancier->{'disable_job_queue'} = false;
-        $this->objectInstancier->{'cache_ttl_in_seconds'} = 10;
+        $this->objectInstancier->setInstance('temp_directory', sys_get_temp_dir());
+        $this->objectInstancier->setInstance('upstart_touch_file', sys_get_temp_dir() . "/upstart.mtime");
+        $this->objectInstancier->setInstance('upstart_time_send_warning', 600);
+        $this->objectInstancier->setInstance('disable_job_queue', false);
+        $this->objectInstancier->setInstance('cache_ttl_in_seconds', 10);
         $this->objectInstancier->setInstance('rgpd_page_path', RGPD_PAGE_PATH);
 
         $this->objectInstancier->setInstance(Logger::class, new  Logger('PHPUNIT'));
@@ -86,11 +88,14 @@ abstract class PastellTestCase extends TestCase
         $this->reinitFileSystem();
         $this->getJournal()->setId(1);
 
-        $this->objectInstancier->{'opensslPath'} = OPENSSL_PATH;
+        $this->objectInstancier->setInstance('opensslPath', OPENSSL_PATH);
 
         $daemon_command = PHP_PATH . " " . realpath(__DIR__ . "/batch/pastell-job-master.php");
 
-        $this->objectInstancier->{'DaemonManager'} = new DaemonManager($daemon_command, PID_FILE, DAEMON_LOG_FILE, DAEMON_USER);
+        $this->objectInstancier->setInstance(
+            DaemonManager::class,
+            new DaemonManager($daemon_command, PID_FILE, DAEMON_LOG_FILE, DAEMON_USER)
+        );
         $this->objectInstancier->setInstance('daemon_user', 'www-data');
         $this->objectInstancier->setInstance('journal_max_age_in_months', 2);
         $this->objectInstancier->setInstance('admin_email', "mettre_un_email");
@@ -107,21 +112,20 @@ abstract class PastellTestCase extends TestCase
 
     public function reinitFileSystem()
     {
-
-        $structure = array(
-                'workspace' => array(
-                    'connecteur_1.yml' => '---
+        $structure = [
+            'workspace' => [
+                'connecteur_1.yml' => '---
 iparapheur_type: Actes
 iparapheur_retour: Archive',
 
-        ),
-                'log' => array(),
-                'tmp' => array(),
-                'html_purifier' => []
-        );
+            ],
+            'log' => [],
+            'tmp' => [],
+            'html_purifier' => [],
+        ];
         vfsStream::setup('test', null, $structure);
         $this->emulated_disk = vfsStream::url('test');
-        $this->objectInstancier->{'workspacePath'} = $this->getEmulatedDisk() . "/workspace/";
+        $this->objectInstancier->setInstance('workspacePath', $this->getEmulatedDisk() . "/workspace/");
 
         $htmlPurifier = new HTMLPurifier();
         $htmlPurifier->config->set('Cache.SerializerPath', $this->emulated_disk . "/html_purifier/");
@@ -151,9 +155,9 @@ iparapheur_retour: Archive',
     }
 
     /**
-     * @deprecated 3.0 use ExtensionsLoader class instead
      * @param array $extension_path_list
      * @return array
+     * @deprecated 3.0 use ExtensionsLoader class instead
      */
     protected function loadExtension(array $extension_path_list)
     {
@@ -166,8 +170,8 @@ iparapheur_retour: Archive',
         parent::setUp();
         $this->reinitDatabase();
         $this->reinitFileSystem();
-        $_POST = array();
-        $_GET = array();
+        $_POST = [];
+        $_GET = [];
     }
 
     /**
@@ -242,7 +246,7 @@ iparapheur_retour: Archive',
         $query = parse_url($ressource, PHP_URL_QUERY);
         parse_str($query, $data_from_query);
 
-        $httpAPI->setServerArray(array('REQUEST_METHOD' => 'get'));
+        $httpAPI->setServerArray(['REQUEST_METHOD' => 'get']);
         $data_from_query[HttpApi::PARAM_API_FUNCTION] = $path;
         $httpAPI->setGetArray($data_from_query);
         $httpAPI->setRequestArray($data_from_query);
@@ -279,8 +283,8 @@ iparapheur_retour: Archive',
     protected function createDocument($type, $entite = self::ID_E_COL)
     {
         return $this->getInternalAPI()->post("/Document/$entite", [
-                'type' => $type
-            ]);
+            'type' => $type,
+        ]);
     }
 
     /**
@@ -305,9 +309,9 @@ iparapheur_retour: Archive',
     protected function createConnector($id_connecteur, $libelle, $entite = self::ID_E_COL): array
     {
         return $this->getInternalAPI()->post("/entite/$entite/connecteur/", [
-                'id_connecteur' => $id_connecteur,
-                'libelle' => $libelle,
-            ]);
+            'id_connecteur' => $id_connecteur,
+            'libelle' => $libelle,
+        ]);
     }
 
     /**
@@ -364,9 +368,9 @@ iparapheur_retour: Archive',
     protected function associateFluxWithConnector($id_ce, $flux, $type, $entite = self::ID_E_COL, $num_same_type = 0)
     {
         return $this->getInternalAPI()->post("/entite/$entite/flux/$flux/connecteur/$id_ce", [
-                'type' => $type,
-                'num_same_type' => $num_same_type
-            ]);
+            'type' => $type,
+            'num_same_type' => $num_same_type,
+        ]);
     }
 
     /**

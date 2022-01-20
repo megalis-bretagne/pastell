@@ -7,7 +7,8 @@ class FakeNomemclatureListe extends ChoiceActionExecutor
         $recuperateur = new Recuperateur($_GET);
         $fieldValue = $recuperateur->get($this->field);
 
-        $donneesFormulaire = $this->objectInstancier->ConnecteurFactory->getConnecteurConfig($this->id_ce);
+        $donneesFormulaire = $this->objectInstancier->getInstance(ConnecteurFactory::class)
+            ->getConnecteurConfig($this->id_ce);
         $donneesFormulaire->setData($this->field, $fieldValue);
     }
 
@@ -17,12 +18,18 @@ class FakeNomemclatureListe extends ChoiceActionExecutor
 
     public function display()
     {
-        $id_e_cdg = $this->objectInstancier->EntiteSQL->getCDG($this->id_e);
+        $id_e_cdg = $this->objectInstancier->getInstance(EntiteSQL::class)->getCDG($this->id_e);
 
-        $donneesFormulaire = $this->objectInstancier->ConnecteurFactory->getConnecteurConfigByType($id_e_cdg, 'actes-cdg', 'classification-cdg');
+        $donneesFormulaire = $this->objectInstancier->getInstance(ConnecteurFactory::class)->getConnecteurConfigByType(
+            $id_e_cdg,
+            'actes-cdg',
+            'classification-cdg'
+        );
 
-        if (! $donneesFormulaire) {
-            throw new Exception("Aucun connecteur classification-cdg (flux actes-cdg) trouvé pour le centre de gestion de cette entité");
+        if (!$donneesFormulaire) {
+            throw new Exception(
+                "Aucun connecteur classification-cdg (flux actes-cdg) trouvé pour le centre de gestion de cette entité"
+            );
         }
 
         $this->classifCDG = $donneesFormulaire->get("classification_cdg");

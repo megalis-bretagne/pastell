@@ -140,7 +140,7 @@ abstract class ActionExecutor
      */
     public function getJournal()
     {
-        return $this->objectInstancier->Journal;
+        return $this->objectInstancier->getInstance(Journal::class);
     }
 
     /**
@@ -148,7 +148,7 @@ abstract class ActionExecutor
      */
     public function getZenMail()
     {
-        return $this->objectInstancier->ZenMail;
+        return $this->objectInstancier->getInstance(ZenMail::class);
     }
 
     /**
@@ -156,7 +156,7 @@ abstract class ActionExecutor
      */
     public function getDonneesFormulaireFactory()
     {
-        return $this->objectInstancier->DonneesFormulaireFactory;
+        return $this->objectInstancier->getInstance(DonneesFormulaireFactory::class);
     }
 
     /**
@@ -164,7 +164,7 @@ abstract class ActionExecutor
      */
     public function getDocumentEntite()
     {
-        return $this->objectInstancier->DocumentEntite;
+        return $this->objectInstancier->getInstance(DocumentEntite::class);
     }
 
     /**
@@ -172,7 +172,7 @@ abstract class ActionExecutor
      */
     public function getDocument()
     {
-        return $this->objectInstancier->Document;
+        return $this->objectInstancier->getInstance(Document::class);
     }
 
     /**
@@ -180,7 +180,7 @@ abstract class ActionExecutor
      */
     public function getDocumentActionEntite()
     {
-        return $this->objectInstancier->DocumentActionEntite;
+        return $this->objectInstancier->getInstance(DocumentActionEntite::class);
     }
 
     /**
@@ -217,7 +217,7 @@ abstract class ActionExecutor
      */
     public function getSQLQuery()
     {
-        return $this->objectInstancier->SQLQuery;
+        return $this->objectInstancier->getInstance(SQLQuery::class);
     }
 
     /**
@@ -225,7 +225,7 @@ abstract class ActionExecutor
      */
     public function getNotificationMail()
     {
-        return $this->objectInstancier->NotificationMail;
+        return $this->objectInstancier->getInstance(NotificationMail::class);
     }
 
     public function getDocumentType(): DocumentType
@@ -346,7 +346,7 @@ abstract class ActionExecutor
      */
     public function getConnecteurFactory()
     {
-        return $this->objectInstancier->ConnecteurFactory;
+        return $this->objectInstancier->getInstance(ConnecteurFactory::class);
     }
 
     public function getGlobalConnecteur($type)
@@ -364,7 +364,13 @@ abstract class ActionExecutor
 
     public function changeAction($action, $message)
     {
-        $this->objectInstancier->ActionChange->addAction($this->id_d, $this->id_e, $this->id_u, $action, $message);
+        $this->objectInstancier->getInstance(ActionChange::class)->addAction(
+            $this->id_d,
+            $this->id_e,
+            $this->id_u,
+            $action,
+            $message
+        );
         $this->setLastMessage($message);
     }
 
@@ -403,8 +409,19 @@ abstract class ActionExecutor
     public function goLot(array $all_id_d)
     {
         foreach ($all_id_d as $id_d) {
-            $this->objectInstancier->JobManager->setTraitementLot($this->id_e, $id_d, $this->id_u, $this->action);
-            $this->objectInstancier->Journal->add(Journal::DOCUMENT_TRAITEMENT_LOT, $this->id_e, $id_d, $this->action, "Programmation dans le cadre d'un traitement par lot");
+            $this->objectInstancier->getInstance(JobManager::class)->setTraitementLot(
+                $this->id_e,
+                $id_d,
+                $this->id_u,
+                $this->action
+            );
+            $this->objectInstancier->getInstance(Journal::class)->add(
+                Journal::DOCUMENT_TRAITEMENT_LOT,
+                $this->id_e,
+                $id_d,
+                $this->action,
+                "Programmation dans le cadre d'un traitement par lot"
+            );
         }
     }
 

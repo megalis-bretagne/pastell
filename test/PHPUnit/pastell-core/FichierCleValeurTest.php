@@ -2,29 +2,36 @@
 
 class FichierCleValeurTest extends PastellTestCase
 {
+    /**
+     * @var string
+     */
+    private $filePath;
+
+    public function setUp()
+    {
+        parent::setUp();
+        $this->filePath = $this->getObjectInstancier()->getInstance('workspacePath') . "/test.yml";
+    }
     public function testGetNonExistentsValue()
     {
-        $filePath = $this->getObjectInstancier()->workspacePath . "/test.yml";
-        $fichierCleValeur = new FichierCleValeur($filePath);
+        $fichierCleValeur = new FichierCleValeur($this->filePath);
         $this->assertFalse($fichierCleValeur->get("test1"));
     }
 
     public function testEmpty()
     {
-        $filePath = $this->getObjectInstancier()->workspacePath . "/test.yml";
-        $fichierCleValeur = new FichierCleValeur($filePath);
+        $fichierCleValeur = new FichierCleValeur($this->filePath);
         $info = $fichierCleValeur->getInfo();
         $this->assertEmpty($info);
     }
 
     public function conservationString($string)
     {
-        $filePath = $this->getObjectInstancier()->workspacePath . "/test.yml";
-        $fichierCleValeur = new FichierCleValeur($filePath);
+        $fichierCleValeur = new FichierCleValeur($this->filePath);
         $fichierCleValeur->set("test1", $string);
         $fichierCleValeur->save();
 
-        $fichierCleValeur = new FichierCleValeur($filePath);
+        $fichierCleValeur = new FichierCleValeur($this->filePath);
         $this->assertEquals($string, $fichierCleValeur->get("test1"));
     }
 
@@ -85,61 +92,56 @@ class FichierCleValeurTest extends PastellTestCase
 
     public function testExists()
     {
-        $filePath = $this->getObjectInstancier()->workspacePath . "/test.yml";
-        $fichierCleValeur = new FichierCleValeur($filePath);
+        $fichierCleValeur = new FichierCleValeur($this->filePath);
         $fichierCleValeur->set("test1", "premier");
         $fichierCleValeur->save();
-        $fichierCleValeur = new FichierCleValeur($filePath);
+        $fichierCleValeur = new FichierCleValeur($this->filePath);
         $this->assertTrue($fichierCleValeur->exists("test1"));
         $this->assertFalse($fichierCleValeur->exists("test2"));
     }
 
     public function testDeuxObjet()
     {
-        $filePath = $this->getObjectInstancier()->workspacePath . "/test.yml";
-        $fichierCleValeur = new FichierCleValeur($filePath);
+        $fichierCleValeur = new FichierCleValeur($this->filePath);
         $fichierCleValeur->set("test1", "premier");
         $fichierCleValeur->set("test2", "second");
         $fichierCleValeur->save();
 
-        $fichierCleValeur = new FichierCleValeur($filePath);
+        $fichierCleValeur = new FichierCleValeur($this->filePath);
         $this->assertEquals("premier", $fichierCleValeur->get("test1"));
         $this->assertEquals("second", $fichierCleValeur->get("test2"));
     }
 
     public function testMulti0()
     {
-        $filePath = $this->getObjectInstancier()->workspacePath . "/test.yml";
-        $fichierCleValeur = new FichierCleValeur($filePath);
+        $fichierCleValeur = new FichierCleValeur($this->filePath);
         $fichierCleValeur->setMulti("test1", "premier");
         $fichierCleValeur->save();
 
-        $fichierCleValeur = new FichierCleValeur($filePath);
+        $fichierCleValeur = new FichierCleValeur($this->filePath);
         $this->assertEquals("premier", $fichierCleValeur->getMulti("test1"));
     }
 
     public function testMultiMany()
     {
-        $filePath = $this->getObjectInstancier()->workspacePath . "/test.yml";
-        $fichierCleValeur = new FichierCleValeur($filePath);
+        $fichierCleValeur = new FichierCleValeur($this->filePath);
         $fichierCleValeur->setMulti("test1", "premier");
         $fichierCleValeur->setMulti("test1", "second", 1);
         $fichierCleValeur->save();
 
-        $fichierCleValeur = new FichierCleValeur($filePath);
+        $fichierCleValeur = new FichierCleValeur($this->filePath);
         $this->assertEquals("premier", $fichierCleValeur->getMulti("test1"));
         $this->assertEquals("second", $fichierCleValeur->getMulti("test1", 1));
     }
 
     public function testAddValue()
     {
-        $filePath = $this->getObjectInstancier()->workspacePath . "/test.yml";
-        $fichierCleValeur = new FichierCleValeur($filePath);
+        $fichierCleValeur = new FichierCleValeur($this->filePath);
         $fichierCleValeur->addValue("test1", "premier");
         $fichierCleValeur->addValue("test1", "second");
         $fichierCleValeur->save();
 
-        $fichierCleValeur = new FichierCleValeur($filePath);
+        $fichierCleValeur = new FichierCleValeur($this->filePath);
         $this->assertEquals("premier", $fichierCleValeur->getMulti("test1"));
         $this->assertEquals("second", $fichierCleValeur->getMulti("test1", 1));
     }
@@ -147,8 +149,7 @@ class FichierCleValeurTest extends PastellTestCase
 
     public function testCount()
     {
-        $filePath = $this->getObjectInstancier()->workspacePath . "/test.yml";
-        $fichierCleValeur = new FichierCleValeur($filePath);
+        $fichierCleValeur = new FichierCleValeur($this->filePath);
         $fichierCleValeur->addValue("test1", "premier");
         $fichierCleValeur->addValue("test1", "troisieme");
         $fichierCleValeur->addValue("test1", "second");
@@ -157,24 +158,22 @@ class FichierCleValeurTest extends PastellTestCase
 
     public function testDelete()
     {
-        $filePath = $this->getObjectInstancier()->workspacePath . "/test.yml";
-        $fichierCleValeur = new FichierCleValeur($filePath);
+        $fichierCleValeur = new FichierCleValeur($this->filePath);
         $fichierCleValeur->addValue("test1", "premier");
         $fichierCleValeur->addValue("test1", "troisieme");
         $fichierCleValeur->addValue("test1", "second");
         $fichierCleValeur->delete("test1", 1);
         $fichierCleValeur->save();
 
-        $fichierCleValeur = new FichierCleValeur($filePath);
+        $fichierCleValeur = new FichierCleValeur($this->filePath);
         $this->assertEquals("premier", $fichierCleValeur->getMulti("test1"));
         $this->assertEquals("second", $fichierCleValeur->getMulti("test1", 1));
     }
 
     public function testUnescapeEmptyString()
     {
-        $filePath = $this->getObjectInstancier()->workspacePath . "/test.yml";
-        file_put_contents($filePath, "test1: ");
-        $fichierCleValeur = new FichierCleValeur($filePath, new YMLLoader(new MemoryCacheNone()));
+        file_put_contents($this->filePath, "test1: ");
+        $fichierCleValeur = new FichierCleValeur($this->filePath, new YMLLoader(new MemoryCacheNone()));
         $this->assertEmpty($fichierCleValeur->get("test1"));
     }
 }

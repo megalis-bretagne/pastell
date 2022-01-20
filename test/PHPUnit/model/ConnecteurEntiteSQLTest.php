@@ -8,7 +8,7 @@ class ConnecteurEntiteSQLTest extends PastellTestCase
      */
     private function getConnecteurEntiteSQL()
     {
-        $sqlQuery = $this->getObjectInstancier()->SQLQuery;
+        $sqlQuery = $this->getObjectInstancier()->getInstance(SQLQuery::class);
         return new ConnecteurEntiteSQL($sqlQuery);
     }
 

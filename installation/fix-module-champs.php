@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * TODO: Remove in 4.0
+ */
+
 require_once(__DIR__ . "/../init.php");
 
 /*

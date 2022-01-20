@@ -1,73 +1,75 @@
 <?php
 
+/**
+ * @var Logger $logger
+ */
+
+use Monolog\Logger;
 use Pastell\Service\FeatureToggleService;
 use Symfony\Component\Lock\LockFactory;
 use Symfony\Component\Lock\Store\InMemoryStore;
 use Symfony\Component\Lock\Store\RedisStore;
 
-require_once(__DIR__ . "/init-no-db.php");
+require_once __DIR__ . '/init-no-db.php';
 
 $objectInstancier = new ObjectInstancier();
 ObjectInstancierFactory::setObjectInstancier($objectInstancier);
 
-
-$objectInstancier->setInstance("Monolog\Logger", $logger);
+$objectInstancier->setInstance(Logger::class, $logger);
 $objectInstancier->setInstance('log_level', LOG_LEVEL);
-$objectInstancier->pastell_path = PASTELL_PATH;
-$objectInstancier->PastellTimer = new PastellTimer();
+$objectInstancier->setInstance('pastell_path', PASTELL_PATH);
+$objectInstancier->setInstance(PastellTimer::class, new PastellTimer());
 $objectInstancier->setInstance('site_base', SITE_BASE);
 $objectInstancier->setInstance('list_pack', LIST_PACK);
 
-$objectInstancier->temp_directory = sys_get_temp_dir();
+$objectInstancier->setInstance('temp_directory', sys_get_temp_dir());
+
+$objectInstancier->setInstance('workspacePath', WORKSPACE_PATH);
+$objectInstancier->setInstance('template_path', TEMPLATE_PATH);
+
+$objectInstancier->setInstance('opensslPath', OPENSSL_PATH);
+
+$objectInstancier->setInstance('bd_dsn', BD_DSN);
+$objectInstancier->setInstance('bd_user', BD_USER);
+$objectInstancier->setInstance('bd_password', BD_PASS);
+
+$objectInstancier->setInstance('daemon_log_file', DAEMON_LOG_FILE);
+
+// TODO: Remove in 4.0
+$objectInstancier->setInstance('upstart_touch_file', UPSTART_TOUCH_FILE);
+$objectInstancier->setInstance('upstart_time_send_warning', UPSTART_TIME_SEND_WARNING);
+$objectInstancier->setInstance('open_id_url_callback', SITE_BASE . "/Connexion/openIdReturn");
+/////
 
 
-$objectInstancier->workspacePath = WORKSPACE_PATH;
-$objectInstancier->template_path = TEMPLATE_PATH;
-
-$objectInstancier->opensslPath = OPENSSL_PATH;
-
-$objectInstancier->bd_dsn = BD_DSN;
-$objectInstancier->bd_user = BD_USER;
-$objectInstancier->bd_password = BD_PASS;
-
-$objectInstancier->daemon_log_file = DAEMON_LOG_FILE;
-
-
-$objectInstancier->upstart_touch_file = UPSTART_TOUCH_FILE;
-$objectInstancier->upstart_time_send_warning = UPSTART_TIME_SEND_WARNING;
-
-$objectInstancier->open_id_url_callback = SITE_BASE . "/Connexion/openIdReturn";
-
-$objectInstancier->redis_server = REDIS_SERVER;
-$objectInstancier->redis_port = REDIS_PORT;
+$objectInstancier->setInstance('redis_server', REDIS_SERVER);
+$objectInstancier->setInstance('redis_port', REDIS_PORT);
 
 if (REDIS_SERVER && !TESTING_ENVIRONNEMENT) {
-    $objectInstancier->RedisWrapper = new RedisWrapper(REDIS_SERVER, REDIS_PORT);
-    $objectInstancier->MemoryCache = $objectInstancier->RedisWrapper;
+    $objectInstancier->setInstance(RedisWrapper::class, new RedisWrapper(REDIS_SERVER, REDIS_PORT));
+    $objectInstancier->setInstance(MemoryCache::class, $objectInstancier->getInstance(RedisWrapper::class));
     $redis = new Redis();
     $redis->connect(REDIS_SERVER, REDIS_PORT);
     $redisStore = new RedisStore($redis);
     $objectInstancier->setInstance(LockFactory::class, new LockFactory($redisStore));
 } else {
-    $objectInstancier->MemoryCache = new StaticWrapper();
+    $objectInstancier->setInstance(MemoryCache::class, new StaticWrapper());
     $objectInstancier->setInstance(LockFactory::class, new LockFactory(new InMemoryStore()));
 }
 
-$objectInstancier->cache_ttl_in_seconds = CACHE_TTL_IN_SECONDS;
-
-$objectInstancier->disable_job_queue = DISABLE_JOB_QUEUE;
-
+$objectInstancier->setInstance('cache_ttl_in_seconds', CACHE_TTL_IN_SECONDS);
+$objectInstancier->setInstance('disable_job_queue', DISABLE_JOB_QUEUE);
 
 $id_u_journal = 0;
-if ($objectInstancier->Authentification->isConnected()) {
-    $id_u_journal = $objectInstancier->Authentification->getId();
+if ($objectInstancier->getInstance(Authentification::class)->isConnected()) {
+    $id_u_journal = $objectInstancier->getInstance(Authentification::class)->getId();
 }
-$objectInstancier->Journal->setId($id_u_journal);
+$objectInstancier->getInstance(Journal::class)->setId($id_u_journal);
 
 try {
-    $horodateur = $objectInstancier->ConnecteurFactory->getGlobalConnecteur('horodateur');
+    $horodateur = $objectInstancier->getInstance(ConnecteurFactory::class)->getGlobalConnecteur('horodateur');
     if ($horodateur) {
-        $objectInstancier->Journal->setHorodateur($horodateur);
+        $objectInstancier->getInstance(Journal::class)->setHorodateur($horodateur);
     }
 } catch (Exception $e) {
     /** Nothing to do */
@@ -75,27 +77,30 @@ try {
 
 
 /** @var SQLQuery $sqlQuery */
-$sqlQuery = $objectInstancier->SQLQuery;
+$sqlQuery = $objectInstancier->getInstance(SQLQuery::class);
 
 $sqlQuery->setLogger($logger);
 
-$authentification = $objectInstancier->Authentification;
-$journal = $objectInstancier->Journal;
-$documentTypeFactory = $objectInstancier->DocumentTypeFactory;
-$donneesFormulaireFactory = $objectInstancier->DonneesFormulaireFactory;
-$roleUtilisateur = $objectInstancier->RoleUtilisateur;
+$authentification = $objectInstancier->getInstance(Authentification::class);
+$journal = $objectInstancier->getInstance(Journal::class);
+$documentTypeFactory = $objectInstancier->getInstance(DocumentTypeFactory::class);
+$donneesFormulaireFactory = $objectInstancier->getInstance(DonneesFormulaireFactory::class);
+$roleUtilisateur = $objectInstancier->getInstance(RoleUtilisateur::class);
 
 define("DATABASE_FILE", PASTELL_PATH . "/installation/pastell.bin");
 
 
-$objectInstancier->Extensions->loadConnecteurType();
+$objectInstancier->getInstance(Extensions::class)->loadConnecteurType();
 
 $daemon_command = PHP_PATH . " " . realpath(__DIR__ . "/batch/pastell-job-master.php");
 
-$objectInstancier->DaemonManager = new DaemonManager($daemon_command, PID_FILE, DAEMON_LOG_FILE, DAEMON_USER);
+$objectInstancier->setInstance(
+    DaemonManager::class,
+    new DaemonManager($daemon_command, PID_FILE, DAEMON_LOG_FILE, DAEMON_USER)
+);
 
 
-$objectInstancier->daemon_user = DAEMON_USER;
+$objectInstancier->setInstance('daemon_user', DAEMON_USER);
 $objectInstancier->setInstance('journal_max_age_in_months', JOURNAL_MAX_AGE_IN_MONTHS);
 $objectInstancier->setInstance('admin_email', ADMIN_EMAIL);
 $objectInstancier->setInstance('database_file', __DIR__ . "/installation/pastell.bin");
@@ -110,8 +115,6 @@ $objectInstancier->setInstance('http_proxy_url', HTTP_PROXY_URL);
 $objectInstancier->setInstance('no_proxy', NO_PROXY);
 $objectInstancier->setInstance('pes_viewer_url', PES_VIEWER_URL);
 $objectInstancier->setInstance('password_min_entropy', PASSWORD_MIN_ENTROPY);
-
-
 
 $featureToggleService = $objectInstancier->getInstance(FeatureToggleService::class);
 

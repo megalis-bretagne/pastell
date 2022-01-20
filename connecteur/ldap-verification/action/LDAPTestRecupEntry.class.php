@@ -14,7 +14,7 @@ class LDAPTestRecupEntry extends ActionExecutor
     public function go()
     {
         $ldap = $this->getMyConnecteur();
-        $login = $this->objectInstancier->Authentification->getLogin();
+        $login = $this->objectInstancier->getInstance(Authentification::class)->getLogin();
         $entry = $ldap->getEntry($login);
         if (!$entry) {
             throw new Exception("L'entrée $login n'a pas été trouvé");

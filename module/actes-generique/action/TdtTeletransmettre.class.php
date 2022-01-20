@@ -52,7 +52,10 @@ class TdtTeletransmettre extends ActionExecutor
 
         foreach ($all_id_d as $id_d) {
             $lst_id_d .= "id_d[]=" . $id_d . "&";
-            $tedetis_transaction_id = $this->objectInstancier->DonneesFormulaireFactory->get($id_d)->get($stringMapper->get('tedetis_transaction_id'));
+            $tedetis_transaction_id = $this->objectInstancier
+                ->getInstance(DonneesFormulaireFactory::class)
+                ->get($id_d)
+                ->get($stringMapper->get('tedetis_transaction_id'));
             $lst_id_transaction .= "id[]=$tedetis_transaction_id&";
             $this->changeAction($this->action, "La télétransmission par lot a été ordonnée depuis Pastell");
         }

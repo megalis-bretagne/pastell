@@ -15,8 +15,8 @@ class MailTo
      */
     public function getRacineAdminsEmails()
     {
-        $mails = array();
-        $allAdminUsers = $this->objectInstancier->RoleUtilisateur->getAllUtilisateur(0, 'admin');
+        $mails = [];
+        $allAdminUsers = $this->objectInstancier->getInstance(RoleUtilisateur::class)->getAllUtilisateur(0, 'admin');
         foreach ($allAdminUsers as $user) {
             $mail = $user['email'];
             if ($mail && !in_array($mail, $mails)) {
@@ -44,9 +44,18 @@ class MailTo
      * @param string $id_u id de l'utilisateur journalisé.
      * @param string $id_d id du document journalisé.
      */
-    public function mail($mailTo, $sujet, $contenu, $action, array $contenuScriptInfo = array(), $emetteurName = null, $id_e = 0, $id_u = 0, $id_d = 0)
-    {
-        $zenMail = $this->objectInstancier->ZenMail;
+    public function mail(
+        $mailTo,
+        $sujet,
+        $contenu,
+        $action,
+        array $contenuScriptInfo = [],
+        $emetteurName = null,
+        $id_e = 0,
+        $id_u = 0,
+        $id_d = 0
+    ) {
+        $zenMail = $this->objectInstancier->getInstance(ZenMail::class);
         $zenMail->setEmetteur($emetteurName, PLATEFORME_MAIL);
         $zenMail->setDestinataire($mailTo);
         $zenMail->setSujet($sujet);
@@ -57,16 +66,30 @@ class MailTo
         }
         $zenMail->send();
         if ($id_e) {
-            $this->objectInstancier->Journal->addSQL(Journal::NOTIFICATION, $id_e, $id_u, $id_d, $action, 'Notification envoyée à ' . $mailTo);
+            $this->objectInstancier->getInstance(Journal::class)->addSQL(
+                Journal::NOTIFICATION,
+                $id_e,
+                $id_u,
+                $id_d,
+                $action,
+                'Notification envoyée à ' . $mailTo
+            );
         }
     }
 
     /**
-     * Envoi un mail aux administrateurs racine (@link MailTo::getRacineAdminsEmails())
-     * @param * Voir @link MailTo::mail
+     * Envoi un mail aux administrateurs racine (@param * Voir @link MailTo::mail
+     * @link MailTo::getRacineAdminsEmails())
      */
-    public function mailRacineAdmins($sujet, $contenu, $action, array $contenuScriptInfo = array(), $emetteurName = null, $id_e = 0, $id_u = 0)
-    {
+    public function mailRacineAdmins(
+        $sujet,
+        $contenu,
+        $action,
+        array $contenuScriptInfo = [],
+        $emetteurName = null,
+        $id_e = 0,
+        $id_u = 0
+    ) {
         $emails = $this->getRacineAdminsEmails();
         if (!$emails) {
             return;

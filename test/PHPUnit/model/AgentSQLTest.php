@@ -4,7 +4,7 @@ class AgentSQLTest extends PastellTestCase
 {
     private function getAgentSQL()
     {
-        $sqlQuery = $this->getObjectInstancier()->SQLQuery;
+        $sqlQuery = $this->getObjectInstancier()->getInstance(SQLQuery::class);
         return new AgentSQL($sqlQuery);
     }
 

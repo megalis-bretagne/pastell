@@ -55,9 +55,11 @@ abstract class ChoiceActionExecutor extends ActionExecutor
         $this->displayMenuGauche();
         $this->page_title = $page_title;
         $this->template_milieu = $template;
-        $this->objectInstancier->PastellControler->setAllViewParameter($this->getViewParameter());
-        $this->objectInstancier->PastellControler->setNavigationInfo($this->id_e, "/Entite/connecteur");
-        $this->objectInstancier->PastellControler->renderDefault();
+        $this->objectInstancier->getInstance(PastellControler::class)->setAllViewParameter($this->getViewParameter());
+        $this->objectInstancier
+            ->getInstance(PastellControler::class)
+            ->setNavigationInfo($this->id_e, "/Entite/connecteur");
+        $this->objectInstancier->getInstance(PastellControler::class)->renderDefault();
     }
 
     public function redirectToFormulaire()

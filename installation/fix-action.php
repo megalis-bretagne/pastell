@@ -1,6 +1,10 @@
 <?php
 
-require_once(__DIR__ . "/../init.php");
+/**
+ * @var ObjectInstancier $objectInstancier
+ */
+
+require_once __DIR__ . '/../init.php';
 
 $flux = get_argv(1);
 $action_from = get_argv(2);
@@ -12,7 +16,7 @@ if (count($argv) != 4) {
     exit;
 }
 
-$result = $objectInstancier->DocumentEntite->getAllByFluxAction($flux, $action_from);
+$result = $objectInstancier->getInstance(DocumentEntite::class)->getAllByFluxAction($flux, $action_from);
 
 if (!$result) {
     echo "Aucun document $flux n'est dans l'état $action_from\n";
@@ -31,5 +35,5 @@ if ($entree != 'o') {
     exit;
 }
 
-$objectInstancier->DocumentEntite->fixAction($flux, $action_from, $action_to);
+$objectInstancier->getInstance(DocumentEntite::class)->fixAction($flux, $action_from, $action_to);
 echo "Les documents ont ete modifies\n";
