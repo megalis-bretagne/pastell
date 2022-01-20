@@ -4,7 +4,10 @@ require_once(__DIR__ . "/vendor/autoload.php");
 require_once(__DIR__ . "/DefaultSettings.php");
 
 if (!empty(SENTRY_DSN)) {
-    Sentry\init(['dsn' => SENTRY_DSN]);
+    Sentry\init([
+        'dsn' => SENTRY_DSN,
+        'environment' => SENTRY_ENVIRONMENT,
+    ]);
 }
 
 set_include_path(

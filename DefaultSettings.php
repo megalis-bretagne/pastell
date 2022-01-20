@@ -261,6 +261,9 @@ if (!defined('LOGIN_PAGE_CONFIGURATION_LOCATION')) {
 if (!defined('SENTRY_DSN')) {
     define('SENTRY_DSN', '');
 }
+if (!defined('SENTRY_ENVIRONMENT')) {
+    define('SENTRY_ENVIRONMENT', 'dev');
+}
 
 # A modifier uniquement pour les environnement docker en local (dev)
 if (! defined('PES_VIEWER_URL')) {
