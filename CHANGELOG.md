@@ -1,5 +1,7 @@
 # [3.1.11]
 
+***Cette version nécessite une mise à jour du générateur SEDA***
+
 ## Ajouts
 
 - Commande `app:module:actes-add-type-piece-fichier` permettant de construire type_piece_fichier avec type_acte et type_pj #1174
@@ -13,6 +15,7 @@
 - Les rejets parapheur à l'étape mail sécurisé parapheur n'étaient pas pris en compte #1227
 - Amélioration de l'affichage des erreurs des templates twig #1434
 - Complexification du token servant au changement de mot de passe lors d'un oubli de celui-ci #1441
+- Utilisation de la version 0.8.1 du generateur SEDA afin de supprimer la balise Agency (qui n'existe pas) pour les bordereaux SEDA 2.1 #1450
 
 ## Évolutions
 
