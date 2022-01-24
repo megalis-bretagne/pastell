@@ -62,8 +62,3 @@ services:
             DEV_MODE: 'true'
         ports:
             - "5000:5000"
-
-    pes-viewer:
-        image: gitlab.libriciel.fr:4567/libriciel/pole-signature/i-parapheur-v5/pes-viewer:1.2.11
-        ports:
-            - "8888:8888"
