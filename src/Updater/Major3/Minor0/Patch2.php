@@ -83,9 +83,6 @@ class Patch2 implements Version
 
     private function replaceFastParapheurUrl(): void
     {
-        // TODO: move legacy autoload into composer
-        require_once PASTELL_PATH . '/connecteur/fast-parapheur/FastParapheur.class.php';
-
         $fastParapheurConnectors = $this->connecteurEntiteSql->getAllById('fast-parapheur');
         foreach ($fastParapheurConnectors as $fastParapheurConnector) {
             if ($fastParapheurConnector['id_e'] === '0') {
@@ -109,9 +106,6 @@ class Patch2 implements Version
      */
     private function renameBordereauFieldToBordereauSignature(): void
     {
-        // TODO: move legacy autoload into composer
-        require_once PASTELL_PATH . '/connecteur-type/TdT/TdTRecupActe.class.php';
-
         $typeDossierWithSignatureStep = $this->getTypeDossierWithStep('signature');
         $bordereauFieldName = 'bordereau';
         $regex = "/^($bordereauFieldName)(_\d+)?$/";

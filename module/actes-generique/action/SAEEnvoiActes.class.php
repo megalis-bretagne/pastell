@@ -70,7 +70,6 @@ class SAEEnvoiActes extends ActionExecutor
 
 
         if ($actesSEDA instanceof SedaNG) {
-            require_once __DIR__ . "/../lib/FluxDataSedaActes.class.php";
             /** @var SedaNG $actesSEDA */
             $fluxData = new FluxDataSedaActes($donneesFormulaire);
             $bordereau = $actesSEDA->getBordereauNG($fluxData);

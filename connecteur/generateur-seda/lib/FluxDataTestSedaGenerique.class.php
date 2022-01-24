@@ -1,8 +1,5 @@
 <?php
 
-require_once PASTELL_PATH . "/connecteur/seda-ng/lib/FluxData.class.php";
-require_once PASTELL_PATH . "/connecteur/seda-ng/lib/FluxDataTest.class.php";
-
 class FluxDataTestSedaGenerique extends FluxDataTest
 {
     private $file_list = [];

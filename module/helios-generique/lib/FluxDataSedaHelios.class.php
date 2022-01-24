@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../../../connecteur-type/TdT/lib/PESV2XMLFile.class.php";
-
 class FluxDataSedaHelios extends FluxDataSedaDefault
 {
     private $info_from_pes_aller;

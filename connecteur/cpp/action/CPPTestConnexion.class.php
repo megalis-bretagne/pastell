@@ -1,6 +1,6 @@
 <?php
 
-class TestConnexion extends ActionExecutor
+class CPPTestConnexion extends ActionExecutor
 {
     /**
      * @return bool

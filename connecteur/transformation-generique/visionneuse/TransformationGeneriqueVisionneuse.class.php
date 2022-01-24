@@ -3,8 +3,6 @@
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
-require_once __DIR__ . "/../lib/TransformationGeneriqueDefinition.class.php";
-
 class TransformationGeneriqueVisionneuse extends Visionneuse
 {
     private $transformationGeneriqueDefinition;

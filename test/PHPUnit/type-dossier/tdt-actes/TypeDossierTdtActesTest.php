@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../../pastell-core/type-dossier/TypeDossierLoader.class.php";
-
 class TypeDossierTdtActesTest extends PastellTestCase
 {
     public const TDT_ACTES_ONLY = 'tdt-actes-only';

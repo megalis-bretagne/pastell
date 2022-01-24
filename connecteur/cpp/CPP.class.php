@@ -1,10 +1,5 @@
 <?php
 
-require_once __DIR__ . "/lib/UTF8Encoder.class.php";
-require_once __DIR__ . "/lib/CPPWrapperConfig.class.php";
-require_once __DIR__ . "/lib/CPPWrapper.class.php";
-require_once __DIR__ . "/lib/CPPWrapperFactory.class.php";
-
 /**
  * Class CPP
  *

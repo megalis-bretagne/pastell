@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . "/PESV2XMLFile.class.php";
-
 class PESAllerFile extends PESV2XMLFile
 {
     public const ID_COLL = 'IdColl';

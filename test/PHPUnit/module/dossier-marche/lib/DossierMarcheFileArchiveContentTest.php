@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../../../../../module/dossier-marche/lib/DossierMarcheFileArchiveContent.class.php";
-
 class DossierMarcheFileArchiveContentTest extends \PHPUnit\Framework\TestCase
 {
     /**

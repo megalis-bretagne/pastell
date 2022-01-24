@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . '/../../../connecteur-type/Tdt/lib/TdtClassification.php';
-
 class RecupClassificationAll extends ActionExecutor
 {
     public function go()

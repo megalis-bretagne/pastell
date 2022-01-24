@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../../../../connecteur/generateur-seda/lib/FluxDataTestSedaGenerique.class.php";
-
 class SedaGeneriqueTest extends PastellTestCase
 {
     use CurlUtilitiesTestTrait;

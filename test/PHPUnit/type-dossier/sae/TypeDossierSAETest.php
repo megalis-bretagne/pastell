@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../../pastell-core/type-dossier/TypeDossierLoader.class.php";
-
 class TypeDossierSAETest extends PastellTestCase
 {
     public const SAE_ONLY = 'sae-only';

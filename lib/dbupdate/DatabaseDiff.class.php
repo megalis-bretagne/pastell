@@ -1,7 +1,5 @@
 <?php
 
-require_once 'DatabaseEventMySQL.class.php';
-
 class DatabaseDiff
 {
     private $databaseEvent;

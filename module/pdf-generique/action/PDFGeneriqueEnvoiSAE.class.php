@@ -32,7 +32,6 @@ class PDFGeneriqueEnvoiSAE extends ActionExecutor
         if (! $sedaNG) {
             throw new Exception("Connnecteur SEDA NG non trouvé");
         }
-        require_once __DIR__ . "/../lib/FluxDataSedaPDFGenerique.class.php";
 
         /** @var SAEConnecteur $sae */
         $sae = $this->getConnecteur('SAE');

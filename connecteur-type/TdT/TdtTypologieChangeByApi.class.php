@@ -1,8 +1,5 @@
 <?php
 
-require_once __DIR__ . "/lib/ActesTypePJData.class.php";
-require_once __DIR__ . "/lib/ActesTypePJ.class.php";
-
 /**
  *
  * @deprecated PA 3.0.0

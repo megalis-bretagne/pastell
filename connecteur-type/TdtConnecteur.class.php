@@ -1,8 +1,5 @@
 <?php
 
-require_once __DIR__ . "/TdtException.class.php";
-require_once __DIR__ . "/TdT/lib/ActesTypePJ.class.php";
-
 abstract class TdtConnecteur extends Connecteur
 {
     public const FAMILLE_CONNECTEUR = 'TdT';

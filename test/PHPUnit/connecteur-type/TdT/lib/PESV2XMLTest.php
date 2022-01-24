@@ -2,8 +2,6 @@
 
 use PHPUnit\Framework\TestCase;
 
-require_once __DIR__ . "/../../../../../connecteur-type/TdT/lib/PESAllerFile.class.php";
-
 class PESV2XMLTest extends TestCase
 {
     /**

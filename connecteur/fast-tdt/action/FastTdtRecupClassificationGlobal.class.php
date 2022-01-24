@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . '/../lib/FastTdtClassification.php';
-
 class FastTdtRecupClassificationGlobal extends ActionExecutor
 {
     public function go()

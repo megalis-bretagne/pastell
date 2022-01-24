@@ -1,25 +1,5 @@
 <?php
 
-require_once(__DIR__ . "/lib/XMLFile.class.php");
-require_once(__DIR__ . "/lib/AgapeFile.class.php");
-require_once(__DIR__ . "/lib/RelaxNG.class.php");
-require_once(__DIR__ . "/lib/FluxData.class.php");
-require_once(__DIR__ . "/lib/FluxDataTest.class.php");
-require_once(__DIR__ . "/lib/FluxDataStandard.class.php");
-require_once(__DIR__ . "/lib/FluxDataSedaDefault.class.php");
-
-
-require_once(__DIR__ . "/lib/RelaxNgImportAgapeAnnotation.class.php");
-require_once(__DIR__ . "/lib/GenerateXMLFromAnnotedRelaxNG.class.php");
-
-require_once(__DIR__ . "/lib/AnnotationWrapper.class.php");
-require_once(__DIR__ . "/lib/GenerateBordereauSEDA.class.php");
-require_once(__DIR__ . "/lib/GenerateXMLFromRelaxNg.class.php");
-require_once(__DIR__ . "/lib/SedaValidation.class.php");
-require_once(__DIR__ . "/lib/XMLCleaningEmptyNode.class.php");
-
-
-
 class SedaNG extends SEDAConnecteur
 {
     public const CONNECTEUR_ID = 'seda-ng';

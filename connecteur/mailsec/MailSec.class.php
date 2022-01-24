@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../undelivered-mail/UndeliveredMail.class.php";
-
 class MailSec extends MailsecConnecteur
 {
     public const CONNECTEUR_ID = 'mailsec';

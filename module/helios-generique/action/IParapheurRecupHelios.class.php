@@ -1,7 +1,5 @@
 <?php
 
-require_once(PASTELL_PATH . "/lib/Array2XML.class.php");
-
 class IParapheurRecupHelios extends ActionExecutor
 {
     /**

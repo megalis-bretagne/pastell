@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../lib/FactureFichierPivot.class.php";
-
 class FactureFormulaireCreerPivot
 {
     private const DEFAULT_MODE_EMISSION = 'PDF';

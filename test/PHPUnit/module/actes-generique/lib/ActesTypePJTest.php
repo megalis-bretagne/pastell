@@ -1,8 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../../../../../connecteur-type/TdT/lib/ActesTypePJ.class.php";
-require_once __DIR__ . "/../../../../../connecteur-type/TdT/lib/ActesTypePJData.class.php";
-
 class ActesTypePJTest extends PHPUnit\Framework\TestCase
 {
     /**

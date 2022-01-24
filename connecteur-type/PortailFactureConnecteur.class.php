@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . "/CPPException.class.php";
-
 abstract class PortailFactureConnecteur extends Connecteur
 {
     public const STATUT_DEPOSEE = "DEPOSEE";

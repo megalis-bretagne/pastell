@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../../../../../connecteur/purge/action/PurgeDocumentEtatCible.class.php";
-
 class PurgeDocumentEtatCibleTest extends PastellTestCase
 {
     /**

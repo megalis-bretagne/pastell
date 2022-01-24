@@ -1,7 +1,5 @@
 <?php
 
-require_once PASTELL_PATH . "/module/actes-generique/lib/FluxDataSedaActes.class.php";
-
 class FluxDataSedaActesTest extends PastellTestCase
 {
     public function getRestrictionAccessDataProvider()

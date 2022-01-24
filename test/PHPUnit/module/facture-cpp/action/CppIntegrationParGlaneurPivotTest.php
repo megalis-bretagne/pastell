@@ -1,7 +1,5 @@
 <?php
 
-require_once PASTELL_PATH . "/connecteur/glaneur-sftp/GlaneurSFTP.class.php";
-
 class CppIntegrationParGlaneurPivotTest extends ExtensionCppTestCase
 {
     /**

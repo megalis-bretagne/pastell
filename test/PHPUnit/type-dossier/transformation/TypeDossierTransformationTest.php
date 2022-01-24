@@ -1,8 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../../pastell-core/type-dossier/TypeDossierLoader.class.php";
-require_once __DIR__ . "/../../../../connecteur/glaneur-sftp/GlaneurSFTP.class.php";
-
 class TypeDossierTransformationTest extends PastellTestCase
 {
     public const TRANSFORMATION = 'studio-transformation';

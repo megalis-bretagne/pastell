@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . DIRECTORY_SEPARATOR . 'DonneesFormulaireException.php';
-
 /**
  * Gestion des données de formulaire à partir d'un fichier YML de type clé:valeur
  */

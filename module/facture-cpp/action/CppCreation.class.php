@@ -1,10 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../lib/SynchronisationFacture.class.php";
-require_once __DIR__ . "/../lib/ExtraireDonneesPivot.class.php";
-require_once __DIR__ . "/../lib/CreationFactureCPP.class.php";
-
-
 class CPPCreation extends ActionExecutor
 {
     /**

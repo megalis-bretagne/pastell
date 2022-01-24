@@ -19,7 +19,7 @@ ENV PATH="${PATH}:/var/www/pastell/vendor/bin/"
 COPY ./ci-resources/install-requirements.sh /var/www/pastell/ci-resources/
 RUN /bin/bash /var/www/pastell/ci-resources/install-requirements.sh
 
-COPY --from=composer:2.0 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # Create Pastell needs
 COPY ./ci-resources /var/www/pastell/ci-resources
@@ -32,11 +32,13 @@ COPY ./composer.* /var/www/pastell/
 
 RUN /bin/bash /var/www/pastell/ci-resources/github/create-auth-file.sh && \
     /bin/bash -c 'mkdir -p /var/www/pastell/{web,web-mailsec}' && \
-    composer install --no-dev --optimize-autoloader && \
+    composer install --no-dev --no-autoloader && \
     rm -rf /root/.composer/
 
 # Pastell sources
 COPY --chown=www-data:www-data ./ /var/www/pastell/
+
+RUN composer dump-autoload --no-dev --optimize
 
 ENTRYPOINT ["docker-pastell-entrypoint"]
 CMD ["/usr/bin/supervisord"]

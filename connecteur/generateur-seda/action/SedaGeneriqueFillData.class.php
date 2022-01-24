@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../SedaGenerique.class.php";
-
 class SedaGeneriqueFillData extends ChoiceActionExecutor
 {
     /**

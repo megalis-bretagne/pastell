@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . "/HeliosEnvoieSignatureChange.class.php";
-
 class HeliosEnvoieSignatureChangeAPI extends HeliosEnvoieSignatureChange
 {
     public function go()

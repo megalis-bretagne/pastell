@@ -4,15 +4,10 @@ ini_set('MAX_EXECUTION_TIME', -1);
 
 error_reporting(E_ALL);
 
-
 define("TESTING_ENVIRONNEMENT", true);
-//define("REDIS_SERVER",false);
 
-#set_include_path(  __DIR__.'/../../composer/vendor/' . PATH_SEPARATOR .
-#   get_include_path()
-#);
-
-require_once __DIR__ . "/../../ci-resources/define-from-environnement.php";
+require_once __DIR__ . '/../../ci-resources/define-from-environnement.php';
+require_once __DIR__ . '/../../init-no-db.php';
 
 function pastell_autoload($class_name)
 {
@@ -22,21 +17,6 @@ function pastell_autoload($class_name)
     }
     return true;
 }
-
-require_once __DIR__ . '/PastellTestCase.class.php';
-
-require_once __DIR__ . "/SoapUtilitiesTestTrait.php";
-require_once __DIR__ . "/CurlUtilitiesTestTrait.php";
-require_once __DIR__ . "/TypeDossierLoaderTestTrait.php";
-
-require_once(__DIR__ . "/../../init-no-db.php");
-
-require_once(__DIR__ . "/ExtensionLoader.class.php");
-
-require_once(__DIR__ . "/../../lib/dbupdate/DatabaseUpdate.class.php");
-
-#TODO BOF...
-require_once(__DIR__ . "/../../connecteur/seda-ng/SedaNG.class.php");
 
 $sqlQuery = new SQLQuery(BD_DSN_TEST, BD_USER_TEST, BD_PASS_TEST);
 

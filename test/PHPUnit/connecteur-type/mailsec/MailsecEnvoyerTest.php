@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../../../../connecteur/mailsec/MailSec.class.php";
-
 class MailsecEnvoyerTest extends PastellTestCase
 {
     private const MAILSEC_FLUX_ID = 'mailsec';

@@ -23,9 +23,6 @@ class Patch2Test extends PastellTestCase
      */
     public function testReplaceFastParapheurUrl()
     {
-        // TODO: move legacy autoload into composer
-        require_once PASTELL_PATH . '/connecteur/fast-parapheur/FastParapheur.class.php';
-
         $connectorId = $this->createConnector('fast-parapheur', 'FAST PARAPHEUR')['id_ce'];
         $defaultUrl = 'https://test.tld';
         $this->configureConnector($connectorId, [
@@ -49,8 +46,6 @@ class Patch2Test extends PastellTestCase
     {
         $typeDossier = 'arrete-rh';
 
-        // Can't just use TypeDossierImportExport because we need the yaml to be generated in the workspace
-        require_once PASTELL_PATH . '/test/PHPUnit/pastell-core/type-dossier/TypeDossierLoader.class.php';
         $typeDossierLoader = $this->getObjectInstancier()->getInstance(TypeDossierLoader::class);
         $typeDossierLoader->createTypeDossierFromFilepath(
             PASTELL_PATH . "/test/PHPUnit/pastell-core/type-dossier/fixtures/$typeDossier.json"

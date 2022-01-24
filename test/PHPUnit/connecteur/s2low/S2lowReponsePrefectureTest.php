@@ -1,7 +1,5 @@
 <?php
 
-require_once  __DIR__ . '/../../../../connecteur/s2low/S2low.class.php';
-
 class S2lowReponsePrefectureTest extends PastellTestCase
 {
     /**

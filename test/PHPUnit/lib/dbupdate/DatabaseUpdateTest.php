@@ -1,7 +1,5 @@
 <?php
 
-require_once PASTELL_PATH . '/lib/dbupdate/DatabaseUpdate.class.php';
-
 class DatabaseUpdateTest extends PastellTestCase
 {
     public function testCreateSQL()

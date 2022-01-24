@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../../../../connecteur/fast-parapheur/FastParapheur.class.php";
-
 class FastParapheurTest extends PastellTestCase
 {
     use SoapUtilitiesTestTrait;

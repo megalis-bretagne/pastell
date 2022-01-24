@@ -1,8 +1,5 @@
 <?php
 
-require_once PASTELL_PATH . DIRECTORY_SEPARATOR . 'module' . DIRECTORY_SEPARATOR . 'helios-generique' .
-    DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'FluxDataSedaHelios.class.php';
-
 class FluxDataSedaHeliosTest extends PastellTestCase
 {
     public function testAccentuatedLibelleCodBud()

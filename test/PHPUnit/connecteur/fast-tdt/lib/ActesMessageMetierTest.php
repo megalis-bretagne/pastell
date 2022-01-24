@@ -1,9 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../../../../../connecteur/fast-tdt/lib/Acte.php";
-require_once __DIR__ . "/../../../../../connecteur/fast-tdt/lib/ActesMessageMetier.php";
-require_once __DIR__ . "/../../../../../connecteur/fast-tdt/lib/ActesMessageMetierException.php";
-
 class ActesMessageMetierTest extends PastellTestCase
 {
     /**

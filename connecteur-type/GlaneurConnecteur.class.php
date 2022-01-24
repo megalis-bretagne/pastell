@@ -1,10 +1,5 @@
 <?php
 
-require_once __DIR__ . "/glaneur/lib/GlaneurDocumentInfo.class.php";
-require_once __DIR__ . "/glaneur/lib/GlaneurDocumentCreator.class.php";
-require_once __DIR__ . "/glaneur/lib/GlaneurFilenameMatcher.class.php";
-require_once __DIR__ . "/glaneur/lib/GlaneurGlanerRepertoire.class.php";
-
 abstract class GlaneurConnecteur extends Connecteur
 {
     public const NB_MAX_FILE_DISPLAY = 20;

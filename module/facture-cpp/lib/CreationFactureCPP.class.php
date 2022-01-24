@@ -1,9 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../lib/AttrFactureCPP.class.php";
-require_once __DIR__ . "/../lib/ExtraireDonneesPivot.class.php";
-require_once __DIR__ . "/../../facture-formulaire-pivot/lib/HistoStatutCPP.class.php";
-
 class CreationFactureCPP
 {
     protected $objectInstancier;

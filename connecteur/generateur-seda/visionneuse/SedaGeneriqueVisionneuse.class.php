@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../SedaGenerique.class.php";
-
 class SedaGeneriqueVisionneuse extends Visionneuse
 {
     public function display($filename, $filepath)

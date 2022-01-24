@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../lib/TransformationGeneriqueDefinition.class.php";
-
 class TransformationGeneriqueFillData extends ChoiceActionExecutor
 {
     /**

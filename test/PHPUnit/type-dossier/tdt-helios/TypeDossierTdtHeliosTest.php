@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../../pastell-core/type-dossier/TypeDossierLoader.class.php";
-
 class TypeDossierTdtHeliosTest extends PastellTestCase
 {
     public const TDT_HELIOS_ONLY = 'tdt-helios-only';

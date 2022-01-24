@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../lib/SynchronisationFacture.class.php";
-
 class CppSynchroniserStatut extends ActionExecutor
 {
     public function go()

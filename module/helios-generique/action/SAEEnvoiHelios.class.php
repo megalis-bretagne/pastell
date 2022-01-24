@@ -59,7 +59,6 @@ class SAEEnvoiHelios extends ActionExecutor
 
 
         if ($heliosSEDA instanceof SedaNG) {
-            require_once __DIR__ . "/../lib/FluxDataSedaHelios.class.php";
             /** @var SedaNG $heliosSEDA */
             $fluxData = new FluxDataSedaHelios($donneesFormulaire);
             $bordereau = $heliosSEDA->getBordereauNG($fluxData);

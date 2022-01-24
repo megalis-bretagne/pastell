@@ -2,12 +2,6 @@
 
 use Monolog\Logger;
 
-require_once __DIR__ . "/UTF8Encoder.class.php";
-require_once __DIR__ . "/CPPWrapperConfig.class.php";
-require_once __DIR__ . "/CPPWrapperExceptionGetToken.class.php";
-require_once __DIR__ . "/CPPWrapperExceptionRechercheFactureParRecipiendaire.class.php";
-require_once __DIR__ . "/CPPWrapperExceptionRechercheFactureTravaux.class.php";
-
 /**
  * Class CPPWrapper
  *

@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . "/ActesTypePJData.class.php";
-
 class ActesTypePJ
 {
     /**

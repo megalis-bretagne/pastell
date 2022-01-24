@@ -1,7 +1,5 @@
 <?php
 
-require_once(PASTELL_PATH . "/connecteur-type/TdT/lib/PESV2XMLFile.class.php");
-
 class PESMarcheInfo extends PESV2XMLFile
 {
     public const NOM_FIC = 'NomFic';

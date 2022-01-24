@@ -1,8 +1,5 @@
 <?php
 
-require_once __DIR__ . "/FluxDataTestRepeat.class.php";
-require_once __DIR__ . "/FluxDataTestConnecteurInfo.class.php";
-
 class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase
 {
     /**

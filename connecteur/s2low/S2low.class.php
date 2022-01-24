@@ -1,8 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../../connecteur-type/TdT/lib/ActesTypePJ.class.php";
-require_once __DIR__ . DIRECTORY_SEPARATOR . 'S2lowException.class.php';
-
 class S2low extends TdtConnecteur
 {
     public const URL_TEST = "/api/test-connexion.php";

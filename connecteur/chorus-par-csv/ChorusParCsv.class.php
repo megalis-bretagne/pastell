@@ -1,10 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../cpp/lib/UTF8Encoder.class.php";
-require_once __DIR__ . "/../cpp/lib/CPPWrapperConfig.class.php";
-require_once __DIR__ . "/../cpp/lib/CPPWrapper.class.php";
-require_once __DIR__ . "/../cpp/lib/CPPWrapperFactory.class.php";
-
 class ChorusParCsv extends PortailFactureConnecteur
 {
     private const DEPOSE_DEPUIS_NB_JOURS = 30;
