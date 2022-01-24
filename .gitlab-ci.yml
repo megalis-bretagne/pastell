@@ -127,12 +127,11 @@ deploy_master:
         - ssh-add <(echo "$SSH_PRIVATE_KEY")
         - mkdir -p ~/.ssh
         - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-        - scp ./docker-compose.yml gitlab@pastell.master.libriciel.fr:/data/docker-file
-        - scp ./docker-compose.master.yml gitlab@pastell.master.libriciel.fr:/data/docker-file/docker-compose.override.yml
-        - scp ./ci-resources/production/docker-compose.yml gitlab@pastell.master.libriciel.fr:/data/docker-file/docker-compose.production.yml
+        - scp ./docker-compose.master.yml gitlab@pastell.master.libriciel.fr:/data/docker-file/docker-compose.yml
+        - scp ./ci-resources/production/docker-compose.yml gitlab@pastell.master.libriciel.fr:/data/docker-file/docker-compose.override.yml
         - echo "$MASTER_ENV_FILE_CONTENT" > /tmp/.env
         - scp /tmp/.env gitlab@pastell.master.libriciel.fr:/data/docker-file/
-        - ssh -tt gitlab@pastell.master.libriciel.fr "docker login -u gitlab-ci-token -p '$CI_JOB_TOKEN' $CI_REGISTRY && cd /data/docker-file/ && docker-compose -f docker-compose.production.yml -f docker-compose.yml -f docker-compose.override.yml pull && docker-compose -f docker-compose.production.yml up -d && docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d"
+        - ssh -tt gitlab@pastell.master.libriciel.fr "docker login -u gitlab-ci-token -p '$CI_JOB_TOKEN' $CI_REGISTRY && cd /data/docker-file/ && docker-compose pull && docker-compose up -d"
         - curl -i -X POST -d "$PAYLOAD" $MATTERMOST_WEBHOOK
 
 deploy_ftp:
