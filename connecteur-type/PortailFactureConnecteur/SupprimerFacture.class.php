@@ -1,8 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../PortailFactureConnecteur.class.php";
-require_once __DIR__ . "/../../module/facture-cpp/lib/AttrFactureCPP.class.php";
-
 abstract class SupprimerFacture extends ActionExecutor
 {
     abstract public function doTraitementSuppression($all_id_d, $id_e);

@@ -1,7 +1,5 @@
 <?php
 
-require_once(__DIR__ . "/FluxData.class.php");
-
 /**
  * Class FluxDataStandard
  * @deprecated PA 3.0 use FluxDataSedaDefault instead

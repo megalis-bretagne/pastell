@@ -1,11 +1,5 @@
 <?php
 
-require_once __DIR__ . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'ActesMessageMetier.php';
-require_once __DIR__ . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'Acte.php';
-require_once __DIR__ . DIRECTORY_SEPARATOR . 'FastTdtException.class.php';
-require_once __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'fast-parapheur' . DIRECTORY_SEPARATOR .
-    'lib' . DIRECTORY_SEPARATOR . 'DocapostParapheurSoapClient.php';
-
 use Sabre\HTTP\ClientHttpException;
 
 class FastTdt extends TdtConnecteur

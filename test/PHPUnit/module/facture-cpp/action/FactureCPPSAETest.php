@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../../../../../module/facture-formulaire-pivot/lib/FactureFichierPivot.class.php";
-
 class FactureCPPSAETest extends ExtensionCppTestCase
 {
     public function getModuleDataProvider()

@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../../../../../connecteur-type/glaneur/lib/GlaneurFilenameMatcher.class.php";
-
 class GlaneurFilenameMatcherTest extends \PHPUnit\Framework\TestCase
 {
     /** @var GlaneurFilenameMatcher */

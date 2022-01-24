@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . "/AttrFactureCPP.class.php";
-
 class SynchronisationFacture
 {
     /** @var PortailFactureConnecteur */

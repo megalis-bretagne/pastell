@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . DIRECTORY_SEPARATOR . 'DocapostParapheurSoapClientException.php';
-
 class DocapostParapheurSoapClient
 {
     private $client;

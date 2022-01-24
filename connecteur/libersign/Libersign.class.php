@@ -1,6 +1,5 @@
 <?php
 
-require_once __DIR__ . '/lib/SignedFile.php';
 use Pastell\Client\Crypto\CryptoClient;
 use Pastell\Client\Crypto\CryptoClientException;
 use Pastell\Client\Crypto\CryptoClientFactory;

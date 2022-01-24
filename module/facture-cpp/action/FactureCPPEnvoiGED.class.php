@@ -1,8 +1,5 @@
 <?php
 
-require_once PASTELL_PATH . "/connecteur-type/GED/GEDEnvoyer.class.php";
-require_once __DIR__ . "/../lib/SynchronisationFacture.class.php";
-
 class FactureCPPEnvoiGED extends GEDEnvoyer
 {
     public function go()

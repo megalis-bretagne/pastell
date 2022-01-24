@@ -1,8 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../../../../../connecteur/fakeSAE/FakeSAE.class.php";
-require_once __DIR__ . "/../../../../../connecteur/seda-ng/SedaNG.class.php";
-
 class ActesGeneriqueGenerationSEDATest extends PastellTestCase
 {
     /**

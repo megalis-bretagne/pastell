@@ -1,7 +1,5 @@
 <?php
 
-require_once(__DIR__ . "/../lib/PESMarcheInfo.class.php");
-
 class PESMarcheFichierPESChange extends ActionExecutor
 {
     private $PESMarcheInfo;

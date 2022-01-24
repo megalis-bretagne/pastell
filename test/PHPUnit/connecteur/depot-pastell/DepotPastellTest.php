@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../../../../connecteur/depot-pastell/DepotPastell.class.php";
-
 class DepotPastellTest extends PastellTestCase
 {
     public const PASTELL_METADATA_DEFAULT = "objet:%objet%\nacte_nature:%acte_nature%\nenvoi_tdt:on\narrete:%arrete%\nautre_document_attache:%autre_document_attache%";

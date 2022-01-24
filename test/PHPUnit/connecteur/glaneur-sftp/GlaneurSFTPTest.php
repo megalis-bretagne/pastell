@@ -1,8 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../../../../connecteur/glaneur-sftp/GlaneurSFTP.class.php";
-
-
 class GlaneurSFTPTest extends PastellTestCase
 {
     /** @var  TmpFolder */

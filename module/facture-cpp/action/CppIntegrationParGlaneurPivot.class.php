@@ -1,8 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../../facture-formulaire-pivot/lib/FactureFichierPivot.class.php";
-require_once __DIR__ . "/../lib/CreationFactureCPP.class.php";
-
 class CppIntegrationParGlaneurPivot extends ActionExecutor
 {
     /**

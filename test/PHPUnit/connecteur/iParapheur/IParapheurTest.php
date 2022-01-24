@@ -1,9 +1,5 @@
 <?php
 
-require_once __DIR__ . '/../../../../connecteur/iParapheur/IParapheur.class.php';
-require_once PASTELL_PATH . DIRECTORY_SEPARATOR . 'pastell-core' . DIRECTORY_SEPARATOR . 'FileToSign.php';
-
-
 class IParapheurTest extends PastellTestCase
 {
     public const REPONSE_ARCHIVE_OK = '{"MessageRetour":{"codeRetour":"OK","message":"Dossier 201806111713 TESTA supprim\u00e9 du Parapheur.","severite":"INFO"}}';

@@ -1,9 +1,5 @@
 <?php
 
-require_once PASTELL_PATH . "/connecteur-type/signature/SignatureRecuperation.class.php";
-require_once __DIR__ . "/../lib/AttrFactureCPP.class.php";
-require_once PASTELL_PATH . "/lib/Array2XML.class.php";
-
 class FactureCPPIParapheurRecup extends SignatureRecuperation
 {
     public function go()

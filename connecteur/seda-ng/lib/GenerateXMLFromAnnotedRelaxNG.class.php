@@ -1,8 +1,5 @@
 <?php
 
-require_once(__DIR__ . "/GenerateXMLFromRelaxNg.class.php");
-
-
 class GenerateXMLFromAnnotedRelaxNG extends GenerateXMLFromRelaxNg
 {
     /**

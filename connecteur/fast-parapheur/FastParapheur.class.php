@@ -1,9 +1,5 @@
 <?php
 
-require_once __DIR__ . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'DocapostParapheurSoapClient.php';
-require_once __DIR__ . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'DocapostParapheurSoapClientException.php';
-require_once PASTELL_PATH . DIRECTORY_SEPARATOR . 'pastell-core' . DIRECTORY_SEPARATOR . 'FileToSign.php';
-
 class FastParapheur extends SignatureConnecteur
 {
     public const PARAPHEUR_NB_JOUR_MAX_DEFAULT = 30;

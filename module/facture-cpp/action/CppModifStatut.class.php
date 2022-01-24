@@ -1,9 +1,5 @@
 <?php
 
-require_once(__DIR__ . "/../lib/AttrFactureCPP.class.php");
-require_once __DIR__ . "/../lib/SynchronisationFacture.class.php";
-require_once __DIR__ . "/../../facture-formulaire-pivot/lib/HistoStatutCPP.class.php";
-
 class CppModifStatut extends ActionExecutor
 {
     private $statut_consomme_liste = '';

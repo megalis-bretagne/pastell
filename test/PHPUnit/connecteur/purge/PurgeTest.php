@@ -1,8 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../../../../connecteur/purge/Purge.class.php";
-
-
 class PurgeTest extends PastellTestCase
 {
     public function getPurgeDataProvider(): iterable

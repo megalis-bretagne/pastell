@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../../../../../connecteur-type/glaneur/lib/GlaneurDocumentCreator.class.php";
-
 class GlaneurDocumentCreatorTest extends PastellTestCase
 {
     private const HELIOS_AUTOMATIQUE = 'helios-automatique';

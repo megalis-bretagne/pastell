@@ -2,8 +2,6 @@
 
 use Monolog\Logger;
 
-require_once __DIR__ . "/../../../../../connecteur/cpp/lib/CPPWrapper.class.php";
-
 class CPPWrapperTest extends ExtensionCppTestCase
 {
     private const MEMORY_KEY = "pastell_token_piste_61cde1ef-41ab-441c-b23f-95991f9d919g";

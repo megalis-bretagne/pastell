@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../../pastell-core/FileToSign.php";
-
 class IParapheur extends SignatureConnecteur
 {
     public const IPARAPHEUR_NB_JOUR_MAX_DEFAULT = SignatureConnecteur::PARAPHEUR_NB_JOUR_MAX_DEFAULT;

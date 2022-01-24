@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../../../connecteur/mailsec/MailSec.class.php";
-
 class MailSecDestinataireControlerTest extends ControlerTestCase
 {
     private const FLUX_MAILSEC_BIDIR = "mailsec-bidir";

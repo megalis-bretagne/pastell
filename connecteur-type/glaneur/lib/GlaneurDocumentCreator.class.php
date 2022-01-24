@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . "/GlaneurDocumentInfo.class.php";
-
 class GlaneurDocumentCreator
 {
     private $document;

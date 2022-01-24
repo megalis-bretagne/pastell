@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . "/GlaneurLocalMock.class.php";
-
 class GlaneurConnecteurTest extends PastellTestCase
 {
     /** @var  TmpFolder */

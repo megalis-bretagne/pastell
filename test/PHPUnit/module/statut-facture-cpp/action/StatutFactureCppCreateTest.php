@@ -1,8 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../../../../../connecteur-type/PortailFactureConnecteur.class.php";
-require_once __DIR__ . "/../../../../../connecteur/cpp/CPP.class.php";
-
 class StatutFactureCppCreateTest extends ExtensionCppTestCase
 {
     private const FLUX_STATUT_FACTURE_CPP = "statut-facture-cpp";

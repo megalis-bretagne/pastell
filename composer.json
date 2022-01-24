@@ -91,11 +91,27 @@
   "autoload": {
     "psr-4": {
       "Pastell\\": "src/"
-    }
+    },
+    "classmap": [
+      "action",
+      "api",
+      "connecteur",
+      "connecteur-type",
+      "controler",
+      "lib",
+      "model",
+      "module",
+      "pastell-core",
+      "type-dossier",
+      "visionneuse"
+    ]
   },
   "autoload-dev": {
     "psr-4": {
       "Pastell\\Tests\\": "tests/"
-    }
+    },
+    "classmap": [
+      "test"
+    ]
   }
 }

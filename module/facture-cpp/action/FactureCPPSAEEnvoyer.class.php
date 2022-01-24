@@ -1,9 +1,5 @@
 <?php
 
-require_once PASTELL_PATH . "/connecteur-type/SAE/SAEEnvoyer.class.php";
-require_once __DIR__ . "/../../../module/facture-formulaire-pivot/lib/FactureFichierPivot.class.php";
-require_once __DIR__ . "/../../../module/facture-cpp/lib/ExtraireDonneesPivot.class.php";
-
 class FactureCPPSAEEnvoyer extends SAEEnvoyer
 {
     /**

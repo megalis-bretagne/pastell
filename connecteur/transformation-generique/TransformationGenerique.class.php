@@ -4,8 +4,6 @@ use Pastell\Service\SimpleTwigRenderer;
 use Twig\Error\LoaderError;
 use Twig\Error\SyntaxError;
 
-require_once __DIR__ . "/lib/TransformationGeneriqueDefinition.class.php";
-
 class TransformationGenerique extends TransformationConnecteur
 {
     /**

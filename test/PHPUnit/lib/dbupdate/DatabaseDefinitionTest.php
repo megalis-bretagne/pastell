@@ -1,7 +1,5 @@
 <?php
 
-require_once(PASTELL_PATH . "/lib/dbupdate/DatabaseDefinition.class.php");
-
 class DatabaseDefinitionTest extends PastellTestCase
 {
     public function testGetDefinition()

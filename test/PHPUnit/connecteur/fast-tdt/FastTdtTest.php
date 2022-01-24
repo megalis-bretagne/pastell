@@ -2,9 +2,6 @@
 
 use Sabre\HTTP\ClientHttpException;
 
-require_once __DIR__ . "/../../../../connecteur/fast-tdt/FastTdt.class.php";
-require_once __DIR__ . "/../../../../connecteur/fast-tdt/FastTdtException.class.php";
-
 class FastTdtTest extends PastellTestCase
 {
     /** @var FastTdt */

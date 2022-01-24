@@ -1,8 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../lib/PieceMarcheParEtapeData.class.php";
-require_once __DIR__ . "/../lib/PieceMarcheParEtapeCreationPiece.class.php";
-
 class PieceMarcheParEtapeCreerEnvoyerPieces extends ActionExecutor
 {
     public function go()

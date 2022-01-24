@@ -1,7 +1,5 @@
 <?php
 
-require_once(__DIR__ . "/lib/PESAllerFile.class.php");
-
 class TdTExtractionHelios extends ConnecteurTypeActionExecutor
 {
     /**

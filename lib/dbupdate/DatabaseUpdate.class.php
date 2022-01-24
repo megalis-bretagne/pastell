@@ -1,8 +1,5 @@
 <?php
 
-require_once 'DatabaseDiff.class.php';
-require_once 'DatabaseDefinition.class.php';
-
 class DatabaseUpdate
 {
     private $fileContent;

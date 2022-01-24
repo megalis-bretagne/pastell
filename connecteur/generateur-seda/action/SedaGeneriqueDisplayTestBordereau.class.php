@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../lib/FluxDataTestSedaGenerique.class.php";
-
 class SedaGeneriqueDisplayTestBordereau extends ActionExecutor
 {
     /**

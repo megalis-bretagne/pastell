@@ -1,8 +1,5 @@
 <?php
 
-require_once(PASTELL_PATH . "/action/CommonExtractionAction.class.php");
-require_once __DIR__ . "/../lib/PieceMarcheParEtapeFichierArchiveExtraire.class.php";
-
 class PieceMarcheParEtapeExtraire extends CommonExtractionAction
 {
     /**

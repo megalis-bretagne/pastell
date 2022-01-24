@@ -1,9 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../../../../connecteur-type/PortailFactureConnecteur.class.php";
-require_once __DIR__ . "/../../../../connecteur/cpp/CPP.class.php";
-require_once __DIR__ . "/../../../../connecteur/cpp/action/CPPImporterFacture.class.php";
-
 use Pastell\Service\ChorusPro\ChorusProImportCreationService;
 use Pastell\Service\ChorusPro\ChorusProImportUtilService;
 

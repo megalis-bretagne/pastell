@@ -1,7 +1,5 @@
 <?php
 
-require_once PASTELL_PATH . DIRECTORY_SEPARATOR . 'pastell-core' . DIRECTORY_SEPARATOR . 'FileToSign.php';
-
 class SignatureEnvoie extends ConnecteurTypeActionExecutor
 {
     /**

@@ -1,8 +1,5 @@
 <?php
 
-require_once __DIR__ . "/lib/ActesTypePJData.class.php";
-require_once __DIR__ . "/lib/ActesTypePJ.class.php";
-
 class TdtChoiceTypologieActes extends ConnecteurTypeChoiceActionExecutor
 {
     /**

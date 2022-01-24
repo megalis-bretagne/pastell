@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . DIRECTORY_SEPARATOR . 'AnnotationReturn.class.php';
-
 class AnnotationWrapper
 {
     public const SHA256_URI = "http://www.w3.org/2001/04/xmlenc#sha256";

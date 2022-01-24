@@ -1,7 +1,5 @@
 <?php
 
-require_once(__DIR__ . "/TdtConnecteur.class.php");
-
 class TdtAdapter extends TdtConnecteur
 {
     public function setConnecteurConfig(DonneesFormulaire $donnesFormulaire)

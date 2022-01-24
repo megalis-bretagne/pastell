@@ -1,7 +1,5 @@
 <?php
 
-require_once(__DIR__ . '/../../../../connecteur/depot-local/DepotLocal.class.php');
-
 class DepotLocalTest extends PastellTestCase
 {
     /** @var TmpFolder */

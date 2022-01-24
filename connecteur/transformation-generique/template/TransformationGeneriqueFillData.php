@@ -1,6 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../TransformationGenerique.class.php";
 /**
  * @var $field
  * @var array $transformation_data

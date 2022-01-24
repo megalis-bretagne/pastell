@@ -1,9 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../../facture-cpp/lib/ExtraireDonneesPivot.class.php";
-require_once __DIR__ . "/../../facture-formulaire-pivot/lib/FactureFichierPivot.class.php";
-
-
 class ChorusProFournisseurSyncrhoniser extends ActionExecutor
 {
     /**
