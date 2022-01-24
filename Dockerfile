@@ -11,7 +11,7 @@ FROM ubuntu:18.04 as pastell_base
 
 ARG GITHUB_API_TOKEN
 EXPOSE 443 80
-VOLUME /data/workspace
+
 WORKDIR /var/www/pastell/
 ENV PATH="${PATH}:/var/www/pastell/vendor/bin/"
 
@@ -45,6 +45,5 @@ FROM pastell_base as pastell_dev
 
 COPY --from=pcov_ext /usr/lib/php/20170718/pcov.so /usr/lib/php/20170718/pcov.so
 RUN /bin/bash /var/www/pastell/ci-resources/install-dev-requirements.sh
-
 
 FROM pastell_base as pastell_prod

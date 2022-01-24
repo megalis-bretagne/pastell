@@ -1,8 +1,14 @@
 #! /bin/bash
 
 SITE_HOST_NAME=$1
+CREATED_FILE_PATH=$2
 
+
+if [ -z ${CREATED_FILE_PATH} ]
+then
 CREATED_FILE_PATH=/etc/apache2/ssl
+fi
+
 
 PRIVKEY_PATH=${CREATED_FILE_PATH}/privkey.pem
 CERTIFICATE_PATH=${CREATED_FILE_PATH}/fullchain.pem

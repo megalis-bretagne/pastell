@@ -68,11 +68,10 @@ class PastellBootstrap
      */
     private function installCertificate()
     {
-        if (file_exists("/etc/apache2/ssl/privkey.pem")) {
+        if (file_exists("/data/certificate/privkey.pem")) {
             $this->pastellLogger->info("Le certificat du site est déjà présent.");
             return;
         }
-
         $hostname = $this->getHostname();
 
         $letsencrypt_cert_path = "/etc/letsencrypt/live/$hostname";
@@ -80,14 +79,14 @@ class PastellBootstrap
         $cert_path  = "$letsencrypt_cert_path/fullchain.pem";
         if (file_exists($privkey_path)) {
             $this->pastellLogger->info("Certificat letsencrypt trouvé !");
-            symlink($privkey_path, "/etc/apache2/ssl/privkey.pem");
-            symlink($cert_path, "/etc/apache2/ssl/fullchain.pem");
+            symlink($privkey_path, "/data/certificate/privkey.pem");
+            symlink($cert_path, "/data/certificate/fullchain.pem");
             return;
         }
 
         $script = __DIR__ . "/../script/plateform-install/generate-key-pair.sh";
 
-        exec("$script $hostname", $output, $return_var);
+        exec("$script $hostname /data/certificate", $output, $return_var);
         $this->pastellLogger->info(implode("\n", $output));
         if ($return_var != 0) {
             throw new UnrecoverableException("Impossible de générer ou de trouver le certificat du site !");

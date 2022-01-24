@@ -10,57 +10,48 @@
 
 Pastell est une solution libre et sécurisée, développée pour permettre le traitement sécurisé, automatisé et tracé de l'ensemble des process dématérialisés.
 
-## Configuration du Docker
+# TL;DR
 
-Le docker est basé sur [ubuuntu:18.04](https://hub.docker.com/_/ubuntu/).
+Il est nécessaire d'avoir docker et docker-compose sur l'environnement de développement
 
-Lors du démarrage, le Docker :
+```bash
+make install
+make start
+```
+
+Sur `https://localhost:8443/` il est possible de se connecter avec le login `admin` et le mot de passe `admin`
+
+
+# Utilisation avec docker-compose
+
+Le conteneur Pastell est basé sur [ubuntu:18.04](https://hub.docker.com/_/ubuntu/).
+
+Lors du démarrage, le conteneur :
 - crée ou met à jour la base de données ;
 - crée un utilisateur admin si celui-ci n'existe pas ; 
 - lance le démon Pastell.
  
-### Variables d'environnement
+### Variables d'environnement, introduites dans le docker-compose
 
-| Variable d'environnement | Signification | Valeur par défaut |
-|----| ---- | ---- |
-| PASTELL_SITE_BASE | URL de base d'accès au site | http://localhost/ |
-| MYSQL_USER | Login de l'utilisateur ayant accès à la base Pastell | user |
-| MYSQL_PASSWORD | Mot de passe de cet utilisateur | user |
-| MYSQL_HOST | Hôte de la base de données | localhost
-| MYSQL_PORT | Port de connexion | 3306 |
-| MYSQL_DATABASE | Nom de la base de données | pastell |
-| REDIS_SERVER | Hote du serveur Redis | (vide) |
-| REDIS_PORT | Port du serveur Redis | 6379 |
-| PASTELL_ADMIN_LOGIN | Login de l'administrateur | admin |
-| PASTELL_ADMIN_PASSWORD | Mot de passe de l'administrateur | admin |
-| PASTELL_ADMIN_EMAIL | Email de l'administrateur | noreply@libriciel.coop |
-| AUTHENTICATION_WITH_CLIENT_CERTIFICATE | Permettre la connexion par certificat (chaîne vide pour non, chaîne non-vide pour oui) | chaîne vide |
+| Variable d'environnement | Signification                                                                          | Valeur par défaut                                    |
+|----|----------------------------------------------------------------------------------------|------------------------------------------------------|
+| PASTELL_SITE_BASE | URL de base d'accès au site                                                            | http://localhost:8443/                               |
+| MYSQL_USER | Login de l'utilisateur ayant accès à la base Pastell                                   | user                                                 |
+| MYSQL_PASSWORD | Mot de passe de cet utilisateur                                                        | user                                                 |
+| MYSQL_HOST | Hôte de la base de données                                                             | localhost                                            
+| MYSQL_PORT | Port de connexion                                                                      | 3306                                                 |
+| MYSQL_DATABASE | Nom de la base de données                                                              | pastell                                              |
+| REDIS_SERVER | Hôte du serveur Redis                                                                  | (vide)                                               |
+| REDIS_PORT | Port du serveur Redis                                                                  | 6379                                                 |
+| PASTELL_ADMIN_LOGIN | Login de l'administrateur                                                              | admin                                                |
+| PASTELL_ADMIN_PASSWORD | Mot de passe de l'administrateur                                                       | admin                                                |
+| PASTELL_ADMIN_EMAIL | Email de l'administrateur                                                              | noreply@libriciel.coop                               |
+| AUTHENTICATION_WITH_CLIENT_CERTIFICATE | Permettre la connexion par certificat (chaîne vide pour non, chaîne non-vide pour oui) | chaîne vide                                          |
+| PASTELL_EXTENSION_PATH | Chemin vers les extensions Pastell                                                     | `..` (répertoire qui contient le répertoire pastell) |
+| WORKSPACE_VOLUME | Chemin vers le workspace Pastell                                                       | création du volume nommé app_workspace               |
+| PASTELL_SSL_CERTIFICAT | Chemin vers les certificats (site web, `validca`, ...)                                   | création du volume nommé app_certificate             |
+| PASTELL_SESSION | Chemin vers les sessions PHP                                                           | création du volume nommé app_session                 |
 
-
-Volume : 
-
-- /data/workspace : Répertoire de travail de Pastell
-- /data/extensions: Répertoire des extensions Pastell
-- /var/lib/php/session/ : Répertoire des sessions PHP (celles-ci ne sont pas nettoyer automatiquement)
-
-
-## Utilisation via docker-compose
-
-Mettre dans un fichier .env les variables du Docker et les variables suivantes :
-
-| Variable d'environnement | Signification | Valeur par défaut |
-|----| ---- | ---- |
-| MYSQL_ROOT_PASSWORD | Mot de passe root de la base de données |
-| WORKSPACE_VOLUME | Emplacement pour le répertoire de travail Pastell (workspace) |
-| MYSQL_DATADIR | Emplacement de la bases MySQL |
-| PASTELL_EXTENSION_PATH | Emplacement des extensions Pastell|
-
-Démarrage : 
-```
-docker-compose -f docker-compose.yml up -d
-```
-
-Accès : http://localhost/ TODO : l'accès doit être relatif au PASTELL_SITE_BASE ...
 
 ## Utilisation de l'environnement de développement et de test via docker-compose
 
@@ -82,18 +73,18 @@ docker-compose up -d
 
 - Accès au site : http://localhost:8000
 - Accès à phpMyAdmin : http://localhost:8001 
-- Accès au site de test (pour codeception): http://localhost:8003
+- Accès au site de test (pour codeception) : http://localhost:8003
 - Accès à la base de données : mysql -u user -p pastell -h localhost -P8306
 
 ## Utilisation via PHPStorm
 
-PHPStorm n'utilise pas docker-compose et écrase l'entrypoint lors du lancement de PHPUnit, 
-il convient donc de spécifier les variables d'environnements directement dans la confiuguration du lanceur PHPUnit.
+PHPStorm n'utilise pas docker-compose et écrase la commande `entrypoint` lors du lancement de PHPUnit, 
+il convient donc de spécifier les variables d'environnements directement dans la configuration du lanceur PHPUnit.
 
 
 ## Utilisation via gitlab-ci
 
-Gitlab-ci utilise l'entrypoint mais surcharge la commande.
+Gitlab-ci utilise la commande `entrypoint` mais surcharge la commande.
 
 ## Démarrage des services annexes
 

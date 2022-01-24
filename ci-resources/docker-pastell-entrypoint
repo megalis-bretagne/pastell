@@ -24,26 +24,25 @@ fi
 
 # Certbot
 if [ "$LETSENCRYPT_DOMAIN" ] ; then
-    if [ -f "/etc/apache2/ssl/fullchain.pem" ] ; then
+    if [ -f "/data/certificate/fullchain.pem" ] ; then
             certbot renew
     else
         certbot --standalone --noninteractive --agree-to --preferred-challenges http -d ${LETSENCRYPT_DOMAIN} -m ${LETSENCRYPT_EMAIL} certonly
-        ln -s /etc/letsencrypt/live/${LETSENCRYPT_DOMAIN}/fullchain.pem /etc/apache2/ssl/
-        ln -s /etc/letsencrypt/live/${LETSENCRYPT_DOMAIN}/privkey.pem /etc/apache2/ssl/
+        ln -s /etc/letsencrypt/live/${LETSENCRYPT_DOMAIN}/fullchain.pem /data/certificate/
+        ln -s /etc/letsencrypt/live/${LETSENCRYPT_DOMAIN}/privkey.pem /data/certificate/
     fi
 
 fi
 
 if [ -z "$DONT_RETRIEVE_VALIDCA" ] ; then
-  if [ ! -d /etc/apache2/ssl/validca ] ; then
+  if [ ! -d /data/certificate/validca ] ; then
       echo "Récupération des CRL"
-      curl -s https://validca.libriciel.fr/retrieve-validca.sh | bash -s /etc/apache2/ssl
+      curl -s https://validca.libriciel.fr/retrieve-validca.sh | bash -s /data/certificate
   fi
 fi
 
 if [ -z "$DONT_INIT_DATABASE" ] ; then
-  php /var/www/pastell/ci-resources/init-docker.php
-
+  su -c "php /var/www/pastell/ci-resources/init-docker.php" www-data
 fi
 
 exec "$@"

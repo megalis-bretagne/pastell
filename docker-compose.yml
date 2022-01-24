@@ -2,51 +2,80 @@ version: '3.7'
 
 services:
     web:
+        build:
+            context: .
+            target: pastell_dev
+            args:
+                GITHUB_API_TOKEN: ${GITHUB_API_TOKEN:-}
         networks:
             - internal_services
             - default
         links:
             - db
             - redis
-        env_file:
-            - .env
         volumes:
-            - ${WORKSPACE_VOLUME}:/data/workspace
-            - ${LOG_VOLUME}:/data/log
-            - ${PASTELL_EXTENSION_PATH}:/data/extensions/
-            - ${PASTELL_SESSION}:/var/lib/php/session
-            - ${PASTELL_SSL_CERTIFICAT}:/etc/apache2/ssl/
-            - ${PASTELL_GLANEUR}:/data/glaneur/
+            - .:/var/www/pastell:cached
+            - ${PASTELL_EXTENSION_PATH:-../}:/data/extensions/
+            - ${WORKSPACE_VOLUME:-app_workspace}:/data/workspace
+            - ${PASTELL_SSL_CERTIFICAT:-app_certificate}:/data/certificate
+            - ${PASTELL_SESSION:-app_session}:/var/lib/php/session
         environment:
             REDIS_SERVER: redis
             REDIS_PORT: 6379
-            SMTP_SERVER: ${SMTP_SERVER}
-            SMTP_PORT: ${SMTP_PORT}
-            PLATEFORME_MAIL: ${PLATEFORME_MAIL}
-            WEBSEC_BASE: ${WEBSEC_BASE}
+            SMTP_SERVER: ${SMTP_SERVER:-}
+            SMTP_PORT: ${SMTP_PORT:-25}
+            PLATEFORME_MAIL: ${PLATEFORME_MAIL:-noreply@pastell}
+            WEBSEC_BASE: ${WEBSEC_BASE:-https://localhost:8443}
             AUTHENTICATION_WITH_CLIENT_CERTIFICATE: ${AUTHENTICATION_WITH_CLIENT_CERTIFICATE:-}
             PASTELL_ADMIN_LOGIN: ${PASTELL_ADMIN_LOGIN:-admin}
             PASTELL_ADMIN_PASSWORD: ${PASTELL_ADMIN_PASSWORD:-admin}
             PASTELL_ADMIN_EMAIL: ${PASTELL_ADMIN_EMAIL:-noreply@noreply.com}
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-123456}
+            MYSQL_USER: ${MYSQL_USER:-user}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD:-user}
+            MYSQL_DATABASE: ${MYSQL_DATABASE:-pastell}
+            MYSQL_HOST: db
+            PASTELL_SITE_BASE: ${PASTELL_SITE_BASE:-https://localhost:8443}
+            MYSQL_HOST_TEST: ${MYSQL_HOST_TEST:-db_test}
 
+        ports:
+            - "${WEB_HTTP_PORT:-8000}:80"
+            - "${WEB_HTTPS_PORT:-8443}:443"
     db:
         image: mysql:5.7
         command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-
-        env_file:
-            - .env
         environment:
-          MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-          MYSQL_USER: ${MYSQL_USER}
-          MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-          MYSQL_DATABASE: ${MYSQL_DATABASE}
+          MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-123456}
+          MYSQL_USER: ${MYSQL_USER:-user}
+          MYSQL_PASSWORD: ${MYSQL_PASSWORD:-user}
+          MYSQL_DATABASE: ${MYSQL_DATABASE:-pastell}
         volumes:
-            - ${MYSQL_DATADIR}:/var/lib/mysql/
+            - ${MYSQL_DATADIR_TEST:-db_datadir}:/var/lib/mysql/
 
     redis:
         image: redis
+
+    db_test:
+        image: mysql:5.7
+
+        environment:
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-123456}
+            MYSQL_USER: ${MYSQL_USER_TEST:-user}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD_TEST:-user}
+            MYSQL_DATABASE: ${MYSQL_DATABASE_TEST:-pastell_test}
+        volumes:
+            - ${MYSQL_DATADIR_TEST:-db_datadir_test}:/var/lib/mysql/
+        ports:
+            - "${DATABASE_TEST_PORT:-13306}:3306"
 
 networks:
     internal_services:
         external:
             name: internal_services
+
+volumes:
+    db_datadir:
+    app_workspace:
+    app_certificate:
+    app_session:
+    db_datadir_test:

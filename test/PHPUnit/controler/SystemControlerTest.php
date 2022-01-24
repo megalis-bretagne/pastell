@@ -22,6 +22,11 @@ class SystemControlerTest extends ControlerTestCase
 
     public function testIndex()
     {
+        $this->getObjectInstancier()->setInstance(
+            RedisWrapper::class,
+            $this->createMock(RedisWrapper::class)
+        );
+
         $this->expectOutputRegex("#Test du système#");
         $this->systemControler->indexAction();
     }
