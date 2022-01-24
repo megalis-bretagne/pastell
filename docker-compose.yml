@@ -50,7 +50,7 @@ services:
           MYSQL_PASSWORD: ${MYSQL_PASSWORD:-user}
           MYSQL_DATABASE: ${MYSQL_DATABASE:-pastell}
         volumes:
-            - ${MYSQL_DATADIR_TEST:-db_datadir}:/var/lib/mysql/
+            - ${MYSQL_DATADIR:-db_datadir}:/var/lib/mysql/
 
     redis:
         image: redis
