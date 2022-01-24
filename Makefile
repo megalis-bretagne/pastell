@@ -2,17 +2,17 @@ DOCKER=docker
 PASTELL_PATH=/var/www/pastell
 EXEC_NODE=$(DOCKER) run --rm --volume ${PWD}:$(PASTELL_PATH) -it node:14-slim
 EXEC_COMPOSER=$(DOCKER) run --rm --volume ${PWD}:/app --volume ${HOME}/.composer:/tmp -it composer:2
-DOCKER_COMPOSE=docker-compose
-DOCKER_COMPOSE_FOR_ADDITIONAL_SERVICES=ci-resources/production/docker-compose.yml
 MAKE_MODULE=$(DOCKER_COMPOSE_EXEC) php ./bin/console app:studio:make-module
-
+DOCKER_COMPOSE=docker-compose -f docker-compose.yml -f docker-compose.dev.yml
 
 .DEFAULT_GOAL := help
 .PHONY: help
 
+
+
 ifneq ($(SKIP_DOCKER),true)
     DOCKER_COMPOSE_EXEC=$(DOCKER_COMPOSE) exec web
-    DOCKER_COMPOSE_UP=$(DOCKER_COMPOSE) up -d
+    DOCKER_COMPOSE_UP=$(DOCKER_COMPOSE)  up -d
 else
 	DOCKER_COMPOSE_EXEC=
 	DOCKER_COMPOSE_UP=
@@ -50,14 +50,16 @@ phpunit: docker-compose-up ## Run unit test through docker-compose
 coverage: docker-compose-up ## Run unit test through docker-compsose with coverage
 	$(DOCKER_COMPOSE_EXEC) composer test-cover
 
-codeception: docker-compose-up ## Run acceptance tests
-	$(DOCKER_COMPOSE_EXEC) composer codecept
+codeception:  ## Run acceptance tests
+	$(DOCKER_COMPOSE) -f docker-compose.codeception.yml up -d
+	$(DOCKER_COMPOSE) -f docker-compose.codeception.yml exec web composer codecept
+	$(DOCKER_COMPOSE_UP)
 
-start:  ## Start all services (seda-generator, cloudooo, ..., and pastell stuff)
-	$(DOCKER_COMPOSE) -f $(DOCKER_COMPOSE_FOR_ADDITIONAL_SERVICES) up -d && $(DOCKER_COMPOSE) up -d
+start:  ## Start all services
+	$(DOCKER_COMPOSE) up -d --remove-orphans
 
-stop: ## Stop all services (pastell stuff and ... seda-generator, cloudooo, ...)
-	$(DOCKER_COMPOSE) down && $(DOCKER_COMPOSE) -f $(DOCKER_COMPOSE_FOR_ADDITIONAL_SERVICES) down
+stop: ## Stop all services
+	$(DOCKER_COMPOSE) down
 
 module-pack-urbanisme: docker-compose-up ## Run make-module pack_urbanisme
 	$(MAKE_MODULE) ./pack-json/pack-urbanisme/dossier-autorisation-urba-draft.json ./module/ --id dossier-autorisation-urbanisme --name "Archivage des dossiers d'autorisation d'urbanisme" --restriction_pack 'pack_urbanisme'
@@ -69,4 +71,3 @@ module-pack-gfc: docker-compose-up ## Run make-module pack_gfc
 	$(MAKE_MODULE) ./pack-json/pack-gfc/dossier-wgfc-destinataire.json ./module/ --id gfc-dossier-destinataire
 
 all-module: module-pack-gfc module-pack-urbanisme
-
