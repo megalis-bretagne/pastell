@@ -119,7 +119,7 @@ formulaire:
 action:
     test-cpp:
         name: Tester la connectivité
-        action-class: TestConnexion
+        action-class: CPPTestConnexion
         rule:
             droit_id_u: 'entite:edition'
 
