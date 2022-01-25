@@ -6,11 +6,13 @@ class SoapClientFactory
 {
     private $http_proxy_url;
     private $no_proxy;
+    private $proxyNeeded;
 
     public function __construct(string $http_proxy_url = "", string $no_proxy = "")
     {
         $this->http_proxy_url = $http_proxy_url;
         $this->no_proxy = $no_proxy;
+        $this->proxyNeeded = new ProxyNeeded($http_proxy_url, $no_proxy);
     }
 
     /**
@@ -20,9 +22,9 @@ class SoapClientFactory
      * @return NotBuggySoapClient
      * @throws SoapFault
      */
-    public function getInstance($wsdl, array $options = array(), $is_jax_ws = false)
+    public function getInstance($wsdl, array $options = array(), bool $is_jax_ws = false): NotBuggySoapClient
     {
-        if ($this->http_proxy_url !== "") {
+        if ($this->http_proxy_url !== "" && $this->proxyNeeded->isNeeded($wsdl)) {
             // Needed to retrieve wsdl and w3c stuff or in non curl mode
             $url_part = parse_url($this->http_proxy_url);
             $options['proxy_host'] = $url_part['host'];
