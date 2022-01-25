@@ -1,0 +1,69 @@
+version: '3.7'
+
+services:
+  web:
+    image: pastell-local-dev
+    build:
+      context: .
+      target: pastell_dev
+      args:
+        GITHUB_API_TOKEN: ${GITHUB_API_TOKEN:-}
+    volumes:
+      - .:/var/www/pastell:cached
+
+  db:
+    volumes:
+      - ./ci-resources/mysql-dev/:/etc/mysql/conf.d/
+    ports:
+      - "${DATABASE_PORT:-8306}:3306"
+
+  db_test:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-123456}
+      MYSQL_USER: ${MYSQL_USER_TEST:-user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD_TEST:-user}
+      MYSQL_DATABASE: ${MYSQL_DATABASE_TEST:-pastell_test}
+    volumes:
+      - ${MYSQL_DATADIR_TEST:-db_datadir_test}:/var/lib/mysql/
+    ports:
+      - "${DATABASE_TEST_PORT:-13306}:3306"
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - db:db
+    ports:
+      - "${PHPMYADMIN_WEB_PORT:-8001}:80"
+
+  phpmyadmin_test:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - db_test:db_test
+    ports:
+      - "${PHPMYADMIN_TEST_PORT:-8004}:80"
+
+  php-redis-admin:
+    image: faktiva/php-redis-admin
+    environment:
+      - PHPREDMIN_DATABASE_REDIS_0_HOST=redis
+    ports:
+      - "${PHP_REDIS_PORT:-8005}:80"
+    depends_on:
+      - redis
+
+  glaneur_sftp:
+    image: atmoz/sftp
+    volumes:
+      - ${PASTELL_GLANEUR:-pastell_glaneur}:/home/${SFTP_USER:-ftp}
+    ports:
+      - "${SFTP_PORT:-2222}:22"
+    command: ${SFTP_USER:-ftp}:${SFTP_PASSWORD:-ftp}:33
+
+  maildev:
+    image: maildev/maildev
+    ports:
+      - 1080:80
+
+volumes:
+  pastell_glaneur:

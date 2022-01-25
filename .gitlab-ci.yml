@@ -127,8 +127,7 @@ deploy_master:
         - ssh-add <(echo "$SSH_PRIVATE_KEY")
         - mkdir -p ~/.ssh
         - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-        - scp ./docker-compose.master.yml gitlab@pastell.master.libriciel.fr:/data/docker-file/docker-compose.yml
-        - scp ./ci-resources/production/docker-compose.yml gitlab@pastell.master.libriciel.fr:/data/docker-file/docker-compose.override.yml
+        - scp ./docker-compose.yml gitlab@pastell.master.libriciel.fr:/data/docker-file/docker-compose.yml
         - echo "$MASTER_ENV_FILE_CONTENT" > /tmp/.env
         - scp /tmp/.env gitlab@pastell.master.libriciel.fr:/data/docker-file/
         - ssh -tt gitlab@pastell.master.libriciel.fr "docker login -u gitlab-ci-token -p '$CI_JOB_TOKEN' $CI_REGISTRY && cd /data/docker-file/ && docker-compose pull && docker-compose up -d"

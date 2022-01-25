@@ -2,26 +2,23 @@ version: '3.7'
 
 services:
     web:
+        image: registry.libriciel.fr:443/public/plateforme/pastell:canary
         build:
             context: .
-            target: pastell_dev
+            target: pastell_prod
             args:
                 GITHUB_API_TOKEN: ${GITHUB_API_TOKEN:-}
-        networks:
-            - internal_services
-            - default
         links:
             - db
             - redis
         volumes:
-            - .:/var/www/pastell:cached
             - ${PASTELL_EXTENSION_PATH:-../}:/data/extensions/
             - ${WORKSPACE_VOLUME:-app_workspace}:/data/workspace
             - ${PASTELL_SSL_CERTIFICAT:-app_certificate}:/data/certificate
             - ${PASTELL_SESSION:-app_session}:/var/lib/php/session
         environment:
-            REDIS_SERVER: redis
-            REDIS_PORT: 6379
+            REDIS_SERVER: ${REDIS_HOST:-redis}
+            REDIS_PORT: ${REDIS_PORT:-6379}
             SMTP_SERVER: ${SMTP_SERVER:-}
             SMTP_PORT: ${SMTP_PORT:-25}
             PLATEFORME_MAIL: ${PLATEFORME_MAIL:-noreply@pastell}
@@ -37,7 +34,8 @@ services:
             MYSQL_HOST: db
             PASTELL_SITE_BASE: ${PASTELL_SITE_BASE:-https://localhost:8443}
             MYSQL_HOST_TEST: ${MYSQL_HOST_TEST:-db_test}
-
+            LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL:-}
+            LETSENCRYPT_DOMAIN: ${LETSENCRYPT_DOMAIN:-}
         ports:
             - "${WEB_HTTP_PORT:-8000}:80"
             - "${WEB_HTTPS_PORT:-8443}:443"
@@ -53,25 +51,26 @@ services:
             - ${MYSQL_DATADIR:-db_datadir}:/var/lib/mysql/
 
     redis:
-        image: redis
+        image: redis:6.2.6
 
-    db_test:
-        image: mysql:5.7
-
-        environment:
-            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-123456}
-            MYSQL_USER: ${MYSQL_USER_TEST:-user}
-            MYSQL_PASSWORD: ${MYSQL_PASSWORD_TEST:-user}
-            MYSQL_DATABASE: ${MYSQL_DATABASE_TEST:-pastell_test}
+    seda-generator:
+        image: 'registry.libriciel.fr:443/public/plateforme/seda-generator:0.8.0'
+        restart: unless-stopped
         volumes:
-            - ${MYSQL_DATADIR_TEST:-db_datadir_test}:/var/lib/mysql/
-        ports:
-            - "${DATABASE_TEST_PORT:-13306}:3306"
+            - '/etc/localtime:/etc/localtime:ro'
 
-networks:
-    internal_services:
-        external:
-            name: internal_services
+    cloudooo:
+        restart: unless-stopped
+        image: 'registry.libriciel.fr/public/actes/cloudooo:7.1.0'
+
+    pes-viewer:
+        restart: unless-stopped
+        image: 'registry.libriciel.fr/public/signature/pes-viewer:1.4.0'
+
+    crypto:
+        restart: unless-stopped
+        image: 'registry.libriciel.fr:443/public/signature/crypto:2.3.1'
+
 
 volumes:
     db_datadir:
