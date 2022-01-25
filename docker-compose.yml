@@ -54,24 +54,20 @@ services:
         image: redis:6.2.6
 
     seda-generator:
-        container_name: seda-generator
         image: 'registry.libriciel.fr:443/public/plateforme/seda-generator:0.8.0'
-        restart: always
+        restart: unless-stopped
         volumes:
             - '/etc/localtime:/etc/localtime:ro'
 
     cloudooo:
-        container_name: cloudooo
         restart: unless-stopped
         image: 'registry.libriciel.fr/public/actes/cloudooo:7.1.0'
 
     pes-viewer:
-        container_name: pes-viewer
         restart: unless-stopped
         image: 'registry.libriciel.fr/public/signature/pes-viewer:1.4.0'
 
     crypto:
-        container_name: crypto
         restart: unless-stopped
         image: 'registry.libriciel.fr:443/public/signature/crypto:2.3.1'
 

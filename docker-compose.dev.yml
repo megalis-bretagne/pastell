@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   web:
-    image: registry.libriciel.fr:443/public/plateforme/pastell:canary-dev
+    image: pastell-local-dev
     build:
       context: .
       target: pastell_dev
