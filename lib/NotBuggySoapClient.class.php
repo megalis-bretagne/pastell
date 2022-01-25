@@ -183,15 +183,8 @@ class NotBuggySoapClient extends SoapClient
 
     private function isProxyNeedded(string $url): bool
     {
-        if (! $this->http_proxy_url) {
-            return false;
-        }
-        if (! $this->no_proxy) {
-            return true;
-        }
-        $no_proxy_array = explode(",", $this->no_proxy);
-        $host = parse_url($url, PHP_URL_HOST);
-        return (! in_array($host, $no_proxy_array));
+        $proxyNeeded = new ProxyNeeded($this->http_proxy_url, $this->no_proxy);
+        return $proxyNeeded->isNeeded($url);
     }
 
     private function addProxyHeader(string $url, $ch): void
