@@ -22,7 +22,7 @@ class SoapClientFactory
      * @return NotBuggySoapClient
      * @throws SoapFault
      */
-    public function getInstance($wsdl, array $options = array(), bool $is_jax_ws = false): NotBuggySoapClient
+    public function getInstance($wsdl, array $options = array(), bool $is_jax_ws = false)
     {
         if ($this->http_proxy_url !== "" && $this->proxyNeeded->isNeeded($wsdl)) {
             // Needed to retrieve wsdl and w3c stuff or in non curl mode
