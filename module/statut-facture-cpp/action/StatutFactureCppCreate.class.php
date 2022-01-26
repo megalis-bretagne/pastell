@@ -49,8 +49,7 @@ class StatutFactureCppCreate extends ActionExecutor
         if (!$supplierCppId) {
             $donneesFormulaire->setData('identifiant_cpp_fournisseur', "1-IDENTIFIANT NON TROUVE");
             throw new Exception(
-                "L'identifiant de structure $supplierIdentifier n'a pas été trouvé. 
-                L'identifiant CPP est invalide"
+                "L'identifiant de structure $supplierIdentifier n'a pas été trouvé. L'identifiant CPP est invalide"
             );
         }
 

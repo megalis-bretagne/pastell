@@ -314,8 +314,7 @@ class CPPWrapper
                 if (!isset($call_result['pageCourante']) || !isset($call_result['pages'])) {
                     $libelle = $call_result['libelle'] ?? '<non défini>';
                     throw new CPPWrapperExceptionRechercheFactureParRecipiendaire(
-                        "Réponse de rechercheFactureParRecipiendaire inattendue ! codeRetour=$codeRetour, 
-                        libelle=$libelle"
+                        "Réponse de rechercheFactureParRecipiendaire inattendue ! codeRetour=$codeRetour, libelle=$libelle"
                     );
                 }
             } while ($call_result['pageCourante'] < $call_result['pages']);
