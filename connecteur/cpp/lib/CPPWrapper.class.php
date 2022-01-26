@@ -74,14 +74,7 @@ class CPPWrapper
     {
         $this->cppWrapperConfig = $cppWrapperConfig;
 
-        if (!($cppWrapperConfig->url_piste_get_token || $cppWrapperConfig->url_piste_api)) {
-            $this->cppWrapperConfig->is_raccordement_certificat = true;
-            if (!($cppWrapperConfig->url)) {
-                throw new CPPException(
-                    "Il manque des éléments pour l'authentification, le connecteur global est-il bien associé ?"
-                );
-            }
-        } elseif (
+        if (
                 !($cppWrapperConfig->url_piste_get_token && $cppWrapperConfig->url_piste_api
                 && $cppWrapperConfig->client_id && $cppWrapperConfig->client_secret)
         ) {
@@ -111,28 +104,12 @@ class CPPWrapper
             throw new Exception("Erreur: Utilisateur sans Login/Mot de passe");
         }
 
-        /** @deprecated V3.1.0 - utiliser authentification PISTE */
-        if ($cppWrapperConfig->is_raccordement_certificat) {
-            $msg_call .= ' (certificat)';
-            $msg_response .= ' (certificat)';
-            $curlWrapper->dontVerifySSLCACert();
-            $curlWrapper->httpAuthentication($cppWrapperConfig->user_login, $cppWrapperConfig->user_password);
-            $curlWrapper->setClientCertificate(
-                $cppWrapperConfig->certificat_pem,
-                $cppWrapperConfig->certificat_prikey_pem,
-                $cppWrapperConfig->certificat_password
-            );
-            $curlWrapper->setServerCertificate($cppWrapperConfig->certificate_chain);
+        $curlWrapper->addHeader('Accept-Charset', 'utf-8');
+        $curlWrapper->addHeader('Authorization', $this->getToken());
+        $curlWrapper->addHeader('cpro-account', $cppWrapperConfig->cpro_account);
 
-            $url = trim($cppWrapperConfig->url, "/") . "/" . sprintf($fonction_cpp, '');
-        } else {
-            $curlWrapper->addHeader('Accept-Charset', 'utf-8');
-            $curlWrapper->addHeader('Authorization', $this->getToken());
-            $curlWrapper->addHeader('cpro-account', $cppWrapperConfig->cpro_account);
-
-            $url = trim($cppWrapperConfig->url_piste_api, "/") .
-                "/cpro/" . sprintf($fonction_cpp, self::PISTE_API_VERSION);
-        }
+        $url = trim($cppWrapperConfig->url_piste_api, "/") .
+            "/cpro/" . sprintf($fonction_cpp, self::PISTE_API_VERSION);
 
         if ($cppWrapperConfig->proxy) {
             $curlWrapper->setProperties(CURLOPT_PROXY, $cppWrapperConfig->proxy);
@@ -144,9 +121,9 @@ class CPPWrapper
 
         $this->logger->debug($msg_call, [$cppWrapperConfig->user_login,$url,$data_to_send]);
 
-        $begin_chrorus_call = microtime(true);
+        $begin_chorus_call = microtime(true);
         $result = $curlWrapper->get($url);
-        $end_chrorus_call = microtime(true);
+        $end_chorus_call = microtime(true);
 
         $this->logger->info(
             $msg_call,
@@ -154,7 +131,7 @@ class CPPWrapper
                 'user_login' => $cppWrapperConfig->user_login,
                 'url' => $url,
                 'http_response' => $curlWrapper->getLastHttpCode(),
-                'time' => round($end_chrorus_call - $begin_chrorus_call, 3)
+                'time' => round($end_chorus_call - $begin_chorus_call, 3)
                 ]
         );
 
@@ -265,25 +242,16 @@ class CPPWrapper
      */
     private function getCacheKey($client_id): string
     {
-        return "pastell_token_piste_{$client_id}";
-    }
-
-
-    /** @deprecated V3.1.0 - utiliser authentification PISTE
-     * @return bool
-     */
-    public function getIsRaccordementCertificat(): bool
-    {
-        return $this->cppWrapperConfig->is_raccordement_certificat;
+        return "pastell_token_piste_" . $client_id;
     }
 
     /**
      * @return bool
      * @throws Exception
      */
-    public function testConnexion()
+    public function testConnexion(): bool
     {
-        $this->call(self::RECUPERER_TAUXTVA, array());
+        $this->call(self::RECUPERER_TAUXTVA, []);
         return true;
     }
 
@@ -299,26 +267,24 @@ class CPPWrapper
         string $idFournisseur = "",
         string $periodeDateHeureEtatCourantDu = "",
         string $periodeDateHeureEtatCourantAu = ""
-    ) {
-        $result = array();
-        $result['listeFactures'] = array();
-        foreach (array('FACTURE', 'FACTURE_TRAVAUX') as $typeDemandePaiement) {
+    ): array {
+        $result = [];
+        $result['listeFactures'] = [];
+        foreach (['FACTURE', 'FACTURE_TRAVAUX'] as $typeDemandePaiement) {
             $num_page = 0;
             do {
                 $num_page++;
-                $data = array(
+                $data = [
                     'typeDemandePaiement' => $typeDemandePaiement,
-                    'paramRecherche' => array(
+                    'paramRecherche' => [
                         'nbResultatsParPage' => self::NB_FACTURE_PER_PAGE,
                         'pageResultatDemandee' => $num_page,
                         //A supprimer
                         'nbResultatsMaximum' => self::MAX_FACTURE_LIST
-                    )
-                );
+                    ]
+                ];
                 if (intval($idFournisseur)) {
-                    $data['listeFournisseurs'][0] = array(
-                        'idFournisseur' => intval($idFournisseur)
-                    );
+                    $data['listeFournisseurs'][0] = ['idFournisseur' => intval($idFournisseur)];
                 }
                 if (intval($this->cppWrapperConfig->identifiant_structure_cpp)) {
                     $data['idDestinataire'] = intval($this->cppWrapperConfig->identifiant_structure_cpp);
@@ -340,15 +306,16 @@ class CPPWrapper
                         $result['listeFactures'][] = $facture;
                     }
                 }
-                $codeRetour = isset($call_result['codeRetour']) ? $call_result['codeRetour'] : '<non défini>';
+                $codeRetour = $call_result['codeRetour'] ?? '<non défini>';
                 // 20000 : TRA_MSG_00.015 - La recherche n'a retourné aucun résultat
                 if ($codeRetour == 20000) {
                     break;
                 }
                 if (!isset($call_result['pageCourante']) || !isset($call_result['pages'])) {
-                    $libelle = isset($call_result['libelle']) ? $call_result['libelle'] : '<non défini>';
+                    $libelle = $call_result['libelle'] ?? '<non défini>';
                     throw new CPPWrapperExceptionRechercheFactureParRecipiendaire(
-                        "Réponse de rechercheFactureParRecipiendaire inattendue ! codeRetour=$codeRetour, libelle=$libelle"
+                        "Réponse de rechercheFactureParRecipiendaire inattendue ! codeRetour=$codeRetour, 
+                        libelle=$libelle"
                     );
                 }
             } while ($call_result['pageCourante'] < $call_result['pages']);
@@ -362,12 +329,12 @@ class CPPWrapper
      * @return array|mixed
      * @throws Exception
      */
-    public function consulterHistoriqueFacture($idFacture, $nbResultatsMaximum = 50)
+    public function consulterHistoriqueFacture($idFacture, int $nbResultatsMaximum = 50)
     {
-        $data = array(
+        $data = [
             'idFacture' => intval($idFacture),
             'nbResultatsMaximum' => intval($nbResultatsMaximum)
-        );
+        ];
         return $this->call(self::CONSULTER_HISTORIQUE_FACTURE, $data);
     }
 
@@ -379,10 +346,10 @@ class CPPWrapper
      */
     public function telechargerGroupeFacture($format, $idFacture)
     {
-        $data = array(
+        $data = [
             'format' => $format,
-            'listeFacture' => array(array('idFacture' => intval($idFacture)))
-        );
+            'listeFacture' => [['idFacture' => intval($idFacture)]]
+        ];
         $result = $this->call(self::TELECHARGER_GROUPE_FACTURE, $data);
         if (!array_key_exists('fichierResultat', $result)) {
             throw new Exception("Impossible de récupérer la facture");
@@ -398,14 +365,14 @@ class CPPWrapper
      * @return array|mixed
      * @throws Exception
      */
-    public function traiterFactureRecue($idFacture, $idNouveauStatut, $motif = "", $numeroMandat = "")
+    public function traiterFactureRecue($idFacture, $idNouveauStatut, string $motif = "", string $numeroMandat = "")
     {
-        $data = array(
+        $data = [
             'idFacture' => intval($idFacture),
             'nouveauStatut' => $idNouveauStatut,
             'motif' => $motif,
             'numeroDPMandat' => $numeroMandat
-        );
+        ];
         return $this->call(self::TRAITER_FACTURE_RECUE, $data);
     }
 
@@ -419,24 +386,24 @@ class CPPWrapper
     public function rechercheFactureTravaux(
         string $periodeDateHeureEtatCourantDu = "",
         string $periodeDateHeureEtatCourantAu = ""
-    ) {
-        $result = array();
-        $result['listeFactures'] = array();
+    ): array {
+        $result = [];
+        $result['listeFactures'] = [];
 
-        if (($this->cppWrapperConfig->is_raccordement_certificat) || (!$this->cppWrapperConfig->user_role)) {
+        if (!$this->cppWrapperConfig->user_role) {
             return $result;
         }
 
         $num_page = 0;
         do {
             $num_page++;
-            $data = array(
+            $data = [
                 'roleUtilisateur' => $this->cppWrapperConfig->user_role,
-                'rechercheFactureTravaux' => array(
+                'rechercheFactureTravaux' => [
                     'nbResultatsParPage' => self::NB_FACTURE_PER_PAGE,
                     'pageResultatDemandee' => $num_page,
-                )
-            );
+                ]
+            ];
 
             if (intval($this->cppWrapperConfig->identifiant_structure_cpp)) {
                 $data['idDestinataire'] = intval($this->cppWrapperConfig->identifiant_structure_cpp);
@@ -458,7 +425,7 @@ class CPPWrapper
                     $result['listeFactures'][] = $facture;
                 }
             }
-            $codeRetour = isset($call_result['codeRetour']) ? $call_result['codeRetour'] : '<non défini>';
+            $codeRetour = $call_result['codeRetour'] ?? '<non défini>';
             // 20007 : GFT_MSG_01.075 - La recherche n'a retourné aucun résultat
             if ($codeRetour == 20007) {
                 break;
@@ -467,7 +434,7 @@ class CPPWrapper
                 !isset($call_result['parametresRetour']['pageCourante'])
                 || !isset($call_result['parametresRetour']['pages'])
             ) {
-                $libelle = isset($call_result['libelle']) ? $call_result['libelle'] : '<non défini>';
+                $libelle = $call_result['libelle'] ?? '<non défini>';
                 throw new CPPWrapperExceptionRechercheFactureTravaux(
                     "Réponse de rechercheFactureTravaux inattendue ! codeRetour=$codeRetour, libelle=$libelle"
                 );
@@ -483,7 +450,7 @@ class CPPWrapper
      */
     public function recupererStructuresActivesPourDestinataire()
     {
-        return $this->call(self::RECUPERER_STRUCTURE_DESTINATAIRE, array());
+        return $this->call(self::RECUPERER_STRUCTURE_DESTINATAIRE, []);
     }
 
     /*Spec Chorus:
@@ -502,17 +469,15 @@ class CPPWrapper
      */
     public function getIdentifiantStructureCPPByIdentifiantStructure(
         $identifiant_structure,
-        $restreindre_structures = ""
+        string $restreindre_structures = ""
     ) {
         if (! $identifiant_structure) {
             return false;
         }
-        $data = array(
-            'structure' => array(
-                'identifiantStructure' => "$identifiant_structure"
-            ),
+        $data = [
+            'structure' => ['identifiantStructure' => "$identifiant_structure"],
             'restreindreStructuresPrivees' => $restreindre_structures,
-        );
+        ];
         $result = $this->call(self::RECHERCHER_STRUCTURE, $data);
         if (empty($result['listeStructures'][0]['idStructureCPP'])) {
             if (empty($result['listeStructures']['idStructureCPP'])) {
@@ -534,9 +499,7 @@ class CPPWrapper
                 "Impossible de récupérer la liste des services si l'identifiant structure CPP n'est pas renseigné"
             );
         }
-        $data = array(
-            "idStructure" => intval($this->cppWrapperConfig->identifiant_structure_cpp),
-        );
+        $data = ["idStructure" => intval($this->cppWrapperConfig->identifiant_structure_cpp)];
         return $this->call(self::RECHERCHER_SERVICE, $data);
     }
 
@@ -548,9 +511,7 @@ class CPPWrapper
      */
     public function getInfoByNumeroFluxDepot($numero_flux_depot)
     {
-        $data = array(
-            'numeroFluxDepot' => $numero_flux_depot
-        );
+        $data = ['numeroFluxDepot' => $numero_flux_depot];
 
         $result = $this->call(self::RECHERCHE_FACTURE_PAR_FOURNISSEUR, $data);
 
@@ -567,11 +528,7 @@ class CPPWrapper
      */
     public function consulterCompteRenduImport($numero_flux_depot)
     {
-        $data = array(
-            'numeroFluxDepot' => $numero_flux_depot
-        );
-
-        return $this->call(self::CONSULTER_CR_DETAILLE, $data);
+        return $this->call(self::CONSULTER_CR_DETAILLE, ['numeroFluxDepot' => $numero_flux_depot]);
     }
 
     /**
@@ -582,14 +539,10 @@ class CPPWrapper
      * @return int The CPP invoice id
      * @throws Exception when the invoice cannot be found on chorus
      */
-    public function getCppInvoiceId($supplierCppId, $invoiceNumber)
+    public function getCppInvoiceId(int $supplierCppId, string $invoiceNumber): int
     {
         $data = [
-            'listeFournisseurs' => [
-                [
-                    'idFournisseur' => $supplierCppId
-                ]
-            ],
+            'listeFournisseurs' => [['idFournisseur' => $supplierCppId]],
             'numeroFacture' => $invoiceNumber
         ];
         $result = $this->call(self::RECHERCHE_FACTURE_PAR_RECIPIENDAIRE, $data);

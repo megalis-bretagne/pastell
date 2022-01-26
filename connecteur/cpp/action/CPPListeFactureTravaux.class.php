@@ -5,7 +5,7 @@ class CPPListeFactureTravaux extends ActionExecutor
     /**
      * @return UTF8Encoder
      */
-    public function getUTF8Encoder()
+    public function getUTF8Encoder(): UTF8Encoder
     {
         return $this->objectInstancier->getInstance(UTF8Encoder::class);
     }
@@ -29,16 +29,14 @@ class CPPListeFactureTravaux extends ActionExecutor
      * @return bool
      * @throws Exception
      */
-    public function go()
+    public function go(): bool
     {
         /** @var CPP $cpp */
         $cpp = $this->getMyConnecteur();
-        if ($cpp->getIsRaccordementCertificat()) {
-            $this->setLastMessage("La récupération des factures de travaux nécessite un raccordement en mode Oauth PISTE");
-            return false;
-        }
         if (!$this->getConnecteurProperties()->get('user_role')) {
-            $this->setLastMessage("Il faut sélectionner le rôle de l'utilisateur pour la récupération des factures de travaux");
+            $this->setLastMessage(
+                "Il faut sélectionner le rôle de l'utilisateur pour la récupération des factures de travaux"
+            );
             return false;
         }
         $result = $this->metier();
@@ -46,8 +44,8 @@ class CPPListeFactureTravaux extends ActionExecutor
             $this->setLastMessage("La connexion cpp a échoué : " . $cpp->getLastError());
             return false;
         }
-        $this->setLastMessage("Liste des factures de travaux ayant changé de statut entre le " . $cpp->getDateDepuisLe() .
-            " et le " . $cpp->getDateJusquAu() . ": " . $result);
+        $this->setLastMessage("Liste des factures de travaux ayant changé de statut entre le " .
+            $cpp->getDateDepuisLe() . " et le " . $cpp->getDateJusquAu() . ": " . $result);
         return true;
     }
 }

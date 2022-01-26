@@ -10,9 +10,6 @@ class CPPWrapperTest extends ExtensionCppTestCase
     /** @var CPPWrapper */
     private $cppWrapper;
 
-    /** @var CPPWrapperConfig */
-    private $cppWrapperConfig;
-
     public function setUp()
     {
         parent::setUp();
@@ -39,8 +36,9 @@ class CPPWrapperTest extends ExtensionCppTestCase
         $cppWrapperConfig->client_id = "61cde1ef-41ab-441c-b23f-95991f9d919g";
         $cppWrapperConfig->client_secret = "bd307b18-298e-45a7-a4ef-9169200fad63";
         $cppWrapperConfig->url_piste_api = "https://sandbox-api.aife.economie.gouv.fr/";
-        $cppWrapperConfig->cpro_account = base64_encode($cppWrapperConfig->user_login . ":" . $cppWrapperConfig->user_password);
-
+        $cppWrapperConfig->cpro_account = base64_encode(
+            $cppWrapperConfig->user_login . ":" . $cppWrapperConfig->user_password
+        );
         return $cppWrapperConfig;
     }
 
@@ -62,29 +60,18 @@ class CPPWrapperTest extends ExtensionCppTestCase
     }
 
     /**
-     * @return array
-     */
-    public function getIsRaccordementCertificatProvider()
-    {
-        return [
-            'RaccordementCertificat' => [true],
-            'NotRaccordementCertificat' => [false],
-        ];
-    }
-
-    /**
-     * @param $is_raccordement_certificat
      * @throws Exception
-     * @dataProvider getIsRaccordementCertificatProvider
      */
-    public function testTestConnexion($is_raccordement_certificat)
+    public function testTestConnexion()
     {
         $returnData = [
             'codeRetour' => 0,
-            'libelle' => 'libelle',
-            'listeFactures' => [
+            'libelle' => 'TRA_MSG_00.000',
+            'listeTauxTva' => [
                 [
-                    'idFacture' => 1234
+                    "codeTauxTva" => "TVA1",
+                    "libelleTauxTva" => "Art 293B(FranchiseEnBase)",
+                    "valeurTauxTva" => 0
                 ]
             ]
         ];
@@ -100,10 +87,7 @@ class CPPWrapperTest extends ExtensionCppTestCase
         $curlWrapperFactory->expects($this->any())->method('getInstance')->willReturn($curlWrapper);
 
         $this->getObjectInstancier()->setInstance(CurlWrapperFactory::class, $curlWrapperFactory);
-
-        $this->cppWrapperConfig = $this->getDefaultWrapperConfig();
-        $this->cppWrapperConfig->is_raccordement_certificat = $is_raccordement_certificat;
-        $this->cppWrapper = $this->getCPPWrapper($this->cppWrapperConfig);
+        $this->cppWrapper = $this->getCPPWrapper();
 
         $this->assertTrue($this->cppWrapper->testConnexion());
     }
@@ -112,10 +96,8 @@ class CPPWrapperTest extends ExtensionCppTestCase
      * When successfully getting the cpp id of the invoice
      * @test
      * @throws Exception
-     * @param $is_raccordement_certificat
-     * @dataProvider getIsRaccordementCertificatProvider
      */
-    public function whenGettingTheInvoiceCppId($is_raccordement_certificat)
+    public function whenGettingTheInvoiceCppId()
     {
         $returnData = [
             'codeRetour' => 0,
@@ -136,10 +118,7 @@ class CPPWrapperTest extends ExtensionCppTestCase
         $curlWrapperFactory->expects($this->any())->method('getInstance')->willReturn($curlWrapper);
 
         $this->getObjectInstancier()->setInstance(CurlWrapperFactory::class, $curlWrapperFactory);
-
-        $this->cppWrapperConfig = $this->getDefaultWrapperConfig();
-        $this->cppWrapperConfig->is_raccordement_certificat = $is_raccordement_certificat;
-        $this->cppWrapper = $this->getCPPWrapper($this->cppWrapperConfig);
+        $this->cppWrapper = $this->getCPPWrapper();
 
         $this->assertEquals(1234, $this->cppWrapper->getCppInvoiceId(1, '1111'));
     }
@@ -148,10 +127,8 @@ class CPPWrapperTest extends ExtensionCppTestCase
      * When no invoice is returned by chorus
      * @test
      * @throws Exception
-     * @param $is_raccordement_certificat
-     * @dataProvider getIsRaccordementCertificatProvider
      */
-    public function whenNoInvoiceIsReturned($is_raccordement_certificat)
+    public function whenNoInvoiceIsReturned()
     {
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("Impossible de trouver la facture 1111");
@@ -171,10 +148,7 @@ class CPPWrapperTest extends ExtensionCppTestCase
         $curlWrapperFactory->expects($this->any())->method('getInstance')->willReturn($curlWrapper);
 
         $this->getObjectInstancier()->setInstance(CurlWrapperFactory::class, $curlWrapperFactory);
-
-        $this->cppWrapperConfig = $this->getDefaultWrapperConfig();
-        $this->cppWrapperConfig->is_raccordement_certificat = $is_raccordement_certificat;
-        $this->cppWrapper = $this->getCPPWrapper($this->cppWrapperConfig);
+        $this->cppWrapper = $this->getCPPWrapper();
 
         $this->cppWrapper->getCppInvoiceId(1, '1111');
     }
@@ -183,10 +157,8 @@ class CPPWrapperTest extends ExtensionCppTestCase
      * When multiple invoices are returned by chorus (unlikely to happen)
      * @test
      * @throws Exception
-     * @param $is_raccordement_certificat
-     * @dataProvider getIsRaccordementCertificatProvider
      */
-    public function whenMultipleInvoicesAreReturned($is_raccordement_certificat)
+    public function whenMultipleInvoicesAreReturned()
     {
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("Plusieurs factures ont été trouvé avec le numéro 1111");
@@ -212,20 +184,15 @@ class CPPWrapperTest extends ExtensionCppTestCase
         $curlWrapperFactory->expects($this->any())->method('getInstance')->willReturn($curlWrapper);
 
         $this->getObjectInstancier()->setInstance(CurlWrapperFactory::class, $curlWrapperFactory);
-
-        $this->cppWrapperConfig = $this->getDefaultWrapperConfig();
-        $this->cppWrapperConfig->is_raccordement_certificat = $is_raccordement_certificat;
-        $this->cppWrapper = $this->getCPPWrapper($this->cppWrapperConfig);
+        $this->cppWrapper = $this->getCPPWrapper();
 
         $this->cppWrapper->getCppInvoiceId(1, '1111');
     }
 
     /**
-     * @param $is_raccordement_certificat
      * @throws Exception
-     * @dataProvider getIsRaccordementCertificatProvider
      */
-    public function testGetIdentifiantStructureCPP($is_raccordement_certificat)
+    public function testGetIdentifiantStructureCPP()
     {
         $returnData = [
             'codeRetour' => 0,
@@ -249,20 +216,18 @@ class CPPWrapperTest extends ExtensionCppTestCase
         $curlWrapperFactory->expects($this->any())->method('getInstance')->willReturn($curlWrapper);
 
         $this->getObjectInstancier()->setInstance(CurlWrapperFactory::class, $curlWrapperFactory);
+        $this->cppWrapper = $this->getCPPWrapper();
 
-        $this->cppWrapperConfig = $this->getDefaultWrapperConfig();
-        $this->cppWrapperConfig->is_raccordement_certificat = $is_raccordement_certificat;
-        $this->cppWrapper = $this->getCPPWrapper($this->cppWrapperConfig);
-
-        $this->assertEquals(25783752, $this->cppWrapper->GetIdentifiantStructureCPPByIdentifiantStructure("00000000012887"));
+        $this->assertEquals(
+            25783752,
+            $this->cppWrapper->GetIdentifiantStructureCPPByIdentifiantStructure("00000000012887")
+        );
     }
 
     /**
-     * @param $is_raccordement_certificat
      * @throws Exception
-     * @dataProvider getIsRaccordementCertificatProvider
      */
-    public function testGetIdentifiantStructureCPPWhenFalse($is_raccordement_certificat)
+    public function testGetIdentifiantStructureCPPWhenFalse()
     {
 
         $curlWrapper = $this->getMockBuilder(CurlWrapper::class)->disableOriginalConstructor()->getMock();
@@ -275,10 +240,7 @@ class CPPWrapperTest extends ExtensionCppTestCase
         $curlWrapperFactory->expects($this->any())->method('getInstance')->willReturn($curlWrapper);
 
         $this->getObjectInstancier()->setInstance(CurlWrapperFactory::class, $curlWrapperFactory);
-
-        $this->cppWrapperConfig = $this->getDefaultWrapperConfig();
-        $this->cppWrapperConfig->is_raccordement_certificat = $is_raccordement_certificat;
-        $this->cppWrapper = $this->getCPPWrapper($this->cppWrapperConfig);
+        $this->cppWrapper = $this->getCPPWrapper();
 
         $this->assertFalse($this->cppWrapper->GetIdentifiantStructureCPPByIdentifiantStructure(""));
     }
@@ -317,24 +279,16 @@ class CPPWrapperTest extends ExtensionCppTestCase
     /**
      * @return array
      */
-    public function getRechercheFactureTravauxProvider()
+    public function getRechercheFactureTravauxProvider(): array
     {
         return [
             'FactureNotEmpty' =>
                 [
-                    false,
                     "MOA",
                     ["listeFactures" => [['idFactureTravaux' => 1234]]],
                 ],
-            'FactureEmpty_NotPiste' =>
-                [
-                    true,
-                    "MOA",
-                    ["listeFactures" => []],
-                ],
             'FactureEmpty_NoRole' =>
                 [
-                    false,
                     "",
                     ["listeFactures" => []],
                 ],
@@ -342,14 +296,13 @@ class CPPWrapperTest extends ExtensionCppTestCase
     }
 
     /**
-     * @param $is_raccordement_certificat
      * @param $user_role
      * @param $result_expected
      * @throws CPPException
      * @throws Exception
      * @dataProvider getRechercheFactureTravauxProvider
      */
-    public function testRechercheFactureTravaux($is_raccordement_certificat, $user_role, $result_expected)
+    public function testRechercheFactureTravaux($user_role, $result_expected)
     {
         $returnData = [
             'codeRetour' => 0,
@@ -378,10 +331,9 @@ class CPPWrapperTest extends ExtensionCppTestCase
 
         $this->getObjectInstancier()->setInstance(CurlWrapperFactory::class, $curlWrapperFactory);
 
-        $this->cppWrapperConfig = $this->getDefaultWrapperConfig();
-        $this->cppWrapperConfig->is_raccordement_certificat = $is_raccordement_certificat;
-        $this->cppWrapperConfig->user_role = $user_role;
-        $this->cppWrapper = $this->getCPPWrapper($this->cppWrapperConfig);
+        $cppWrapperConfig = $this->getDefaultWrapperConfig();
+        $cppWrapperConfig->user_role = $user_role;
+        $this->cppWrapper = $this->getCPPWrapper($cppWrapperConfig);
 
         $this->assertEquals($result_expected, $this->cppWrapper->rechercheFactureTravaux());
     }

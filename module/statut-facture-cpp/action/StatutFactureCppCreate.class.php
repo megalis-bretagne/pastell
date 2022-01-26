@@ -7,7 +7,7 @@ class StatutFactureCppCreate extends ActionExecutor
     /**
      * @throws Exception
      */
-    public function go()
+    public function go(): bool
     {
         $donneesFormulaire = $this->getDonneesFormulaire();
 
@@ -22,7 +22,8 @@ class StatutFactureCppCreate extends ActionExecutor
             $xsdValidator->schemaValidate($schemaPath, $filePath);
         } catch (Exception $e) {
             $errorMessage = "Le fichier CPPStatutPivot est incorrect: " . $e->getMessage();
-            $this->getActionCreator()->addAction($this->id_e, $this->id_u, 'create-statut-facture-cpp-error', $errorMessage);
+            $this->getActionCreator()
+                ->addAction($this->id_e, $this->id_u, 'create-statut-facture-cpp-error', $errorMessage);
             $this->notify('create-statut-facture-cpp-error', $this->type, $errorMessage);
             throw new Exception($errorMessage);
         }
@@ -32,7 +33,8 @@ class StatutFactureCppCreate extends ActionExecutor
 
         if (!$content->CPPFactureStatuts) {
             $errorMessage = "Le fichier CPPStatutPivot est incorrect : Il ne présente pas l'élément CPPFactureStatuts";
-            $this->getActionCreator()->addAction($this->id_e, $this->id_u, 'create-statut-facture-cpp-error', $errorMessage);
+            $this->getActionCreator()
+                ->addAction($this->id_e, $this->id_u, 'create-statut-facture-cpp-error', $errorMessage);
             $this->notify('create-statut-facture-cpp-error', $this->type, $errorMessage);
 
             throw new Exception($errorMessage);
@@ -42,11 +44,14 @@ class StatutFactureCppCreate extends ActionExecutor
 
         $donneesFormulaire->setData('fournisseur', $supplierIdentifier);
 
-        $supplierCppId = $portailFature->getIdentifiantStructureCPPByIdentifiantStructure($supplierIdentifier, false);
+        $supplierCppId = $portailFature->getIdentifiantStructureCPPByIdentifiantStructure($supplierIdentifier, "false");
 
         if (!$supplierCppId) {
             $donneesFormulaire->setData('identifiant_cpp_fournisseur', "1-IDENTIFIANT NON TROUVE");
-            throw new Exception("L'identifiant de structure $supplierIdentifier n'a pas été trouvé. L'identifiant CPP est invalide");
+            throw new Exception(
+                "L'identifiant de structure $supplierIdentifier n'a pas été trouvé. 
+                L'identifiant CPP est invalide"
+            );
         }
 
         $donneesFormulaire->setData('identifiant_cpp_fournisseur', $supplierCppId);
@@ -77,7 +82,7 @@ class StatutFactureCppCreate extends ActionExecutor
      * @return string
      * @throws Exception when the status id doesn't exist
      */
-    private function getStatusFromId($statusId)
+    private function getStatusFromId(string $statusId): string
     {
         $statusesList = [
             '01' => PortailFactureConnecteur::STATUT_DEPOSEE,

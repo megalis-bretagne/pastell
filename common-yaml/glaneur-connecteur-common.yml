@@ -29,7 +29,7 @@ formulaire:
 
     flux_name:
       name: Identifiant du type de dossier à alimenter
-      commantaire: Pris dans le manifest s'il existe
+      commentaire: Pris dans le manifest s'il existe
 
     file_preg_match:
       name: Expressions rationnelles pour associer les fichiers

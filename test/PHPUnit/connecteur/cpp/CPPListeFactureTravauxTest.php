@@ -5,12 +5,11 @@ class CPPListeFactureTravauxTest extends ExtensionCppTestCase
     /**
      * @return array
      */
-    public function getFactureTravauxProvider()
+    public function getFactureTravauxProvider(): array
     {
         return [
             'FactureWithPisteAndRole' =>
                 [
-                    false,
                     "MOA",
                     'Liste des factures de travaux ayant changé de statut entre le 2019-01-01 et le ' . date('Y-m-d') . ': ' .
                         '{"listeFactures":[{"identifiantDestinataire":"00000000013456","identifiantFournisseur":"00000000000727","dateDepot":"2019-07-11",' .
@@ -21,15 +20,8 @@ class CPPListeFactureTravauxTest extends ExtensionCppTestCase
                         '"typeIdentifiantFournisseur":"SIRET"}]}',
 
                 ],
-            'FactureWithoutPiste' =>
-                [
-                    true,
-                    "MOA",
-                    "La récupération des factures de travaux nécessite un raccordement en mode Oauth PISTE",
-                ],
             'FactureWithoutRole' =>
                 [
-                    false,
                     "",
                     "Il faut sélectionner le rôle de l'utilisateur pour la récupération des factures de travaux",
                 ],
@@ -38,12 +30,12 @@ class CPPListeFactureTravauxTest extends ExtensionCppTestCase
 
 
     /**
-     * @param $is_raccordement_certificat
      * @param $user_role
      * @param $last_message_expected
      * @dataProvider getFactureTravauxProvider
+     * @throws Exception
      */
-    public function testCPPListeFactureTravaux($is_raccordement_certificat, $user_role, $last_message_expected)
+    public function testCPPListeFactureTravaux($user_role, $last_message_expected)
     {
         $cppWrapper = $this->getMockBuilder(CPPWrapper::class)
             ->disableOriginalConstructor()
@@ -51,9 +43,6 @@ class CPPListeFactureTravauxTest extends ExtensionCppTestCase
         $cppWrapper->expects($this->any())
             ->method('rechercheFactureTravaux')
             ->willReturn($this->getrechercheFactureTravaux());
-        $cppWrapper->expects($this->any())
-            ->method('getIsRaccordementCertificat')
-            ->willReturn($is_raccordement_certificat);
 
         $cppWrapperFactory = $this->getMockBuilder(CPPWrapperFactory::class)
             ->disableOriginalConstructor()

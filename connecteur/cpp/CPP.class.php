@@ -43,6 +43,7 @@ class CPP extends PortailFactureConnecteur
     /**
      * @param DonneesFormulaire $donneesFormulaire
      * @throws CPPException
+     * @throws Exception
      */
     public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire)
     {
@@ -51,24 +52,16 @@ class CPP extends PortailFactureConnecteur
         $this->no_change_statut_chorus = $donneesFormulaire->get('no_change_statut_chorus');
         $this->no_recup_facture = $donneesFormulaire->get("no_recup_facture");
         $cppWrapperConfig = new CPPWrapperConfig();
-        $cppWrapperConfig->url = $this->getFromLocalOrGlobalConfig('url');
-        $cppWrapperConfig->user_login = $donneesFormulaire->get('user_login');
-        $cppWrapperConfig->user_password = $donneesFormulaire->get('user_password');
-        $cppWrapperConfig->certificat_pem = $this->getFileFromLocalOrGlobalConfig('certificat_pem');
-        $cppWrapperConfig->certificat_prikey_pem = $this->getFileFromLocalOrGlobalConfig('certificat_prikey_pem');
-        $cppWrapperConfig->certificate_chain = $this->getFileFromLocalOrGlobalConfig('certificate_chain');
-        $cppWrapperConfig->certificat_password = $this->getFromLocalOrGlobalConfig('certificat_password');
-
-        $cppWrapperConfig->user_role = $donneesFormulaire->get('user_role');
-
         $cppWrapperConfig->url_piste_get_token = $this->getFromLocalOrGlobalConfig('url_piste_get_token');
         $cppWrapperConfig->client_id = $this->getFromLocalOrGlobalConfig('client_id');
         $cppWrapperConfig->client_secret = $this->getFromLocalOrGlobalConfig('client_secret');
         $cppWrapperConfig->url_piste_api = $this->getFromLocalOrGlobalConfig('url_piste_api');
-        $cppWrapperConfig->cpro_account = base64_encode($donneesFormulaire->get('user_login') . ":" . $donneesFormulaire->get('user_password'));
-
         $cppWrapperConfig->proxy = $this->getFromLocalOrGlobalConfig('proxy');
-
+        $cppWrapperConfig->user_login = $donneesFormulaire->get('user_login');
+        $cppWrapperConfig->user_password = $donneesFormulaire->get('user_password');
+        $cppWrapperConfig->cpro_account = base64_encode(
+            $donneesFormulaire->get('user_login') . ":" . $donneesFormulaire->get('user_password')
+        );
         $cppWrapperConfig->user_role = $donneesFormulaire->get('user_role');
         $cppWrapperConfig->identifiant_structure_cpp = $donneesFormulaire->get('identifiant_structure_cpp');
         $cppWrapperConfig->service_destinataire = $donneesFormulaire->get('service_destinataire');
@@ -155,22 +148,6 @@ class CPP extends PortailFactureConnecteur
         return false;
     }
 
-    /**
-     * @param $element_name
-     * @return bool|string
-     */
-    private function getFileFromLocalOrGlobalConfig($element_name)
-    {
-        $value = $this->connecteurConfig->getFilePath($element_name);
-        if ($value && file_exists($value)) {
-            return $value;
-        }
-        if ($this->globalConfig) {
-            return $this->globalConfig->getFilePath($element_name);
-        }
-        return false;
-    }
-
     private function setConfigFromGlobalConnecteur()
     {
         /** @var ConnecteurFactory $connecteurFactory */
@@ -193,31 +170,23 @@ class CPP extends PortailFactureConnecteur
      * @return bool
      * @throws Exception
      */
-    public function testConnexion()
+    public function testConnexion(): bool
     {
         return $this->cppWrapper->testConnexion();
-    }
-
-    /** @deprecated V3.1.0 - utiliser authentification PISTE
-     * @return bool
-     */
-    public function getIsRaccordementCertificat(): bool
-    {
-        return $this->cppWrapper->getIsRaccordementCertificat();
     }
 
     /**
      * @param string $idFournisseur
      * @param string $periodeDateHeureEtatCourantDu
      * @param string $periodeDateHeureEtatCourantAu
-     * @return array|mixed
+     * @return array
      * @throws Exception
      */
     public function rechercheFactureParRecipiendaire(
         string $idFournisseur = "",
         string $periodeDateHeureEtatCourantDu = "",
         string $periodeDateHeureEtatCourantAu = ""
-    ) {
+    ): array {
         return $this->cppWrapper->rechercheFactureParRecipiendaire(
             $idFournisseur,
             $periodeDateHeureEtatCourantDu,
@@ -228,13 +197,13 @@ class CPP extends PortailFactureConnecteur
     /**
      * @param string $periodeDateHeureEtatCourantDu
      * @param string $periodeDateHeureEtatCourantAu
-     * @return array|mixed
+     * @return array
      * @throws Exception
      */
     public function rechercheFactureTravaux(
         string $periodeDateHeureEtatCourantDu = "",
         string $periodeDateHeureEtatCourantAu = ""
-    ) {
+    ): array {
         return $this->cppWrapper->rechercheFactureTravaux(
             $periodeDateHeureEtatCourantDu,
             $periodeDateHeureEtatCourantAu
@@ -255,7 +224,7 @@ class CPP extends PortailFactureConnecteur
     /**
      * @param $format
      * @param $idFacture
-     * @return false|mixed|string
+     * @return false|string
      * @throws Exception
      */
     protected function telechargerGroupeFacture($format, $idFacture)
@@ -291,9 +260,14 @@ class CPP extends PortailFactureConnecteur
      * @return bool|mixed
      * @throws Exception
      */
-    public function getIdentifiantStructureCPPByIdentifiantStructure($identifiant_structure, $restreindre_structures = "")
-    {
-        return $this->cppWrapper->getIdentifiantStructureCPPByIdentifiantStructure($identifiant_structure, $restreindre_structures);
+    public function getIdentifiantStructureCPPByIdentifiantStructure(
+        $identifiant_structure,
+        string $restreindre_structures = ""
+    ) {
+        return $this->cppWrapper->getIdentifiantStructureCPPByIdentifiantStructure(
+            $identifiant_structure,
+            $restreindre_structures
+        );
     }
 
     /**
@@ -312,13 +286,13 @@ class CPP extends PortailFactureConnecteur
      * @return array|mixed
      * @throws Exception
      */
-    public function deposerXML($filename, $filecontent, $syntaxe_flux = 'IN_DP_E1_UBL_INVOICE')
+    public function deposerXML($filename, $filecontent, string $syntaxe_flux = 'IN_DP_E1_UBL_INVOICE')
     {
-        $data = array(
+        $data = [
             'fichierFlux' => base64_encode($filecontent),
             'nomFichier' => $filename,
             'syntaxeFlux' => $syntaxe_flux,
-        );
+        ];
         return $this->call(CPPWrapper::DEPOSER_FLUX, $data);
     }
 
@@ -330,11 +304,11 @@ class CPP extends PortailFactureConnecteur
      */
     public function deposerPDF($filename, $filecontent)
     {
-        $data = array(
+        $data = [
             'fichierFacture' => base64_encode($filecontent),
             'nomFichier' => $filename,
             'formatDepot' => 'PDF_NON_SIGNE',
-        );
+        ];
         return $this->call(CPPWrapper::DEPOSER_PDF, $data);
     }
 
@@ -345,38 +319,32 @@ class CPP extends PortailFactureConnecteur
      */
     public function soumettreFacture(DonneesFormulaire $donneesFormulaire)
     {
-        $data = array(
+        $data = [
             'modeDepot' => "DEPOT_PDF_API",
             'numeroFactureSaisi' => $donneesFormulaire->get('numero_facture'),
             'dateFacture' => $donneesFormulaire->get('date_facture'),
-            'destinataire' => array(
-                'codeDestinataire' => $donneesFormulaire->get('code_destinataire'),
-            ),
-            'fournisseur' => array(
-                "idFournisseur" => intval($donneesFormulaire->get('id_cpp_fournisseur')),
-            ),
-            'cadreDeFacturation' => array(
-                'codeCadreFacturation' => $donneesFormulaire->get('cadre_facturation')
-            ),
-            'references' => array(
+            'destinataire' => ['codeDestinataire' => $donneesFormulaire->get('code_destinataire')],
+            'fournisseur' => ["idFournisseur" => intval($donneesFormulaire->get('id_cpp_fournisseur'))],
+            'cadreDeFacturation' => ['codeCadreFacturation' => $donneesFormulaire->get('cadre_facturation')],
+            'references' => [
                 'deviseFacture' => $donneesFormulaire->get('code_devise_facture'),
                 'typeFacture' => $donneesFormulaire->get('type_facture'),
                 'typeTva' => $donneesFormulaire->get('type_tva'),
                 'modePaiement' => 'VIREMENT',
-            ),
-            'montantTotal' => array(
+            ],
+            'montantTotal' => [
                 'montantHtTotal' => floatval($donneesFormulaire->get('montant_ht_total')),
                 'montantTVA' => floatval($donneesFormulaire->get('montant_tva')),
                 'montantTtcTotal' => floatval($donneesFormulaire->get('montant_ttc_avant_remise_global_ttc')),
                 'montantAPayer' => floatval($donneesFormulaire->get('montant_a_payer')),
-            ),
-            'pieceJointePrincipale' => array(
-                array(
+            ],
+            'pieceJointePrincipale' => [
+                [
                     'pieceJointePrincipaleDesignation' => 'ma facture',
                     'pieceJointePrincipaleId' => intval($donneesFormulaire->get('piece_jointe_id'))
-                )
-            ),
-        );
+                ]
+            ],
+        ];
 
         if ($donneesFormulaire->get('code_service_executant')) {
             $data['destinataire']['codeServiceExecutant'] = $donneesFormulaire->get('code_service_executant');
@@ -416,7 +384,7 @@ class CPP extends PortailFactureConnecteur
      * @return int
      * @throws Exception
      */
-    public function getInvoicePerSupplier($supplierCppId, $invoiceNumber)
+    public function getInvoicePerSupplier(int $supplierCppId, string $invoiceNumber): int
     {
         return $this->cppWrapper->getCppInvoiceId($supplierCppId, $invoiceNumber);
     }

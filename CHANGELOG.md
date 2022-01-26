@@ -5,6 +5,10 @@
 - Suppression des méthodes magiques `__get()` et `__set()` sur la class `ObjectInstancier`, il convient d'utiliser respectivement
 `getInstance()` et `setInstance()`
 
+## Retraits d'éléments dépréciés
+
+- Suppression de l'authentification par certificat au services Chorus Pro #1453
+
 # [3.1.11]
 
 ## Ajouts
