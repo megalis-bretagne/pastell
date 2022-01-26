@@ -7,7 +7,6 @@ class ChorusParCsv extends PortailFactureConnecteur
     private $depose_depuis_nb_jours;
 
     private $user_login;
-    private $user_password;
 
     /** @var DonneesFormulaire $globalConfig */
     private $globalConfig;
@@ -30,31 +29,26 @@ class ChorusParCsv extends PortailFactureConnecteur
     /**
      * @param DonneesFormulaire $donneesFormulaire
      * @throws CPPException
+     * @throws Exception
      */
     public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire)
     {
         $this->connecteurConfig = $donneesFormulaire;
         $this->setConfigFromGlobalConnecteur();
         $cppWrapperConfig = new CPPWrapperConfig();
-        $cppWrapperConfig->url = $this->getFromLocalOrGlobalConfig('url');
-        $cppWrapperConfig->user_login = $donneesFormulaire->get('user_login');
-        $cppWrapperConfig->user_password = $donneesFormulaire->get('user_password');
-        $cppWrapperConfig->certificat_pem = $this->getFileFromLocalOrGlobalConfig('certificat_pem');
-        $cppWrapperConfig->certificat_prikey_pem = $this->getFileFromLocalOrGlobalConfig('certificat_prikey_pem');
-        $cppWrapperConfig->certificate_chain = $this->getFileFromLocalOrGlobalConfig('certificate_chain');
-        $cppWrapperConfig->certificat_password = $this->getFromLocalOrGlobalConfig('certificat_password');
-
         $cppWrapperConfig->url_piste_get_token = $this->getFromLocalOrGlobalConfig('url_piste_get_token');
         $cppWrapperConfig->client_id = $this->getFromLocalOrGlobalConfig('client_id');
         $cppWrapperConfig->client_secret = $this->getFromLocalOrGlobalConfig('client_secret');
         $cppWrapperConfig->url_piste_api = $this->getFromLocalOrGlobalConfig('url_piste_api');
-        $cppWrapperConfig->cpro_account = base64_encode($donneesFormulaire->get('user_login') . ":" . $donneesFormulaire->get('user_password'));
-
+        $cppWrapperConfig->user_login = $donneesFormulaire->get('user_login');
+        $cppWrapperConfig->user_password = $donneesFormulaire->get('user_password');
+        $cppWrapperConfig->cpro_account = base64_encode(
+            $donneesFormulaire->get('user_login') . ":" . $donneesFormulaire->get('user_password')
+        );
         $cppWrapperConfig->identifiant_structure_cpp = $donneesFormulaire->get('identifiant_structure_cpp');
 
-        $this->user_login = $donneesFormulaire->get('user_login');
-
         $this->depose_depuis_nb_jours = $this->getDeposeDepuisNbJours($donneesFormulaire);
+        $this->user_login = $donneesFormulaire->get('user_login');
 
         $this->cppWrapper = $this->cppWrapperFactory->newInstance();
         $this->cppWrapper->setCppWrapperConfig($cppWrapperConfig);
@@ -70,7 +64,7 @@ class ChorusParCsv extends PortailFactureConnecteur
 
     /**
      * @param DonneesFormulaire $donneesFormulaire
-     * @return array|int|string
+     * @return float|int|string
      */
     public function getDeposeDepuisNbJours(DonneesFormulaire $donneesFormulaire)
     {
@@ -108,22 +102,6 @@ class ChorusParCsv extends PortailFactureConnecteur
         return false;
     }
 
-    /**
-     * @param $element_name
-     * @return bool|string
-     */
-    private function getFileFromLocalOrGlobalConfig($element_name)
-    {
-        $value = $this->connecteurConfig->getFilePath($element_name);
-        if ($value && file_exists($value)) {
-            return $value;
-        }
-        if ($this->globalConfig) {
-            return $this->globalConfig->getFilePath($element_name);
-        }
-        return false;
-    }
-
     private function setConfigFromGlobalConnecteur()
     {
         /** @var ConnecteurFactory $connecteurFactory */
@@ -146,7 +124,7 @@ class ChorusParCsv extends PortailFactureConnecteur
      * @return bool
      * @throws Exception
      */
-    public function testConnexion()
+    public function testConnexion(): bool
     {
         return $this->cppWrapper->testConnexion();
     }
@@ -155,14 +133,14 @@ class ChorusParCsv extends PortailFactureConnecteur
      * @param string $idFournisseur
      * @param string $periodeDateHeureEtatCourantDu
      * @param string $periodeDateHeureEtatCourantAu
-     * @return array|mixed
+     * @return array
      * @throws Exception
      */
     public function rechercheFactureParRecipiendaire(
         string $idFournisseur = "",
         string $periodeDateHeureEtatCourantDu = "",
         string $periodeDateHeureEtatCourantAu = ""
-    ) {
+    ): array {
         return $this->cppWrapper->rechercheFactureParRecipiendaire(
             $idFournisseur,
             $periodeDateHeureEtatCourantDu,
@@ -173,13 +151,13 @@ class ChorusParCsv extends PortailFactureConnecteur
     /**
      * @param string $periodeDateHeureEtatCourantDu
      * @param string $periodeDateHeureEtatCourantAu
-     * @return array|mixed
+     * @return array
      * @throws Exception
      */
     protected function rechercheFactureTravaux(
         string $periodeDateHeureEtatCourantDu = "",
         string $periodeDateHeureEtatCourantAu = ""
-    ) {
+    ): array {
         return $this->cppWrapper->rechercheFactureTravaux(
             $periodeDateHeureEtatCourantDu,
             $periodeDateHeureEtatCourantAu
@@ -200,7 +178,7 @@ class ChorusParCsv extends PortailFactureConnecteur
     /**
      * @param $format
      * @param $idFacture
-     * @return false|mixed|string
+     * @return false|string
      * @throws Exception
      */
     protected function telechargerGroupeFacture($format, $idFacture)
@@ -227,8 +205,13 @@ class ChorusParCsv extends PortailFactureConnecteur
      * @return bool|mixed
      * @throws Exception
      */
-    public function getIdentifiantStructureCPPByIdentifiantStructure($identifiant_structure, $restreindre_structures = "")
-    {
-        return $this->cppWrapper->getIdentifiantStructureCPPByIdentifiantStructure($identifiant_structure, $restreindre_structures);
+    public function getIdentifiantStructureCPPByIdentifiantStructure(
+        $identifiant_structure,
+        string $restreindre_structures = ""
+    ) {
+        return $this->cppWrapper->getIdentifiantStructureCPPByIdentifiantStructure(
+            $identifiant_structure,
+            $restreindre_structures
+        );
     }
 }

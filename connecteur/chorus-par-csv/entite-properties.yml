@@ -11,36 +11,6 @@ restriction_pack:
 
 formulaire:
     page0:
-        url:
-            name: "URL du service Chorus Pro (déprécié)"
-            commentaire : "https://chorus-pro.gouv.fr:5443/service-qualif/ si non renseigné, utilise la propriété globale"
-
-        certificat_connexion:
-            name: Certificat de connexion (déprécié)
-            commentaire: Certificat x509 au format pkcs12 - si non renseigné, utilise la propriété globale
-            type: file
-            content-type: application/octet-stream
-            onchange: update-certificate
-
-        certificat_password:
-            name: Mot de passe du certificat (déprécié)
-            commentaire: Si non renseigné, utilise la propriété globale
-            type: password
-            onchange: update-certificate
-
-        certificate_chain:
-            name: Chaine du certificat client (déprécié)
-            commentaire: au format PEM, si non renseigné, utilise la propriété globale
-            type: file
-
-        certificat_prikey_pem:
-            type: file
-            no-show: true
-
-        certificat_pem:
-            type: file
-            no-show: true
-
         url_piste_get_token:
             name: "URL du service PISTE token"
             commentaire : "https://sandbox-oauth.aife.economie.gouv.fr/api/oauth/token, https://oauth.aife.economie.gouv.fr/api/oauth/token. Si non renseigné, utilise la propriété globale"
@@ -105,17 +75,3 @@ action:
         rule:
             droit_id_u: 'entite:edition'
         action-automatique: import-facture-par-csv
-
-    update-certificate:
-        name: Mettre à jour les certificats
-        rule:
-            role_id_e: no-role
-        action-class: StandardAction
-        connecteur-type: utilities
-        connecteur-type-action: UpdateCertificate
-        connecteur-type-mapping:
-            certificat_connexion_cert_pem: certificat_pem
-            certificat_connexion_key_pem: certificat_prikey_pem
-
-
-

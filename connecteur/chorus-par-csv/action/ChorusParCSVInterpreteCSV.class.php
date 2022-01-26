@@ -2,7 +2,10 @@
 
 class ChorusParCSVInterpreteCSV extends ActionExecutor
 {
-    public function metier()
+    /**
+     * @throws Exception
+     */
+    public function metier(): string
     {
 
         $connecteur_properties = $this->getConnecteurProperties();
@@ -27,29 +30,39 @@ class ChorusParCSVInterpreteCSV extends ActionExecutor
 
                 $id_chorus_structure = $this->recupIdChorus($col[2]);
                 $id_chorus_fournisseur = $this->recupIdChorus($col[3]);
-                // ('user_login', 'user_password', 'siret_structure', 'id_chorus_structure','siret_fournisseur','id_chorus_fournisseur')
-                $fichier_csv_interprete_lines .= $col[0] . ';"' . $col[1] . '";' . $col[2] . ";" . $id_chorus_structure . ";" . $col[3] . ";" . $id_chorus_fournisseur . "\n";
+                //('user_login', 'user_password', 'siret_structure',
+                //'id_chorus_structure','siret_fournisseur','id_chorus_fournisseur')
+                $fichier_csv_interprete_lines .= $col[0] . ';"' . $col[1] . '";' . $col[2] . ";" .
+                    $id_chorus_structure . ";" . $col[3] . ";" . $id_chorus_fournisseur . "\n";
             } else {
-                throw new Exception('Les lignes doivent être de la forme "utilisateur technique";"mot de passe";"SIRET de la structure (optionel)";"SIRET du fournisseur (optionel)"');
+                throw new Exception('Les lignes doivent être de la forme "utilisateur technique";
+                "mot de passe";"SIRET de la structure (optionel)";"SIRET du fournisseur (optionel)"');
             }
         }
-        $connecteur_properties->addFileFromData("fichier_csv_interprete", $fichier_csv_interprete, $fichier_csv_interprete_lines);
+        $connecteur_properties->addFileFromData(
+            "fichier_csv_interprete",
+            $fichier_csv_interprete,
+            $fichier_csv_interprete_lines
+        );
 
         return $fichier_csv_interprete_lines;
     }
 
+    /**
+     * @throws Exception
+     */
     public function recupIdChorus($siret)
     {
         /** @var ChorusParCSV $connecteur_chorus */
         $connecteur_chorus = $this->getMyConnecteur();
-        $id_chorus = $connecteur_chorus->getIdentifiantStructureCPPByIdentifiantStructure($siret, false);
+        $id_chorus = $connecteur_chorus->getIdentifiantStructureCPPByIdentifiantStructure($siret, "false");
         if ((!$id_chorus) && ($siret)) {
             throw new Exception("Le siret $siret n'a pas été trouvé. L'identifiant Chorus est invalide");
         }
         return $id_chorus;
     }
 
-    public function go()
+    public function go(): bool
     {
         try {
             $result = $this->metier();

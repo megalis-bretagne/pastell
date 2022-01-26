@@ -9,7 +9,7 @@ class ChorusParCSVImporterFacture extends ActionExecutor
     /**
      * @return ChorusProImportCreationService
      */
-    private function getChorusProCreationService()
+    private function getChorusProCreationService(): ChorusProImportCreationService
     {
         return $this->objectInstancier->getInstance(ChorusProImportCreationService::class);
     }
@@ -17,7 +17,7 @@ class ChorusParCSVImporterFacture extends ActionExecutor
     /**
      * @return ChorusProImportSynchroService
      */
-    private function getChorusProSynchroService()
+    private function getChorusProSynchroService(): ChorusProImportSynchroService
     {
         return $this->objectInstancier->getInstance(ChorusProImportSynchroService::class);
     }
@@ -25,7 +25,7 @@ class ChorusParCSVImporterFacture extends ActionExecutor
     /**
      * @return ChorusProImportUtilService
      */
-    private function getChorusProUtilService()
+    private function getChorusProUtilService(): ChorusProImportUtilService
     {
         return $this->objectInstancier->getInstance(ChorusProImportUtilService::class);
     }
@@ -33,7 +33,7 @@ class ChorusParCSVImporterFacture extends ActionExecutor
     /**
      * @return bool
      */
-    public function go()
+    public function go(): bool
     {
         $this->getChorusProCreationService()->setChorusProConfigService($this->id_e, $this->id_u, $this->id_ce);
         $this->getChorusProSynchroService()->setChorusProConfigService($this->id_e, $this->id_u);
@@ -41,7 +41,10 @@ class ChorusParCSVImporterFacture extends ActionExecutor
         try {
             $result = $this->metier();
         } catch (Exception $ex) {
-            $this->setLastMessage("La liste des factures d'après Le fichier CSV interprété n'a pas pu être récupérée: " . "<br/>" . $ex->getMessage());
+            $this->setLastMessage(
+                "La liste des factures d'après Le fichier CSV interprété n'a pas pu être récupérée: " . "<br/>" .
+                $ex->getMessage()
+            );
             return false;
         }
         $this->setLastMessage("Liste des factures: " . '<br/>' . $result);
@@ -56,7 +59,11 @@ class ChorusParCSVImporterFacture extends ActionExecutor
     {
         /** @var ChorusParCSV $connecteur_chorus */
         $connecteur_chorus = $this->getMyConnecteur();
-        $min_date_statut_courant = $this->getChorusProUtilService()->getMinDateStatutCourant($this->id_e, $connecteur_chorus->getDateDepuisLe(), ChorusProImportUtilService::TYPE_INTEGRATION_CSV_VALEUR);
+        $min_date_statut_courant = $this->getChorusProUtilService()->getMinDateStatutCourant(
+            $this->id_e,
+            $connecteur_chorus->getDateDepuisLe(),
+            ChorusProImportUtilService::TYPE_INTEGRATION_CSV_VALEUR
+        );
         $this->getLogger()->info("Date de dépôt minimum factures recues: $min_date_statut_courant");
 
         $connecteur_properties = $this->getConnecteurProperties();
@@ -74,7 +81,7 @@ class ChorusParCSVImporterFacture extends ActionExecutor
             if (!$col[0]) {
                 continue;
             }
-            if (!(count($col) == 6)) {
+            if (count($col) !== 6) {
                 $message = 'Les lignes doivent être de la forme ' .
                     '"utilisateur technique";' .
                     '"mot de passe";' .
@@ -104,9 +111,8 @@ class ChorusParCSVImporterFacture extends ActionExecutor
      */
     public function traiterUneLigne(string $fournisseur, string $min_date_statut_courant): array
     {
-        $liste_facture_a_creer = array();
-        $result_all = array();
-        $liste_facture_traite = array();
+        $liste_facture_a_creer = [];
+        $result_all = [];
 
         /** @var ChorusParCSV $connecteur_chorus */
         $connecteur_chorus = $this->getMyConnecteur();
@@ -114,16 +120,24 @@ class ChorusParCSVImporterFacture extends ActionExecutor
         $utilisateur_technique = $connecteur_chorus->getUserLogin();
         $liste_facture_pastell = $this->getListeFacturePastellCSV($utilisateur_technique);
         // Chargement des factures présentes sur la plateforme chorus ayant changé de statut
-        $liste_facture_chorus = $connecteur_chorus->getListeFacturesRecipiendaire($fournisseur, $min_date_statut_courant);
+        $liste_facture_chorus = $connecteur_chorus->getListeFacturesRecipiendaire(
+            $fournisseur,
+            $min_date_statut_courant
+        );
 
         foreach ($liste_facture_chorus as $facture_chorus) {
             // Le document existe-t-il déjà sur Pastell
-            $facture_pastell = $this->getChorusProUtilService()->rechercherDocumentPastell($facture_chorus['id_facture_cpp'], $liste_facture_pastell);
+            $facture_pastell = $this->getChorusProUtilService()->rechercherDocumentPastell(
+                $facture_chorus['id_facture_cpp'],
+                $liste_facture_pastell
+            );
             if ($facture_pastell !== false) {
                 // La facture existe. Il faut l'actualiser
-                $result = $this->getChorusProSynchroService()->analyseOneFactureSynchro($facture_chorus, $facture_pastell);
+                $result = $this->getChorusProSynchroService()->analyseOneFactureSynchro(
+                    $facture_chorus,
+                    $facture_pastell
+                );
                 $result_all[] = $result;
-                $liste_facture_traite[] = $result['id_d'];
             } else {
                 // La facture n'existe pas. Il faudra la créer.
                 // Enregistrement de la facture chorus à créer.
@@ -139,10 +153,12 @@ class ChorusParCSVImporterFacture extends ActionExecutor
         foreach ($liste_facture_a_creer as $facture_a_creer) {
             //créations de factures
             $facture_a_creer['utilisateur_technique'] = $utilisateur_technique;
-            $result = $this->getChorusProCreationService()->analyseOneFactureCreation($facture_a_creer, ChorusProImportUtilService::NOMMAGE_ID_FACTURE_CSV);
+            $result = $this->getChorusProCreationService()->analyseOneFactureCreation(
+                $facture_a_creer,
+                ChorusProImportUtilService::NOMMAGE_ID_FACTURE_CSV
+            );
             $result['id_facture_cpp'] = $facture_a_creer['id_facture_cpp'];
             $result_all[] = $result;
-            $liste_facture_traite[] = $result['id_d'];
         }
         return $result_all;
     }
@@ -154,10 +170,15 @@ class ChorusParCSVImporterFacture extends ActionExecutor
      */
     public function getListeFacturePastellCSV(string $utilisateur_technique): array
     {
-        $liste_facture_pastell_csv = array();
-        $liste_facture_pastell = $this->getChorusProUtilService()->getListeFacturePastell($this->id_e, ChorusProImportUtilService::TYPE_INTEGRATION_CSV_VALEUR, $utilisateur_technique);
+        $liste_facture_pastell_csv = [];
+        $liste_facture_pastell = $this->getChorusProUtilService()->getListeFacturePastell(
+            $this->id_e,
+            ChorusProImportUtilService::TYPE_INTEGRATION_CSV_VALEUR,
+            $utilisateur_technique
+        );
         foreach ($liste_facture_pastell as $facture_pastell) {
-            $explode_id = explode('-', $facture_pastell['id_facture_cpp']); //id_facture_cpp de la forme id_facture_cpp-99-CSV
+            //id_facture_cpp de la forme id_facture_cpp-99-CSV
+            $explode_id = explode('-', $facture_pastell['id_facture_cpp']);
             $facture_pastell['id_facture_cpp'] = $explode_id[0];
             $liste_facture_pastell_csv[] = $facture_pastell;
         }
