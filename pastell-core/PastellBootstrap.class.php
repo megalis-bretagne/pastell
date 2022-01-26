@@ -21,7 +21,6 @@ class PastellBootstrap
             $this->startDaemon();
             $this->installCertificate();
             $this->installHorodateur();
-            $this->installLibersign();
             $this->installCloudooo();
             $this->installPESViewerConnecteur();
             $this->installConnecteurFrequenceDefault();
@@ -212,35 +211,6 @@ class PastellBootstrap
         foreach (glob($workspacePath . "/connecteur_$id_ce.yml*") as $file) {
             chown("$file", $daemon_user);
         }
-    }
-
-    public function installLibersign()
-    {
-        if (file_exists(__DIR__ . "/../web/libersign/update.json")) {
-            $this->pastellLogger->info("Libersign est déjà installé");
-            return true;
-        }
-        if (empty(LIBERSIGN_INSTALLER)) {
-            $this->pastellLogger->info("Lien vers l'installeur de Libersign non trouvée");
-            return true;
-        }
-        $this->majLibersign();
-        return true;
-    }
-
-    public function majLibersign()
-    {
-        $aContext = array(
-            'http' => array(
-                'proxy'           => HTTP_PROXY_URL,
-                'request_fulluri' => true
-            ),
-        );
-        $cxContext = stream_context_create($aContext);
-
-        $make = file_get_contents(LIBERSIGN_INSTALLER, false, $cxContext);
-        file_put_contents("/tmp/libersign_make.sh", $make);
-        exec("/bin/bash /tmp/libersign_make.sh PROD", $output, $result);
     }
 
     public function installConnecteurFrequenceDefault()

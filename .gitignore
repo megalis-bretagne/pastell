@@ -9,7 +9,6 @@
 .env
 /temp/
 /web/test
-/web/libersign
 .DS_STORE
 .scannerwork
 node_modules

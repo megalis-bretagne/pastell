@@ -24,9 +24,6 @@ define("WORKSPACE_PATH" , "/data/workspace");
 define("PLATEFORME_MAIL","${PLATEFORME_MAIL}");
 define("MODE_MUTUALISE",${MODE_MUTUALISE:-false});
 
-define("LIBERSIGN_INSTALLER","${LIBERSIGN_INSTALLER}");
-
-
 define("REDIS_SERVER","${REDIS_SERVER}");
 define("REDIS_PORT",${REDIS_PORT:-6379});
 
