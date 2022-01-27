@@ -48,10 +48,3 @@ dpkg-reconfigure --frontend=noninteractive locales
 update-locale LANG=fr_FR.UTF-8
 
 rm /etc/localtime && ln -s /usr/share/zoneinfo/Europe/Paris /etc/localtime
-
-# Libersign v1 stuff TODO
-mkdir -p /var/www/parapheur/libersign
-cd /var/www/parapheur/libersign/
-wget https://ressources.libriciel.fr/s2low/libersign_v1_compat.tgz
-tar xvzf libersign_v1_compat.tgz
-rm libersign_v1_compat.tgz

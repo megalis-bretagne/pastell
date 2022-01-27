@@ -71,6 +71,10 @@ services:
         restart: unless-stopped
         image: 'registry.libriciel.fr:443/public/signature/crypto:2.3.1'
 
+    libersign:
+        restart: unless-stopped
+        image: 'registry.libriciel.fr:443/public/signature/libersign:1.11.4'
+
 
 volumes:
     db_datadir:

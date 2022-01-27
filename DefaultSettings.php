@@ -206,11 +206,6 @@ if (!defined("CACHE_TTL_IN_SECONDS")) {
     define("CACHE_TTL_IN_SECONDS", 10);
 }
 
-if (!defined("LIBERSIGN_INSTALLER")) {
-    define("LIBERSIGN_INSTALLER", "");
-}
-
-
 if (!defined("LOG_FILE")) {
     define("LOG_FILE", "/data/log/pastell.log");
 }
