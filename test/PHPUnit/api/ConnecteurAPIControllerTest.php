@@ -26,7 +26,10 @@ class ConnecteurAPIControllerTest extends PastellTestCase
 
     public function testCreate()
     {
-        $info = $this->getInternalAPI()->post("/entite/1/connecteur", array('libelle' => 'Connecteur de test','id_connecteur' => 'test'));
+        $info = $this->getInternalAPI()->post(
+            "/entite/1/connecteur",
+            ['libelle' => 'Connecteur de test','id_connecteur' => 'test']
+        );
         $this->assertEquals('Connecteur de test', $info['libelle']);
 
         $connecteurActionService = $this->getObjectInstancier()->getInstance(ConnecteurActionService::class);
@@ -38,12 +41,18 @@ class ConnecteurAPIControllerTest extends PastellTestCase
     {
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("Le libellé est obligatoire.");
-        $this->getInternalAPI()->post("/entite/1/connecteur", array('libelle' => '','id_connecteur' => 'test'));
+        $this->getInternalAPI()->post(
+            "/entite/1/connecteur",
+            ['libelle' => '','id_connecteur' => 'test']
+        );
     }
 
     public function testCreateGlobale()
     {
-        $info = $this->getInternalAPI()->post("/entite/0/connecteur", array('libelle' => 'Test','id_connecteur' => 'test'));
+        $info = $this->getInternalAPI()->post(
+            "/entite/0/connecteur",
+            ['libelle' => 'Test','id_connecteur' => 'test']
+        );
         $this->assertEquals(0, $info['id_e']);
     }
 
@@ -51,7 +60,10 @@ class ConnecteurAPIControllerTest extends PastellTestCase
     {
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("Aucun connecteur du type « foo »");
-        $this->getInternalAPI()->post("/entite/1/connecteur", array('libelle' => 'Connecteur de test','id_connecteur' => 'foo'));
+        $this->getInternalAPI()->post(
+            "/entite/1/connecteur",
+            ['libelle' => 'Connecteur de test','id_connecteur' => 'foo']
+        );
     }
 
     public function testDelete()
@@ -76,10 +88,13 @@ class ConnecteurAPIControllerTest extends PastellTestCase
 
     public function testEdit()
     {
-        $info = $this->getInternalAPI()->post("/entite/1/connecteur", array('libelle' => 'Connecteur de test','id_connecteur' => 'test'));
+        $info = $this->getInternalAPI()->post(
+            "/entite/1/connecteur",
+            ['libelle' => 'Connecteur de test','id_connecteur' => 'test']
+        );
         $this->assertEquals('Connecteur de test', $info['libelle']);
         $id_ce = $info['id_ce'];
-        $info = $this->getInternalAPI()->patch("/entite/1/connecteur/$id_ce", array('libelle' => 'bar'));
+        $info = $this->getInternalAPI()->patch("/entite/1/connecteur/$id_ce", ['libelle' => 'bar']);
         $this->assertEquals('bar', $info['libelle']);
 
         $connecteurActionService = $this->getObjectInstancier()->getInstance(ConnecteurActionService::class);
@@ -91,19 +106,19 @@ class ConnecteurAPIControllerTest extends PastellTestCase
     {
         $this->expectException("Exception");
         $this->expectExceptionMessage("Ce connecteur n'existe pas.");
-        $this->getInternalAPI()->patch("/entite/1/connecteur/42", array('libelle' => 'bar'));
+        $this->getInternalAPI()->patch("/entite/1/connecteur/42", ['libelle' => 'bar']);
     }
 
     public function testEditNotLibelle()
     {
         $this->expectException("Exception");
         $this->expectExceptionMessage("Le libellé est obligatoire.");
-        $this->getInternalAPI()->patch("/entite/1/connecteur/12", array('libelle' => ''));
+        $this->getInternalAPI()->patch("/entite/1/connecteur/12", ['libelle' => '']);
     }
 
     public function testEditContentAction()
     {
-        $info = $this->getInternalAPI()->patch("/entite/1/connecteur/12/content", array('champs1' => 'foo'));
+        $info = $this->getInternalAPI()->patch("/entite/1/connecteur/12/content", ['champs1' => 'foo']);
         $this->assertEquals('foo', $info['data']['champs1']);
         $id_ce = $info['id_ce'];
         $connecteurActionService = $this->getObjectInstancier()->getInstance(ConnecteurActionService::class);
@@ -113,7 +128,7 @@ class ConnecteurAPIControllerTest extends PastellTestCase
 
     public function testEditContentOnChangeAction()
     {
-        $info = $this->getInternalAPI()->patch("/entite/1/connecteur/12/content", array('champs3' => 'foo'));
+        $info = $this->getInternalAPI()->patch("/entite/1/connecteur/12/content", ['champs3' => 'foo']);
         $this->assertEquals('foo', $info['data']['champs4']);
     }
 
@@ -121,10 +136,10 @@ class ConnecteurAPIControllerTest extends PastellTestCase
     {
         $result = $this->getInternalAPI()->post(
             "/entite/1/connecteur/12/file/champs5",
-            array(
+            [
                 'file_name' => 'test.txt',
                 'file_content' => 'test...'
-            )
+            ]
         );
         $this->assertEquals("test.txt", $result['data']['champs5'][0]);
         $this->expectOutputRegex("#test...#");
@@ -201,7 +216,7 @@ class ConnecteurAPIControllerTest extends PastellTestCase
         $internalAPI->setUtilisateurId($id_u);
 
         try {
-            $internalAPI->patch("/entite/2/connecteur/12/content", array('champs1' => 'bar'));
+            $internalAPI->patch("/entite/2/connecteur/12/content", ['champs1' => 'bar']);
         } catch (Exception $e) {
 /* Nothing to do  */
         }
@@ -372,7 +387,7 @@ class ConnecteurAPIControllerTest extends PastellTestCase
         $userId = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class)
             ->create('test', 'test', 'test', 'test@test.test');
         $this->expectException(ForbiddenException::class);
-        $this->expectExceptionMessage("Acces interdit id_e=0, droit=entite:lecture,id_u=$userId");
+        $this->expectExceptionMessage("Acces interdit id_e=0, droit=connecteur:lecture,id_u=$userId");
 
         $this->getInternalAPIAsUser($userId)->get('/connecteur/all');
     }
@@ -429,7 +444,7 @@ class ConnecteurAPIControllerTest extends PastellTestCase
         $this->getObjectInstancier()->getInstance(RoleUtilisateur::class)->addRole($userId, 'readonly', self::ID_E_COL);
 
         $this->expectException(ForbiddenException::class);
-        $this->expectExceptionMessage('Acces interdit id_e=1, droit=entite:edition,id_u=3');
+        $this->expectExceptionMessage('Acces interdit id_e=1, droit=connecteur:edition,id_u=3');
 
         $this->getInternalAPIAsUser($userId)->post('/entite/1/connecteur', [
             'libelle' => 'Connecteur de test',
@@ -447,7 +462,7 @@ class ConnecteurAPIControllerTest extends PastellTestCase
         $this->getObjectInstancier()->getInstance(RoleUtilisateur::class)->addRole($userId, 'readonly', self::ID_E_COL);
 
         $this->expectException(ForbiddenException::class);
-        $this->expectExceptionMessage('Acces interdit id_e=1, droit=entite:edition,id_u=3');
+        $this->expectExceptionMessage('Acces interdit id_e=1, droit=connecteur:edition,id_u=3');
 
         $this->getInternalAPIAsUser($userId)->post('/entite/1/connecteur/12/file/champs5', [
             'file_name' => 'test.txt',

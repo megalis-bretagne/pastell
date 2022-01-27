@@ -9,7 +9,6 @@ class EntiteFluxAPIController extends BaseAPIController
     private $actionPossible;
     private $fluxEntiteSQL;
     private $actionExecutorFactory;
-    private $droitService;
     private $connecteurAssociationService;
 
     public function __construct(
@@ -17,18 +16,19 @@ class EntiteFluxAPIController extends BaseAPIController
         ActionPossible $actionPossible,
         FluxEntiteSQL $fluxEntiteSQL,
         ActionExecutorFactory $actionExecutorFactory,
-        DroitService $droitService,
         ConnecteurAssociationService $connecteurAssociationService
     ) {
-
         $this->entiteSQL = $entiteSQL;
         $this->actionPossible = $actionPossible;
         $this->fluxEntiteSQL = $fluxEntiteSQL;
         $this->actionExecutorFactory = $actionExecutorFactory;
-        $this->droitService = $droitService;
         $this->connecteurAssociationService = $connecteurAssociationService;
     }
 
+    /**
+     * @throws NotFoundException
+     * @throws ForbiddenException
+     */
     private function checkedEntite()
     {
         $id_e = $this->getFromQueryArgs(0) ?: 0;
@@ -40,26 +40,26 @@ class EntiteFluxAPIController extends BaseAPIController
     }
 
     /**
-     * @param $id_e
+     * @param int $id_e
      * @throws ForbiddenException
      */
     private function checkConnecteurLecture(int $id_e): void
     {
-        $part = $this->droitService->getPartForConnecteurDroit();
-        $this->checkDroit($id_e, DroitService::getDroitLecture($part));
+        $this->checkDroit($id_e, DroitService::getDroitLecture(DroitService::DROIT_CONNECTEUR));
     }
 
     /**
-     * @param $id_e
+     * @param int $id_e
      * @throws ForbiddenException
      */
     private function checkConnecteurEdition(int $id_e): void
     {
-        $part = $this->droitService->getPartForConnecteurDroit();
-        $this->checkDroit($id_e, DroitService::getDroitEdition($part));
+        $this->checkDroit($id_e, DroitService::getDroitEdition(DroitService::DROIT_CONNECTEUR));
     }
 
     /**
+     * @throws ForbiddenException
+     * @throws NotFoundException
      * @api {get}  /Connecteur/recherche /Connecteur/recherche
      * @apiDescription Recherche des association flux/connecteur (was: /list-flux-connecteur.php)
      * @apiGroup Connecteur
@@ -80,11 +80,12 @@ class EntiteFluxAPIController extends BaseAPIController
 
         $this->checkDroit($id_e, "entite:lecture");
 
-        $result = $this->fluxEntiteSQL->getAllFluxEntite($id_e, $flux, $type);
-        return $result;
+        return $this->fluxEntiteSQL->getAllFluxEntite($id_e, $flux, $type);
     }
 
-
+    /**
+     * @throws Exception
+     */
     public function post()
     {
         if ($this->getFromQueryArgs(3) == 'action') {
@@ -97,7 +98,12 @@ class EntiteFluxAPIController extends BaseAPIController
     }
 
 
-    public function postConnecteur()
+    /**
+     * @throws UnrecoverableException
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     */
+    public function postConnecteur(): array
     {
         $id_e = (int)$this->checkedEntite();
         $this->checkConnecteurEdition($id_e);
@@ -120,7 +126,13 @@ class EntiteFluxAPIController extends BaseAPIController
     }
 
     //Ca c'est vraiment pas bo... mais c'est pour assurer la compatibilité avec la V1
-    public function postAction()
+
+    /**
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws Exception
+     */
+    public function postAction(): array
     {
         $id_e = $this->checkedEntite();
         $this->checkConnecteurEdition($id_e);
@@ -131,7 +143,7 @@ class EntiteFluxAPIController extends BaseAPIController
         //WTF ! Il faut que le connecteur soit associé à un flux ??
 
         $action = $this->getFromRequest('action');
-        $action_params = $this->getFromRequest('action_params', array());
+        $action_params = $this->getFromRequest('action_params', []);
 
 
         // La vérification des droits est déléguée au niveau du test sur l'action est-elle possible.
@@ -151,18 +163,28 @@ class EntiteFluxAPIController extends BaseAPIController
             throw new Exception("L'action « $action »  n'est pas permise : " . $actionPossible->getLastBadRule());
         }
 
-
-        $result = $this->actionExecutorFactory->executeOnConnecteur($id_ce, $this->getUtilisateurId(), $action, true, $action_params);
+        $result = $this->actionExecutorFactory->executeOnConnecteur(
+            $id_ce,
+            $this->getUtilisateurId(),
+            $action,
+            true,
+            $action_params
+        );
         $message = $this->actionExecutorFactory->getLastMessage();
 
         if (! $result) {
             throw new Exception($message);
         }
 
-        return array("result" => $result, "message" => $message);
+        return ["result" => $result, "message" => $message];
     }
 
-    public function delete()
+    /**
+     * @throws ForbiddenException
+     * @throws NotFoundException
+     * @throws Exception
+     */
+    public function delete(): array
     {
         $id_e = $this->checkedEntite();
         $id_fe = $this->getFromRequest('id_fe');
