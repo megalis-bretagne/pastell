@@ -12,6 +12,7 @@ class DroitService
 
     public const DROIT_CONNECTEUR = "connecteur";
     public const DROIT_SYSTEM = "system";
+    public const DROIT_ENTITE = "entite";
 
     public static function getDroitLecture(string $part): string
     {
