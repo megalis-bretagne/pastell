@@ -103,4 +103,10 @@ class HttpApiTest extends PastellTestCase
         $all = $this->getJournal()->getAll(0, '', 0, 0, 0, 10);
         $this->assertEquals(1, $all[0]['id_u']);
     }
+
+    public function testGetDocumentEndingWithPhp(): void
+    {
+        $this->getCall('/v2/entite/1/document/jfkvphp');
+        $this->expectOutputRegex('/HTTP\/1.1 403 Forbidden/');
+    }
 }
