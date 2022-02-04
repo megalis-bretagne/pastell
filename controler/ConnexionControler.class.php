@@ -31,7 +31,7 @@ class ConnexionControler extends PastellControler
         } catch (Exception $e) {
         }
 
-        if (! $this->getAuthentification()->isConnected()) {
+        if (!$this->getAuthentification()->isConnected()) {
             $this->redirect("/Connexion/connexion");
         }
 
@@ -54,48 +54,14 @@ class ConnexionControler extends PastellControler
     }
 
     /**
-     * @deprecated 3.0.0 Cette partie est dépréciée et n'est utile qu'avec pastell-compat-v2 et sera retiré dans une prochaine version mineur
-     */
-    public function openIdReturnAction()
-    {
-        $recuperateur = new Recuperateur($_GET);
-        $state = $recuperateur->get('state');
-        $state = urldecode($state);
-        $state_array = array();
-        parse_str($state, $state_array);
-        $id_ce = $state_array['id_ce'];
-        /** @var OpenIDAuthentication $openIdAuthentication */
-        $openIdAuthentication = $this->getConnecteurFactory()->getConnecteurById($id_ce);
-        if (!$openIdAuthentication) {
-            $this->redirect();
-        }
-        $sub = false;
-        try {
-            $sub = $openIdAuthentication->returnAuthenticate($recuperateur);
-        } catch (Exception $e) {
-            $this->setLastError($e->getMessage());
-            $this->redirect("Connexion/connexion");
-        }
-
-        $id_u = $this->getUtilisateur()->getIdFromLogin($sub);
-        if (!$id_u) {
-            $this->setLastError("Aucun utilisateur ne correspond au login $sub");
-            $this->redirect("Connexion/connexion");
-        }
-
-        $_SESSION['open_id_authenticate_id_ce'] = $id_ce;
-
-        $this->setConnexion($id_u, "OpenID");
-        $this->redirect();
-    }
-
-    /**
      * @param AuthenticationConnecteur|null $authenticationConnecteur
      * @return array|bool|mixed
      * @throws Exception
      */
-    public function apiExternalConnexion(AuthenticationConnecteur $authenticationConnecteur = null, bool $redirect = true)
-    {
+    public function apiExternalConnexion(
+        AuthenticationConnecteur $authenticationConnecteur = null,
+        bool $redirect = true
+    ) {
         if (is_null($authenticationConnecteur)) {
             /** @var AuthenticationConnecteur $authenticationConnecteur */
             $authenticationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur('Authentification');
@@ -176,7 +142,13 @@ class ConnexionControler extends PastellControler
         $login = $infoUtilisateur['login'];
         $this->getJournal()->setId($id_u);
         $nom = $infoUtilisateur['prenom'] . " " . $infoUtilisateur['nom'];
-        $this->getJournal()->add(Journal::CONNEXION, $infoUtilisateur['id_e'], 0, "Connecté", "$nom s'est connecté via $external_system depuis l'adresse " . $_SERVER['REMOTE_ADDR']);
+        $this->getJournal()->add(
+            Journal::CONNEXION,
+            $infoUtilisateur['id_e'],
+            0,
+            "Connecté",
+            "$nom s'est connecté via $external_system depuis l'adresse " . $_SERVER['REMOTE_ADDR']
+        );
         $this->getAuthentification()->connexion($login, $id_u);
     }
 
@@ -222,7 +194,6 @@ class ConnexionControler extends PastellControler
 
     public function oublieIdentifiantAction()
     {
-
         $config = false;
         try {
             $config = $this->getConnecteurFactory()->getGlobalConnecteurConfig('message-oublie-identifiant');
@@ -297,15 +268,6 @@ class ConnexionControler extends PastellControler
             $authentificationConnecteur->logout($authentificationConnecteur->getRedirectUrl());
         }
 
-        if (isset($_SESSION['open_id_authenticate_id_ce'])) {
-            /** @deprecated 3.0.0 Cette partie est dépréciée et n'est utile qu'avec pastell-compat-v2 et sera retiré dans une prochaine version mineur **/
-            /** @var OpenIDAuthentication $openIdAuthentication */
-            $openIdAuthentication = $this->getConnecteurFactory()->getConnecteurById($_SESSION['open_id_authenticate_id_ce']);
-            if ($openIdAuthentication) {
-                $openIdAuthentication->logout();
-            }
-        }
-
         $this->redirect("/Connexion/connexion");
     }
 
@@ -342,7 +304,7 @@ class ConnexionControler extends PastellControler
         }
         $id_u = $this->getUtilisateurListe()->getUtilisateurByLogin($login);
 
-        if (! $id_u) {
+        if (!$id_u) {
             $this->setLastError("Identifiant ou mot de passe incorrect.");
             $this->redirect($redirect_fail);
         }
@@ -350,7 +312,7 @@ class ConnexionControler extends PastellControler
         $verificationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur("Vérification");
 
         if ($verificationConnecteur && $login != 'admin') {
-            if (! $verificationConnecteur->verifLogin($login, $password)) {
+            if (!$verificationConnecteur->verifLogin($login, $password)) {
                 $this->getLastError()->setLastError("Login ou mot de passe incorrect. (LDAP)");
                 $this->redirect($redirect_fail);
             }
@@ -370,7 +332,7 @@ class ConnexionControler extends PastellControler
 
         $certificatConnexion = $this->getInstance(CertificatConnexion::class);
 
-        if (! $certificatConnexion->connexionGranted($id_u)) {
+        if (!$certificatConnexion->connexionGranted($id_u)) {
             $this->setLastError("Vous devez avoir un certificat valide pour ce compte");
             $this->redirect($redirect_fail);
         }
@@ -378,7 +340,13 @@ class ConnexionControler extends PastellControler
         $this->getJournal()->setId($id_u);
         $infoUtilisateur = $this->getUtilisateur()->getInfo($id_u);
         $nom = $infoUtilisateur['prenom'] . " " . $infoUtilisateur['nom'];
-        $this->getJournal()->add(Journal::CONNEXION, $infoUtilisateur['id_e'], 0, "Connecté", "$nom s'est connecté depuis l'adresse " . $_SERVER['REMOTE_ADDR']);
+        $this->getJournal()->add(
+            Journal::CONNEXION,
+            $infoUtilisateur['id_e'],
+            0,
+            "Connecté",
+            "$nom s'est connecté depuis l'adresse " . $_SERVER['REMOTE_ADDR']
+        );
         $this->getAuthentification()->connexion($login, $id_u);
         return $id_u;
     }
@@ -391,20 +359,12 @@ class ConnexionControler extends PastellControler
         $this->redirect(urldecode($request_uri));
     }
 
-    public function renderOasisErrorAction()
-    {
-        $this->{'page'} = "connexion";
-        $this->{'page_title'} = "Erreur";
-        $this->{'template_milieu'} = "ConnexionOasisError";
-        $this->renderDefault();
-    }
-
     public function autoConnectAction()
     {
         $certificatConnexion = new CertificatConnexion($this->getSQLQuery());
         $id_u = $certificatConnexion->autoConnect();
 
-        if (! $id_u) {
+        if (!$id_u) {
             $this->redirect("/Connexion/index");
         }
 
@@ -413,7 +373,13 @@ class ConnexionControler extends PastellControler
 
         $this->getJournal()->setId($id_u);
         $nom = $utilisateurInfo['prenom'] . " " . $utilisateurInfo['nom'];
-        $this->getJournal()->add(Journal::CONNEXION, $utilisateurInfo['id_e'], 0, "Connecté", "$nom s'est connecté automatiquement depuis l'adresse " . $_SERVER['REMOTE_ADDR']);
+        $this->getJournal()->add(
+            Journal::CONNEXION,
+            $utilisateurInfo['id_e'],
+            0,
+            "Connecté",
+            "$nom s'est connecté automatiquement depuis l'adresse " . $_SERVER['REMOTE_ADDR']
+        );
 
 
         $this->getAuthentification()->connexion($utilisateurInfo['login'], $id_u);
@@ -428,7 +394,7 @@ class ConnexionControler extends PastellControler
             self::CHANGE_PASSWORD_TOKEN_TTL_IN_SECONDS
         );
 
-        if (! $id_u) {
+        if (!$id_u) {
             /* Note : on ne peut pas mettre de message d'erreur personnalisé pour le moment */
             echo "Le lien du mail a expiré. Veuillez recommencer la procédure";
             exit_wrapper();
@@ -446,7 +412,7 @@ class ConnexionControler extends PastellControler
 
         $id_u = $this->getId_uFromTokenOrFailed($mail_verif_password);
 
-        if (! $password) {
+        if (!$password) {
             /* Note : on ne peut pas mettre de message d'erreur personnalisé pour le moment */
             $this->setLastError("Le mot de passe est obligatoire");
             $this->redirect("/Connexion/changementMdp?mail_verif=$mail_verif_password");
@@ -468,7 +434,13 @@ class ConnexionControler extends PastellControler
         $mailVerifPassword = $passwordGenerator->getPassword();
         $utilisateur->reinitPassword($id_u, $mailVerifPassword);
 
-        $this->getJournal()->add(Journal::MODIFICATION_UTILISATEUR, $infoUtilisateur['id_e'], 0, "mot de passe modifié", "{$infoUtilisateur['login']} ({$infoUtilisateur['id_u']}) a modifié son mot de passe");
+        $this->getJournal()->add(
+            Journal::MODIFICATION_UTILISATEUR,
+            $infoUtilisateur['id_e'],
+            0,
+            "mot de passe modifié",
+            "{$infoUtilisateur['login']} ({$infoUtilisateur['id_u']}) a modifié son mot de passe"
+        );
 
         /* Note : on ne peut pas mettre de message d'erreur personnalisé pour le moment */
         $this->setLastMessage("Votre mot de passe a été modifié");
