@@ -13,7 +13,7 @@
   afin de gérer les connecteurs et les associations de types de documents!!
   Il faut lancer la commande `app:user:add-connecteur-droit` pour reporter les droits (entite:) existants aux nouveaux droits (connecteur:) #1136
 - Suppression de l'authentification OASIS/OPENID #1459
-- Suppression de LastUpstart UPSTART_TIME_SEND_WARNING #1459
+- Suppression de LastUpstart UPSTART_TIME_SEND_WARNING #1461
 
 # [3.1.11]
 
