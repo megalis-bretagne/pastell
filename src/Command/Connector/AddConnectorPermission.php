@@ -40,6 +40,11 @@ class AddConnectorPermission extends BaseCommand
         ;
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
+     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->getIO()->title(
@@ -50,25 +55,11 @@ class AddConnectorPermission extends BaseCommand
         $roleDroitEntite = [];
         foreach ($this->roleSQL->getAllRole() as $role) {
             $droit = $this->roleSQL->getDroit($this->roleDroit->getAllDroit(), $role['role']);
-
-            $droitConnecteur = array_filter($droit, function ($value, $key) {
-                list($part) = explode(":", $key);
-                return $value == 1 && $part == DroitService::DROIT_CONNECTEUR;
-            }, ARRAY_FILTER_USE_BOTH);
-            if ($droitConnecteur) {
-                $roleDroitConnecteur[$role['role']] = array_keys($droitConnecteur);
-            }
-
-            $droitEntite = array_filter($droit, function ($value, $key) {
-                list($part) = explode(":", $key);
-                return $value == 1 && $part == DroitService::DROIT_ENTITE;
-            }, ARRAY_FILTER_USE_BOTH);
-            if ($droitEntite) {
-                $roleDroitEntite[$role['role']] = array_keys($droitEntite);
-            }
+            $this->RoleDroitfilter($role['role'], $droit, DroitService::DROIT_CONNECTEUR, $roleDroitConnecteur);
+            $this->RoleDroitfilter($role['role'], $droit, DroitService::DROIT_ENTITE, $roleDroitEntite);
         }
 
-        if (count($roleDroitConnecteur)) {
+        if (! empty($roleDroitConnecteur)) {
             $this->getIO()->comment(
                 "Nothing to do. There are already connector permission for role: " . json_encode($roleDroitConnecteur)
             );
@@ -96,5 +87,23 @@ class AddConnectorPermission extends BaseCommand
         $this->getIO()->progressFinish();
         $this->getIO()->success('Success for ' . $numberOfRole . ' role.');
         return 0;
+    }
+
+    /**
+     * @param string $role
+     * @param array $droit
+     * @param string $familleDroit
+     * @param array $roleDroit
+     * @return void
+     */
+    private function roleDroitFilter(string $role, array $droit, string $familleDroit, array &$roleDroit): void
+    {
+        $droitFilter = array_filter($droit, static function ($value, $key) use ($familleDroit) {
+            list($part) = explode(":", $key);
+            return $value == 1 && $part === $familleDroit;
+        }, ARRAY_FILTER_USE_BOTH);
+        if (! empty($droitFilter)) {
+            $roleDroit[$role] = array_keys($droitFilter);
+        }
     }
 }
