@@ -38,7 +38,6 @@ $objectInstancier->setInstance('daemon_log_file', DAEMON_LOG_FILE);
 // TODO: Remove in 4.0
 $objectInstancier->setInstance('upstart_touch_file', UPSTART_TOUCH_FILE);
 $objectInstancier->setInstance('upstart_time_send_warning', UPSTART_TIME_SEND_WARNING);
-$objectInstancier->setInstance('open_id_url_callback', SITE_BASE . "/Connexion/openIdReturn");
 /////
 
 

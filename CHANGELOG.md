@@ -9,6 +9,7 @@
 ## Retraits d'éléments dépréciés
 
 - Suppression de l'authentification par certificat au services Chorus Pro #1453
+- Suppression de l'authentification OASIS/OPENID #1459
 
 # [3.1.11]
 
