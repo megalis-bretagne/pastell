@@ -8,13 +8,14 @@ class FakeCPP extends PortailFactureConnecteur
     }
 
     /**
-     * @param string $idFournisseur
-     * @param string $periodeDateHeureEtatCourantDu
      * @return false|mixed|string
      * @throws CPPException
      */
-    protected function rechercheFactureParRecipiendaire($idFournisseur = "", $periodeDateHeureEtatCourantDu = "")
-    {
+    protected function rechercheFactureParRecipiendaire(
+        string $idFournisseur = "",
+        string $periodeDateHeureEtatCourantDu = "",
+        string $periodeDateHeureEtatCourantAu = ""
+    ) {
         $ListeFacturesCPP = file_get_contents(__DIR__ . "/fixtures/CPPListeFactures.json");
         if (!$ListeFacturesCPP) {
             throw new CPPException("Problème lors de la récuperation de la liste des factures cpp");
@@ -115,8 +116,10 @@ class FakeCPP extends PortailFactureConnecteur
     /**
      * @inheritDoc
      */
-    protected function rechercheFactureTravaux($periodeDateHeureEtatCourantDu = "")
-    {
+    protected function rechercheFactureTravaux(
+        string $periodeDateHeureEtatCourantDu = "",
+        string $periodeDateHeureEtatCourantAu = ""
+    ) {
         // TODO: Implement rechercheFactureTravaux() method.
     }
 }

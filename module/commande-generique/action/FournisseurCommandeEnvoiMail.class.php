@@ -17,8 +17,8 @@ class FournisseurCommandeEnvoiMail extends ActionExecutor
         );
 
 
-        $this->documentEmail = $this->objectInstancier->getInstance(DocumentEmail::class);
-        $this->documentEmail->add($this->id_d, $this->getDonneesFormulaire()->get('mail_fournisseur'), 'to');
+        $documentEmail = $this->objectInstancier->getInstance(DocumentEmail::class);
+        $documentEmail->add($this->id_d, $this->getDonneesFormulaire()->get('mail_fournisseur'), 'to');
 
         $mailsec->sendAllMail($this->id_e, $this->id_d);
 

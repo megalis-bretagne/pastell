@@ -4,6 +4,8 @@ class DatabaseUpdate
 {
     private $fileContent;
     private $databaseDefinition = array();
+    /** @var DatabaseDiff */
+    private $databaseDiff;
 
     public function __construct($fileContent, SQLQuery $sqlQuery = null)
     {

@@ -16,6 +16,8 @@ class FluxDataSedaDefault extends FluxData
 
     private $zip_file_list = [];
     private $archive_content;
+    /** @var ExtractZipStructure */
+    private $extractZipStructure;
 
     public function __construct(DonneesFormulaire $donneesFormulaire)
     {
