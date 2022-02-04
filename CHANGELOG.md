@@ -17,6 +17,7 @@
 - Complexification du token servant au changement de mot de passe lors d'un oubli de celui-ci #1441
 - Utilisation de la version 0.8.1 du generateur SEDA afin de supprimer la balise Agency (qui n'existe pas) pour les bordereaux SEDA 2.1 #1450
 - La directive NO_PROXY n'était pas prise en compte lors de l'intialisation des requêtes SOAP, entrainant un dysfonctionnement dans certain cas. #1454
+- L'API v2 pouvait renvoyer une erreur si l'identifiant du dossier terminait par `php` #1460
 
 ## Évolutions
 

@@ -112,7 +112,7 @@ class HttpApi
 
         $is_legacy = false;
         $old_api_function = false;
-        if (preg_match("#.php$#", $api_function)) {
+        if (preg_match("#\.php$#", $api_function)) {
             $old_api_function = $api_function;
             $old_info = $this->getAPINameFromLegacyScript($api_function);
             $api_function = "v2/" . $old_info[0];
