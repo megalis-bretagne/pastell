@@ -101,6 +101,8 @@ class RoleUtilisateurSQLTest extends PastellTestCase
             'annuaire:lecture',
             'commande-generique:edition',
             'commande-generique:lecture',
+            'connecteur:edition',
+            'connecteur:lecture',
             'document-a-signer:edition',
             'document-a-signer:lecture',
             'entite:edition',
@@ -195,38 +197,38 @@ class RoleUtilisateurSQLTest extends PastellTestCase
         $arbre_fille = $this->roleUtilisateurSQL->getArbreFille($id_u, "entite:lecture");
 
         $this->assertEquals(
-            array (
+            [
                 0 =>
-                    array (
+                    [
                         'id_e' => '1',
                         'denomination' => 'Bourg-en-Bresse',
                         'profondeur' => 0,
-                    ),
+                    ],
                 1 =>
-                    array (
+                    [
                         'id_e' => '2',
                         'denomination' => 'CCAS',
                         'profondeur' => 1,
-                    ),
+                    ],
                 2 =>
-                    array (
+                    [
                         'id_e' => '3',
                         'denomination' => 'Entité 1',
                         'profondeur' => 0,
-                    ),
+                    ],
                 3 =>
-                    array (
+                    [
                         'id_e' => '4',
                         'denomination' => 'Entité 2',
                         'profondeur' => 0,
-                    ),
+                    ],
                 4 =>
-                    array (
+                    [
                         'id_e' => '5',
                         'denomination' => 'Entité 3',
                         'profondeur' => 1,
-                    ),
-            ),
+                    ],
+            ],
             $arbre_fille
         );
     }

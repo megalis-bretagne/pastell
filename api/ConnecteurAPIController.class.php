@@ -14,7 +14,6 @@ class ConnecteurAPIController extends BaseAPIController
     private $connecteurFactory;
     private $connecteurDefinitionFiles;
     private $entiteSQL;
-    private $droitService;
     private $connecteurCreationService;
     private $connecteurDeletionService;
     private $connecteurModificationService;
@@ -27,7 +26,6 @@ class ConnecteurAPIController extends BaseAPIController
         ConnecteurFactory $connecteurFactory,
         ConnecteurDefinitionFiles $connecteurDefinitionFiles,
         EntiteSQL $entiteSQL,
-        DroitService $droitService,
         ConnecteurCreationService $connecteurCreationService,
         ConnecteurDeletionService $connecteurDeletionService,
         ConnecteurModificationService $connecteurModificationService
@@ -39,12 +37,14 @@ class ConnecteurAPIController extends BaseAPIController
         $this->connecteurFactory = $connecteurFactory;
         $this->connecteurDefinitionFiles = $connecteurDefinitionFiles;
         $this->entiteSQL = $entiteSQL;
-        $this->droitService = $droitService;
         $this->connecteurCreationService = $connecteurCreationService;
         $this->connecteurDeletionService = $connecteurDeletionService;
         $this->connecteurModificationService = $connecteurModificationService;
     }
 
+    /**
+     * @throws Exception
+     */
     private function verifExists($id_ce)
     {
         $info = $this->connecteurEntiteSQL->getInfo($id_ce);
@@ -53,6 +53,10 @@ class ConnecteurAPIController extends BaseAPIController
         }
     }
 
+    /**
+     * @throws NotFoundException
+     * @throws ForbiddenException
+     */
     private function checkedEntite()
     {
         $id_e = $this->getFromQueryArgs(0) ?: 0;
@@ -88,7 +92,7 @@ class ConnecteurAPIController extends BaseAPIController
      * @return array
      * @throws ForbiddenException
      */
-    public function listAllConnecteur()
+    public function listAllConnecteur(): array
     {
         $this->checkConnecteurLecture(0);
         $id_connecteur = $this->getFromQueryArgs(1);
@@ -118,17 +122,24 @@ class ConnecteurAPIController extends BaseAPIController
         return $this->getDetail($id_e, $id_ce);
     }
 
+    /**
+     * @throws Exception
+     */
     private function getDetail($id_e, $id_ce)
     {
         $result = $this->checkedConnecteur($id_e, $id_ce);
 
         $donneesFormulaire = $this->donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
         $result['data'] = $donneesFormulaire->getRawDataWithoutPassword();
-        $result['action-possible'] = $this->actionPossible->getActionPossibleOnConnecteur($id_ce, $this->getUtilisateurId());
+        $result['action-possible'] = $this->actionPossible
+            ->getActionPossibleOnConnecteur($id_ce, $this->getUtilisateurId());
 
         return $result;
     }
 
+    /**
+     * @throws Exception
+     */
     public function getExternalData($id_ce)
     {
         $field = $this->getFromQueryArgs(4);
@@ -143,6 +154,9 @@ class ConnecteurAPIController extends BaseAPIController
     }
 
     //TODO assurément c'est pas la bonne place de cette fonction
+    /**
+     * @throws Exception
+     */
     private function getActionNameFromField($id_ce, $field)
     {
         $connecteurConfig = $this->connecteurFactory->getConnecteurConfig($id_ce);
@@ -157,6 +171,10 @@ class ConnecteurAPIController extends BaseAPIController
         return $theField->getProperties('choice-action');
     }
 
+    /**
+     * @throws UnrecoverableException
+     * @throws Exception
+     */
     public function patchExternalData($id_e, $id_ce)
     {
         $field = $this->getFromQueryArgs(4);
@@ -173,6 +191,10 @@ class ConnecteurAPIController extends BaseAPIController
         return $this->getDetail($id_e, $id_ce);
     }
 
+    /**
+     * @throws NotFoundException
+     * @throws Exception
+     */
     public function getFichier($id_ce)
     {
         $field = $this->getFromQueryArgs(4);
@@ -205,6 +227,9 @@ class ConnecteurAPIController extends BaseAPIController
         // @codeCoverageIgnoreEnd
     }
 
+    /**
+     * @throws Exception
+     */
     public function checkedConnecteur($id_e, $id_ce)
     {
         $this->verifExists($id_ce);
@@ -216,23 +241,21 @@ class ConnecteurAPIController extends BaseAPIController
     }
 
     /**
-     * @param $id_e
+     * @param int $id_e
      * @throws ForbiddenException
      */
     private function checkConnecteurLecture(int $id_e): void
     {
-        $part = $this->droitService->getPartForConnecteurDroit();
-        $this->checkDroit($id_e, DroitService::getDroitLecture($part));
+        $this->checkDroit($id_e, DroitService::getDroitLecture(DroitService::DROIT_CONNECTEUR));
     }
 
     /**
-     * @param $id_e
+     * @param int $id_e
      * @throws ForbiddenException
      */
     private function checkConnecteurEdition(int $id_e): void
     {
-        $part = $this->droitService->getPartForConnecteurDroit();
-        $this->checkDroit($id_e, DroitService::getDroitEdition($part));
+        $this->checkDroit($id_e, DroitService::getDroitEdition(DroitService::DROIT_CONNECTEUR));
     }
 
     /**
@@ -286,12 +309,12 @@ class ConnecteurAPIController extends BaseAPIController
     }
 
     /**
-     * @return mixed
+     * @return array
      * @throws ForbiddenException
      * @throws NotFoundException
      * @throws Exception
      */
-    public function delete()
+    public function delete(): array
     {
         $id_e = $this->checkedEntite();
         $id_ce = $this->getFromQueryArgs(2);
@@ -343,7 +366,6 @@ class ConnecteurAPIController extends BaseAPIController
             "Le libellé a été modifié en « $libelle »"
         );
 
-        $result['result'] = self::RESULT_OK;
         return $this->detail($id_e, $id_ce);
     }
 
@@ -412,10 +434,10 @@ class ConnecteurAPIController extends BaseAPIController
      * @return array
      * @throws Exception
      */
-    public function postAction($id_e, $id_ce)
+    public function postAction($id_e, $id_ce): array
     {
         $action_name = $this->getFromQueryArgs(4);
-        $action_params = $this->getFromRequest('action_params', array());
+        $action_params = $this->getFromRequest('action_params', []);
 
         $this->checkedConnecteur($id_e, $id_ce);
 
@@ -450,9 +472,9 @@ class ConnecteurAPIController extends BaseAPIController
             $action_params
         );
 
-        return array(
+        return [
             "result" => $result,
             "last_message" => $this->actionExecutorFactory->getLastMessage()
-        );
+        ];
     }
 }

@@ -9,6 +9,9 @@
 ## Retraits d'éléments dépréciés
 
 - Suppression de l'authentification par certificat au services Chorus Pro #1453
+- Suppression de la constante CONNECTEUR_DROIT. Il faut maintenant ajouter les droits 'connecteur:lecture' et 'connecteur:edition'
+  afin de gérer les connecteurs et les associations de types de documents!!
+  Il faut lancer la commande `app:user:add-connecteur-droit` pour reporter les droits (entite:) existants aux nouveaux droits (connecteur:) #1136
 - Suppression de l'authentification OASIS/OPENID #1459
 
 # [3.1.11]

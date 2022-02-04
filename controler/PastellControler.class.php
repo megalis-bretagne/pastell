@@ -5,6 +5,10 @@ use Pastell\Service\Droit\DroitService;
 
 class PastellControler extends Controler
 {
+    /**
+     * @throws LastMessageException
+     * @throws LastErrorException
+     */
     public function _beforeAction()
     {
         if (! $this->getAuthentification()->isConnected()) {
@@ -19,32 +23,53 @@ class PastellControler extends Controler
 
     protected function setDroitLectureOnConnecteur(int $id_e): void
     {
-        $this->{'droit_lecture_on_connecteur'} = $this->getDroitService()->hasDroitConnecteurLecture($id_e, $this->getId_u());
+        $this->{'droit_lecture_on_connecteur'} = $this->getDroitService()->hasDroitConnecteurLecture(
+            $id_e,
+            $this->getId_u()
+        );
     }
 
+    /**
+     * @throws LastMessageException
+     * @throws LastErrorException
+     */
     public function hasConnecteurDroitEdition(int $id_e): void
     {
-        $part = $this->getDroitService()->getPartForConnecteurDroit();
-        $this->verifDroit($id_e, DroitService::getDroitEdition($part));
+        $this->verifDroit($id_e, DroitService::getDroitEdition(DroitService::DROIT_CONNECTEUR));
     }
 
+    /**
+     * @throws LastMessageException
+     * @throws LastErrorException
+     */
     public function hasConnecteurDroitLecture(int $id_e): void
     {
-        $part = $this->getDroitService()->getPartForConnecteurDroit();
-        $this->verifDroit($id_e, DroitService::getDroitLecture($part));
+        $this->verifDroit($id_e, DroitService::getDroitLecture(DroitService::DROIT_CONNECTEUR));
     }
 
+    /**
+     * @throws LastMessageException
+     * @throws LastErrorException
+     */
     public function hasDroitLecture($id_e)
     {
         $this->verifDroit($id_e, "entite:lecture");
     }
 
+    /**
+     * @throws LastMessageException
+     * @throws LastErrorException
+     */
     public function hasDroitEdition($id_e)
     {
         $this->verifDroit($id_e, "entite:edition");
     }
 
-    public function verifDroit($id_e, $droit, $redirect_to = "")
+    /**
+     * @throws LastMessageException
+     * @throws LastErrorException
+     */
+    public function verifDroit($id_e, $droit, $redirect_to = ""): bool
     {
         if ($id_e && ! $this->getEntiteSQL()->getInfo($id_e)) {
             if ($this->hasDroit(0, $droit)) {
@@ -62,7 +87,7 @@ class PastellControler extends Controler
         return true;
     }
 
-    public function hasDroit($id_e, $droit)
+    public function hasDroit($id_e, $droit): bool
     {
         if (! $this->getId_u()) {
             return true;
@@ -163,12 +188,10 @@ class PastellControler extends Controler
             $this->{'menu_gauche_select'} = "";
             if ($this->id_e_menu) {
                 $this->{'menu_gauche_link'} = "Document/list?id_e=" . $this->{'id_e_menu'};
-            } else {
-                if (isset($this->getViewParameter()['id_e'])) {
+            } elseif (isset($this->getViewParameter()['id_e'])) {
                     $this->{'menu_gauche_link'} = "Document/list?id_e=" . $this->{'id_e'};
-                } else {
-                    $this->{'menu_gauche_link'} = "Document/list?id_e=0";
-                }
+            } else {
+                $this->{'menu_gauche_link'} = "Document/list?id_e=0";
             }
         }
         if (! $this->isViewParameter('navigation_url')) {
@@ -199,7 +222,7 @@ class PastellControler extends Controler
     {
         if (! $this->isViewParameter('id_e_menu')) {
             $recuperateur = $this->getGetInfo();
-            $this->{'id_e_menu'} = $recuperateur->getInt('id_e', 0);
+            $this->{'id_e_menu'} = $recuperateur->getInt('id_e');
             $this->{'type_e_menu'} = get_hecho(
                 $recuperateur->get(
                     'type',
@@ -210,16 +233,18 @@ class PastellControler extends Controler
 
         $listeCollectivite = $this->getRoleUtilisateur()->getEntite($this->getId_u(), "entite:lecture");
 
-        $this->{'display_entite_racine'} = $this->{'id_e_menu'} != 0 && (count($listeCollectivite) > 1 || (isset($listeCollectivite[0]) && $listeCollectivite[0] == 0));
+        $this->{'display_entite_racine'} =
+            $this->{'id_e_menu'} != 0
+            && (count($listeCollectivite) > 1 || (isset($listeCollectivite[0]) && $listeCollectivite[0] == 0));
     }
 
     /**
      * @return array
      * @throws NotFoundException
      */
-    public function getAllModule()
+    public function getAllModule(): array
     {
-        $all_module = array();
+        $all_module = [];
 
         /** @var FluxAPIController $fluxAPIController */
         $fluxAPIController = $this->getAPIController('Flux');
@@ -277,7 +302,7 @@ class PastellControler extends Controler
 
     protected function apiDelete($ressource)
     {
-        return $this->apiCall('delete', $ressource, array());
+        return $this->apiCall('delete', $ressource, []);
     }
 
     protected function apiPatch($ressource)
@@ -290,7 +315,7 @@ class PastellControler extends Controler
     /**
      * @return SQLQuery
      */
-    public function getSQLQuery()
+    public function getSQLQuery(): SQLQuery
     {
         return $this->getInstance(SQLQuery::class);
     }
@@ -298,7 +323,7 @@ class PastellControler extends Controler
     /**
      * @return EntiteSQL
      */
-    public function getEntiteSQL()
+    public function getEntiteSQL(): EntiteSQL
     {
         return $this->getInstance(EntiteSQL::class);
     }
@@ -306,7 +331,7 @@ class PastellControler extends Controler
     /**
      * @return RoleUtilisateur
      */
-    public function getRoleUtilisateur()
+    public function getRoleUtilisateur(): RoleUtilisateur
     {
         return $this->getInstance(RoleUtilisateur::class);
     }
@@ -322,7 +347,7 @@ class PastellControler extends Controler
     /**
      * @return Authentification
      */
-    public function getAuthentification()
+    public function getAuthentification(): Authentification
     {
         return $this->getInstance(Authentification::class);
     }
@@ -335,7 +360,7 @@ class PastellControler extends Controler
     /**
      * @return ConnecteurEntiteSQL
      */
-    public function getConnecteurEntiteSQL()
+    public function getConnecteurEntiteSQL(): ConnecteurEntiteSQL
     {
         return $this->getInstance(ConnecteurEntiteSQL::class);
     }
@@ -343,7 +368,7 @@ class PastellControler extends Controler
     /**
      * @return WorkerSQL
      */
-    public function getWorkerSQL()
+    public function getWorkerSQL(): WorkerSQL
     {
         return $this->getInstance(WorkerSQL::class);
     }
@@ -351,7 +376,7 @@ class PastellControler extends Controler
     /**
      * @return Journal
      */
-    public function getJournal()
+    public function getJournal(): Journal
     {
         return $this->getInstance(Journal::class);
     }
@@ -359,7 +384,7 @@ class PastellControler extends Controler
     /**
      * @return DocumentTypeFactory
      */
-    public function getDocumentTypeFactory()
+    public function getDocumentTypeFactory(): DocumentTypeFactory
     {
         return $this->getInstance(DocumentTypeFactory::class);
     }
@@ -367,7 +392,7 @@ class PastellControler extends Controler
     /**
      * @return ConnecteurFactory
      */
-    public function getConnecteurFactory()
+    public function getConnecteurFactory(): ConnecteurFactory
     {
         return $this->getInstance(ConnecteurFactory::class);
     }
@@ -375,15 +400,15 @@ class PastellControler extends Controler
     /**
      * @return UtilisateurSQL
      */
-    public function getUtilisateur()
+    public function getUtilisateur(): UtilisateurSQL
     {
-        return $this->getInstance(Utilisateur::class);
+        return $this->getInstance(UtilisateurSQL::class);
     }
 
     /**
      * @return UtilisateurListe
      */
-    public function getUtilisateurListe()
+    public function getUtilisateurListe(): UtilisateurListe
     {
         return $this->getInstance(UtilisateurListe::class);
     }
@@ -391,7 +416,7 @@ class PastellControler extends Controler
     /**
      * @return ActionExecutorFactory
      */
-    public function getActionExecutorFactory()
+    public function getActionExecutorFactory(): ActionExecutorFactory
     {
         return $this->getInstance(ActionExecutorFactory::class);
     }
@@ -399,7 +424,7 @@ class PastellControler extends Controler
     /**
      * @return ActionPossible
      */
-    public function getActionPossible()
+    public function getActionPossible(): ActionPossible
     {
         return $this->getInstance(ActionPossible::class);
     }
@@ -416,7 +441,7 @@ class PastellControler extends Controler
     /**
      * @return DocumentSQL
      */
-    public function getDocumentSQL()
+    public function getDocumentSQL(): DocumentSQL
     {
         return $this->getInstance(DocumentSQL::class);
     }
@@ -424,7 +449,7 @@ class PastellControler extends Controler
     /**
      * @return DocumentEntite
      */
-    public function getDocumentEntite()
+    public function getDocumentEntite(): DocumentEntite
     {
         return $this->getInstance(DocumentEntite::class);
     }
@@ -432,7 +457,7 @@ class PastellControler extends Controler
     /**
      * @return ActionChange
      */
-    public function getActionChange()
+    public function getActionChange(): ActionChange
     {
         return $this->getInstance(ActionChange::class);
     }
@@ -440,7 +465,7 @@ class PastellControler extends Controler
     /**
      * @return RoleSQL
      */
-    public function getRoleSQL()
+    public function getRoleSQL(): RoleSQL
     {
         return $this->getInstance(RoleSQL::class);
     }
@@ -448,7 +473,7 @@ class PastellControler extends Controler
     /**
      * @return EntiteListe
      */
-    public function getEntiteListe()
+    public function getEntiteListe(): EntiteListe
     {
         return $this->getInstance(EntiteListe::class);
     }
@@ -456,7 +481,7 @@ class PastellControler extends Controler
     /**
      * @return ConnecteurDefinitionFiles
      */
-    public function getConnecteurDefinitionFiles()
+    public function getConnecteurDefinitionFiles(): ConnecteurDefinitionFiles
     {
         return $this->getInstance(ConnecteurDefinitionFiles::class);
     }
@@ -464,7 +489,7 @@ class PastellControler extends Controler
     /**
      * @return FluxEntiteSQL
      */
-    public function getFluxEntiteSQL()
+    public function getFluxEntiteSQL(): FluxEntiteSQL
     {
         return $this->getInstance(FluxEntiteSQL::class);
     }
@@ -472,7 +497,7 @@ class PastellControler extends Controler
     /**
      * @return FluxDefinitionFiles
      */
-    public function getFluxDefinitionFiles()
+    public function getFluxDefinitionFiles(): FluxDefinitionFiles
     {
         return $this->getInstance(FluxDefinitionFiles::class);
     }
@@ -480,13 +505,13 @@ class PastellControler extends Controler
     /**
      * @return ZenMail
      */
-    public function getZenMail()
+    public function getZenMail(): ZenMail
     {
         return $this->getInstance(ZenMail::class);
     }
 
     /** @return UtilisateurCreator */
-    public function getUtilisateurCreator()
+    public function getUtilisateurCreator(): UtilisateurCreator
     {
         return $this->getInstance(UtilisateurCreator::class);
     }
@@ -499,7 +524,7 @@ class PastellControler extends Controler
     /**
      * @return Extensions
      */
-    public function getExtensions()
+    public function getExtensions(): Extensions
     {
         return $this->getInstance(Extensions::class);
     }
@@ -507,7 +532,7 @@ class PastellControler extends Controler
     /**
      * @return ExtensionSQL
      */
-    public function getExtensionSQL()
+    public function getExtensionSQL(): ExtensionSQL
     {
         return $this->getInstance(ExtensionSQL::class);
     }
@@ -515,7 +540,7 @@ class PastellControler extends Controler
     /**
      * @return Monolog\Logger
      */
-    public function getLogger()
+    public function getLogger(): Logger
     {
         return $this->getInstance(Logger::class);
     }

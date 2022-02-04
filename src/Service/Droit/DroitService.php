@@ -26,13 +26,11 @@ class DroitService
 
     private $roleUtilisateur;
     private $documentTypeFactory;
-    private $connecteur_droit;
 
-    public function __construct(RoleUtilisateur $roleUtilisateur, DocumentTypeFactory $documentTypeFactory, bool $connecteur_droit = false)
+    public function __construct(RoleUtilisateur $roleUtilisateur, DocumentTypeFactory $documentTypeFactory)
     {
         $this->roleUtilisateur = $roleUtilisateur;
         $this->documentTypeFactory = $documentTypeFactory;
-        $this->connecteur_droit = $connecteur_droit;
     }
 
     /**
@@ -119,8 +117,7 @@ class DroitService
      */
     public function hasDroitConnecteurLecture(int $id_e, int $id_u): bool
     {
-        $part = $this->getPartForConnecteurDroit();
-        return $this->hasDroit($id_u, self::getDroitLecture($part), $id_e);
+        return $this->hasDroit($id_u, self::getDroitLecture(self::DROIT_CONNECTEUR), $id_e);
     }
 
     /**
@@ -130,21 +127,7 @@ class DroitService
      */
     public function hasDroitConnecteurEdition(int $id_e, int $id_u): bool
     {
-        $part = $this->getPartForConnecteurDroit();
-        return $this->hasDroit($id_u, self::getDroitEdition($part), $id_e);
-    }
-
-    /**
-     * @return string
-     */
-    public function getPartForConnecteurDroit(): string
-    {
-        if ($this->connecteur_droit) {
-            $part = self::DROIT_CONNECTEUR;
-        } else {
-            $part = self::DROIT_ENTITE;
-        }
-        return $part;
+        return $this->hasDroit($id_u, self::getDroitEdition(self::DROIT_CONNECTEUR), $id_e);
     }
 
     /**

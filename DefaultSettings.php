@@ -265,15 +265,6 @@ if (! defined('PES_VIEWER_URL')) {
     define('PES_VIEWER_URL', SITE_BASE);
 }
 
-/**
- * Si CONNECTEUR_DROIT est activé, alors l'accès au connecteur est géré par connecteur:lecture et connecteur:edition
- *   à la place de entite:lecture et entite:edition
- * @deprecated 3.0.4 : doit passé obligatoirement à true sur la prochaine version mineure
- */
-if (!defined("CONNECTEUR_DROIT")) {
-    define("CONNECTEUR_DROIT", false);
-}
-
 if (!defined("HTTP_PROXY_URL")) {
     define("HTTP_PROXY_URL", "");
 }
