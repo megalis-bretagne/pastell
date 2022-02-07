@@ -61,17 +61,6 @@ class Extensions
         return strcmp($a['nom'], $b['nom']);
     }
 
-    public function getById($id)
-    {
-        foreach ($this->getAll() as $id_e => $info) {
-            if ($info['id'] == $id) {
-                return $info;
-            }
-        }
-        return false;
-    }
-
-
     public function getAllModule()
     {
         return $this->getAllElement(
