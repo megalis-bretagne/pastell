@@ -100,14 +100,6 @@ if (!defined("MODE_MUTUALISE")) {
     define("MODE_MUTUALISE", false);
 }
 
-if (!defined("UPSTART_TOUCH_FILE")) {
-    define("UPSTART_TOUCH_FILE", __DIR__ . "/log/upstart.mtime");
-}
-
-if (!defined("UPSTART_TIME_SEND_WARNING")) {
-    define("UPSTART_TIME_SEND_WARNING", 600);
-}
-
 if (!defined("AIDE_URL")) {
     define("AIDE_URL", "Aide/index");
 }
@@ -121,7 +113,8 @@ if (!defined("TIMEZONE")) {
 }
 
 
-//Information pour le démon Pastell - les informations sont celles par défaut pour une Ubuntu 14.04LTS  et la plupart des sytêmes Linux
+//Information pour le démon Pastell
+//les informations sont celles par défaut pour une Ubuntu 14.04LTS  et la plupart des sytêmes Linux
 if (!defined("NB_WORKERS")) {
     define("NB_WORKERS", 5);
 }

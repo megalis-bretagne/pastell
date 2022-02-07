@@ -35,12 +35,6 @@ $objectInstancier->setInstance('bd_password', BD_PASS);
 
 $objectInstancier->setInstance('daemon_log_file', DAEMON_LOG_FILE);
 
-// TODO: Remove in 4.0
-$objectInstancier->setInstance('upstart_touch_file', UPSTART_TOUCH_FILE);
-$objectInstancier->setInstance('upstart_time_send_warning', UPSTART_TIME_SEND_WARNING);
-/////
-
-
 $objectInstancier->setInstance('redis_server', REDIS_SERVER);
 $objectInstancier->setInstance('redis_port', REDIS_PORT);
 

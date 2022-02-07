@@ -18,11 +18,6 @@ Le serveur web doit "servir" aussi le répertoire "web-mailsec"
 # Créer un administrateur
 
 Le script create-admin.php permet la création d'un administrateur initial
- 
-# Mettre en place le fichier upstart
-Copier le fichier batch pastell-upstart.conf vers le repertoire de configuration d'upstart
-
-(Il est possible de le mettre dans un crontab)
 
 # Mettre en place un crontab 
 50 4 * * * recup-classification.php

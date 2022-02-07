@@ -75,8 +75,6 @@ abstract class PastellTestCase extends TestCase
         );
 
         $this->objectInstancier->setInstance('temp_directory', sys_get_temp_dir());
-        $this->objectInstancier->setInstance('upstart_touch_file', sys_get_temp_dir() . "/upstart.mtime");
-        $this->objectInstancier->setInstance('upstart_time_send_warning', 600);
         $this->objectInstancier->setInstance('disable_job_queue', false);
         $this->objectInstancier->setInstance('cache_ttl_in_seconds', 10);
         $this->objectInstancier->setInstance('rgpd_page_path', RGPD_PAGE_PATH);
