@@ -91,3 +91,11 @@ Gitlab-ci utilise la commande `entrypoint` mais surcharge la commande.
 ```bash
 docker-compose -f ci-resources/production/docker-compose.yml up -d
 ```
+
+# Utilisation de l'API Pastell
+
+Pour utiliser l'API de Pastell en PHP, on pourra utiliser le package pastell-api-php
+
+```
+composer require libriciel/pastell-api-php
+```

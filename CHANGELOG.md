@@ -5,6 +5,7 @@
 - Suppression des méthodes magiques `__get()` et `__set()` sur la class `ObjectInstancier`, il convient d'utiliser respectivement
 `getInstance()` et `setInstance()`
 - Suppression de la directive de configuration LIBERSIGN_INSTALLER, Libersign est fourni via un container docker
+- Suppression de documentations et de scripts obsolètes concernant les versions de Pastell inférieures à 4.0.0 
 
 ## Retraits d'éléments dépréciés
 

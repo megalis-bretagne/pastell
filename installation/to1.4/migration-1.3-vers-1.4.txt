@@ -1,8 +1,0 @@
-stop pastell
-rm /etc/init/pastell
-
-apt-get install graphviz
-
-
-php dbupdate.php
-
