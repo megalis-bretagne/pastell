@@ -95,9 +95,8 @@ if (!defined("PLATEFORME_MAIL")) {
 }
 
 // En mode saas/mutualisé mailsec_from est renseigné avec PLATEFORME_MAIL
-/** @deprecated V3.1 : doit passer à true sur la prochaine version */
 if (!defined("MODE_MUTUALISE")) {
-    define("MODE_MUTUALISE", false);
+    define("MODE_MUTUALISE", true);
 }
 
 if (!defined("AIDE_URL")) {
