@@ -5,7 +5,7 @@ include:
     file: '/publish-container-to-registry.yml'
 
   - project: "libriciel/integration-continue/templates"
-    ref: master
+    ref: fix-trivy-error
     file: '/security-check.yml'
 
 stages:
