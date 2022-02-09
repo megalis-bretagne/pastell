@@ -130,6 +130,8 @@ class IParapheurRecupHelios extends ActionExecutor
 
         $this->notify('rejet-iparapheur', $this->type, "Le document a été rejeté dans le parapheur : $result");
         $this->getActionCreator()->addAction($this->id_e, $this->id_u, 'rejet-iparapheur', "Le document a été rejeté dans le parapheur : $result");
+
+        return true;
     }
 
     /**

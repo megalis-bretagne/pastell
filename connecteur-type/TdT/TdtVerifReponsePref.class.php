@@ -89,7 +89,7 @@ class TdtVerifReponsePref extends ConnecteurTypeActionExecutor
     private function getLibelleType($id_type)
     {
         $txt_message = [
-            TdTConnecteur::COURRIER_SIMPLE => 'courrier_simple',
+            TdtConnecteur::COURRIER_SIMPLE => 'courrier_simple',
             TdtConnecteur::DEMANDE_PIECE_COMPLEMENTAIRE => 'demande_piece_complementaire',
             TdtConnecteur::LETTRE_OBSERVATION => 'lettre_observation',
             TdtConnecteur::DEFERE_TRIBUNAL_ADMINISTRATIF => 'defere_tribunal_administratif',
