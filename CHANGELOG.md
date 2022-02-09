@@ -3,9 +3,9 @@
 ## Suppressions
 
 - Suppression des méthodes magiques `__get()` et `__set()` sur la class `ObjectInstancier`, il convient d'utiliser respectivement
-`getInstance()` et `setInstance()`
+  `getInstance()` et `setInstance()`
 - Suppression de la directive de configuration LIBERSIGN_INSTALLER, Libersign est fourni via un container docker
-- Suppression de documentations et de scripts obsolètes concernant les versions de Pastell inférieures à 4.0.0 
+- Suppression de documentations et de scripts obsolètes concernant les versions de Pastell inférieures à 4.0.0
 
 ## Retraits d'éléments dépréciés
 
@@ -16,7 +16,9 @@
 - Suppression de l'authentification OASIS/OPENID #1459
 - Suppression de LastUpstart UPSTART_TIME_SEND_WARNING - Suppression de `batch/action-automatique.php` et `installation/pastell-upstart.conf` #1461
 
-# [3.1.11]
+# [3.1.11] - 2022-02-14
+
+***Cette version nécessite une mise à jour du générateur SEDA en 0.8.1***
 
 ## Ajouts
 
@@ -31,6 +33,9 @@
 - Les rejets parapheur à l'étape mail sécurisé parapheur n'étaient pas pris en compte #1227
 - Amélioration de l'affichage des erreurs des templates twig #1434
 - Complexification du token servant au changement de mot de passe lors d'un oubli de celui-ci #1441
+- Utilisation de la version 0.8.1 du generateur SEDA afin de supprimer la balise Agency des bordereaux SEDA 2.1 (qui n'existe pas pour asalae) #1450
+- La directive NO_PROXY n'était pas prise en compte lors de l'intialisation des requêtes SOAP, entrainant un dysfonctionnement dans certain cas. #1454
+- L'API v2 pouvait renvoyer une erreur si l'identifiant du dossier terminait par `php` #1460
 
 ## Évolutions
 
