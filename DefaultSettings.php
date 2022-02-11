@@ -94,11 +94,6 @@ if (!defined("PLATEFORME_MAIL")) {
     define("PLATEFORME_MAIL", "ne-pas-repondre@libriciel.coop");
 }
 
-// En mode saas/mutualisé mailsec_from est renseigné avec PLATEFORME_MAIL
-if (!defined("MODE_MUTUALISE")) {
-    define("MODE_MUTUALISE", true);
-}
-
 if (!defined("AIDE_URL")) {
     define("AIDE_URL", "Aide/index");
 }
