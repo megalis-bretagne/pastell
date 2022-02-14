@@ -3,7 +3,7 @@
 ## Évolutions
 
 - Les extensions doivent charger leurs fichiers PHP dans un fichier `autoload.php` à la racine de l'application ou via
-composer avec un fichier `vendor/autoload.php`
+  composer avec un fichier `vendor/autoload.php`
 
 ## Suppressions
 
@@ -21,6 +21,12 @@ composer avec un fichier `vendor/autoload.php`
   Il faut lancer la commande `app:user:add-connecteur-droit` pour reporter les droits (entite:) existants aux nouveaux droits (connecteur:) #1136
 - Suppression de l'authentification OASIS/OPENID #1459
 - Suppression de LastUpstart UPSTART_TIME_SEND_WARNING - Suppression de `batch/action-automatique.php` et `installation/pastell-upstart.conf` #1461
+
+# [3.1.12]
+
+## Corrections
+
+- Une action synchrone sur un dossier peut faire planter une action automatique #1468
 
 # [3.1.11] - 2022-02-14
 

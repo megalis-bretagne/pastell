@@ -81,7 +81,7 @@ class PastellDaemon
     {
         $job = $this->jobQueueSQL->getJob($id_job);
         if (! $job) {
-            throw new Exception("Aucun job trouvé pour l'id_job $id_job");
+            return;
         }
 
         if (! $job->isTypeOK()) {
