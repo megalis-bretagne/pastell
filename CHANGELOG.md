@@ -1,3 +1,9 @@
+# [3.1.12]
+
+## Corrections
+
+- Une action synchrone sur un dossier peut faire planter une action automatique #1468
+
 # [3.1.11] - 2022-02-14
 
 ***Cette version nécessite une mise à jour du générateur SEDA en 0.8.1***
