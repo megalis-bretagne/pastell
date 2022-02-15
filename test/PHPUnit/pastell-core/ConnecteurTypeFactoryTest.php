@@ -40,10 +40,10 @@ class ConnecteurTypeFactoryTest extends TestCase
     /**
      * @throws RecoverableException
      */
-    public function testClassNotFound()
+    public function testClassNotFound(): void
     {
         $this->expectException(RecoverableException::class);
-        $this->expectExceptionMessageRegExp("#Le fichier .*NotFoundMock.class.php n'a pas été trouvé#");
+        $this->expectExceptionMessage("La classe NotFoundMock n'a pas été trouvée.");
         $this->connecteurTypeFactory->getActionExecutor("signature", "NotFoundMock")->go();
     }
 

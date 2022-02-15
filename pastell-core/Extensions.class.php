@@ -152,7 +152,19 @@ class Extensions
         return $to_search;
     }
 
-
+    public function autoloadExtensions(): void
+    {
+        $extensions = $this->getAllExtensionsPath();
+        // Remove pastell root path
+        unset($extensions[0]);
+        foreach ($extensions as $extension) {
+            if (\file_exists($extension . '/autoload.php')) {
+                require_once $extension . '/autoload.php';
+            } elseif (\file_exists($extension . '/vendor/autoload.php')) {
+                require_once $extension . '/vendor/autoload.php';
+            }
+        }
+    }
 
     public function getInfo($id_e, $path = null)
     {
@@ -299,41 +311,5 @@ class Extensions
             }
         }
         return $result;
-    }
-
-    /**
-     * Permet de mettre dans le path l'ensemble des répertoires connecteurs-type des modules.
-     * Les connecteurs types des modules sont chargés après celui du coeur Pastell (c-à-d on ne peut pas masquer un connecteur-type du coeur Pastell)
-     */
-    public function loadConnecteurType()
-    {
-        $include_path = $this->getConnecteurTypeIncludePath();
-        if ($include_path) {
-            set_include_path(get_include_path() . PATH_SEPARATOR . implode(PATH_SEPARATOR, $include_path));
-        }
-    }
-
-    private function getConnecteurTypeIncludePath()
-    {
-        $include_path = $this->memoryCache->fetch(self::PASTELL_CONNECTEUR_TYPE_PATH_CACHE_KEY);
-        if ($include_path) {
-            return $include_path;
-        }
-
-        $include_path = [];
-        $extensions_path_list = $this->getAllExtensionsPath();
-        foreach ($extensions_path_list as $extension_path) {
-            $connecteur_type_path = $extension_path . "/" . self::CONNECTEUR_TYPE_FOLDER_NAME . "/";
-            if (file_exists($connecteur_type_path)) {
-                $include_path[] = $connecteur_type_path;
-            }
-        }
-        $this->memoryCache->store(
-            self::PASTELL_CONNECTEUR_TYPE_PATH_CACHE_KEY,
-            $include_path,
-            $this->cache_ttl_in_seconds
-        );
-
-        return $include_path;
     }
 }

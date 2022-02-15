@@ -83,7 +83,7 @@ $roleUtilisateur = $objectInstancier->getInstance(RoleUtilisateur::class);
 define("DATABASE_FILE", PASTELL_PATH . "/installation/pastell.bin");
 
 
-$objectInstancier->getInstance(Extensions::class)->loadConnecteurType();
+$objectInstancier->getInstance(Extensions::class)->autoloadExtensions();
 
 $daemon_command = PHP_PATH . " " . realpath(__DIR__ . "/batch/pastell-job-master.php");
 

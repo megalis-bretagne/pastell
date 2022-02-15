@@ -112,6 +112,9 @@
     },
     "classmap": [
       "test"
+    ],
+    "exclude-from-classmap": [
+      "test/PHPUnit/fixtures/extensions"
     ]
   }
 }
