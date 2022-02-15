@@ -19,6 +19,7 @@ stages:
 
 variables:
     CONTAINER_IMAGE: "${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_NAME}"
+    CONTAINER_IMAGE_22: "${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_NAME}_ubuntu_22"
     MYSQL_DATABASE: pastell_test
     MYSQL_USER: user
     MYSQL_PASSWORD: user
@@ -44,6 +45,22 @@ build:
     - docker build --build-arg GITHUB_API_TOKEN=$GITHUB_API_TOKEN --target pastell_dev --pull -t ${CONTAINER_IMAGE} .
     - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
     - docker push ${CONTAINER_IMAGE}
+
+build22:
+  stage: build
+  tags:
+    - docker-build
+  variables:
+    GITHUB_API_TOKEN: "${GITHUB_API_TOKEN}"
+  script:
+    - date=$(date)
+    - sed -i "s/%CI_BUILD_ID%/${CI_PIPELINE_ID}/" ./manifest.yml
+    - sed -i "s/%BUILD_DATE%/$date/" ./manifest.yml
+    - sed -i "s/%VERSION%/${CI_COMMIT_REF_NAME}/" ./manifest.yml
+    - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
+    - docker build -f Dockerfile-ubuntu22 --build-arg GITHUB_API_TOKEN=$GITHUB_API_TOKEN --target pastell_dev --pull -t ${CONTAINER_IMAGE_22} .
+    - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
+    - docker push ${CONTAINER_IMAGE_22}
 
 lint:
   stage: lint
@@ -77,6 +94,25 @@ unit_test:
         paths:
             - coverage
         expire_in: 1h
+
+unit_test_22:
+  stage: test
+  image : "$CONTAINER_IMAGE_22"
+  variables:
+    GIT_STRATEGY: none
+    COMPOSER_PROCESS_TIMEOUT: 1200
+    DONT_RETRIEVE_VALIDCA: "true"
+  services:
+    - mysql:5.7.23
+  script:
+    - cd /var/www/pastell
+    - php -dpcov.enabled=1 -dpcov.directory=. vendor/bin/phpunit --coverage-text --colors=never --coverage-clover coverage/coverage.xml --log-junit coverage/logfile.xml
+    - cp -rf coverage $CI_PROJECT_DIR
+  artifacts:
+    paths:
+      - coverage
+    expire_in: 1h
+  allow_failure: true
 
 quality:
   stage: quality
