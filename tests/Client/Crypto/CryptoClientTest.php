@@ -17,7 +17,7 @@ class CryptoClientTest extends TestCase
      */
     private $cryptoClient;
 
-    public function setUp(): void
+    protected function setUp()
     {
         $clientInterface = $this->getMockBuilder(ClientInterface::class)->getMock();
         $this->cryptoClient = new CryptoClient($clientInterface);

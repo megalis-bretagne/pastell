@@ -10,7 +10,7 @@ use ZipArchive;
 
 class MissingConnecteurServiceTest extends PastellTestCase
 {
-    public function tearDown()
+    protected function tearDown()
     {
         $this->setListPack(["pack_test" => true]);
     }

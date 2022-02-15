@@ -27,20 +27,4 @@ trait SoapUtilitiesTestTrait
     {
         return json_decode(json_encode(simplexml_load_file($filepath)), false);
     }
-
-    /**
-     * @param $classname
-     * @return PHPUnit_Framework_MockObject_MockBuilder
-     */
-    abstract public function getMockBuilder($classname);
-
-
-    /**
-     * @return ObjectInstancier
-     */
-    abstract public function getObjectInstancier();
-
-
-    abstract public function any();
-    abstract public function returnCallback(callable $function);
 }

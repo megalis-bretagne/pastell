@@ -43,20 +43,4 @@ trait CurlUtilitiesTestTrait
 
         $this->getObjectInstancier()->setInstance(CurlWrapperFactory::class, $curlWrapperFactory);
     }
-
-    /**
-     * @param $classname
-     * @return PHPUnit_Framework_MockObject_MockBuilder
-     */
-    abstract public function getMockBuilder($classname);
-
-
-    /**
-     * @return ObjectInstancier
-     */
-    abstract public function getObjectInstancier();
-
-
-    abstract public function any();
-    abstract public function returnCallback(callable $function);
 }

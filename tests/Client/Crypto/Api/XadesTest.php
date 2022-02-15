@@ -25,7 +25,7 @@ class XadesTest extends TestCase
      */
     private $xadesApi;
 
-    public function setUp(): void
+    protected function setUp()
     {
         $this->clientInterface = $this->getMockBuilder(ClientInterface::class)->getMock();
         $this->xadesApi = new Xades(new CryptoClient($this->clientInterface));

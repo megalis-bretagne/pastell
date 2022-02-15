@@ -25,7 +25,7 @@ class VersionTest extends TestCase
      */
     private $versionApi;
 
-    public function setUp(): void
+    protected function setUp()
     {
         $this->clientInterface = $this->getMockBuilder(ClientInterface::class)->getMock();
         $this->versionApi = new Version(new CryptoClient($this->clientInterface));

@@ -12,7 +12,7 @@ class ConnecteurDefinitionFilesTest extends PastellTestCase
             $this->getObjectInstancier()->getInstance(ConnecteurDefinitionFiles::class);
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         $this->setListPack(["pack_test" => true]);
     }
