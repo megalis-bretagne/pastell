@@ -58,7 +58,7 @@ build22:
     - sed -i "s/%BUILD_DATE%/$date/" ./manifest.yml
     - sed -i "s/%VERSION%/${CI_COMMIT_REF_NAME}/" ./manifest.yml
     - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
-    - docker build -t Dockerfile-ubuntu22 --build-arg GITHUB_API_TOKEN=$GITHUB_API_TOKEN --target pastell_dev --pull -t ${CONTAINER_IMAGE_22} .
+    - docker build -f Dockerfile-ubuntu22 --build-arg GITHUB_API_TOKEN=$GITHUB_API_TOKEN --target pastell_dev --pull -t ${CONTAINER_IMAGE_22} .
     - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
     - docker push ${CONTAINER_IMAGE_22}
 
