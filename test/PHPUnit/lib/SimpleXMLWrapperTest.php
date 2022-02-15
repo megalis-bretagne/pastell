@@ -9,7 +9,7 @@ class SimpleXMLWrapperTest extends TestCase
      */
     private $simpleXMLWrapper;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->simpleXMLWrapper = new SimpleXMLWrapper();
     }

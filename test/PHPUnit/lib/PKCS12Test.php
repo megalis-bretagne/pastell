@@ -10,7 +10,7 @@ class PKCS12Test extends PHPUnit\Framework\TestCase
     private $p12_password;
     private $certificate_name;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         $this->pkcs12 = new PKCS12();

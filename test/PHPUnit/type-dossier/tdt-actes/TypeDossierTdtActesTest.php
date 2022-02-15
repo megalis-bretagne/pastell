@@ -10,13 +10,13 @@ class TypeDossierTdtActesTest extends PastellTestCase
     /**
      * @throws Exception
      */
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         $this->typeDossierLoader = $this->getObjectInstancier()->getInstance(TypeDossierLoader::class);
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         parent::tearDown();
         $this->typeDossierLoader->unload();

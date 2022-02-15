@@ -5,7 +5,7 @@ class RoleControlerTest extends ControlerTestCase
     /** @var  RoleControler */
     private $roleControler;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         $this->roleControler = $this->getControlerInstance("RoleControler");
