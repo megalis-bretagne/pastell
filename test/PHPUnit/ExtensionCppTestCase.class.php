@@ -16,7 +16,6 @@ class ExtensionCppTestCase extends PastellTestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->getObjectInstancier()->getInstance(Extensions::class)->loadConnecteurType();
     }
 
     protected function tearDown()

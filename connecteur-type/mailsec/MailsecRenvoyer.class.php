@@ -1,6 +1,6 @@
 <?php
 
-class MailSecRenvoyer extends ConnecteurTypeActionExecutor
+class MailsecRenvoyer extends ConnecteurTypeActionExecutor
 {
     /**
      * @return Connecteur

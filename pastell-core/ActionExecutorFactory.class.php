@@ -270,7 +270,6 @@ class ActionExecutorFactory
         }
 
         $action_class_name = $this->getActionClassName($documentType, $action_name);
-        $this->loadConnecteurActionFile($connecteur_entite_info['id_connecteur'], $action_class_name);
 
         $actionClass = $this->getInstance($action_class_name, $connecteur_entite_info['id_e'], $id_u, $action_name);
         $actionClass->setConnecteurId($connecteur_entite_info['id_connecteur'], $id_ce);
@@ -331,7 +330,6 @@ class ActionExecutorFactory
         }
 
         $action_class_name = $this->getActionClassName($documentType, $action_name);
-        $this->loadConnecteurActionFile($connecteur_entite_info['id_connecteur'], $action_class_name);
 
         /** @var ChoiceActionExecutor $actionClass */
         $actionClass = $this->getInstance($action_class_name, $connecteur_entite_info['id_e'], $id_u, $action_name);
@@ -397,7 +395,6 @@ class ActionExecutorFactory
         }
 
         $action_class_name = $this->getActionClassName($documentType, $action_name);
-        $this->loadConnecteurActionFile($connecteur_entite_info['id_connecteur'], $action_class_name);
 
         $actionClass = $this->getInstance($action_class_name, $connecteur_entite_info['id_e'], $id_u, $action_name);
         $actionClass->setConnecteurId($connecteur_entite_info['id_connecteur'], $id_ce);
@@ -435,24 +432,22 @@ class ActionExecutorFactory
         throw new UnrecoverableException("L'action $action_name n'existe pas.");
     }
 
-    private function getInstance($action_class_name, $id_e, $id_u, $action_name)
+    /**
+     * @throws UnrecoverableException
+     */
+    private function getInstance(string $action_class_name, $id_e, $id_u, string $action_name): \ActionExecutor
     {
         /** @var ActionExecutor $actionClass */
         $actionClass = $this->objectInstancier->newInstance($action_class_name);
+
+        if (!$actionClass instanceof ActionExecutor) {
+            throw new UnrecoverableException("The action needs to extends : " . ActionExecutor::class);
+        }
         $actionClass->setEntiteId($id_e);
         $actionClass->setUtilisateurId($id_u);
         $actionClass->setAction($action_name);
         $actionClass->setLogger($this->getLogger());
         return $actionClass;
-    }
-
-    private function loadConnecteurActionFile($id_connecteur, $action_class_name)
-    {
-        $action_class_file = $this->getConnecteurActionPath($id_connecteur, $action_class_name);
-        if (! file_exists($action_class_file)) {
-            throw new Exception("Le fichier $action_class_name est introuvable");
-        }
-        require_once($action_class_file);
     }
 
     public function getConnecteurActionPath($id_connecteur, $action_class_name)

@@ -16,6 +16,9 @@ class ConnecteurTypeFactory
         return $this->objectInstancier->getInstance(Extensions::class);
     }
 
+    /**
+     * @throws RecoverableException
+     */
     public function getActionExecutor($connecteur_type_name, $action_class_name)
     {
         $connecteur_type_list = $this->getExtensions()->getAllConnecteurType();
@@ -23,16 +26,25 @@ class ConnecteurTypeFactory
             throw new RecoverableException("Impossible de trouver le connecteur type $connecteur_type_name");
         }
 
-        $action_class_path = $connecteur_type_list[$connecteur_type_name] . "/" . $action_class_name . ".class.php";
-
-        if (! file_exists($action_class_path)) {
-            throw new RecoverableException("Le fichier $action_class_path n'a pas été trouvé");
+        if (! class_exists($action_class_name)) {
+            throw new RecoverableException("La classe $action_class_name n'a pas été trouvée.");
         }
-
-        require_once($action_class_path);
 
         /** @var ConnecteurTypeActionExecutor|ConnecteurTypeChoiceActionExecutor $action_class */
         $action_class = new $action_class_name($this->objectInstancier);
+
+        if (
+            !$action_class instanceof ConnecteurTypeActionExecutor &&
+            !$action_class instanceof ConnecteurTypeChoiceActionExecutor
+        ) {
+            throw new RecoverableException(
+                sprintf(
+                    "The action needs to extends : %s or %s",
+                    ConnecteurTypeActionExecutor::class,
+                    ConnecteurTypeChoiceActionExecutor::class
+                )
+            );
+        }
 
         return $action_class;
     }

@@ -1,11 +1,17 @@
 # [4.0.0]
 
+## Évolutions
+
+- Les extensions doivent charger leurs fichiers PHP dans un fichier `autoload.php` à la racine de l'application ou via
+composer avec un fichier `vendor/autoload.php`
+
 ## Suppressions
 
 - Suppression des méthodes magiques `__get()` et `__set()` sur la class `ObjectInstancier`, il convient d'utiliser respectivement
   `getInstance()` et `setInstance()`
 - Suppression de la directive de configuration LIBERSIGN_INSTALLER, Libersign est fourni via un container docker
 - Suppression de documentations et de scripts obsolètes concernant les versions de Pastell inférieures à 4.0.0
+- Suppression du chargement automatique des fichiers PHP des extensions
 
 ## Retraits d'éléments dépréciés
 

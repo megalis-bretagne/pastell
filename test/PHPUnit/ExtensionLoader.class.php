@@ -20,7 +20,7 @@ class ExtensionLoader
             $this->extensionSQL->edit(0, $ext);
             $result[$ext] = $this->extensionSQL->getLastInsertId();
         }
-        $this->extensions->loadConnecteurType();
+        $this->extensions->autoloadExtensions();
         return $result;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-class ExtensionsTest extends PHPUnit\Framework\TestCase
+class ExtensionsTest extends PastellTestCase
 {
     private function getExtensionTestPath()
     {
@@ -134,11 +134,24 @@ class ExtensionsTest extends PHPUnit\Framework\TestCase
         $this->assertEquals("Le fichier manifest.yml n'a pas été trouvé dans /tmp", $info['warning-detail']);
     }
 
-    public function testLoadConnecteurType()
+    public function testExecuteActionsOnConnector(): void
     {
-        $extensions = $this->getExtensionsTest();
-        $extensions->loadConnecteurType();
-        $extension_test_path = $this->getExtensionTestPath();
-        $this->assertRegExp("#$extension_test_path/connecteur-type/$#", get_include_path());
+        $this->getObjectInstancier()
+            ->getInstance(ExtensionLoader::class)
+            ->loadExtension([$this->getExtensionTestPath()]);
+
+        $connector = $this->createConnector('connecteur-test', 'connector');
+
+        $this->assertTrue(
+            $this->triggerActionOnConnector($connector['id_ce'], 'test')
+        );
+        $this->assertLastMessage('Action done');
+
+        $this->assertFalse(
+            $this->triggerActionOnConnector($connector['id_ce'], 'test-not-loaded')
+        );
+        $this->assertLastMessage(
+            "En essayant d'inclure ExtensionTestActionTestNotLoaded : Class ExtensionTestActionTestNotLoaded does not exist"
+        );
     }
 }
