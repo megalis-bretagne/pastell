@@ -136,4 +136,12 @@ class DepotCMIS extends DepotConnecteur
         $this->folder = $this->session->getObjectByPath($this->connecteurConfig->get(self::DEPOT_CMIS_DIRECTORY));
         return $this->folder;
     }
+
+    /*
+     * Only used for testing
+     */
+    public function getClient(): Client
+    {
+        return new Client();
+    }
 }
