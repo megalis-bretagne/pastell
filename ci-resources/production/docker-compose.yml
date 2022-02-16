@@ -5,7 +5,7 @@ services:
     networks:
       - internal_services
     container_name: seda-generator
-    image: 'registry.libriciel.fr:443/public/plateforme/seda-generator:0.8.1'
+    image: 'registry.libriciel.fr:443/public/plateforme/seda-generator:0.8.2'
     restart: always
     ports:
       - '127.0.0.1:8021:80'
