@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<ruleset name="Pastell">
+    <description>Custom standard for Pastell.</description>
+
+    <arg name="basepath" value="."/>
+    <arg name="colors"/>
+    <arg name="parallel" value="50"/>
+    <arg value="p"/>
+
+    <file>./action</file>
+    <file>./api</file>
+    <file>./batch</file>
+    <file>./bin</file>
+    <file>./ci-resources</file>
+    <file>./connecteur</file>
+    <file>./connecteur-type</file>
+    <file>./controler</file>
+    <file>./extensions</file>
+    <file>./installation</file>
+    <file>./lib</file>
+    <file>./mail</file>
+    <file>./model</file>
+    <file>./module</file>
+    <file>./pastell-core</file>
+    <file>./script</file>
+    <file>./src</file>
+    <file>./template</file>
+    <file>./test</file>
+    <file>./tests</file>
+    <file>./type-dossier</file>
+    <file>./visionneuse</file>
+    <file>DefaultSettings.php</file>
+    <file>init.php</file>
+    <file>init-no-db.php</file>
+
+    <exclude-pattern>./extensions/*/vendor</exclude-pattern>
+    <exclude-pattern>./extensions/*/build</exclude-pattern>
+
+    <rule ref="PSR12">
+        <!-- require and require_once before classes declarations -->
+        <exclude name="PSR1.Files.SideEffects.FoundWithSymbols"/>
+
+        <!-- namespaces -->
+        <exclude name="PSR1.Classes.ClassDeclaration.MissingNamespace"/>
+
+        <!-- some methods are not in camel case (related to SEDA NG) -->
+        <exclude name="PSR1.Methods.CamelCapsMethodName.NotCamelCaps"/>
+
+        <exclude name="PSR2.Methods.MethodDeclaration.Underscore"/>
+
+    </rule>
+
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="270"/>
+            <property name="absoluteLineLimit" value="270"/>
+        </properties>
+    </rule>
+</ruleset>
