@@ -22,7 +22,10 @@
 - Suppression de l'authentification OASIS/OPENID #1459
 - Suppression de LastUpstart UPSTART_TIME_SEND_WARNING - Suppression de `batch/action-automatique.php` et `installation/pastell-upstart.conf` #1461
 
-# [3.1.12]
+# [3.1.12] - 2022-02-16
+
+***Cette version nécessite une mise à jour du générateur SEDA en 0.8.2***
+- Mise à jour des dépendances. Twig security release v3.3.8
 
 ## Corrections
 
