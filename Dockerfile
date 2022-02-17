@@ -10,8 +10,6 @@ RUN pecl install pcov
 FROM php:7.4-cli as extensions_builder
 WORKDIR /app
 
-ARG PHP_SCOPER_VERSION=0.17.0
-
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -23,12 +21,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN curl \
     --location \
     --output /usr/bin/php-scoper \
-    --url https://github.com/humbug/php-scoper/releases/download/${PHP_SCOPER_VERSION}/php-scoper.phar \
+    --url https://github.com/humbug/php-scoper/releases/download/0.17.0/php-scoper.phar \
     && chmod +x /usr/bin/php-scoper
 
 COPY ./extensions/pastell-depot-cmis/ /app/
 RUN composer install --ignore-platform-reqs \
-    && php-scoper add-prefix \
+    && php-scoper add-prefix --force \
     && composer dump-autoload --working-dir=build
 
 FROM ubuntu:18.04 as pastell_base

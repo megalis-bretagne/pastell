@@ -77,7 +77,7 @@ all-module: module-pack-gfc module-pack-urbanisme
 
 build-extensions:
 	$(EXEC_COMPOSER) composer install --ignore-platform-reqs --working-dir=./extensions/pastell-depot-cmis/
-	docker-compose -f ./extensions/pastell-depot-cmis/docker-compose.yml run app bash -c "php-scoper add-prefix && composer dump-autoload --working-dir=build"
+	docker-compose -f ./extensions/pastell-depot-cmis/docker-compose.yml run app bash -c "php-scoper add-prefix --force && composer dump-autoload --working-dir=build"
 
 build22:
 	$(DOCKER_COMPOSE_22) build webubuntu22
