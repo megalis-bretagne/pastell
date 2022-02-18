@@ -30,7 +30,7 @@ composer-install: ## Run composer install
 npm-install: ## Run npm install
 	$(EXEC_NODE) npm --prefix $(PASTELL_PATH) install
 
-install: npm-install composer-install ## Install the project NPM and PHP dependencies
+install: npm-install composer-install build-extensions ## Install the project NPM and PHP dependencies
 
 clean: ## Clear and remove dependencies
 	rm -f web/node_modules web-mailsec/node_modules
@@ -74,6 +74,10 @@ module-pack-gfc: docker-compose-up ## Run make-module pack_gfc
 	$(MAKE_MODULE) ./pack-json/pack-gfc/dossier-wgfc-destinataire.json ./module/ --id gfc-dossier-destinataire
 
 all-module: module-pack-gfc module-pack-urbanisme
+
+build-extensions:
+	$(EXEC_COMPOSER) composer install --ignore-platform-reqs --working-dir=./extensions/pastell-depot-cmis/
+	docker-compose -f ./extensions/pastell-depot-cmis/docker-compose.yml run app bash -c "php-scoper add-prefix --force && composer dump-autoload --working-dir=build"
 
 build22:
 	$(DOCKER_COMPOSE_22) build webubuntu22

@@ -25,12 +25,10 @@
     "ext-xsl": "*",
     "ext-zend-opcache": "*",
     "ext-zip": "^1.15",
-    "dkd/php-cmis": "^1.0",
     "dragonmantank/cron-expression": "^3.1",
     "erusev/parsedown": "^1.7",
     "ezyang/htmlpurifier": "^4.13",
     "flowjs/flow-php-server": "^1.0",
-    "guzzlehttp/guzzle": "^5.3",
     "guzzlehttp/psr7": "^1.8",
     "jasig/phpcas": "^1.4",
     "jumbojett/openid-connect-php": "^0.8.0",
@@ -85,7 +83,7 @@
     "test": "phpunit",
     "test-cover": "phpunit --coverage-text --colors=never --coverage-clover coverage/coverage.xml --log-junit coverage/logfile.xml",
     "codecept": "codecept -c test/codeception/codeception.yml run",
-    "phpcs": "phpcs -ps --standard=ruleset.xml --ignore=vendor/,node_modules/,web/,web-mailsec/,temp/ ./",
+    "phpcs": "phpcs",
     "phpcbf": "phpcbf -ps --standard=ruleset.xml --ignore=vendor/,node_modules/,web/,web-mailsec/,temp/ ./"
   },
   "autoload": {

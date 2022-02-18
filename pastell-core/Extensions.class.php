@@ -12,6 +12,8 @@ class Extensions
     public const PASTELL_ALL_CONNECTEUR_TYPE_CACHE_KEY = "pastell_all_connecteur_type";
     public const PASTELL_CONNECTEUR_TYPE_PATH_CACHE_KEY = "pastell_connecteur_type";
     public const PASTELL_ALL_TYPE_DOSSIER_CACHE_KEY = "pastell_all_type_dossier";
+    public const EXTENSIONS_SUBDIR = 'extensions';
+    public const EXTENSION_BUILT_SUBDIR = 'build';
 
     private $extensionSQL;
     private $manifestFactory;
@@ -142,9 +144,25 @@ class Extensions
     }
 
 
-    private function getAllExtensionsPath()
+    private function getAllExtensionsPath(): array
     {
-        $to_search = array($this->pastell_path);
+        $to_search = [$this->pastell_path];
+
+        $localExtensions = $this->globAll(sprintf("%s/%s/*", $this->pastell_path, self::EXTENSIONS_SUBDIR));
+
+        foreach ($localExtensions as $localExtension) {
+            $extensionBuildPath = sprintf(
+                "%s/%s/%s/%s",
+                $this->pastell_path,
+                self::EXTENSIONS_SUBDIR,
+                $localExtension,
+                self::EXTENSION_BUILT_SUBDIR
+            );
+            if (\file_exists($extensionBuildPath)) {
+                $to_search[] = $extensionBuildPath;
+            }
+        }
+
         $to_search[] = $this->workspace_path . "/" . TypeDossierPersonnaliseDirectoryManager::SUB_DIRECTORY;
         foreach ($this->extensionSQL->getAll() as $extension) {
             $to_search[] = $extension['path'];

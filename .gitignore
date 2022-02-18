@@ -18,3 +18,7 @@ web-mailsec/node_modules
 /documentation/api/LocalSettings.php
 docker-compose.override.yml
 coverage
+phpcs.xml
+
+extensions/**/vendor
+extensions/**/build
