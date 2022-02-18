@@ -61,7 +61,7 @@ class ZenMail
     public function setEmetteur(string $nom, string $mail, string $reply_to = ''): void
     {
         $this->emetteur = $this->getDisplayNamedMail($nom, $mail);
-        $this->reply_to = ($reply_to !== '') ? $reply_to : $mail;
+        $this->reply_to = ($reply_to && ($reply_to !== '')) ? $reply_to : $mail;
     }
 
     public function getDestinataire(): string

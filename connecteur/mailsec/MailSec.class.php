@@ -241,9 +241,12 @@ class MailSec extends MailsecConnecteur
         $sujet = $this->connecteurConfig->getWithDefault('mailsec_subject');
         $this->zenMail->setSujet($sujet);
         $message = $this->connecteurConfig->getWithDefault('mailsec_content');
-        $this->zenMail->setDestinataire(PLATEFORME_MAIL);
+        $mailsec_reply_to = $this->connecteurConfig->get('mailsec_reply_to');
+        $destinataire = ($mailsec_reply_to && ($mailsec_reply_to !== '')) ?
+            $mailsec_reply_to : PLATEFORME_MAIL;
+        $this->zenMail->setDestinataire($destinataire);
         $this->zenMail->setContenuText($message);
         $this->zenMail->send();
-        return PLATEFORME_MAIL;
+        return $destinataire;
     }
 }

@@ -52,5 +52,5 @@ formulaire:
 
 action:
     test:
-        name: Tester l'envoi
+        name: Tester l'envoi à Reply-To
         action-class: MailsecTest
