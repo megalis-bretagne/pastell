@@ -16,6 +16,7 @@ services:
             - ${WORKSPACE_VOLUME:-app_workspace}:/data/workspace
             - ${PASTELL_SSL_CERTIFICAT:-app_certificate}:/data/certificate
             - ${PASTELL_SESSION:-app_session}:/var/lib/php/session
+            - ${LETSENCRYPT_DATADIR:-letsencrypt_datadir}:/etc/letsencrypt
         environment:
             REDIS_SERVER: ${REDIS_HOST:-redis}
             REDIS_PORT: ${REDIS_PORT:-6379}
