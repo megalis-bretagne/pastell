@@ -7,7 +7,7 @@ class FichierCleValeurTest extends PastellTestCase
      */
     private $filePath;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->filePath = $this->getObjectInstancier()->getInstance('workspacePath') . "/test.yml";

@@ -10,7 +10,7 @@ class PESMarcheEnvoiSAETest extends PastellMarcheTestCase
     /**
      * @throws Exception
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->createConnecteurForTypeDossier(self::PES_MARCHE, FakeSAE::CONNECTEUR_ID);

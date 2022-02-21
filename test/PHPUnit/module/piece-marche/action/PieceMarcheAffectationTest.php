@@ -9,7 +9,7 @@ class PieceMarcheAffectationTest extends PastellMarcheTestCase
      * @throws Exception
      */
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->parametragePieceMarche = $this->createConnecteurParametragePieceMarche();

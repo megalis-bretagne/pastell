@@ -5,7 +5,7 @@ class AnnotationWrapperTest extends PHPUnit\Framework\TestCase
     /** @var  AnnotationWrapper */
     private $annotationWrapper;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->annotationWrapper = new AnnotationWrapper();
     }

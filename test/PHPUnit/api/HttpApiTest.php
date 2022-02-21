@@ -5,7 +5,7 @@ class HttpApiTest extends PastellTestCase
     /** @var  HttpApi */
     private $http_api;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $apiAuthetication = $this->createMock('ApiAuthentication');

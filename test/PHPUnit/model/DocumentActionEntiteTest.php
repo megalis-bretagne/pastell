@@ -5,7 +5,7 @@ class DocumentActionEntiteTest extends PastellTestCase
     /** @var DocumentActionEntite */
     private $documentActionEntite;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->documentActionEntite = $this->getObjectInstancier()->getInstance(DocumentActionEntite::class);

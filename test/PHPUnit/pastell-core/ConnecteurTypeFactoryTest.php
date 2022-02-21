@@ -7,7 +7,7 @@ class ConnecteurTypeFactoryTest extends TestCase
     /** @var  ConnecteurTypeFactory */
     private $connecteurTypeFactory;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $extensions = $this->createMock("Extensions");
         $extensions

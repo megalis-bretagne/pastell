@@ -9,7 +9,7 @@ class PieceMarcheOrientationTest extends PastellMarcheTestCase
      * @throws Exception
      */
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->id_d = $this->createDocument('piece-marche')['id_d'];

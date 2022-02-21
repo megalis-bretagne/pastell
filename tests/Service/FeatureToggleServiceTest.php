@@ -11,7 +11,7 @@ class FeatureToggleServiceTest extends PastellTestCase
 {
     private $featureFactory;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->featureFactory = new FeatureToggleService($this->getObjectInstancier());

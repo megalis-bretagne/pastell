@@ -5,14 +5,14 @@ class ConnecteurDefinitionFilesTest extends PastellTestCase
     /** @var  ConnecteurDefinitionFiles */
     private $connecteurDefinitionFiles;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->connecteurDefinitionFiles =
             $this->getObjectInstancier()->getInstance(ConnecteurDefinitionFiles::class);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->setListPack(["pack_test" => true]);
     }

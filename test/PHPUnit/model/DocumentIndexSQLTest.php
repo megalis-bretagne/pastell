@@ -7,7 +7,7 @@ class DocumentIndexSQLTest extends PastellTestCase
      */
     private $documentIndexSQL;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->documentIndexSQL = $this->getObjectInstancier()->getInstance(DocumentIndexSQL::class);

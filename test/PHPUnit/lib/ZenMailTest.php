@@ -7,7 +7,7 @@ class ZenMailTest extends PastellTestCase
      */
     private $zenMail;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->zenMail = $this->getObjectInstancier()->getInstance(ZenMail::class);

@@ -5,7 +5,7 @@ class DepotSFTPTest extends PastellTestCase
     /** @var  DepotSFTP */
     private $depotSFTP;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $SFTP = $this->createMock('SFTP');

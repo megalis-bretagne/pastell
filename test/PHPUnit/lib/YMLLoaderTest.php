@@ -8,7 +8,7 @@ class YMLLoaderTest extends PHPUnit\Framework\TestCase
     /** @var  StaticWrapper */
     private $staticWrapper;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->staticWrapper = new StaticWrapper();
         $this->ymlLoader = new YMLLoader($this->staticWrapper);

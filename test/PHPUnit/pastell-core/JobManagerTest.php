@@ -8,7 +8,7 @@ class JobManagerTest extends PastellTestCase
     /** @var  JobQueueSQL */
     private $jobQueueSQL;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->jobManager = $this->getObjectInstancier()->getInstance(JobManager::class);

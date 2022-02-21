@@ -9,7 +9,7 @@ class CSRFTokenTest extends TestCase
 
     private $session = array();
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->csrfToken = new CSRFToken();

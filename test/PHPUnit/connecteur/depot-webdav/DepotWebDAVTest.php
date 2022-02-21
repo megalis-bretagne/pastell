@@ -5,7 +5,7 @@ class DepotWebDAVTest extends PastellTestCase
     /** @var  DepotWebDAV */
     private $depotWebDAV;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $webdavWrapper = $this->createMock('WebdavWrapper');

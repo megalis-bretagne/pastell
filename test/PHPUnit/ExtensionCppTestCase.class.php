@@ -13,12 +13,12 @@ class ExtensionCppTestCase extends PastellTestCase
 
     private $workspace_path;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
         if ($this->workspace_path) {

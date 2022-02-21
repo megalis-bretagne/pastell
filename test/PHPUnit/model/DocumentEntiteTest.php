@@ -12,7 +12,7 @@ class DocumentEntiteTest extends PastellTestCase
     /**
      * @throws UnrecoverableException
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $document = new DocumentSQL($this->getSQLQuery(), new PasswordGenerator());

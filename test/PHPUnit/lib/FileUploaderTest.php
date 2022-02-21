@@ -5,7 +5,7 @@ class FileUploaderTest extends PHPUnit\Framework\TestCase
     public const FILE_CONTENT = "Hello World!";
     private $tmp_file;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         org\bovigo\vfs\vfsStream::setup('test');

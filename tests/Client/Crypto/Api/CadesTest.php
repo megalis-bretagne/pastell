@@ -25,7 +25,7 @@ class CadesTest extends TestCase
      */
     private $cadesApi;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->clientInterface = $this->getMockBuilder(ClientInterface::class)->getMock();
         $this->cadesApi = new Cades(new CryptoClient($this->clientInterface));

@@ -15,7 +15,7 @@ final class DeleteByTypeTest extends PastellTestCase
      */
     private $commandTester;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->createConnector('test', 'Test global', 0);

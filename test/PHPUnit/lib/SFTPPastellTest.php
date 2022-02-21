@@ -8,7 +8,7 @@ class SFTPPastellTest extends PHPUnit\Framework\TestCase
     /** @var  SFTPProperties */
     private $sftpProperties;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->sftpProperties = new SFTPProperties();

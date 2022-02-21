@@ -7,7 +7,7 @@ use PastellTestCase;
 
 class DroitServiceTest extends PastellTestCase
 {
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->setListPack(["pack_test" => true]);
     }

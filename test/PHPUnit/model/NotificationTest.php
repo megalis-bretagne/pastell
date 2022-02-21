@@ -7,7 +7,7 @@ class NotificationTest extends PastellTestCase
      */
     private $notification;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->notification = new Notification($this->getSQLQuery());

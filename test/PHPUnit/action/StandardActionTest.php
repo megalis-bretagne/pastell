@@ -5,7 +5,7 @@ class StandardActionTest extends PHPUnit\Framework\TestCase
     /** @var  StandardAction */
     private $standardAction;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $ymlLoader = new YMLLoader(new MemoryCacheNone());
         $type_definition = $ymlLoader->getArray(__DIR__ . "/fixtures/standard-action-definition.yml");

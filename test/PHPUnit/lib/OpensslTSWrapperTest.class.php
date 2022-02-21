@@ -7,7 +7,7 @@ class OpensslTSWrapperTest extends PHPUnit\Framework\TestCase
      */
     private $opensslTSWrapper;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->opensslTSWrapper = new OpensslTSWrapper(OPENSSL_PATH);

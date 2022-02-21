@@ -164,7 +164,7 @@ iparapheur_retour: Archive',
         return $extensionLoader->loadExtension($extension_path_list);
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->reinitDatabase();

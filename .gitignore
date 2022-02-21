@@ -22,3 +22,5 @@ phpcs.xml
 
 extensions/**/vendor
 extensions/**/build
+
+.phpunit.result.cache

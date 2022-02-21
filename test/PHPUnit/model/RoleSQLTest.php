@@ -7,7 +7,7 @@ class RoleSQLTest extends PastellTestCase
 
     private $role_droit = array();
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->roleSQL = new RoleSQL($this->getSQLQuery());

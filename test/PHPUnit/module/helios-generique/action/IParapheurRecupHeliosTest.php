@@ -1,11 +1,13 @@
 <?php
 
+use PHPUnit\Framework\MockObject\MockObject;
+
 class IParapheurRecupHeliosTest extends PastellTestCase
 {
     /**
-     * @param PHPUnit_Framework_MockObject_MockObject $soapClient
+     * @param MockObject $soapClient
      */
-    private function mockSoapClientFactory(PHPUnit_Framework_MockObject_MockObject $soapClient): void
+    private function mockSoapClientFactory(MockObject $soapClient): void
     {
         $soapClientFactory = $this->createMock(SoapClientFactory::class);
         $soapClientFactory

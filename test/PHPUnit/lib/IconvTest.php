@@ -13,7 +13,7 @@ class IconvTest extends TestCase
     private $streamURL;
     private $temporary_file;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->file_in_iso = __DIR__ . '/fixtures/file_in_iso-8859-15.txt';

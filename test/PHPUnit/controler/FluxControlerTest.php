@@ -7,7 +7,7 @@ class FluxControlerTest extends ControlerTestCase
     /** @var  FluxControler */
     private $fluxControler;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->fluxControler = $this->getControlerInstance("FluxControler");

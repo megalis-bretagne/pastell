@@ -17,7 +17,7 @@ class TypeDossierTransformationTest extends PastellTestCase
     /**
      * @throws Exception
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->typeDossierLoader = $this->getObjectInstancier()->getInstance(TypeDossierLoader::class);
@@ -27,7 +27,7 @@ class TypeDossierTransformationTest extends PastellTestCase
         $this->getObjectInstancier()->setInstance('workspacePath', $this->workspace_path);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->typeDossierLoader->unload();
         $this->tmpFolder->delete($this->workspace_path);

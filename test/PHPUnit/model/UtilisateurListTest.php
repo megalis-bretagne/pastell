@@ -7,7 +7,7 @@ class UtilisateurListTest extends PastellTestCase
      */
     private $utilisateurListe;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->utilisateurListe = new UtilisateurListe($this->getSQLQuery());

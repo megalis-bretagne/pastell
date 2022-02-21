@@ -6,7 +6,7 @@ class VersionCest
     {
         $I->wantTo('récupérer la version de Pastell');
         $I->amHttpAuthenticatedAsAdmin();
-        $I->sendGET('version');
+        $I->sendGet('version');
         $this->testVersionResponse($I);
     }
 

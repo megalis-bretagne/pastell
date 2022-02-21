@@ -10,7 +10,7 @@ class PieceMarcheEnvoiSAETest extends PastellMarcheTestCase
     /**
      * @throws Exception
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

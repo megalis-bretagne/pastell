@@ -12,7 +12,7 @@ class DepotLocalTest extends PastellTestCase
     /** @var DepotLocal */
     private $depotLocal;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->tmpFolder = new TmpFolder();
@@ -24,7 +24,7 @@ class DepotLocalTest extends PastellTestCase
         mkdir("{$this->tmp_folder}/foo/");
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->tmpFolder->delete($this->tmp_folder);
         parent::tearDown();

@@ -7,7 +7,7 @@ class FileContentTypeTest extends PHPUnit\Framework\TestCase
      */
     private $mimeCode;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->mimeCode = new FileContentType();

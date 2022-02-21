@@ -11,7 +11,7 @@ class IParapheurTest extends PastellTestCase
     /** @var  DonneesFormulaire */
     private $donneesFormulaire;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

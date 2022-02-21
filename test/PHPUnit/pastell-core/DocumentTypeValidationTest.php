@@ -6,7 +6,7 @@ class DocumentTypeValidationTest extends PHPUnit\Framework\TestCase
     private $documentTypeValidation;
 
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->documentTypeValidation = new DocumentTypeValidation(new YMLLoader(new MemoryCacheNone()));
         $this->documentTypeValidation->setListPack(["pack_chorus_pro" => false, "pack_marche" => false]);

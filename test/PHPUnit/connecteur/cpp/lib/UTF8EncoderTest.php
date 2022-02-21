@@ -7,7 +7,7 @@ class UTF8EncoderTest extends ExtensionCppTestCase
 
     private $testArray;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->utf8Encoding = new UTF8Encoder();

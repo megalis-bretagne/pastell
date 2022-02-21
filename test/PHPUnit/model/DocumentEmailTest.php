@@ -7,7 +7,7 @@ class DocumentEmailTest extends PastellTestCase
      */
     private $documentEmail;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->documentEmail = $this->getObjectInstancier()->getInstance(DocumentEmail::class);
         parent::setUp();

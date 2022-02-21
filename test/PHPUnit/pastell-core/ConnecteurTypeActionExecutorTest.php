@@ -5,7 +5,7 @@ class ConnecteurTypeActionExecutorTest extends PHPUnit\Framework\TestCase
     /** @var ConnecteurTypeActionExecutor $connecteurTypeActionExecutor */
     private $connecteurTypeActionExecutor;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->connecteurTypeActionExecutor = $this->getMockForAbstractClass("ConnecteurTypeActionExecutor", array(new ObjectInstancier()));
     }

@@ -5,7 +5,7 @@ class UtilisateurNewEmailSQLTest extends PastellTestCase
     /** @var  UtilisateurNewEmailSQL */
     private $utilisateurNewEmailSQL;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->utilisateurNewEmailSQL = new UtilisateurNewEmailSQL($this->getSQLQuery(), new PasswordGenerator());

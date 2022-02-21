@@ -10,13 +10,13 @@ class CPPWrapperTest extends ExtensionCppTestCase
     /** @var CPPWrapper */
     private $cppWrapper;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->getObjectInstancier()->getInstance(MemoryCache::class)->store(self::MEMORY_KEY, self::TOKEN);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
         $this->getObjectInstancier()->getInstance(MemoryCache::class)->delete(self::MEMORY_KEY);

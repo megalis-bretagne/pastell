@@ -5,7 +5,7 @@ class JobTest extends PastellTestCase
     /** @var  Job */
     private $job;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->job = new Job();

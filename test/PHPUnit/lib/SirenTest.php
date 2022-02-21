@@ -6,7 +6,7 @@ class SirenTest extends TestCase
 {
     private $siren;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->siren = new Siren();
     }
