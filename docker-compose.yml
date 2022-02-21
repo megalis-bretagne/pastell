@@ -83,3 +83,4 @@ volumes:
     app_certificate:
     app_session:
     db_datadir_test:
+    letsencrypt_datadir:
