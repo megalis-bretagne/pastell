@@ -5,7 +5,7 @@ class EntiteSQLTest extends PastellTestCase
     /** @var  EntiteSQL */
     private $entiteSQL;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->entiteSQL = $this->getObjectInstancier()->getInstance(EntiteSQL::class);

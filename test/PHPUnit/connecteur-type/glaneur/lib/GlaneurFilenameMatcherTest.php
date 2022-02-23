@@ -5,7 +5,7 @@ class GlaneurFilenameMatcherTest extends \PHPUnit\Framework\TestCase
     /** @var GlaneurFilenameMatcher */
     private $glaneurLocalFilenameMatcher;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->glaneurLocalFilenameMatcher = new GlaneurFilenameMatcher();

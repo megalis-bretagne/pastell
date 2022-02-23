@@ -7,7 +7,7 @@ class ConnexionControlerTest extends ControlerTestCase
      */
     private $connexionControler;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->connexionControler = $this->getControlerInstance(ConnexionControler::class);

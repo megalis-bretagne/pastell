@@ -9,7 +9,7 @@ class ConnecteurControlerTest extends ControlerTestCase
      */
     private $connecteurControler;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->connecteurControler = $this->getControlerInstance(ConnecteurControler::class);

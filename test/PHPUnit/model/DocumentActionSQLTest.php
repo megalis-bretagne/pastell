@@ -5,7 +5,7 @@ class DocumentActionSQLTest extends PastellTestCase
     /** @var DocumentActionSQL */
     private $documentActionSQL;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->documentActionSQL = $this->getObjectInstancier()->getInstance(DocumentActionSQL::class);

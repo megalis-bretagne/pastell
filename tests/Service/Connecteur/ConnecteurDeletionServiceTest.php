@@ -18,7 +18,7 @@ final class ConnecteurDeletionServiceTest extends PastellTestCase
      */
     private $connectorEntitySql;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->connectorDeletionService = $this->getObjectInstancier()->getInstance(ConnecteurDeletionService::class);
         $this->connectorEntitySql = $this->getObjectInstancier()->getInstance(ConnecteurEntiteSQL::class);

@@ -5,7 +5,7 @@ class DaemonManagerTest extends PHPUnit\Framework\TestCase
     /** @var  DaemonManager */
     private $daemonManager;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $tmp_dir = sys_get_temp_dir();
 

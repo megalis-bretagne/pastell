@@ -5,7 +5,7 @@ class ActionTest extends PHPUnit\Framework\TestCase
     /** @var  Action */
     private $action;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $yamlLoader = new YMLLoader(new MemoryCacheNone());

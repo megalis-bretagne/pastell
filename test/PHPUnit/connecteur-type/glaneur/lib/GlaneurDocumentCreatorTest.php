@@ -10,7 +10,7 @@ class GlaneurDocumentCreatorTest extends PastellTestCase
     private $tmp_folder;
 
     /** @throws Exception */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->tmpFolder = new TmpFolder();
@@ -20,7 +20,7 @@ class GlaneurDocumentCreatorTest extends PastellTestCase
         copy(__DIR__ . "/../fixtures/pes_exemple/test.xml", $this->tmp_folder . "/test.xml");
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->tmpFolder->delete($this->workspace_path);
         $this->tmpFolder->delete($this->tmp_folder);

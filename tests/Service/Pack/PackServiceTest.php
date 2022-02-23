@@ -7,7 +7,7 @@ use PastellTestCase;
 
 class PackServiceTest extends PastellTestCase
 {
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->setListPack(["pack_chorus_pro" => true, "pack_marche" => true, "pack_test" => true]);
     }

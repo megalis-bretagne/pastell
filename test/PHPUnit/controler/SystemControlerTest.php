@@ -5,7 +5,7 @@ class SystemControlerTest extends ControlerTestCase
     /** @var  SystemControler */
     private $systemControler;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->systemControler = $this->getControlerInstance("SystemControler");

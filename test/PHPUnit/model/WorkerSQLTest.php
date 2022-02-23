@@ -5,7 +5,7 @@ class WorkerSQLTest extends PastellTestCase
     /** @var  WorkerSQL */
     private $workerSQL;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->workerSQL = new WorkerSQL($this->getSQLQuery());

@@ -7,7 +7,7 @@ class ActionPossibleTest extends PastellTestCase
 
     private $id_d;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->actionPossible = $this->getObjectInstancier()->getInstance(ActionPossible::class);

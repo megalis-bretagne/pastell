@@ -14,7 +14,7 @@ class JobQueueSQLTest extends PastellTestCase
      */
     private $job;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->jobQueueSQL = new JobQueueSQL($this->getSQLQuery());

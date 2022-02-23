@@ -7,7 +7,7 @@ class JournalTest extends PastellTestCase
      */
     private $journal;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

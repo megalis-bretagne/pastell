@@ -17,7 +17,7 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase
     /**
      *
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->relax_ng_path = __DIR__ . "/../fixtures/EMEG_PROFIL_PES_0002_v1_schema.rng";

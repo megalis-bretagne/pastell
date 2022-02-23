@@ -87,7 +87,6 @@ unit_test:
         - mysql:5.7.23
     script:
         - cd /var/www/pastell
-        - vendor/bin/pcov clobber
         - php -dpcov.enabled=1 -dpcov.directory=. vendor/bin/phpunit --coverage-text --colors=never --coverage-clover coverage/coverage.xml --log-junit coverage/logfile.xml
         - cp -rf coverage $CI_PROJECT_DIR
     artifacts:

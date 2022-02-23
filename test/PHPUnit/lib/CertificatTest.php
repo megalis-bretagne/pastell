@@ -11,7 +11,7 @@ class CertificatTest extends PHPUnit\Framework\TestCase
      */
     private $bad_certificat;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->certificat = new Certificat(file_get_contents(__DIR__ . "/fixtures/autorite-cert.pem"));

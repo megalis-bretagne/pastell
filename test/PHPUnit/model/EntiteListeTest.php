@@ -5,7 +5,7 @@ class EntiteListeTest extends PastellTestCase
     /** @var  EntiteListe */
     private $entiteListe;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->entiteListe = new EntiteListe($this->getSQLQuery());

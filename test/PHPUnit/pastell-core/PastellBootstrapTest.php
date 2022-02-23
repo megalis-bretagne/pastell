@@ -5,7 +5,7 @@ class PastellBootstrapTest extends PastellTestCase
     /** @var  PastellBootstrap */
     private $pastellBootstrap;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->pastellBootstrap = $this->getObjectInstancier()->getInstance(PastellBootstrap::class);

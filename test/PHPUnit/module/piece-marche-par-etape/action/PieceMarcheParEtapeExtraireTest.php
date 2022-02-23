@@ -13,7 +13,7 @@ class PieceMarcheLotExtraireTest extends PastellMarcheTestCase
     /**
      * @throws Exception
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->id_d = $this->createDocument('piece-marche-par-etape')['id_d'];
@@ -22,7 +22,7 @@ class PieceMarcheLotExtraireTest extends PastellMarcheTestCase
     }
 
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
         $tmpFolder = new TmpFolder();

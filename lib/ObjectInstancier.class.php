@@ -44,7 +44,13 @@ class ObjectInstancier
         $param = array();
         /** @var ReflectionParameter $parameters */
         foreach ($allParameters as $parameters) {
-            $param_name = $parameters->getClass() ? $parameters->getClass()->name : $parameters->name;
+            if ($parameters->getType() && !$parameters->getType()->isBuiltin()) {
+                $class = new ReflectionClass($parameters->getType()->getName());
+                $param_name = $class->getName();
+            } else {
+                $param_name = $parameters->getName();
+            }
+
             $bind_value = null;
             try {
                 $bind_value = $this->getInstance($param_name);

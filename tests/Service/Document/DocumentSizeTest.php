@@ -14,7 +14,7 @@ class DocumentSizeTest extends PastellTestCase
      */
     private $documentSize;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->documentSize = $this->getObjectInstancier()->getInstance(DocumentSize::class);
         parent::setUp();

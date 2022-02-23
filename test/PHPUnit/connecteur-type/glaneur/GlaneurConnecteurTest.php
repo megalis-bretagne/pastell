@@ -14,7 +14,7 @@ class GlaneurConnecteurTest extends PastellTestCase
     private $workspace_path;
 
     /** @throws Exception */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->tmpFolder = new TmpFolder();
@@ -26,7 +26,7 @@ class GlaneurConnecteurTest extends PastellTestCase
         $this->getObjectInstancier()->setInstance('workspacePath', $this->workspace_path);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->tmpFolder->delete($this->tmp_folder);
         $this->tmpFolder->delete($this->directory_send);

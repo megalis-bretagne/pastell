@@ -7,7 +7,7 @@ class RoleUtilisateurSQLTest extends PastellTestCase
      */
     private $roleUtilisateurSQL;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->roleUtilisateurSQL = new RoleUtilisateur(

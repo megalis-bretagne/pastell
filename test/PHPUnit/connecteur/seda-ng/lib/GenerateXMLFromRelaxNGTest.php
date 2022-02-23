@@ -10,7 +10,7 @@ class GenerateXMLFromRelaxNGTest extends TestCase
     /** @var  GenerateXMLFromRelaxNg */
     private $relaxNgGenerateXML;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $relaxNG = new RelaxNG();
         $this->relaxNg = $relaxNG->getFromFilePath(__DIR__ . "/../fixtures/grammar-test.rng");

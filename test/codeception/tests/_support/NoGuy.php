@@ -1,5 +1,7 @@
 <?php
 
+use Codeception\Actor;
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -15,16 +17,16 @@
  *
  * @SuppressWarnings(PHPMD)
 */
-class NoGuy extends \Codeception\Actor
+class NoGuy extends Actor
 {
     use _generated\NoGuyActions {
-        sendGET as sendGETTrait;
+        sendGet as sendGETTrait;
         sendPOST as sendPOSTTrait;
         sendPATCH as sendPATCHTrait;
         sendDELETE as sendDELETETrait;
     }
 
-    public function sendGET($url, $params = array())
+    public function sendGet($url, $params = array())
     {
         return $this->sendGETTrait($this->getAPIV2URL($url), $params);
     }

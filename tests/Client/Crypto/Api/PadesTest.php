@@ -27,7 +27,7 @@ class PadesTest extends TestCase
      */
     private $padesApi;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->clientInterface = $this->getMockBuilder(ClientInterface::class)->getMock();
         $this->padesApi = new Pades(new CryptoClient($this->clientInterface));

@@ -5,7 +5,7 @@ class FrontControllerTest extends PastellTestCase
     /** @var  FrontController */
     private $frontController;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->getObjectInstancier()->getInstance(Authentification::class)->Connexion('admin', 1);

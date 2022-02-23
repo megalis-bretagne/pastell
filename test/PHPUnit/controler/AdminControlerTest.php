@@ -5,7 +5,7 @@ class AdminControlerTest extends ControlerTestCase
     /** @var  AdminControler */
     private $adminControler;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->adminControler = $this->getControlerInstance(AdminControler::class);

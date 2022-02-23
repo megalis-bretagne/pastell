@@ -3,3 +3,4 @@ modules:
     enabled:
         - REST:
             depends: PhpBrowser
+        - \Helper\Api

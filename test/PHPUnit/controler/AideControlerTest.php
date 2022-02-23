@@ -5,7 +5,7 @@ class AideControlerTest extends ControlerTestCase
     /** @var  AideControler $aideControler*/
     private $aideControler;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->aideControler = $this->getControlerInstance(AideControler::class);

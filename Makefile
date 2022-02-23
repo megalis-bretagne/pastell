@@ -79,6 +79,10 @@ build-extensions:
 	$(EXEC_COMPOSER) composer install --ignore-platform-reqs --working-dir=./extensions/pastell-depot-cmis/
 	docker-compose -f ./extensions/pastell-depot-cmis/docker-compose.yml run app bash -c "php-scoper add-prefix --force && composer dump-autoload --working-dir=build"
 
+build:
+	$(DOCKER_COMPOSE_22) build web
+
+
 build22:
 	$(DOCKER_COMPOSE_22) build webubuntu22
 

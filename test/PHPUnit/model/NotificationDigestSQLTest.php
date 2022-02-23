@@ -5,7 +5,7 @@ class NotificationDigestSQLTest extends PastellTestCase
     /** @var  NotificationDigestSQL */
     private $notificationDigestSQL;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->notificationDigestSQL = new NotificationDigestSQL($this->getSQLQuery());

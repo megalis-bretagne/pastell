@@ -8,7 +8,7 @@ class ControlerTest extends PHPUnit\Framework\TestCase
     /** @var  Controler */
     private $controler;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->objectInstancier = new ObjectInstancier();
         $this->controler = $this->getMockForAbstractClass("Controler", [$this->objectInstancier]);

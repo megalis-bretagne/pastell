@@ -7,7 +7,7 @@ class EntiteControlerTest extends ControlerTestCase
      */
     private $entiteControler;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->entiteControler = $this->getControlerInstance(EntiteControler::class);

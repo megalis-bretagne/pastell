@@ -5,7 +5,7 @@ class DepotFTPTest extends PastellTestCase
     /** @var  DepotFTP */
     private $depotFTP;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $FTPClientWrapper = $this->createMock('FtpClientWrapper');

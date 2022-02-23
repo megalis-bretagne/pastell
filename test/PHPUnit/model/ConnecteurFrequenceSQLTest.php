@@ -10,7 +10,7 @@ class ConnecteurFrequenceSQLTest extends PastellTestCase
 
     private $id_cf;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->connecteurFrequenceSQL = $this->getObjectInstancier()->getInstance(ConnecteurFrequenceSQL::class);

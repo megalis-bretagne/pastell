@@ -8,7 +8,7 @@ class GenerateurSedaFillFilesTest extends TestCase
 
     private $generateurSedaFillFiles;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->generateurSedaFillFiles = new GenerateurSedaFillFiles(
             file_get_contents(self::FIXTURE_FILEPATH)

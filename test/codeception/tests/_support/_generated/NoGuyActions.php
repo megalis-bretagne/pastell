@@ -256,7 +256,7 @@ trait NoGuyActions
      * @see \Codeception\Module\REST::sendPOST()
      */
     public function sendPOST($url, $params = null, $files = null) {
-        return $this->getScenario()->runStep(new \Codeception\Step\Action('sendPOST', func_get_args()));
+        return $this->getScenario()->runStep(new \Codeception\Step\Action('sendPost', func_get_args()));
     }
 
  
@@ -272,7 +272,7 @@ trait NoGuyActions
      * @see \Codeception\Module\REST::sendHEAD()
      */
     public function sendHEAD($url, $params = null) {
-        return $this->getScenario()->runStep(new \Codeception\Step\Action('sendHEAD', func_get_args()));
+        return $this->getScenario()->runStep(new \Codeception\Step\Action('sendHead', func_get_args()));
     }
 
  
@@ -288,7 +288,7 @@ trait NoGuyActions
      * @see \Codeception\Module\REST::sendOPTIONS()
      */
     public function sendOPTIONS($url, $params = null) {
-        return $this->getScenario()->runStep(new \Codeception\Step\Action('sendOPTIONS', func_get_args()));
+        return $this->getScenario()->runStep(new \Codeception\Step\Action('sendOptions', func_get_args()));
     }
 
  
@@ -303,8 +303,8 @@ trait NoGuyActions
      * @part xml
      * @see \Codeception\Module\REST::sendGET()
      */
-    public function sendGET($url, $params = null) {
-        return $this->getScenario()->runStep(new \Codeception\Step\Action('sendGET', func_get_args()));
+    public function sendGet($url, $params = null) {
+        return $this->getScenario()->runStep(new \Codeception\Step\Action('sendGet', func_get_args()));
     }
 
  
@@ -321,7 +321,7 @@ trait NoGuyActions
      * @see \Codeception\Module\REST::sendPUT()
      */
     public function sendPUT($url, $params = null, $files = null) {
-        return $this->getScenario()->runStep(new \Codeception\Step\Action('sendPUT', func_get_args()));
+        return $this->getScenario()->runStep(new \Codeception\Step\Action('sendPut', func_get_args()));
     }
 
  
@@ -338,7 +338,7 @@ trait NoGuyActions
      * @see \Codeception\Module\REST::sendPATCH()
      */
     public function sendPATCH($url, $params = null, $files = null) {
-        return $this->getScenario()->runStep(new \Codeception\Step\Action('sendPATCH', func_get_args()));
+        return $this->getScenario()->runStep(new \Codeception\Step\Action('sendPatch', func_get_args()));
     }
 
  
@@ -355,7 +355,7 @@ trait NoGuyActions
      * @see \Codeception\Module\REST::sendDELETE()
      */
     public function sendDELETE($url, $params = null, $files = null) {
-        return $this->getScenario()->runStep(new \Codeception\Step\Action('sendDELETE', func_get_args()));
+        return $this->getScenario()->runStep(new \Codeception\Step\Action('sendDelete', func_get_args()));
     }
 
  
@@ -375,7 +375,7 @@ trait NoGuyActions
      * @see \Codeception\Module\REST::sendLINK()
      */
     public function sendLINK($url, $linkEntries) {
-        return $this->getScenario()->runStep(new \Codeception\Step\Action('sendLINK', func_get_args()));
+        return $this->getScenario()->runStep(new \Codeception\Step\Action('sendLink', func_get_args()));
     }
 
  
@@ -393,7 +393,7 @@ trait NoGuyActions
      * @see \Codeception\Module\REST::sendUNLINK()
      */
     public function sendUNLINK($url, $linkEntries) {
-        return $this->getScenario()->runStep(new \Codeception\Step\Action('sendUNLINK', func_get_args()));
+        return $this->getScenario()->runStep(new \Codeception\Step\Action('sendUnlink', func_get_args()));
     }
 
  
