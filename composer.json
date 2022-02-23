@@ -63,7 +63,6 @@
     "codeception/module-phpbrowser": "^1.0",
     "codeception/module-rest": "^1.4",
     "mikey179/vfsstream": "^1.6",
-    "pcov/clobber": "^2.0",
     "pdepend/pdepend": "^2.10",
     "phploc/phploc": "^4.0",
     "phpmd/phpmd": "^2.11",
