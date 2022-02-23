@@ -14,7 +14,7 @@ class MailSecConnecteurTest extends PastellTestCase
     /**
      * @return DocumentEmail
      */
-    private function getDocumentEmail()
+    private function getDocumentEmail(): DocumentEmail
     {
         return $this->getObjectInstancier()->getInstance(DocumentEmail::class);
     }
@@ -22,7 +22,7 @@ class MailSecConnecteurTest extends PastellTestCase
     /**
      * @return ZenMail
      */
-    private function getZenMail()
+    private function getZenMail(): ZenMail
     {
         return $this->getObjectInstancier()->getInstance(ZenMail::class);
     }
@@ -31,8 +31,9 @@ class MailSecConnecteurTest extends PastellTestCase
      * @param ZenMail $zenMail
      * @return MailSec
      * @throws DonneesFormulaireException
+     * @throws Exception
      */
-    public function getMailSec(ZenMail $zenMail)
+    public function getMailSec(ZenMail $zenMail): MailSec
     {
         $mailsec = new MailSec(
             $zenMail,
@@ -108,6 +109,7 @@ class MailSecConnecteurTest extends PastellTestCase
 
     /**
      * @throws DonneesFormulaireException
+     * @throws Exception
      */
     public function testTest()
     {
@@ -119,32 +121,23 @@ class MailSecConnecteurTest extends PastellTestCase
 
     /**
      * @throws DonneesFormulaireException
+     * @throws Exception
      */
     public function testEmetteur()
     {
         $zenMail = $this->getZenMail();
         $mailsec = $this->getMailSec($zenMail);
         $this->connecteurConfig->setData('mailsec_from_description', 'ma_collectivite');
-        $this->connecteurConfig->setData('mailsec_from', 'mail_collectivite@example.org');
         $this->connecteurConfig->setData('mailsec_reply_to', 'mail_reply_to@example.org');
         $mailsec->test();
         $info_entete = $zenMail->getAllInfo()[0][self::ENTETE];
 
-        if (MODE_MUTUALISE) {
-            $this->assertEquals(
-                'From: =?utf-8?B?bWFfY29sbGVjdGl2aXRl?=<' . PLATEFORME_MAIL . '>
+        $this->assertEquals(
+            'From: =?utf-8?B?bWFfY29sbGVjdGl2aXRl?=<' . PLATEFORME_MAIL . '>
 Reply-To: mail_reply_to@example.org
 Content-Type: text/plain; charset="UTF-8"',
-                $info_entete
-            );
-        } else {
-            $this->assertEquals(
-                'From: =?utf-8?B?bWFfY29sbGVjdGl2aXRl?=<mail_collectivite@example.org>
-Reply-To: mail_reply_to@example.org
-Content-Type: text/plain; charset="UTF-8"',
-                $info_entete
-            );
-        }
+            $info_entete
+        );
     }
 
     /**
@@ -157,7 +150,7 @@ Content-Type: text/plain; charset="UTF-8"',
 
 
         $this->addContentHTML(__DIR__ . "/fixtures/mail-exemple.html");
-        $this->addEmbededImage('image1.png', 0);
+        $this->addEmbededImage('image1.png');
         $this->addEmbededImage('image2.png', 1);
 
         $key = $this->getDocumentEmail()->add(1, self::EMAIL, "to");
@@ -193,7 +186,7 @@ Content-Type: text/plain; charset="UTF-8"',
      * @param int $filenum
      * @throws DonneesFormulaireException
      */
-    private function addEmbededImage($filename = 'image.png', $filenum = 0)
+    private function addEmbededImage(string $filename = 'image.png', int $filenum = 0)
     {
         $this->connecteurConfig->addFileFromCopy(
             'embeded_image',

@@ -142,7 +142,7 @@ class ConnecteurControlerTest extends ControlerTestCase
             'test_secure_import@example.org',
             $this->getDonneesFormulaireFactory()
                 ->getConnecteurEntiteFormulaire(11)
-                ->get('mailsec_from')
+                ->get('mailsec_reply_to')
         );
 
         $connecteurActionService = $this->getObjectInstancier()->getInstance(ConnecteurActionService::class);
