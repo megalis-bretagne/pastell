@@ -110,7 +110,7 @@ class CPPWrapperTest extends ExtensionCppTestCase
         ];
         $curlWrapper = $this->getMockBuilder(CurlWrapper::class)->disableOriginalConstructor()->getMock();
         $curlWrapper->expects($this->any())->method('get')->willReturn(json_encode($returnData));
-        $curlWrapper->expects($this->any())->method('getLastHttpCode')->willReturn("200");
+        $curlWrapper->expects($this->any())->method('getLastHttpCode')->willReturn(200);
 
         $curlWrapperFactory = $this->getMockBuilder(CurlWrapperFactory::class)
             ->disableOriginalConstructor()
@@ -140,7 +140,7 @@ class CPPWrapperTest extends ExtensionCppTestCase
         ];
         $curlWrapper = $this->getMockBuilder(CurlWrapper::class)->disableOriginalConstructor()->getMock();
         $curlWrapper->expects($this->any())->method('get')->willReturn(json_encode($returnData));
-        $curlWrapper->expects($this->any())->method('getLastHttpCode')->willReturn("200");
+        $curlWrapper->expects($this->any())->method('getLastHttpCode')->willReturn(200);
 
         $curlWrapperFactory = $this->getMockBuilder(CurlWrapperFactory::class)
             ->disableOriginalConstructor()
@@ -176,7 +176,7 @@ class CPPWrapperTest extends ExtensionCppTestCase
         ];
         $curlWrapper = $this->getMockBuilder(CurlWrapper::class)->disableOriginalConstructor()->getMock();
         $curlWrapper->expects($this->any())->method('get')->willReturn(json_encode($returnData));
-        $curlWrapper->expects($this->any())->method('getLastHttpCode')->willReturn("200");
+        $curlWrapper->expects($this->any())->method('getLastHttpCode')->willReturn(200);
 
         $curlWrapperFactory = $this->getMockBuilder(CurlWrapperFactory::class)
             ->disableOriginalConstructor()
@@ -208,7 +208,7 @@ class CPPWrapperTest extends ExtensionCppTestCase
         ];
         $curlWrapper = $this->getMockBuilder(CurlWrapper::class)->disableOriginalConstructor()->getMock();
         $curlWrapper->expects($this->any())->method('get')->willReturn(json_encode($returnData));
-        $curlWrapper->expects($this->any())->method('getLastHttpCode')->willReturn("200");
+        $curlWrapper->expects($this->any())->method('getLastHttpCode')->willReturn(200);
 
         $curlWrapperFactory = $this->getMockBuilder(CurlWrapperFactory::class)
             ->disableOriginalConstructor()
@@ -232,7 +232,7 @@ class CPPWrapperTest extends ExtensionCppTestCase
 
         $curlWrapper = $this->getMockBuilder(CurlWrapper::class)->disableOriginalConstructor()->getMock();
         $curlWrapper->expects($this->any())->method('get')->willReturn(false);
-        $curlWrapper->expects($this->any())->method('getLastHttpCode')->willReturn("200");
+        $curlWrapper->expects($this->any())->method('getLastHttpCode')->willReturn(200);
 
         $curlWrapperFactory = $this->getMockBuilder(CurlWrapperFactory::class)
             ->disableOriginalConstructor()

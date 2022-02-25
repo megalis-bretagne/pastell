@@ -11,7 +11,7 @@ apt-get install -y --no-install-recommends \
 
 rm -r /var/lib/apt/lists/*
 
-echo "extension=pcov.so" > /etc/php/7.2/mods-available/pcov.ini
+echo "extension=pcov.so" > /etc/php/8.1/mods-available/pcov.ini
 
 phpenmod xdebug pcov
 

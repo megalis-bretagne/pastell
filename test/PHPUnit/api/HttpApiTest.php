@@ -107,6 +107,6 @@ class HttpApiTest extends PastellTestCase
     public function testGetDocumentEndingWithPhp(): void
     {
         $this->getCall('/v2/entite/1/document/jfkvphp');
-        $this->expectOutputRegex('/HTTP\/1.1 403 Forbidden/');
+        $this->expectOutputRegex('/HTTP\/1.1 404 Not Found/');
     }
 }

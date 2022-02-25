@@ -110,6 +110,6 @@ class FluxEntiteSQLTest extends PastellTestCase
     {
         $associatedConnectors = $this->getFluxEntiteSQL()->getAssociatedConnectorsById('fakeTdt');
         $this->assertCount(1, $associatedConnectors);
-        $this->assertSame('2', $associatedConnectors[0]['id_ce']);
+        $this->assertSame(2, $associatedConnectors[0]['id_ce']);
     }
 }

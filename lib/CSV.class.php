@@ -24,7 +24,8 @@ class CSV
         }
         $fileInfo = new finfo();
         $info = $fileInfo->file($file_path, FILEINFO_MIME_TYPE);
-        if ($info == 'application/x-gzip') {
+        echo $info;
+        if (in_array($info, ['application/x-gzip', 'application/gzip'])) {
             return gzopen($file_path, "r");
         }
         return fopen($file_path, "r");

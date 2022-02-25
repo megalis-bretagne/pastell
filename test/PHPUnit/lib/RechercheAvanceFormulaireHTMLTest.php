@@ -30,7 +30,7 @@ class RechercheAvanceFormulaireHTMLTest extends PastellTestCase
         $contents = ob_get_contents();
         ob_end_clean();
 
-        $this->assertContains("<select name='iparapheur_sous_type' class=\"form-control col-md-8\">
+        $this->assertStringContainsString("<select name='iparapheur_sous_type' class=\"form-control col-md-8\">
             <option value=''></option>
                             <option                         value='Cachet serveur'>Cachet serveur</option>
                             <option                         value='Commande'>Commande</option>
@@ -54,7 +54,7 @@ class RechercheAvanceFormulaireHTMLTest extends PastellTestCase
         $contents = ob_get_contents();
         ob_end_clean();
 
-        $this->assertContains("<select name='iparapheur_sous_type' class=\"form-control col-md-8\">
+        $this->assertStringContainsString("<select name='iparapheur_sous_type' class=\"form-control col-md-8\">
             <option value=''></option>
                     </select>", $contents);
     }

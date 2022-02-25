@@ -14,9 +14,9 @@ class PKCS12Test extends PHPUnit\Framework\TestCase
     {
         parent::setUp();
         $this->pkcs12 = new PKCS12();
-        $this->p12_file_path = __DIR__ . "/fixtures/robert_petitpoids.p12";
-        $this->p12_password = "robert_petitpoids";
-        $this->certificate_name = "/C=FR/ST=France/L=Lyon/O=Sigmalis/OU=sigmalis/CN=robert_petitpoids";
+        $this->p12_file_path = __DIR__ . "/fixtures/certificat.p12";
+        $this->p12_password = "certificat";
+        $this->certificate_name = "/C=FR/ST=HERAULT/L=MONTPELLIER/O=LIBRICIEL/OU=CERTIFICAT_AUTO_SIGNE/CN=localhost/emailAddress=test@localhost";
     }
 
     public function testGetAll()
@@ -40,6 +40,6 @@ class PKCS12Test extends PHPUnit\Framework\TestCase
     public function testUnencryptedKey()
     {
         $result = $this->pkcs12->getUnencryptedKey($this->p12_file_path, $this->p12_password);
-        $this->assertRegExp("#-----BEGIN PRIVATE KEY-----#", $result);
+        $this->assertMatchesRegularExpression("#-----BEGIN PRIVATE KEY-----#", $result);
     }
 }

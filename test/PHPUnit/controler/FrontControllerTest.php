@@ -14,7 +14,7 @@ class FrontControllerTest extends PastellTestCase
 
     public function testDispatch()
     {
-        $this->expectOutputRegex("#Liste des dossiers  - Pastell#");
+        $this->expectOutputRegex("#Liste des dossiers - Pastell#");
         $this->frontController->dispatch();
     }
 
@@ -34,7 +34,7 @@ class FrontControllerTest extends PastellTestCase
 
     public function testDispatchDefaultMethod()
     {
-        $this->expectOutputRegex("#Liste des dossiers  - Pastell#");
+        $this->expectOutputRegex("#Liste des dossiers - Pastell#");
         $this->frontController->setGetParameter(array(FrontController::PAGE_REQUEST => 'Document'));
         $this->frontController->dispatch();
     }

@@ -19,7 +19,7 @@ class ManifestReaderTest extends PHPUnit\Framework\TestCase
     public function testGetInfo()
     {
         $info = $this->getManifestReader()->getInfo();
-        $this->assertInternalType('array', $info);
+        $this->assertIsArray($info);
         $this->assertArrayHasKey('nom', $info);
         $this->assertEquals('Glaneur', $info['nom']);
     }
@@ -50,7 +50,7 @@ class ManifestReaderTest extends PHPUnit\Framework\TestCase
     {
         $manifestReader = $this->getManifestReader();
         $extension_needed = $manifestReader->getExtensionNeeded();
-        $this->assertInternalType('array', $extension_needed);
+        $this->assertIsArray($extension_needed);
         $this->assertArrayHasKey('pastell-mnesys', $extension_needed);
         $this->assertArrayHasKey('version', $extension_needed['pastell-mnesys']);
         $this->assertEquals(2, $extension_needed['pastell-mnesys']['version']);

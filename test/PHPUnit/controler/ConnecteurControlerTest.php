@@ -160,7 +160,7 @@ class ConnecteurControlerTest extends ControlerTestCase
             'field' => 'unknown_field',
         ]);
         $this->expectException(LastErrorException::class);
-        $this->expectExceptionMessageRegExp("/Le champ unknown_field n'existe pas/");
+        $this->expectExceptionMessageMatches("/Le champ unknown_field n'existe pas/");
 
         $this->connecteurControler->externalDataAction();
     }

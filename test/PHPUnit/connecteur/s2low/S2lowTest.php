@@ -49,16 +49,6 @@ class S2lowTest extends PastellTestCase
     /**
      * @throws S2lowException
      */
-    public function testPostHeliosS2lowFailed()
-    {
-        $s2low = $this->getS2low("KO test");
-        $this->expectExceptionMessage("La réponse de S²low n'a pas pu être analysée : KO test");
-        $s2low->postHelios($this->getDonneesFormulaire());
-    }
-
-    /**
-     * @throws S2lowException
-     */
     public function testPostHeliosS2lowOK()
     {
         $s2low = $this->getS2low("<import><resultat>OK</resultat></import>");

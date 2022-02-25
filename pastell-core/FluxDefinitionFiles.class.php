@@ -87,8 +87,8 @@ class FluxDefinitionFiles
 
     private function compareFluxDefinition($a, $b)
     {
-        $str1 = iconv('utf-8', 'ascii//TRANSLIT', $a[DocumentType::NOM]);
-        $str2 = iconv('utf-8', 'ascii//TRANSLIT', $b[DocumentType::NOM]);
+        $str1 = iconv('utf-8', 'ascii//TRANSLIT', $a[DocumentType::NOM] ?? '');
+        $str2 = iconv('utf-8', 'ascii//TRANSLIT', $b[DocumentType::NOM] ?? '');
 
         return strcasecmp($str1, $str2);
     }

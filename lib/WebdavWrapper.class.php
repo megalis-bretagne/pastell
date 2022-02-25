@@ -82,7 +82,7 @@ class WebdavWrapper
      */
     public function isConnected()
     {
-        $options = $this->dav->send(new Request('OPTIONS', $this->dav->getAbsoluteUrl('')));
+        $options = $this->dav->send(new Request('OPTIONS', $this->dav->getAbsoluteUrl('') ?: ''));
         if ($options->getStatus() !== 200) {
             throw new Exception($options->getStatus() . ' : ' . $options->getStatusText());
         } elseif (!$options->getHeader('Dav')) {
@@ -123,7 +123,7 @@ class WebdavWrapper
      */
     public function get($element)
     {
-        $response = $this->dav->send(new Request('GET', $this->dav->getAbsoluteUrl($element)));
+        $response = $this->dav->send(new Request('GET', $this->dav->getAbsoluteUrl($element) ?: ''));
         if ($response->getStatus() !== 200) {
             throw new Exception($response->getStatus() . ' : ' . $response->getStatusText());
         }

@@ -117,7 +117,24 @@ class EntiteControlerTest extends ControlerTestCase
 
         $info = $this->entiteControler->getViewParameter();
 
-        $this->assertSame('1', $info['nbCollectivite']);
+        $this->assertSame(1, $info['nbCollectivite']);
         $this->assertCount(1, $info['liste_collectivite']);
+    }
+
+    public function testDoEditionAction()
+    {
+        $this->setPostInfo([
+            'id_e' => 0,
+            'siren' => '000000000',
+            'denomination' => 'TEST ENTITIES',
+            'type' => 'collectivite',
+        ]);
+        try {
+            $this->entiteControler->doEditionAction();
+        } catch (LastMessageException $e) {
+        }
+
+        $info = $this->getObjectInstancier()->getInstance(EntiteSQL::class)->getInfo(3);
+        $this->assertEquals("TEST ENTITIES", $info['denomination']);
     }
 }

@@ -46,7 +46,9 @@ class SedaGenerique extends SedaNG
 
     public function __destruct()
     {
-        $this->tmpFolder->delete($this->zipDirectory);
+        if ($this->zipDirectory) {
+            $this->tmpFolder->delete($this->zipDirectory);
+        }
     }
 
     public function setConnecteurConfig(DonneesFormulaire $connecteurConfig): void
@@ -706,9 +708,9 @@ class SedaGenerique extends SedaNG
                 $file_unit['Filename'] = $relative_path;
                 $file_unit['MessageDigest'] = hash_file('sha256', $filepath);
                 $file_unit['Size'] = filesize($filepath);
-                $fileInfo = new finfo();
+                $fileContentType = new FileContentType();
                 if (!$do_not_put_mime_type) {
-                    $file_unit['MimeType'] = $fileInfo->file($filepath, FILEINFO_MIME_TYPE);
+                    $file_unit['MimeType'] = $fileContentType->getContentType($filepath);
                 }
 
                 $local_description = $this->getLocalDescription($description, $relative_path, false);

@@ -11,7 +11,7 @@ class CurlWrapper
     public const PUT_METHOD = "PUT";
 
     private $curlHandle;
-    private $lastError;
+    private $lastError = "";
 
     private $postDataList = [];
     /**
@@ -19,7 +19,7 @@ class CurlWrapper
      */
     private $filePropertiesList = [];
 
-    private $httpCode;
+    private $httpCode = 0;
     private $lastOutput;
 
     /** @var  CurlFunctions */
@@ -88,7 +88,7 @@ class CurlWrapper
         );
     }
 
-    public function getLastError()
+    public function getLastError(): string
     {
         return $this->lastError;
     }
@@ -122,7 +122,7 @@ class CurlWrapper
         $this->setProperties(CURLOPT_SSLKEYPASSWD, $clientKeyPassword);
     }
 
-    private function isProxyNeedded(string $url): bool
+    private function isProxyNeeded(string $url): bool
     {
         if (! $this->http_proxy_url) {
             return false;
@@ -137,7 +137,7 @@ class CurlWrapper
 
     private function addProxyHeader(string $url): void
     {
-        if ($this->isProxyNeedded($url)) {
+        if ($this->isProxyNeeded($url)) {
             $this->setProperties(CURLOPT_PROXY, $this->http_proxy_url);
         } else {
             $this->setProperties(CURLOPT_PROXY, '');
@@ -154,8 +154,8 @@ class CurlWrapper
         $this->addProxyHeader($url);
 
         $this->lastOutput = $this->curlFunctions->curl_exec($this->curlHandle);
-
         $this->lastError = $this->curlFunctions->curl_error($this->curlHandle);
+
 
         if ($this->lastError) {
             $this->lastError = "Erreur de connexion au serveur : " . $this->lastError;
@@ -170,7 +170,7 @@ class CurlWrapper
         return $this->lastOutput;
     }
 
-    public function getLastHttpCode()
+    public function getLastHttpCode(): int
     {
         return $this->httpCode;
     }
@@ -248,7 +248,7 @@ class CurlWrapper
         $array = array();
 
         //cURL ne permet pas de poster plusieurs fichiers avec le même nom !
-        //cette fonction est inspiré de http://blog.srcmvn.com/multiple-values-for-the-same-key-and-file-upl
+        //cette fonction est inspirée de http://blog.srcmvn.com/multiple-values-for-the-same-key-and-file-upl
         foreach ($this->postDataList as $postData) {
             if (isset($array[$postData[0]])) {
                 return true;
@@ -284,7 +284,7 @@ class CurlWrapper
     private function curlSetPostDataWithSimilarFilename()
     {
         //cette fonction, bien que résolvant la limitation du problème de nom multiple de fichier
-        //nécessite le chargement en mémoire de l'ensemble des fichiers.
+        //nécessite le chargement de l'ensemble des fichiers dans la mémoire.
         $boundary = $this->getBoundary();
 
         $body = array();

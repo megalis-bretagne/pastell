@@ -1,6 +1,6 @@
 <?php
 
-class PieceMarcheLotExtraireTest extends PastellMarcheTestCase
+class PieceMarcheParEtapeExtraireTest extends PastellMarcheTestCase
 {
     private const FILENAME_ZIP = "exemple-zip-pieces.zip";
     private const FILENAME_PDF = "2018BPU.pdf";

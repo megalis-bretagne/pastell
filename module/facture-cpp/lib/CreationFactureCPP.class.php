@@ -203,8 +203,8 @@ class CreationFactureCPP
             $statut_file_content,
             $statut,
             $commentaire,
-            $utilisateur_info['nom'],
-            $utilisateur_info['prenom']
+            $utilisateur_info['nom'] ?? "",
+            $utilisateur_info['prenom'] ?? ""
         );
         $donneesFormulaire->addFileFromData(
             'histo_statut_cpp',

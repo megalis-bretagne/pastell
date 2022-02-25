@@ -10,7 +10,7 @@ class RecupClassificationAll extends ActionExecutor
 
         $summary = [];
         foreach ($s2lowTdtConnectors as $connector) {
-            if ($connector['id_e'] === '0') {
+            if ($connector['id_e'] === 0) {
                 continue;
             }
             $denomination = $connector['denomination'];

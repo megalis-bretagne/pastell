@@ -235,8 +235,8 @@ class DocumentControlerTest extends ControlerTestCase
         $documentController->indexAction();
         $result = ob_get_contents();
         ob_end_clean();
-        $this->assertContains("Bourg-en-Bresse", $result);
-        $this->assertContains("CCAS", $result);
+        $this->assertStringContainsString("Bourg-en-Bresse", $result);
+        $this->assertStringContainsString("CCAS", $result);
     }
 
     public function testIndexWithTwoDifferentRoleOnTwoEntities()
@@ -259,8 +259,8 @@ class DocumentControlerTest extends ControlerTestCase
         $documentController->indexAction();
         $result = ob_get_contents();
         ob_end_clean();
-        $this->assertContains("Bourg-en-Bresse", $result);
-        $this->assertContains("CCAS", $result);
+        $this->assertStringContainsString("Bourg-en-Bresse", $result);
+        $this->assertStringContainsString("CCAS", $result);
     }
 
 
@@ -314,7 +314,7 @@ class DocumentControlerTest extends ControlerTestCase
             'message' => 'message',
         ]);
         $this->expectException(LastErrorException::class);
-        $this->expectExceptionMessageRegExp("/L'action unknown_action n'existe pas/");
+        $this->expectExceptionMessageMatches("/L'action unknown_action n'existe pas/");
 
         $documentController->changeEtatAction();
     }

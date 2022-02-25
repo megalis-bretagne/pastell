@@ -234,7 +234,7 @@ class FastParapheurTest extends PastellTestCase
         $this->fastParapheur = $this->getFastParapheur();
 
         $this->assertFalse($this->fastParapheur->sendDocument("", "", "", "", "", ['not empty']));
-        $this->assertContains("Impossible de créer le fichier d'archive : ", $this->fastParapheur->getLastError());
+        $this->assertStringContainsString("Impossible de créer le fichier d'archive : ", $this->fastParapheur->getLastError());
     }
 
     /**

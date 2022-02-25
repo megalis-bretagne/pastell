@@ -5,13 +5,13 @@ class DatabaseUpdateTest extends PastellTestCase
     public function testCreateSQL()
     {
         $databaseUpdate = new DatabaseUpdate(file_get_contents(PASTELL_PATH . "/installation/pastell.bin"), $this->getSQLQuery());
-        $this->assertInternalType('array', $databaseUpdate->getAllSQLCommand());
+        $this->assertIsArray($databaseUpdate->getAllSQLCommand());
     }
 
     public function testFileEmpty()
     {
         $databaseUpdate = new DatabaseUpdate(false, $this->getSQLQuery());
-        $this->assertInternalType('array', $databaseUpdate->getAllSQLCommand());
+        $this->assertIsArray($databaseUpdate->getAllSQLCommand());
     }
 
     public function testGetJson()
@@ -19,7 +19,7 @@ class DatabaseUpdateTest extends PastellTestCase
         $databaseUpdate = new DatabaseUpdate(false, $this->getSQLQuery());
         $json = $databaseUpdate->getDatabaseDefinition();
         $result = json_decode($json, true);
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
     }
 
     public function testWrite()
@@ -31,14 +31,14 @@ class DatabaseUpdateTest extends PastellTestCase
         );
         $content = file_get_contents($this->getObjectInstancier()->getInstance('workspacePath') . "/toto.bin");
         $result = json_decode($content, true);
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
     }
 
     public function testGetDiff()
     {
         $databaseUpdate = new DatabaseUpdate(false, $this->getSQLQuery());
         $diff = $databaseUpdate->getDiff();
-        $this->assertInternalType('array', $diff);
+        $this->assertIsArray($diff);
     }
 
     public function testLongtextTypeInsteadOfJsonType()

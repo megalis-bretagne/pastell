@@ -43,7 +43,7 @@
       <Type>CDO</Type>
     </Document>
     <Document>
-      <Attachment mimeCode="text/plain" filename="journal.json"/>
+      <Attachment mimeCode="application/json" filename="journal.json"/>
       <Type>CDO</Type>
     </Document>
   </Archive>

@@ -596,7 +596,7 @@ class GlaneurConnecteurTest extends PastellTestCase
         ]);
 
         $directories_info = $glaneurLocal->listDirectories();
-        $this->assertContains("directory - 1 fichier", $directories_info);
+        $this->assertStringContainsString("directory - 1 fichier", $directories_info);
     }
 
     /**

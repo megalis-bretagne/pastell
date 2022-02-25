@@ -16,7 +16,9 @@ class FileContentType
                 'docx'   =>  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
                 'dotx'   =>  "application/vnd.openxmlformats-officedocument.wordprocessingml.template",
                 'xlam'   =>  "application/vnd.ms-excel.addin.macroEnabled.12",
-                'xlsb'   =>  "application/vnd.ms-excel.sheet.binary.macroEnabled.12");
+                'xlsb'   =>  "application/vnd.ms-excel.sheet.binary.macroEnabled.12",
+                'txt' => 'text/plain'
+        );
         if (isset($openXMLExtension[$ext])) {
             return $openXMLExtension[$ext];
         }
@@ -33,6 +35,13 @@ class FileContentType
         if ($result == 'application/zip') {
             $file_name = basename($file_path);
             $result = $this->getOpenXMLMimeType($file_name) ?: 'application/zip';
+        }
+        if ($result == 'application/octet-stream') {
+            $file_name = basename($file_path);
+            $result = $this->getOpenXMLMimeType($file_name) ?: 'application/octet-stream';
+        }
+        if ($result == 'application/x-empty') {
+            $result = "text/plain";
         }
         return $result;
     }

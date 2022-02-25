@@ -15,7 +15,7 @@
 
 <div class="box">
 
-<h2>Gestion du rôle : <?php  hecho($role_info['libelle']) ?></h2>
+<h2>Gestion du rôle : <?php  hecho($role_info['libelle'] ?? '') ?></h2>
 
 <div class="bloc-flex">
 <a class='btn btn-primary inline' href='<?php $this->url("Role/edition?role=" . get_hecho($role)) ?>'><i class='fa fa-pencil'></i>&nbsp;Modifier le libellé</a>

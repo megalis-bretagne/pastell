@@ -17,7 +17,7 @@ class YMLLoaderTest extends PHPUnit\Framework\TestCase
     public function testGetArray()
     {
         $result = $this->ymlLoader->getArray(__DIR__ . "/fixtures/test.yml");
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertEquals('chat', $result['animaux']['mamifère']['félin'][0]);
     }
 

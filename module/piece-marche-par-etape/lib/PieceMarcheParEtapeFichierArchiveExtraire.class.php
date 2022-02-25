@@ -31,8 +31,9 @@ class PieceMarcheParEtapeFichierArchiveExtraire
 
         $zip = new ZipArchive();
         $handle = $zip->open($zip_file);
-        if (!$handle) {
-            throw new UnrecoverableException("Impossible d'ouvrir le fichier zip");
+
+        if ($handle !== true) {
+            throw new UnrecoverableException("Impossible d'ouvrir le fichier zip - erreur $handle");
         }
 
         $zip->extractTo($this->tmp_folder);

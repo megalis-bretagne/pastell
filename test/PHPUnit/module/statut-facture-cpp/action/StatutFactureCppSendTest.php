@@ -16,7 +16,12 @@ class StatutFactureCppSendTest extends ExtensionCppTestCase
         $cppWrapper->expects($this->any())->method('getIdentifiantStructureCPPByIdentifiantStructure')->willReturn(1234);
         $cppWrapper->expects($this->any())->method('getCppInvoiceId')->willReturn(10000);
         // Not important in this case
-        $cppWrapper->expects($this->any())->method('traiterFactureRecue')->willReturn(true);
+        $cppWrapper->expects($this->any())->method('traiterFactureRecue')->willReturn([
+            'idFacture' => 42,
+            'numeroFacture' => 12,
+            'dateTraitement' => '2021-12-12',
+            'nouveauStatut' => 'OK'
+        ]);
 
         $cppWrapperFactory = $this->getMockBuilder(CPPWrapperFactory::class)
             ->disableOriginalConstructor()

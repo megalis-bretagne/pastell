@@ -25,7 +25,7 @@ class SAEEnvoiHelios extends ActionExecutor
         if (! $donneesFormulaire->get('envoi_signature') && ! $donneesFormulaire->get('fichier_pes_signe')) {
             $fichier_pes = $donneesFormulaire->getFileContent('fichier_pes');
             $file_name = $donneesFormulaire->get('fichier_pes');
-            $donneesFormulaire->addFileFromData('fichier_pes_signe', $file_name[0], $fichier_pes);
+            $donneesFormulaire->addFileFromData('fichier_pes_signe', $file_name[0] ?? '', $fichier_pes);
         }
 
         $pes_aller = $donneesFormulaire->copyFile('fichier_pes_signe', $tmp_folder, 0, "pes_aller");

@@ -9,7 +9,7 @@ class FastTdtRecupClassificationGlobal extends ActionExecutor
 
         $summary = [];
         foreach ($fastTdtConnectors as $connector) {
-            if ($connector['id_e'] === '0') {
+            if ($connector['id_e'] === 0) {
                 continue;
             }
             $denomination = $connector['denomination'];

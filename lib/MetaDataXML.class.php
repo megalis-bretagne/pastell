@@ -52,7 +52,7 @@ class MetaDataXML
     public function getSanitizeFileName($file)
     {
         $file = strtr($file, " àáâãäçèéêëìíîïñòóôõöùúûüýÿ", "_aaaaaceeeeiiiinooooouuuuyy");
-        $file = preg_replace('/[^\w-_\.]/', "", $file);
+        $file = preg_replace('/[^\w\-\_\.]/', "", $file);
         return $file;
     }
 }

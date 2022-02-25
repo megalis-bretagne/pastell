@@ -216,6 +216,9 @@ class DocumentAPIController extends BaseAPIController
     private function internalDetail($id_e, $id_d)
     {
         $info = $this->document->getInfo($id_d);
+        if (!$info) {
+            throw new NotFoundException("Le document $id_d n'appartient pas à l'entité $id_e");
+        }
         $result['info'] = $info;
 
         $this->checkDroit($id_e, $info['type'] . ":edition");
@@ -305,7 +308,6 @@ class DocumentAPIController extends BaseAPIController
         if ('externalData' == $this->getFromQueryArgs(3)) {
             return $this->patchExternalData($id_e, $id_d);
         }
-
         $this->documentModificationService->modifyDocument(
             $id_e,
             $this->getUtilisateurId(),

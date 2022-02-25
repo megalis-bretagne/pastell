@@ -6,6 +6,7 @@ error_reporting(E_ALL);
 
 define("TESTING_ENVIRONNEMENT", true);
 
+
 require_once __DIR__ . '/../../ci-resources/define-from-environnement.php';
 require_once __DIR__ . '/../../init-no-db.php';
 

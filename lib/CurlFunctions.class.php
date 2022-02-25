@@ -24,7 +24,15 @@ class CurlFunctions
 
     public function curl_error($curl_handle)
     {
-        return curl_error($curl_handle);
+        $curl_error = curl_error($curl_handle);
+        if ($curl_error) {
+            return $curl_error;
+        }
+        $curl_errno = curl_errno($curl_handle);
+        if ($curl_errno === 0) {
+            return "";
+        }
+        return "Curl errno $curl_errno";
     }
 
     public function curl_getinfo($curl_handle, $option = null)

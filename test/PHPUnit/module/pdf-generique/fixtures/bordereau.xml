@@ -115,13 +115,13 @@
       </Document>
     </ArchiveObject>
     <Document>
-      <Attachment mimeCode="text/plain" filename="journal.json"/>
+      <Attachment mimeCode="application/json" filename="journal.json"/>
       <Copy>false</Copy>
       <Creation>NOT TESTABLE</Creation>
       <Description>Fichier du journal d&#x2019;&#xE9;changes horodat&#xE9;s de Pastell</Description>
       <Integrity algorithme="http://www.w3.org/2001/04/xmlenc#sha256">NOT TESTABLE</Integrity>
       <Language>fra</Language>
-      <Size unitCode="AD">546</Size>
+      <Size unitCode="AD">538</Size>
       <Type>CDO</Type>
     </Document>
   </Archive>

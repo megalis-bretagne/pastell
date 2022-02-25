@@ -1,32 +1,33 @@
+<?xml version="1.0"?>
 <!-- 
 PHPUnit essaye de sauver les variables global, dont PDO qui ne peut être sérialisé
 cf : http://blogs.kent.ac.uk/webdev/2011/07/14/phpunit-and-unserialized-pdo-instances/
 -->
-<phpunit backupGlobals="false" bootstrap="test/PHPUnit/init.php">
-    <testsuites>
-        <testsuite name="Pastell Core">
-            <directory>test/PHPUnit/</directory>
-            <directory>tests/</directory>
-        </testsuite>
-    </testsuites>
-    <filter>
-        <whitelist>
-            <directory suffix=".php">action</directory>
-            <directory suffix=".php">api</directory>
-            <directory suffix=".php">batch</directory>
-            <directory suffix=".php">connecteur</directory>
-            <directory suffix=".php">connecteur-type</directory>
-            <directory suffix=".php">controler</directory>
-            <directory suffix=".php">lib</directory>
-            <directory suffix=".php">mail</directory>
-            <directory suffix=".php">model</directory>
-            <directory suffix=".php">module</directory>
-            <directory suffix=".php">pastell-core</directory>
-            <directory suffix=".php">script</directory>
-            <directory suffix=".php">src</directory>
-            <directory suffix=".php">template</directory>
-            <directory suffix=".php">web</directory>
-            <directory suffix=".php">wev-mailsec</directory>
-        </whitelist>
-    </filter>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" backupGlobals="false" bootstrap="test/PHPUnit/init.php" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+  <coverage>
+    <include>
+      <directory suffix=".php">action</directory>
+      <directory suffix=".php">api</directory>
+      <directory suffix=".php">batch</directory>
+      <directory suffix=".php">connecteur</directory>
+      <directory suffix=".php">connecteur-type</directory>
+      <directory suffix=".php">controler</directory>
+      <directory suffix=".php">lib</directory>
+      <directory suffix=".php">mail</directory>
+      <directory suffix=".php">model</directory>
+      <directory suffix=".php">module</directory>
+      <directory suffix=".php">pastell-core</directory>
+      <directory suffix=".php">script</directory>
+      <directory suffix=".php">src</directory>
+      <directory suffix=".php">template</directory>
+      <directory suffix=".php">web</directory>
+      <directory suffix=".php">wev-mailsec</directory>
+    </include>
+  </coverage>
+  <testsuites>
+    <testsuite name="Pastell Core">
+      <directory>test/PHPUnit/</directory>
+      <directory>tests/</directory>
+    </testsuite>
+  </testsuites>
 </phpunit>

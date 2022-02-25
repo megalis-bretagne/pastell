@@ -3,7 +3,7 @@ WORKDIR /var/www/pastell/
 COPY package*.json ./
 RUN npm install
 
-FROM ubuntu:18.04 as pcov_ext
+FROM ubuntu:22.04 as pcov_ext
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y php-dev
 RUN pecl install pcov
 
@@ -29,7 +29,7 @@ RUN composer install --ignore-platform-reqs \
     && php-scoper add-prefix --force \
     && composer dump-autoload --working-dir=build
 
-FROM ubuntu:18.04 as pastell_base
+FROM ubuntu:22.04 as pastell_base
 
 ARG GITHUB_API_TOKEN
 EXPOSE 443 80
@@ -51,7 +51,6 @@ COPY --chown=www-data:www-data --from=node_modules /var/www/pastell/node_modules
 
 # Composer stuff
 COPY ./composer.* /var/www/pastell/
-
 RUN /bin/bash /var/www/pastell/ci-resources/github/create-auth-file.sh && \
     /bin/bash -c 'mkdir -p /var/www/pastell/{web,web-mailsec}' && \
     composer install --no-dev --no-autoloader && \
@@ -68,7 +67,7 @@ CMD ["/usr/bin/supervisord"]
 
 FROM pastell_base as pastell_dev
 
-COPY --from=pcov_ext /usr/lib/php/20170718/pcov.so /usr/lib/php/20170718/pcov.so
+COPY --from=pcov_ext /usr/lib/php/20210902/pcov.so /usr/lib/php/20210902/pcov.so
 RUN /bin/bash /var/www/pastell/ci-resources/install-dev-requirements.sh
 
 FROM pastell_base as pastell_prod

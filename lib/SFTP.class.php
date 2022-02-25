@@ -142,9 +142,13 @@ class SFTP
 
     private function getFingerprint($flags = SSH2_FINGERPRINT_SHA1 | SSH2_FINGERPRINT_HEX)
     {
-        $hostkey = substr($this->netSFTP->getServerPublicHostKey(), 8);
-        $hostkey = ($flags & 1) ? sha1($hostkey) : md5($hostkey);
-        return ($flags & 2) ? pack('H*', $hostkey) : strtoupper($hostkey);
+        $serverPublicHostKey = $this->netSFTP->getServerPublicHostKey();
+        if ($serverPublicHostKey === null) {
+            throw new UnrecoverableException("Impossible de récupérer la clé publique du serveur");
+        }
+        $hostKey = substr($serverPublicHostKey, 8);
+        $hostKey = ($flags & 1) ? sha1($hostKey) : md5($hostKey);
+        return ($flags & 2) ? pack('H*', $hostKey) : strtoupper($hostKey);
     }
 
     /**

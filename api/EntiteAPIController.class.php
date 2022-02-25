@@ -145,6 +145,7 @@ class EntiteAPIController extends BaseAPIController
 
     private function edition($id_e, $nom, $siren, $type, $entite_mere, $centre_de_gestion)
     {
+
         $this->checkDroit($entite_mere, "entite:edition");
 
         if ($id_e) {
