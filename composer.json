@@ -30,7 +30,6 @@
     "erusev/parsedown": "^1.7",
     "ezyang/htmlpurifier": "^4.13",
     "flowjs/flow-php-server": "^1.0",
-    "guzzlehttp/guzzle": "^7.4",
     "guzzlehttp/psr7": "^1.8",
     "jasig/phpcas": "^1.4",
     "jumbojett/openid-connect-php": "^0.8.0",
@@ -49,7 +48,6 @@
     "psr/http-client": "^1.0",
     "psr/http-factory": "^1.0",
     "sabre/dav": "^4.3",
-    "sebastian/version": "^3.0",
     "sentry/sdk": "^3.1",
     "softcreatr/jsonpath": "^0.8",
     "symfony/cache": "^5.4",
@@ -86,8 +84,8 @@
     "test": "phpunit",
     "test-cover": "phpunit --coverage-text --colors=never --coverage-clover coverage/coverage.xml --log-junit coverage/logfile.xml",
     "codecept": "codecept -c test/codeception/codeception.yml run",
-    "phpcs": "phpcs -ps --ignore=vendor/,node_modules/,web/,web-mailsec/,temp/ ./",
-    "phpcbf": "phpcbf -ps --ignore=vendor/,node_modules/,web/,web-mailsec/,temp/ ./"
+    "phpcs": "phpcs",
+    "phpcbf": "phpcbf"
   },
   "autoload": {
     "psr-4": {
