@@ -3,10 +3,7 @@ WORKDIR /var/www/pastell/
 COPY package*.json ./
 RUN npm install
 
-FROM ubuntu:22.04 as pcov_ext
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y php-dev
-RUN pecl install pcov
-
+# TODO il faudra passer en PHP 8.1 une fois que scoper suportera cette version
 FROM php:7.4-cli as extensions_builder
 WORKDIR /app
 
@@ -67,7 +64,6 @@ CMD ["/usr/bin/supervisord"]
 
 FROM pastell_base as pastell_dev
 
-COPY --from=pcov_ext /usr/lib/php/20210902/pcov.so /usr/lib/php/20210902/pcov.so
 RUN /bin/bash /var/www/pastell/ci-resources/install-dev-requirements.sh
 
 FROM pastell_base as pastell_prod
