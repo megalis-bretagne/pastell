@@ -22,10 +22,9 @@
 - Suppression de l'authentification par certificat au services Chorus Pro #1453
 - Suppression de la constante CONNECTEUR_DROIT. Il faut maintenant ajouter les droits 'connecteur:lecture' et 'connecteur:edition'
   afin de gérer les connecteurs et les associations de types de documents!!
-  Il faut lancer la commande `app:user:add-connecteur-droit` pour reporter les droits (entite:) existants aux nouveaux droits (connecteur:) #1136
+  Il faut lancer la commande `app:connector:add-connector-permission` pour reporter les droits (entite:) existants aux nouveaux droits (connecteur:) #1136
 - Suppression de l'authentification OASIS/OPENID #1459
 - Suppression de LastUpstart UPSTART_TIME_SEND_WARNING - Suppression de `batch/action-automatique.php` et `installation/pastell-upstart.conf` #1461
-- Suppression de la constante MODE_MUTUALISE. Lors de l'envoi d'un mail sécurisé, mailsec_from prend la valeur de PLATEFORME_MAIL #1465
 - Suppression de la classe SSH2 et de la dépendance à l'extension php ssh2
 - Suppression des fonctions GEDConnecteur::{send, sendDonneesFormulaire, createFolder, addDocument, getRootFolder, listFolder, getSanitizedFolder, getSanitizedFilename, forceAddDocument, forceCreateFolder}
 - Suppression de la fonction PastellTestCase::loadExtension
@@ -38,7 +37,9 @@
   HeliosGeneriqueSAEVerif, IparapheurEnvoieHelios 
 - Suppression de la propriété Controler::lastError
 - La récupération des acquittements du flux pes-marché est standardisé avec les autres flux (modification du nom du fichier de l'acquittement)
-- 
+- Suppression de la constante MODE_MUTUALISE. Lors de l'envoi d'un mail sécurisé, mailsec_from prend la valeur de PLATEFORME_MAIL.
+  Il faut lancer la commande `app:connector:mailsec-copy-from-to-replyto` pour reporter l'ancien mailsec_from à mailsec_reply_to (s'il n'est pas déjà renseigné) #1465
+
 
 # [3.1.12] - 2022-02-16
 
