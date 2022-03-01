@@ -55,6 +55,9 @@ codeception:  ## Run acceptance tests
 	$(DOCKER_COMPOSE) -f docker-compose.codeception.yml exec web composer codecept
 	$(DOCKER_COMPOSE_UP)
 
+phpstan: docker-compose-up ## Run phpstan
+	$(DOCKER_COMPOSE_EXEC) vendor/bin/phpstan
+
 start:  ## Start all services
 	$(DOCKER_COMPOSE) up -d --remove-orphans
 

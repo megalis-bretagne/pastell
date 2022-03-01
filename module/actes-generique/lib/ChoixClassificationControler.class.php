@@ -4,6 +4,8 @@
 
 class ChoixClassificationControler
 {
+    private $sqlQuery;
+
     public function __construct(SQLQuery $sqlQuery)
     {
         $this->sqlQuery = $sqlQuery;

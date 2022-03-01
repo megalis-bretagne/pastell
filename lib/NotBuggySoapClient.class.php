@@ -79,6 +79,7 @@ class NotBuggySoapClient extends SoapClient
     }
 
 //http://stackoverflow.com/questions/5948402/having-issues-with-mime-headers-when-consuming-jax-ws-using-php-soap-client
+    #[\ReturnTypeWillChange]
     public function __doRequest($request, $location, $action, $version, $one_way = 0)
     {
         if (isset($this->option['use_curl'])) {

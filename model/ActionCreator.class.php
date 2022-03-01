@@ -12,6 +12,9 @@ class ActionCreator extends SQL
     private $lastAction;
     private $id_a;
 
+    private $action;
+    private $date;
+
     public function __construct(SQLQuery $sqlQuery, Journal $journal, $id_d)
     {
         parent::__construct($sqlQuery);

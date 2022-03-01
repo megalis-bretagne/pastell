@@ -52,7 +52,7 @@ abstract class GEDConnecteur extends Connecteur
     public function getSanitizeFolderName($folder)
     {
         $folder = strtr($folder, " àáâãäçèéêëìíîïñòóôõöùúûüýÿ", "_aaaaaceeeeiiiinooooouuuuyy");
-        $folder = preg_replace('/[^\w_]/', "", $folder);
+        $folder = preg_replace('/[^\w]/', "", $folder);
         return $folder;
     }
 
@@ -60,7 +60,7 @@ abstract class GEDConnecteur extends Connecteur
     public function getSanitizeFileName($file)
     {
         $file = strtr($file, " àáâãäçèéêëìíîïñòóôõöùúûüýÿ", "_aaaaaceeeeiiiinooooouuuuyy");
-        $file = preg_replace('/[^\w-_\.]/', "", $file);
+        $file = preg_replace('/[^\w\-\.]/', "", $file);
         return $file;
     }
 
