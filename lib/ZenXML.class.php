@@ -107,10 +107,8 @@ class ZenXML implements ArrayAccess
         return isset($this->attributs[$offset]);
     }
 
-    /*
-     * TODO Pastell 4.0.0 => Le type mixed n'existe pas en PHP 7.2 et génère un warning en PHP 8.1
-     */
-    public function offsetGet($offset)
+
+    public function offsetGet($offset): mixed
     {
 
         if (is_int($offset)) {

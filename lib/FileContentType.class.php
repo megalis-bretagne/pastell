@@ -32,15 +32,15 @@ class FileContentType
         }
         $fileInfo = new finfo();
         $result = $fileInfo->file($file_path, FILEINFO_MIME_TYPE);
-        if ($result == 'application/zip') {
+        if ($result === 'application/zip') {
             $file_name = basename($file_path);
             $result = $this->getOpenXMLMimeType($file_name) ?: 'application/zip';
         }
-        if ($result == 'application/octet-stream') {
+        if ($result === 'application/octet-stream') {
             $file_name = basename($file_path);
             $result = $this->getOpenXMLMimeType($file_name) ?: 'application/octet-stream';
         }
-        if ($result == 'application/x-empty') {
+        if ($result === 'application/x-empty') {
             $result = "text/plain";
         }
         return $result;
