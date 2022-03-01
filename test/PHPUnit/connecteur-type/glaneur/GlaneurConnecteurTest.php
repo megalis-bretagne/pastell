@@ -188,7 +188,7 @@ class GlaneurConnecteurTest extends PastellTestCase
             ])
         );
 
-        $this->assertRegExp("#Création du document#", $this->last_message[0]);
+        $this->assertMatchesRegularExpression("#Création du document#", $this->last_message[0]);
         $id_d = $this->created_id_d;
 
         $document = $this->getObjectInstancier()->getInstance(Document::class);
@@ -208,7 +208,7 @@ class GlaneurConnecteurTest extends PastellTestCase
             __DIR__ . "/fixtures/HELIOS_SIMU_ALR2_1514362287_770650402.xml",
             $donneesFormulaire->getFilePath('fichier_pes')
         );
-        $this->assertFileNotExists($this->tmp_folder . "/" . "test1");
+        $this->assertFileDoesNotExist($this->tmp_folder . "/" . "test1");
         $this->assertFileExists($this->directory_send . "/" . "test1");
     }
 
@@ -269,7 +269,7 @@ class GlaneurConnecteurTest extends PastellTestCase
             ])
         );
 
-        $this->assertRegExp("#Création du document#", $this->last_message[0]);
+        $this->assertMatchesRegularExpression("#Création du document#", $this->last_message[0]);
         $id_d = $this->created_id_d;
 
         $document = $this->getObjectInstancier()->getInstance(Document::class);
@@ -333,8 +333,8 @@ class GlaneurConnecteurTest extends PastellTestCase
         );
 
 
-        $this->assertFileNotExists($this->tmp_folder . "/" . "test1");
-        $this->assertFileNotExists($this->directory_send . "/" . "test1");
+        $this->assertFileDoesNotExist($this->tmp_folder . "/" . "test1");
+        $this->assertFileDoesNotExist($this->directory_send . "/" . "test1");
     }
 
 
@@ -363,7 +363,7 @@ class GlaneurConnecteurTest extends PastellTestCase
                 GlaneurLocalMock::ACTION_KO => 'erreur'
             ]));
 
-        $this->assertRegExp("#Création du document#", $this->last_message[0]);
+        $this->assertMatchesRegularExpression("#Création du document#", $this->last_message[0]);
 
         $id_d = $this->created_id_d;
         $document = $this->getObjectInstancier()->getInstance(Document::class);
@@ -381,7 +381,7 @@ class GlaneurConnecteurTest extends PastellTestCase
 
         $this->assertFileExists($this->directory_send . "/PESALR2_49101169800000_171227_2045.xml");
         $this->assertFileExists($this->directory_send . "/ACQUIT_PESALR2_49101169800000_171227_2045.xml");
-        $this->assertFileNotExists($this->tmp_folder . "/PESALR2_49101169800000_171227_2045.xml");
+        $this->assertFileDoesNotExist($this->tmp_folder . "/PESALR2_49101169800000_171227_2045.xml");
     }
 
     /**
@@ -400,7 +400,7 @@ class GlaneurConnecteurTest extends PastellTestCase
             GlaneurLocalMock::ACTION_OK => 'importation',
             GlaneurLocalMock::ACTION_KO => 'erreur'
         ]));
-        $this->assertRegExp("#Le répertoire est vide#", $this->last_message[0]);
+        $this->assertMatchesRegularExpression("#Le répertoire est vide#", $this->last_message[0]);
     }
 
     /**
@@ -422,7 +422,7 @@ class GlaneurConnecteurTest extends PastellTestCase
             GlaneurLocalMock::ACTION_KO => 'erreur'
         ]));
 
-        $this->assertRegExp("#Création du document#", $this->last_message[0]);
+        $this->assertMatchesRegularExpression("#Création du document#", $this->last_message[0]);
 
         $id_d = $this->created_id_d;
         $document = $this->getObjectInstancier()->getInstance(Document::class);
@@ -430,7 +430,7 @@ class GlaneurConnecteurTest extends PastellTestCase
         $this->assertEquals("PESALR2_49101169800000_171227_2045.xml", $info['titre']);
         $this->assertEquals("helios-automatique", $info['type']);
         $this->assertFileExists($this->directory_send . "/pes_exemple.zip");
-        $this->assertFileNotExists($this->tmp_folder . "/pes_exemple.zip");
+        $this->assertFileDoesNotExist($this->tmp_folder . "/pes_exemple.zip");
     }
 
     /**
@@ -454,7 +454,7 @@ class GlaneurConnecteurTest extends PastellTestCase
         ]));
 
         $this->assertFileExists($this->directory_send . "/pes_exemple.zip-0");
-        $this->assertFileNotExists($this->tmp_folder . "/pes_exemple.zip");
+        $this->assertFileDoesNotExist($this->tmp_folder . "/pes_exemple.zip");
     }
 
     /**
@@ -474,7 +474,7 @@ class GlaneurConnecteurTest extends PastellTestCase
             GlaneurLocalMock::ACTION_OK => 'importation',
             GlaneurLocalMock::ACTION_KO => 'erreur'
         ]));
-        $this->assertRegExp("#Le répertoire est vide#", $this->last_message[0]);
+        $this->assertMatchesRegularExpression("#Le répertoire est vide#", $this->last_message[0]);
     }
 
     /**
@@ -524,7 +524,7 @@ class GlaneurConnecteurTest extends PastellTestCase
             GlaneurLocalMock::ACTION_KO => 'erreur'
         ]));
 
-        $this->assertRegExp("#Création du document#", $this->last_message[0]);
+        $this->assertMatchesRegularExpression("#Création du document#", $this->last_message[0]);
 
         $id_d = $this->created_id_d;
         $document = $this->getObjectInstancier()->getInstance(Document::class);
@@ -596,7 +596,7 @@ class GlaneurConnecteurTest extends PastellTestCase
         ]);
 
         $directories_info = $glaneurLocal->listDirectories();
-        $this->assertContains("directory - 1 fichier", $directories_info);
+        $this->assertStringContainsString("directory - 1 fichier", $directories_info);
     }
 
     /**
@@ -617,8 +617,8 @@ class GlaneurConnecteurTest extends PastellTestCase
             ])
         );
         $this->assertFileExists($this->directory_error . "/foo.txt");
-        $this->assertFileNotExists($this->tmp_folder . "/foo.txt");
-        $this->assertFileNotExists($this->directory_send . "/foo.txt");
+        $this->assertFileDoesNotExist($this->tmp_folder . "/foo.txt");
+        $this->assertFileDoesNotExist($this->directory_send . "/foo.txt");
     }
 
     /**
@@ -646,7 +646,7 @@ class GlaneurConnecteurTest extends PastellTestCase
             ])
         );
 
-        $this->assertRegExp("#Création du document#", $this->last_message[0]);
+        $this->assertMatchesRegularExpression("#Création du document#", $this->last_message[0]);
         $id_d = $this->created_id_d;
 
         $journal = $this->getJournal()->getAll(1, 'actes-automatique', $id_d, 0, 0, 100);
@@ -679,7 +679,7 @@ class GlaneurConnecteurTest extends PastellTestCase
             ])
         );
 
-        $this->assertRegExp("#Création du document#", $this->last_message[0]);
+        $this->assertMatchesRegularExpression("#Création du document#", $this->last_message[0]);
         $id_d = $this->created_id_d;
 
         $journal = $this->getJournal()->getAll(1, 'actes-automatique', $id_d, 0, 0, 100);

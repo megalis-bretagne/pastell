@@ -43,7 +43,7 @@ class InternalAPI
     {
         $path = parse_url($ressource, PHP_URL_PATH);
         $query = parse_url($ressource, PHP_URL_QUERY);
-        parse_str($query, $data_from_query);
+        parse_str($query ?? "", $data_from_query);
         $data = array_merge($data, $data_from_query);
         return $this->callMethod('get', $path, $data);
     }
@@ -57,7 +57,7 @@ class InternalAPI
     {
         $path = parse_url($ressource, PHP_URL_PATH);
         $query = parse_url($ressource, PHP_URL_QUERY);
-        parse_str($query, $data_from_query);
+        parse_str($query ?? "", $data_from_query);
         $data = array_merge($data, $data_from_query);
         return $this->callMethod('delete', $path, $data);
     }

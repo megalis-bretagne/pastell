@@ -97,7 +97,7 @@ class MailSecDestinataireControler extends PastellControler
             $documentEmailReponseSQL = $this->getObjectInstancier()->getInstance(DocumentEmailReponseSQL::class);
             $mailSecInfo->id_d_reponse = $documentEmailReponseSQL->getDocumentReponseId($mailSecInfo->id_de);
 
-            $mailSecInfo->has_reponse = $documentEmailReponseSQL->getInfo($mailSecInfo->id_de)['has_reponse'];
+            $mailSecInfo->has_reponse = $documentEmailReponseSQL->getInfo($mailSecInfo->id_de)['has_reponse'] ?? false;
 
             $mailSecInfo->donneesFormulaireReponse =
                 $this->getDonneesFormulaireFactory()->get($mailSecInfo->id_d_reponse, $mailSecInfo->flux_reponse);

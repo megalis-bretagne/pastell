@@ -64,7 +64,15 @@ class TestConnexionTest extends ExtensionCppTestCase
         $curlWrapper = $this->getMockBuilder(CurlWrapper::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $curlWrapper->expects($this->any())->method('get')->willReturn(true);
+        $curlWrapper->expects($this->any())->method('get')->willReturn(
+            json_encode(
+                [
+                    'token_type' => 'foo',
+                    'access_token' => 'bar',
+                    'expires_in' => 42
+                ]
+            )
+        );
         $curlWrapper->expects($this->any())->method('getLastHttpCode')->willReturn(200);
 
         $curlWrapperFactory = $this->getMockBuilder(CurlWrapperFactory::class)

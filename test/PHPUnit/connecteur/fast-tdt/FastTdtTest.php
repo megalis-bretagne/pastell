@@ -515,7 +515,7 @@ class FastTdtTest extends PastellTestCase
             TdtConnecteur::STATUS_ERREUR,
             $this->fastTdt->getStatus('999-1234-20190515-201905151412-AI')
         );
-        $this->assertSame('2', $this->getJournal()->getNbLine());
+        $this->assertSame(2, $this->getJournal()->getNbLine());
         $this->assertSame(
             json_encode([
                 'filename' => '999-1234-20190515-201905151412-AI-1-2_0.xml',

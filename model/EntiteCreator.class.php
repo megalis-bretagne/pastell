@@ -36,7 +36,7 @@ class EntiteCreator extends SQL
                 " VALUES (?,?,?,?,?,?)";
         $this->query($sql, $siren, $denomination, $type, intval($entite_mere), $date_inscription, $id_e_centre_de_gestion);
 
-        $id_e = $this->lastInsertId();
+        $id_e = intval($this->lastInsertId());
 
         $this->journal->add(Journal::MODIFICATION_ENTITE, $id_e, 0, "Créé", "Création de l'entité $denomination - $siren");
 
@@ -66,8 +66,11 @@ class EntiteCreator extends SQL
         $this->journal->add(Journal::MODIFICATION_ENTITE, $id_e, 0, "Modifié", "Modification de l'entité $denomination ($id_e) : $infoChanged");
     }
 
-    public function updateAncetre($id_e, $entite_ancetre)
+    public function updateAncetre($id_e, $entite_ancetre = 0)
     {
+        if (! $entite_ancetre) {
+            $entite_ancetre = 0;
+        }
         $sql_delete = "DELETE FROM entite_ancetre WHERE id_e=?";
         $this->query($sql_delete, $id_e);
         $sql_insert = "INSERT INTO entite_ancetre(id_e_ancetre,id_e,niveau) VALUES (?,?,?)";

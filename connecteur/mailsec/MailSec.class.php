@@ -112,9 +112,9 @@ class MailSec extends MailsecConnecteur
         }
 
         $connecteur_info = $this->getConnecteurInfo();
-        $entite_info = $this->entiteSQL->getInfo($connecteur_info['id_e']);
+        $entite_info = $this->entiteSQL->getInfo($connecteur_info['id_e'] ?? 0);
 
-        $this->replaceElement(self::ENTITE_REPLACEMENT_REGEXP, $entite_info['denomination']);
+        $this->replaceElement(self::ENTITE_REPLACEMENT_REGEXP, $entite_info['denomination'] ?? '');
 
         $this->zenMail->setSujet($this->sujet);
         $this->embeded_image = array();
@@ -242,6 +242,7 @@ class MailSec extends MailsecConnecteur
         $this->zenMail->setSujet($sujet);
         $message = $this->connecteurConfig->getWithDefault('mailsec_content');
         $mailsec_reply_to = $this->connecteurConfig->get('mailsec_reply_to');
+
         $destinataire = ($mailsec_reply_to && ($mailsec_reply_to !== '')) ?
             $mailsec_reply_to : PLATEFORME_MAIL;
         $this->zenMail->setDestinataire($destinataire);

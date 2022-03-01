@@ -5,9 +5,6 @@ EXEC_COMPOSER=$(DOCKER) run --rm --volume ${PWD}:/app --volume ${HOME}/.composer
 MAKE_MODULE=$(DOCKER_COMPOSE_EXEC) php ./bin/console app:studio:make-module
 DOCKER_COMPOSE=docker-compose -f docker-compose.yml -f docker-compose.dev.yml
 
-DOCKER_COMPOSE_22=docker-compose -f docker-compose.yml -f docker-compose.dev.yml -f docker-compose-ubuntu22.yml
-
-
 .DEFAULT_GOAL := help
 .PHONY: help
 
@@ -80,14 +77,7 @@ build-extensions:
 	docker-compose -f ./extensions/pastell-depot-cmis/docker-compose.yml run app bash -c "php-scoper add-prefix --force && composer dump-autoload --working-dir=build"
 
 build:
-	$(DOCKER_COMPOSE_22) build web
+	$(DOCKER_COMPOSE) build web
 
-
-build22:
-	$(DOCKER_COMPOSE_22) build webubuntu22
-
-run22:
-	$(DOCKER_COMPOSE_22) run webubuntu22 bash
-
-phpunit22:
-	$(DOCKER_COMPOSE_22) run webubuntu22 phpunit
+run:
+	$(DOCKER_COMPOSE) run web bash

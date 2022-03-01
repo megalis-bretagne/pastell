@@ -21,7 +21,7 @@ class IParapheurEmptyWSDLCacheTest extends PastellTestCase
             "executeOnConnecteur - fin - id_ce=$id_ce,id_u=1,action_name=iparapheur-empty-cache : OK - \"Le cache WSDL a \u00e9t\u00e9 supprim\u00e9\"",
             $this->getLogRecords()[1]['message']
         );
-        $this->assertFileNotExists($wsdl_cache_file);
+        $this->assertFileDoesNotExist($wsdl_cache_file);
     }
 
     public function testNoDeleteInSubDirectory()

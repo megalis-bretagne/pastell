@@ -133,6 +133,9 @@ class DonneesFormulaireFactory
         if (mb_strlen($id_document) < 2) {
             return $this->workspacePath;
         }
+        if (! is_string($id_document)) {
+            return $this->workspacePath;
+        }
         $a = $id_document[0];
         $b = $id_document[1];
         return $this->workspacePath . "/$a/$b/";

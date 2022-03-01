@@ -94,13 +94,13 @@ class TransformationGenerique extends TransformationConnecteur
 
         if ($donneesFormulaire->id_d) {
             $user_info = $this->documentActionSQL->getCreator($donneesFormulaire->id_d);
-            $other_metadata['pa_creator_lastname'] = $user_info['nom'];
-            $other_metadata['pa_creator_firstname'] = $user_info['prenom'];
-            $other_metadata['pa_creator_email'] = $user_info['email'];
-            $other_metadata['pa_creator_login'] = $user_info['login'];
-            $other_metadata['pa_creator_id_u'] = $user_info['id_u'];
-            $other_metadata['pa_document_creation_date'] = $user_info['date'];
-            $other_metadata['pa_document_id_d'] = $user_info['id_d'];
+            $other_metadata['pa_creator_lastname'] = $user_info['nom'] ?? '';
+            $other_metadata['pa_creator_firstname'] = $user_info['prenom'] ?? '';
+            $other_metadata['pa_creator_email'] = $user_info['email'] ?? '';
+            $other_metadata['pa_creator_login'] = $user_info['login'] ?? '';
+            $other_metadata['pa_creator_id_u'] = $user_info['id_u'] ?? '';
+            $other_metadata['pa_document_creation_date'] = $user_info['date'] ?? '';
+            $other_metadata['pa_document_id_d'] = $user_info['id_d'] ?? '';
         }
 
         $transformation_data = $this->transformationGeneriqueDefinition->getData($this->connecteurConfig);

@@ -654,13 +654,16 @@ class DonneesFormulaire
             'docx'   =>  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
             'dotx'   =>  "application/vnd.openxmlformats-officedocument.wordprocessingml.template",
             'xlam'   =>  "application/vnd.ms-excel.addin.macroEnabled.12",
-            'xlsb'   =>  "application/vnd.ms-excel.sheet.binary.macroEnabled.12");
+            'xlsb'   =>  "application/vnd.ms-excel.sheet.binary.macroEnabled.12",
+            'txt' => "text/plain"
+        );
         if (isset($openXMLExtension[$ext])) {
             return $openXMLExtension[$ext];
         }
         return false;
     }
 
+    /* TODO refactor avec FileContentType */
     public function getContentType($field_name, $num = 0)
     {
         $file_path = $this->getFilePath($field_name, $num);
@@ -684,6 +687,9 @@ class DonneesFormulaire
             $result = 'application/xml';
         }
 
+        if ($result == 'application/x-empty') {
+            $result = "text/plain";
+        }
 
         if ($result == 'application/octet-stream') {
             $file_name = $this->getFileName($field_name, $num);
@@ -704,6 +710,9 @@ class DonneesFormulaire
     public function getFileName($field_name, $num = 0)
     {
         $all_file_name = $this->get($field_name);
+        if (! $all_file_name) {
+            return "";
+        }
         return  $all_file_name[$num];
     }
 
@@ -906,6 +915,9 @@ class DonneesFormulaire
     public function copyFile($field_name, $folder_destination, $num = 0, $new_filename = false)
     {
         $file_name = $this->get($field_name);
+        if (! $file_name) {
+            return false;
+        }
         $file_name = $file_name[$num];
         $file_path = $this->getFilePath($field_name, $num);
         if (! file_exists($file_path)) {

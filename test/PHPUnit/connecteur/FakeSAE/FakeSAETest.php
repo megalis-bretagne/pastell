@@ -45,23 +45,21 @@ class FakeSAETest extends PastellTestCase
         ]);
 
         $this->triggerActionOnDocument($id_d, 'send-archive');
-
         $this->triggerActionOnDocument($id_d, 'verif-sae');
 
         $this->assertLastDocumentAction('ar-recu-sae', $id_d);
 
         $donnesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
-        $this->assertRegExp('#ACK_\d*\.xml#', $donnesFormulaire->getFileName('ar_sae'));
+        $this->assertMatchesRegularExpression('#ACK_\d*\.xml#', $donnesFormulaire->getFileName('ar_sae'));
         $this->assertEquals(
             'Ce transfert d\'archive a été envoyé à un connecteur bouchon SAE !',
             $donnesFormulaire->get('sae_ack_comment')
         );
 
-
         $this->triggerActionOnDocument($id_d, 'validation-sae');
         $this->assertLastDocumentAction($last_action_expected, $id_d);
         $donnesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
-        $this->assertRegExp('#ATR_\d*\.xml#', $donnesFormulaire->getFileName('reply_sae'));
+        $this->assertMatchesRegularExpression('#ATR_\d*\.xml#', $donnesFormulaire->getFileName('reply_sae'));
         $this->assertEquals(
             $sae_atr_comment_expected,
             $donnesFormulaire->get('sae_atr_comment')

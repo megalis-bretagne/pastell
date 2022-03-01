@@ -23,7 +23,7 @@ class FastTdt extends TdtConnecteur
     /** @var Journal */
     private $journal;
 
-    private $url;
+    private $url = '';
     private $department;
     private $subscriberNumber;
     private $publisherPrefix;
@@ -499,7 +499,7 @@ class FastTdt extends TdtConnecteur
                 ];
                 $this->journal->addSQL(
                     Journal::DOCUMENT_ACTION_ERROR,
-                    $this->getConnecteurInfo()['id_e'],
+                    $this->getConnecteurInfo()['id_e'] ?? 0,
                     0,
                     $this->getDocDonneesFormulaire()->id_d,
                     'tdt-error',

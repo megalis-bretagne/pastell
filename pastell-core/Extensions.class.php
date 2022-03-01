@@ -203,7 +203,7 @@ class Extensions
             $info['error-detail'] = "L'emplacement {$info['path']} n'a pas été trouvé sur le système de fichier";
             return $info;
         }
-        if (! $info['manifest']['nom']) {
+        if (empty($info['manifest']['nom'])) {
             $info['warning'] = "manifest.yml absent";
             $info['warning-detail'] = "Le fichier manifest.yml n'a pas été trouvé dans {$info['path']}";
             return $info;
@@ -289,8 +289,8 @@ class Extensions
         $result['connecteur-type'] = $this->getAllConnecteurTypeByPath($path);
         $manifest = $this->getManifest($path);
         $result['manifest'] = $manifest;
-        $result['id'] = $manifest['id'] ?: basename($path);
-        $result['nom'] = $manifest['nom'] ?: $result['id'];
+        $result['id'] = $manifest['id'] ?? basename($path);
+        $result['nom'] = $manifest['nom'] ?? $result['id'];
         return $result;
     }
 

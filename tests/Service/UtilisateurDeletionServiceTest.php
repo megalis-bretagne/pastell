@@ -25,7 +25,7 @@ class UtilisateurDeletionServiceTest extends PastellTestCase
         );
         $this->assertFalse($utilisateurSQL->exists(2));
         $log_message = $this->getLogRecords()[0]['message'];
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             "#^Ajout au journal \(id_j=1\): 4 - 0 - 1 - 0 - Supprimé - $expected_journal_message#",
             $log_message
         );

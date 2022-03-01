@@ -99,7 +99,7 @@ class CurlWrapperTest extends PHPUnit\Framework\TestCase
             if ($properties != CURLOPT_POSTFIELDS) {
                 return;
             }
-            $this->assertRegExp("#foo.*bar.*foo.*baz#ms", $values);
+            $this->assertMatchesRegularExpression("#foo.*bar.*foo.*baz#ms", $values);
         });
         $curlWrapper = new CurlWrapper($curlFunction);
         $curlWrapper->addPostData("foo", "bar");
@@ -139,7 +139,7 @@ class CurlWrapperTest extends PHPUnit\Framework\TestCase
         $curlWrapper->addPostFile("foo", __DIR__ . "/fixtures/autorite-cert.pem");
 
         $this->assertEquals("OK", $curlWrapper->get("http://pastell.adullact.org"));
-        $this->assertRegExp("#foo.*foo#ms", $last_body);
+        $this->assertMatchesRegularExpression("#foo.*foo#ms", $last_body);
     }
 
     public function testGetHTTPCode()
@@ -180,7 +180,7 @@ class CurlWrapperTest extends PHPUnit\Framework\TestCase
             if ($properties != CURLOPT_POSTFIELDS) {
                 return;
             }
-            $this->assertRegExp("#aaa.*bbbb.*aaa#s", $values);
+            $this->assertMatchesRegularExpression("#aaa.*bbbb.*aaa#s", $values);
         });
 
         $curlWrapper = new CurlWrapper($curlFunction);

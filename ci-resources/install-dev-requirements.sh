@@ -7,11 +7,10 @@ export DEBIAN_FRONTEND=noninteractive
 apt-get update
 
 apt-get install -y --no-install-recommends \
+    php-pcov \
     php-xdebug
 
 rm -r /var/lib/apt/lists/*
-
-echo "extension=pcov.so" > /etc/php/7.2/mods-available/pcov.ini
 
 phpenmod xdebug pcov
 

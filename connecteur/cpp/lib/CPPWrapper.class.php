@@ -226,6 +226,10 @@ class CPPWrapper
 
         $array_result = $this->utf8Encoder->decode(json_decode($result));
 
+        if (! is_array($array_result)) {
+            throw new CPPWrapperExceptionGetToken("PISTE impossible de déchiffrer le token");
+        }
+
         $token = $array_result['token_type'] . ' ' . $array_result['access_token'];
 
         $this->memoryCache->store(

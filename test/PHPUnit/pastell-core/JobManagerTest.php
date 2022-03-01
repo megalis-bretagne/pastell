@@ -230,7 +230,7 @@ class JobManagerTest extends PastellTestCase
         $this->triggerActionOnDocument($id_d, 'does-not-exist');
         $id_job = $this->jobQueueSQL->getJobIdForDocument(self::ID_E_COL, $id_d);
         $job = $this->jobQueueSQL->getJob($id_job);
-        $this->assertSame('0', $job->is_lock);
+        $this->assertSame(0, $job->is_lock);
         $this->assertSame($originalDateNextTry, $job->next_try);
     }
 }

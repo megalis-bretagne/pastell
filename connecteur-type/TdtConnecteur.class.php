@@ -77,6 +77,7 @@ abstract class TdtConnecteur extends Connecteur
 
     abstract public function verifClassif();
 
+    /* @deprecated PA 3.0 use sendHelios() instead */
     abstract public function postHelios(DonneesFormulaire $donneesFormulaire);
 
     abstract public function sendHelios(Fichier $fichierHelios);

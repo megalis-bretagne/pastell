@@ -471,7 +471,7 @@ class TypeDossierServiceTest extends PastellTestCase
             . "/type-dossier-personnalise/module/double-ged/definition.yml";
         $this->assertFileExists($definition_path);
         unlink($definition_path);
-        $this->assertFileNotExists($definition_path);
+        $this->assertFileDoesNotExist($definition_path);
         $this->getTypeDossierService()->rebuildAll();
         $this->assertFileExists($definition_path);
         //file_put_contents(__DIR__."/fixtures/double-ged.yml",file_get_contents($definition_path));

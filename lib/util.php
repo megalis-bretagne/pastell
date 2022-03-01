@@ -2,15 +2,14 @@
 
 use Monolog\Logger;
 
-function get_hecho($message, $quote_style = ENT_QUOTES)
+function get_hecho(?string $message = '', int $quote_style = ENT_QUOTES): string
 {
-    return htmlentities($message, $quote_style, "utf-8");
-    //return htmlentities($message,$quote_style,"iso-8859-1");
+    return htmlentities($message, $quote_style, "utf-8") ?? '';
 }
 
-function hecho($message, $quot_style = ENT_QUOTES)
+function hecho(?string $message = '', int $quot_style = ENT_QUOTES): void
 {
-    echo get_hecho($message, $quot_style);
+    echo get_hecho($message ?? '', $quot_style);
 }
 
 function getDateIso($value)

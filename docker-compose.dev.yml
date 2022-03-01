@@ -52,7 +52,7 @@ services:
     depends_on:
       - redis
 
-  glaneur_sftp:
+  glaneur-sftp:
     image: atmoz/sftp
     volumes:
       - ${PASTELL_GLANEUR:-pastell_glaneur}:/home/${SFTP_USER:-ftp}

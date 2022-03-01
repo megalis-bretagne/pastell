@@ -7,7 +7,7 @@ class PasswordGeneratorTest extends PHPUnit\Framework\TestCase
         $passwordGenerator = new PasswordGenerator();
         $password = $passwordGenerator->getPassword();
         $this->assertEquals(PasswordGenerator::NB_SIGNE_DEFAULT, mb_strlen($password));
-        $this->assertRegExp("/^[" . PasswordGenerator::SIGNE . "]*$/", $password);
+        $this->assertMatchesRegularExpression("/^[" . PasswordGenerator::SIGNE . "]*$/", $password);
     }
 
     public function testSetPasswordLength()

@@ -360,7 +360,7 @@ class EntiteControler extends PastellControler
 
     public function doEditionAction()
     {
-        $recuperateur = new Recuperateur($_POST);
+        $recuperateur = $this->getPostInfo();
         $id_e = $recuperateur->get('id_e');
         $entite_mere =  $recuperateur->get('entite_mere', 0);
         try {

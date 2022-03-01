@@ -42,15 +42,15 @@ class FancyDate
     public function getMoisAnnee($date)
     {
         if ($this->isSameYear($date, date('Y-m-d'))) {
-            return ucfirst($this->getFormatedDate($date, "%B"));
+            return ucfirst($this->getFormattedDate($date, "MMMM"));
         } else {
-            return ucfirst($this->getFormatedDate($date, "%B %Y"));
+            return ucfirst($this->getFormattedDate($date, "MMMM yyy"));
         }
     }
 
-    public function getDay($date_iso)
+    public function getDay(string $dateIso = ''): string
     {
-        $time = strtotime($date_iso);
+        $time = strtotime($dateIso);
         $date = date('Y-m-d', $time);
         $nb_jour = (strtotime($date) - strtotime(date("Y-m-d"))) / 86400;
         if ($nb_jour == 0) {
@@ -60,7 +60,7 @@ class FancyDate
         if ($nb_jour == 1) {
             return "Demain";
         }
-        return ucfirst(strftime("%A %e", $time));
+        return ucfirst($this->getFormattedTime($time, "EEEE d"));
     }
 
     public function hasTime($date)
@@ -70,12 +70,26 @@ class FancyDate
 
     public function getTime($date)
     {
-        return $this->getFormatedDate($date, "%Hh%M");
+        return $this->getFormattedDate($date, "HH") . "h" . $this->getFormattedDate($date, "mm");
     }
 
-    private function getFormatedDate($date, $format)
+    private function getFormattedDate($date, $format): string
     {
-        return strftime($format, strtotime($date));
+        return $this->getFormattedTime(strtotime($date), $format);
+    }
+
+    private function getFormattedTime($time, $format): string
+    {
+        $currentLocale = setlocale(LC_TIME, 0);
+        $formatter = new IntlDateFormatter(
+            $currentLocale,
+            IntlDateFormatter::LONG,
+            IntlDateFormatter::LONG,
+            TIMEZONE,
+            IntlDateFormatter::GREGORIAN,
+            $format
+        );
+        return $formatter->format($time);
     }
 
     public function getAllInfo($date)
@@ -93,21 +107,21 @@ class FancyDate
     public function getFrenchDay($date_iso)
     {
         //Bug en fonction des locales qui mettent ou pas en majuscule le nom du jour de la semaine
-        return lcfirst($this->getFormatedDate($date_iso, "%A"));
+        return lcfirst($this->getFormattedDate($date_iso, "EEEE"));
     }
 
     public function getFrenchDate($date_iso)
     {
-        return lcfirst($this->getFormatedDate($date_iso, "%A %d %B %Y"));
+        return lcfirst($this->getFormattedDate($date_iso, "EEEE dd MMMM yyyy")); //"%A %d %B %Y"
     }
     public function get($date_iso)
     {
-        return $this->getFormatedDate($date_iso, "%d/%m/%Y");
+        return $this->getFormattedDate($date_iso, "dd/MM/yyyy");
     }
 
     public function getDayATime($date_iso)
     {
-        return $this->getFormatedDate($date_iso, "%d/%m/%Y à %H:%M");
+        return $this->getFormattedDate($date_iso, "dd/MM/yyyy à HH:mm");
     }
 
     public function getMinute($second)
@@ -128,7 +142,7 @@ class FancyDate
 
     public function getDateSansHeure($date)
     {
-        return $this->getFormatedDate($date, "%d/%m/%Y");
+        return $this->getFormattedDate($date, "dd/MM/yyyy");
     }
 
     public function getTimeElapsed($date_iso)

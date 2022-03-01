@@ -75,14 +75,18 @@ class PESRetourVisionneuse extends Visionneuse
                 <?php if ($elementACQUIT->EtatAck['V'] == 1) : ?>
                     &nbsp;
                 <?php else : ?>
-                     <b>Erreur <?php hecho($elementACQUIT->Erreur->NumAnoAck['V']) ?> :
-                    <?php hecho($elementACQUIT->Erreur->LibelleAnoAck['V'])?>
+                    <?php if ($elementACQUIT->Erreur) : ?>
+                         <b>Erreur <?php hecho($elementACQUIT->Erreur->NumAnoAck['V']) ?> :
+                        <?php hecho($elementACQUIT->Erreur->LibelleAnoAck['V'])?>
+                    <?php endif; ?>
                     <?php foreach ($elementACQUIT->DetailPiece as $detailPiece) : ?>
-                        <?php if ($detailPiece->Erreur->NumAnoAck['V']) : ?>
-                            <br>
-                            Sur pièce n° <?php hecho($detailPiece->NumPiece['V'])?>
-                            , <?php hecho($detailPiece->Erreur->NumAnoAck['V']) ?> : <?php hecho($detailPiece->Erreur->LibelleAnoAck['V'])?>
-                        <?php endif;?>
+                        <?php if ($detailPiece->Erreur) : ?>
+                            <?php if ($detailPiece->Erreur->NumAnoAck['V']) : ?>
+                                <br>
+                                Sur pièce n° <?php hecho($detailPiece->NumPiece['V'])?>
+                                , <?php hecho($detailPiece->Erreur->NumAnoAck['V']) ?> : <?php hecho($detailPiece->Erreur->LibelleAnoAck['V'])?>
+                            <?php endif;?>
+                        <?php endif; ?>
                         <?php foreach ($detailPiece->DetailLigne as $detailLigne) : ?>
                             <?php if ($detailLigne->Erreur->NumAnoAck['V']) : ?>
                                 <br>

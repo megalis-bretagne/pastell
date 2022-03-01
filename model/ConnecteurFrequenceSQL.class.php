@@ -92,7 +92,7 @@ class ConnecteurFrequenceSQL extends SQL
     public function getConnecteurFrequence($id_cf)
     {
         $info = $this->getInfo($id_cf);
-        if (! $info['id_cf']) {
+        if (! $info || ! $info['id_cf']) {
             return null;
         }
         $connecteurFrequence = new ConnecteurFrequence($info);

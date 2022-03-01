@@ -116,7 +116,7 @@ class MailSecConnecteurTest extends PastellTestCase
         $zenMail = $this->getZenMail();
         $this->getMailSec($zenMail)->test();
         $all_info = $zenMail->getAllInfo();
-        $this->assertEquals('ne-pas-repondre@libriciel.coop', $all_info[0][self::DESTINATAIRE]);
+        $this->assertEquals('=?UTF-8?Q?entite:=20%ENTITE%=20--=20titre=20:=20%TITRE%?=', $all_info[0]['sujet']);
     }
 
     /**
@@ -159,13 +159,13 @@ Content-Type: text/plain; charset="UTF-8"',
 
         $mailsec->sendOneMail(1, 1, $document_email_info[DocumentEmail::ID_DE]);
         $all_info = $zenMail->getAllInfo();
-        $this->assertRegExp("#Content-Type: text/html;#", $all_info[0][self::CONTENU]);
-        $this->assertRegExp("#Content-ID: <image0>#", $all_info[0][self::CONTENU]);
-        $this->assertRegExp("#Content-ID: <image1>#", $all_info[0][self::CONTENU]);
-        $this->assertRegExp("#Content-Disposition: inline, filename=\"image1.png#", $all_info[0][self::CONTENU]);
-        $this->assertRegExp("#Content-Disposition: inline, filename=\"image2.png#", $all_info[0][self::CONTENU]);
-        $this->assertRegExp("#FOO42#", $all_info[0][self::CONTENU]);
-        $this->assertRegExp("#Le montant de cette commande est de : 42 franc#", $all_info[0][self::CONTENU]);
+        $this->assertMatchesRegularExpression("#Content-Type: text/html;#", $all_info[0][self::CONTENU]);
+        $this->assertMatchesRegularExpression("#Content-ID: <image0>#", $all_info[0][self::CONTENU]);
+        $this->assertMatchesRegularExpression("#Content-ID: <image1>#", $all_info[0][self::CONTENU]);
+        $this->assertMatchesRegularExpression("#Content-Disposition: inline, filename=\"image1.png#", $all_info[0][self::CONTENU]);
+        $this->assertMatchesRegularExpression("#Content-Disposition: inline, filename=\"image2.png#", $all_info[0][self::CONTENU]);
+        $this->assertMatchesRegularExpression("#FOO42#", $all_info[0][self::CONTENU]);
+        $this->assertMatchesRegularExpression("#Le montant de cette commande est de : 42 franc#", $all_info[0][self::CONTENU]);
     }
 
     /**
@@ -275,7 +275,7 @@ Content-Type: text/plain; charset="UTF-8"',
 
         $mailsec->sendOneMail(1, 1, $document_email_info['id_de']);
         $all_info = $zenMail->getAllInfo();
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             "#^Un lien ici : .*index.php\?key=.*. C'était mon lien$#",
             $all_info[0][self::CONTENU]
         );
@@ -297,8 +297,8 @@ Content-Type: text/plain; charset="UTF-8"',
         $mailsec->sendAllMail(1, 1);
         $all_info = $zenMail->getAllInfo();
 
-        $this->assertContains($key1, $all_info[0][self::CONTENU]);
-        $this->assertContains($key2, $all_info[1][self::CONTENU]);
-        $this->assertNotContains($key1, $all_info[1][self::CONTENU]);
+        $this->assertStringContainsString($key1, $all_info[0][self::CONTENU]);
+        $this->assertStringContainsString($key2, $all_info[1][self::CONTENU]);
+        $this->assertStringNotContainsString($key1, $all_info[1][self::CONTENU]);
     }
 }

@@ -28,7 +28,7 @@ class DocumentControler extends PastellControler
     {
         $this->{'show_choice_entity_message'} =
             !(bool)$this->getPostOrGetInfo()->getInt('id_e')
-            && $this->{'id_e'} === '0';
+            && $this->{'id_e'} === 0;
         parent::renderDefault();
     }
 
@@ -371,7 +371,12 @@ class DocumentControler extends PastellControler
         $this->{'champs_affiches'} = DocumentType::getDefaultDisplayField();
 
         $this->setNavigationInfo($id_e, "Document/index?a=a");
-        $this->{'page_title'} = "Liste des dossiers " . $this->{'infoEntite'}['denomination'] ;
+        if ($this->{'infoEntite'}) {
+            $this->{'page_title'} = "Liste des dossiers " . $this->{'infoEntite'}['denomination'] ;
+        } else {
+            $this->{'page_title'} = "Liste des dossiers";
+        }
+
         $this->{'template_milieu'} = "DocumentIndex";
         $this->renderDefault();
     }

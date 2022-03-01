@@ -243,7 +243,7 @@ iparapheur_retour: Archive',
 
         $path = parse_url($ressource, PHP_URL_PATH);
         $query = parse_url($ressource, PHP_URL_QUERY);
-        parse_str($query, $data_from_query);
+        parse_str($query ?? "", $data_from_query);
 
         $httpAPI->setServerArray(['REQUEST_METHOD' => 'get']);
         $data_from_query[HttpApi::PARAM_API_FUNCTION] = $path;

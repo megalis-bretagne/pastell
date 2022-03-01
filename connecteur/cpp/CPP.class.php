@@ -102,7 +102,7 @@ class CPP extends PortailFactureConnecteur
      */
     public function getDateDepuisLe()
     {
-        $time_debut = time() - ($this->depose_depuis_nb_jours * 86400);
+        $time_debut = floor(time() - ($this->depose_depuis_nb_jours * 86400));
         return date('Y-m-d', $time_debut);
     }
 

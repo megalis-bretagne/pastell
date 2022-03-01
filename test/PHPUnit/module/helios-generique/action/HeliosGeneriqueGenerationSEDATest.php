@@ -33,7 +33,7 @@ class HeliosGeneriqueGenerationSEDATest extends PastellTestCase
         $donneesFormulaire->addFileFromCopy(
             "fichier_reponse",
             "fichier_reponse.xml",
-            __DIR__ . "/../fixtures/helios-reponse.xml"
+            __DIR__ . "/../fixtures/pes_acquit_no_ack.xml"
         );
 
         $this->triggerActionOnDocument($id_d, 'send-archive');

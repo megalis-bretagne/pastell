@@ -12,7 +12,7 @@ class TypeDossierPersonnaliseDirectoryManagerTest extends PastellTestCase
         $this->assertFileExists($this->getWorkspacePath() . "/type-dossier-personnalise/module/cas-nominal/definition.yml");
         $typeDossierPersonaliseDirectoryManager = $this->getObjectInstancier()->getInstance(TypeDossierPersonnaliseDirectoryManager::class);
         $typeDossierPersonaliseDirectoryManager->delete($id_t);
-        $this->assertFileNotExists($this->getWorkspacePath() . "/type-dossier-personnalise/module/cas-nominal/definition.yml");
+        $this->assertFileDoesNotExist($this->getWorkspacePath() . "/type-dossier-personnalise/module/cas-nominal/definition.yml");
     }
 
     /**
@@ -44,7 +44,7 @@ class TypeDossierPersonnaliseDirectoryManagerTest extends PastellTestCase
 
         $typeDossierPersonaliseDirectoryManager->rename('cas-nominal', 'cas-nominal-new');
         $this->assertFileExists($this->getWorkspacePath() . '/type-dossier-personnalise/module/cas-nominal-new/definition.yml');
-        $this->assertFileNotExists($this->getWorkspacePath() . '/type-dossier-personnalise/module/cas-nominal/definition.yml');
+        $this->assertFileDoesNotExist($this->getWorkspacePath() . '/type-dossier-personnalise/module/cas-nominal/definition.yml');
     }
 
     /**

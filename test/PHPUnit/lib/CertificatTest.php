@@ -30,7 +30,7 @@ class CertificatTest extends PHPUnit\Framework\TestCase
 
     public function testGetContent()
     {
-        $this->assertRegExp("#-----BEGIN CERTIFICATE-----#", $this->certificat->getContent());
+        $this->assertMatchesRegularExpression("#-----BEGIN CERTIFICATE-----#", $this->certificat->getContent());
     }
 
     public function testGetInfo()

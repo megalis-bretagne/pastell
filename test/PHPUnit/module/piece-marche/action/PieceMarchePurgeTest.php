@@ -113,10 +113,10 @@ class PieceMarchePurgeTest extends PastellMarcheTestCase
             $sql = "SELECT * FROM job_queue ";
             $result = $this->getSQLQuery()->query($sql);
             $this->assertEquals($document_etat_cible, $result[0]['etat_cible']);
-            $this->assertRegExp("#$id_d#", $purge->getLastMessage());
+            $this->assertMatchesRegularExpression("#$id_d#", $purge->getLastMessage());
         } else {
             $this->assertFalse($jobManager->hasActionProgramme(1, $id_d));
-            $this->assertRegExp($message, $purge->getLastMessage());
+            $this->assertMatchesRegularExpression($message, $purge->getLastMessage());
         }
     }
 }

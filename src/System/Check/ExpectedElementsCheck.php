@@ -32,12 +32,12 @@ class ExpectedElementsCheck implements CheckInterface
         }
 
         $array = [
-            'PHP est en version 7.2' => [
-                '#^7\.2#',
+            'PHP est en version 8.1' => [
+                '#^8\.1#',
                 $this->verifEnvironnement->checkPHP()['environnement_value']
             ],
-            'OpenSSL est en version 1 ou plus ' => [
-                "#^OpenSSL 1\.#",
+            'OpenSSL est en version 1 ou 3' => [
+                "#^OpenSSL [13]\.#",
                 shell_exec(OPENSSL_PATH . ' version')
             ],
             'Curl est compilé avec OpenSSL' => [

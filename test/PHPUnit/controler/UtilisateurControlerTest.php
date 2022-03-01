@@ -31,22 +31,7 @@ class UtilisateurControlerTest extends ControlerTestCase
         }
 
         $utilisateurSQL = $this->getObjectInstancier()->getInstance(UtilisateurSQL::class);
-
-        $this->assertArraySubset(
-            array (
-                'id_u' => '3',
-                'email' => 'boz@byz.fr',
-                'login' => 'foo',
-                'mail_verifie' => '1',
-                'nom' => 'baz',
-                'prenom' => 'buz',
-                'certificat' => '',
-                'certificat_verif_number' => '',
-                'id_e' => '0',
-            ),
-            $utilisateurSQL->getInfo(3)
-        );
-
+        $this->assertEquals('boz@byz.fr', $utilisateurSQL->getInfo(3)['email']);
         $this->assertTrue($utilisateurSQL->verifPassword(3, "bar"));
     }
 

@@ -161,8 +161,7 @@ class TypeDossierSAETest extends PastellTestCase
         $this->assertFalse(
             $this->triggerActionOnDocument($document['id_d'], 'send-archive')
         );
-
         $this->assertLastDocumentAction('erreur-envoie-sae', $document['id_d']);
-        $this->assertLastMessage("Erreur de connexion au serveur : <url> malformed - L'envoi du bordereau a échoué : ");
+        $this->assertLastMessage("Erreur de connexion au serveur : Curl errno 3 - L'envoi du bordereau a échoué : ");
     }
 }

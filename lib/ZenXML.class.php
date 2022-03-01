@@ -12,21 +12,21 @@ class ZenXML implements ArrayAccess
 
     /*
         Normalement, il faut bien échapper les caractères, mais pour des raisons de compatibilité ascendante,
-        ZenXML n'échappe pas les charactères des chaînes CDATA !
+        ZenXML n'échappe pas les caractères des chaînes CDATA !
     */
     private $escape_cdata;
 
-    public function __construct($tag_name, $cdata = "", $escape_cdata = false)
+    public function __construct(string $tag_name, string $cdata = "", bool $escape_cdata = false)
     {
         $this->tag_name = $tag_name;
         $this->cdata = $cdata;
         $this->child = array();
         $this->attributs = array();
-        $this->multipleValue = false;
+        $this->multipleValue = [];
         $this->escape_cdata = $escape_cdata;
     }
 
-    public function set($tag_name, $cdata = false)
+    public function set(string $tag_name, $cdata = false): void
     {
         if (is_object($cdata)) {
             $this->child[$tag_name] = $cdata;
@@ -35,12 +35,12 @@ class ZenXML implements ArrayAccess
         }
     }
 
-    public function __set($tag_name, $cdata)
+    public function __set(string $tag_name, $cdata)
     {
         $this->set($tag_name, $cdata);
     }
 
-    public function get($tag_name)
+    public function get(string $tag_name)
     {
         if (empty($this->child[$tag_name])) {
             $this->child[$tag_name] = new ZenXML($tag_name, "", $this->escape_cdata);
@@ -48,20 +48,20 @@ class ZenXML implements ArrayAccess
         return $this->child[$tag_name];
     }
 
-    public function __get($tag_name)
+    public function __get(string $tag_name)
     {
         return $this->get($tag_name);
     }
 
-    private function getCDATA($data, $escape_special_char = true)
+    private function getCDATA(string $data, bool $escape_special_char = true): string
     {
         if (! $escape_special_char) {
             return $data;
         }
-        return htmlspecialchars($data, ENT_QUOTES, "UTF-8");
+        return htmlspecialchars($data, ENT_QUOTES);
     }
 
-    public function getAttrData($data)
+    public function getAttrData(string $data)
     {
         if ($this->escape_cdata) {
             return $this->getCDATA($data, $this->escape_cdata);
@@ -70,7 +70,7 @@ class ZenXML implements ArrayAccess
         }
     }
 
-    private function getAttr()
+    private function getAttr(): string
     {
         $attr = "";
         foreach ($this->attributs as $name => $value) {
@@ -80,7 +80,7 @@ class ZenXML implements ArrayAccess
         return $attr;
     }
 
-    public function asXML()
+    public function asXML(): string
     {
         $xml = "";
         if ($this->isMultivalued) {
@@ -90,7 +90,7 @@ class ZenXML implements ArrayAccess
             return $xml;
         }
         $attr = $this->getAttr();
-        $xml = "<{$this->tag_name}$attr>";
+        $xml = "<$this->tag_name$attr>";
         if ($this->cdata) {
             $xml .=  $this->getCDATA($this->cdata, $this->escape_cdata);
         }
@@ -98,16 +98,17 @@ class ZenXML implements ArrayAccess
             $xml .= $child->asXML();
         }
 
-        $xml .= "</{$this->tag_name}>\n";
+        $xml .= "</$this->tag_name>\n";
         return $xml;
     }
 
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->attributs[$offset]);
     }
 
-    public function offsetGet($offset)
+
+    public function offsetGet($offset): mixed
     {
 
         if (is_int($offset)) {
@@ -119,7 +120,7 @@ class ZenXML implements ArrayAccess
         return $this->attributs[$offset];
     }
 
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if ($offset === null) {
             if (! $this->multipleValue) {
@@ -136,13 +137,12 @@ class ZenXML implements ArrayAccess
                 $node = new ZenXML($this->tag_name, $value, $this->escape_cdata);
             }
             $this->multipleValue[$offset] = $node;
-            return $node;
         } else {
             $this->attributs[$offset] = $value;
         }
     }
 
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->attributs[$offset]);
     }

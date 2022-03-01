@@ -15,7 +15,7 @@ class SFTPPastellTest extends PHPUnit\Framework\TestCase
         $this->sftpProperties->host = "localhost";
         $this->sftpProperties->login = "admin";
         $this->sftpProperties->password = "password";
-        $this->sftpProperties->fingerprint = "DA39A3EE5E6B4B0D3255BFEF95601890AFD80709";
+        $this->sftpProperties->fingerprint = "9F62EFD4E0972B11A521366568D4B6325B75D150";
         $this->setSFTP();
     }
 
@@ -39,7 +39,9 @@ class SFTPPastellTest extends PHPUnit\Framework\TestCase
                 ->method("login")
                 ->willThrowException(new Exception("Cannot connect to foo:22"));
         }
-
+        $netSFTP
+            ->method('getServerPublicHostKey')
+            ->willReturn(file_get_contents(__DIR__ . "/fixtures/ssh_server_public_key.txt"));
         /** @var \phpseclib\Net\SFTP $netSFTP */
         $this->sftp = new SFTP($netSFTP, $this->sftpProperties);
     }
@@ -62,7 +64,7 @@ class SFTPPastellTest extends PHPUnit\Framework\TestCase
         $this->sftpProperties->host = "foo";
         $this->setSFTP();
         $this->expectException(Exception::class);
-        $this->expectExceptionMessageRegExp("#Cannot connect to foo:22#");
+        $this->expectExceptionMessageMatches("#Cannot connect to foo:22#");
         $this->sftp->listDirectory("/tmp/");
     }
 
@@ -84,7 +86,7 @@ class SFTPPastellTest extends PHPUnit\Framework\TestCase
         $this->sftpProperties->fingerprint = "foo";
         $this->setSFTP();
         $this->expectException("Exception");
-        $this->expectExceptionMessage("L'empreinte du serveur (DA39A3EE5E6B4B0D3255BFEF95601890AFD80709) ne correspond pas");
+        $this->expectExceptionMessage("L'empreinte du serveur (9F62EFD4E0972B11A521366568D4B6325B75D150) ne correspond pas");
         $this->sftp->listDirectory("/tmp/");
     }
 

@@ -151,7 +151,7 @@ class ExtensionsTest extends PastellTestCase
             $this->triggerActionOnConnector($connector['id_ce'], 'test-not-loaded')
         );
         $this->assertLastMessage(
-            "En essayant d'inclure ExtensionTestActionTestNotLoaded : Class ExtensionTestActionTestNotLoaded does not exist"
+            'En essayant d\'inclure ExtensionTestActionTestNotLoaded : Class "ExtensionTestActionTestNotLoaded" does not exist'
         );
     }
 }

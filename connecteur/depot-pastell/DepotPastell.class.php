@@ -219,8 +219,8 @@ class DepotPastell extends GEDConnecteur
 
         $url = rtrim($this->connecteurConfig->get('pastell_url'), "/") . "/api/v2/$api_function";
 
-        $curl_output = $curlWrapper->get($url);
-        $http_code = $curlWrapper->getLastHttpCode();
+        $curl_output = strval($curlWrapper->get($url));
+        $http_code = strval($curlWrapper->getLastHttpCode());
 
         $this->getLogger()->info("Pastell call URL : $url, username: $login, code_reponse: $http_code");
         $this->getLogger()->debug("Pastell response : $curl_output");

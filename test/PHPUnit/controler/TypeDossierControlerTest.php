@@ -59,10 +59,10 @@ class TypeDossierControlerTest extends ControlerTestCase
             $this->getTypeDossierController()->doDeleteAction();
             $this->assertFalse(true);
         } catch (Exception $e) {
-            $this->assertRegexp("#Le type de dossier <b>cas-nominal</b> a été supprimé#", $e->getMessage());
+            $this->assertMatchesRegularExpression("#Le type de dossier <b>cas-nominal</b> a été supprimé#", $e->getMessage());
         }
         $this->assertFalse($typeDossierSQL->exists($id_t));
-        $this->assertFileNotExists($type_dossier_path);
+        $this->assertFileDoesNotExist($type_dossier_path);
     }
 
     /**
@@ -89,8 +89,8 @@ class TypeDossierControlerTest extends ControlerTestCase
             $this->getTypeDossierController()->doDeleteAction();
             $this->assertFalse(true);
         } catch (Exception $e) {
-            $this->assertRegexp("#Le type de dossier cas-nominal est utilisé par des dossiers qui ne sont pas dans l'état <i>terminé</i>#", $e->getMessage());
-            $this->assertRegexp("#Bourg-en-Bresse</a>\s*</td>\s*<td>1</td>#", $e->getMessage());
+            $this->assertMatchesRegularExpression("#Le type de dossier cas-nominal est utilisé par des dossiers qui ne sont pas dans l'état <i>terminé</i>#", $e->getMessage());
+            $this->assertMatchesRegularExpression("#Bourg-en-Bresse</a>\s*</td>\s*<td>1</td>#", $e->getMessage());
         }
         $this->assertTrue($typeDossierSQL->exists($id_t));
         $this->assertFileExists($typeDossierPersonnaliseDirectoryManager->getTypeDossierPath($id_t));
@@ -108,7 +108,7 @@ class TypeDossierControlerTest extends ControlerTestCase
             $this->getTypeDossierController()->doEditionAction();
             $this->assertFalse(true);
         } catch (Exception $e) {
-            $this->assertRegExp("#Le type de dossier personnalisé $id_type_dossier a été créé#", $e->getMessage());
+            $this->assertMatchesRegularExpression("#Le type de dossier personnalisé $id_type_dossier a été créé#", $e->getMessage());
         }
 
         $typeDossierSQL = $this->getObjectInstancier()->getInstance(TypeDossierSQL::class);
@@ -129,7 +129,7 @@ class TypeDossierControlerTest extends ControlerTestCase
             $this->getTypeDossierController()->doEditionAction();
             $this->assertFalse(true);
         } catch (Exception $e) {
-            $this->assertRegExp("#Aucun identifiant de type de dossier fourni#", $e->getMessage());
+            $this->assertMatchesRegularExpression("#Aucun identifiant de type de dossier fourni#", $e->getMessage());
         }
     }
 
@@ -144,7 +144,7 @@ class TypeDossierControlerTest extends ControlerTestCase
             $this->getTypeDossierController()->doEditionAction();
             $this->assertFalse(true);
         } catch (Exception $e) {
-            $this->assertRegExp(
+            $this->assertMatchesRegularExpression(
                 "#L'identifiant du type de dossier « AAAAA » ne respecte pas l'expression rationnelle#u",
                 $e->getMessage()
             );
@@ -161,7 +161,7 @@ class TypeDossierControlerTest extends ControlerTestCase
             $this->getTypeDossierController()->doEditionAction();
             $this->assertFalse(true);
         } catch (Exception $e) {
-            $this->assertRegExp(
+            $this->assertMatchesRegularExpression(
                 "#L'identifiant du type de dossier « aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa » ne respecte pas l'expression rationnelle#",
                 $e->getMessage()
             );
@@ -184,7 +184,7 @@ class TypeDossierControlerTest extends ControlerTestCase
             $this->getTypeDossierController()->doNewEtapeAction();
             $this->assertFalse(true);
         } catch (Exception $e) {
-            $this->assertRegExp("#/TypeDossier/editionEtape\?id_t=$id_t&num_etape=0#", $e->getMessage());
+            $this->assertMatchesRegularExpression("#/TypeDossier/editionEtape\?id_t=$id_t&num_etape=0#", $e->getMessage());
         }
 
         $typeDossierActionService = $this->getObjectInstancier()->getInstance(TypeDossierActionService::class);
@@ -202,7 +202,7 @@ class TypeDossierControlerTest extends ControlerTestCase
             $this->getTypeDossierController()->doNewEtapeAction();
             $this->assertFalse(true);
         } catch (Exception $e) {
-            $this->assertRegExp("#/TypeDossier/detail\?id_t=$id_t#", $e->getMessage());
+            $this->assertMatchesRegularExpression("#/TypeDossier/detail\?id_t=$id_t#", $e->getMessage());
         }
 
         $typeDossierActionService = $this->getObjectInstancier()->getInstance(TypeDossierActionService::class);
@@ -222,7 +222,7 @@ class TypeDossierControlerTest extends ControlerTestCase
             $this->getTypeDossierController()->doDeleteAction();
             $this->assertFalse(true);
         } catch (Exception $e) {
-            $this->assertRegExp("#Le type de dossier <b>test-42</b> a été supprimé#", $e->getMessage());
+            $this->assertMatchesRegularExpression("#Le type de dossier <b>test-42</b> a été supprimé#", $e->getMessage());
         }
         $this->assertFalse($typeDossierSQL->exists($id_t));
     }
@@ -243,7 +243,7 @@ class TypeDossierControlerTest extends ControlerTestCase
             $this->getTypeDossierController()->doDeleteAction();
             $this->assertFalse(true);
         } catch (Exception $e) {
-            $this->assertRegExp(
+            $this->assertMatchesRegularExpression(
                 "#Le type de dossier <b>test-42</b> est utilisé par le rôle « admin »#",
                 $e->getMessage()
             );
@@ -267,7 +267,7 @@ class TypeDossierControlerTest extends ControlerTestCase
             $this->getTypeDossierController()->doDeleteAction();
             $this->assertFalse(true);
         } catch (Exception $e) {
-            $this->assertRegExp(
+            $this->assertMatchesRegularExpression(
                 "#Le type de dossier <b>test-42</b> a été associé avec des connecteurs sur l'entité Bourg-en-Bresse \(id_e=1\)#",
                 $e->getMessage()
             );

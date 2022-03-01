@@ -134,10 +134,13 @@ class ConnecteurControler extends PastellControler
     {
         $recuperateur = $this->getPostInfo();
         $id_ce = $recuperateur->getInt('id_ce');
-        $info = $this->getConnecteurEntiteSQL()->getInfo($id_ce);
         $libelle = $recuperateur->get('libelle');
 
         try {
+            $info = $this->getConnecteurEntiteSQL()->getInfo($id_ce);
+            if (! $info) {
+                throw new Exception("Ce connecteur n'existe pas.");
+            }
             $this->apiPatch("/entite/{$info['id_e']}/connecteur/$id_ce");
         } catch (Exception $ex) {
             $this->getLastError()->setLastError($ex->getMessage());
@@ -271,7 +274,7 @@ class ConnecteurControler extends PastellControler
         $this->verifDroitOnConnecteur($id_ce);
         $connecteur_entite_info = $this->getConnecteurEntiteSQL()->getInfo($id_ce);
         $id_e = $connecteur_entite_info['id_e'];
-        $entite_info = $this->getEntiteSQL()->getInfo($id_e);
+        $entite_info = $this->getEntiteSQL()->getInfo($id_e) ?: [];
 
         $this->{'has_definition'} = boolval(
             $this->getConnecteurDefinitionFile()->getInfo($connecteur_entite_info['id_connecteur'], ! boolval($id_e))

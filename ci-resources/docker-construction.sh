@@ -19,8 +19,8 @@ mkdir -p /var/lib/php/session/
 chown www-data: /var/lib/php/session
 
 # TODO utiliser le phpenmod
-cp /var/www/pastell/ci-resources/php/* /etc/php/7.2/cli/conf.d/
-cp /var/www/pastell/ci-resources/php/* /etc/php/7.2/apache2/conf.d/
+cp /var/www/pastell/ci-resources/php/* /etc/php/8.1/cli/conf.d/
+cp /var/www/pastell/ci-resources/php/* /etc/php/8.1/apache2/conf.d/
 
 
 # needed for the composer install

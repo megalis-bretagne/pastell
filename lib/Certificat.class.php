@@ -60,6 +60,9 @@ class Certificat
         $base = bcpow("2", "32");
         $counter = 100;
         $res = "";
+        if (! $this->certData) {
+            return false;
+        }
         $val = $this->certData['serialNumber'];
         while ($counter > 0 && $val > 0) {
             $counter = $counter - 1;

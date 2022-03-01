@@ -22,6 +22,7 @@ apt-get install -y --no-install-recommends \
     php-bcmath \
     php-curl \
     php-imap \
+    php-intl \
     php-ldap \
     php-mbstring \
     php-mysql \

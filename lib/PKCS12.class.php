@@ -10,7 +10,6 @@ class PKCS12
         $pkcs12 = file_get_contents($p12_file_path);
 
         $result = openssl_pkcs12_read($pkcs12, $certs, $p12_password);
-
         if (! $result) {
             return false;
         }

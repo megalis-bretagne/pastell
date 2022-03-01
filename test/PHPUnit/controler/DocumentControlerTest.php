@@ -101,12 +101,12 @@ class DocumentControlerTest extends ControlerTestCase
         $this->setGetInfo(['id_e' => 1,'id_d' => $info['id_d']]);
 
         $this->setOutputCallback(function ($output) {
-            $this->assertNotRegExp(
+            $this->assertDoesNotMatchRegularExpression(
                 "#<textarea(.*)name='test_textarea'(.*)</textarea>#s",
                 $output
             );
 
-            $this->assertRegExp(
+            $this->assertMatchesRegularExpression(
                 "#<textarea(.*)name='test_textarea_read_write'(.*)</textarea>#s",
                 $output
             );
@@ -164,13 +164,13 @@ class DocumentControlerTest extends ControlerTestCase
         $documentController->editionAction();
         $result = ob_get_contents();
         ob_end_clean();
-        $this->assertRegExp("#test_edit_only#", $result);
+        $this->assertMatchesRegularExpression("#test_edit_only#", $result);
 
         ob_start();
         $documentController->detailAction();
         $result = ob_get_contents();
         ob_end_clean();
-        $this->assertNotRegExp("#test_edit_only#", $result);
+        $this->assertDoesNotMatchRegularExpression("#test_edit_only#", $result);
     }
 
     /**
@@ -191,7 +191,7 @@ class DocumentControlerTest extends ControlerTestCase
         $result = ob_get_contents();
         ob_end_clean();
 
-        $this->assertNotRegExp('/Veuillez sélectionner une entité afin de pouvoir visualiser ses dossiers/', $result);
+        $this->assertDoesNotMatchRegularExpression('/Veuillez sélectionner une entité afin de pouvoir visualiser ses dossiers/', $result);
     }
 
     public function testIndexWithoutRight()
@@ -235,8 +235,8 @@ class DocumentControlerTest extends ControlerTestCase
         $documentController->indexAction();
         $result = ob_get_contents();
         ob_end_clean();
-        $this->assertContains("Bourg-en-Bresse", $result);
-        $this->assertContains("CCAS", $result);
+        $this->assertStringContainsString("Bourg-en-Bresse", $result);
+        $this->assertStringContainsString("CCAS", $result);
     }
 
     public function testIndexWithTwoDifferentRoleOnTwoEntities()
@@ -259,8 +259,8 @@ class DocumentControlerTest extends ControlerTestCase
         $documentController->indexAction();
         $result = ob_get_contents();
         ob_end_clean();
-        $this->assertContains("Bourg-en-Bresse", $result);
-        $this->assertContains("CCAS", $result);
+        $this->assertStringContainsString("Bourg-en-Bresse", $result);
+        $this->assertStringContainsString("CCAS", $result);
     }
 
 
@@ -314,7 +314,7 @@ class DocumentControlerTest extends ControlerTestCase
             'message' => 'message',
         ]);
         $this->expectException(LastErrorException::class);
-        $this->expectExceptionMessageRegExp("/L'action unknown_action n'existe pas/");
+        $this->expectExceptionMessageMatches("/L'action unknown_action n'existe pas/");
 
         $documentController->changeEtatAction();
     }
