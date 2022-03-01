@@ -60,7 +60,7 @@ abstract class ActionExecutor
     {
         $this->connecteurs = false;
         $this->docDonneesFormulaire = false;
-        $this->connecteurConfig = false;
+        $this->connecteurConfigs = [];
     }
 
     public function setDestinataireId(array $id_destinataire)

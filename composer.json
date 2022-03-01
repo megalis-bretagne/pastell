@@ -66,6 +66,7 @@
     "mikey179/vfsstream": "^1.6",
     "pdepend/pdepend": "^2.10",
     "phpmd/phpmd": "^2.11",
+    "phpstan/phpstan": "^1.4",
     "phpunit/phpunit": "^9.5",
     "squizlabs/php_codesniffer": "3.*"
   },
@@ -85,7 +86,8 @@
     "test-cover": "phpunit --coverage-text --colors=never --coverage-clover coverage/coverage.xml --log-junit coverage/logfile.xml",
     "codecept": "codecept -c test/codeception/codeception.yml run",
     "phpcs": "phpcs",
-    "phpcbf": "phpcbf"
+    "phpcbf": "phpcbf",
+    "phpstan": "phpstan"
   },
   "autoload": {
     "psr-4": {

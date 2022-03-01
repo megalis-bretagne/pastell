@@ -1,0 +1,32 @@
+parameters:
+  bootstrapFiles:
+    - init-no-db.php
+  level: 0
+  paths:
+    - action
+    - api
+    - batch
+    - connecteur
+    - connecteur-type
+    - controler
+    - installation
+    - lib
+    - model
+    - module
+    - pastell-core
+    - script
+    - src
+    - test
+    - tests
+    - type-dossier
+    - visionneuse
+  ignoreErrors:
+    -
+      message: '/Access to an undefined property (.*)/'
+      paths:
+        - controler/*
+        - "*/*/template/*"
+    -
+      message: '/Class PastellExtension\\PastellDepotCmis\\GuzzleHttp\\Client not found\./'
+      paths:
+        - test/PHPUnit/extensions

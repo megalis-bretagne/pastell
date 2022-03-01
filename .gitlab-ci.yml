@@ -10,7 +10,7 @@ include:
 
 stages:
     - build
-    - lint
+    - static-analysis
     - test
     - quality
     - deploy
@@ -47,7 +47,7 @@ build:
     - docker push ${CONTAINER_IMAGE}
 
 lint:
-  stage: lint
+  stage: static-analysis
   image : "$CONTAINER_IMAGE"
   variables:
     DONT_INIT_DATABASE: "true"
@@ -55,6 +55,16 @@ lint:
   script:
     - cd /var/www/pastell
     - composer phpcs
+
+phpstan:
+  stage: static-analysis
+  image : "$CONTAINER_IMAGE"
+  variables:
+    DONT_INIT_DATABASE: "true"
+    DONT_RETRIEVE_VALIDCA: "true"
+  script:
+    - cd /var/www/pastell
+    - composer phpstan
 
 #Note: il semble que le fichier entrypoint soit exécuté deux fois !
 # https://gitlab.com/gitlab-org/gitlab-ci-multi-runner/issues/1380
