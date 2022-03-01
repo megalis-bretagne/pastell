@@ -126,10 +126,10 @@ class PurgeTest extends PastellTestCase
             $sql = "SELECT * FROM job_queue ";
             $result = $this->getSQLQuery()->query($sql);
             $this->assertEquals($document_etat_cible, $result[0]['etat_cible']);
-            $this->assertRegExp("#$id_d#", $purge->getLastMessage());
+            $this->assertMatchesRegularExpression("#$id_d#", $purge->getLastMessage());
         } else {
             $this->assertFalse($jobManager->hasActionProgramme(1, $id_d));
-            $this->assertRegExp($message, $purge->getLastMessage());
+            $this->assertMatchesRegularExpression($message, $purge->getLastMessage());
         }
     }
 
@@ -183,7 +183,7 @@ class PurgeTest extends PastellTestCase
         $result = $this->getSQLQuery()->query($sql);
         $this->assertEquals('supression', $result[0]['etat_cible']);
         $this->assertSame($lockName, $result[0]['id_verrou']);
-        $this->assertRegExp("#$id_d#", $purge->getLastMessage());
+        $this->assertMatchesRegularExpression("#$id_d#", $purge->getLastMessage());
     }
 
     /**
@@ -267,7 +267,7 @@ class PurgeTest extends PastellTestCase
         $sql = "SELECT * FROM job_queue ";
         $result = $this->getSQLQuery()->query($sql);
         $this->assertEquals('supression', $result[0]['etat_cible']);
-        $this->assertRegExp("#$id_d#", $purge->getLastMessage());
+        $this->assertMatchesRegularExpression("#$id_d#", $purge->getLastMessage());
     }
 
     /**

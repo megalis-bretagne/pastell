@@ -20,7 +20,7 @@ class FancyDateTest extends PHPUnit\Framework\TestCase
 
     public function testGetDateFrNow()
     {
-        $this->assertRegExp("#^\d{2}/\d{2}/\d{4}\s\d{2}:\d{2}:\d{2}$#", $this->fancyDate->getDateFr());
+        $this->assertMatchesRegularExpression("#^\d{2}/\d{2}/\d{4}\s\d{2}:\d{2}:\d{2}$#", $this->fancyDate->getDateFr());
     }
 
     public function testIsSameDayNot()
@@ -105,7 +105,7 @@ class FancyDateTest extends PHPUnit\Framework\TestCase
 
     public function testGetAllInfo()
     {
-        $this->assertRegExp("#dans 2[01] jours#", $this->fancyDate->getAllInfo(date("Y-m-d", strtotime("+20day"))));
+        $this->assertMatchesRegularExpression("#dans 2[01] jours#", $this->fancyDate->getAllInfo(date("Y-m-d", strtotime("+20day"))));
     }
 
     public function testGetFranchDay()

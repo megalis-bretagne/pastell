@@ -32,14 +32,14 @@ class DatabaseDiffTest extends PHPUnit\Framework\TestCase
     {
         $databaseDiff = new DatabaseDiff();
         $diff = $databaseDiff->getDiff($this->getDatabaseDefinitionArray(), array());
-        $this->assertRegExp("#CREATE TABLE `utilisateur`#", $diff[0]);
+        $this->assertMatchesRegularExpression("#CREATE TABLE `utilisateur`#", $diff[0]);
     }
 
     public function testDropTable()
     {
         $databaseDiff = new DatabaseDiff();
         $diff = $databaseDiff->getDiff(array(), $this->getDatabaseDefinitionArray());
-        $this->assertRegExp("#DROP TABLE `utilisateur`#", $diff[0]);
+        $this->assertMatchesRegularExpression("#DROP TABLE `utilisateur`#", $diff[0]);
     }
 
     public function testAddColumn()
@@ -214,7 +214,7 @@ class DatabaseDiffTest extends PHPUnit\Framework\TestCase
 
         $diff = $databaseDiff->getDiff($db2, $db1);
 
-        $this->assertRegExp("#HASH UNIQUE KEY `ma_cle`#", $diff[0]);
+        $this->assertMatchesRegularExpression("#HASH UNIQUE KEY `ma_cle`#", $diff[0]);
     }
 
     public function testAddDefaultNow()

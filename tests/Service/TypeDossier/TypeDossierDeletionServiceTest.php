@@ -36,7 +36,7 @@ class TypeDossierDeletionServiceTest extends PastellTestCase
         );
 
         $log_message = $this->getLogRecords()[0]['message'];
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             "#Ajout au journal \(id_j=1\): 12 - 0 - 1 - 0 - Supprimé - Suppression du type de dossier id_t=1#",
             $log_message
         );

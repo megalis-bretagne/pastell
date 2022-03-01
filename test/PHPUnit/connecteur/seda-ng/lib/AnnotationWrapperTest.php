@@ -76,7 +76,7 @@ class AnnotationWrapperTest extends PHPUnit\Framework\TestCase
     public function testDateNow()
     {
         $date = $this->annotationWrapper->wrap("{{pastell:now}}")->string;
-        $this->assertRegExp("#^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}#", $date); //2012-04-04T16:05:30Z
+        $this->assertMatchesRegularExpression("#^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}#", $date); //2012-04-04T16:05:30Z
     }
 
     /**
@@ -85,7 +85,7 @@ class AnnotationWrapperTest extends PHPUnit\Framework\TestCase
     public function testDateNowFormat()
     {
         $date = $this->annotationWrapper->wrap("{{pastell:now:Y-m-d}}")->string;
-        $this->assertRegExp("#^\d{4}-\d{2}-\d{2}$#", $date); //2012-04-04
+        $this->assertMatchesRegularExpression("#^\d{4}-\d{2}-\d{2}$#", $date); //2012-04-04
     }
 
     /**

@@ -29,7 +29,7 @@ class EntiteDeletionServiceTest extends PastellTestCase
         );
         $this->assertFalse($entiteSQL->exists(2));
         $log_message = $this->getLogRecords()[0]['message'];
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             "#^Ajout au journal \(id_j=1\): 3 - 2 - 1 - 0 - Supprimé - $expected_journal_message#",
             $log_message
         );

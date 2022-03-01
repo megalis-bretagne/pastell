@@ -15,7 +15,7 @@ class GenerateXMLFromAnnotedRelaxNGTest extends TestCase
         $relax_ng->registerXPathNamespace('pastell', RelaxNgImportAgapeAnnotation::PASTELL_ANNOTATION_NS);
         $element = $relax_ng->xpath("//seda:Date/pastell:annotation")[0];
 
-        $this->assertRegExp("#pastell:now#", (string) $element);
+        $this->assertMatchesRegularExpression("#pastell:now#", (string) $element);
     }
 
 

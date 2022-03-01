@@ -237,7 +237,7 @@ class GlaneurSFTPTest extends PastellTestCase
         ]);
 
         $glaneurSFTP->setSFTPFactory($sftpFactory);
-        $this->assertRegExp("#test1#", $glaneurSFTP->listDirectories());
+        $this->assertMatchesRegularExpression("#test1#", $glaneurSFTP->listDirectories());
     }
 
     /**

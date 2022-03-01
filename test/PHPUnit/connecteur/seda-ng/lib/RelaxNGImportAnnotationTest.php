@@ -31,7 +31,7 @@ class RelaxNGImportAnnotationTest extends PHPUnit\Framework\TestCase
             __DIR__ . "/../fixtures/EMEG_PROFIL_PES_0002_v1_schema.rng"
         );
         $element = $relax_ng->xpath("//rng:element[@name='Date']/pastell:annotation")[0];
-        $this->assertRegExp("#pastell:now#", (string) $element);
+        $this->assertMatchesRegularExpression("#pastell:now#", (string) $element);
     }
 
     public function testImportAnnotation2()
@@ -41,7 +41,7 @@ class RelaxNGImportAnnotationTest extends PHPUnit\Framework\TestCase
             __DIR__ . "/../fixtures/profil_test_schema.rng"
         );
         $element = $relax_ng->xpath("//rng:element[@name='Date']/pastell:annotation")[0];
-        $this->assertRegExp("#pastell:now#", (string) $element);
+        $this->assertMatchesRegularExpression("#pastell:now#", (string) $element);
     }
 
     public function testPesManyAnnotationOnKeywords()
@@ -52,8 +52,8 @@ class RelaxNGImportAnnotationTest extends PHPUnit\Framework\TestCase
             __DIR__ . "/../fixtures/many_keywords.xml"
         );
 
-        $this->assertRegExp("#Ceci est une annotation#", $new_relax_ng);
-        $this->assertRegExp("#Ceci est une seconde annotation#", $new_relax_ng);
+        $this->assertMatchesRegularExpression("#Ceci est une annotation#", $new_relax_ng);
+        $this->assertMatchesRegularExpression("#Ceci est une seconde annotation#", $new_relax_ng);
     }
 
     public function testAnnotationForTwoSiblingWithSameName()
