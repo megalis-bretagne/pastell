@@ -142,7 +142,7 @@ class FluxDataSedaDefault extends FluxData
     {
         $sub_command = $this->getZipSubCommand($key);
         $local_archive_content = $this->getArchiveContent($sub_command[0]);
-        return $local_archive_content['tmp_folder'] . "/" . $local_archive_content['root_directory'] . "/" . $local_archive_content['file_list'][$this->$key_type[$key]++];
+        return $local_archive_content['tmp_folder'] . "/" . $local_archive_content['root_directory'] . "/" . $local_archive_content['file_list'][$this->{$key_type[$key]++}];
     }
 
     private function isZipElement($key)
