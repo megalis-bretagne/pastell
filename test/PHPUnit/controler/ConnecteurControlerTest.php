@@ -1,18 +1,32 @@
 <?php
 
+use ParagonIE\Halite\Alerts\CannotPerformOperation;
+use ParagonIE\Halite\Alerts\InvalidDigestLength;
+use ParagonIE\Halite\Alerts\InvalidKey;
+use ParagonIE\Halite\Alerts\InvalidMessage;
+use ParagonIE\Halite\Alerts\InvalidSalt;
+use ParagonIE\Halite\Alerts\InvalidType;
 use Pastell\Service\Connecteur\ConnecteurActionService;
 
 class ConnecteurControlerTest extends ControlerTestCase
 {
-    /**
-     * @var ConnecteurControler
-     */
-    private $connecteurControler;
+    private ConnecteurControler $connecteurControler;
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->connecteurControler = $this->getControlerInstance(ConnecteurControler::class);
+    }
+
+    /**
+     * @throws LastErrorException
+     * @throws LastMessageException
+     */
+    public function testBefore(): void
+    {
+        $this->setGetInfo(['id_e' => ""]);
+        $this->connecteurControler->_beforeAction();
+        $this->assertEquals(0, $this->connecteurControler->getViewParameter()['id_e']);
     }
 
     /**
@@ -97,7 +111,17 @@ class ConnecteurControlerTest extends ControlerTestCase
         $this->assertEquals('ok', $result['result']);
     }
 
-    public function testDoExport()
+    /**
+     * @throws LastErrorException
+     * @throws LastMessageException
+     * @throws CannotPerformOperation
+     * @throws InvalidDigestLength
+     * @throws InvalidKey
+     * @throws InvalidMessage
+     * @throws InvalidSalt
+     * @throws InvalidType
+     */
+    public function testDoExport(): void
     {
         $this->setPostInfo([
             'id_ce' => 11,
