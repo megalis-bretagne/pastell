@@ -1,18 +1,19 @@
 <?php
 
+use PHPUnit\Framework\MockObject\MockObject;
+
 class DepotConnecteurTest extends PastellTestCase
 {
     public const DOCUMENT_TITRE = "Titre de mon document";
 
-    /** @var  DepotConnecteur|PHPUnit_Framework_MockObject_MockObject */
-    private $DepotConnecteur;
+    private MockObject|DepotConnecteur $DepotConnecteur;
+    private DonneesFormulaire $connecteurConfig;
+    private DonneesFormulaire $donneesFormulaire;
 
-    /** @var  DonneesFormulaire */
-    private $connecteurConfig;
-
-    /** @var  DonneesFormulaire */
-    private $donneesFormulaire;
-
+    /**
+     * @throws NotFoundException
+     * @throws Exception
+     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -28,24 +29,31 @@ class DepotConnecteurTest extends PastellTestCase
         $this->DepotConnecteur->setConnecteurConfig($this->connecteurConfig);
     }
 
-    private function callBackTestFile($directory, $filename, $filepath)
+    private function callBackTestFile(string $filename, string $filepath): callable
     {
-        return $this->callBackTestContent($directory, $filename, file_get_contents($filepath));
+        return $this->callBackTestContent(
+            self::DOCUMENT_TITRE,
+            $filename,
+            file_get_contents($filepath) ?: ''
+        );
     }
 
-    private function callBackTestContent($directory, $filename, $content)
+    private function callBackTestContent(string $directory, string $filename, string $content): callable
     {
-        return $this->returnCallback(function ($a, $b, $c) use ($directory, $filename, $content) {
+        return function ($a, $b, $c) use ($directory, $filename, $content) {
+            if ($b !== $filename) {
+                return;
+            }
             $this->assertEquals($directory, $a);
             $this->assertEquals($filename, $b);
             $this->assertEquals(
                 $content,
                 file_get_contents($c)
             );
-        });
+        };
     }
 
-    public function testLecture()
+    public function testLecture(): void
     {
         $this->DepotConnecteur
             ->method('listDirectory')
@@ -53,7 +61,10 @@ class DepotConnecteurTest extends PastellTestCase
         $this->assertEquals('Contenu du répertoire : ["mock"]', $this->DepotConnecteur->testLecture());
     }
 
-    public function testEcriture()
+    /**
+     * @throws UnrecoverableException
+     */
+    public function testEcriture(): void
     {
         $this->DepotConnecteur->method('makeDirectory')->willReturn(true);
         $this->DepotConnecteur->method('saveDocument')->willReturn(true);
@@ -61,7 +72,10 @@ class DepotConnecteurTest extends PastellTestCase
         $this->assertTrue($this->DepotConnecteur->testEcriture());
     }
 
-    public function testEcritureFailed()
+    /**
+     * @throws UnrecoverableException
+     */
+    public function testEcritureFailed(): void
     {
         $this->DepotConnecteur->method('makeDirectory')->willReturn(true);
         $this->DepotConnecteur->method('saveDocument')->willReturn(true);
@@ -71,7 +85,10 @@ class DepotConnecteurTest extends PastellTestCase
         $this->assertTrue($this->DepotConnecteur->testEcriture());
     }
 
-    public function testEcritureFichierFailed()
+    /**
+     * @throws UnrecoverableException
+     */
+    public function testEcritureFichierFailed(): void
     {
         $this->DepotConnecteur->method('makeDirectory')->willReturn(true);
         $this->DepotConnecteur->method('saveDocument')->willReturn(true);
@@ -82,7 +99,10 @@ class DepotConnecteurTest extends PastellTestCase
         $this->assertTrue($this->DepotConnecteur->testEcritureFichier());
     }
 
-    public function testEcritureFichier()
+    /**
+     * @throws UnrecoverableException
+     */
+    public function testEcritureFichier(): void
     {
         $this->DepotConnecteur->method('saveDocument')->willReturn(true);
 
@@ -93,21 +113,19 @@ class DepotConnecteurTest extends PastellTestCase
     /**
      * @throws UnrecoverableException
      */
-    public function testSend()
+    public function testSend(): void
     {
         $this->DepotConnecteur->expects($this->once())
             ->method('makeDirectory')
             ->with(self::DOCUMENT_TITRE);
 
-        $this->DepotConnecteur->expects($this->at(2))
+        $this->DepotConnecteur
             ->method('saveDocument')
-            ->with(
-                self::DOCUMENT_TITRE,
-                "foo.txt",
-                $this->callback(function ($filepath) {
-                    return "foo foo" == file_get_contents($filepath);
-                })
-            );
+            ->willReturnCallback(function (string $directory_name, string $filename, string $filepath) {
+                if ($filename === "foo.txt") {
+                    $this->assertEquals("foo foo", file_get_contents($filepath));
+                }
+            });
 
         $this->assertSame(
             [],
@@ -115,39 +133,41 @@ class DepotConnecteurTest extends PastellTestCase
         );
     }
 
-    public function testSendWithMetadataInYAML()
+    /**
+     * @throws UnrecoverableException
+     */
+    public function testSendWithMetadataInYAML(): void
     {
         $this->connecteurConfig->setData(
             DepotConnecteur::DEPOT_METADONNEES,
             DepotConnecteur::DEPOT_METADONNEES_YAML_FILE
         );
 
-        $this->DepotConnecteur->expects($this->at(4))
+        $this->DepotConnecteur
             ->method('saveDocument')
-            ->will(
+            ->willReturnCallback(
                 $this->callBackTestFile(
-                    self::DOCUMENT_TITRE,
                     "metadata.txt",
                     __DIR__ . "/fixtures/metadata.yml"
                 )
             );
-
-
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
-    public function testSendWithMetadataInJSON()
+    /**
+     * @throws UnrecoverableException
+     */
+    public function testSendWithMetadataInJSON(): void
     {
         $this->connecteurConfig->setData(
             DepotConnecteur::DEPOT_METADONNEES,
             DepotConnecteur::DEPOT_METADONNEES_JSON_FILE
         );
 
-        $this->DepotConnecteur->expects($this->at(4))
+        $this->DepotConnecteur
             ->method('saveDocument')
-            ->will(
+            ->willReturnCallback(
                 $this->callBackTestFile(
-                    self::DOCUMENT_TITRE,
                     "metadata.json",
                     __DIR__ . "/fixtures/metadata.json"
                 )
@@ -156,18 +176,20 @@ class DepotConnecteurTest extends PastellTestCase
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
-    public function testSendWithMetadataInXML()
+    /**
+     * @throws UnrecoverableException
+     */
+    public function testSendWithMetadataInXML(): void
     {
         $this->connecteurConfig->setData(
             DepotConnecteur::DEPOT_METADONNEES,
             DepotConnecteur::DEPOT_METADONNEES_XML_FILE
         );
 
-        $this->DepotConnecteur->expects($this->at(4))
+        $this->DepotConnecteur
             ->method('saveDocument')
-            ->will(
+            ->willReturnCallback(
                 $this->callBackTestFile(
-                    self::DOCUMENT_TITRE,
                     "metadata.xml",
                     __DIR__ . "/fixtures/metadata.xml"
                 )
@@ -176,7 +198,10 @@ class DepotConnecteurTest extends PastellTestCase
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
-    public function testSaveWithPastellFilename()
+    /**
+     * @throws UnrecoverableException
+     */
+    public function testSaveWithPastellFilename(): void
     {
         $this->connecteurConfig->setData(
             DepotConnecteur::DEPOT_PASTELL_FILE_FILENAME,
@@ -186,20 +211,19 @@ class DepotConnecteurTest extends PastellTestCase
             DepotConnecteur::DEPOT_METADONNEES,
             DepotConnecteur::DEPOT_METADONNEES_XML_FILE
         );
-        $this->DepotConnecteur->expects($this->at(2))
+        $this->DepotConnecteur
             ->method('saveDocument')
-            ->with(
-                self::DOCUMENT_TITRE,
-                "aaaa.yml_fichier_0",
-                $this->callback(function ($filepath) {
-                    return 'foo foo' == file_get_contents($filepath);
-                })
-            );
-        $this->DepotConnecteur->expects($this->at(4))
-            ->method('saveDocument')
-            ->will(
-                $this->callBackTestFile(
+            ->willReturnCallback(
+                $this->callBackTestContent(
                     self::DOCUMENT_TITRE,
+                    "aaaa.yml_fichier_0",
+                    'foo foo'
+                )
+            );
+        $this->DepotConnecteur
+            ->method('saveDocument')
+            ->willReturnCallback(
+                $this->callBackTestFile(
                     "metadata.xml",
                     __DIR__ . "/fixtures/metadata-pastell-name.xml"
                 )
@@ -207,22 +231,29 @@ class DepotConnecteurTest extends PastellTestCase
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
-    public function testSaveZipFile()
+    /**
+     * @throws UnrecoverableException
+     */
+    public function testSaveZipFile(): void
     {
         $this->connecteurConfig->setData(
             DepotConnecteur::DEPOT_TYPE_DEPOT,
             DepotConnecteur::DEPOT_TYPE_DEPOT_ZIP
         );
-        $this->DepotConnecteur->expects($this->at(1))
+        $this->DepotConnecteur
             ->method('saveDocument')
-            ->with(
-                "",
-                self::DOCUMENT_TITRE . ".zip"
+            ->willReturnCallback(
+                function ($a, $b) {
+                    $this->assertEquals(self::DOCUMENT_TITRE . ".zip", $b);
+                }
             );
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
-    public function testSendRepertoireAsExpression()
+    /**
+     * @throws UnrecoverableException
+     */
+    public function testSendRepertoireAsExpression(): void
     {
         $this->connecteurConfig->setData(
             DepotConnecteur::DEPOT_TITRE_REPERTOIRE,
@@ -234,12 +265,13 @@ class DepotConnecteurTest extends PastellTestCase
             'expression %toto% avec métadonnée'
         );
 
-        $this->DepotConnecteur->expects($this->at(1))
+        $this->DepotConnecteur
             ->method('makeDirectory')
-            ->with(
-                'expression ' . self::DOCUMENT_TITRE . ' avec métadonnée'
+            ->willReturnCallback(
+                function ($a) {
+                    $this->assertEquals('expression ' . self::DOCUMENT_TITRE . ' avec métadonnée', $a);
+                }
             );
-
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
@@ -254,14 +286,19 @@ class DepotConnecteurTest extends PastellTestCase
         );
 
         $this->DepotConnecteur
-            ->expects($this->at(1))
             ->method('makeDirectory')
-            ->with($this->donneesFormulaire->id_d);
-
+            ->willReturnCallback(
+                function ($a) {
+                    $this->assertEquals($this->donneesFormulaire->id_d, $a);
+                }
+            );
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
-    public function testSendModifMetadonneFilename()
+    /**
+     * @throws UnrecoverableException
+     */
+    public function testSendModifMetadonneFilename(): void
     {
         $this->connecteurConfig->setData(
             DepotConnecteur::DEPOT_METADONNES_FILENAME,
@@ -273,11 +310,10 @@ class DepotConnecteurTest extends PastellTestCase
             DepotConnecteur::DEPOT_METADONNEES_JSON_FILE
         );
 
-        $this->DepotConnecteur->expects($this->at(4))
+        $this->DepotConnecteur
             ->method('saveDocument')
-            ->will(
+            ->willReturnCallback(
                 $this->callBackTestFile(
-                    self::DOCUMENT_TITRE,
                     "fichier_metadata_Titre de mon document.json",
                     __DIR__ . "/fixtures/metadata.json"
                 )
@@ -286,7 +322,10 @@ class DepotConnecteurTest extends PastellTestCase
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
-    public function testSendModifMetadonneRestriction()
+    /**
+     * @throws UnrecoverableException
+     */
+    public function testSendModifMetadonneRestriction(): void
     {
         $this->connecteurConfig->setData(
             DepotConnecteur::DEPOT_METADONNEES_RESTRICTION,
@@ -298,11 +337,10 @@ class DepotConnecteurTest extends PastellTestCase
             DepotConnecteur::DEPOT_METADONNEES_JSON_FILE
         );
 
-        $this->DepotConnecteur->expects($this->at(4))
+        $this->DepotConnecteur
             ->method('saveDocument')
-            ->will(
+            ->willReturnCallback(
                 $this->callBackTestFile(
-                    self::DOCUMENT_TITRE,
                     "metadata.json",
                     __DIR__ . "/fixtures/metadata-restriction.json"
                 )
@@ -312,7 +350,10 @@ class DepotConnecteurTest extends PastellTestCase
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
-    public function testSendModifMetadonneRestrictionXML()
+    /**
+     * @throws UnrecoverableException
+     */
+    public function testSendModifMetadonneRestrictionXML(): void
     {
         $this->connecteurConfig->setData(
             DepotConnecteur::DEPOT_METADONNEES_RESTRICTION,
@@ -324,11 +365,10 @@ class DepotConnecteurTest extends PastellTestCase
             DepotConnecteur::DEPOT_METADONNEES_XML_FILE
         );
 
-        $this->DepotConnecteur->expects($this->at(4))
+        $this->DepotConnecteur
             ->method('saveDocument')
-            ->will(
+            ->willReturnCallback(
                 $this->callBackTestFile(
-                    self::DOCUMENT_TITRE,
                     "metadata.xml",
                     __DIR__ . "/fixtures/metadata-restriction.xml"
                 )
@@ -336,16 +376,19 @@ class DepotConnecteurTest extends PastellTestCase
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
-    public function testSendFileRestriction()
+    /**
+     * @throws UnrecoverableException
+     */
+    public function testSendFileRestriction(): void
     {
         $this->connecteurConfig->setData(
             DepotConnecteur::DEPOT_FILE_RESTRICTION,
             "fichier"
         );
 
-        $this->DepotConnecteur->expects($this->at(2))
+        $this->DepotConnecteur
             ->method('saveDocument')
-            ->will(
+            ->willReturnCallback(
                 $this->callBackTestContent(
                     self::DOCUMENT_TITRE,
                     "foo.txt",
@@ -356,12 +399,15 @@ class DepotConnecteurTest extends PastellTestCase
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
-    public function testSendCleaningDirectory()
+    /**
+     * @throws UnrecoverableException
+     */
+    public function testSendCleaningDirectory(): void
     {
         $this->donneesFormulaire->setData('toto', 'bl/utr/ep\oi');
-        $this->DepotConnecteur->expects($this->at(2))
+        $this->DepotConnecteur
             ->method('saveDocument')
-            ->will(
+            ->willReturnCallback(
                 $this->callBackTestContent(
                     'bl-utr-ep-oi',
                     "foo.txt",
@@ -371,12 +417,16 @@ class DepotConnecteurTest extends PastellTestCase
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
-    public function testSendCleaningFilename()
+    /**
+     * @throws UnrecoverableException
+     * @throws Exception
+     */
+    public function testSendCleaningFilename(): void
     {
         $this->donneesFormulaire->addFileFromData("fichier", "blu/tre\poi.txt", "foo foo");
-        $this->DepotConnecteur->expects($this->at(2))
+        $this->DepotConnecteur
             ->method('saveDocument')
-            ->will(
+            ->willReturnCallback(
                 $this->callBackTestContent(
                     self::DOCUMENT_TITRE,
                     "blu-tre-poi.txt",
@@ -387,15 +437,19 @@ class DepotConnecteurTest extends PastellTestCase
 
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
-    public function testSendFichierTermine()
+
+    /**
+     * @throws UnrecoverableException
+     */
+    public function testSendFichierTermine(): void
     {
         $this->connecteurConfig->setData(
             DepotConnecteur::DEPOT_CREATION_FICHIER_TERMINE,
             "on"
         );
-        $this->DepotConnecteur->expects($this->at(4))
+        $this->DepotConnecteur
             ->method('saveDocument')
-            ->will(
+            ->willReturnCallback(
                 $this->callBackTestContent(
                     self::DOCUMENT_TITRE,
                     "fichier_termine.txt",
@@ -405,7 +459,10 @@ class DepotConnecteurTest extends PastellTestCase
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
-    public function testExceptionIsThrow()
+    /**
+     * @throws UnrecoverableException
+     */
+    public function testExceptionIsThrow(): void
     {
         $this->DepotConnecteur
             ->method('saveDocument')
@@ -415,7 +472,10 @@ class DepotConnecteurTest extends PastellTestCase
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
-    public function testSendAlreadyExists()
+    /**
+     * @throws UnrecoverableException
+     */
+    public function testSendAlreadyExists(): void
     {
         $this->DepotConnecteur
             ->method('directoryExists')
@@ -425,7 +485,10 @@ class DepotConnecteurTest extends PastellTestCase
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
-    public function testSendAlreadyExistsRename()
+    /**
+     * @throws UnrecoverableException
+     */
+    public function testSendAlreadyExistsRename(): void
     {
         $this->connecteurConfig->setData(
             DepotConnecteur::DEPOT_EXISTE_DEJA,
@@ -435,16 +498,21 @@ class DepotConnecteurTest extends PastellTestCase
             ->method('directoryExists')
             ->willReturn(true);
 
-        $this->DepotConnecteur->expects($this->at(1))
+        $this->DepotConnecteur
             ->method('makeDirectory')
-            ->with(
-                $this->matchesRegularExpression("#^Titre de mon document_[0-9_]*$#")
+            ->willReturnCallback(
+                function ($a) {
+                    $this->assertMatchesRegularExpression("#^Titre de mon document_[0-9_]*$#", $a);
+                }
             );
 
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
-    public function testSendFilenameAlreadyExists()
+    /**
+     * @throws UnrecoverableException
+     */
+    public function testSendFilenameAlreadyExists(): void
     {
         $this->connecteurConfig->setData(
             DepotConnecteur::DEPOT_TYPE_DEPOT,
@@ -458,7 +526,10 @@ class DepotConnecteurTest extends PastellTestCase
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
-    public function testSendFilenameAlreadyExistsRename()
+    /**
+     * @throws UnrecoverableException
+     */
+    public function testSendFilenameAlreadyExistsRename(): void
     {
         $this->connecteurConfig->setData(
             DepotConnecteur::DEPOT_EXISTE_DEJA,
@@ -472,20 +543,20 @@ class DepotConnecteurTest extends PastellTestCase
             ->method('fileExists')
             ->willReturn(true);
 
-        $this->DepotConnecteur->expects($this->at(1))
+        $this->DepotConnecteur
             ->method('saveDocument')
-            ->with(
-                $this->anything(),
-                $this->matchesRegularExpression("#^Titre de mon document_[0-9_]*\.zip$#")
+            ->willReturnCallback(
+                function ($a, $b) {
+                    $this->assertMatchesRegularExpression("#^Titre de mon document_[0-9_]*\.zip$#", $b);
+                }
             );
-
         $this->DepotConnecteur->send($this->donneesFormulaire);
     }
 
     /**
      * @throws UnrecoverableException
      */
-    public function testSendWithGedDocumentsId()
+    public function testSendWithGedDocumentsId(): void
     {
         $this->DepotConnecteur = $this->getMockForAbstractClass(
             DepotConnecteur::class,
@@ -504,14 +575,14 @@ class DepotConnecteurTest extends PastellTestCase
             ->method('makeDirectory')
             ->with(self::DOCUMENT_TITRE);
 
-        $this->DepotConnecteur->expects($this->at(2))
+        $this->DepotConnecteur
             ->method('saveDocument')
-            ->with(
-                self::DOCUMENT_TITRE,
-                "foo.txt",
-                $this->callback(function ($filepath) {
-                    return "foo foo" == file_get_contents($filepath);
-                })
+            ->willReturnCallback(
+                $this->callBackTestContent(
+                    self::DOCUMENT_TITRE,
+                    "foo.txt",
+                    "foo foo"
+                )
             );
 
         $this->DepotConnecteur
@@ -533,7 +604,7 @@ class DepotConnecteurTest extends PastellTestCase
     /**
      * @throws UnrecoverableException
      */
-    public function testRenameFiles()
+    public function testRenameFiles(): void
     {
         $this->connecteurConfig->setData(
             DepotConnecteur::DEPOT_PASTELL_FILE_FILENAME,
@@ -547,9 +618,9 @@ class DepotConnecteurTest extends PastellTestCase
             "
         );
 
-        $this->DepotConnecteur->expects($this->at(2))
+        $this->DepotConnecteur
             ->method('saveDocument')
-            ->will(
+            ->willReturnCallback(
                 $this->callBackTestContent(
                     self::DOCUMENT_TITRE,
                     'foo-const_0.txt',
@@ -557,9 +628,9 @@ class DepotConnecteurTest extends PastellTestCase
                 )
             );
 
-        $this->DepotConnecteur->expects($this->at(3))
+        $this->DepotConnecteur
             ->method('saveDocument')
-            ->will(
+            ->willReturnCallback(
                 $this->callBackTestContent(
                     self::DOCUMENT_TITRE,
                     self::DOCUMENT_TITRE . '-const-bar.txt',
