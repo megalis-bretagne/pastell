@@ -124,24 +124,24 @@ acceptance_test:
 security_scan:
   allow_failure: true
 
-deploy_master:
+deploy_dev:
     stage: staging
     environment:
-        name: pastell.master.libriciel.fr
-        url: https://pastell.master.libriciel.fr
+        name: pastell-4-0.dev.libriciel.net
+        url: https://pastell-4-0.dev.libriciel.net
     only:
         - master
     variables:
-        PAYLOAD: "payload={\"text\": \"[pastell.master.libriciel.fr](https://pastell.master.libriciel.fr) a été mis à jour - [build $CI_PIPELINE_ID]($CI_PROJECT_URL/pipelines/$CI_PIPELINE_ID)\"}"
+        PAYLOAD: "payload={\"text\": \"[pastell-4-0.dev.libriciel.net](https://pastell-4-0.dev.libriciel.net) a été mis à jour - [build $CI_PIPELINE_ID]($CI_PROJECT_URL/pipelines/$CI_PIPELINE_ID)\"}"
     script:
         - eval $(ssh-agent -s)
         - ssh-add <(echo "$SSH_PRIVATE_KEY")
         - mkdir -p ~/.ssh
         - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-        - scp ./docker-compose.yml gitlab@pastell.master.libriciel.fr:/data/docker-file/docker-compose.yml
-        - echo "$MASTER_ENV_FILE_CONTENT" > /tmp/.env
-        - scp /tmp/.env gitlab@pastell.master.libriciel.fr:/data/docker-file/
-        - ssh -tt gitlab@pastell.master.libriciel.fr "docker login -u gitlab-ci-token -p '$CI_JOB_TOKEN' $CI_REGISTRY && cd /data/docker-file/ && docker-compose pull && docker-compose up -d"
+        - scp ./docker-compose.yml gitlab@pastell-4-0.dev.libriciel.net:/data/docker-file/docker-compose.yml
+        - echo "$DEV_ENV_FILE_CONTENT" > /tmp/.env
+        - scp /tmp/.env gitlab@pastell-4-0.dev.libriciel.net:/data/docker-file/
+        - ssh -tt gitlab@pastell-4-0.dev.libriciel.net "docker login -u gitlab-ci-token -p '$CI_JOB_TOKEN' $CI_REGISTRY && cd /data/docker-file/ && docker-compose pull && docker-compose up -d"
         - curl -i -X POST -d "$PAYLOAD" $MATTERMOST_WEBHOOK
 
 deploy_ftp:
