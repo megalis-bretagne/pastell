@@ -34,22 +34,22 @@ class UtilisateurControler extends PastellControler
         $id_u = $this->getGetInfo()->getInt('id_u');
         if ($id_u) {
             $info = $this->getUtilisateur()->getInfo($id_u);
-            $this->{'id_e'} = $info['id_e'];
-            $this->{'id_e_menu'} = $info['id_e'];
-            $this->{'type_e_menu'} = "";
+            $this->setViewParameter('id_e', $info['id_e']);
+            $this->setViewParameter('id_e_menu', $info['id_e']);
+            $this->setViewParameter('type_e_menu', "");
             $this->hasDroitLecture($info['id_e']);
             $this->setNavigationInfo($info['id_e'], "Entite/utilisateur?");
         } elseif ($this->getGetInfo()->get('id_e')) {
-            $this->{'type_e_menu'} = "";
-            $this->{'id_e'} = $this->getGetInfo()->get('id_e');
-            $this->{'id_e_menu'} = $this->getGetInfo()->get('id_e');
+            $this->setViewParameter('type_e_menu', "");
+            $this->setViewParameter('id_e', $this->getGetInfo()->get('id_e'));
+            $this->setViewParameter('id_e_menu', $this->getGetInfo()->get('id_e'));
             $this->setNavigationInfo($this->{'id_e'}, "Entite/utilisateur?");
         } else {
-            $this->{'id_e'} = 0;
+            $this->setViewParameter('id_e', 0);
             $this->setNavigationInfo(0, "Entite/utilisateur?");
         }
-        $this->{'menu_gauche_template'} = "EntiteMenuGauche";
-        $this->{'menu_gauche_select'} = "Entite/utilisateur";
+        $this->setViewParameter('menu_gauche_template', "EntiteMenuGauche");
+        $this->setViewParameter('menu_gauche_select', "Entite/utilisateur");
         $this->setDroitLectureOnConnecteur($this->{'id_e'});
     }
 
@@ -65,12 +65,12 @@ class UtilisateurControler extends PastellControler
             $this->{'LastError'}->setLastError("Vous ne pouvez pas modifier votre mot de passe en dehors du CAS");
             $this->redirect("/Utilisateur/moi");
         }
-        $this->{'pages_without_left_menu'} = true;
+        $this->setViewParameter('pages_without_left_menu', true);
 
-        $this->{'page_title'} = "Modification de votre mot de passe";
-        $this->{'template_milieu'} = "UtilisateurModifPassword";
+        $this->setViewParameter('page_title', "Modification de votre mot de passe");
+        $this->setViewParameter('template_milieu', "UtilisateurModifPassword");
         $passwordEntropy = $this->getObjectInstancier()->getInstance(PasswordEntropy::class);
-        $this->{'password_min_entropy'} = $passwordEntropy->getEntropyForDisplay();
+        $this->setViewParameter('password_min_entropy', $passwordEntropy->getEntropyForDisplay());
         $this->renderDefault();
     }
 
@@ -81,13 +81,13 @@ class UtilisateurControler extends PastellControler
      */
     public function modifEmailAction()
     {
-        $this->{'utilisateur_info'} = $this->getUtilisateur()->getInfo($this->getId_u());
+        $this->setViewParameter('utilisateur_info', $this->getUtilisateur()->getInfo($this->getId_u()));
         if ($this->{'utilisateur_info'}['id_e'] == 0) {
             $this->{'LastError'}->setLastError("Les utilisateurs de l'entité racine ne peuvent pas utiliser cette procédure");
             $this->redirect("/Utilisateur/moi");
         }
-        $this->{'page_title'} = "Modification de votre email";
-        $this->{'template_milieu'} = "UtilisateurModifEmail";
+        $this->setViewParameter('page_title', "Modification de votre email");
+        $this->setViewParameter('template_milieu', "UtilisateurModifEmail");
         $this->renderDefault();
     }
 
@@ -144,9 +144,9 @@ class UtilisateurControler extends PastellControler
         }
 
         $this->getUtilisateurNewEmailSQL()->delete($info['id_u']);
-        $this->{'result'} = $info;
-        $this->{'page_title'} = "Procédure de changement d'email";
-        $this->{'template_milieu'} = "UtilisateurModifEmailConfirm";
+        $this->setViewParameter('result', $info);
+        $this->setViewParameter('page_title', "Procédure de changement d'email");
+        $this->setViewParameter('template_milieu', "UtilisateurModifEmailConfirm");
         $this->renderDefault();
     }
 
@@ -185,23 +185,23 @@ class UtilisateurControler extends PastellControler
     public function certificatAction()
     {
         $recuperateur = new Recuperateur($_GET);
-        $this->{'verif_number'} = $recuperateur->get('verif_number');
-        $this->{'offset'} = $recuperateur->getInt('offset', 0);
+        $this->setViewParameter('verif_number', $recuperateur->get('verif_number'));
+        $this->setViewParameter('offset', $recuperateur->getInt('offset', 0));
 
-        $this->{'limit'} = 20;
+        $this->setViewParameter('limit', 20);
 
-        $this->{'count'} = $this->getUtilisateurListe()->getNbUtilisateurByCertificat($this->{'verif_number'});
-        $this->{'liste'} = $this->getUtilisateurListe()->getUtilisateurByCertificat($this->{'verif_number'}, $this->{'offset'}, $this->{'limit'});
+        $this->setViewParameter('count', $this->getUtilisateurListe()->getNbUtilisateurByCertificat($this->{'verif_number'}));
+        $this->setViewParameter('liste', $this->getUtilisateurListe()->getUtilisateurByCertificat($this->{'verif_number'}, $this->{'offset'}, $this->{'limit'}));
 
         if (!$this->{'count'}) {
             $this->redirect("/index.php");
         }
 
-        $this->{'certificat'} = new Certificat($this->{'liste'}[0]['certificat']);
-        $this->{'certificatInfo'} = $this->{'certificat'}->getInfo();
+        $this->setViewParameter('certificat', new Certificat($this->{'liste'}[0]['certificat']));
+        $this->setViewParameter('certificatInfo', $this->{'certificat'}->getInfo());
 
-        $this->{'page_title'} = "Certificat";
-        $this->{'template_milieu'} = "UtilisateurCertificat";
+        $this->setViewParameter('page_title', "Certificat");
+        $this->setViewParameter('template_milieu', "UtilisateurCertificat");
         $this->renderDefault();
     }
 
@@ -233,19 +233,19 @@ class UtilisateurControler extends PastellControler
 
         $this->verifDroit($infoUtilisateur['id_e'], "utilisateur:edition");
 
-        $this->{'infoEntite'} = $this->getEntiteSQL()->getInfo($infoUtilisateur['id_e']);
-        $this->{'certificat'} = new Certificat($infoUtilisateur['certificat']);
-        $this->{'arbre'} = $this->getRoleUtilisateur()->getArbreFille($this->getId_u(), "entite:edition");
+        $this->setViewParameter('infoEntite', $this->getEntiteSQL()->getInfo($infoUtilisateur['id_e']));
+        $this->setViewParameter('certificat', new Certificat($infoUtilisateur['certificat']));
+        $this->setViewParameter('arbre', $this->getRoleUtilisateur()->getArbreFille($this->getId_u(), "entite:edition"));
 
         if ($id_u) {
-            $this->{'page_title'} = "Modification de " . $infoUtilisateur['prenom'] . " " . $infoUtilisateur['nom'];
+            $this->setViewParameter('page_title', "Modification de " . $infoUtilisateur['prenom'] . " " . $infoUtilisateur['nom']);
         } else {
-            $this->{'page_title'} = "Nouvel utilisateur ";
+            $this->setViewParameter('page_title', "Nouvel utilisateur ");
         }
-        $this->{'id_u'} = $id_u;
-        $this->{'id_e'} = $id_e;
-        $this->{'infoUtilisateur'} = $infoUtilisateur;
-        $this->{'template_milieu'} = "UtilisateurEdition";
+        $this->setViewParameter('id_u', $id_u);
+        $this->setViewParameter('id_e', $id_e);
+        $this->setViewParameter('infoUtilisateur', $infoUtilisateur);
+        $this->setViewParameter('template_milieu', "UtilisateurEdition");
         $this->renderDefault();
     }
 
@@ -265,32 +265,32 @@ class UtilisateurControler extends PastellControler
             $this->redirect("index.php");
         }
 
-        $this->{'certificat'} = new Certificat($info['certificat']);
-        $this->{'page_title'} = "Utilisateur " . $info['prenom'] . " " . $info['nom'];
-        $this->{'entiteListe'} = $this->getEntiteListe();
-        $this->{'tabEntite'} = $this->getRoleUtilisateur()->getEntite($this->getId_u(), 'entite:edition');
+        $this->setViewParameter('certificat', new Certificat($info['certificat']));
+        $this->setViewParameter('page_title', "Utilisateur " . $info['prenom'] . " " . $info['nom']);
+        $this->setViewParameter('entiteListe', $this->getEntiteListe());
+        $this->setViewParameter('tabEntite', $this->getRoleUtilisateur()->getEntite($this->getId_u(), 'entite:edition'));
 
-        $this->{'notification_list'} = $this->getNotificationList($id_u);
+        $this->setViewParameter('notification_list', $this->getNotificationList($id_u));
         if ($this->hasDroit($info['id_e'], 'role:lecture')) {
-            $this->{'role_authorized'} = $this->apiGet('role');
+            $this->setViewParameter('role_authorized', $this->apiGet('role'));
         } else {
-            $this->{'role_authorized'} = array();
+            $this->setViewParameter('role_authorized', array());
         }
 
         if (!$this->getRoleUtilisateur()->hasDroit($this->getId_u(), "utilisateur:lecture", $info['id_e'])) {
             $this->setLastError("Vous n'avez pas le droit de lecture (" . $info['id_e'] . ")");
             $this->redirect();
         }
-        $this->{'utilisateur_edition'} = $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "utilisateur:edition", $info['id_e']);
+        $this->setViewParameter('utilisateur_edition', $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "utilisateur:edition", $info['id_e']));
 
         if ($info['id_e']) {
-            $this->{'infoEntiteDeBase'} = $this->getEntiteSQL()->getInfo($info['id_e']);
-            $this->{'denominationEntiteDeBase'} = $this->{'infoEntiteDeBase'}['denomination'];
+            $this->setViewParameter('infoEntiteDeBase', $this->getEntiteSQL()->getInfo($info['id_e']));
+            $this->setViewParameter('denominationEntiteDeBase', $this->{'infoEntiteDeBase'}['denomination']);
         }
-        $this->{'info'} = $info;
-        $this->{'id_u'} = $id_u;
-        $this->{'arbre'} = $this->getRoleUtilisateur()->getArbreFille($this->getId_u(), "entite:edition");
-        $this->{'template_milieu'} = "UtilisateurDetail";
+        $this->setViewParameter('info', $info);
+        $this->setViewParameter('id_u', $id_u);
+        $this->setViewParameter('arbre', $this->getRoleUtilisateur()->getArbreFille($this->getId_u(), "entite:edition"));
+        $this->setViewParameter('template_milieu', "UtilisateurDetail");
         $this->renderDefault();
     }
 
@@ -313,28 +313,28 @@ class UtilisateurControler extends PastellControler
     {
         $id_u = $this->getId_u();
         $info = $this->getUtilisateur()->getInfo($id_u);
-        $this->{'certificat'} = new Certificat($info['certificat']);
+        $this->setViewParameter('certificat', new Certificat($info['certificat']));
 
-        $this->{'page_title'} = "Espace utilisateur : " . $info['prenom'] . " " . $info['nom'];
+        $this->setViewParameter('page_title', "Espace utilisateur : " . $info['prenom'] . " " . $info['nom']);
 
-        $this->{'entiteListe'} = $this->getEntiteListe();
+        $this->setViewParameter('entiteListe', $this->getEntiteListe());
 
-        $this->{'tabEntite'} = $this->getRoleUtilisateur()->getEntite($this->getId_u(), 'entite:edition');
+        $this->setViewParameter('tabEntite', $this->getRoleUtilisateur()->getEntite($this->getId_u(), 'entite:edition'));
 
-        $this->{'notification_list'} = $this->getNotificationList($id_u);
+        $this->setViewParameter('notification_list', $this->getNotificationList($id_u));
 
-        $this->{'roleInfo'} = $this->getRoleUtilisateur()->getRole($id_u);
-        $this->{'utilisateur_edition'} = $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "utilisateur:edition", $info['id_e']);
+        $this->setViewParameter('roleInfo', $this->getRoleUtilisateur()->getRole($id_u));
+        $this->setViewParameter('utilisateur_edition', $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "utilisateur:edition", $info['id_e']));
 
         if ($info['id_e']) {
             $infoEntiteDeBase = $this->getEntiteSQL()->getInfo($info['id_e']);
-            $this->{'denominationEntiteDeBase'} = $infoEntiteDeBase['denomination'];
+            $this->setViewParameter('denominationEntiteDeBase', $infoEntiteDeBase['denomination']);
         }
-        $this->{'info'} = $info;
-        $this->{'id_u'} = $id_u;
-        $this->{'arbre'} = $this->getRoleUtilisateur()->getArbreFille($this->getId_u(), "entite:lecture");
-        $this->{'template_milieu'} = "UtilisateurMoi";
-        $this->{'pages_without_left_menu'} = true;
+        $this->setViewParameter('info', $info);
+        $this->setViewParameter('id_u', $id_u);
+        $this->setViewParameter('arbre', $this->getRoleUtilisateur()->getArbreFille($this->getId_u(), "entite:lecture"));
+        $this->setViewParameter('template_milieu', "UtilisateurMoi");
+        $this->setViewParameter('pages_without_left_menu', true);
         $this->renderDefault();
     }
 
@@ -511,36 +511,36 @@ class UtilisateurControler extends PastellControler
         $type = $recuperateur->get('type');
         $from_me = $recuperateur->get('from_me', false);
         $page_moi = $recuperateur->get('moi', false);
-        $this->{'page_moi'} = $page_moi;
+        $this->setViewParameter('page_moi', $page_moi);
 
         if ($page_moi) {
-            $this->{'pages_without_left_menu'} = true;
+            $this->setViewParameter('pages_without_left_menu', true);
         }
 
         $utilisateur_info = $this->getUtilisateur()->getInfo($id_u);
         $this->verifEditNotification($id_u, $id_e, $type, $page_moi);
 
-        $this->{'has_daily_digest'} = $this->getNotification()->hasDailyDigest($id_u, $id_e, $type);
+        $this->setViewParameter('has_daily_digest', $this->getNotification()->hasDailyDigest($id_u, $id_e, $type));
 
         $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($type);
         $titreSelectAction = $type ? "Paramètre des notification des documents de type " . $type : "La sélection des actions n'est pas possible car aucun type de dossier n'est spécifié";
 
         $action_list = $documentType->getAction()->getActionWithNotificationPossible();
 
-        $this->{'titreSelectAction'} = $titreSelectAction;
-        $this->{'action_list'} = $this->getNotification()->getNotificationActionList($id_u, $id_e, $type, $action_list);
-        $this->{'id_u'} = $id_u;
-        $this->{'id_e'} = $id_e;
-        $this->{'type'} = $type;
+        $this->setViewParameter('titreSelectAction', $titreSelectAction);
+        $this->setViewParameter('action_list', $this->getNotification()->getNotificationActionList($id_u, $id_e, $type, $action_list));
+        $this->setViewParameter('id_u', $id_u);
+        $this->setViewParameter('id_e', $id_e);
+        $this->setViewParameter('type', $type);
 
         if ($from_me) {
-            $this->{'cancel_url'} = "/Utilisateur/moi";
+            $this->setViewParameter('cancel_url', "/Utilisateur/moi");
         } else {
-            $this->{'cancel_url'} = "/Utilisateur/detail?id_u=$id_u&id_e=$id_e";
+            $this->setViewParameter('cancel_url', "/Utilisateur/detail?id_u=$id_u&id_e=$id_e");
         }
 
-        $this->{'page_title'} = get_hecho($utilisateur_info['login']) . " - abonnement aux actions des documents ";
-        $this->{'template_milieu'} = "UtilisateurNotification";
+        $this->setViewParameter('page_title', get_hecho($utilisateur_info['login']) . " - abonnement aux actions des documents ");
+        $this->setViewParameter('template_milieu', "UtilisateurNotification");
         $this->renderDefault();
     }
 

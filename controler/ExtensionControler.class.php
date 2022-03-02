@@ -6,26 +6,26 @@ class ExtensionControler extends PastellControler
     {
         parent::_beforeAction();
         $this->verifDroit(0, "system:lecture");
-        $this->{'menu_gauche_template'} = "ConfigurationMenuGauche";
-        $this->{'menu_gauche_select'} = "Extension/index";
-        $this->{'dont_display_breacrumbs'} = true;
+        $this->setViewParameter('menu_gauche_template', "ConfigurationMenuGauche");
+        $this->setViewParameter('menu_gauche_select', "Extension/index");
+        $this->setViewParameter('dont_display_breacrumbs', true);
     }
 
     public function indexAction()
     {
         $this->verifDroit(0, "system:lecture");
-        $this->{'droitEdition'} = $this->hasDroit(0, "system:edition");
-        $this->{'all_extensions'} = $this->extensionList();
+        $this->setViewParameter('droitEdition', $this->hasDroit(0, "system:edition"));
+        $this->setViewParameter('all_extensions', $this->extensionList());
 
-        $this->{'pastell_manifest'} = $this->getManifestFactory()->getPastellManifest()->getInfo();
-        $this->{'extensions_graphe'} = $this->getObjectInstancier()
+        $this->setViewParameter('pastell_manifest', $this->getManifestFactory()->getPastellManifest()->getInfo());
+        $this->setViewParameter('extensions_graphe', $this->getObjectInstancier()
             ->getInstance(ExtensionsGraphique::class)
-            ->creerGraphe();
+            ->creerGraphe());
 
-        $this->{'template_milieu'} = "ExtensionIndex";
-        $this->{'page_title'} = "Extensions";
+        $this->setViewParameter('template_milieu', "ExtensionIndex");
+        $this->setViewParameter('page_title', "Extensions");
         if ($this->hasDroit(0, "system:edition")) {
-            $this->{'nouveau_bouton_url'} = array("Ajouter" => "Extension/edition");
+            $this->setViewParameter('nouveau_bouton_url', array("Ajouter" => "Extension/edition"));
         }
         $this->renderDefault();
     }
@@ -41,9 +41,9 @@ class ExtensionControler extends PastellControler
         $id_e = $this->getGetInfo()->get("id_extension");
         $extension_info = $this->getExtensions()->getInfo($id_e);
 
-        $this->{'extension_info'} = $extension_info;
-        $this->{'template_milieu'} = "ExtensionDetail";
-        $this->{'page_title'} = "Extension « {$extension_info['nom']} »";
+        $this->setViewParameter('extension_info', $extension_info);
+        $this->setViewParameter('template_milieu', "ExtensionDetail");
+        $this->setViewParameter('page_title', "Extension « {$extension_info['nom']} »");
 
         $this->renderDefault();
     }
@@ -52,18 +52,18 @@ class ExtensionControler extends PastellControler
     {
         $id_e = $this->getGetInfo()->get("id_extension");
         $extension_info = $this->getExtensions()->getInfo($id_e);
-        $this->{'page_title'} = "Journal des modifications (CHANGELOG) de l'extension « {$extension_info['nom']} » ";
-        $this->{'template_milieu'} = "SystemChangelog";
+        $this->setViewParameter('page_title', "Journal des modifications (CHANGELOG) de l'extension « {$extension_info['nom']} » ");
+        $this->setViewParameter('template_milieu', "SystemChangelog");
 
         $changelog_file_path  = $extension_info['path'] . "/CHANGELOG.md";
         if (!file_exists($changelog_file_path)) {
-            $this->{'changelog'} = "Le CHANGELOG n'est pas disponible pour cette extension";
+            $this->setViewParameter('changelog', "Le CHANGELOG n'est pas disponible pour cette extension");
         } else {
             $text = file_get_contents($changelog_file_path);
             $parsedown = new Parsedown();
             $text = $parsedown->parse($text);
             $text = preg_replace("/<h2>/", "<h3>", $text);
-            $this->{'changelog'} = preg_replace("/<h1>/", "<h2>", $text);
+            $this->setViewParameter('changelog', preg_replace("/<h1>/", "<h2>", $text));
         }
 
         $this->renderDefault();
@@ -77,12 +77,12 @@ class ExtensionControler extends PastellControler
         if (!$extension_info) {
             $extension_info = array('id_e' => 0,'path' => '');
         }
-        $this->{'extension_info'} = $extension_info;
-        $this->{'template_milieu'} = "ExtensionEdition";
+        $this->setViewParameter('extension_info', $extension_info);
+        $this->setViewParameter('template_milieu', "ExtensionEdition");
         if ($id_e) {
-            $this->{'page_title'} = "Modification de l'emplactement d'une extension";
+            $this->setViewParameter('page_title', "Modification de l'emplactement d'une extension");
         } else {
-            $this->{'page_title'} = "Ajout d'une extension";
+            $this->setViewParameter('page_title', "Ajout d'une extension");
         }
 
         $this->renderDefault();

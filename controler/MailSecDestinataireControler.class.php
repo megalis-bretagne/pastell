@@ -113,12 +113,12 @@ class MailSecDestinataireControler extends PastellControler
 
     private function renderPage(MailSecInfo $mailSecInfo)
     {
-        $this->{'mailSecInfo'} = $mailSecInfo;
-        $this->{'manifest_info'} = $this->getManifestFactory()->getPastellManifest()->getInfo();
-        $this->{'recuperation_fichier_url'} = "recuperation-fichier.php?key={$mailSecInfo->key}";
-        $this->{'reponse_recuperation_fichier_url'} = "recuperation-fichier.php?key={$mailSecInfo->key}&fichier_reponse=true";
-        $this->{'id_e'} = $mailSecInfo->id_e;
-        $this->{'my_role'} = "";
+        $this->setViewParameter('mailSecInfo', $mailSecInfo);
+        $this->setViewParameter('manifest_info', $this->getManifestFactory()->getPastellManifest()->getInfo());
+        $this->setViewParameter('recuperation_fichier_url', "recuperation-fichier.php?key={$mailSecInfo->key}");
+        $this->setViewParameter('reponse_recuperation_fichier_url', "recuperation-fichier.php?key={$mailSecInfo->key}&fichier_reponse=true");
+        $this->setViewParameter('id_e', $mailSecInfo->id_e);
+        $this->setViewParameter('my_role', "");
 
         $this->render("PageWebSec");
     }
@@ -129,18 +129,18 @@ class MailSecDestinataireControler extends PastellControler
     public function indexAction()
     {
         $mailSecInfo = $this->getMailsecInfo();
-        $this->{'page_title'} = $mailSecInfo->denomination_entite . " - Mail sécurisé";
-        $this->{'template_milieu'} = "MailSecIndex";
-        $this->{'reponse_url'}  = WEBSEC_BASE . "/repondre.php?key={$mailSecInfo->key}";
+        $this->setViewParameter('page_title', $mailSecInfo->denomination_entite . " - Mail sécurisé");
+        $this->setViewParameter('template_milieu', "MailSecIndex");
+        $this->setViewParameter('reponse_url', WEBSEC_BASE . "/repondre.php?key={$mailSecInfo->key}");
 
-        $this->{'inject'} = array(
+        $this->setViewParameter('inject', array(
             'id_e' => $mailSecInfo->id_e,
             'id_d' => $mailSecInfo->id_d,
             'action' => '',
             'id_ce' => false,
             'key' => $mailSecInfo->key
-        );
-        $this->{'download_all_link'} = WEBSEC_BASE . "/download_all.php?key={$mailSecInfo->key}";
+        ));
+        $this->setViewParameter('download_all_link', WEBSEC_BASE . "/download_all.php?key={$mailSecInfo->key}");
         $this->renderPage($mailSecInfo);
     }
 
@@ -177,10 +177,10 @@ class MailSecDestinataireControler extends PastellControler
         $mailSecInfo = $this->getMailsecInfo();
         $this->checkResponseCanBeEdited($mailSecInfo);
 
-        $this->{'page_title'} = $mailSecInfo->denomination_entite . " - Réponse à un mail sécurisé";
-        $this->{'template_milieu'} = "MailSecRepondre";
+        $this->setViewParameter('page_title', $mailSecInfo->denomination_entite . " - Réponse à un mail sécurisé");
+        $this->setViewParameter('template_milieu', "MailSecRepondre");
 
-        $this->{'suppression_fichier_url'} = "suppression-fichier.php?key={$mailSecInfo->key}";
+        $this->setViewParameter('suppression_fichier_url', "suppression-fichier.php?key={$mailSecInfo->key}");
 
         $documentEmailReponseSQL = $this->getObjectInstancier()->getInstance(DocumentEmailReponseSQL::class);
         $id_d_reponse = $documentEmailReponseSQL->getDocumentReponseId($mailSecInfo->id_de);
@@ -189,15 +189,15 @@ class MailSecDestinataireControler extends PastellControler
             $id_d_reponse = $this->createDocumentReponse($mailSecInfo);
         }
 
-        $this->{'action_url'} = "reponse-edition.php";
-        $this->{'inject'} = array(
+        $this->setViewParameter('action_url', "reponse-edition.php");
+        $this->setViewParameter('inject', array(
             'id_e' => $mailSecInfo->id_e,
             'id_d' => $id_d_reponse,
             'action' => '',
             'id_ce' => '',
             'key' => $mailSecInfo->key
-        );
-        $this->{'page'} = 0;
+        ));
+        $this->setViewParameter('page', 0);
 
         $this->renderPage($mailSecInfo);
     }
@@ -237,18 +237,18 @@ class MailSecDestinataireControler extends PastellControler
         $mailSecInfo = $this->getMailsecInfo();
         $this->checkResponseCanBeEdited($mailSecInfo);
 
-        $this->{'page_title'} = $mailSecInfo->denomination_entite . " - Mail sécurisé - Validation de la réponse";
-        $this->{'template_milieu'} = "MailSecValidation";
-        $this->{'reponse_url'}  = WEBSEC_BASE . "/repondre.php?key={$mailSecInfo->key}";
-        $this->{'validation_url'}  = WEBSEC_BASE . "/do-validation.php?key={$mailSecInfo->key}";
-        $this->{'download_all_link'} = WEBSEC_BASE . "/download_all.php?key={$mailSecInfo->key}";
-        $this->{'inject'} = array(
+        $this->setViewParameter('page_title', $mailSecInfo->denomination_entite . " - Mail sécurisé - Validation de la réponse");
+        $this->setViewParameter('template_milieu', "MailSecValidation");
+        $this->setViewParameter('reponse_url', WEBSEC_BASE . "/repondre.php?key={$mailSecInfo->key}");
+        $this->setViewParameter('validation_url', WEBSEC_BASE . "/do-validation.php?key={$mailSecInfo->key}");
+        $this->setViewParameter('download_all_link', WEBSEC_BASE . "/download_all.php?key={$mailSecInfo->key}");
+        $this->setViewParameter('inject', array(
             'id_e' => $mailSecInfo->id_e,
             'id_d' => $mailSecInfo->id_d,
             'action' => '',
             'id_ce' => '',
             'key' => $mailSecInfo->key
-        );
+        ));
         $this->renderPage($mailSecInfo);
     }
 
@@ -340,20 +340,20 @@ class MailSecDestinataireControler extends PastellControler
             $this->redirectWebMailsec("invalid.php");
         }
 
-        $this->{'page'} = "Mail sécurisé";
-        $this->{'page_title'} = " Mail sécurisé";
-        $this->{'the_key'} = $key;
-        $this->{'template_milieu'} = "MailSecPassword";
-        $this->{'manifest_info'} = $this->getManifestFactory()->getPastellManifest()->getInfo();
+        $this->setViewParameter('page', "Mail sécurisé");
+        $this->setViewParameter('page_title', " Mail sécurisé");
+        $this->setViewParameter('the_key', $key);
+        $this->setViewParameter('template_milieu', "MailSecPassword");
+        $this->setViewParameter('manifest_info', $this->getManifestFactory()->getPastellManifest()->getInfo());
         $this->render("PageWebSec");
     }
 
     public function invalidAction()
     {
-        $this->{'page'} = "Mail sécurisé";
-        $this->{'page_title'} = " Mail sécurisé";
-        $this->{'template_milieu'} = "MailSecInvalid";
-        $this->{'manifest_info'} = $this->getManifestFactory()->getPastellManifest()->getInfo();
+        $this->setViewParameter('page', "Mail sécurisé");
+        $this->setViewParameter('page_title', " Mail sécurisé");
+        $this->setViewParameter('template_milieu', "MailSecInvalid");
+        $this->setViewParameter('manifest_info', $this->getManifestFactory()->getPastellManifest()->getInfo());
         $this->render("PageWebSec");
     }
 

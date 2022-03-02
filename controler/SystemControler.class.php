@@ -14,9 +14,9 @@ class SystemControler extends PastellControler
     public function _beforeAction()
     {
         parent::_beforeAction();
-        $this->{'menu_gauche_template'} = "ConfigurationMenuGauche";
+        $this->setViewParameter('menu_gauche_template', "ConfigurationMenuGauche");
         $this->verifDroit(0, DroitService::getDroitLecture(DroitService::DROIT_SYSTEM));
-        $this->{'dont_display_breacrumbs'} = true;
+        $this->setViewParameter('dont_display_breacrumbs', true);
     }
 
     private function needDroitEdition()
@@ -30,38 +30,38 @@ class SystemControler extends PastellControler
      */
     public function indexAction()
     {
-        $this->{'droitEdition'} = $this->hasDroit(0, DroitService::getDroitEdition(DroitService::DROIT_SYSTEM));
+        $this->setViewParameter('droitEdition', $this->hasDroit(0, DroitService::getDroitEdition(DroitService::DROIT_SYSTEM)));
 
         /** @var HealthCheck $healthCheck */
         $healthCheck = $this->getInstance(HealthCheck::class);
-        $this->{'checkWorkspace'} = $healthCheck->check(HealthCheck::WORKSPACE_CHECK);
-        $this->{'checkJournal'} = $healthCheck->check(HealthCheck::JOURNAL_CHECK);
-        $this->{'checkRedis'} = $healthCheck->check(HealthCheck::REDIS_CHECK);
-        $this->{'checkPhpConfiguration'} = $healthCheck->check(HealthCheck::PHP_CONFIGURATION_CHECK);
-        $this->{'checkPhpExtensions'} = $healthCheck->check(HealthCheck::PHP_EXTENSIONS_CHECK);
-        $this->{'checkExpectedElements'} = $healthCheck->check(HealthCheck::EXPECTED_ELEMENTS_CHECK);
-        $this->{'checkCommands'} = $healthCheck->check(HealthCheck::COMMAND_CHECK);
-        $this->{'checkConstants'} = $healthCheck->check(HealthCheck::CONSTANTS_CHECK);
-        $this->{'checkDatabaseSchema'} = $healthCheck->check(HealthCheck::DATABASE_SCHEMA_CHECK)[0];
-        $this->{'checkDatabaseEncoding'} = $healthCheck->check(HealthCheck::DATABASE_ENCODING_CHECK)[0];
-        $this->{'checkCrashedTables'} = $healthCheck->check(HealthCheck::CRASHED_TABLES_CHECK)[0];
-        $this->{'checkMissingConnectors'} = $healthCheck->check(HealthCheck::MISSING_CONNECTORS_CHECK)[0];
-        $this->{'checkMissingModules'} = $healthCheck->check(HealthCheck::MISSING_MODULES_CHECK)[0];
+        $this->setViewParameter('checkWorkspace', $healthCheck->check(HealthCheck::WORKSPACE_CHECK));
+        $this->setViewParameter('checkJournal', $healthCheck->check(HealthCheck::JOURNAL_CHECK));
+        $this->setViewParameter('checkRedis', $healthCheck->check(HealthCheck::REDIS_CHECK));
+        $this->setViewParameter('checkPhpConfiguration', $healthCheck->check(HealthCheck::PHP_CONFIGURATION_CHECK));
+        $this->setViewParameter('checkPhpExtensions', $healthCheck->check(HealthCheck::PHP_EXTENSIONS_CHECK));
+        $this->setViewParameter('checkExpectedElements', $healthCheck->check(HealthCheck::EXPECTED_ELEMENTS_CHECK));
+        $this->setViewParameter('checkCommands', $healthCheck->check(HealthCheck::COMMAND_CHECK));
+        $this->setViewParameter('checkConstants', $healthCheck->check(HealthCheck::CONSTANTS_CHECK));
+        $this->setViewParameter('checkDatabaseSchema', $healthCheck->check(HealthCheck::DATABASE_SCHEMA_CHECK)[0]);
+        $this->setViewParameter('checkDatabaseEncoding', $healthCheck->check(HealthCheck::DATABASE_ENCODING_CHECK)[0]);
+        $this->setViewParameter('checkCrashedTables', $healthCheck->check(HealthCheck::CRASHED_TABLES_CHECK)[0]);
+        $this->setViewParameter('checkMissingConnectors', $healthCheck->check(HealthCheck::MISSING_CONNECTORS_CHECK)[0]);
+        $this->setViewParameter('checkMissingModules', $healthCheck->check(HealthCheck::MISSING_MODULES_CHECK)[0]);
 
         $packService = $this->getInstance(PackService::class);
-        $this->{'listPack'} = $packService->getListPack();
+        $this->setViewParameter('listPack', $packService->getListPack());
 
-        $this->{'manifest_info'} = $this->getManifestFactory()->getPastellManifest()->getInfo();
+        $this->setViewParameter('manifest_info', $this->getManifestFactory()->getPastellManifest()->getInfo());
 
-        $this->{'feature_toggle'} = $this->getObjectInstancier()
+        $this->setViewParameter('feature_toggle', $this->getObjectInstancier()
             ->getInstance(FeatureToggleService::class)
-            ->getAllOptionalFeatures();
-        $this->{'display_feature_toggle_in_test_page'} =  $this->getObjectInstancier()
+            ->getAllOptionalFeatures());
+        $this->setViewParameter('display_feature_toggle_in_test_page', $this->getObjectInstancier()
             ->getInstance(FeatureToggleService::class)
-            ->isEnabled(DisplayFeatureToggleInTestPage::class);
-        $this->{'template_milieu'} = "SystemEnvironnement";
-        $this->{'page_title'} = "Test du système";
-        $this->{'menu_gauche_select'} = self::SYSTEM_INDEX_PAGE;
+            ->isEnabled(DisplayFeatureToggleInTestPage::class));
+        $this->setViewParameter('template_milieu', "SystemEnvironnement");
+        $this->setViewParameter('page_title', "Test du système");
+        $this->setViewParameter('menu_gauche_select', self::SYSTEM_INDEX_PAGE);
         $this->renderDefault();
     }
 
@@ -91,7 +91,7 @@ class SystemControler extends PastellControler
             $definition_path = $this->getFluxDefinitionFiles()->getDefinitionPath($id_flux);
             $all_flux[$id_flux]['is_valide'] = $documentTypeValidation->validate($definition_path);
         }
-        $this->{'all_flux'} = $all_flux;
+        $this->setViewParameter('all_flux', $all_flux);
 
         foreach ($this->getFluxDefinitionFiles()->getAllRestricted() as $id_flux) {
             $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($id_flux);
@@ -99,11 +99,11 @@ class SystemControler extends PastellControler
             $all_flux_restricted[$id_flux]['type'] = $documentType->getType();
             $all_flux_restricted[$id_flux]['list_restriction_pack'] = $documentType->getListRestrictionPack();
         }
-        $this->{'all_flux_restricted'} = $all_flux_restricted;
+        $this->setViewParameter('all_flux_restricted', $all_flux_restricted);
 
-        $this->{'template_milieu'} = "SystemFlux";
-        $this->{'page_title'} = "Types de dossier disponibles sur la plateforme";
-        $this->{'menu_gauche_select'} = "System/flux";
+        $this->setViewParameter('template_milieu', "SystemFlux");
+        $this->setViewParameter('page_title', "Types de dossier disponibles sur la plateforme");
+        $this->setViewParameter('menu_gauche_select', "System/flux");
         $this->renderDefault();
     }
 
@@ -180,13 +180,13 @@ class SystemControler extends PastellControler
         $id = $this->getGetInfo()->get('id');
         $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($id);
         $name = $documentType->getName();
-        $this->{'description'} = $documentType->getDescription();
-        $this->{'list_restriction_pack'} = $documentType->getListRestrictionPack();
-        $this->{'all_connecteur'} = $documentType->getConnecteur();
+        $this->setViewParameter('description', $documentType->getDescription());
+        $this->setViewParameter('list_restriction_pack', $documentType->getListRestrictionPack());
+        $this->setViewParameter('all_connecteur', $documentType->getConnecteur());
 
-        $this->{'all_action'} = $this->getAllActionInfo($documentType);
+        $this->setViewParameter('all_action', $this->getAllActionInfo($documentType));
 
-        $this->{'formulaire_fields'} = $this->getFormsElement($documentType);
+        $this->setViewParameter('formulaire_fields', $this->getFormsElement($documentType));
 
         $document_type_is_validate = false;
         $validation_error = false;
@@ -196,12 +196,12 @@ class SystemControler extends PastellControler
             $validation_error = $this->getDocumentTypeValidation()->getLastError();
         }
 
-        $this->{'document_type_is_validate'} = $document_type_is_validate;
-        $this->{'validation_error'} = $validation_error;
+        $this->setViewParameter('document_type_is_validate', $document_type_is_validate);
+        $this->setViewParameter('validation_error', $validation_error);
 
-        $this->{'page_title'} = "Détail du type de dossier « $name » ($id)";
-        $this->{'template_milieu'} = "SystemFluxDetail";
-        $this->{'menu_gauche_select'} = "System/flux";
+        $this->setViewParameter('page_title', "Détail du type de dossier « $name » ($id)");
+        $this->setViewParameter('template_milieu', "SystemFluxDetail");
+        $this->setViewParameter('menu_gauche_select', "System/flux");
 
         $this->renderDefault();
     }
@@ -211,10 +211,10 @@ class SystemControler extends PastellControler
      */
     public function definitionAction()
     {
-        $this->{'flux_definition'} = $this->getDocumentTypeValidation()->getModuleDefinition();
-        $this->{'page_title'} = "Définition des types de dossier";
-        $this->{'template_milieu'} = "SystemFluxDef";
-        $this->{'menu_gauche_select'} = "System/definition";
+        $this->setViewParameter('flux_definition', $this->getDocumentTypeValidation()->getModuleDefinition());
+        $this->setViewParameter('page_title', "Définition des types de dossier");
+        $this->setViewParameter('template_milieu', "SystemFluxDef");
+        $this->setViewParameter('menu_gauche_select', "System/definition");
         $this->renderDefault();
     }
 
@@ -234,7 +234,7 @@ class SystemControler extends PastellControler
             $all_connecteur_globaux[$id_connecteur]['description'] = $documentType->getDescription();
             $all_connecteur_globaux[$id_connecteur]['list_restriction_pack'] = $documentType->getListRestrictionPack();
         }
-        $this->{'all_connecteur_globaux'} = $all_connecteur_globaux;
+        $this->setViewParameter('all_connecteur_globaux', $all_connecteur_globaux);
 
         foreach ($this->getConnecteurDefinitionFiles()->getAll() as $id_connecteur => $connecteur) {
             $documentType = $this->getDocumentTypeFactory()->getEntiteDocumentType($id_connecteur);
@@ -242,25 +242,25 @@ class SystemControler extends PastellControler
             $all_connecteur_entite[$id_connecteur]['description'] = $documentType->getDescription();
             $all_connecteur_entite[$id_connecteur]['list_restriction_pack'] = $documentType->getListRestrictionPack();
         }
-        $this->{'all_connecteur_entite'} = $all_connecteur_entite;
+        $this->setViewParameter('all_connecteur_entite', $all_connecteur_entite);
 
         foreach ($this->getConnecteurDefinitionFiles()->getAllRestricted(true) as $id_connecteur) {
             $documentType = $this->getDocumentTypeFactory()->getGlobalDocumentType($id_connecteur);
             $all_connecteur_globaux_restricted[$id_connecteur]['nom'] = $documentType->getName();
             $all_connecteur_globaux_restricted[$id_connecteur]['list_restriction_pack'] = $documentType->getListRestrictionPack();
         }
-        $this->{'all_connecteur_globaux_restricted'} = $all_connecteur_globaux_restricted;
+        $this->setViewParameter('all_connecteur_globaux_restricted', $all_connecteur_globaux_restricted);
 
         foreach ($this->getConnecteurDefinitionFiles()->getAllRestricted() as $id_connecteur) {
             $documentType = $this->getDocumentTypeFactory()->getEntiteDocumentType($id_connecteur);
             $all_connecteur_entite_restricted[$id_connecteur]['nom'] = $documentType->getName();
             $all_connecteur_entite_restricted[$id_connecteur]['list_restriction_pack'] = $documentType->getListRestrictionPack();
         }
-        $this->{'all_connecteur_entite_restricted'} = $all_connecteur_entite_restricted;
+        $this->setViewParameter('all_connecteur_entite_restricted', $all_connecteur_entite_restricted);
 
-        $this->{'page_title'} = "Connecteurs disponibles";
-        $this->{'template_milieu'} = "SystemConnecteurList";
-        $this->{'menu_gauche_select'} = "System/connecteur";
+        $this->setViewParameter('page_title', "Connecteurs disponibles");
+        $this->setViewParameter('template_milieu', "SystemConnecteurList");
+        $this->setViewParameter('menu_gauche_select', "System/connecteur");
         $this->renderDefault();
     }
 
@@ -343,14 +343,14 @@ class SystemControler extends PastellControler
             $documentType = $this->getDocumentTypeFactory()->getEntiteDocumentType($id_connecteur);
         }
         $name = $documentType->getName();
-        $this->{'description'} = $documentType->getDescription();
-        $this->{'list_restriction_pack'} = $documentType->getListRestrictionPack();
-        $this->{'all_action'} = $this->getAllActionInfo($documentType, 'connecteur');
-        $this->{'formulaire_fields'} = $this->getFormsElement($documentType);
+        $this->setViewParameter('description', $documentType->getDescription());
+        $this->setViewParameter('list_restriction_pack', $documentType->getListRestrictionPack());
+        $this->setViewParameter('all_action', $this->getAllActionInfo($documentType, 'connecteur'));
+        $this->setViewParameter('formulaire_fields', $this->getFormsElement($documentType));
 
-        $this->{'page_title'} = "Détail du connecteur " . ($scope == 'global' ? 'global' : "d'entité") . " « $name » ($id_connecteur)";
-        $this->{'menu_gauche_select'} = "System/connecteur";
-        $this->{'template_milieu'} = "SystemConnecteurDetail";
+        $this->setViewParameter('page_title', "Détail du connecteur " . ($scope == 'global' ? 'global' : "d'entité") . " « $name » ($id_connecteur)");
+        $this->setViewParameter('menu_gauche_select', "System/connecteur");
+        $this->setViewParameter('template_milieu', "SystemConnecteurDetail");
         $this->renderDefault();
     }
 
@@ -376,12 +376,12 @@ class SystemControler extends PastellControler
      */
     public function loginPageConfigurationAction()
     {
-        $this->{'login_page_configuration'} = file_exists(LOGIN_PAGE_CONFIGURATION_LOCATION)
+        $this->setViewParameter('login_page_configuration', file_exists(LOGIN_PAGE_CONFIGURATION_LOCATION)
             ? file_get_contents(LOGIN_PAGE_CONFIGURATION_LOCATION)
-            : '';
-        $this->{'page_title'} = '';
-        $this->{'menu_gauche_select'} = 'System/loginPageConfiguration';
-        $this->{'template_milieu'} = 'LoginPageConfiguration';
+            : '');
+        $this->setViewParameter('page_title', '');
+        $this->setViewParameter('menu_gauche_select', 'System/loginPageConfiguration');
+        $this->setViewParameter('template_milieu', 'LoginPageConfiguration');
         $this->renderDefault();
     }
 
@@ -412,11 +412,11 @@ class SystemControler extends PastellControler
      */
     public function missingConnecteurAction()
     {
-        $this->{'page_title'} = 'Connecteurs manquants';
-        $this->{'template_milieu'} = 'SystemMissingConnecteur';
-        $this->{'menu_gauche_select'} = self::SYSTEM_INDEX_PAGE;
+        $this->setViewParameter('page_title', 'Connecteurs manquants');
+        $this->setViewParameter('template_milieu', 'SystemMissingConnecteur');
+        $this->setViewParameter('menu_gauche_select', self::SYSTEM_INDEX_PAGE);
 
-        $this->{'connecteur_manquant_list'} = $this->getConnecteurFactory()->getManquant();
+        $this->setViewParameter('connecteur_manquant_list', $this->getConnecteurFactory()->getManquant());
 
         $this->renderDefault();
     }
