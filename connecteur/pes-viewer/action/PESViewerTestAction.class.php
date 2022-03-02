@@ -1,6 +1,6 @@
 <?php
 
-class PESViewerTest extends ActionExecutor
+class PESViewerTestAction extends ActionExecutor
 {
     /**
      * @throws UnrecoverableException

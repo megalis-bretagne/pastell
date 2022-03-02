@@ -10,5 +10,5 @@ formulaire:
 action:
   test-generation:
     name: Tester la visionneuse
-    action-class: PESViewerTest
+    action-class: PESViewerTestAction
 
