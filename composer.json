@@ -69,6 +69,7 @@
     "phpmd/phpmd": "^2.11",
     "phpstan/phpstan": "^1.4",
     "phpunit/phpunit": "^9.5",
+    "rector/rector": "^0.12.16",
     "squizlabs/php_codesniffer": "3.*"
   },
   "config": {
@@ -92,7 +93,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Pastell\\": "src/"
+      "Pastell\\": "src/",
+      "Utils\\Rector\\": "utils/rector/src"
     },
     "classmap": [
       "action",
@@ -110,7 +112,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Pastell\\Tests\\": "tests/"
+      "Pastell\\Tests\\": "tests/",
+      "Utils\\Rector\\Tests\\": "utils/rector/tests"
     },
     "classmap": [
       "test"

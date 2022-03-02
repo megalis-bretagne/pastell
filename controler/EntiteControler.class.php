@@ -404,18 +404,6 @@ class EntiteControler extends PastellControler
         $this->renderDefault();
     }
 
-    /**
-     * @deprecated 3.0.0 use FluxControler::indexAction instead
-     *
-     * Entite/flux => Flux/index
-     *
-     */
-    public function fluxAction()
-    {
-        $id_e = $this->getGetInfo()->get('id_e');
-        $this->redirect("Flux/index?id_e=$id_e");
-    }
-
     private function isSupprimable($id_e)
     {
         if ($this->getDocumentEntite()->getNbAll($id_e)) {

@@ -28,18 +28,6 @@ class XMLFormattage
     }
 
     /**
-     * @deprecated 3.1.0 use changeFileOutputFormat instead
-     * @param $filename
-     * @return bool
-     * @throws Exception
-     */
-    public function format($filename): bool
-    {
-        $this->changeFileOutputFormat($filename);
-        return true;
-    }
-
-    /**
      * @param string $filepath
      * @return string
      * @throws UnrecoverableException
