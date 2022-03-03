@@ -26,7 +26,7 @@ class ConnecteurControlerTest extends ControlerTestCase
     {
         $this->setGetInfo(['id_e' => ""]);
         $this->connecteurControler->_beforeAction();
-        $this->assertEquals(0, $this->connecteurControler->getViewParameter()['id_e']);
+        $this->assertSame(0, $this->connecteurControler->getViewParameter()['id_e']);
     }
 
     /**
