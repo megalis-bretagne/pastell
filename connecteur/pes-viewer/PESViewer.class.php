@@ -5,32 +5,23 @@ class PESViewer extends Connecteur
     public const TEST_PES = "test_pes";
     public const CONNECTEUR_TYPE_ID = "visionneuse_pes";
 
-    /** @var DonneesFormulaire */
-    private $connecteurConfig;
-
-    private $curlWrapperFactory;
-
-    private $pes_viewer_url;
+    private DonneesFormulaire $connecteurConfig;
 
     public function __construct(
-        CurlWrapperFactory $curlWrapperFactory,
-        string $pes_viewer_url
+        private CurlWrapperFactory $curlWrapperFactory,
+        private string $pes_viewer_url,
     ) {
-        $this->curlWrapperFactory = $curlWrapperFactory;
-        $this->pes_viewer_url = $pes_viewer_url;
     }
 
-    public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire)
+    public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire): void
     {
         $this->connecteurConfig = $donneesFormulaire;
     }
 
     /**
-     * @param $pes_filepath
-     * @return mixed
      * @throws UnrecoverableException
      */
-    public function getURL($pes_filepath)
+    public function getURL(string $pes_filepath): string
     {
 
         $curlWrapper = $this->curlWrapperFactory->getInstance();
@@ -59,7 +50,7 @@ class PESViewer extends Connecteur
             $cookies = array_merge($cookies, $cookie);
         }
         foreach ($cookies as $cookie => $value) {
-            setcookie_wrapper($cookie, $value, time() + 3600, "/bl-xemwebviewer; HttpOnly");
+            setcookie_wrapper($cookie, $value, time() + 3600, "/bl-xemwebviewer", httponly: true);
         }
 
         return $location;
@@ -71,10 +62,9 @@ class PESViewer extends Connecteur
     }
 
     /**
-     * @return mixed
      * @throws UnrecoverableException
      */
-    public function test()
+    public function test(): string
     {
         return $this->getURL($this->connecteurConfig->getFilePath(self::TEST_PES));
     }
