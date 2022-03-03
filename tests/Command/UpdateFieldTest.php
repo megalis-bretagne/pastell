@@ -17,6 +17,11 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 final class UpdateFieldTest extends PastellTestCase
 {
+    /**
+     * @var CommandTester
+     */
+    private $commandTester;
+
     protected function setUp(): void
     {
         parent::setUp();
