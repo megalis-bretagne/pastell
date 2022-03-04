@@ -37,6 +37,8 @@ services:
             MYSQL_HOST_TEST: ${MYSQL_HOST_TEST:-db_test}
             LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL:-}
             LETSENCRYPT_DOMAIN: ${LETSENCRYPT_DOMAIN:-}
+            SENTRY_DSN: ${SENTRY_DSN:-}
+            SENTRY_ENVIRONMENT: ${SENTRY_ENVIRONMENT:-dev}
         ports:
             - "${WEB_HTTP_PORT:-8000}:80"
             - "${WEB_HTTPS_PORT:-8443}:443"
