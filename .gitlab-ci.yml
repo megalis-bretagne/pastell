@@ -15,7 +15,6 @@ stages:
     - quality
     - deploy
     - staging
-    - release
 
 variables:
     CONTAINER_IMAGE: "${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_NAME}"
@@ -143,48 +142,4 @@ deploy_dev:
         - scp /tmp/.env gitlab@pastell-4-0.dev.libriciel.net:/data/docker-file/
         - ssh -tt gitlab@pastell-4-0.dev.libriciel.net "docker login -u gitlab-ci-token -p '$CI_JOB_TOKEN' $CI_REGISTRY && cd /data/docker-file/ && docker-compose pull && docker-compose up -d"
         - curl -i -X POST -d "$PAYLOAD" $MATTERMOST_WEBHOOK
-
-deploy_ftp:
-    stage: staging
-    image : "$CONTAINER_IMAGE"
-    only:
-        - master
-    variables:
-      DONT_INIT_DATABASE: "true"
-      DONT_RETRIEVE_VALIDCA: "true"
-    before_script:
-        # Bug in lftp, see https://bugs.launchpad.net/ubuntu/+source/lftp/+bug/1904601
-        - apt-get -qq update && apt-get -yqq install openssh-client lftp=4.8.1-1ubuntu0.1
-        - mkdir -p ~/.ssh
-        - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-    script:
-        - cd /var/www/ && tar cvzf /tmp/pastell-master.tgz pastell
-        - lftp -p 2222 -u "pastell","${RESSOURCE_LIBRICIEL_FTP_PASSWD}"  "sftp://ressources.libriciel.fr/pastell" -e "put /tmp/pastell-master.tgz; bye"
-
-release:
-    stage: release
-    only:
-      - tags
-    image : "$CONTAINER_IMAGE"
-
-    variables:
-        TARBALL_NAME: pastell-${CI_COMMIT_REF_NAME}.tar.gz
-        PAYLOAD: "payload={\"text\": \"[Pastell] Création de la version [$CI_COMMIT_REF_NAME](https://ressources.libriciel.fr/pastell/pastell-${CI_COMMIT_REF_NAME}.tar.gz)\"}"
-        DONT_INIT_DATABASE: "true"
-        DONT_RETRIEVE_VALIDCA: "true"
-    before_script:
-        - apt-get -qq update || echo 1
-        - apt-get -yqq install openssh-client lftp=4.8.1-1ubuntu0.1
-        - mkdir -p ~/.ssh
-        - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-    script:
-        - cd /var/www/ && tar cvzf /tmp/${TARBALL_NAME} pastell
-        - cp /tmp/${TARBALL_NAME} ${CI_PROJECT_DIR}
-        - lftp -p 2222 -u "pastell","${RESSOURCE_LIBRICIEL_FTP_PASSWD}"  "sftp://ressources.libriciel.fr/pastell" -e "put /tmp/${TARBALL_NAME}; bye"
-        - curl -i -X POST -d "$PAYLOAD" $MATTERMOST_WEBHOOK
-
-    artifacts:
-        paths:
-          - ${TARBALL_NAME}
-
 
