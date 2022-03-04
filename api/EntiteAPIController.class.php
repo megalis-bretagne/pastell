@@ -71,7 +71,7 @@ class EntiteAPIController extends BaseAPIController
     {
         $entite_mere = $this->getFromRequest('entite_mere', 0);
         $type = $this->getFromRequest('type');
-        $siren = $this->getFromRequest('siren');
+        $siren = $this->getFromRequest('siren',"");
         $denomination = $this->getFromRequest('denomination');
         $centre_de_gestion = $this->getFromRequest('centre_de_gestion', 0);
         $id_e = $this->edition(null, $denomination, $siren, $type, $entite_mere, $centre_de_gestion);
@@ -127,7 +127,7 @@ class EntiteAPIController extends BaseAPIController
         }
 
         $type = $infoEntiteExistante['type'];
-        $siren = $infoEntiteExistante['siren'];
+        $siren = $infoEntiteExistante['siren'] ?? "";
         $denomination = $infoEntiteExistante['denomination'];
         if ($infoEntiteExistante['entite_mere']) {
             $entite_mere = $infoEntiteExistante['entite_mere'];
@@ -145,7 +145,6 @@ class EntiteAPIController extends BaseAPIController
 
     private function edition($id_e, $nom, $siren, $type, $entite_mere, $centre_de_gestion)
     {
-
         $this->checkDroit($entite_mere, "entite:edition");
 
         if ($id_e) {
@@ -163,13 +162,8 @@ class EntiteAPIController extends BaseAPIController
             throw new Exception("Un service doit être ataché à une entité mère (collectivité, centre de gestion ou service)");
         }
 
-        if ($type != Entite::TYPE_SERVICE) {
-            if (! $siren) {
-                throw new Exception("Le siren est obligatoire");
-            }
-            if (! $this->siren->isValid($siren)) {
-                throw new Exception("Le siren « $siren » ne semble pas valide");
-            }
+        if ($siren !== '' && ! $this->siren->isValid($siren)) {
+            throw new Exception("Le siren « $siren » ne semble pas valide");
         }
 
         $id_e = $this->entiteCreator->edit($id_e, $siren, $nom, $type, $entite_mere, $centre_de_gestion);

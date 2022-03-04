@@ -313,51 +313,6 @@ class EntiteControler extends PastellControler
         $this->renderDefault();
     }
 
-    /**
-     * @param $id_e
-     * @param $nom
-     * @param $siren
-     * @param $type
-     * @param $entite_mere
-     * @param $centre_de_gestion
-     * @return array|bool|mixed|string
-     * @throws Exception
-     */
-    public function edition($id_e, $nom, $siren, $type, $entite_mere, $centre_de_gestion)
-    {
-        //  Suppression du controle des droits. Ce controle doit être remonté sur l'appelant
-        if (!$nom) {
-            throw new Exception("Le nom est obligatoire");
-        }
-        //Ajout du controle sur le type d'entité
-        if (!$type || ($type != Entite::TYPE_SERVICE && $type != Entite::TYPE_CENTRE_DE_GESTION && $type != Entite::TYPE_COLLECTIVITE )) {
-            throw new Exception("Le type d'entité doit être renseigné. Les valeurs possibles sont collectivite, service ou centre_de_gestion.");
-        }
-
-        if ($type == Entite::TYPE_SERVICE && ! $entite_mere) {
-            throw new Exception("Un service doit être ataché à une entité mère (collectivité, centre de gestion ou service)");
-        }
-
-        if ($type != Entite::TYPE_SERVICE) {
-            if (! $siren) {
-                throw new Exception("Le siren est obligatoire");
-            }
-            // Pourquoi en modification, les sirens invalides sont acceptés ???
-
-            /** @var Siren $siren */
-            $siren = $this->getInstance(Siren::class);
-            if (! ( $siren->isValid($siren) || ($id_e && $this->getEntiteSQL()->exists($id_e)))) {
-                throw new Exception("Votre siren ne semble pas valide");
-            }
-        }
-
-        /** @var EntiteCreator $entiteCreator */
-        $entiteCreator = $this->getInstance(EntiteCreator::class);
-
-        $id_e = $entiteCreator->edit($id_e, $siren, $nom, $type, $entite_mere, $centre_de_gestion);
-        return $id_e;
-    }
-
     public function doEditionAction()
     {
         $recuperateur = $this->getPostInfo();

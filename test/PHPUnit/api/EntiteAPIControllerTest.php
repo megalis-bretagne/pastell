@@ -104,9 +104,14 @@ class EntiteAPIControllerTest extends PastellTestCase
 
     public function testCreateWithoutSiren()
     {
-        $this->expectException("Exception");
-        $this->expectExceptionMessage("Le siren est obligatoire");
-        $this->getInternalAPI()->post("/entite", array("denomination" => "toto",'type' => Entite::TYPE_COLLECTIVITE));
+        $info = $this->getInternalAPI()->post(
+            "/entite",
+            [
+                "denomination" => "toto",
+                'type' => Entite::TYPE_COLLECTIVITE
+            ]
+        );
+        $this->assertSame("", $info['siren']);
     }
 
     public function testCreateBadSiren()
