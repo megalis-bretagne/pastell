@@ -71,7 +71,7 @@ class EntiteAPIController extends BaseAPIController
     {
         $entite_mere = $this->getFromRequest('entite_mere', 0);
         $type = $this->getFromRequest('type');
-        $siren = $this->getFromRequest('siren',"");
+        $siren = $this->getFromRequest('siren', "");
         $denomination = $this->getFromRequest('denomination');
         $centre_de_gestion = $this->getFromRequest('centre_de_gestion', 0);
         $id_e = $this->edition(null, $denomination, $siren, $type, $entite_mere, $centre_de_gestion);
