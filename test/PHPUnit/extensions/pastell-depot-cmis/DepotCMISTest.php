@@ -11,6 +11,14 @@ final class DepotCMISTest extends PastellTestCase
         $connector = $this->createConnector('depot-cmis', 'test');
         /** @var DepotCMIS $class */
         $class = $this->getConnecteurFactory()->getConnecteurById($connector['id_ce']);
-        $this->assertInstanceOf(PastellExtension\PastellDepotCmis\GuzzleHttp\Client::class, $class->getClient());
+
+        /*
+         * FIXME : Guzzle5 émet un deprecated...
+         * La seule solution est d'attendre que la lib dkd/php-cmis soit mise à jour ou de passer à autre chose
+         * https://packagist.org/packages/dkd/php-cmis
+         */
+        @ $client = $class->getClient();
+
+        $this->assertInstanceOf(PastellExtension\PastellDepotCmis\GuzzleHttp\Client::class, $client);
     }
 }
