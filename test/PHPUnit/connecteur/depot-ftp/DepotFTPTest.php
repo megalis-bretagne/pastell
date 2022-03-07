@@ -13,7 +13,7 @@ class DepotFTPTest extends PastellTestCase
          * FIXME Il y a un deprecated dans nicolab/php-ftp-client qui n'est pour le moment pas pris en compte
          * https://github.com/Nicolab/php-ftp-client/pull/67
          */
-        @ $FTPClientWrapper = $this->createMock('FtpClientWrapper');
+        @ $FTPClientWrapper = $this->createMock(FtpClientWrapper::class);
 
         $FTPClientWrapper->method('login')->willReturn(true);
         $FTPClientWrapper->method('mkdir')->willReturn(true);
