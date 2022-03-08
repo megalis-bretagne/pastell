@@ -59,7 +59,7 @@
 <?php if ($certificat->isValid()) : ?>
 <tr>
 <th>Certificat</th>
-<td><a href='Utilisateur/certificat?verif_number=<?php echo $certificat->getVerifNumber() ?>'><?php echo $certificat->getFancy() ?></a></td>
+<td><a href='Utilisateur/certificat?verif_number=<?php echo $certificat->getMD5() ?>'><?php echo $certificat->getFancy() ?></a></td>
 </tr>
 <?php endif;?>
 

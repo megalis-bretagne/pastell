@@ -1,6 +1,7 @@
 <?php
 
 use Pastell\Service\Utilisateur\UtilisateurDeletionService;
+use Pastell\Utilities\Certificat;
 
 class UtilisateurAPIController extends BaseAPIController
 {

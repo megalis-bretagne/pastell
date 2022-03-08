@@ -1,6 +1,7 @@
 <?php
 
 use Pastell\Service\PasswordEntropy;
+use Pastell\Utilities\Certificat;
 
 class UtilisateurControler extends PastellControler
 {
@@ -198,7 +199,6 @@ class UtilisateurControler extends PastellControler
         }
 
         $this->setViewParameter('certificat', new Certificat($this->{'liste'}[0]['certificat']));
-        $this->setViewParameter('certificatInfo', $this->{'certificat'}->getInfo());
 
         $this->setViewParameter('page_title', "Certificat");
         $this->setViewParameter('template_milieu', "UtilisateurCertificat");

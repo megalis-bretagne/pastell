@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Utilities\Certificat;
+
 class UtilisateurSQL extends SQL
 {
     public function setNomPrenom($id_u, $nom, $prenom)
@@ -86,7 +88,7 @@ class UtilisateurSQL extends SQL
         }
 
         $certificatContent = $certificat->getContent();
-        $certificatVerifNumber = $certificat->getVerifNumber();
+        $certificatVerifNumber = $certificat->getMD5();
 
         $this->updateCertificat($id_u, $certificatContent, $certificatVerifNumber);
         return true;

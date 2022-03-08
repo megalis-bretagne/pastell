@@ -1,8 +1,10 @@
 <?php
 
+use Pastell\Utilities\Certificat;
+
 class CertificatConnexion extends SQL
 {
-    private $certificat;
+    private Certificat $certificat;
 
     public function __construct(SQLQuery $sqlQuery)
     {
@@ -29,12 +31,12 @@ class CertificatConnexion extends SQL
             return true;
         }
 
-        return $certif_verif_number == $this->certificat->getVerifNumber();
+        return $certif_verif_number == $this->certificat->getMD5();
     }
 
     public function autoConnect()
     {
-        $verifNumber = $this->certificat->getVerifNumber();
+        $verifNumber = $this->certificat->getMD5();
         if (! $verifNumber) {
             return false;
         }

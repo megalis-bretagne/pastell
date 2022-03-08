@@ -11,6 +11,9 @@
  * @var array $notification_list
  * @var array $all_module
  */
+
+use Pastell\Utilities\Certificat;
+
 ?>
 
 <a class='btn btn-link' href='Entite/utilisateur?id_e=<?php echo $info['id_e']?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des utilisateurs</a>
@@ -64,7 +67,7 @@
 <?php if ($certificat->isValid()) : ?>
 <tr>
 <th>Certificat</th>
-<td><a href='Utilisateur/certificat?verif_number=<?php echo $certificat->getVerifNumber() ?>'><?php echo $certificat->getFancy() ?></a></td>
+<td><a href='Utilisateur/certificat?verif_number=<?php echo $certificat->getMD5() ?>'><?php echo $certificat->getName() ?></a></td>
 </tr>
 <?php endif;?>
 
