@@ -34,3 +34,5 @@ a2ensite pastell-apache-config.conf
 # Create entrypoint command
 cp /var/www/pastell/ci-resources/docker-pastell-entrypoint /usr/local/bin/
 chmod a+x /usr/local/bin/docker-pastell-entrypoint
+
+bash /var/www/pastell/ci-resources/add-legacy-provider-to-openssl-v3.sh

@@ -42,4 +42,12 @@ class PKCS12Test extends PHPUnit\Framework\TestCase
         $result = $this->pkcs12->getUnencryptedKey($this->p12_file_path, $this->p12_password);
         $this->assertMatchesRegularExpression("#-----BEGIN PRIVATE KEY-----#", $result);
     }
+
+    public function testWithLegacyOpensslProvider()
+    {
+        $all = $this->pkcs12->getAll(__DIR__ . "/fixtures/demou.p12", "demou");
+        $this->assertNotFalse($all);
+        $info = openssl_x509_parse($all['cert']);
+        $this->assertSame("7e899712", $info['hash']);
+    }
 }
