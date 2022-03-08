@@ -15,6 +15,7 @@ class Journal extends SQL
     public const TEST = 11;
     public const TYPE_DOSSIER_EDITION = 12;
     public const JOURNAL = 13;
+    public const COMMANDE = 14;
 
     public const DEFAULT_LIMIT = 100;
 

@@ -9,13 +9,14 @@ use DocumentSQL;
 use DonneesFormulaireFactory;
 use Exception;
 use InvalidArgumentException;
+use Journal;
 use NotFoundException;
-use Pastell\Command\UpdateField;
+use Pastell\Command\ForceUpdateField;
 use Pastell\Service\SimpleTwigRenderer;
 use PastellTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
-final class UpdateFieldTest extends PastellTestCase
+final class ForceUpdateFieldTest extends PastellTestCase
 {
     /**
      * @var CommandTester
@@ -26,13 +27,14 @@ final class UpdateFieldTest extends PastellTestCase
     {
         parent::setUp();
 
-        $command = new UpdateField(
+        $command = new ForceUpdateField(
             $this->getObjectInstancier()->getInstance(DocumentSQL::class),
             $this->getObjectInstancier()->getInstance(DonneesFormulaireFactory::class),
             $this->getObjectInstancier()->getInstance(DocumentEntite::class),
             $this->getObjectInstancier()->getInstance(ConnecteurEntiteSQL::class),
             $this->getObjectInstancier()->getInstance(ConnecteurFactory::class),
-            $this->getObjectInstancier()->getInstance(SimpleTwigRenderer::class)
+            $this->getObjectInstancier()->getInstance(SimpleTwigRenderer::class),
+            $this->getObjectInstancier()->getInstance(Journal::class)
         );
         $this->commandTester = new CommandTester($command);
     }
@@ -101,7 +103,7 @@ final class UpdateFieldTest extends PastellTestCase
         int $documentsNumber
     ): void {
 
-        if ($scope === UpdateField::SCOPE_MODULE) {
+        if ($scope === ForceUpdateField::SCOPE_MODULE) {
             $document = $this->createDocument('test');
             $this->configureDocument($document['id_d'], ['nom' => 'UnNom']);
         } else {
@@ -117,7 +119,7 @@ final class UpdateFieldTest extends PastellTestCase
         $this->assertStringContainsString('0/' . $documentsNumber, $output);
         $this->assertStringContainsString($documentsNumber . '/' . $documentsNumber, $output);
 
-        if ($scope === UpdateField::SCOPE_MODULE) {
+        if ($scope === ForceUpdateField::SCOPE_MODULE) {
             $donneesFormulaire = $this->getObjectInstancier()
                 ->getInstance(DonneesFormulaireFactory::class)
                 ->get($document['id_d']);
@@ -129,6 +131,18 @@ final class UpdateFieldTest extends PastellTestCase
         $this->assertSame(
             $newValue,
             $donneesFormulaire->get($field)
+        );
+
+        $this->assertEquals(
+            sprintf(
+                '`app:force-update-field` Update field `%s` by twig expression `%s` for %s documents %s `%s`',
+                $field,
+                $twigExpression,
+                $documentsNumber,
+                $scope,
+                $type
+            ),
+            $this->getJournal()->getAll()[0]['message']
         );
     }
 

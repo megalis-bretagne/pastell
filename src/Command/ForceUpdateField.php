@@ -9,6 +9,7 @@ use DocumentSQL;
 use DonneesFormulaireFactory;
 use Exception;
 use InvalidArgumentException;
+use Journal;
 use Pastell\Service\SimpleTwigRenderer;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -18,7 +19,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use function implode;
 use function in_array;
 
-class UpdateField extends BaseCommand
+class ForceUpdateField extends BaseCommand
 {
     public const SCOPE_MODULE = 'module';
     private const SCOPE_CONNECTOR = 'connector';
@@ -31,6 +32,7 @@ class UpdateField extends BaseCommand
         private ConnecteurEntiteSQL $connecteurEntiteSql,
         private ConnecteurFactory $connecteurFactory,
         private SimpleTwigRenderer $simpleTwigRenderer,
+        private Journal $journal,
     ) {
         parent::__construct();
     }
@@ -38,7 +40,7 @@ class UpdateField extends BaseCommand
     protected function configure()
     {
         $this
-            ->setName('app:update-field')
+            ->setName('app:force-update-field')
             ->setDescription('Update field by twig expression for all documents connectors entity or module by type')
             ->addArgument(
                 'scope',
@@ -65,6 +67,7 @@ class UpdateField extends BaseCommand
         if (!in_array($scope, self::SCOPE_LIST, true)) {
             throw new InvalidArgumentException('Invalid scope');
         }
+
         $this->getIO()->title(
             sprintf(
                 'Start Update field `%s` by twig expression `%s` for all documents %s `%s`',
@@ -131,6 +134,23 @@ class UpdateField extends BaseCommand
                 $donneesFormulaire->setData($field, $new_value);
             }
             $this->getIO()->progressAdvance();
+        }
+        if (!$dryRun) {
+            $this->journal->addSQL(
+                Journal::COMMANDE,
+                0,
+                0,
+                '',
+                '',
+                sprintf(
+                    '`app:force-update-field` Update field `%s` by twig expression `%s` for %s documents %s `%s`',
+                    $field,
+                    $twigExpression,
+                    $documentsNumber,
+                    $scope,
+                    $type
+                )
+            );
         }
 
         $this->getIO()->progressFinish();
