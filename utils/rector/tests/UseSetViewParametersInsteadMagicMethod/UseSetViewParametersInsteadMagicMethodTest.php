@@ -1,11 +1,14 @@
 <?php
+
 declare(strict_types=1);
+
 namespace Utils\Rector\Tests\UseSetViewParametersInsteadMagicMethod;
+
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 use Iterator;
 use Symplify\SmartFileSystem\SmartFileInfo;
-final class UseSetViewParametersInsteadMagicMethodTest extends
-    AbstractRectorTestCase
+
+final class UseSetViewParametersInsteadMagicMethodTest extends AbstractRectorTestCase
 {
     /**
      * @dataProvider provideData()

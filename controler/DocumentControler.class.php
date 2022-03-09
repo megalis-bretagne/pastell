@@ -211,12 +211,12 @@ class DocumentControler extends PastellControler
         $this->setViewParameter('id_e', $id_e);
         $this->setViewParameter('id_d', $id_d);
 
-        $this->inject = [
+        $this->setViewParameter('inject', [
             'id_d' => $id_d_reponse,
             'id_e' => $id_e,
             'id_ce' => false,
             'action' => false,
-        ];
+        ]);
 
         $this->setViewParameter('template_milieu', "DocumentMailReponse");
         $this->renderDefault();

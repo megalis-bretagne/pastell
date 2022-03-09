@@ -9,4 +9,5 @@ class TotoControler extends PastellControler
     {
         $this->title = "Hello world !";
     }
+
 }
