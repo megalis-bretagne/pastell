@@ -45,8 +45,8 @@
 
 ## Corrections
 
-- Actes générique/automatique : Si l'étape de signature est faite avec un connecteur parapheur fast et que l'envoi au tdt
-  est fait par le connecteur s2low, le document envoyé n'est pas celui signé mais celui d'origine #1482
+- Actes générique/automatique : Si l'étape de signature est faite avec un connecteur parapheur fast,
+le document envoyé n'est pas celui signé mais celui d'origine #1482
 
 # [3.1.12] - 2022-02-16
 

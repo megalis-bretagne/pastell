@@ -12,6 +12,7 @@ class FastTdt extends TdtConnecteur
     public const ACTES_FLUX_CLASSIFICATION = '7-2';
 
     public const ACTE_FIELD = 'arrete';
+    public const SIGNATURE_FIELD = 'signature';
     public const ANNEXES_FIELD = 'autre_document_attache';
 
     /** @var  WebdavWrapper */
@@ -315,10 +316,15 @@ class FastTdt extends TdtConnecteur
         $tdtActe->classification = $donneesFormulaire->get('classification');
 
         $tdtActe->arrete = new Fichier();
-        $tdtActe->arrete->filename = $donneesFormulaire->getFileName(self::ACTE_FIELD);
-        $tdtActe->arrete->filepath = $donneesFormulaire->getFilePath(self::ACTE_FIELD);
-        $tdtActe->arrete->content = $donneesFormulaire->getFileContent(self::ACTE_FIELD);
-        $tdtActe->arrete->contentType = $donneesFormulaire->getContentType(self::ACTE_FIELD);
+        if ($donneesFormulaire->get('is_pades')) {
+            $field = self::SIGNATURE_FIELD;
+        } else {
+            $field = self::ACTE_FIELD;
+        }
+        $tdtActe->arrete->filename = $donneesFormulaire->getFileName($field);
+        $tdtActe->arrete->filepath = $donneesFormulaire->getFilePath($field);
+        $tdtActe->arrete->content = $donneesFormulaire->getFileContent($field);
+        $tdtActe->arrete->contentType = $donneesFormulaire->getContentType($field);
 
         $annexes = [];
         if ($donneesFormulaire->get(self::ANNEXES_FIELD)) {
