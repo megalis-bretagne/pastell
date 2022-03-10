@@ -41,6 +41,12 @@
   Il faut lancer la commande `app:force-update-field connector mailsec mailsec_reply_to "{% if mailsec_reply_to == '' %}{{mailsec_from}}{% else %}{{mailsec_reply_to}}{% endif %}"` 
   pour reporter l'ancien mailsec_from à mailsec_reply_to (s'il n'est pas déjà renseigné) #1465
 
+# [3.1.13]
+
+## Corrections
+
+- Actes générique/automatique : Si l'étape de signature est faite avec un connecteur parapheur fast et que l'envoi au tdt
+  est fait par le connecteur s2low, le document envoyé n'est pas celui signé mais celui d'origine #1482
 
 # [3.1.12] - 2022-02-16
 
