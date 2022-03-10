@@ -38,9 +38,8 @@
 <td><input class="form-control col-md-4" type="text" maxlength="128" name="denomination" id="denomination" value='<?php hecho($infoEntite['denomination']) ?>'/></td>
 </tr>
 <tr>
-<th><label for="siren">SIREN<span class='obl'>*</span></label>
-<p class='form_commentaire'>9 caractères obligatoires </p>
-<p class='form_commentaire'>obligatoire pour une collectivité</p></th>
+<th><label for="siren">SIREN</label>
+<p class='form_commentaire'>9 chiffres ou champ vide</p>
 <td>
     <input class="form-control col-md-4" type="text" maxlength="9" name="siren" id="siren" value='<?php echo $infoEntite['siren']?>'/></td>
 </tr>

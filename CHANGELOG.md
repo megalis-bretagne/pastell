@@ -4,6 +4,7 @@
 
 - Les extensions doivent charger leurs fichiers PHP dans un fichier `autoload.php` à la racine de l'application ou via
   composer avec un fichier `vendor/autoload.php`
+- Le champ SIREN n'est plus obligatoire sur la définition d'une entité #1009 
 
 ## Suppressions
 
