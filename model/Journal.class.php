@@ -271,7 +271,8 @@ class Journal extends SQL
                         "Programmation d'un traitement par lot",
                         "Test",
                         "Action sur un type de dossier personnalisé",
-                        "Action sur le journal"
+                        "Action sur le journal",
+                        "Action par commande"
         );
         return $type_string[$type];
     }

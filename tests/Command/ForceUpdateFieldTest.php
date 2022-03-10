@@ -15,6 +15,7 @@ use Pastell\Command\ForceUpdateField;
 use Pastell\Service\SimpleTwigRenderer;
 use PastellTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
+use UnrecoverableException;
 
 final class ForceUpdateFieldTest extends PastellTestCase
 {
@@ -143,6 +144,27 @@ final class ForceUpdateFieldTest extends PastellTestCase
                 $type
             ),
             $this->getJournal()->getAll()[0]['message']
+        );
+    }
+
+    public function testCommandInvalidTwig(): void
+    {
+        $this->createConnector('test', 'Connecteur Test entité');
+        $this->expectException(UnrecoverableException::class);
+        $this->expectExceptionMessage('Erreur de syntaxe sur le template twig ligne 1<br />
+Message d\'erreur : Unexpected token "end of template" of value "".<br />
+<br />
+<br />
+<br />
+<b>1. {% if champs2 == "" %</b><em>^^^ Unexpected token "end of template" of value "".</em><br />
+<br />
+');
+        $this->executeCommand(
+            'connector',
+            'test',
+            'champs1',
+            '{% if champs2 == "" %',
+            'yes'
         );
     }
 
