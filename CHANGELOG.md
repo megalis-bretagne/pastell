@@ -1,3 +1,10 @@
+# [3.1.13]
+
+## Corrections
+
+- Actes générique/automatique : Si l'étape de signature est faite avec un connecteur parapheur fast,
+le document envoyé n'est pas celui signé mais celui d'origine #1482
+
 # [3.1.12] - 2022-02-16
 
 ***Cette version nécessite une mise à jour du générateur SEDA en 0.8.2***
