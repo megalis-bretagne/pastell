@@ -1,12 +1,12 @@
 ## Description
 
-Ex : Les bannettes doivent devenir noires quand le projet est vérouillé
+Ex : Le fichier envoyé au tdt doit être le document signé
 Si possible mettre un imprime écran. (cliquer sur attach a file)
 
 ## Url(s) de l'erreur :
 
-- [Edition d'un projet](http://web-delib.local/deliberation/:id)
-- [Autres](http://web-delib.local/:path)
+- [Edition d'un projet](https://pastell.recette.libriciel.net/)
+- [Autres](https://pastell.recette.libriciel.net/:path)
 
 ## Liste des actions menant au bug
 
