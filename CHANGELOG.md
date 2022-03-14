@@ -5,6 +5,10 @@
 - Actes générique/automatique : Si l'étape de signature est faite avec un connecteur parapheur fast,
 le document envoyé n'est pas celui signé mais celui d'origine #1482
 
+## Évolutions
+
+- Le glaneur permet l'extration des données d'un PES avec le flux Hélios automatique en appelant l'action importation #711
+
 # [3.1.12] - 2022-02-16
 
 ***Cette version nécessite une mise à jour du générateur SEDA en 0.8.2***
