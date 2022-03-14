@@ -5,8 +5,7 @@ Si possible mettre un imprime écran. (cliquer sur attach a file)
 
 ## Url(s) de l'erreur :
 
-- [Edition d'un projet](https://pastell.recette.libriciel.net/)
-- [Autres](https://pastell.recette.libriciel.net/:path)
+- [Pastell](https://pastell.recette.libriciel.net/:path)
 
 ## Liste des actions menant au bug
 
@@ -32,4 +31,4 @@ Lister ici le(s) message(s) d'erreur(s) afficher à l'utilisateur ou des logs
 
 
 /label ~"Type:Bug"  ~"Origine: Ticket client" ~"Priorité::Haute" 
-/cc @epommateau @iruiz @mreyrolles @rbarlet   
+/cc @epommateau @iruiz @mreyrolle @rbarlet   
