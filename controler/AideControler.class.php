@@ -7,8 +7,8 @@ class AideControler extends PastellControler
     public function _beforeAction()
     {
         parent::_beforeAction();
-        $this->{'pages_without_left_menu'} = true;
-        $this->{'dont_display_breacrumbs'} = true;
+        $this->setViewParameter('pages_without_left_menu', true);
+        $this->setViewParameter('dont_display_breacrumbs', true);
     }
 
     /**
@@ -16,8 +16,8 @@ class AideControler extends PastellControler
      */
     public function indexAction()
     {
-        $this->{'page_title'} = "Aide";
-        $this->{'template_milieu'} = "AideIndex";
+        $this->setViewParameter('page_title', "Aide");
+        $this->setViewParameter('template_milieu', "AideIndex");
         $this->renderDefault();
     }
 
@@ -26,10 +26,10 @@ class AideControler extends PastellControler
      */
     public function RGPDAction()
     {
-        $this->{'page_title'} = "RGPD";
-        $this->{'template_milieu'} = "AideRGPD";
+        $this->setViewParameter('page_title', "RGPD");
+        $this->setViewParameter('template_milieu', "AideRGPD");
         $file = $this->getObjectInstancier()->getInstance('rgpd_page_path');
-        $this->{'rgpd_content'} = $this->parsedown($file);
+        $this->setViewParameter('rgpd_content', $this->parsedown($file));
         $this->renderDefault();
     }
 
@@ -54,14 +54,14 @@ class AideControler extends PastellControler
      */
     public function AProposAction()
     {
-        $this->{'page_title'} = "À propos";
-        $this->{'template_milieu'} = "AideAPropos";
-        $this->{'changelog'} = $this->parsedown(__DIR__ . "/../CHANGELOG.md");
-        $this->{'manifest_info'} = $this->getManifestFactory()->getPastellManifest()->getInfo();
+        $this->setViewParameter('page_title', "À propos");
+        $this->setViewParameter('template_milieu', "AideAPropos");
+        $this->setViewParameter('changelog', $this->parsedown(__DIR__ . "/../CHANGELOG.md"));
+        $this->setViewParameter('manifest_info', $this->getManifestFactory()->getPastellManifest()->getInfo());
 
         /** @var PackService $packService */
         $packService = $this->getInstance(PackService::class);
-        $this->{'listPack'} = $packService->getListPack();
+        $this->setViewParameter('listPack', $packService->getListPack());
 
         $this->renderDefault();
     }

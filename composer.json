@@ -47,7 +47,6 @@
     "phpseclib/phpseclib": "^2.0",
     "psr/http-client": "^1.0",
     "psr/http-factory": "^1.0",
-    "rector/rector": "^0.12.17",
     "sabre/dav": "^4.3",
     "sentry/sdk": "^3.1",
     "softcreatr/jsonpath": "^0.8",
@@ -69,6 +68,7 @@
     "phpmd/phpmd": "^2.11",
     "phpstan/phpstan": "^1.4",
     "phpunit/phpunit": "^9.5",
+    "rector/rector": "^0.12.17",
     "squizlabs/php_codesniffer": "3.*"
   },
   "config": {
@@ -92,7 +92,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Pastell\\": "src/"
+      "Pastell\\": "src/",
+      "Utils\\Rector\\": "utils/rector/src"
     },
     "classmap": [
       "action",
@@ -110,7 +111,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Pastell\\Tests\\": "tests/"
+      "Pastell\\Tests\\": "tests/",
+      "Utils\\Rector\\Tests\\": "utils/rector/tests"
     },
     "classmap": [
       "test"

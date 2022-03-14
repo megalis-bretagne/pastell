@@ -23,10 +23,10 @@ class PastellControler extends Controler
 
     protected function setDroitLectureOnConnecteur(int $id_e): void
     {
-        $this->{'droit_lecture_on_connecteur'} = $this->getDroitService()->hasDroitConnecteurLecture(
+        $this->setViewParameter('droit_lecture_on_connecteur', $this->getDroitService()->hasDroitConnecteurLecture(
             $id_e,
             $this->getId_u()
-        );
+        ));
     }
 
     /**
@@ -104,8 +104,8 @@ class PastellControler extends Controler
     {
         $listeCollectivite = $this->getRoleUtilisateur()->getEntiteWithSomeDroit($this->getId_u());
         if (! $listeCollectivite) {
-            $this->{'navigation'} = [];
-            $this->{'navigation_url'} = $url;
+            $this->setViewParameter('navigation', []);
+            $this->setViewParameter('navigation_url', $url);
             return;
         }
 
@@ -153,19 +153,19 @@ class PastellControler extends Controler
             ];
         }
 
-        $this->{'navigation'} = $navigation;
-        $this->{'navigation_url'} = $url;
+        $this->setViewParameter('navigation', $navigation);
+        $this->setViewParameter('navigation_url', $url);
     }
 
 
 
     public function render($template)
     {
-        $this->{'sqlQuery'} = $this->getSQLQuery();
-        $this->{'objectInstancier'} = $this->getObjectInstancier();
-        $this->{'manifest_info'} = $this->getManifestFactory()
+        $this->setViewParameter('sqlQuery', $this->getSQLQuery());
+        $this->setViewParameter('objectInstancier', $this->getObjectInstancier());
+        $this->setViewParameter('manifest_info', $this->getManifestFactory()
             ->getPastellManifest()
-            ->getInfo();
+            ->getInfo());
         parent::render($template);
     }
 
@@ -175,27 +175,27 @@ class PastellControler extends Controler
     public function renderDefault()
     {
         $this->setBreadcrumbs();
-        $this->{'all_module'} = $this->getAllModule();
-        $this->{'authentification'} = $this->getInstance(Authentification::class);
-        $this->{'roleUtilisateur'} = $this->getRoleUtilisateur();
-        $this->{'sqlQuery'} = $this->getSQLQuery();
-        $this->{'objectInstancier'} = $this->getObjectInstancier();
-        $this->{'manifest_info'} = $this->getManifestFactory()->getPastellManifest()->getInfo();
+        $this->setViewParameter('all_module', $this->getAllModule());
+        $this->setViewParameter('authentification', $this->getInstance(Authentification::class));
+        $this->setViewParameter('roleUtilisateur', $this->getRoleUtilisateur());
+        $this->setViewParameter('sqlQuery', $this->getSQLQuery());
+        $this->setViewParameter('objectInstancier', $this->getObjectInstancier());
+        $this->setViewParameter('manifest_info', $this->getManifestFactory()->getPastellManifest()->getInfo());
 
-        $this->{'timer'} = $this->getInstance(PastellTimer::class);
+        $this->setViewParameter('timer', $this->getInstance(PastellTimer::class));
         if (! $this->isViewParameter('menu_gauche_template')) {
-            $this->{'menu_gauche_template'} = "DocumentMenuGauche";
-            $this->{'menu_gauche_select'} = "";
+            $this->setViewParameter('menu_gauche_template', "DocumentMenuGauche");
+            $this->setViewParameter('menu_gauche_select', "");
             if ($this->id_e_menu) {
-                $this->{'menu_gauche_link'} = "Document/list?id_e=" . $this->{'id_e_menu'};
+                $this->setViewParameter('menu_gauche_link', "Document/list?id_e=" . $this->{'id_e_menu'});
             } elseif (isset($this->getViewParameter()['id_e'])) {
-                    $this->{'menu_gauche_link'} = "Document/list?id_e=" . $this->{'id_e'};
+                    $this->setViewParameter('menu_gauche_link', "Document/list?id_e=" . $this->{'id_e'});
             } else {
-                $this->{'menu_gauche_link'} = "Document/list?id_e=0";
+                $this->setViewParameter('menu_gauche_link', "Document/list?id_e=0");
             }
         }
         if (! $this->isViewParameter('navigation_url')) {
-            $this->{'navigation_url'} = "Document/index";
+            $this->setViewParameter('navigation_url', "Document/index");
         }
 
         /** @var DaemonManager $daemonManager */
@@ -204,14 +204,14 @@ class PastellControler extends Controler
         if (
                 $this->getRoleUtilisateur()->hasDroit($this->getId_u(), 'system:lecture', 0)
         ) {
-            $this->{'nb_job_lock'} = $this->getObjectInstancier()
+            $this->setViewParameter('nb_job_lock', $this->getObjectInstancier()
                 ->getInstance(JobQueueSQL::class)
-                ->getNbLockSinceOneHour();
+                ->getNbLockSinceOneHour());
 
             if ($daemonManager->status() == DaemonManager::IS_STOPPED) {
-                $this->{'daemon_stopped_warning'} = true;
+                $this->setViewParameter('daemon_stopped_warning', true);
             } else {
-                $this->{'daemon_stopped_warning'} = false;
+                $this->setViewParameter('daemon_stopped_warning', false);
             }
         }
 
@@ -222,20 +222,19 @@ class PastellControler extends Controler
     {
         if (! $this->isViewParameter('id_e_menu')) {
             $recuperateur = $this->getGetInfo();
-            $this->{'id_e_menu'} = $recuperateur->getInt('id_e');
-            $this->{'type_e_menu'} = get_hecho(
+            $this->setViewParameter('id_e_menu', $recuperateur->getInt('id_e'));
+            $this->setViewParameter('type_e_menu', get_hecho(
                 $recuperateur->get(
                     'type',
                     $this->isViewParameter('type_e_menu') ? $this->{'type_e_menu'} : ''
                 )
-            );
+            ));
         }
 
         $listeCollectivite = $this->getRoleUtilisateur()->getEntite($this->getId_u(), "entite:lecture");
 
-        $this->{'display_entite_racine'} =
-            $this->{'id_e_menu'} != 0
-            && (count($listeCollectivite) > 1 || (isset($listeCollectivite[0]) && $listeCollectivite[0] == 0));
+        $this->setViewParameter('display_entite_racine', $this->{'id_e_menu'} != 0
+        && (count($listeCollectivite) > 1 || (isset($listeCollectivite[0]) && $listeCollectivite[0] == 0)));
     }
 
     /**

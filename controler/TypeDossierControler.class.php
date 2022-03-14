@@ -13,24 +13,24 @@ class TypeDossierControler extends PastellControler
     public function _beforeAction()
     {
         parent::_beforeAction();
-        $this->{'menu_gauche_template'} = "ConfigurationMenuGauche";
-        $this->{'menu_gauche_select'} = "TypeDossier/list";
+        $this->setViewParameter('menu_gauche_template', "ConfigurationMenuGauche");
+        $this->setViewParameter('menu_gauche_select', "TypeDossier/list");
         $this->verifDroit(0, "system:lecture");
-        $this->{'dont_display_breacrumbs'} = true;
+        $this->setViewParameter('dont_display_breacrumbs', true);
     }
 
     private function commonEdition()
     {
         $this->verifDroit(0, "system:edition");
-        $this->{'id_t'} = $this->getPostOrGetInfo()->getInt('id_t');
-        $this->{'type_de_dossier_info'} = $this->getTypeDossierSQL()->getInfo($this->{'id_t'});
-        $this->{'type_dossier_hash'} = $this->getTypeDossierActionService()->getLastHash($this->{'id_t'});
-        $this->{'typeDossierProperties'} = $this->getTypeDossierManager()->getTypeDossierProperties($this->{'id_t'});
-        $this->{'page_title'} = "Type de dossier personnalisé {$this->{'type_de_dossier_info'}['id_type_dossier']}";
-        $this->{'id_type_dossier'} = $this->{'type_de_dossier_info'}['id_type_dossier'];
+        $this->setViewParameter('id_t', $this->getPostOrGetInfo()->getInt('id_t'));
+        $this->setViewParameter('type_de_dossier_info', $this->getTypeDossierSQL()->getInfo($this->{'id_t'}));
+        $this->setViewParameter('type_dossier_hash', $this->getTypeDossierActionService()->getLastHash($this->{'id_t'}));
+        $this->setViewParameter('typeDossierProperties', $this->getTypeDossierManager()->getTypeDossierProperties($this->{'id_t'}));
+        $this->setViewParameter('page_title', "Type de dossier personnalisé {$this->{'type_de_dossier_info'}['id_type_dossier']}");
+        $this->setViewParameter('id_type_dossier', $this->{'type_de_dossier_info'}['id_type_dossier']);
 
         $typeDossierEtape = $this->getObjectInstancier()->getInstance(TypeDossierEtapeManager::class);
-        $this->{'all_etape_type'} = $typeDossierEtape->getAllType();
+        $this->setViewParameter('all_etape_type', $typeDossierEtape->getAllType());
     }
 
     /**
@@ -86,11 +86,11 @@ class TypeDossierControler extends PastellControler
      */
     public function listAction()
     {
-        $this->{'type_dossier_list'} = $this->getTypeDossierSQL()->getAll();
-        $this->{'droit_edition'} = $this->hasDroit(0, "system:edition");
-        $this->{'page_title'} = "Types de dossier personnalisés";
-        $this->{'menu_gauche_select'} = "TypeDossier/list";
-        $this->{'template_milieu'} = "TypeDossierList";
+        $this->setViewParameter('type_dossier_list', $this->getTypeDossierSQL()->getAll());
+        $this->setViewParameter('droit_edition', $this->hasDroit(0, "system:edition"));
+        $this->setViewParameter('page_title', "Types de dossier personnalisés");
+        $this->setViewParameter('menu_gauche_select', "TypeDossier/list");
+        $this->setViewParameter('template_milieu', "TypeDossierList");
         $this->renderDefault();
     }
 
@@ -103,7 +103,7 @@ class TypeDossierControler extends PastellControler
     {
         $this->verifDroit(0, "system:edition");
         $id_t = $this->getPostOrGetInfo()->getInt('id_t');
-        $this->{'flux_info'} = $this->getTypeDossierSQL()->getInfo($id_t);
+        $this->setViewParameter('flux_info', $this->getTypeDossierSQL()->getInfo($id_t));
 
         if ($this->{'flux_info'}['id_type_dossier']) {
             $id_type_dossier = $this->{'flux_info'}['id_type_dossier'];
@@ -116,9 +116,9 @@ class TypeDossierControler extends PastellControler
             }
         }
 
-        $this->{'page_title'} = "Création d'un type de dossier personnalisé";
-        $this->{'menu_gauche_select'} = "TypeDossier/list";
-        $this->{'template_milieu'} = "TypeDossierEdition";
+        $this->setViewParameter('page_title', "Création d'un type de dossier personnalisé");
+        $this->setViewParameter('menu_gauche_select', "TypeDossier/list");
+        $this->setViewParameter('template_milieu', "TypeDossierEdition");
         $this->renderDefault();
     }
 
@@ -182,7 +182,7 @@ class TypeDossierControler extends PastellControler
         $id_type_dossier = $this->{'type_de_dossier_info'}['id_type_dossier'];
         $this->verifyTypeDossierIsUnused($id_type_dossier);
 
-        $this->{'template_milieu'} = "TypeDossierDelete";
+        $this->setViewParameter('template_milieu', "TypeDossierDelete");
         $this->renderDefault();
     }
 
@@ -221,8 +221,8 @@ class TypeDossierControler extends PastellControler
     public function detailAction()
     {
         $this->commonEdition();
-        $this->{'csrfToken'} = $this->getObjectInstancier()->getInstance(CSRFToken::class);
-        $this->{'template_milieu'} = "TypeDossierDetail";
+        $this->setViewParameter('csrfToken', $this->getObjectInstancier()->getInstance(CSRFToken::class));
+        $this->setViewParameter('template_milieu', "TypeDossierDetail");
         $this->renderDefault();
     }
 
@@ -232,14 +232,14 @@ class TypeDossierControler extends PastellControler
     public function etatAction()
     {
         $this->verifDroit(0, "system:edition");
-        $this->{'id_t'} = $this->getPostOrGetInfo()->getInt('id_t');
-        $this->{'page_title'} = "États du type de dossier personnalisé {$this->getTypeDossierSQL()->getInfo($this->{'id_t'})['id_type_dossier']}";
-        $this->{'offset'} = $this->getPostOrGetInfo()->get('offset', 0);
-        $this->{'limit'} = 10;
-        $this->{'count'} = $this->getTypeDossierActionService()->countById($this->{'id_t'});
-        $this->{'typeDossierAction'} = $this->getTypeDossierActionService()->getById($this->{'id_t'}, $this->{'offset'}, $this->{'limit'});
+        $this->setViewParameter('id_t', $this->getPostOrGetInfo()->getInt('id_t'));
+        $this->setViewParameter('page_title', "États du type de dossier personnalisé {$this->getTypeDossierSQL()->getInfo($this->{'id_t'})['id_type_dossier']}");
+        $this->setViewParameter('offset', $this->getPostOrGetInfo()->get('offset', 0));
+        $this->setViewParameter('limit', 10);
+        $this->setViewParameter('count', $this->getTypeDossierActionService()->countById($this->{'id_t'}));
+        $this->setViewParameter('typeDossierAction', $this->getTypeDossierActionService()->getById($this->{'id_t'}, $this->{'offset'}, $this->{'limit'}));
 
-        $this->{'template_milieu'} = "TypeDossierEtat";
+        $this->setViewParameter('template_milieu', "TypeDossierEtat");
         $this->renderDefault();
     }
 
@@ -249,7 +249,7 @@ class TypeDossierControler extends PastellControler
     public function editionLibelleAction()
     {
         $this->commonEdition();
-        $this->{'template_milieu'} = "TypeDossierEditionLibelle";
+        $this->setViewParameter('template_milieu', "TypeDossierEditionLibelle");
         $this->renderDefault();
     }
 
@@ -283,8 +283,8 @@ class TypeDossierControler extends PastellControler
     {
         $this->commonEdition();
         $element_id = $this->getPostOrGetInfo()->get('element_id');
-        $this->{'formulaireElement'} = $this->getTypeDossierService()->getFormulaireElement($this->{'id_t'}, $element_id);
-        $this->{'template_milieu'} = "TypeDossierEditionElement";
+        $this->setViewParameter('formulaireElement', $this->getTypeDossierService()->getFormulaireElement($this->{'id_t'}, $element_id));
+        $this->setViewParameter('template_milieu', "TypeDossierEditionElement");
         $this->renderDefault();
     }
 
@@ -339,14 +339,14 @@ class TypeDossierControler extends PastellControler
         $this->commonEdition();
         $num_etape = $this->getPostOrGetInfo()->get('num_etape', 0);
 
-        $this->{'file_field_list'} = $this->getTypeDossierService()->getFieldWithType($this->{'id_t'}, 'file');
-        $this->{'multi_file_field_list'} = $this->getTypeDossierService()->getFieldWithType($this->{'id_t'}, 'multi_file');
-        $this->{'text_field_list'} = $this->getTypeDossierService()->getFieldWithType($this->{'id_t'}, 'text');
+        $this->setViewParameter('file_field_list', $this->getTypeDossierService()->getFieldWithType($this->{'id_t'}, 'file'));
+        $this->setViewParameter('multi_file_field_list', $this->getTypeDossierService()->getFieldWithType($this->{'id_t'}, 'multi_file'));
+        $this->setViewParameter('text_field_list', $this->getTypeDossierService()->getFieldWithType($this->{'id_t'}, 'text'));
 
-        $this->{'etapeInfo'} = $this->getTypeDossierService()->getEtapeInfo($this->{'id_t'}, $num_etape);
-        $this->{'formulaire_etape'} = $this->getTypeDossierEtapeDefinition()->getFormulaireConfigurationEtape($this->{'etapeInfo'}->type);
+        $this->setViewParameter('etapeInfo', $this->getTypeDossierService()->getEtapeInfo($this->{'id_t'}, $num_etape));
+        $this->setViewParameter('formulaire_etape', $this->getTypeDossierEtapeDefinition()->getFormulaireConfigurationEtape($this->{'etapeInfo'}->type));
 
-        $this->{'template_milieu'} = "TypeDossierEditionEtape";
+        $this->setViewParameter('template_milieu', "TypeDossierEditionEtape");
         $this->renderDefault();
     }
 
@@ -430,8 +430,8 @@ class TypeDossierControler extends PastellControler
     public function newEtapeAction()
     {
         $this->commonEdition();
-        $this->{'template_milieu'} = "TypeDossierNewEtape";
-        $this->{'etapeInfo'} = $this->getTypeDossierService()->getEtapeInfo($this->{'id_t'}, "new");
+        $this->setViewParameter('template_milieu', "TypeDossierNewEtape");
+        $this->setViewParameter('etapeInfo', $this->getTypeDossierService()->getEtapeInfo($this->{'id_t'}, "new"));
         $this->renderDefault();
     }
 
@@ -480,9 +480,9 @@ class TypeDossierControler extends PastellControler
     public function importAction()
     {
         $this->verifDroit(0, "system:edition");
-        $this->{'page_title'} = "Import d'un type de dossier personnalisé";
-        $this->{'menu_gauche_select'} = "TypeDossier/list";
-        $this->{'template_milieu'} = "TypeDossierImport";
+        $this->setViewParameter('page_title', "Import d'un type de dossier personnalisé");
+        $this->setViewParameter('menu_gauche_select', "TypeDossier/list");
+        $this->setViewParameter('template_milieu', "TypeDossierImport");
         $this->renderDefault();
     }
 

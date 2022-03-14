@@ -7,9 +7,9 @@ class DaemonControler extends PastellControler
     public function _beforeAction()
     {
         parent::_beforeAction();
-        $this->{'menu_gauche_template'} = "DaemonMenuGauche";
-        $this->{'menu_gauche_select'} = "Daemon/index";
-        $this->{'dont_display_breacrumbs'} = true;
+        $this->setViewParameter('menu_gauche_template', "DaemonMenuGauche");
+        $this->setViewParameter('menu_gauche_select', "Daemon/index");
+        $this->setViewParameter('dont_display_breacrumbs', true);
     }
 
     /**
@@ -45,20 +45,20 @@ class DaemonControler extends PastellControler
     public function indexAction()
     {
         $this->indexData();
-        $this->{'page_url'} = "index";
-        $this->{'template_milieu'} = "DaemonIndex";
-        $this->{'page_title'} = "Gestionnaire de tâches";
+        $this->setViewParameter('page_url', "index");
+        $this->setViewParameter('template_milieu', "DaemonIndex");
+        $this->setViewParameter('page_title', "Gestionnaire de tâches");
         $this->renderDefault();
     }
 
     public function verrouAction()
     {
         $this->verifDroit(0, "system:lecture");
-        $this->{'job_queue_info_list'} = $this->getJobQueueSQL()->getCountJobByVerrouAndEtat();
-        $this->{'menu_gauche_select'} = "Daemon/verrou";
-        $this->{'template_milieu'} = "DaemonVerrou";
-        $this->{'page_title'} = "Gestionnaire de tâches : Files d'attente";
-        $this->{'return_url'} = "Daemon/verrou";
+        $this->setViewParameter('job_queue_info_list', $this->getJobQueueSQL()->getCountJobByVerrouAndEtat());
+        $this->setViewParameter('menu_gauche_select', "Daemon/verrou");
+        $this->setViewParameter('template_milieu', "DaemonVerrou");
+        $this->setViewParameter('page_title', "Gestionnaire de tâches : Files d'attente");
+        $this->setViewParameter('return_url', "Daemon/verrou");
 
         $this->renderDefault();
     }
@@ -73,13 +73,13 @@ class DaemonControler extends PastellControler
     private function indexData()
     {
         $this->verifDroit(0, "system:lecture");
-        $this->{'nb_worker_actif'} = $this->getWorkerSQL()->getNbActif();
-        $this->{'job_stat_info'} = $this->getJobQueueSQL()->getStatInfo();
-        $this->{'daemon_pid'} = $this->getDaemonManager()->getDaemonPID();
-        $this->{'pid_file'} = PID_FILE;
-        $this->{'sub_title'} = "Liste de tous les travaux";
-        $this->{'return_url'} = urlencode("Daemon/index");
-        $this->{'job_list'} = $this->getWorkerSQL()->getJobListWithWorker();
+        $this->setViewParameter('nb_worker_actif', $this->getWorkerSQL()->getNbActif());
+        $this->setViewParameter('job_stat_info', $this->getJobQueueSQL()->getStatInfo());
+        $this->setViewParameter('daemon_pid', $this->getDaemonManager()->getDaemonPID());
+        $this->setViewParameter('pid_file', PID_FILE);
+        $this->setViewParameter('sub_title', "Liste de tous les travaux");
+        $this->setViewParameter('return_url', urlencode("Daemon/index"));
+        $this->setViewParameter('job_list', $this->getWorkerSQL()->getJobListWithWorker());
     }
 
     public function daemonStartAction()
@@ -186,18 +186,18 @@ class DaemonControler extends PastellControler
 
     public function jobAction()
     {
-        $this->{'menu_gauche_select'} = "Daemon/job";
+        $this->setViewParameter('menu_gauche_select', "Daemon/job");
 
         $this->verifDroit(0, "system:edition");
-        $this->{'template_milieu'} = "DaemonJob";
-        $this->{'page_title'} = "Gestionnaire de tâches";
+        $this->setViewParameter('template_milieu', "DaemonJob");
+        $this->setViewParameter('page_title', "Gestionnaire de tâches");
         $recuperateur = new Recuperateur($_GET);
         $filtre = $recuperateur->get('filtre', '');
         if ($filtre) {
-            $this->{'page_url'} = "job?filtre=$filtre";
-            $this->{'menu_gauche_select'} = "Daemon/job?filtre=$filtre";
+            $this->setViewParameter('page_url', "job?filtre=$filtre");
+            $this->setViewParameter('menu_gauche_select', "Daemon/job?filtre=$filtre");
         } else {
-            $this->{'page_url'} = "job";
+            $this->setViewParameter('page_url', "job");
         }
 
         $sub_title_array = [
@@ -206,16 +206,16 @@ class DaemonControler extends PastellControler
                 'wait' => 'Liste des travaux en retard'
             ];
 
-        $this->{'sub_title'} = $sub_title_array[$filtre] ?? "Liste de tous les travaux";
+        $this->setViewParameter('sub_title', $sub_title_array[$filtre] ?? "Liste de tous les travaux");
 
-        $this->{'offset'} = $recuperateur->getInt('offset', 0);
-        $this->{'limit'} = self::NB_JOB_DISPLAYING;
-        $this->{'filtre'} = $filtre;
+        $this->setViewParameter('offset', $recuperateur->getInt('offset', 0));
+        $this->setViewParameter('limit', self::NB_JOB_DISPLAYING);
+        $this->setViewParameter('filtre', $filtre);
 
-        $this->{'return_url'} = urlencode("Daemon/job?filtre=$filtre&offset=" . $this->{'offset'});
+        $this->setViewParameter('return_url', urlencode("Daemon/job?filtre=$filtre&offset=" . $this->{'offset'}));
 
-        $this->{'count'} = $this->getWorkerSQL()->getNbJob($filtre);
-        $this->{'job_list'} = $this->getWorkerSQL()->getJobListWithWorker($this->{'offset'}, $this->{'limit'}, $filtre);
+        $this->setViewParameter('count', $this->getWorkerSQL()->getNbJob($filtre));
+        $this->setViewParameter('job_list', $this->getWorkerSQL()->getJobListWithWorker($this->{'offset'}, $this->{'limit'}, $filtre));
 
         $this->renderDefault();
     }
@@ -225,12 +225,12 @@ class DaemonControler extends PastellControler
         $this->verifDroit(0, "system:edition");
         $id_job = $this->getGetInfo()->get("id_job");
 
-        $this->{'page_title'} = "Détail du travail #{$id_job}";
+        $this->setViewParameter('page_title', "Détail du travail #{$id_job}");
         /** @var JobQueueSQL $jobQueueSQL */
         $jobQueueSQL = $this->{'JobQueueSQL'};
-        $this->{'job_info'} = $jobQueueSQL->getJobInfo($id_job);
-        $this->{'return_url'} = "Daemon/detail?id_job=$id_job";
-        $this->{'template_milieu'} = "DaemonDetail";
+        $this->setViewParameter('job_info', $jobQueueSQL->getJobInfo($id_job));
+        $this->setViewParameter('return_url', "Daemon/detail?id_job=$id_job");
+        $this->setViewParameter('template_milieu', "DaemonDetail");
         $this->renderDefault();
     }
 
@@ -238,11 +238,11 @@ class DaemonControler extends PastellControler
     {
         $this->verifDroit(0, "system:edition");
 
-        $this->{'page_title'} = "Configuration de la fréquence des connecteurs";
-        $this->{'template_milieu'} = "DaemonConfig";
-        $this->{'menu_gauche_select'} = "Daemon/config";
-        $this->{'nouveau_bouton_url'} = ['Ajouter' => "Daemon/editFrequence"];
-        $this->{'connecteur_frequence_list'} = $this->getConnecteurFrequenceSQL()->getAll();
+        $this->setViewParameter('page_title', "Configuration de la fréquence des connecteurs");
+        $this->setViewParameter('template_milieu', "DaemonConfig");
+        $this->setViewParameter('menu_gauche_select', "Daemon/config");
+        $this->setViewParameter('nouveau_bouton_url', ['Ajouter' => "Daemon/editFrequence"]);
+        $this->setViewParameter('connecteur_frequence_list', $this->getConnecteurFrequenceSQL()->getAll());
         $this->renderDefault();
     }
 
@@ -252,12 +252,12 @@ class DaemonControler extends PastellControler
         $id_cf = $this->getGetInfo()->getInt('id_cf');
         $connecteurFrequence = $this->getConnecteurFrequenceSQL()->getConnecteurFrequence($id_cf) ?: new ConnecteurFrequence();
 
-        $this->{'connecteurFrequence'} = $connecteurFrequence;
+        $this->setViewParameter('connecteurFrequence', $connecteurFrequence);
 
         $verbe = $connecteurFrequence->id_cf ? "Modification" : "Ajout";
-        $this->{'page_title'} = "$verbe d'une fréquence de connecteur";
-        $this->{'template_milieu'} = "DaemmonEditFrequence";
-        $this->{'menu_gauche_select'} = "Daemon/config";
+        $this->setViewParameter('page_title', "$verbe d'une fréquence de connecteur");
+        $this->setViewParameter('template_milieu', "DaemmonEditFrequence");
+        $this->setViewParameter('menu_gauche_select', "Daemon/config");
         $this->renderDefault();
     }
 
@@ -329,10 +329,10 @@ class DaemonControler extends PastellControler
         $this->verifDroit(0, "system:edition");
         $id_cf = $this->getGetInfo()->getInt('id_cf');
         $connecteurFrequence = $this->verifConnecteur($id_cf);
-        $this->{'connecteurFrequence'} = $connecteurFrequence;
-        $this->{'page_title'} = "Détail sur la fréquence d'un connecteur";
-        $this->{'template_milieu'} = "DaemonFrequenceDetail";
-        $this->{'menu_gauche_select'} = "Daemon/config";
+        $this->setViewParameter('connecteurFrequence', $connecteurFrequence);
+        $this->setViewParameter('page_title', "Détail sur la fréquence d'un connecteur");
+        $this->setViewParameter('template_milieu', "DaemonFrequenceDetail");
+        $this->setViewParameter('menu_gauche_select', "Daemon/config");
         $this->renderDefault();
     }
     private function verifConnecteur($id_cf)

@@ -13,15 +13,15 @@ class JournalControler extends PastellControler
         if ($id_d) {
             $document_info = $this->getDocument()->getInfo($id_d);
             $type = $document_info['type'];
-            $this->{'type_e_menu'} = $type;
+            $this->setViewParameter('type_e_menu', $type);
         }
 
 
         $this->setNavigationInfo($id_e, "Journal/index?type=$type");
-        $this->{'menu_gauche_link'} = "Journal/index?id_e={$id_e}";
+        $this->setViewParameter('menu_gauche_link', "Journal/index?id_e={$id_e}");
 
         if (! $id_d && ! $type) {
-            $this->{'pages_without_left_menu'} = true;
+            $this->setViewParameter('pages_without_left_menu', true);
         }
     }
 
@@ -29,72 +29,72 @@ class JournalControler extends PastellControler
     {
 
         $recuperateur = new Recuperateur($_REQUEST);
-        $this->{'id_e'} = $recuperateur->getInt('id_e', 0);
-        $this->{'type'} = $recuperateur->get('type');
-        $this->{'id_d'} = $recuperateur->get('id_d');
-        $this->{'id_u'} = $recuperateur->get('id_u');
+        $this->setViewParameter('id_e', $recuperateur->getInt('id_e', 0));
+        $this->setViewParameter('type', $recuperateur->get('type'));
+        $this->setViewParameter('id_d', $recuperateur->get('id_d'));
+        $this->setViewParameter('id_u', $recuperateur->get('id_u'));
 
         $this->verifDroit($this->{'id_e'}, 'journal:lecture');
 
-        $this->{'entite_info'} = $this->getEntiteSQL()->getInfo($this->{'id_e'});
-        $this->{'utilisateur_info'} = $this->getUtilisateur()->getInfo($this->{'id_u'});
-        $this->{'document_info'} = $this->getDocument()->getInfo($this->{'id_d'});
+        $this->setViewParameter('entite_info', $this->getEntiteSQL()->getInfo($this->{'id_e'}));
+        $this->setViewParameter('utilisateur_info', $this->getUtilisateur()->getInfo($this->{'id_u'}));
+        $this->setViewParameter('document_info', $this->getDocument()->getInfo($this->{'id_d'}));
 
 
-        $this->{'recherche'} = $recuperateur->get('recherche');
-        $this->{'date_debut'} = $recuperateur->get('date_debut', date("Y-m-d"));
-        $this->{'date_fin'} = $recuperateur->get('date_fin', date("Y-m-d"));
+        $this->setViewParameter('recherche', $recuperateur->get('recherche'));
+        $this->setViewParameter('date_debut', $recuperateur->get('date_debut', date("Y-m-d")));
+        $this->setViewParameter('date_fin', $recuperateur->get('date_fin', date("Y-m-d")));
 
-        $this->{'page_title'} = "Journal des événements - Export";
-        $this->{'template_milieu'} = "JournalExport";
+        $this->setViewParameter('page_title', "Journal des événements - Export");
+        $this->setViewParameter('template_milieu', "JournalExport");
         $this->renderDefault();
     }
 
     public function detailAction()
     {
         $recuperateur = new Recuperateur($_GET);
-        $this->{'id_j'} = $recuperateur->getInt('id_j', 0);
-        $this->{'offset'} = $recuperateur->getInt('offset', 0);
-        $this->{'id_e'} = $recuperateur->getInt('id_e', 0);
-        $this->{'type'} = $recuperateur->get('type');
-        $this->{'id_d'} = $recuperateur->get('id_d');
+        $this->setViewParameter('id_j', $recuperateur->getInt('id_j', 0));
+        $this->setViewParameter('offset', $recuperateur->getInt('offset', 0));
+        $this->setViewParameter('id_e', $recuperateur->getInt('id_e', 0));
+        $this->setViewParameter('type', $recuperateur->get('type'));
+        $this->setViewParameter('id_d', $recuperateur->get('id_d'));
 
-        $this->{'info'} = $this->getJournal()->getAllInfo($this->{'id_j'});
+        $this->setViewParameter('info', $this->getJournal()->getAllInfo($this->{'id_j'}));
         $this->verifDroit($this->{'info'}['id_e'], "journal:lecture");
 
         /** @var OpensslTSWrapper $opensslTSWrapper */
         $opensslTSWrapper = $this->getInstance(OpensslTSWrapper::class);
 
-        $this->{'preuve_txt'} = $opensslTSWrapper->getTimestampReplyString($this->{'info'}['preuve']);
+        $this->setViewParameter('preuve_txt', $opensslTSWrapper->getTimestampReplyString($this->{'info'}['preuve']));
 
         /** @var HorodateurPastell $horodateur */
         $horodateur = $this->getConnecteurFactory()->getGlobalConnecteur('horodateur');
         if ($horodateur) {
             try {
                     $horodateur->verify($this->{'info'}['message_horodate'], $this->{'info'}['preuve']);
-                    $this->{'preuve_is_ok'} = true;
+                    $this->setViewParameter('preuve_is_ok', true);
             } catch (Exception $e) {
-                $this->{'preuve_is_ok'} = false;
-                $this->{'preuve_error'} = $e->getMessage();
+                $this->setViewParameter('preuve_is_ok', false);
+                $this->setViewParameter('preuve_error', $e->getMessage());
             }
             if ($this->{'preuve_is_ok'} == false) {
                 try {
                     //OK, c'est pas terrible, mais ca permet d'éviter la gestiond d'une constante supplémentaire
                     //pour noter la position du journal au moment de la bascule iso-8859-1 => utf-8
                     $horodateur->verify(utf8_decode($this->{'info'}['message_horodate']), $this->{'info'}['preuve']);
-                    $this->{'preuve_is_ok'} = true;
+                    $this->setViewParameter('preuve_is_ok', true);
                 } catch (Exception $e) {
-                    $this->{'preuve_is_ok'} = false;
-                    $this->{'preuve_error'} = $e->getMessage();
+                    $this->setViewParameter('preuve_is_ok', false);
+                    $this->setViewParameter('preuve_error', $e->getMessage());
                 }
             }
         } else {
-            $this->{'preuve_is_ok'} = false;
-            $this->{'preuve_error'} = "Aucun horodateur n'est configuré";
+            $this->setViewParameter('preuve_is_ok', false);
+            $this->setViewParameter('preuve_error', "Aucun horodateur n'est configuré");
         }
 
-        $this->{'page_title'} = "Événement numéro {$this->{'id_j'}}";
-        $this->{'template_milieu'} = "JournalDetail";
+        $this->setViewParameter('page_title', "Événement numéro {$this->{'id_j'}}");
+        $this->setViewParameter('template_milieu', "JournalDetail");
         $this->renderDefault();
     }
 
@@ -103,13 +103,13 @@ class JournalControler extends PastellControler
 
         $recuperateur = new Recuperateur($_GET);
         $id_e = $recuperateur->getInt('id_e', 0);
-        $this->{'offset'} = $recuperateur->getInt('offset', 0);
-        $this->{'type'} = $recuperateur->get('type');
-        $this->{'id_d'} = $recuperateur->get('id_d');
-        $this->{'id_u'} = $recuperateur->get('id_u');
-        $this->{'recherche'} = $recuperateur->get('recherche');
-        $this->{'date_debut'} = $recuperateur->get('date_debut');
-        $this->{'date_fin'} = $recuperateur->get('date_fin');
+        $this->setViewParameter('offset', $recuperateur->getInt('offset', 0));
+        $this->setViewParameter('type', $recuperateur->get('type'));
+        $this->setViewParameter('id_d', $recuperateur->get('id_d'));
+        $this->setViewParameter('id_u', $recuperateur->get('id_u'));
+        $this->setViewParameter('recherche', $recuperateur->get('recherche'));
+        $this->setViewParameter('date_debut', $recuperateur->get('date_debut'));
+        $this->setViewParameter('date_fin', $recuperateur->get('date_fin'));
 
         $liste_collectivite = $this->getRoleUtilisateur()->getEntite($this->getId_u(), 'journal:lecture');
 
@@ -122,12 +122,12 @@ class JournalControler extends PastellControler
             $id_e = $liste_collectivite[0];
         }
         $this->verifDroit($id_e, "journal:lecture");
-        $this->{'id_e'} = $id_e;
+        $this->setViewParameter('id_e', $id_e);
 
         $infoEntite = $this->getEntiteSQL()->getInfo($this->{'id_e'});
 
 
-        $this->{'count'} = $this->getJournal()->countAll(
+        $this->setViewParameter('count', $this->getJournal()->countAll(
             $this->{'id_e'},
             $this->{'type'},
             $this->{'id_d'},
@@ -135,7 +135,7 @@ class JournalControler extends PastellControler
             $this->{'recherche'},
             $this->{'date_debut'},
             $this->{'date_fin'}
-        );
+        ));
 
         $page_title = "Journal des événements";
         if ($this->{'id_e'}) {
@@ -153,15 +153,15 @@ class JournalControler extends PastellControler
             $page_title .= " - " . $infoUtilisateur['prenom'] . " " . $infoUtilisateur['nom'];
         }
 
-        $this->{'limit'} = 20;
-        $this->{'all'} = $this->getJournal()->getAll($this->{'id_e'}, $this->{'type'}, $this->{'id_d'}, $this->{'id_u'}, $this->{'offset'}, $this->{'limit'}, $this->{'recherche'}, $this->{'date_debut'}, $this->{'date_fin'}) ;
-        $this->{'liste_collectivite'} = $liste_collectivite;
+        $this->setViewParameter('limit', 20);
+        $this->setViewParameter('all', $this->getJournal()->getAll($this->{'id_e'}, $this->{'type'}, $this->{'id_d'}, $this->{'id_u'}, $this->{'offset'}, $this->{'limit'}, $this->{'recherche'}, $this->{'date_debut'}, $this->{'date_fin'})) ;
+        $this->setViewParameter('liste_collectivite', $liste_collectivite);
 
         $this->setNavigationInfo($id_e, "Journal/index?a=a");
 
-        $this->{'infoEntite'} = $infoEntite;
-        $this->{'page_title'} = $page_title;
-        $this->{'template_milieu'} = "JournalIndex";
+        $this->setViewParameter('infoEntite', $infoEntite);
+        $this->setViewParameter('page_title', $page_title);
+        $this->setViewParameter('template_milieu', "JournalIndex");
         $this->renderDefault();
     }
 

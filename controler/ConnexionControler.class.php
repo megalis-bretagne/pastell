@@ -154,15 +154,15 @@ class ConnexionControler extends PastellControler
 
     public function adminAction()
     {
-        $this->{'message_connexion'} = false;
+        $this->setViewParameter('message_connexion', false);
 
-        $this->{'login_page_configuration'} = file_exists(LOGIN_PAGE_CONFIGURATION_LOCATION)
+        $this->setViewParameter('login_page_configuration', file_exists(LOGIN_PAGE_CONFIGURATION_LOCATION)
             ? file_get_contents(LOGIN_PAGE_CONFIGURATION_LOCATION)
-            : '';
-        $this->{'page'} = "connexion";
-        $this->{'page_title'} = "Connexion";
-        $this->{'template_milieu'} = "ConnexionIndex";
-        $this->{'request_uri'} = $this->getGetInfo()->get('request_uri');
+            : '');
+        $this->setViewParameter('page', "connexion");
+        $this->setViewParameter('page_title', "Connexion");
+        $this->setViewParameter('template_milieu', "ConnexionIndex");
+        $this->setViewParameter('request_uri', $this->getGetInfo()->get('request_uri'));
         $this->render('PageConnexion');
     }
 
@@ -179,13 +179,13 @@ class ConnexionControler extends PastellControler
             $this->redirect($this->getGetInfo()->get('request_uri'));
         }
 
-        $this->{'login_page_configuration'} = file_exists(LOGIN_PAGE_CONFIGURATION_LOCATION)
+        $this->setViewParameter('login_page_configuration', file_exists(LOGIN_PAGE_CONFIGURATION_LOCATION)
             ? file_get_contents(LOGIN_PAGE_CONFIGURATION_LOCATION)
-            : '';
-        $this->{'page'} = "connexion";
-        $this->{'page_title'} = "Connexion";
-        $this->{'template_milieu'} = "ConnexionIndex";
-        $this->{'request_uri'} = $this->getGetInfo()->get('request_uri');
+            : '');
+        $this->setViewParameter('page', "connexion");
+        $this->setViewParameter('page_title', "Connexion");
+        $this->setViewParameter('template_milieu', "ConnexionIndex");
+        $this->setViewParameter('request_uri', $this->getGetInfo()->get('request_uri'));
         /** @var LastMessage $lastMessage */
         $lastMessage = $this->getObjectInstancier()->getInstance(LastError::class);
         $lastMessage->setCssClass('alert-connexion');
@@ -202,34 +202,34 @@ class ConnexionControler extends PastellControler
         }
 
 
-        $this->{'config'} = $config;
-        $this->{'login_page_configuration'} = file_exists(LOGIN_PAGE_CONFIGURATION_LOCATION)
+        $this->setViewParameter('config', $config);
+        $this->setViewParameter('login_page_configuration', file_exists(LOGIN_PAGE_CONFIGURATION_LOCATION)
             ? file_get_contents(LOGIN_PAGE_CONFIGURATION_LOCATION)
-            : '';
-        $this->{'page'} = "oublie_identifiant";
-        $this->{'page_title'} = "Oubli des identifiants";
-        $this->{'template_milieu'} = "ConnexionOublieIdentifiant";
+            : '');
+        $this->setViewParameter('page', "oublie_identifiant");
+        $this->setViewParameter('page_title', "Oubli des identifiants");
+        $this->setViewParameter('template_milieu', "ConnexionOublieIdentifiant");
         $this->render("PageConnexion");
     }
 
     public function changementMdpAction()
     {
         $recuperateur = new Recuperateur($_GET);
-        $this->{'login_page_configuration'} = file_exists(LOGIN_PAGE_CONFIGURATION_LOCATION)
+        $this->setViewParameter('login_page_configuration', file_exists(LOGIN_PAGE_CONFIGURATION_LOCATION)
             ? file_get_contents(LOGIN_PAGE_CONFIGURATION_LOCATION)
-            : '';
-        $this->{'mail_verif_password'} = $recuperateur->get('mail_verif');
-        $this->{'page'} = "oublie_identifiant";
-        $this->{'page_title'} = "Oubli des identifiants";
-        $this->{'template_milieu'} = "ConnexionChangementMdp";
+            : '');
+        $this->setViewParameter('mail_verif_password', $recuperateur->get('mail_verif'));
+        $this->setViewParameter('page', "oublie_identifiant");
+        $this->setViewParameter('page_title', "Oubli des identifiants");
+        $this->setViewParameter('template_milieu', "ConnexionChangementMdp");
         $this->getId_uFromTokenOrFailed($this->{'mail_verif_password'});
         $this->render("PageConnexion");
     }
 
     public function noDroitAction()
     {
-        $this->{'page_title'} = "Pas de droit";
-        $this->{'template_milieu'} = "ConnexionNoDroit";
+        $this->setViewParameter('page_title', "Pas de droit");
+        $this->setViewParameter('template_milieu', "ConnexionNoDroit");
         $this->renderDefault();
     }
 
@@ -241,12 +241,12 @@ class ConnexionControler extends PastellControler
         /** @var AuthenticationConnecteur $authenticationConnecteur */
         $authenticationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur('Authentification');
 
-        $this->{'page_title'} = "Erreur lors de l'authentification";
-        $this->{'template_milieu'} = "ExternalError";
-        $this->{'externalSystem'} = "système d'authentification inconnu";
+        $this->setViewParameter('page_title', "Erreur lors de l'authentification");
+        $this->setViewParameter('template_milieu', "ExternalError");
+        $this->setViewParameter('externalSystem', "système d'authentification inconnu");
 
         if ($authenticationConnecteur) {
-            $this->{'externalSystem'} = $authenticationConnecteur->getExternalSystemName();
+            $this->setViewParameter('externalSystem', $authenticationConnecteur->getExternalSystemName());
         }
         $this->renderDefault();
     }
