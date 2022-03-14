@@ -74,4 +74,4 @@ Le développeur peut indiquer un statut bloqué si celui trouve une incohérence
 - Ville [Ticket](lien vers le ticket)
 
 /label ~"Type:Evolution" ~"Origine: Ticket client" ~"Origine: Ticket client"  ~"Priorité::Basse"
-/cc @epommateau @iruiz @mreyrolles @rbarlet   
+/cc @epommateau @iruiz @mreyrolle @rbarlet   
