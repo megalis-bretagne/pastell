@@ -135,7 +135,7 @@ abstract class DepotConnecteur extends GEDConnecteur
      * @throws UnrecoverableException
      * @throws Exception
      */
-    public function send(DonneesFormulaire $donneesFormulaire)
+    public function send(DonneesFormulaire $donneesFormulaire): array
     {
         $this->file_to_save = [];
         $this->createTmpDir();

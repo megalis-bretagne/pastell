@@ -153,17 +153,6 @@ iparapheur_retour: Archive',
         return $this->databaseConnection;
     }
 
-    /**
-     * @param array $extension_path_list
-     * @return array
-     * @deprecated 3.0 use ExtensionsLoader class instead
-     */
-    protected function loadExtension(array $extension_path_list)
-    {
-        $extensionLoader = $this->getObjectInstancier()->getInstance(ExtensionLoader::class);
-        return $extensionLoader->loadExtension($extension_path_list);
-    }
-
     protected function setUp(): void
     {
         parent::setUp();

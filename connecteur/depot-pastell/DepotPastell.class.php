@@ -22,11 +22,9 @@ class DepotPastell extends GEDConnecteur
     }
 
     /**
-     * @param DonneesFormulaire $donneesFormulaire
-     * @return array|void
      * @throws UnrecoverableException
      */
-    public function send(DonneesFormulaire $donneesFormulaire)
+    public function send(DonneesFormulaire $donneesFormulaire): array
     {
         list($metadata,$files) = $this->getMetadataAndFiles($donneesFormulaire);
 

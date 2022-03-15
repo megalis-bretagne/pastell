@@ -192,19 +192,6 @@ abstract class ActionExecutor
     }
 
     /**
-     * @deprecated
-     * @return Entite
-     */
-    public function getEntite()
-    {
-        static $entite;
-        if (empty($entite[$this->id_e])) {
-            $entite[$this->id_e] = new Entite($this->getSQLQuery(), $this->id_e);
-        }
-        return $entite[$this->id_e];
-    }
-
-    /**
      * @return EntiteSQL
      */
     public function getEntiteSQL()
