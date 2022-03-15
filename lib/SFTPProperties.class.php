@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 class SFTPProperties
 {
-    public $host = "localhost";
-    public $port = 22;
-    public $timeout = 10;
+    public string $host = 'localhost';
+    public int $port = 22;
+    public int $timeout = 10;
 
-    public $login;
-    public $password;
+    public string $login;
+    public string $password;
 
-    public $verify_fingerprint = true;
-    public $fingerprint;
+    public bool $verifyFingerprint = true;
+    public string $fingerprint;
 }
