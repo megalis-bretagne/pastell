@@ -27,7 +27,6 @@ apt-get install -y --no-install-recommends \
     php-mbstring \
     php-mysql \
     php-redis \
-    php-ssh2 \
     php-soap \
     php-xml \
     php-zip \

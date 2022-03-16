@@ -22,7 +22,6 @@
     "ext-redis": "^5.3",
     "ext-simplexml": "*",
     "ext-soap": "*",
-    "ext-ssh2": "*",
     "ext-xsl": "*",
     "ext-zend-opcache": "*",
     "ext-zip": "^1.19",

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "400ed5e319119deeaa620a52678d13bc",
+    "content-hash": "0792ed562dee7af5b48544ba7a747252",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -8907,7 +8907,6 @@
         "ext-redis": "^5.3",
         "ext-simplexml": "*",
         "ext-soap": "*",
-        "ext-ssh2": "*",
         "ext-xsl": "*",
         "ext-zend-opcache": "*",
         "ext-zip": "^1.19"

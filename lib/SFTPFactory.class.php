@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 class SFTPFactory
 {
     public const DEFAULT_HOST = 'localhost';
     public const DEFAULT_PORT = 22;
 
-    public function getInstance(SFTPProperties $sftpProperties)
+    public function getInstance(SFTPProperties $sftpProperties): SFTP
     {
         $netSFTP = new phpseclib\Net\SFTP(
             $sftpProperties->host ?: self::DEFAULT_HOST,

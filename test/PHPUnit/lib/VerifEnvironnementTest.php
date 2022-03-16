@@ -19,7 +19,6 @@ class VerifEnvironnementTest extends PHPUnit\Framework\TestCase
                 'pdo_mysql' => true,
                 'redis' => true,
                 'soap' => true,
-                'ssh2' => true,
                 'zip' => true,
                 'Zend OPcache' => true,
                 'posix' => true,

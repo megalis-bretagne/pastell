@@ -80,6 +80,7 @@ class GlaneurSFTPTest extends PastellTestCase
             ->method('get')
             ->willReturnCallback(function ($a, $b) {
                 copy($this->tmp_folder . "/vide1.pdf", $b);
+                return true;
             });
 
         $sftpFactory = $this->getMockBuilder(SFTPFactory::class)->disableOriginalConstructor()->getMock();
@@ -147,6 +148,7 @@ class GlaneurSFTPTest extends PastellTestCase
             ->method('get')
             ->willReturnCallback(function ($a, $b) {
                 copy($a, $b);
+                return true;
             });
 
 

@@ -33,7 +33,7 @@ class DepotSFTP extends DepotConnecteur
         $sftpProperties->port = $donneesFormulaire->get(self::DEPOT_SFTP_PORT) ?: self::DEPOT_SFTP_PORT_DEFAULT;
         $sftpProperties->login = $donneesFormulaire->get(self::DEPOT_SFTP_LOGIN);
         $sftpProperties->password = $donneesFormulaire->get(self::DEPOT_SFTP_PASSWORD);
-        $sftpProperties->verify_fingerprint = true;
+        $sftpProperties->verifyFingerprint = true;
         $sftpProperties->fingerprint = $donneesFormulaire->get(self::DEPOT_SFTP_FINGERPRINT);
 
         $this->sftp = $this->sftpFactory->getInstance($sftpProperties);
