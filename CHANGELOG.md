@@ -33,8 +33,9 @@
   TedetisVerifReponsePref, FournisseurCommandeEnvoiGED, FournisseurCommandeEnvoiSAE, GEDEnvoiDocumentASigner
   IParapheurEnvoieDocumentASigner, IParapheurRecupDocumentASigner, HeliosEnvoieSAEChange, HeliosGEDEnvoi, HeliosGeneriqueSAEValidation
   HeliosGeneriqueSAEVerif, IparapheurEnvoieHelios 
-- Suppresion de la propriété Controler::lastError
-
+- Suppression de la propriété Controler::lastError
+- La récupération des acquittements du flux pes-marché est standardisé avec les autres flux (modification du nom du fichier de l'acquittement)
+- 
 
 # [3.1.12] - 2022-02-16
 

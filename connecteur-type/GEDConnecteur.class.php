@@ -8,12 +8,12 @@ abstract class GEDConnecteur extends Connecteur
 
     private array $gedDocumentsId;
 
+    abstract public function send(DonneesFormulaire $donneesFormulaire): array;
+
     public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire)
     {
         $this->connecteurConfig = $donneesFormulaire;
     }
-
-    abstract public function send(DonneesFormulaire $donneesFormulaire): array;
 
     public function getGedDocumentsId(): array
     {
