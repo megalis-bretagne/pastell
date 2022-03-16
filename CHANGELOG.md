@@ -23,6 +23,8 @@
 - Suppression de l'authentification OASIS/OPENID #1459
 - Suppression de LastUpstart UPSTART_TIME_SEND_WARNING - Suppression de `batch/action-automatique.php` et `installation/pastell-upstart.conf` #1461
 - Suppression de la constante MODE_MUTUALISE. Lors de l'envoi d'un mail sécurisé, mailsec_from prend la valeur de PLATEFORME_MAIL #1465
+- Suppression de la classe SSH2 et de la dépendance à l'extension php ssh2
+
 
 # [3.1.12] - 2022-02-16
 
