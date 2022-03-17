@@ -160,20 +160,6 @@ date_default_timezone_set(TIMEZONE);
 
 setlocale(LC_TIME, "fr_FR.UTF-8");
 
-
-if (!defined("OCRE_RECEIVE_PASSPHRASE")) {
-    define("OCRE_RECEIVE_PASSPHRASE", "changme");
-}
-
-if (!defined("OCRE_INPUT_DIRECTORY")) {
-    define("OCRE_INPUT_DIRECTORY", "/data/workspace/ocre/");
-}
-
-/* Après NB_ENTITE_BEFORE_COLLAPSE entités, on utilise un composant de choix javascript */
-if (!defined("NB_ENTITE_BEFORE_COLLAPSE")) {
-    define("NB_ENTITE_BEFORE_COLLAPSE", 5);
-}
-
 /* Par défaut on utilise pas de serveur redis */
 if (!defined("REDIS_SERVER")) {
     define("REDIS_SERVER", "");
@@ -270,8 +256,7 @@ if (!defined("LIST_PACK")) {
 }
 
 if (!defined("PASSWORD_MIN_ENTROPY")) {
-    // Pour assurer la compatibilité de la version 3.1.X
     // Voir https://www.ssi.gouv.fr/administration/precautions-elementaires/calculer-la-force-dun-mot-de-passe/
     // pour fixer l'entropie
-    define("PASSWORD_MIN_ENTROPY", 0);
+    define("PASSWORD_MIN_ENTROPY", 80);
 }
