@@ -24,7 +24,18 @@
 - Suppression de LastUpstart UPSTART_TIME_SEND_WARNING - Suppression de `batch/action-automatique.php` et `installation/pastell-upstart.conf` #1461
 - Suppression de la constante MODE_MUTUALISE. Lors de l'envoi d'un mail sécurisé, mailsec_from prend la valeur de PLATEFORME_MAIL #1465
 - Suppression de la classe SSH2 et de la dépendance à l'extension php ssh2
-
+- Suppression des fonctions GEDConnecteur::{send, sendDonneesFormulaire, createFolder, addDocument, getRootFolder, listFolder, getSanitizedFolder, getSanitizedFilename, forceAddDocument, forceCreateFolder}
+- Suppression de la fonction PastellTestCase::loadExtension
+- Suppression de la fonction SAEConnecteur::getLastErrorCode
+- Suppression du script create-default-horodatage.php
+- Suppression des classes PDFGeneriqueSendGED, PDFGeneriqueSAEVerif, PDFGeneriqueSAEValidation, PDFGeneriqueReceptionIParapheur, PDFGeneriqueEnvoieIParapheur
+  EnvoieSAEChange, IParapheurEnvoie, SAEVerif, TedetisAnnulation, TedetisRecupAnnulation, TedetisSendReponsePref
+  TedetisVerifReponsePref, FournisseurCommandeEnvoiGED, FournisseurCommandeEnvoiSAE, GEDEnvoiDocumentASigner
+  IParapheurEnvoieDocumentASigner, IParapheurRecupDocumentASigner, HeliosEnvoieSAEChange, HeliosGEDEnvoi, HeliosGeneriqueSAEValidation
+  HeliosGeneriqueSAEVerif, IparapheurEnvoieHelios 
+- Suppression de la propriété Controler::lastError
+- La récupération des acquittements du flux pes-marché est standardisé avec les autres flux (modification du nom du fichier de l'acquittement)
+- 
 
 # [3.1.12] - 2022-02-16
 

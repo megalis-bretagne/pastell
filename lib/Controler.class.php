@@ -5,13 +5,6 @@ class Controler
     private $objectInstancier;
     private $viewParameter;
 
-    /**
-     * @var string
-     * @deprecated Use getLastError()/setLastError() instead
-     * Je pense que c'est pas utilisé vu qu'on passe par les objet LastError et LastMessage
-     */
-    protected $lastError;
-
     private $dont_redirect = false;
 
     private $server_info;

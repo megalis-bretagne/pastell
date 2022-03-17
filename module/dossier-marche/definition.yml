@@ -221,8 +221,9 @@ action:
             last-action:
                 send-archive
                 verif-sae-erreur
+        action-class: StandardAction
         connecteur-type: SAE
-        action-class: SAEVerif
+        connecteur-type-action: SAEVerifier
 
     verif-sae-erreur:
         name: Erreur lors de la récupération de l'AR
@@ -242,8 +243,9 @@ action:
             last-action:
                 ar-recu-sae
                 validation-sae-erreur
+        action-class: StandardAction
         connecteur-type: SAE
-        action-class: SAEValidation
+        connecteur-type-action: SAEValider
 
     validation-sae-erreur:
         name: Erreur lors de la vérification de la validité du transfert

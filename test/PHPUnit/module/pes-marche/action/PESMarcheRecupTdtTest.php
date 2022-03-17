@@ -53,6 +53,7 @@ class PESMarcheRecupTdtTest extends PastellMarcheTestCase
         $this->assertTrue(
             $this->triggerActionOnDocument($id_d, 'verif-tdt')
         );
+
         $this->assertLastMessage("La transaction est dans l'état : Transmis (3) ");
     }
 }

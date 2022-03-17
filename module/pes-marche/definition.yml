@@ -332,8 +332,15 @@ action:
                 send-tdt
                 tdt-error
             droit_id_u: 'pes-marche:edition'
-        action-class: TedetisRecupHelios
-
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdTRecupHelios
+        connecteur-type-mapping:
+            pes_tedetis_transaction_id: tedetis_transaction_id
+            pes_acquit: fichier_reponse
+            pes_etat_ack: etat_ack
+            pes_has_reponse: has_reponse
+            info-tdt: info-tdt
 
     acquiter-tdt:
         name: Le fichier PES a été acquitté
@@ -491,7 +498,7 @@ action:
         no-workflow: true
         rule:
             role_id_e: no-role
-        action-class: HeliosEnvoieSAEChange
+        action-class: HeliosGeneriqueCheminementChange
 
     fichier_pes_change:
         name: Modification fichier_pes

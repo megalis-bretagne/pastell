@@ -10,7 +10,7 @@ class Envoyer extends ActionExecutor
             return false;
         }
 
-        $infoEntite = $this->getEntite()->getInfo();
+        $infoEntite = $this->getEntiteSQL()->getInfo($this->id_e);
         $emmeteurName = $infoEntite['denomination'];
 
 

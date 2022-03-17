@@ -11,11 +11,6 @@ class SAEConnecteurTest extends PastellTestCase
         return $this->getMockForAbstractClass(SAEConnecteur::class);
     }
 
-    public function testGetLastErrorCode()
-    {
-        $this->assertNull($this->getSAEConnecteur()->getLastErrorCode());
-    }
-
     public function bordereauTransfertIdProvider()
     {
         return [

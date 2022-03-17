@@ -34,7 +34,7 @@ abstract class SAEConnecteur extends Connecteur
     public function getTransferId($bordereau)
     {
         $xml = simplexml_load_string($bordereau);
-        if (! empty($xml->{'TransferIdentifier'})) {
+        if (!empty($xml->{'TransferIdentifier'})) {
             return strval($xml->{'TransferIdentifier'});
         } else {
             return strval($xml->{'MessageIdentifier'});
@@ -44,10 +44,10 @@ abstract class SAEConnecteur extends Connecteur
     abstract public function sendArchive($bordereauSEDA, $archivePath, $file_type = "TARGZ", $archive_file_name = "archive.tar.gz");
 
     /**
-     * @throws UnrecoverableException
-     * @throws Exception
      * @param $id_transfert
      * @return mixed
+     * @throws UnrecoverableException
+     * @throws Exception
      * @deprecated 3.1.5 use self::getAck instead
      */
     abstract public function getAcuseReception($id_transfert);
@@ -61,10 +61,10 @@ abstract class SAEConnecteur extends Connecteur
     abstract public function getAck(string $transfert_id, string $originating_agency_id): string;
 
     /**
-     * @throws UnrecoverableException
-     * @throws Exception
      * @param $id_transfer
      * @return mixed
+     * @throws UnrecoverableException
+     * @throws Exception
      * @deprecated 3.1.5 use self::getAtr instead
      */
     abstract public function getReply($id_transfer);
@@ -81,12 +81,4 @@ abstract class SAEConnecteur extends Connecteur
     abstract public function getURL($cote);
 
     abstract public function getErrorString($number);
-
-    /**
-     * @deprecated PA 3.0
-     */
-    public function getLastErrorCode()
-    {
-        return null;
-    }
 }

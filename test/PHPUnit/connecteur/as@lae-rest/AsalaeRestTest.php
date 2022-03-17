@@ -186,15 +186,6 @@ class AsalaeRestTest extends PastellTestCase
         );
     }
 
-    /**
-     * @throws Exception
-     */
-    public function testGetLastErrorCode()
-    {
-        $asalaeRest = $this->getAsalaeRest('"ok"');
-        $this->assertNull($asalaeRest->getLastErrorCode());
-    }
-
     public function testGetURL()
     {
         $asalaeRest = $this->getAsalaeRest('"ok"');
