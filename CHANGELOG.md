@@ -5,7 +5,7 @@
 - Les extensions doivent charger leurs fichiers PHP dans un fichier `autoload.php` à la racine de l'application ou via
   composer avec un fichier `vendor/autoload.php`
 - Le champ SIREN n'est plus obligatoire sur la définition d'une entité #1009 
-- La constante PASSWORD_MIN_ENTROPY passe par défaut à 80 suivant les recommendations de l'ANSSI
+- La constante PASSWORD_MIN_ENTROPY passe par défaut à 80 suivant les recommandations de l'ANSSI
 
 ## Suppressions
 
