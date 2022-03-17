@@ -5,6 +5,7 @@
 - Les extensions doivent charger leurs fichiers PHP dans un fichier `autoload.php` à la racine de l'application ou via
   composer avec un fichier `vendor/autoload.php`
 - Le champ SIREN n'est plus obligatoire sur la définition d'une entité #1009 
+- La constante PASSWORD_MIN_ENTROPY passe par défaut à 80 suivant les recommendations de l'ANSSI
 
 ## Suppressions
 
@@ -13,6 +14,8 @@
 - Suppression de la directive de configuration LIBERSIGN_INSTALLER, Libersign est fourni via un container docker
 - Suppression de documentations et de scripts obsolètes concernant les versions de Pastell inférieures à 4.0.0
 - Suppression du chargement automatique des fichiers PHP des extensions
+- Suppression du endpoint divers/receive-ocre.php et des constantes OCRE_RECEIVE_PASSPHRASE et OCRE_INPUT_DIRECTORY
+- Suppression de la constante NB_ENTITE_BEFORE_COLLAPSE
 
 ## Retraits d'éléments dépréciés
 
