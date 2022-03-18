@@ -96,6 +96,14 @@ class DocumentSQL extends SQL
         return $this->query($sql, $type);
     }
 
+    public function getAllIdByType($type)
+    {
+        $sql = "SELECT document.id_d, document_entite.id_e FROM document " .
+            " JOIN document_entite ON document.id_d=document_entite.id_d " .
+            " WHERE document.type=? ORDER BY document.creation";
+        return $this->query($sql, $type);
+    }
+
     public function fixModule($old_flux_name, $new_flux_name)
     {
         self::clearCache();
