@@ -206,11 +206,12 @@ class ActionExecutorFactory
         $action_class_name = $this->getActionClassName($documentType, $action_name);
 
         $this->loadDocumentActionFile($infoDocument['type'], $action_class_name);
+        /** @var ChoiceActionExecutor $actionClass */
         $actionClass = $this->getInstance($action_class_name, $id_e, $id_u, $action_name);
         $actionClass->setDocumentId($infoDocument['type'], $id_d);
-        $actionClass->setFromAPI($from_api);
-        $actionClass->field = $field;
-        $actionClass->page = $page;
+        $actionClass->setFromApi($from_api);
+        $actionClass->setViewParameter('field', $field);
+        $actionClass->setViewParameter('page',$page);
 
 
         if ($from_api) {
@@ -297,12 +298,12 @@ class ActionExecutorFactory
 
         $action_class_name = $this->getActionClassName($documentType, $action_name);
         $this->loadDocumentActionFile($infoDocument['type'], $action_class_name);
-
+        /** @var ChoiceActionExecutor $actionClass */
         $actionClass = $this->getInstance($action_class_name, $id_e, $id_u, $action_name);
         $actionClass->setDocumentId($infoDocument['type'], $id_d);
-        $actionClass->setFromAPI($from_api);
-        $actionClass->field = $field;
-        $actionClass->page = $page;
+        $actionClass->setFromApi($from_api);
+        $actionClass->setViewParameter('field', $field);
+        $actionClass->setViewParameter('page', $page);
         if ($post_data) {
             $actionClass->setRecuperateur(new Recuperateur($post_data));
         }
