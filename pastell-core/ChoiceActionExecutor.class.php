@@ -35,6 +35,11 @@ abstract class ChoiceActionExecutor extends ActionExecutor
 
     public function __set($key, $value)
     {
+        $this->setViewParameter($key, $value);
+    }
+
+    public function setViewParameter($key, $value)
+    {
         $this->viewParameter[$key] = $value;
         $this->$key  = $value;
     }

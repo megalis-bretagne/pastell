@@ -43,7 +43,7 @@ class SedaNGFluxInfo extends ChoiceActionExecutor
                 }
             }
         }
-        $this->properties = $properties;
+        $this->setViewParameter('properties', $properties);
 
         $this->renderPage("Propriétés « pastell:flux » du profil", __DIR__ . "/../template/SedaNGConnecteurProperties.php");
         return true;
