@@ -1,1 +1,0 @@
-10  1   *   *   *   root  php /var/www/pastell/batch/maj-libersign.php  >> /data/log/maj-libersign.log 2>&1

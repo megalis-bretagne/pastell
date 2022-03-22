@@ -13,6 +13,8 @@ mkdir -p /data/certificate/
 cp /var/www/pastell/ci-resources/supervisord/*.conf /etc/supervisor/conf.d/
 cp /var/www/pastell/ci-resources/logrotate.d/*.conf /etc/logrotate.d/
 cp /var/www/pastell/ci-resources/cron.d/* /etc/cron.d/
+chmod 0644 /etc/cron.d/*
+
 
 # Set PHP configuration
 mkdir -p /var/lib/php/session/

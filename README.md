@@ -8,6 +8,8 @@
 
 # Pastell
 
+Plate-forme Adullact Sécurisée Transactionnelle d’Échanges en Logiciel Libre
+
 Pastell est une solution libre et sécurisée, développée pour permettre le traitement sécurisé, automatisé et tracé de l'ensemble des process dématérialisés.
 
 # TL;DR
