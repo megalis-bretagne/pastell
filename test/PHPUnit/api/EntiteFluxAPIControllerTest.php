@@ -11,6 +11,7 @@ class EntiteFluxAPIControllerTest extends PastellTestCase
     {
         $info = $this->associateConnecteur();
         $this->assertNotEmpty($info['id_fe']);
+        $this->assertIsString($info['id_fe']);
     }
 
     public function testDoActionAction()
