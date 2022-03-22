@@ -44,7 +44,7 @@ class TransformationGeneriqueFillData extends ChoiceActionExecutor
     {
         $fluxEntiteSQL = $this->objectInstancier->getInstance(FluxEntiteSQL::class);
         $this->setViewParameter('flux', $fluxEntiteSQL->getUsedByConnecteurIfUnique($this->id_ce, $this->id_e));
-        $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($this->{'flux'});
+        $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($this->getViewParameter()['flux']);
         $this->setViewParameter('fieldsList', $documentType->getFormulaire()->getFieldsList());
 
         $transformationGeneriqueDefinition = $this->objectInstancier->getInstance(

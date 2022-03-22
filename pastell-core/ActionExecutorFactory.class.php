@@ -211,7 +211,7 @@ class ActionExecutorFactory
         $actionClass->setDocumentId($infoDocument['type'], $id_d);
         $actionClass->setFromApi($from_api);
         $actionClass->setViewParameter('field', $field);
-        $actionClass->setViewParameter('page',$page);
+        $actionClass->setViewParameter('page', $page);
 
 
         if ($from_api) {

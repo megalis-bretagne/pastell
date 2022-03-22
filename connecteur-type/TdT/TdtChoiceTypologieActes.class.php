@@ -39,7 +39,7 @@ class TdtChoiceTypologieActes extends ConnecteurTypeChoiceActionExecutor
         if ($type_pj) {
             $type_pj_selection = array_merge($type_pj_selection, json_decode($type_pj));
         }
-        $type_pj_selection = array_pad($type_pj_selection, count($this->{'pieces'}), 0);
+        $type_pj_selection = array_pad($type_pj_selection, count($this->getViewParameter()['pieces']), 0);
 
         $this->setViewParameter('type_pj_selection', $type_pj_selection);
 

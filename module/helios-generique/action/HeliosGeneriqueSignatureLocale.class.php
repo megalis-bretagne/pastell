@@ -83,7 +83,7 @@ class HeliosGeneriqueSignatureLocale extends ChoiceActionExecutor
         $type_name = $this->getDocumentTypeFactory()->getFluxDocumentType($this->type)->getName();
 
         $this->renderPage(
-            "Signature du fichier PES - " . $this->title . " (" . $type_name . ")",
+            "Signature du fichier PES - " . $this->getViewParameter()['title'] . " (" . $type_name . ")",
             __DIR__ . '/../template/HeliosSignatureLocale.php'
         );
         return true;
