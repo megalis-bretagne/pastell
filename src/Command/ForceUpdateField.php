@@ -23,7 +23,7 @@ use function in_array;
 class ForceUpdateField extends BaseCommand
 {
     public const SCOPE_MODULE = 'module';
-    private const SCOPE_CONNECTOR = 'connector';
+    public const SCOPE_CONNECTOR = 'connector';
     private const SCOPE_LIST = [self::SCOPE_MODULE, self::SCOPE_CONNECTOR];
 
     public function __construct(
