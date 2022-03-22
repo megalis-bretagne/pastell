@@ -15,6 +15,7 @@ class Journal extends SQL
     public const TEST = 11;
     public const TYPE_DOSSIER_EDITION = 12;
     public const JOURNAL = 13;
+    public const COMMANDE = 14;
 
     public const DEFAULT_LIMIT = 100;
 
@@ -270,7 +271,8 @@ class Journal extends SQL
                         "Programmation d'un traitement par lot",
                         "Test",
                         "Action sur un type de dossier personnalisé",
-                        "Action sur le journal"
+                        "Action sur le journal",
+                        "Action par commande"
         );
         return $type_string[$type];
     }
