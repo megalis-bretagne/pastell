@@ -4,7 +4,6 @@ namespace Pastell\Tests\Command;
 
 use ConnecteurEntiteSQL;
 use ConnecteurFactory;
-use DocumentEntite;
 use DocumentSQL;
 use DonneesFormulaireFactory;
 use Exception;
@@ -29,7 +28,6 @@ final class ForceUpdateFieldTest extends PastellTestCase
         $command = new ForceUpdateField(
             $this->getObjectInstancier()->getInstance(DocumentSQL::class),
             $this->getObjectInstancier()->getInstance(DonneesFormulaireFactory::class),
-            $this->getObjectInstancier()->getInstance(DocumentEntite::class),
             $this->getObjectInstancier()->getInstance(ConnecteurEntiteSQL::class),
             $this->getObjectInstancier()->getInstance(ConnecteurFactory::class),
             $this->getObjectInstancier()->getInstance(SimpleTwigRenderer::class),
@@ -59,6 +57,7 @@ final class ForceUpdateFieldTest extends PastellTestCase
     public function commandArgumentsProvider(): iterable
     {
         yield [
+            'dossiers',
             'module',
             'test',
             'nom',
@@ -68,6 +67,7 @@ final class ForceUpdateFieldTest extends PastellTestCase
             1
         ];
         yield [
+            'dossiers',
             'module',
             'test',
             'prenom',
@@ -77,6 +77,7 @@ final class ForceUpdateFieldTest extends PastellTestCase
             1
         ];
         yield [
+            'configuration',
             'connector',
             'test',
             'champs1',
@@ -93,6 +94,7 @@ final class ForceUpdateFieldTest extends PastellTestCase
      * @throws Exception
      */
     public function testCommand(
+        string $scopeType,
         string $scope,
         string $type,
         string $field,
@@ -134,10 +136,11 @@ final class ForceUpdateFieldTest extends PastellTestCase
 
         $this->assertEquals(
             sprintf(
-                '`app:force-update-field` Update field `%s` by twig expression `%s` for %s documents %s `%s`',
+                '`app:force-update-field` Update field `%s` by twig expression `%s` for %s %s %s `%s`',
                 $field,
                 $twigExpression,
                 $documentsNumber,
+                $scopeType,
                 $scope,
                 $type
             ),
@@ -169,7 +172,7 @@ Message d\'erreur : Unexpected token "end of template" of value "".<br />
     public function testCommandUnknownScope(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Invalid scope');
+        $this->expectExceptionMessage('Scope `unknown` is invalid. It needs to be in (module, connector)');
         $this->executeCommand('unknown', 'test', 'test', 'test', 'yes');
     }
 
