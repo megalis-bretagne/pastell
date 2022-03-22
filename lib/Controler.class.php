@@ -155,11 +155,6 @@ class Controler
         return isset($this->viewParameter[$key]);
     }
 
-    public function exitToIndex()
-    {
-        $this->doRedirect($this->getObjectInstancier()->{'site_index'});
-    }
-
     /**
      * @param string $to
      * @throws LastErrorException

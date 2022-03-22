@@ -44,15 +44,6 @@ class ControlerTest extends PHPUnit\Framework\TestCase
         $this->assertTrue($this->controler->isViewParameter('foo'));
     }
 
-    public function testExitToIndex()
-    {
-        $this->objectInstancier->site_index = "foo";
-        $this->expectException("Exception");
-        $this->expectExceptionMessage("Exit called with code 0");
-        $this->expectOutputString("Location: foo\n");
-        $this->controler->exitToIndex();
-    }
-
     public function testRedirect()
     {
         $this->expectException("Exception");
