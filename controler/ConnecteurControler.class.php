@@ -293,7 +293,10 @@ class ConnecteurControler extends PastellControler
                     ->getAction());
             }
         } else {
-            $this->setViewParameter('donneesFormulaire', $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire());
+            $this->setViewParameter(
+                'donneesFormulaire',
+                $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire()
+            );
             $this->setViewParameter('action', []);
         }
 
@@ -304,6 +307,7 @@ class ConnecteurControler extends PastellControler
         if (! $id_e) {
             $entite_info['denomination'] = "Entité racine";
         }
+
         $this->setViewParameter('entite_info', $entite_info);
         $this->setViewParameter('connecteur_entite_info', $connecteur_entite_info);
         $this->setViewParameter('id_ce', $id_ce);
@@ -318,8 +322,11 @@ class ConnecteurControler extends PastellControler
     public function editionModifAction()
     {
         $this->setConnecteurInfo();
-        $this->setViewParameter('page_title', "Configuration du connecteur « {$this->connecteur_entite_info['libelle']} » 
-            pour « {$this->{'entite_info'}['denomination']} »");
+        $this->setViewParameter(
+            'page_title',
+            "Configuration du connecteur « {$this->connecteur_entite_info['libelle']} » 
+            pour « {$this->{'entite_info'}['denomination']} »"
+        );
         $this->setViewParameter('action_url', "Connecteur/doEditionModif");
         $this->setViewParameter('recuperation_fichier_url', "Connecteur/recupFile?id_ce=" . $this->{'id_ce'});
         $this->setViewParameter('suppression_fichier_url', "Connecteur/deleteFile?id_ce=" . $this->{'id_ce'});
@@ -346,7 +353,10 @@ class ConnecteurControler extends PastellControler
     public function editionAction()
     {
         $this->setConnecteurInfo();
-        $this->setViewParameter('page_title', "Configuration des connecteurs pour « {$this->{'entite_info'}['denomination']} »");
+        $this->setViewParameter(
+            'page_title',
+            "Configuration des connecteurs pour « {$this->getViewParameter()['entite_info']['denomination']} »"
+        );
         $this->setViewParameter('recuperation_fichier_url', "Connecteur/recupFile?id_ce=" . $this->{'id_ce'});
         $this->setViewParameter('template_milieu', "ConnecteurEdition");
         $this->setViewParameter('fieldDataList', $this->{'donneesFormulaire'}->getFieldDataListAllOnglet($this->{'my_role'}));

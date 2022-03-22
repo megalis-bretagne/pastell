@@ -229,11 +229,10 @@ class ActionExecutorFactory
         $this->loadDocumentActionFile($type, $action_class_name);
         /** @var ChoiceActionExecutor $actionClass */
         $actionClass = $this->getInstance($action_class_name, $id_e, $id_u, $action_name);
-        $actionClass->field = $field;
+        $actionClass->setViewParameter('field', $field);
         $actionClass->setDocumentId($type, 0);
 
-        $result = $actionClass->displayChoiceForSearch();
-        return $result;
+        return $actionClass->displayChoiceForSearch();
     }
 
     public function isChoiceEnabled($id_e, $id_u, $id_d, $action_name)

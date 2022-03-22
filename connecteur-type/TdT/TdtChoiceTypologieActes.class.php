@@ -24,14 +24,14 @@ class TdtChoiceTypologieActes extends ConnecteurTypeChoiceActionExecutor
         $connecteur_type_action = $this->getMappingList();
 
         $document_info = $this->getDocument()->getInfo($this->id_d);
-        $this->{'info'} = $document_info;
+        $this->setViewParameter('info', $document_info);
 
         $result = $this->displayAPI();
         if (empty($result['actes_type_pj_list'])) {
             throw new UnrecoverableException("La typologie des pièces jointes n'est pas disponible");
         }
-        $this->{'actes_type_pj_list'} = $result['actes_type_pj_list'];
-        $this->{'pieces'} = $result['pieces'];
+        $this->setViewParameter('actes_type_pj_list', $result['actes_type_pj_list']);
+        $this->setViewParameter('pieces', $result['pieces']);
 
         $type_pj_selection = [$this->getDonneesFormulaire()->get($connecteur_type_action['type_acte'] ?? 'type_acte')];
 
@@ -41,7 +41,7 @@ class TdtChoiceTypologieActes extends ConnecteurTypeChoiceActionExecutor
         }
         $type_pj_selection = array_pad($type_pj_selection, count($this->{'pieces'}), 0);
 
-        $this->{'type_pj_selection'} = $type_pj_selection;
+        $this->setViewParameter('type_pj_selection', $type_pj_selection);
 
         $this->renderPage("Choix des types de pièces", __DIR__ . "/template/TdtChoiceTypologieActesTemplate.php");
     }

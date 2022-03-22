@@ -30,7 +30,7 @@ class GetModuleList extends ConnecteurTypeChoiceActionExecutor
 
     public function display()
     {
-        $this->moduleType = $this->getConnecteurProperties()->get($this->getMappingValue(self::MODULE_TYPE_FIELD));
+        $this->setViewParameter('moduleType', $this->getConnecteurProperties()->get($this->getMappingValue(self::MODULE_TYPE_FIELD)));
         $modules = $this->displayAPI();
 
         $currentLocale = setlocale(LC_COLLATE, 0);
@@ -40,7 +40,7 @@ class GetModuleList extends ConnecteurTypeChoiceActionExecutor
         });
         setlocale(LC_COLLATE, $currentLocale);
 
-        $this->moduleList = $modules;
+        $this->setViewParameter('moduleList', $modules);
         $this->renderPage(
             $this->getMappingValue(self::PAGE_TITLE),
             __DIR__ . '/template/GetModuleList.php'

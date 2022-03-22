@@ -1,6 +1,7 @@
 <?php
 
 /**
+ * @var Gabarit $this
  * @var MailSecInfo $mailSecInfo
  * @var string $reponse_url
  * @var string $validation_url;
@@ -12,9 +13,9 @@
 <div class="box">
     <h2>Votre message</h2>
     <?php
-    $this->donneesFormulaire = $mailSecInfo->donneesFormulaire ;
-    $this->fieldDataList = $mailSecInfo->fieldDataList;
-    $this->render("DonneesFormulaireDetail");
+    $this->setViewParameter('donneesFormulaire', $mailSecInfo->donneesFormulaire);
+    $this->setViewParameter('fieldDataList', $mailSecInfo->fieldDataList);
+    $this->render('DonneesFormulaireDetail');
     ?>
 </div>
 
@@ -22,10 +23,10 @@
     <h2>Votre réponse</h2>
     <div class="alert alert-info">Votre réponse ne sera pas envoyée tant que vous ne l'avez pas validée</div>
     <?php
-    $this->donneesFormulaire = $mailSecInfo->donneesFormulaireReponse ;
-    $this->fieldDataList = $mailSecInfo->fieldDataListReponse;
-    $this->recuperation_fichier_url = $reponse_recuperation_fichier_url;
-    $this->download_all_link = $download_all_link . "&fichier_reponse=true";
+    $this->setViewParameter('donneesFormulaire', $mailSecInfo->donneesFormulaireReponse);
+    $this->setViewParameter('fieldDataList', $mailSecInfo->fieldDataListReponse);
+    $this->setViewParameter('recuperation_fichier_url', $reponse_recuperation_fichier_url);
+    $this->setViewParameter('download_all_link', $download_all_link . "&fichier_reponse=true");
 
     $this->render("DonneesFormulaireDetail");
     ?>
