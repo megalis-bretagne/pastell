@@ -23,7 +23,7 @@ class ListeStatutsCPP extends ChoiceActionExecutor
      */
     public function display()
     {
-        $this->{'statut_cible_liste'} = $this->getListeStatuts();
+        $this->setViewParameter('statut_cible_liste', $this->getListeStatuts());
         $this->renderPage("Choix d'un nouveau statut", __DIR__ . "/../template/ListeStatutsCPP.php");
     }
 

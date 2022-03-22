@@ -52,13 +52,13 @@ class IparapheurSousType extends ChoiceActionExecutor
         $signature = $this->getConnecteur('signature');
 
         if ($signature->isFastSignature()) {
-            $this->{'circuits'} = $this->getSousType();
+            $this->setViewParameter('circuits', $this->getSousType());
             $this->renderPage(
                 "Choix d'un type de dossier",
                 __DIR__ . "/../../../connecteur/fast-parapheur/templates/FastParapheurCircuit.php"
             );
         } else {
-            $this->{'sous_type'} = $this->getSousType();
+            $this->setViewParameter('sous_type', $this->getSousType());
             $this->renderPage(
                 "Choix d'un type de dossier",
                 __DIR__ . "/../../../connecteur/iParapheur/template/IparapheurSousType.php"

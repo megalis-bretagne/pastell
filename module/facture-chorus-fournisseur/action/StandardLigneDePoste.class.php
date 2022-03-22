@@ -47,9 +47,9 @@ class StandardLigneDePoste extends ChoiceActionExecutor
     {
 
         $document_info = $this->getDocument()->getInfo($this->id_d);
-        $this->{'info'} = $document_info;
+        $this->setViewParameter('info', $document_info);
 
-        $this->{'ligne_de_poste'} = $this->getLigneDePoste();
+        $this->setViewParameter('ligne_de_poste', $this->getLigneDePoste());
         $this->renderPage("Edition des lignes de poste", __DIR__ . "/../template/StandardLigneDePoste.php");
     }
 

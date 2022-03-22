@@ -35,6 +35,9 @@ class UseSetViewParametersInsteadMagicMethod extends AbstractRector
         $parent = $node;
         do {
             $parent = $parent->getAttribute('parent');
+            if ($parent === null) {
+                return null;
+            }
         } while (! $parent instanceof Class_);
 
         foreach ($parent->stmts as $statement) {
