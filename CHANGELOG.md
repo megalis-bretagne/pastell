@@ -4,6 +4,8 @@
 
 - Actes générique/automatique : Si l'étape de signature est faite avec un connecteur parapheur fast,
 le document envoyé n'est pas celui signé mais celui d'origine #1482
+- l'API POST /entite/:id_e/flux/:flux/connecteur/:id_ce?type=:type renvoyait un int depuis la version 3.1.9.
+  C'est maintenant rétablit avec un string #1479
 
 ## Évolutions
 
