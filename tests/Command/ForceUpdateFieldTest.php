@@ -18,7 +18,6 @@ use UnrecoverableException;
 
 final class ForceUpdateFieldTest extends PastellTestCase
 {
-
     private CommandTester $commandTester;
 
     protected function setUp(): void
