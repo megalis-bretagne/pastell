@@ -6,6 +6,7 @@
 le document envoyé n'est pas celui signé mais celui d'origine #1482
 - l'API POST /entite/:id_e/flux/:flux/connecteur/:id_ce?type=:type renvoyait un int depuis la version 3.1.9.
   C'est maintenant rétablit avec un string #1479
+- Il manquait le contrôle de la force de mot de passe pour la page "Mot de passe oublié" #1478
 
 ## Évolutions
 

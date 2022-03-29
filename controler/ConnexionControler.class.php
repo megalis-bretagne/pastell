@@ -2,6 +2,7 @@
 
 use Pastell\Service\TokenGenerator;
 use Pastell\Service\LoginAttemptLimit;
+use Pastell\Service\PasswordEntropy;
 
 class ConnexionControler extends PastellControler
 {
@@ -244,6 +245,8 @@ class ConnexionControler extends PastellControler
     public function changementMdpAction()
     {
         $recuperateur = new Recuperateur($_GET);
+        $passwordEntropy = $this->getObjectInstancier()->getInstance(PasswordEntropy::class);
+        $this->{'password_min_entropy'} = $passwordEntropy->getEntropyForDisplay();
         $this->{'login_page_configuration'} = file_exists(LOGIN_PAGE_CONFIGURATION_LOCATION)
             ? file_get_contents(LOGIN_PAGE_CONFIGURATION_LOCATION)
             : '';
@@ -459,6 +462,14 @@ class ConnexionControler extends PastellControler
             exit;
         }
 
+        $passwordEntropy = $this->getObjectInstancier()->getInstance(PasswordEntropy::class);
+        if (! $passwordEntropy->isPasswordStrongEnough($password)) {
+            $this->setLastError(
+                "Le mot de passe n'a pas été changé car le nouveau mot de passe n'est pas assez fort.<br/>" .
+                "Essayez de l'allonger ou de mettre des caractères de différents types. La barre de vérification doit être entièrement remplie"
+            );
+            $this->redirect("/Connexion/changementMdp?mail_verif=$mail_verif_password");
+        }
 
         $utilisateur = new UtilisateurSQL($this->getSQLQuery());
         $infoUtilisateur = $utilisateur->getInfo($id_u);
