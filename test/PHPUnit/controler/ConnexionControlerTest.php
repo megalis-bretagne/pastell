@@ -58,6 +58,7 @@ class ConnexionControlerTest extends ControlerTestCase
 
     public function testChangementMdpAction()
     {
+        $this->getObjectInstancier()->setInstance('password_min_entropy', 0);
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("Exit called with code 0");
         $this->expectOutputString("Le lien du mail a expiré. Veuillez recommencer la procédure");
