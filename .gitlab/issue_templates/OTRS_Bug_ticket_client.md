@@ -20,9 +20,6 @@ Lister ici le(s) message(s) d'erreur(s) afficher à l'utilisateur ou des logs
 - Ville [Ticket](lien vers le ticket)
 
 
-## Check List pour la maintenance
-- [ ] Avertissement de la disponibilité de la demande
 
-
-/label ~"Type:Bug"  ~"Origine: Ticket client" ~"Priorité::Haute" 
+/label ~"Cible:patch"  ~"Origine: Ticket client" ~"Priorité:Haute" 
 /cc @epommateau @iruiz @mreyrolle @rbarlet   
