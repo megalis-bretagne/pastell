@@ -1,13 +1,13 @@
 <?php
 
-$onglet_tab  = array(
+$onglet_tab  = [
     "Daemon/index" => "Gestionnaire de tâches",
     "Daemon/verrou" => "Files d'attente",
     "Daemon/job" => "Tous les travaux",
     "Daemon/job?filtre=actif" => "Travaux actifs",
     "Daemon/job?filtre=lock" => "Travaux suspendus",
     "Daemon/job?filtre=wait" => "Travaux en attente"
-);
+];
 ?>
 
 <div id="main_gauche" class="ls-on">

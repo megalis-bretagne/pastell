@@ -2,13 +2,13 @@
 
 $file_path = __DIR__ . "/vide.pdf";
 
-$post_data = array(
+$post_data = [
         'field' => 'fichier1',
         'file_name' => 'vide.pdf',
         'file_content' => file_get_contents($file_path),
         'id_d' => 'C65p6sz',
         'id_e' => '2',
-);
+];
 
 $curl = curl_init();
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);

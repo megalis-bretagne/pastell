@@ -2,12 +2,12 @@
 
 $file_path = __DIR__ . "/annexe.pdf";
 
-$post_data = array(
+$post_data = [
         "fichier_pes" => "@$file_path",
         'objet' => 'toto',
         'id_d' => 'OhbQeEv',
         'id_e' => '12',
-);
+];
 
 $curl = curl_init();
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);

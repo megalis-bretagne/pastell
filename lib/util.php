@@ -27,7 +27,7 @@ function rrmdir($dir)
         return;
     }
     foreach (scandir($dir) as $object) {
-        if (in_array($object, array(".",".."))) {
+        if (in_array($object, [".",".."])) {
             continue;
         }
         if (is_dir("$dir/$object")) {
@@ -51,7 +51,7 @@ function get_argv($num_arg)
 
 function exceptionToJson(Exception $ex)
 {
-    $json = array(
+    $json = [
         'date' => date('d/m/Y H:i:s'),
         'code' => $ex->getCode(),
         'file' => $ex->getFile(),
@@ -59,7 +59,7 @@ function exceptionToJson(Exception $ex)
         'message' => $ex->getMessage(),
         // utf8_encode_array non applicable sur getTrace() car peut contenir des "resources"
         'trace' => explode("\n", $ex->getTraceAsString())
-    );
+    ];
     $json = json_encode($json);
     return $json;
 }
@@ -166,7 +166,7 @@ function utf8_encode_array($array)
     if (! is_array($array) && !is_object($array)) {
         return utf8_encode($array);
     }
-    $result = array();
+    $result = [];
     foreach ($array as $cle => $value) {
         $result[utf8_encode($cle)] = utf8_encode_array($value);
     }
@@ -178,7 +178,7 @@ function utf8_decode_array($array)
     if (! is_array($array) && !is_object($array)) {
         return utf8_decode($array);
     }
-    $result = array();
+    $result = [];
     foreach ($array as $cle => $value) {
         $result[utf8_decode($cle)] = utf8_decode_array($value);
     }

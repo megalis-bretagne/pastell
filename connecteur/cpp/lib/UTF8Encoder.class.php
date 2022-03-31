@@ -16,7 +16,7 @@ class UTF8Encoder
         if ($this->isScalar($var)) {
             return $this->encodeScalar($var);
         }
-        $result = array();
+        $result = [];
         foreach ($var as $key => $value) {
             $result[$this->encodeScalar($key)] = $this->encode($value);
         }
@@ -50,7 +50,7 @@ class UTF8Encoder
         if ($this->isScalar($var)) {
             return $this->decodeScalar($var);
         }
-        $result = array();
+        $result = [];
         foreach ($var as $key => $value) {
             $result[$this->decodeScalar($key)] = $this->decode($value);
         }

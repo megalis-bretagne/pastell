@@ -50,7 +50,7 @@ class FournisseurCommandeOrientation extends ActionExecutor
             }
             return "termine";
         }
-        if (in_array($action, array('reception','non-recu','erreur'))) {
+        if (in_array($action, ['reception','non-recu','erreur'])) {
             if ($this->getDonneesFormulaire()->get('envoi_ged')) {
                 return 'prepare-ged';
             }
@@ -68,7 +68,7 @@ class FournisseurCommandeOrientation extends ActionExecutor
         if ($action == 'recu-iparapheur') {
             return "recu-iparapheur-etat";
         }
-        if (in_array($action, array('reception','non-recu','erreur'))) {
+        if (in_array($action, ['reception','non-recu','erreur'])) {
             return "reception-etat";
         }
         throw new Exception("L'action suivante de $action n'est pas défini. Arret du flux");

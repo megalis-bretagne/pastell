@@ -32,7 +32,7 @@ class SAEEnvoiActes extends ActionExecutor
 
         @ unlink($tmp_folder . "/empty");
 
-        $transactionsInfo = array(
+        $transactionsInfo = [
             'numero_acte_collectivite' => $donneesFormulaire->get('numero_de_lacte'),
             'subject' => $donneesFormulaire->get('objet'),
             'decision_date' =>  $donneesFormulaire->get("date_de_lacte"),
@@ -47,7 +47,7 @@ class SAEEnvoiActes extends ActionExecutor
             'annexe_original_filename' => $donneesFormulaire->get('autre_document_attache'),
             'actes_file_tamponne' => $acte_tamponne,
             'bordereau_acquit' => $bdx_s2low
-        );
+        ];
 
         if ($this->getDonneesFormulaire()->get('has_information_complementaire')) {
             $echangePrefecture = $this->getEchangePrefecture($donneesFormulaire, $tmp_folder);
@@ -124,8 +124,8 @@ class SAEEnvoiActes extends ActionExecutor
     public function getEchangePrefecture(DonneesFormulaire $donneesFormulaire, $tmp_folder)
     {
         $result['echange_prefecture'] = $donneesFormulaire->copyAllFiles('echange_prefecture', $tmp_folder, "document-prefecture");
-        $result['echange_prefecture_ar'] = array();
-        $result['echange_prefecture_type'] = array();
+        $result['echange_prefecture_ar'] = [];
+        $result['echange_prefecture_type'] = [];
         if ($donneesFormulaire->get("echange_prefecture_ar")) {
             foreach ($donneesFormulaire->get("echange_prefecture_ar") as $i => $ar_name) {
                 if ($ar_name == "empty") {
@@ -148,10 +148,10 @@ class SAEEnvoiActes extends ActionExecutor
     public function getFromDocument(DonneesFormulaire $donneesFormulaire, $tmp_folder)
     {
         $nb_document  = 1;
-        $result['echange_prefecture'] = array();
-        $result['echange_prefecture_ar'] = array();
-        $result['echange_prefecture_type'] = array();
-        $result['echange_prefecture_original_filename'] = array();
+        $result['echange_prefecture'] = [];
+        $result['echange_prefecture_ar'] = [];
+        $result['echange_prefecture_type'] = [];
+        $result['echange_prefecture_original_filename'] = [];
 
         if ($donneesFormulaire->get('has_courrier_simple')) {
             $result['echange_prefecture'][] = $donneesFormulaire->copyFile('courrier_simple', $tmp_folder, 0, "document-prefecture-" . $nb_document++);

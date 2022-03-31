@@ -17,7 +17,7 @@ class DepotFTPTest extends PastellTestCase
 
         $FTPClientWrapper->method('login')->willReturn(true);
         $FTPClientWrapper->method('mkdir')->willReturn(true);
-        $FTPClientWrapper->method('nlist')->willReturn(array('foo'));
+        $FTPClientWrapper->method('nlist')->willReturn(['foo']);
 
         $connecteurConfig = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
         $connecteurConfig->setData(DepotFTP::DEPOT_FTP_DIRECTORY, '/foo/');
@@ -31,7 +31,7 @@ class DepotFTPTest extends PastellTestCase
     public function testList()
     {
         $this->assertEquals(
-            array('foo'),
+            ['foo'],
             $this->depotFTP->listDirectory()
         );
     }

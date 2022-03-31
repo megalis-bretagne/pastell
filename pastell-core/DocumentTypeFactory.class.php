@@ -48,7 +48,7 @@ class DocumentTypeFactory
     {
         $flux_definition = $this->getDocumentTypeArray($id_flux);
         if (!$flux_definition) {
-            return new DocumentType($id_flux, array());
+            return new DocumentType($id_flux, []);
         }
         return new DocumentType($id_flux, $flux_definition);
     }
@@ -63,7 +63,7 @@ class DocumentTypeFactory
         if ($this->allType) {
             return $this->allType;
         }
-        $all_type = array();
+        $all_type = [];
         foreach ($this->fluxDefinitionFiles->getAll() as $id_flux => $properties) {
             $documentType = $this->getFluxDocumentType($id_flux);
             $type = $documentType->getType();
@@ -149,7 +149,7 @@ class DocumentTypeFactory
 
     public function getAllDroit()
     {
-        $list_droit = array();
+        $list_droit = [];
         foreach ($this->fluxDefinitionFiles->getAll() as $id_flux => $properties) {
             $documentType = $this->getFluxDocumentType($id_flux);
             $list_droit = array_merge($list_droit, $documentType->getListDroit());

@@ -17,7 +17,7 @@ class SedaNGConnecteurInfo extends ChoiceActionExecutor
         $properties = $sedaNG->getProprietePastellConnecteur();
 
         $recuperateur = $this->getRecuperateur();
-        $data = array();
+        $data = [];
         foreach ($properties as $property) {
             $data[$property] = $recuperateur->get($property);
         }

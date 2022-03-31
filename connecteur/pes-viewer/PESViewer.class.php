@@ -44,7 +44,7 @@ class PESViewer extends Connecteur
         }
 
         preg_match_all('/^Set-Cookie:\s*([^;]*)/mi', $result, $matches);
-        $cookies = array();
+        $cookies = [];
         foreach ($matches[1] as $item) {
             parse_str($item, $cookie);
             $cookies = array_merge($cookies, $cookie);

@@ -15,29 +15,30 @@ class PDFGeneriqueTest extends PastellTestCase
 
         $result = $this->getInternalAPI()->post(
             "/entite/" . self::ID_E_COL . "/connecteur",
-            array('libelle' => 'Signature', 'id_connecteur' => 'fakeIparapheur')
+            ['libelle' => 'Signature', 'id_connecteur' => 'fakeIparapheur']
         );
 
         $id_ce = $result['id_ce'];
 
         $this->getInternalAPI()->post(
             "/entite/" . self::ID_E_COL . "/flux/pdf-generique/connecteur/$id_ce",
-            array('type' => 'signature')
+            ['type' => 'signature']
         );
 
         $result = $this->getInternalAPI()->post(
             "/Document/" . PastellTestCase::ID_E_COL,
-            array('type' => 'pdf-generique')
+            ['type' => 'pdf-generique']
         );
         $id_d = $result['id_d'];
 
         $this->getInternalAPI()->patch(
             "/entite/1/document/$id_d",
-            array('libelle' => 'Test pdf générique',
+            [
+            'libelle' => 'Test pdf générique',
                 'envoi_signature' => '1',
                 'iparapheur_type' => 'Actes',
                 'iparapheur_sous_type' => 'Délibération',
-            )
+            ]
         );
 
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);

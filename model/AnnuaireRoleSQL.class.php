@@ -68,12 +68,12 @@ class AnnuaireRoleSQL extends SQL
 
     public function getGroupeHerite($all_ancetre, $debut = "")
     {
-        $result = array();
+        $result = [];
         foreach ($all_ancetre as $id_e) {
             $sql = "SELECT annuaire_role.*,entite.denomination FROM annuaire_role " .
                     " LEFT JOIN entite ON annuaire_role.id_e_owner = entite.id_e" .
                     " WHERE annuaire_role.id_e_owner=? AND partage=1";
-            $data = array($id_e);
+            $data = [$id_e];
             if ($debut) {
                 $sql .= " AND nom LIKE ?";
                 $data[] = "$debut%";

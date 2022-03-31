@@ -35,12 +35,12 @@ $post_data = array(
 */
 $id_d = 'MgaY0ER';
 
-$post_data = array(
+$post_data = [
 
     'id_d' => $id_d,
     'action' => 'teletransmission-tdt',
     'id_e' => '1',
-);
+];
  $url = "https://pastell.devlocal.org/api/Document/action";
 
  $retour = pastell_api($url, $post_data);

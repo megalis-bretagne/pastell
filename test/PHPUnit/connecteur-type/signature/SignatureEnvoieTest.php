@@ -14,23 +14,23 @@ class SignatureEnvoieTest extends PastellTestCase
             $this->assertSame("CreerDossier", $soapMethod);
             $arguments[0]['DossierID'] = "NOT TESTABLE";
             $this->assertEquals(
-                array (
+                [
                     0 =>
-                        array (
+                         [
                             'TypeTechnique' => 'FOO',
                             'SousType' => 'BAR',
                             'DossierID' => 'NOT TESTABLE',
                             'DocumentPrincipal' =>
-                                array (
+                                 [
                                     '_' => 'test',
                                     'contentType' => 'text/plain',
-                                ),
+                                ],
                             'Visibilite' => 'SERVICE',
                             'NomDocPrincipal' => 'document.pdf',
                             'DossierTitre' => 'LIBELLE',
                             'DateLimite' => '2012-08-05',
-                        ),
-                ),
+                        ],
+                 ],
                 $arguments
             );
             return json_decode(

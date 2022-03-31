@@ -88,7 +88,7 @@ class IparapheurSousType extends ChoiceActionExecutor
             $config = $this->getConnecteurConfigByType('signature');
             /** @var SignatureConnecteur $signature */
             $signature = $this->getConnecteur('signature');
-            $result = array();
+            $result = [];
         } catch (Exception $e) {
             /** Aucun connecteur configuré */
             return [];

@@ -5,7 +5,7 @@ class UtilisateurSQL extends SQL
     public function setNomPrenom($id_u, $nom, $prenom)
     {
         $sql = "UPDATE utilisateur SET nom = ? , prenom = ? WHERE id_u = ?";
-        $this->query($sql, array($nom,$prenom,$id_u));
+        $this->query($sql, [$nom,$prenom,$id_u]);
     }
 
     public function getInfo($id_u)

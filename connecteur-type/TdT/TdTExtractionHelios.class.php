@@ -14,7 +14,7 @@ class TdTExtractionHelios extends ConnecteurTypeActionExecutor
             ->getInstance(PESAllerFile::class)
             ->getAllInfo($this->getDonneesFormulaire()->getFilePath($fichier_pes_element));
 
-        $info_to_retrieve = array (
+        $info_to_retrieve =  [
             PESAllerFile::ID_COLL => 'id_coll',
             PESAllerFile::DTE_STR => 'dte_str',
             PESAllerFile::COD_BUD => 'cod_bud',
@@ -24,7 +24,7 @@ class TdTExtractionHelios extends ConnecteurTypeActionExecutor
             PESAllerFile::ID_PCE => 'id_pce',
             PESAllerFile::ID_NATURE => 'id_nature',
             PESAllerFile::ID_FONCTION => 'id_fonction',
-        );
+        ];
 
         foreach ($info_to_retrieve as $pes_element_name => $pastell_element_name) {
             $this->getDonneesFormulaire()->setData($this->getMappingValue($pastell_element_name), $info[$pes_element_name]);

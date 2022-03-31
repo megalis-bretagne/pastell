@@ -38,7 +38,7 @@ class ConnecteurFrequence
         return $result;
     }
 
-    public function __construct(array $input = array())
+    public function __construct(array $input = [])
     {
         foreach ($this->getArray() as $key => $value) {
             if (isset($input[$key])) {
@@ -137,7 +137,7 @@ class ConnecteurFrequence
     private function getExpressionArray()
     {
         $all_line = explode("\n", $this->expression);
-        $frequence_list = array();
+        $frequence_list = [];
         foreach ($all_line as $line) {
             preg_match('#([^X]*)\s*X?\s*(\d*)#', $line, $matches);
             $expression = trim($matches[1]);
@@ -149,7 +149,7 @@ class ConnecteurFrequence
             } else {
                 $frequence = intval($expression);
             }
-            $frequence_list[] = array('frequence' => $frequence,'cron' => $cron,'nb_try' => $nb_try);
+            $frequence_list[] = ['frequence' => $frequence,'cron' => $cron,'nb_try' => $nb_try];
         }
         return $frequence_list;
     }

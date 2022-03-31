@@ -7,7 +7,7 @@ class AgentSQL extends SQL
     //"Matricule (5)";"Titre";"Nom d'usage";"Nom patronymique";"Prénom";"Emploi / Grade (C)";
     //"Emploi / Grade (L)";"Collectivité (C)";"Collectivité (L)";"SIREN";"Type de dossier";"Type de dossier (L)"
     //;"Train de traitement (C)";"Train de traitement (L)"
-    public function add($info, $infoCollectivite = array())
+    public function add($info, $infoCollectivite = [])
     {
 
         if ($infoCollectivite) {

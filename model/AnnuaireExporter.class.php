@@ -18,10 +18,10 @@ class AnnuaireExporter
     {
         $utilisateur_list = $this->annuaireSQL->getUtilisateur($id_e);
 
-        $display = array();
+        $display = [];
 
         foreach ($utilisateur_list as $utilisateur_info) {
-            $line = array($utilisateur_info['email'],$utilisateur_info['description']);
+            $line = [$utilisateur_info['email'],$utilisateur_info['description']];
             $groupe_list = $this->annuaireGroupeSQL->getGroupeFromUtilisateur($utilisateur_info['id_a']);
             foreach ($groupe_list as $groupe_info) {
                 $line[] = $groupe_info['nom'];

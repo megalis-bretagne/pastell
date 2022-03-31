@@ -25,7 +25,7 @@ class CppIntegrationParGlaneurPivot extends ActionExecutor
             return false;
         }
 
-        $docInfo = array(
+        $docInfo = [
             'id_u' => 0,
             'id_facture_cpp' => date("YmdHis") . "_" . mt_rand(0, mt_getrandmax()),
 
@@ -39,7 +39,7 @@ class CppIntegrationParGlaneurPivot extends ActionExecutor
             'date_statut_courant' => '',
 
             'fichier_facture' => $fichier_pivot,
-        );
+        ];
 
         $classCreationFactureCPP = $this->objectInstancier->getInstance(CreationFactureCPP::class);
 

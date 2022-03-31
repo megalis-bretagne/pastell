@@ -7,7 +7,7 @@ class MetaDataXMLTest extends PHPUnit\Framework\TestCase
         $metaDataXML = new MetaDataXML();
 
         $donneesFormulaire = $this->createMock("DonneesFormulaire");
-        $donneesFormulaire->method('getRawData')->willReturn(array('id_facture_cpp' => 519450));
+        $donneesFormulaire->method('getRawData')->willReturn(['id_facture_cpp' => 519450]);
 
 
         $xml = $metaDataXML->getMetaDataAsXML($donneesFormulaire);
@@ -25,13 +25,13 @@ class MetaDataXMLTest extends PHPUnit\Framework\TestCase
 
         $donneesFormulaire = $this->createMock("DonneesFormulaire");
         $donneesFormulaire->method('getRawData')->willReturn(
-            array(
+            [
                 'id_facture_cpp' => 519450,
-                'facture_pj_02' => array(
+                'facture_pj_02' => [
                     "PJ00FACQUAL_0000000000213700000000003457.pdf",
                     "PJ01FACQUAL_0000000000213700000000003457.pdf"
-                )
-            )
+                ]
+            ]
         );
 
         $xml = $metaDataXML->getMetaDataAsXML($donneesFormulaire);

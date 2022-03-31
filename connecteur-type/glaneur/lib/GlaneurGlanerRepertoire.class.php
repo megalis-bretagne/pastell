@@ -127,7 +127,7 @@ class GlaneurGlanerRepertoire
     private function getMetadataStatic(array $file_match)
     {
         $metadata_static = $this->connecteurConfig->get(GlaneurConnecteur::METADATA_STATIC);
-        $metadata = array();
+        $metadata = [];
         foreach (explode("\n", $metadata_static) as $line) {
             $r = explode(':', $line);
             if (count($r) < 2) {
@@ -175,7 +175,7 @@ class GlaneurGlanerRepertoire
             if (! $documentType->exists()) {
                 throw new UnrecoverableException("Impossible de trouver le type $type_document sur ce pastell");
             }
-            $cardinalite = array();
+            $cardinalite = [];
             foreach ($documentType->getFormulaire()->getAllFields() as $field) {
                 if ($field->getType() == 'file') {
                     $cardinalite[$field->getName()] = $field->getProperties('multiple') ? 'n' : '1';
@@ -191,7 +191,7 @@ class GlaneurGlanerRepertoire
 
     private function getFileList(string $directory)
     {
-        $result = array();
+        $result = [];
         foreach (new DirectoryIterator($directory) as $file) {
             if ($file->isFile()) {
                 $result[] = $file->getFilename();

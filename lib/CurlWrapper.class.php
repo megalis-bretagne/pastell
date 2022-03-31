@@ -28,7 +28,7 @@ class CurlWrapper
     private $http_proxy_url;
     private $no_proxy;
 
-    private $header  = array();
+    private $header  = [];
 
     public function __construct(CurlFunctions $curlFunctions = null)
     {
@@ -195,14 +195,14 @@ class CurlWrapper
 
     public function setPostDataUrlEncode(array $post_data)
     {
-        $pd = array();
+        $pd = [];
         foreach ($post_data as $k => $v) {
             $pd[] = "$k=$v";
         }
         $pd = implode("&", $pd);
         $this->setProperties(CURLOPT_POST, true);
         $this->setProperties(CURLOPT_POSTFIELDS, $pd);
-        $this->setProperties(CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
+        $this->setProperties(CURLOPT_HTTPHEADER, ['Content-Type: application/x-www-form-urlencoded']);
     }
 
 
@@ -245,7 +245,7 @@ class CurlWrapper
 
     private function isPostDataWithSimilarName(): bool
     {
-        $array = array();
+        $array = [];
 
         //cURL ne permet pas de poster plusieurs fichiers avec le même nom !
         //cette fonction est inspirée de http://blog.srcmvn.com/multiple-values-for-the-same-key-and-file-upl
@@ -267,7 +267,7 @@ class CurlWrapper
 
     private function curlPostDataStandard()
     {
-        $post = array();
+        $post = [];
         foreach ($this->postDataList as $postData) {
             $post[$postData[0]] = $postData[1];
         }
@@ -287,7 +287,7 @@ class CurlWrapper
         //nécessite le chargement de l'ensemble des fichiers dans la mémoire.
         $boundary = $this->getBoundary();
 
-        $body = array();
+        $body = [];
 
         foreach ($this->postDataList as $postData) {
                 $body[] = "--$boundary";

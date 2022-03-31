@@ -48,7 +48,7 @@ class CPPVerifConnectivite extends ActionExecutor
      */
     public function traiterCPP()
     {
-        $result_cpp = array();
+        $result_cpp = [];
         $data_cpp = '';
         $result_cpp['data'] = '';
         $result_cpp['nb_ok'] = 0;
@@ -97,7 +97,7 @@ class CPPVerifConnectivite extends ActionExecutor
      */
     public function traiterChorusCSV()
     {
-        $result_cpp = array();
+        $result_cpp = [];
         $result_cpp['data'] = '';
         $result_cpp['nb_ok'] = 0;
         $result_cpp['nb_ko'] = 0;
@@ -112,7 +112,7 @@ class CPPVerifConnectivite extends ActionExecutor
             $result_connecteur_ko = 0;
             $message_erreur = '';
 
-            $list_login_pass = array();
+            $list_login_pass = [];
 
             if ($connecteur['id_e'] == 0) {
                 continue;

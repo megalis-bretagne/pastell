@@ -68,7 +68,7 @@ class PDFGeneriqueOrientation extends ActionExecutor
             }
             return "termine";
         }
-        if (in_array($action, array('reception','non-recu','erreur'))) {
+        if (in_array($action, ['reception','non-recu','erreur'])) {
             if ($action == 'reception') {
                 $this->getDonneesFormulaire()->setData('is_recupere', '1');
             }

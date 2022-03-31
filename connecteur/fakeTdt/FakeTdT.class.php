@@ -53,7 +53,7 @@ class FakeTdT extends TdtAdapter
 
     public function getListReponsePrefecture($transaction_id)
     {
-        return array();
+        return [];
     }
 
     public function postHelios(DonneesFormulaire $donneesFormulaire)
@@ -84,11 +84,11 @@ class FakeTdT extends TdtAdapter
 
     public function getAnnexesTamponnees($transaction_id)
     {
-        return array();
+        return [];
     }
 
     public function getPESRetourListe()
     {
-        return array();
+        return [];
     }
 }

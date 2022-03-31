@@ -19,7 +19,7 @@ class CPPDeposerPDF extends ActionExecutor
         $this->getDonneesFormulaire()->setData('has_information', true);
 
 
-        $info_from_cpp = array(
+        $info_from_cpp = [
             'codeDestinataire' => 'code_destinataire',
             'codeDeviseFacture' => 'code_devise_facture',
             'codeFournisseur' => 'code_fournisseur',
@@ -36,7 +36,7 @@ class CPPDeposerPDF extends ActionExecutor
             'pieceJointeId' => 'piece_jointe_id',
             'typeFacture' => 'type_facture',
             'typeTva' => 'type_tva'
-        );
+        ];
 
         foreach ($info_from_cpp as $item_chorus => $item_pastell) {
             if (array_key_exists($item_chorus, $result)) {

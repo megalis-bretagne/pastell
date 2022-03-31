@@ -66,7 +66,7 @@ class ConnecteurTypeFactory
 
     public function getAllActionExecutor()
     {
-        $result = array();
+        $result = [];
         $connecteur_type_list = $this->getExtensions()->getAllConnecteurType();
         foreach ($connecteur_type_list as $connecteur_type_name => $connecteur_type_path) {
             foreach (glob("$connecteur_type_path/*.class.php") as $action_executor_path) {

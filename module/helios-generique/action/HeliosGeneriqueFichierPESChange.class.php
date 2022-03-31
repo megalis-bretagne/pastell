@@ -18,7 +18,7 @@ class HeliosGeneriqueFichierPESChange extends ActionExecutor
     {
         $info = $this->heliosGeneriquePESAller->getAllInfo($this->getDonneesFormulaire()->getFilePath('fichier_pes'));
 
-        $info_to_retrieve = array (
+        $info_to_retrieve =  [
             PESAllerFile::ID_COLL => 'id_coll',
             PESAllerFile::DTE_STR => 'dte_str',
             PESAllerFile::COD_BUD => 'cod_bud',
@@ -28,7 +28,7 @@ class HeliosGeneriqueFichierPESChange extends ActionExecutor
             PESAllerFile::ID_PCE => 'id_pce',
             PESAllerFile::ID_NATURE => 'id_nature',
             PESAllerFile::ID_FONCTION => 'id_fonction',
-        );
+        ];
 
         if (! $this->getDonneesFormulaire()->get('objet')) {
             $this->getDonneesFormulaire()->setData('objet', $info[PESAllerFile::NOM_FIC]);

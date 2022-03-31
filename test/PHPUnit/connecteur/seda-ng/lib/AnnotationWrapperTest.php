@@ -94,7 +94,7 @@ class AnnotationWrapperTest extends PHPUnit\Framework\TestCase
     public function testIntegrity()
     {
 
-        $fluxDataTest = new FluxDataTest(array());
+        $fluxDataTest = new FluxDataTest([]);
         $fluxDataTest->setFileList("toto", "toto", "toto");
 
         $this->annotationWrapper->setFluxData($fluxDataTest);
@@ -114,7 +114,7 @@ class AnnotationWrapperTest extends PHPUnit\Framework\TestCase
      */
     public function testConnecteur()
     {
-        $this->annotationWrapper->setConnecteurInfo(array("foo" => "bar"));
+        $this->annotationWrapper->setConnecteurInfo(["foo" => "bar"]);
         $this->assertAnnotation("bar", "{{pastell:connecteur:foo}}");
     }
 
@@ -131,7 +131,7 @@ class AnnotationWrapperTest extends PHPUnit\Framework\TestCase
      */
     public function testTripleWrap()
     {
-        $this->annotationWrapper->setConnecteurInfo(array("a" => "bar"));
+        $this->annotationWrapper->setConnecteurInfo(["a" => "bar"]);
         $wrap = $this->annotationWrapper->wrap("{{pastell:connecteur:a}}{{pastell:string:-}}{{pastell:string:c}}");
         $this->assertEquals("bar-c", $wrap->string);
     }
@@ -150,7 +150,7 @@ class AnnotationWrapperTest extends PHPUnit\Framework\TestCase
      */
     public function testFluxWrap()
     {
-        $fluxDataTest = new FluxDataTest(array("foo" => "bar"));
+        $fluxDataTest = new FluxDataTest(["foo" => "bar"]);
         $this->annotationWrapper->setFluxData($fluxDataTest);
         $this->assertAnnotation("bar", "{{pastell:flux:foo}}");
     }
@@ -168,7 +168,7 @@ class AnnotationWrapperTest extends PHPUnit\Framework\TestCase
      */
     public function testSha256Command()
     {
-        $fluxDataTest = new FluxDataTest(array());
+        $fluxDataTest = new FluxDataTest([]);
         $fluxDataTest->setFileList("fichier_test", "fichier_test", "fichier_test");
         $this->annotationWrapper->setFluxData($fluxDataTest);
         $annotationReturn = $this->annotationWrapper->wrap("{{pastell:sha256:fichier_test}}");
@@ -183,7 +183,7 @@ class AnnotationWrapperTest extends PHPUnit\Framework\TestCase
      */
     public function testConnecteurInfoCommand()
     {
-        $fluxDataTest = new FluxDataTest(array("foo" => "bar"));
+        $fluxDataTest = new FluxDataTest(["foo" => "bar"]);
         $this->annotationWrapper->setFluxData($fluxDataTest);
         $this->assertAnnotation("", "{{pastell:connecteurInfo:foo}}");
     }

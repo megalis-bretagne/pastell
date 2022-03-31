@@ -64,14 +64,14 @@ class UtilisateurRoleAPIController extends BaseAPIController
 
 
         // Construction du tableau de retour
-        $result = array();
+        $result = [];
         foreach ($role_list as $id_u_role => $role_info) {
-            $result[$id_u_role] = array(
+            $result[$id_u_role] = [
                 'id_u' => $role_info['id_u'],
                 'role' => $role_info['role'],
                 'id_e' => $role_info['id_e'],
                 'droits' => array_keys($this->roleSQL->getDroit($all_droit_utilisateur, $role_info['role']))
-            );
+            ];
         }
 
         return $result;
@@ -185,7 +185,7 @@ class UtilisateurRoleAPIController extends BaseAPIController
 
         $roles = $this->getFromRequest('role');
         if (! $roles) {
-            return array();
+            return [];
         }
 
         $deleteRoles = $this->getFromRequest('deleteRoles', false);
@@ -194,7 +194,7 @@ class UtilisateurRoleAPIController extends BaseAPIController
         }
 
         if (is_array($roles)) {
-            $result = array();
+            $result = [];
             foreach ($roles as $role) {
                 $result[] = $this->addRoleUtilisateur($id_u, $role, $id_e);
             }
@@ -220,14 +220,14 @@ class UtilisateurRoleAPIController extends BaseAPIController
         $roles = $this->getFromRequest('role');
 
         if (! $roles) {
-            return array();
+            return [];
         }
 
         $id_e = $infoEntiteExistante['id_e'];
         $id_u = $infoUtilisateurExistant['id_u'];
 
         if (is_array($roles)) {
-            $result = array();
+            $result = [];
             foreach ($roles as $role) {
                 $result[] = $this->deleteRoleUtilisateur($id_u, $role, $id_e);
             }

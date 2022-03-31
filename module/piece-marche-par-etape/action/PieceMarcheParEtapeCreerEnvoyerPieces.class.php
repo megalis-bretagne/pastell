@@ -73,7 +73,7 @@ class PieceMarcheParEtapeCreerEnvoyerPieces extends ActionExecutor
         $pieceMarcheParEtapeData->date_document = $donneesFormulaire->get('date_document');
         $pieceMarcheParEtapeData->montant = $donneesFormulaire->get('montant');
 
-        $result = array();
+        $result = [];
         foreach ($pieces as $num => $file_name) {
             $file_path = $donneesFormulaire->getFilePath('piece', $num);
             $result[] = $this->objectInstancier->getInstance(PieceMarcheParEtapeCreationPiece::class)->creerPieceMarche($pieceMarcheParEtapeData, array_shift($types_pj), $file_name, $file_path);

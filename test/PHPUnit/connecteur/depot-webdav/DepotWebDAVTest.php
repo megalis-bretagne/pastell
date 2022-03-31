@@ -9,7 +9,7 @@ class DepotWebDAVTest extends PastellTestCase
     {
         parent::setUp();
         $webdavWrapper = $this->createMock('WebdavWrapper');
-        $webdavWrapper->method('listFolder')->willReturn(array('foo'));
+        $webdavWrapper->method('listFolder')->willReturn(['foo']);
         $webdavWrapper->method('exists')->willReturn(false);
 
         $connecteurConfig = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
@@ -23,7 +23,7 @@ class DepotWebDAVTest extends PastellTestCase
     public function testList()
     {
         $this->assertEquals(
-            array('foo'),
+            ['foo'],
             $this->depotWebDAV->listDirectory()
         );
     }

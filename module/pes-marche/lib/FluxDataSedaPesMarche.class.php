@@ -44,7 +44,7 @@ class FluxDataSedaPesMarche extends FluxDataSedaDefault
     public function get_Domaine()
     {
         $info = $this->getInfoFromPesAller();
-        $result = array();
+        $result = [];
         if ($info['is_recette']) {
             $result[] = "PES_RecetteAller";
         }
@@ -113,7 +113,7 @@ class FluxDataSedaPesMarche extends FluxDataSedaDefault
 
     public function get_Acheteur()
     {
-        $result = array();
+        $result = [];
         $info = $this->getInfoFromPesAller();
         foreach ($info['Acheteur'] as $acheteur) {
             $result[] = "Acheteur $acheteur";
@@ -123,7 +123,7 @@ class FluxDataSedaPesMarche extends FluxDataSedaDefault
 
     public function get_Titulaire()
     {
-        $result = array();
+        $result = [];
         $info = $this->getInfoFromPesAller();
         foreach ($info['Titulaire'] as $titulaire) {
             $result[] = "Titulaire $titulaire";
@@ -232,7 +232,7 @@ class FluxDataSedaPesMarche extends FluxDataSedaDefault
         $pes_retour_content = file_get_contents($pes_retour);
         $xml =  simplexml_load_string($pes_retour_content, 'SimpleXMLElement', LIBXML_PARSEHUGE);
 
-        $info = array();
+        $info = [];
         $info['DteStr'] =  strval($xml->EnTetePES->DteStr['V']);
 
         return $info;

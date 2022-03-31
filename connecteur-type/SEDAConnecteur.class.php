@@ -59,7 +59,7 @@ abstract class SEDAConnecteur extends Connecteur
         if (!$attr) {
             throw new Exception("Le fichier AR actes $file_name n'est pas exploitable");
         }
-        return array('DateReception' => $attr['DateReception'],'IDActe' => $attr['IDActe']);
+        return ['DateReception' => $attr['DateReception'],'IDActe' => $attr['IDActe']];
     }
 
     public function getIntegrityMarkup($fileName)

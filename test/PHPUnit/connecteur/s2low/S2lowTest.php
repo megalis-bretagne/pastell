@@ -26,7 +26,7 @@ class S2lowTest extends PastellTestCase
             ->method('get')
             ->willReturnCallback(function ($a) {
 
-                $result = array('user_login' => 'foo');
+                $result = ['user_login' => 'foo'];
                 if (isset($result[$a])) {
                     return $result[$a];
                 }

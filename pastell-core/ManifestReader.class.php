@@ -19,14 +19,14 @@ class ManifestReader
 
     public function __construct(array $manifest_info)
     {
-        foreach (array(self::VERSION,self::REVISION,self::NOM,self::DESCRIPTION,self::PASTELL_VERSION,self::ID,self::LAST_CHANGED_DATE) as $key) {
+        foreach ([self::VERSION,self::REVISION,self::NOM,self::DESCRIPTION,self::PASTELL_VERSION,self::ID,self::LAST_CHANGED_DATE] as $key) {
             if (! isset($manifest_info[$key])) {
                 $manifest_info[$key] = false;
             }
         }
-        foreach (array(self::EXTENSIONS_VERSION_ACCEPTED,self::EXTENSION_NEEDED) as $key) {
+        foreach ([self::EXTENSIONS_VERSION_ACCEPTED,self::EXTENSION_NEEDED] as $key) {
             if (empty($manifest_info[$key])) {
-                $manifest_info[$key] = array();
+                $manifest_info[$key] = [];
             }
         }
         if (preg_match('#^\$Rev: (\d*) \$#u', $manifest_info[self::REVISION], $matches)) {
@@ -34,7 +34,7 @@ class ManifestReader
         }
         $manifest_info[self::VERSION_COMPLETE] =  "Version {$manifest_info[self::VERSION]} - Révision  {$manifest_info[self::REVISION]}" ;
 
-        $manifest_info[self::AUTRE_VERSION_COMPATIBLE] = array();
+        $manifest_info[self::AUTRE_VERSION_COMPATIBLE] = [];
         foreach ($manifest_info[self::EXTENSIONS_VERSION_ACCEPTED] as $version) {
             if ($version != $manifest_info[self::VERSION]) {
                 $manifest_info[self::AUTRE_VERSION_COMPATIBLE][] = $version;

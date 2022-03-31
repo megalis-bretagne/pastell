@@ -32,7 +32,7 @@ class PieceMarcheParEtapeTypePiece extends ChoiceActionExecutor
      */
     public function displayAPI()
     {
-        $result = array();
+        $result = [];
 
         $result['pieces_type_pj_list'] = $this->getTypePJListe();
 
@@ -51,7 +51,7 @@ class PieceMarcheParEtapeTypePiece extends ChoiceActionExecutor
     public function go()
     {
 
-        $result = array();
+        $result = [];
         $info = $this->displayAPI();
 
         $type_pj = $this->getRecuperateur()->get('type_pj');
@@ -73,7 +73,7 @@ class PieceMarcheParEtapeTypePiece extends ChoiceActionExecutor
     public function getTypePJListe()
     {
 
-        $type_piece_marche = array (
+        $type_piece_marche =  [
             "ARN" => "Accusé de Réception de Notification (ARN)",
             "AE" => "Acte d'Engagement (AE)",
             "AS" => "Acte de sous-traitance (AS)",
@@ -110,7 +110,7 @@ class PieceMarcheParEtapeTypePiece extends ChoiceActionExecutor
             "RP" => "Rapport de Présentation (RP)",
             "RDP" => "Récépissé de dépôt de pli (RDP)",
             "RC" => "Règlement de la Consultation (RC)",
-        );
+        ];
         return $type_piece_marche;
     }
 }

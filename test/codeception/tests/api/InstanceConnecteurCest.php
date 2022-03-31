@@ -7,7 +7,7 @@ class InstanceConnecteurCest
         $I->wantTo("lister toutes les instances d'un connecteur");
         $I->amHttpAuthenticatedAsAdmin();
         $I->sendGET("/connecteur/all");
-        $I->verifyJsonResponseOK(array());
+        $I->verifyJsonResponseOK([]);
     }
 
     public function listInstanceSpecificConnecteur(NoGuy $I)
@@ -15,7 +15,7 @@ class InstanceConnecteurCest
         $I->wantTo("lister toutes les instances d'un même connecteur");
         $I->amHttpAuthenticatedAsAdmin();
         $I->sendGET("/connecteur/all/fakeIparapheur");
-        $I->verifyJsonResponseOK(array(array('libelle' => 'Bouchon de signature')));
+        $I->verifyJsonResponseOK([['libelle' => 'Bouchon de signature']]);
     }
 
     public function listInstanceEntiteConnecteur(NoGuy $I)
@@ -23,7 +23,7 @@ class InstanceConnecteurCest
         $I->wantTo("lister toutes les instances d'une entité");
         $I->amHttpAuthenticatedAsAdmin();
         $I->sendGET("/entite/1/connecteur/");
-        $I->verifyJsonResponseOK(array(array('libelle' => 'Bouchon de signature')));
+        $I->verifyJsonResponseOK([['libelle' => 'Bouchon de signature']]);
     }
 
     public function listInstanceEntiteConnecteurV1(NoGuy $I)
@@ -31,7 +31,7 @@ class InstanceConnecteurCest
         $I->wantTo("lister toutes les instances d'une entité [V1]");
         $I->amHttpAuthenticatedAsAdmin();
         $I->sendGETV1("list-connecteur-entite.php?id_e=1");
-        $I->verifyJsonResponseOK(array(array('libelle' => 'Bouchon de signature')));
+        $I->verifyJsonResponseOK([['libelle' => 'Bouchon de signature']]);
     }
 
     public function detailConnecteur(NoGuy $I)
@@ -39,7 +39,7 @@ class InstanceConnecteurCest
         $I->wantTo("avoir le détail d'un connecteur");
         $I->amHttpAuthenticatedAsAdmin();
         $I->sendGET("/entite/1/connecteur/4");
-        $I->verifyJsonResponseOK(array('libelle' => 'Bouchon de signature'));
+        $I->verifyJsonResponseOK(['libelle' => 'Bouchon de signature']);
     }
 
     public function detailConnecteurV1(NoGuy $I)
@@ -47,7 +47,7 @@ class InstanceConnecteurCest
         $I->wantTo("avoir le détail d'un connecteur [V1]");
         $I->amHttpAuthenticatedAsAdmin();
         $I->sendGETV1("detail-connecteur-entite.php?id_e=1&id_ce=4");
-        $I->verifyJsonResponseOK(array('libelle' => 'Bouchon de signature'));
+        $I->verifyJsonResponseOK(['libelle' => 'Bouchon de signature']);
     }
 
     public function creationConnecteur(NoGuy $I)
@@ -56,7 +56,7 @@ class InstanceConnecteurCest
         $I->amHttpAuthenticatedAsAdmin();
         $I->sendPOST("/entite/1/connecteur?id_connecteur=s2low&libelle=test_s2low");
         $I->verifyJsonResponseOK(
-            array('libelle' => 'test_s2low'),
+            ['libelle' => 'test_s2low'],
             \Codeception\Util\HttpCode::CREATED
         );
     }
@@ -67,14 +67,14 @@ class InstanceConnecteurCest
         $I->amHttpAuthenticatedAsAdmin();
         $I->sendPOSTV1(
             "create-connecteur-entite.php",
-            array(
+            [
                 'id_e' => 1,
                 'id_connecteur' => 's2low',
                 'libelle' => 'test_s2low'
-            )
+            ]
         );
         $I->verifyJsonResponseOK(
-            array('libelle' => 'test_s2low'),
+            ['libelle' => 'test_s2low'],
             \Codeception\Util\HttpCode::OK
         );
     }
@@ -91,9 +91,9 @@ class InstanceConnecteurCest
         $I->wantTo("modifier le libellé d'un connecteur");
         $I->amHttpAuthenticatedAsAdmin();
         $id_ce = $this->createConnecteur($I);
-        $I->sendPATCH("/entite/1/connecteur/$id_ce", array('libelle' => 'foo'));
+        $I->sendPATCH("/entite/1/connecteur/$id_ce", ['libelle' => 'foo']);
         $I->verifyJsonResponseOK(
-            array('libelle' => 'foo')
+            ['libelle' => 'foo']
         );
     }
 
@@ -102,9 +102,9 @@ class InstanceConnecteurCest
         $I->wantTo("modifier le libellé d'un connecteur [V1]");
         $I->amHttpAuthenticatedAsAdmin();
         $id_ce = $this->createConnecteur($I);
-        $I->sendPOSTV1("modif-connecteur-entite.php", array('id_e' => 1,'id_ce' => $id_ce,'libelle' => 'foo'));
+        $I->sendPOSTV1("modif-connecteur-entite.php", ['id_e' => 1,'id_ce' => $id_ce,'libelle' => 'foo']);
         $I->verifyJsonResponseOK(
-            array('libelle' => 'foo')
+            ['libelle' => 'foo']
         );
     }
 
@@ -113,8 +113,8 @@ class InstanceConnecteurCest
         $I->wantTo("modifier une propriété d'un connecteur");
         $I->amHttpAuthenticatedAsAdmin();
         $id_ce = $this->createConnecteur($I);
-        $I->sendPATCH("/entite/1/connecteur/$id_ce/content", array('url' => 'https://s2low.org'));
-        $I->verifyJsonResponseOK(array('data' => array('url' => 'https://s2low.org')));
+        $I->sendPATCH("/entite/1/connecteur/$id_ce/content", ['url' => 'https://s2low.org']);
+        $I->verifyJsonResponseOK(['data' => ['url' => 'https://s2low.org']]);
     }
 
     public function voirExternalData(NoGuy $I)
@@ -124,7 +124,7 @@ class InstanceConnecteurCest
         $I->sendPOST("/entite/1/connecteur?id_connecteur=purge&libelle=purge1");
         $id_ce = $I->grabDataFromResponseByJsonPath('$.id_ce')[0];
         $I->sendGET("/entite/1/connecteur/$id_ce/externalData/document_type_libelle");
-        $I->verifyJsonResponseOK(array('actes-generique' => ['nom' => 'Actes (générique)']));
+        $I->verifyJsonResponseOK(['actes-generique' => ['nom' => 'Actes (générique)']]);
     }
 
     public function selectExternalData(NoGuy $I)
@@ -135,7 +135,7 @@ class InstanceConnecteurCest
         $id_ce = $I->grabDataFromResponseByJsonPath('$.id_ce')[0];
         $I->sendPATCH(
             "/entite/1/connecteur/$id_ce/externalData/document_type_libelle",
-            array('module_type' => 'actes-generique')
+            ['module_type' => 'actes-generique']
         );
         $I->verifyJsonResponseOK(['data' => ["document_type" => "actes-generique"]]);
     }
@@ -147,16 +147,16 @@ class InstanceConnecteurCest
         $id_ce = $this->createConnecteur($I);
         $I->sendPOST(
             "/entite/1/connecteur/$id_ce/file/user_certificat",
-            array('file_name' => 'toto.txt','file_content' => 'test1')
+            ['file_name' => 'toto.txt','file_content' => 'test1']
         );
         $I->verifyJsonResponseOK(
-            array(
-                'data' => array(
-                    'user_certificat' => array(
+            [
+                'data' => [
+                    'user_certificat' => [
                         'toto.txt'
-                    )
-                )
-            ),
+                    ]
+                ]
+            ],
             \Codeception\Util\HttpCode::CREATED
         );
         $I->sendGET("/entite/1/connecteur/$id_ce/file/user_certificat");
@@ -171,7 +171,7 @@ class InstanceConnecteurCest
         $id_ce = $I->grabDataFromResponseByJsonPath('$.id_ce')[0];
         $I->sendPOST("/entite/1/connecteur/$id_ce/action/ok");
         $I->verifyJsonResponseOK(
-            array("result" => true,'last_message' => 'OK !'),
+            ["result" => true,'last_message' => 'OK !'],
             \Codeception\Util\HttpCode::CREATED
         );
     }
@@ -182,10 +182,10 @@ class InstanceConnecteurCest
         $I->amHttpAuthenticatedAsAdmin();
         $id_ce = $this->createConnecteur($I);
         $I->sendDELETE("/entite/1/connecteur/$id_ce");
-        $I->verifyJsonResponseOK(array('result' => 'ok'));
+        $I->verifyJsonResponseOK(['result' => 'ok']);
         $I->sendGET("/entite/1/connecteur/$id_ce");
         $I->verifyJsonResponseOK(
-            array('error-message' => 'Ce connecteur n\'existe pas.'),
+            ['error-message' => 'Ce connecteur n\'existe pas.'],
             \Codeception\Util\HttpCode::BAD_REQUEST
         );
     }
@@ -196,10 +196,10 @@ class InstanceConnecteurCest
         $I->amHttpAuthenticatedAsAdmin();
         $id_ce = $this->createConnecteur($I);
         $I->sendGETV1("delete-connecteur-entite.php?id_e=1&id_ce=$id_ce");
-        $I->verifyJsonResponseOK(array('result' => 'ok'));
+        $I->verifyJsonResponseOK(['result' => 'ok']);
         $I->sendGET("/entite/1/connecteur/$id_ce");
         $I->verifyJsonResponseOK(
-            array('error-message' => 'Ce connecteur n\'existe pas.'),
+            ['error-message' => 'Ce connecteur n\'existe pas.'],
             \Codeception\Util\HttpCode::BAD_REQUEST
         );
     }

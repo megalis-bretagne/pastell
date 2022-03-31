@@ -48,10 +48,10 @@ class UtilisateurListe extends SQL
         if ($with_fille) {
                 $sql .= " JOIN entite_ancetre ON utilisateur_role.id_e=entite_ancetre.id_e " .
                 " WHERE entite_ancetre.id_e_ancetre=?";
-                $data = array($id_e);
+                $data = [$id_e];
         } else {
             $sql .= "WHERE utilisateur_role.id_e=?";
-            $data = array($id_e);
+            $data = [$id_e];
         }
         if ($role) {
             $sql .= "AND utilisateur_role.role = ?";
@@ -78,10 +78,10 @@ class UtilisateurListe extends SQL
         if ($with_fille) {
                 $sql .= " JOIN entite_ancetre ON utilisateur_role.id_e=entite_ancetre.id_e " .
                 " WHERE entite_ancetre.id_e_ancetre=?";
-                $data = array($id_e);
+                $data = [$id_e];
         } else {
             $sql .= "WHERE utilisateur_role.id_e=?";
-            $data = array($id_e);
+            $data = [$id_e];
         }
         if ($role) {
             $sql .= "AND utilisateur_role.role = ?";

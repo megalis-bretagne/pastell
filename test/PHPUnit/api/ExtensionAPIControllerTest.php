@@ -10,7 +10,7 @@ class ExtensionAPIControllerTest extends PastellTestCase
 
     public function testEdit()
     {
-        $list = $this->getInternalAPI()->patch("/extension/1", array('path' => '/tmp'));
+        $list = $this->getInternalAPI()->patch("/extension/1", ['path' => '/tmp']);
         $this->assertEquals('/tmp', $list['detail']['path']);
     }
 
@@ -18,22 +18,22 @@ class ExtensionAPIControllerTest extends PastellTestCase
     {
         $this->expectException("Exception");
         $this->expectExceptionMessage("Le chemin « /foo/bar » n'existe pas sur le système de fichier");
-        $this->getInternalAPI()->patch("/extension/1", array('path' => '/foo/bar'));
+        $this->getInternalAPI()->patch("/extension/1", ['path' => '/foo/bar']);
     }
 
     public function testEditExtensionNotFound()
     {
         $this->expectException("Exception");
         $this->expectExceptionMessage("Extension #42 non trouvée");
-        $this->getInternalAPI()->patch("/extension/42", array('path' => '/tmp'));
+        $this->getInternalAPI()->patch("/extension/42", ['path' => '/tmp']);
     }
 
     public function testEditAlreadyExists()
     {
-        $this->getInternalAPI()->post("/extension", array('path' => __DIR__ . '/../fixtures/extensions/extension-test'));
+        $this->getInternalAPI()->post("/extension", ['path' => __DIR__ . '/../fixtures/extensions/extension-test']);
         $this->expectException("ConflictException");
         $this->expectExceptionMessage("L'extension #glaneur est déja présente");
-        $this->getInternalAPI()->post("/extension", array('path' => __DIR__ . '/../fixtures/extensions/extension-test'));
+        $this->getInternalAPI()->post("/extension", ['path' => __DIR__ . '/../fixtures/extensions/extension-test']);
     }
 
     public function testDeleteAction()

@@ -13,7 +13,7 @@ class XMLCleaningEmptyNode
 
     private function onePass(DOMDocument $DOMDocument)
     {
-        $this->nodeToRemove = array();
+        $this->nodeToRemove = [];
         $this->cleanElement($DOMDocument->documentElement);
 
         /**
@@ -39,7 +39,7 @@ class XMLCleaningEmptyNode
                 }
             }
             if ($child->childNodes->length === 0 && $child->attributes->length === 0) {
-                $this->nodeToRemove[] = array($domElement,$child);
+                $this->nodeToRemove[] = [$domElement,$child];
             } else {
                 $this->cleanElement($child);
             }

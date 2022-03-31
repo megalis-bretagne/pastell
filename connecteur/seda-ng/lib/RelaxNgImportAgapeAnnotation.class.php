@@ -52,7 +52,7 @@ class RelaxNgImportAgapeAnnotation
 
     private function getAgapeChildElement(SimpleXMLElement $agapeNode)
     {
-        $result = array();
+        $result = [];
         foreach ($agapeNode->xpath("./xsd:element") as $element) {
             $name = (string) $element->attributes()->{'name'};
             $result[$name][] = $element;
@@ -64,7 +64,7 @@ class RelaxNgImportAgapeAnnotation
     public function getRelaxNGElementChildren(SimpleXMLElement $relaxNgNode)
     {
 
-        $result = array();
+        $result = [];
         /** @var SimpleXMLElement $child */
         foreach ($relaxNgNode->children(self::RELAX_NG_NS) as $child) {
             if ($child->getName() == 'ref') {
@@ -76,7 +76,7 @@ class RelaxNgImportAgapeAnnotation
                     }
                 }
             }
-            if (in_array($child->getName(), array('optional','oneOrMore','zeroOrMore'))) {
+            if (in_array($child->getName(), ['optional','oneOrMore','zeroOrMore'])) {
                 foreach ($this->getRelaxNGElementChildren($child) as $name => $element) {
                     foreach ($element as $i => $new_element) {
                         $result[$name][] = $new_element;

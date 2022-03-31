@@ -106,8 +106,8 @@ class CPPImporterFacture extends ActionExecutor
         );
         $liste_facture_bus = array_merge($liste_facture_bus_travaux, $liste_facture_bus_recues);
 
-        $liste_facture_a_creer = array();
-        $result_all = array();
+        $liste_facture_a_creer = [];
+        $result_all = [];
         foreach ($liste_facture_chorus as $facture_chorus) {
             // Le document existe-t-il déjà sur le bus
             $facture_bus = $this->getChorusProUtilService()->rechercherDocumentPastell(

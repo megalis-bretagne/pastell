@@ -231,7 +231,7 @@ abstract class DepotConnecteur extends GEDConnecteur
     private function getMetadataIncluded()
     {
         if (!$this->connecteurConfig->get(self::DEPOT_METADONNEES_RESTRICTION)) {
-            return array();
+            return [];
         }
         $result = explode(",", $this->connecteurConfig->get(self::DEPOT_METADONNEES_RESTRICTION));
         return array_map(function ($e) {
@@ -242,7 +242,7 @@ abstract class DepotConnecteur extends GEDConnecteur
     private function getFileIncluded()
     {
         if (!$this->connecteurConfig->get(self::DEPOT_FILE_RESTRICTION)) {
-            return array();
+            return [];
         }
         $result = explode(",", $this->connecteurConfig->get(self::DEPOT_FILE_RESTRICTION));
         return array_map(function ($e) {
@@ -256,11 +256,11 @@ abstract class DepotConnecteur extends GEDConnecteur
         if (
             !in_array(
                 $depot_metadonnees,
-                array(
+                [
                     self::DEPOT_METADONNEES_YAML_FILE,
                     self::DEPOT_METADONNEES_JSON_FILE,
                     self::DEPOT_METADONNEES_XML_FILE
-                )
+                ]
             )
         ) {
             return;

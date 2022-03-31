@@ -567,7 +567,7 @@ class S2low extends TdtConnecteur
     {
         //get PES Retour non lu
 
-        $pes = array();
+        $pes = [];
         $this->verifyForwardCertificate();
         $result = $this->exec(self::URL_HELIOS_PES_RETOUR_LISTE);
         $xml = @ simplexml_load_string($result);
@@ -592,7 +592,7 @@ class S2low extends TdtConnecteur
      * @throws Exception
      * @throws S2lowException
      */
-    public function getPESRetour($pes = array())
+    public function getPESRetour($pes = [])
     {
         // création document flux helios PES Retour non lu
 
@@ -771,7 +771,7 @@ class S2low extends TdtConnecteur
      */
     public function getListDocumentPrefecture()
     {
-        $data = array();
+        $data = [];
         $this->verifyForwardCertificate();
         $result = $this->exec(self::URL_ACTES_REPONSE_PREFECTURE_LISTE);
 
@@ -803,7 +803,7 @@ class S2low extends TdtConnecteur
      * @throws UnrecoverableException
      * @throws Exception
      */
-    public function getDocumentPrefecture($reponse = array())
+    public function getDocumentPrefecture($reponse = [])
     {
         // création document flux actes réponse préfecture non lu
 
@@ -908,7 +908,7 @@ class S2low extends TdtConnecteur
      */
     public function getListReponsePrefecture($transaction_id)
     {
-        $result = array();
+        $result = [];
         $all_reponse = $this->exec(self::URL_ACTES_REPONSE_PREFECTURE . "?id=$transaction_id");
         $all_reponse = trim($all_reponse);
         if (!$all_reponse) {
@@ -916,7 +916,7 @@ class S2low extends TdtConnecteur
         }
         foreach (explode("\n", $all_reponse) as $line) {
             list($type,$status,$id) = explode("-", $line);
-            $result[] = array('type' => $type,'status' => $status,'id' => $id);
+            $result[] = ['type' => $type,'status' => $status,'id' => $id];
         }
         return $result;
     }
@@ -1040,22 +1040,22 @@ class S2low extends TdtConnecteur
         try {
             $file_list = $this->exec(self::URL_GET_FILE_LIST . "?transaction=$transaction_id");
         } catch (Exception $e) {
-            return array();
+            return [];
         }
         if (!$file_list) {
-            return array();
+            return [];
         }
         $file_list = json_decode($file_list, true);
         if (!$file_list) {
-            return array();
+            return [];
         }
 
         if (count($file_list) <= 2) {
-            return array();
+            return [];
         }
         array_shift($file_list);
         array_shift($file_list);
-        $result = array();
+        $result = [];
         foreach ($file_list as $file) {
             $filename = $file['posted_filename'];
             if ($file['mimetype'] != 'application/pdf') {

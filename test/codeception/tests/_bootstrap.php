@@ -22,10 +22,11 @@ $internalAPI->setUtilisateurId(1);
 /* Création de l'entité Bourg-en-Bresse*/
 $info = $internalAPI->post(
     "/Entite",
-    array(
+    [
         "type" => Entite::TYPE_COLLECTIVITE,
         "denomination" => "Bourg-en-Bresse",
-        "siren" => '000000000')
+        "siren" => '000000000'
+    ]
 );
 
 $id_e = $info['id_e'];
@@ -33,76 +34,76 @@ $id_e = $info['id_e'];
 /* Création d'un connecteur bouchon de signature */
 $info = $internalAPI->post(
     "/Entite/$id_e/Connecteur",
-    array (
+    [
         'libelle' => 'Bouchon de signature',
         'id_connecteur' => 'fakeIparapheur'
-    )
+    ]
 );
 $id_ce = $info['id_ce'];
 
 $internalAPI->patch(
     "/Entite/$id_e/Connecteur/$id_ce/content",
-    array(
+    [
         'iparapheur_type' => 'Actes',
         'iparapheur_envoi_status' => 'ok',
         'iparapheur_retour' => 'Archive'
-    )
+    ]
 );
 
 $info = $internalAPI->post(
     "/Entite/$id_e/Flux/actes-generique/connecteur/$id_ce",
-    array("type" => "signature")
+    ["type" => "signature"]
 );
 
 /* Création d'un connecteur bouchon Tdt */
 $info = $internalAPI->post(
     "/Entite/$id_e/Connecteur",
-    array (
+    [
         'libelle' => 'Bouchon Tdt',
         'id_connecteur' => 'fakeTdt'
-    )
+    ]
 );
 $id_ce = $info['id_ce'];
 
 $internalAPI->post(
     "/Entite/$id_e/Connecteur/$id_ce/file/classification_file",
-    array(
+    [
         'file_name' => 'classification.xml',
         'file_content' => file_get_contents(__DIR__ . "/_data/classification.xml")
-    )
+    ]
 );
 
 $info = $internalAPI->post(
     "/Entite/$id_e/Flux/actes-generique/connecteur/$id_ce",
-    array("type" => "TdT")
+    ["type" => "TdT"]
 );
 
 /* Création d'un connecteur bouchon GED */
 $info = $internalAPI->post(
     "/Entite/$id_e/Connecteur",
-    array (
+    [
         'libelle' => 'Bouchon GED',
         'id_connecteur' => 'FakeGED'
-    )
+    ]
 );
 $id_ce = $info['id_ce'];
 $info = $internalAPI->post(
     "/Entite/$id_e/Flux/actes-generique/connecteur/$id_ce",
-    array("type" => "GED")
+    ["type" => "GED"]
 );
 
 /* Création du connecteur bouchon SAE */
 $info = $internalAPI->post(
     "/Entite/$id_e/Connecteur",
-    array (
+    [
         'libelle' => 'Bouchon SAE',
         'id_connecteur' => 'fakeSAE'
-    )
+    ]
 );
 $id_ce = $info['id_ce'];
 $info = $internalAPI->post(
     "/Entite/$id_e/Flux/actes-generique/connecteur/$id_ce",
-    array("type" => "SAE")
+    ["type" => "SAE"]
 );
 
 chown("/data/log/pastell.log", "www-data");

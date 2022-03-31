@@ -142,7 +142,7 @@ class DocumentType
     private function getFormulaireArray()
     {
         if (empty($this->module_definition[self::FORMULAIRE])) {
-            return array();
+            return [];
         }
         return $this->module_definition[self::FORMULAIRE];
     }
@@ -161,7 +161,7 @@ class DocumentType
     public function getTabAction()
     {
         if (empty($this->module_definition[self::ACTION])) {
-            return array();
+            return [];
         }
         return $this->module_definition[self::ACTION];
     }
@@ -172,7 +172,7 @@ class DocumentType
         if (empty($this->module_definition[self::CHAMPS_AFFICHE])) {
             return $default_fields;
         }
-        $result = array();
+        $result = [];
         foreach ($this->module_definition[self::CHAMPS_AFFICHE] as $champs) {
             if (isset($default_fields[$champs])) {
                 $result[$champs] = $default_fields[$champs];
@@ -195,7 +195,7 @@ class DocumentType
         if (isset($this->module_definition[self::CHAMPS_RECHERCHE_AFFICHE])) {
             return $this->module_definition[self::CHAMPS_RECHERCHE_AFFICHE];
         }
-        $default_field = array('type','id_e','lastetat','last_state_begin','etatTransit','state_begin','search');
+        $default_field = ['type','id_e','lastetat','last_state_begin','etatTransit','state_begin','search'];
 
         foreach ($this->getFormulaire()->getIndexedFields() as $indexField => $indexLibelle) {
             $default_field[] = $indexField;
@@ -206,7 +206,7 @@ class DocumentType
 
     public function getListDroit()
     {
-        $all_droit = array($this->module_id . ":lecture",$this->module_id . ":edition");
+        $all_droit = [$this->module_id . ":lecture",$this->module_id . ":edition"];
         $all_droit = array_merge($all_droit, $this->getAction()->getAllDroit());
         return array_values(array_unique($all_droit));
     }

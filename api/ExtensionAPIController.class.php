@@ -54,7 +54,7 @@ class ExtensionAPIController extends BaseAPIController
             }
         }
         $id_extension = $this->extensionSQL->edit(0, $path);
-        return array('id_extension' => $id_extension,'detail' => $detail_extension);
+        return ['id_extension' => $id_extension,'detail' => $detail_extension];
     }
 
     /**
@@ -84,7 +84,7 @@ class ExtensionAPIController extends BaseAPIController
         }
         $this->extensionSQL->edit($id_extension, $path); // ajout ou modification
 
-        return array('id_extension' => $id_extension,'detail' => $detail_extension);
+        return ['id_extension' => $id_extension,'detail' => $detail_extension];
     }
 
     /**

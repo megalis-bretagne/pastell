@@ -19,12 +19,12 @@ class ChorusProFournisseurRecupCPPFactureId extends ActionExecutor
             $this->getDonneesFormulaire()->setData('has_donnees_depot', true);
 
 
-            $info_from_cpp = array(
+            $info_from_cpp = [
                 'codeInterfaceDepotFlux' => 'code_interface_flux',
                 'etatCourantDepotFlux' => 'etat_courant_flux',
                 'dateHeureEtatCourantFlux' => 'date_heure_etat_courant_flux',
                 'nomFichier' => 'nom_fichier_flux',
-            );
+            ];
 
             foreach ($info_from_cpp as $item_chorus => $item_pastell) {
                 $this->getDonneesFormulaire()->setData($item_pastell, $crr_import[$item_chorus]);
@@ -36,7 +36,7 @@ class ChorusProFournisseurRecupCPPFactureId extends ActionExecutor
                 json_encode($crr_import)
             );
 
-            if (in_array($crr_import['etatCourantDepotFlux'], array('IN_REJETE','IN_INCIDENTE'))) {
+            if (in_array($crr_import['etatCourantDepotFlux'], ['IN_REJETE','IN_INCIDENTE'])) {
                 $message = "Le flux a été rejeté par CPP : " . json_encode($crr_import);
                 $this->setLastMessage($message);
                 $this->notify("flux-rejete", $this->type, $message);

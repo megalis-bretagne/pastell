@@ -7,10 +7,10 @@ class ChorusProFournisseurSyncrhoniser extends ActionExecutor
      */
     public function getStatutTerminalFournisseur()
     {
-        return array(
+        return [
             PortailFactureConnecteur::STATUT_MISE_EN_PAIEMENT,
             PortailFactureConnecteur::STATUT_REJETEE,
-        );
+        ];
     }
 
     /**

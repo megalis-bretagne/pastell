@@ -7,11 +7,11 @@ class DocumentControlerTest extends ControlerTestCase
      */
     public function testReindex()
     {
-        $info = $this->getInternalAPI()->post("entite/1/document", array('type' => 'test'));
+        $info = $this->getInternalAPI()->post("entite/1/document", ['type' => 'test']);
 
         $this->getInternalAPI()->patch(
             "entite/1/document/{$info['id_d']}",
-            array('nom' => 'foo')
+            ['nom' => 'foo']
         );
 
         $result = $this->getInternalAPI()->get("entite/1/document?type=test&nom=foo");
@@ -33,7 +33,7 @@ class DocumentControlerTest extends ControlerTestCase
 
     public function testActionActionNoRight()
     {
-        $info = $this->getInternalAPI()->post("entite/1/document", array('type' => 'test'));
+        $info = $this->getInternalAPI()->post("entite/1/document", ['type' => 'test']);
 
         $authentification = $this->getObjectInstancier()->getInstance(Authentification::class);
         $authentification->connexion('foo', 42);
@@ -60,7 +60,7 @@ class DocumentControlerTest extends ControlerTestCase
 
     public function testActionAction()
     {
-        $info = $this->getInternalAPI()->post("entite/1/document", array('type' => 'test'));
+        $info = $this->getInternalAPI()->post("entite/1/document", ['type' => 'test']);
 
         $authentification = $this->getObjectInstancier()->getInstance(Authentification::class);
         $authentification->connexion('foo', 1);

@@ -17,7 +17,7 @@ function iconv_log($message)
 $iconv = new Iconv();
 $iconv->setLogingFunction('iconv_log');
 
-$type = array('txt','yml','php');
+$type = ['txt','yml','php'];
 if (isset($argv[2])) {
     $type = explode(',', $argv[2]);
 }

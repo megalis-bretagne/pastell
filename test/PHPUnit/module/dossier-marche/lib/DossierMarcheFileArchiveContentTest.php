@@ -13,10 +13,10 @@ class DossierMarcheFileArchiveContentTest extends \PHPUnit\Framework\TestCase
 
         $info = $dossierMarcheFileArchiveContent->extract(__DIR__ . "/../fixtures/42007_achat_de_materiel_de_bureau.zip");
 
-        $expected_result = array (
+        $expected_result =  [
             'folder_name' => '42007_achat_de_materiel_de_bureau',
             'numero_marche' => '42007',
-        );
+        ];
 
         $this->assertEquals($expected_result, $info);
     }

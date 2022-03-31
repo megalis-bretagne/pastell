@@ -40,7 +40,7 @@ class ConnecteurDefinitionFiles
 
     private function getAllConnecteurByFile($file_name)
     {
-        $result = array();
+        $result = [];
         foreach ($this->extensions->getAllConnecteur() as $id_connecteur => $connecteur_path) {
             $definition_file_path = $connecteur_path . "/" . $file_name;
             if (file_exists($definition_file_path)) {
@@ -50,7 +50,7 @@ class ConnecteurDefinitionFiles
                 }
             }
         }
-        uasort($result, array($this,"sortConnecteur"));
+        uasort($result, [$this,"sortConnecteur"]);
         return $result;
     }
 
@@ -72,7 +72,7 @@ class ConnecteurDefinitionFiles
 
     private function getAllTypeByDef(array $connecteur_definition)
     {
-        $result = array();
+        $result = [];
         foreach ($connecteur_definition as $def) {
             $result[$def[self::TYPE]] = 1;
         }
@@ -127,7 +127,7 @@ class ConnecteurDefinitionFiles
 
     public function getAllByFamille($famille_connecteur, $global = false)
     {
-        $result = array();
+        $result = [];
         foreach ($this->getAll($global) as $connecteur_id => $connecteur_properties) {
             if ($connecteur_properties['type'] == $famille_connecteur) {
                 $result[$connecteur_id] = true;
@@ -164,7 +164,7 @@ class ConnecteurDefinitionFiles
      */
     private function getAllRestrictedByFile(string $file_name): array
     {
-        $result = array();
+        $result = [];
         foreach ($this->extensions->getAllConnecteur() as $id_connecteur => $connecteur_path) {
             $definition_file_path = $connecteur_path . "/" . $file_name;
             if (file_exists($definition_file_path)) {

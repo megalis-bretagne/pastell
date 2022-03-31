@@ -44,7 +44,7 @@ abstract class SupprimerFacture extends ActionExecutor
      */
     public function SupprimerByFluxEntite($flux, $id_e)
     {
-        $all_id_d = array();
+        $all_id_d = [];
         $nb_jours_avant_supp = $this->getNbJourAvantSupp() - 1;
         $listeStatutCourant = PortailFactureConnecteur::getListeStatutCourant();
 

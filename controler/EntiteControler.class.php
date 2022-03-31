@@ -61,7 +61,7 @@ class EntiteControler extends PastellControler
         $this->hasDroitLecture($id_e);
 
         $all_role = $this->getRoleSQL()->getAllRole();
-        $all_role[] = array('role' => RoleUtilisateur::AUCUN_DROIT,'libelle' => RoleUtilisateur::AUCUN_DROIT);
+        $all_role[] = ['role' => RoleUtilisateur::AUCUN_DROIT,'libelle' => RoleUtilisateur::AUCUN_DROIT];
 
         $this->setViewParameter('all_role', $all_role);
         $this->setViewParameter('droitEdition', $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "utilisateur:edition", $id_e));
@@ -90,19 +90,20 @@ class EntiteControler extends PastellControler
 
         $this->hasDroitLecture($id_e);
 
-        $result = array();
-        $result[] = array("id_u","login","prénom","nom","email","collectivité de base","id_e","rôles");
+        $result = [];
+        $result[] = ["id_u","login","prénom","nom","email","collectivité de base","id_e","rôles"];
 
         $allUtilisateur = $this->getUtilisateurListe()->getAllUtilisateur($id_e, $descendance, $the_role, $search, -1);
         foreach ($allUtilisateur as $i => $user) {
-            $r = array();
+            $r = [];
             foreach ($user['all_role'] as $role) {
                 $r[] = ($role['libelle'] ?: "Aucun droit") . " - " . ($role['denomination'] ?: 'Entite racine');
             }
             $user['all_role'] = implode(",", $r);
-            $result[]  = array($user['id_u'],$user['login'],
+            $result[]  = [$user['id_u'],$user['login'],
                 $user['prenom'],$user['nom'],$user['email'],
-                $user['denomination'] ?: "Entité racine",$user['id_e'],$user['all_role']);
+                $user['denomination'] ?: "Entité racine",$user['id_e'],$user['all_role']
+            ];
         }
 
         $filename = "utilisateur-pastell-$id_e-$descendance-$the_role-$search.csv";
@@ -193,14 +194,14 @@ class EntiteControler extends PastellControler
         $this->hasDroitLecture($id_e);
 
         $entite_list = $this->getEntiteListe()->getAllFille($id_e);
-        $result = array(
-            array(
+        $result = [
+            [
                 "ID_E","SIREN","DENOMINATION","TYPE","DATE INSCRIPTION","ACTIVE","CENTRE DE GESTION"
-            )
-        );
+            ]
+        ];
 
         foreach ($entite_list as $i => $entite_info) {
-            $result[]  = array(
+            $result[]  = [
                 $entite_info['id_e'],
                 $entite_info['siren'],
                 $entite_info['denomination'],
@@ -208,7 +209,7 @@ class EntiteControler extends PastellControler
                 $entite_info['date_inscription'],
                 $entite_info['is_active'],
                 $entite_info['centre_de_gestion'],
-            );
+            ];
         }
 
         $filename = "entite-pastell-$id_e.csv";
@@ -233,8 +234,8 @@ class EntiteControler extends PastellControler
             $this->setViewParameter('cdg_selected', false);
         }
 
-        $this->setViewParameter('onglet_tab', array("Collectivités","Agents","Grades"));
-        $onglet_content = array("EntiteImportCollectivite","EntiteImportAgent","EntiteImportGrade");
+        $this->setViewParameter('onglet_tab', ["Collectivités","Agents","Grades"]);
+        $onglet_content = ["EntiteImportCollectivite","EntiteImportAgent","EntiteImportGrade"];
         $this->setViewParameter('template_onglet', $onglet_content[$page]);
         $this->setViewParameter('page', $page);
         $this->setViewParameter('id_e', $id_e);
@@ -281,8 +282,8 @@ class EntiteControler extends PastellControler
 
     private function getEntiteInfoFromLastError()
     {
-        $field_list = array("type","denomination","siren","entite_mere","id_e","has_ged","has_archivage","centre_de_gestion");
-        $infoEntite = array();
+        $field_list = ["type","denomination","siren","entite_mere","id_e","has_ged","has_archivage","centre_de_gestion"];
+        $infoEntite = [];
         foreach ($field_list as $field) {
             $infoEntite[$field] = $this->getLastError()->getLastInput($field);
         }
@@ -477,7 +478,7 @@ class EntiteControler extends PastellControler
 
         $CSV = new CSV();
 
-        $infoCollectivite = array();
+        $infoCollectivite = [];
         if ($id_e) {
             $entiteSQL = $this->getEntiteSQL();
             $infoCollectivite = $entiteSQL->getInfo($id_e);

@@ -42,6 +42,6 @@ class FamilleConnecteurAPIController extends BaseAPIController
     private function detailConnecteur($id_connecteur)
     {
         $global = $this->getFromRequest('global');
-        return $this->connecteurDefinitionFiles->getInfo($id_connecteur, $global) ?: array();
+        return $this->connecteurDefinitionFiles->getInfo($id_connecteur, $global) ?: [];
     }
 }

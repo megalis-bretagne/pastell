@@ -17,46 +17,46 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
 
         $action_list = $typeDossierEtapeDefinition->getActionForEtape($typeDossierEtape);
 
-        $this->assertEquals(array(
+        $this->assertEquals([
             'preparation-send-ged_2' =>
-                array(
+                [
                     'name' => 'Préparation de l\'envoi à la GED #2',
                     'rule' =>
-                        array(
+                        [
                             'role_id_e' => 'no-role',
-                        ),
+                        ],
                     'action-automatique' => 'send-ged_2',
-                ),
+                ],
             'send-ged_2' =>
-                array(
+                [
                     'name-action' => 'Verser à la GED #2',
                     'name' => 'Versé à la GED #2',
                     'rule' =>
-                        array(
+                        [
                             'last-action' =>
-                                array(
+                                [
                                     0 => 'preparation-send-ged_2',
                                     1 => 'error-ged_2'
-                                ),
-                        ),
+                                ],
+                        ],
                     'action-automatique' => 'orientation',
                     'action-class' => 'StandardAction',
                     'connecteur-type' => 'GED',
                     'connecteur-type-action' => 'GEDEnvoyer',
                     'connecteur-type-mapping' =>
-                        array(
+                        [
                             'fatal-error' => 'error-ged_2',
-                        ),
-                ),
+                        ],
+                ],
             'error-ged_2' =>
-                array(
+                [
                     'name' => 'Erreur irrécupérable lors du dépôt #2',
                     'rule' =>
-                        array(
+                        [
                             'role_id_e' => 'no-role',
-                        ),
-                ),
-        ), $action_list);
+                        ],
+                ],
+        ], $action_list);
     }
 
     public function testWhenHasNoEtapeWithSameType()
@@ -67,46 +67,46 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
         $typeDossierEtape->type = 'depot';
 
         $action_list = $typeDossierEtapeDefinition->getActionForEtape($typeDossierEtape);
-        $this->assertEquals(array(
+        $this->assertEquals([
             'preparation-send-ged' =>
-                array(
+                [
                     'name' => 'Préparation de l\'envoi à la GED',
                     'rule' =>
-                        array(
+                        [
                             'role_id_e' => 'no-role',
-                        ),
+                        ],
                     'action-automatique' => 'send-ged',
-                ),
+                ],
             'send-ged' =>
-                array(
+                [
                     'name-action' => 'Verser à la GED',
                     'name' => 'Versé à la GED',
                     'rule' =>
-                        array(
+                        [
                             'last-action' =>
-                                array(
+                                [
                                     0 => 'preparation-send-ged',
                                     1 => 'error-ged'
-                                ),
-                        ),
+                                ],
+                        ],
                     'action-automatique' => 'orientation',
                     'action-class' => 'StandardAction',
                     'connecteur-type' => 'GED',
                     'connecteur-type-action' => 'GEDEnvoyer',
                     'connecteur-type-mapping' =>
-                        array(
+                        [
                             'fatal-error' => 'error-ged',
-                        ),
-                ),
+                        ],
+                ],
             'error-ged' =>
-                array(
+                [
                     'name' => 'Erreur irrécupérable lors du dépôt',
                     'rule' =>
-                        array(
+                        [
                             'role_id_e' => 'no-role',
-                        ),
-                ),
-        ), $action_list);
+                        ],
+                ],
+        ], $action_list);
     }
 
 
@@ -127,7 +127,7 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
 
         $mapping = $typeDossierEtapeDefinition->getMapping($typeDossierEtape)->getAll();
 
-        $this->assertEquals(array(
+        $this->assertEquals([
             'i-Parapheur' => 'i-Parapheur #2',
             'iparapheur_type' => 'iparapheur_type_2',
             'iparapheur_sous_type' => 'iparapheur_sous_type_2',
@@ -161,7 +161,7 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
             'fast_parapheur_email_destinataire' => 'fast_parapheur_email_destinataire_2',
             'fast_parapheur_email_cc' => 'fast_parapheur_email_cc_2',
             'fast_parapheur_agents' => 'fast_parapheur_agents_2',
-        ), $mapping);
+        ], $mapping);
     }
 
     /**
@@ -194,16 +194,16 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
 
         $action_list = $typeDossierEtapeDefinition->getFormulaireForEtape($typeDossierEtape);
 
-        $this->assertEquals(array(
+        $this->assertEquals([
             'i-Parapheur #2' =>
-                array(
+                [
                     'iparapheur_type_2' =>
-                        array(
+                        [
                             'name' => 'Type iParapheur',
                             'read-only' => true,
-                        ),
+                        ],
                     'iparapheur_sous_type_2' =>
-                        array(
+                        [
                             'name' => 'Sous-type i-Parapheur',
                             'requis' => true,
                             'index' => true,
@@ -211,72 +211,72 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
                             'type' => 'externalData',
                             'choice-action' => 'iparapheur-sous-type_2',
                             'link_name' => 'Sélectionner un sous-type',
-                        ),
+                        ],
                     'json_metadata_2' =>
-                        array(
+                        [
                             'name' => 'Métadonnées parapheur (JSON)',
                             'commentaire' => 'Au format JSON {"cle1":"valeur1","cle2":"valeur2",...}',
                             'type' => 'file',
-                        ),
+                        ],
                     'has_date_limite_2' =>
-                        array(
+                        [
                             'name' => 'Utiliser une date limite',
                             'type' => 'checkbox',
-                        ),
+                        ],
                     'date_limite_2' =>
-                        array(
+                        [
                             'name' => 'Date limite',
                             'type' => 'date',
-                        ),
+                        ],
                     'envoi_iparapheur_2' => [
                         'no-show' => true
                     ]
-                ),
+                ],
             'Signature #2' =>
-                array(
+                [
                     'iparapheur_dossier_id_2' =>
-                        array(
+                        [
                             'name' => '#ID dossier parapheur',
-                        ),
+                        ],
                     'iparapheur_historique_2' =>
-                        array(
+                        [
                             'name' => 'Historique iparapheur',
                             'type' => 'file',
-                        ),
+                        ],
                     'parapheur_last_message_2' => [
                         'name' => 'Dernier message reçu du parapheur',
                     ],
                     'has_signature_2' =>
-                        array(
+                        [
                             'no-show' => true,
-                        ),
+                        ],
                     'signature_2' =>
-                        array(
+                        [
                             'name' => 'Signature détachée',
                             'type' => 'file',
-                        ),
+                        ],
                     'bordereau_signature_2' => [
                         'name' => 'Bordereau de signature',
                         'type' => 'file',
                     ],
                     'document_original_2' =>
-                        array(
+                        [
                             'name' => 'Document original',
                             'type' => 'file',
-                        ),
+                        ],
                     'multi_document_original_2' =>
-                        array(
+                        [
                             'name' => 'Multi-document(s) original',
                             'type' => 'file',
                             'multiple' => true,
-                        ),
+                        ],
                     'iparapheur_annexe_sortie_2' =>
-                        array(
+                        [
                             'name' => 'Annexe(s) de sortie du parapheur',
                             'type' => 'file',
                             'multiple' => true,
-                        ),
-                ),
+                        ],
+                ],
             'Parapheur FAST #2' => [
                 'envoi_fast_2' => [
                     'no-show' => true
@@ -308,7 +308,7 @@ Uniquement avec le mode "circuit à la volée"',
 Uniquement avec le mode "circuit à la volée"',
                 ],
             ]
-        ), $action_list);
+        ], $action_list);
     }
 
 
@@ -446,17 +446,17 @@ Uniquement avec le mode "circuit à la volée"',
 
         $page_condition = $typeDossierEtapeDefinition->getPageCondition($typeDossierEtape);
 
-        $this->assertEquals(array(
+        $this->assertEquals([
             'i-Parapheur #2' => [
                 'envoi_iparapheur_2' => true
             ],
             'Signature #2' =>
-                array(
+                [
                     'has_signature_2' => true,
-                ),
+                ],
             'Parapheur FAST #2' => [
                 'envoi_fast_2' => true
             ]
-        ), $page_condition);
+        ], $page_condition);
     }
 }

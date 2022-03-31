@@ -21,7 +21,7 @@ if (!$result) {
     exit;
 }
 
-$entite_list = array();
+$entite_list = [];
 
 foreach ($result as $document) {
     $id_d = $document['id_d'];

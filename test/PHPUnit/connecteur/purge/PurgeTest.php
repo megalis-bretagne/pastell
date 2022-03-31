@@ -209,7 +209,7 @@ class PurgeTest extends PastellTestCase
         $this->getObjectInstancier()->setInstance(ActionPossible::class, $actionPossible);
         $result = $this->getInternalAPI()->post(
             "/Document/" . PastellTestCase::ID_E_COL,
-            array('type' => 'actes-generique')
+            ['type' => 'actes-generique']
         );
         $id_d = $result['id_d'];
 
@@ -239,11 +239,11 @@ class PurgeTest extends PastellTestCase
     {
         $result = $this->getInternalAPI()->post(
             "/Document/" . PastellTestCase::ID_E_COL,
-            array('type' => 'actes-generique')
+            ['type' => 'actes-generique']
         );
         $id_d = $result['id_d'];
 
-        $this->getInternalAPI()->patch("/entite/1/document/$id_d", array('objet' => 'test'));
+        $this->getInternalAPI()->patch("/entite/1/document/$id_d", ['objet' => 'test']);
 
         $purge = $this->getObjectInstancier()->getInstance(Purge::class);
 

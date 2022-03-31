@@ -297,7 +297,7 @@ class ConnecteurControler extends PastellControler
             $this->setViewParameter('action', []);
         }
 
-        $this->setViewParameter('inject', array('id_e' => $id_e,'id_ce' => $id_ce,'id_d' => '','action' => ''));
+        $this->setViewParameter('inject', ['id_e' => $id_e,'id_ce' => $id_ce,'id_d' => '','action' => '']);
 
         $this->setViewParameter('my_role', "");
 

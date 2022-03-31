@@ -9,7 +9,7 @@ class DepotSFTPTest extends PastellTestCase
     {
         parent::setUp();
         $SFTP = $this->createMock('SFTP');
-        $SFTP->method('listDirectory')->willReturn(array('foo'));
+        $SFTP->method('listDirectory')->willReturn(['foo']);
 
 
         $SFTPFactory = $this->createMock('SFTPFactory');
@@ -34,7 +34,7 @@ class DepotSFTPTest extends PastellTestCase
     public function testList()
     {
         $this->assertEquals(
-            array('foo'),
+            ['foo'],
             $this->depotSFTP->listDirectory()
         );
     }
@@ -67,7 +67,7 @@ class DepotSFTPTest extends PastellTestCase
     public function testSaveDocumentRename()
     {
         $SFTP = $this->createMock('SFTP');
-        $SFTP->method('listDirectory')->willReturn(array('foo'));
+        $SFTP->method('listDirectory')->willReturn(['foo']);
 
 
         $SFTPFactory = $this->createMock('SFTPFactory');

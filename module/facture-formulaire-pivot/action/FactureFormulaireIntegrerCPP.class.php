@@ -45,7 +45,7 @@ class FactureFormulaireIntegrerCPP extends ActionExecutor
         }
         @ unlink($tmp_folder . "/empty");
 
-        $docInfo = array(
+        $docInfo = [
             'id_e' => $this->id_e,
             'id_u' => $this->id_u,
             'nom_flux_cpp' => $this->nom_flux_cpp,
@@ -61,7 +61,7 @@ class FactureFormulaireIntegrerCPP extends ActionExecutor
             'date_statut_courant' => '',
 
             'fichier_facture' => $fichier_facture,
-        );
+        ];
 
         $result = $this->objectInstancier->getInstance(CreationFactureCPP::class)->creerFactureCPP($docInfo);
 

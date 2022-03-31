@@ -139,8 +139,8 @@ class DocumentEntite extends SQL
 
     private function buildFiltersClause($id_e, $type, $filters)
     {
-        $sql = array();
-        $params = array();
+        $sql = [];
+        $params = [];
 
         if (empty($filters)) {
             $sql[] = "SELECT id_d FROM document_index JOIN document_entite USING(id_d) JOIN document USING(id_d) WHERE id_e=? AND type=?";
@@ -152,7 +152,7 @@ class DocumentEntite extends SQL
                 array_push($params, $id_e, $type, $k, $this->formatLIKE($v));
             }
         }
-        return array('sql' => $sql, 'params' => $params);
+        return ['sql' => $sql, 'params' => $params];
     }
 
     private function buildRequestOneClause($clause)

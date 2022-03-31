@@ -43,14 +43,16 @@ class FileUploaderTest extends PHPUnit\Framework\TestCase
         $tmp_file = $tmp_folder . "/var.txt";
         file_put_contents($tmp_file, self::FILE_CONTENT);
 
-        $fileUploader = $this->getFileUploader(array("foo" =>
-            array(
+        $fileUploader = $this->getFileUploader([
+        "foo" =>
+            [
                 'name' => 'bar',
                 'type' => 'text/plain',
                 'size' => 42,
                 'tmp_name' => $tmp_file,
-                'error' => UPLOAD_ERR_OK)
-        ));
+                'error' => UPLOAD_ERR_OK
+        ]
+        ]);
         $this->assertEquals(1, $fileUploader->getNbFile('foo'));
         $this->assertEquals('bar', $fileUploader->getName('foo'));
         $this->assertEquals($tmp_file, $fileUploader->getFilePath('foo'));
@@ -64,13 +66,15 @@ class FileUploaderTest extends PHPUnit\Framework\TestCase
     public function testGetManyFiles()
     {
         $fileUploader = $this->getFileUploader(
-            ["foo" =>
-            array(
+            [
+            "foo" =>
+            [
                 'name' => ['bar','baz'],
                 'type' => ['text/plain','application/xml'],
                 'size' => [42,43],
                 'tmp_name' => [$this->tmp_file,$this->tmp_file],
-                'error' => [UPLOAD_ERR_OK,UPLOAD_ERR_OK])
+                'error' => [UPLOAD_ERR_OK,UPLOAD_ERR_OK]
+            ]
             ]
         );
         $this->assertEquals(2, $fileUploader->getNbFile('foo'));
@@ -82,14 +86,16 @@ class FileUploaderTest extends PHPUnit\Framework\TestCase
     public function testGetOneFileError()
     {
 
-        $fileUploader = $this->getFileUploader(array("foo" =>
-            array(
+        $fileUploader = $this->getFileUploader([
+        "foo" =>
+            [
                 'name' => 'bar',
                 'type' => 'text/plain',
                 'size' => 42,
                 'tmp_name' => $this->tmp_file,
-                'error' => UPLOAD_ERR_FORM_SIZE)
-        ));
+                'error' => UPLOAD_ERR_FORM_SIZE
+        ]
+        ]);
         $this->assertEquals(1, $fileUploader->getNbFile('foo'));
         $this->assertFalse($fileUploader->getName('foo'));
     }
@@ -97,13 +103,15 @@ class FileUploaderTest extends PHPUnit\Framework\TestCase
     public function testGetManyFilesError()
     {
         $fileUploader = $this->getFileUploader(
-            ["foo" =>
-                array(
+            [
+            "foo" =>
+                [
                     'name' => ['bar','baz'],
                     'type' => ['text/plain','application/xml'],
                     'size' => [42,43],
                     'tmp_name' => [$this->tmp_file,$this->tmp_file],
-                    'error' => [UPLOAD_ERR_OK,UPLOAD_ERR_FORM_SIZE])
+                    'error' => [UPLOAD_ERR_OK,UPLOAD_ERR_FORM_SIZE]
+            ]
             ]
         );
         $this->assertEquals(2, $fileUploader->getNbFile('foo'));
@@ -116,14 +124,16 @@ class FileUploaderTest extends PHPUnit\Framework\TestCase
     public function testGetOneFileUnknowError()
     {
 
-        $fileUploader = $this->getFileUploader(array("foo" =>
-            array(
+        $fileUploader = $this->getFileUploader([
+        "foo" =>
+            [
                 'name' => 'bar',
                 'type' => 'text/plain',
                 'size' => 42,
                 'tmp_name' => $this->tmp_file,
-                'error' => 142)
-        ));
+                'error' => 142
+        ]
+        ]);
         $this->assertEquals(1, $fileUploader->getNbFile('foo'));
         $this->assertFalse($fileUploader->getName('foo'));
         $this->assertEquals("Erreur inconnue (142) lors de l'upload du fichier", $fileUploader->getLastError());

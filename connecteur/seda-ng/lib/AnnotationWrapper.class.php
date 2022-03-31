@@ -6,10 +6,10 @@ class AnnotationWrapper
 
     private const DEFAULT_FILENAME_TRANSLIT_REGEXP = '/[^\x20-\x7E]/';
 
-    private $connecteurInfo = array();
+    private $connecteurInfo = [];
     private $compteur_jour;
 
-    private $array_index = array();
+    private $array_index = [];
 
     /** @var  FluxData */
     private $fluxData;
@@ -82,12 +82,12 @@ class AnnotationWrapper
 
     public function extractInfo($string)
     {
-        $result = array();
+        $result = [];
         preg_match_all("#{{pastell:([^:]*):?((?:(?!}}).)*)}}#", $string, $matches);
         foreach ($matches[0] as $i => $one_match) {
             $command = $matches[1][$i];
             $data = $matches[2][$i];
-            $result[] = array($command,$data);
+            $result[] = [$command,$data];
         }
         return $result;
     }
@@ -124,7 +124,7 @@ class AnnotationWrapper
         return $return;
     }
 
-    protected function getAnnotationReturn($type, $data = false, $node_attributes = array())
+    protected function getAnnotationReturn($type, $data = false, $node_attributes = [])
     {
         $return = new AnnotationReturn();
         $return->type = $type;
@@ -170,9 +170,9 @@ class AnnotationWrapper
     {
         $sha256 = $this->fluxData->getFileSHA256($data);
 
-        $node_attributes = array(
+        $node_attributes = [
             'algorithme' => self::SHA256_URI
-        );
+        ];
 
         return $this->getAnnotationReturn(AnnotationReturn::STRING, $sha256, $node_attributes);
     }
@@ -213,7 +213,7 @@ class AnnotationWrapper
         $filepath = $this->fluxData->getFilepath($data);
         $this->fluxData->setFileList($data, $value, $filepath);
         $annotationReturn = $this->getAnnotationReturn(AnnotationReturn::ATTACHMENT_INFO, $value);
-        $annotationReturn->data = array('content-type' => $this->fluxData->getContentType($data));
+        $annotationReturn->data = ['content-type' => $this->fluxData->getContentType($data)];
         return $annotationReturn;
     }
 

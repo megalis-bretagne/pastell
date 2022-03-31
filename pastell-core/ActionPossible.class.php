@@ -222,7 +222,7 @@ class ActionPossible
      */
     private function getActionPossibleWithCache($id_u, $id_d)
     {
-        $possible = array();
+        $possible = [];
 
         foreach ($this->actionObject->getAll() as $action_name) {
             if ($this->isActionPossibleWithCache($id_u, $id_d, $action_name)) {
@@ -243,7 +243,7 @@ class ActionPossible
     {
         $action_possible_list = $this->getActionPossibleWithCache($id_u, $id_d);
 
-        $result = array();
+        $result = [];
         foreach ($action_possible_list as $action_possible) {
             if ($action_possible == 'modification') {
                 continue;
@@ -372,7 +372,7 @@ class ActionPossible
             }
             return true;
         }
-        if (is_array($ruleValue) && ! in_array($ruleName, array('collectivite-properties','herited-properties','content','properties'))) {
+        if (is_array($ruleValue) && ! in_array($ruleName, ['collectivite-properties','herited-properties','content','properties'])) {
             foreach ($ruleValue as $ruleElement) {
                 if ($this->verifRule($id_u, $ruleName, $ruleElement)) {
                     return true;

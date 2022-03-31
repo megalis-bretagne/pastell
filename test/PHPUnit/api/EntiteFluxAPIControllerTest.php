@@ -4,7 +4,7 @@ class EntiteFluxAPIControllerTest extends PastellTestCase
 {
     private function associateConnecteur()
     {
-        return $this->getInternalAPI()->post("/entite/1/flux/test/connecteur/12", array("type" => "test"));
+        return $this->getInternalAPI()->post("/entite/1/flux/test/connecteur/12", ["type" => "test"]);
     }
 
     public function testAssociateConnecteur()
@@ -16,7 +16,7 @@ class EntiteFluxAPIControllerTest extends PastellTestCase
     public function testDoActionAction()
     {
         $this->associateConnecteur();
-        $result = $this->getInternalAPI()->post("/entite/1/flux/test/action", array("type" => "test","id_ce" => 12,"flux" => 'test',"action" => "ok"));
+        $result = $this->getInternalAPI()->post("/entite/1/flux/test/action", ["type" => "test","id_ce" => 12,"flux" => 'test',"action" => "ok"]);
         $this->assertEquals("OK !", $result['message']);
     }
 
@@ -47,7 +47,7 @@ class EntiteFluxAPIControllerTest extends PastellTestCase
         $this->associateConnecteur();
         $this->expectException("Exception");
         $this->expectExceptionMessage("L'action foo n'existe pas.");
-        $this->getInternalAPI()->post("/entite/1/flux/test/action", array("type" => "test","id_ce" => 12,"flux" => 'test',"action" => "foo"));
+        $this->getInternalAPI()->post("/entite/1/flux/test/action", ["type" => "test","id_ce" => 12,"flux" => 'test',"action" => "foo"]);
     }
 
     public function testDoActionFail()
@@ -55,7 +55,7 @@ class EntiteFluxAPIControllerTest extends PastellTestCase
         $this->associateConnecteur();
         $this->expectException("Exception");
         $this->expectExceptionMessage("Fail !");
-        $this->getInternalAPI()->post("/entite/1/flux/test/action", array("type" => "test","id_ce" => 12,"flux" => 'test',"action" => "fail"));
+        $this->getInternalAPI()->post("/entite/1/flux/test/action", ["type" => "test","id_ce" => 12,"flux" => 'test',"action" => "fail"]);
     }
 
     public function testDoActionNotPossible()
@@ -63,14 +63,14 @@ class EntiteFluxAPIControllerTest extends PastellTestCase
         $this->associateConnecteur();
         $this->expectException("Exception");
         $this->expectExceptionMessage("L'action « not_possible »  n'est pas permise : role_id_e n'est pas vérifiée");
-        $this->getInternalAPI()->post("/entite/1/flux/test/action", array("type" => "test","id_ce" => 12,"flux" => 'test',"action" => "not_possible"));
+        $this->getInternalAPI()->post("/entite/1/flux/test/action", ["type" => "test","id_ce" => 12,"flux" => 'test',"action" => "not_possible"]);
     }
 
     public function testDoActionNoConnecteur()
     {
         $this->expectException("Exception");
         $this->expectExceptionMessage("Le connecteur de type SAE n'existe pas pour le flux test.");
-        $this->getInternalAPI()->post("/entite/1/flux/test/action", array("type" => "SAE","id_ce" => 12,"flux" => 'test',"action" => "ok"));
+        $this->getInternalAPI()->post("/entite/1/flux/test/action", ["type" => "SAE","id_ce" => 12,"flux" => 'test',"action" => "ok"]);
     }
 
     public function testDoPostTwoSameType()

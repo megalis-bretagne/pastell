@@ -117,27 +117,28 @@ class ExtensionCppTestCase extends PastellTestCase
      */
     protected function getConsulterHistoriqueFacture($date_dernier_statut, $dernier_statut)
     {
-        return array (
+        return  [
             'codeRetour' => 0,
             'libelle' => 'GCU_MSG_01_000',
-            'historiquesDesStatuts' => array (
-                'histoStatut' => array (
-                    array(
+            'historiquesDesStatuts' =>  [
+                'histoStatut' =>  [
+                    [
                         'histoStatutCode' => $dernier_statut,
                         'histoStatutDatePassage' => $date_dernier_statut,
                         'histoStatutId' => 8548204
-                    ),
-                    array (
+                    ],
+                     [
                         'histoStatutCode' => "DEPOSEE",
                         'histoStatutDatePassage' => "2018-04-19 11:08",
                         'histoStatutId' => 8548152
-                    ))
-            ),
+                    ]
+                ]
+            ],
             'idFacture' => 2194673,
             'modeDepot' => "DEPOT_PDF_API",
             'numeroFacture' => "FAC19-2512",
             'statutCourantCode' => $dernier_statut
-        );
+        ];
     }
 
     /**
@@ -148,13 +149,13 @@ class ExtensionCppTestCase extends PastellTestCase
     protected function getrechercheFactureParRecipiendaire($min_date_depot = self::DATE_DEPUIS_LE, $statut_facture = 'MISE_A_DISPOSITION'): array
     {
         if ($min_date_depot > self::DATE_DEPOT_FACTURE) {
-            return array (
-                'listeFactures' =>  array ()
-            );
+            return  [
+                'listeFactures' =>   []
+            ];
         }
-        return array (
-            'listeFactures' =>  array (
-                array (
+        return  [
+            'listeFactures' =>   [
+                 [
                     'codeDestinataire' => '00000000013456',
                     'codeFournisseur' => '00000000000727',
                     'dateDepot' => self::DATE_DEPOT_FACTURE,
@@ -174,8 +175,9 @@ class ExtensionCppTestCase extends PastellTestCase
                     'typeDemandePaiement' => 'FACTURE',
                     'typeFacture' => 'FACTURE',
                     'typeIdentifiantFournisseur' => 'SIRET',
-                ))
-        );
+                 ]
+            ]
+        ];
     }
 
     /**
@@ -185,13 +187,13 @@ class ExtensionCppTestCase extends PastellTestCase
     protected function getrechercheFactureTravaux($min_date_depot = self::DATE_DEPUIS_LE)
     {
         if ($min_date_depot > self::DATE_DEPOT_FACTURE) {
-            return array (
-                'listeFactures' =>  array ()
-            );
+            return  [
+                'listeFactures' =>   []
+            ];
         }
-        return array (
-            'listeFactures' =>  array (
-                array (
+        return  [
+            'listeFactures' =>   [
+                 [
                     'identifiantDestinataire' => '00000000013456',
                     'identifiantFournisseur' => '00000000000727',
                     'dateDepot' => '2019-07-11',
@@ -211,8 +213,9 @@ class ExtensionCppTestCase extends PastellTestCase
                     'typeDemandePaiement' => 'FACTURE_TRAVAUX',
                     'typeFactureTravaux' => 'PROJET_DECOMPTE_MENSUEL',
                     'typeIdentifiantFournisseur' => 'SIRET',
-                ))
-        );
+                 ]
+            ]
+        ];
     }
 
     /**
@@ -221,13 +224,13 @@ class ExtensionCppTestCase extends PastellTestCase
      */
     protected function getTraiterFactureRecue($statut_cible)
     {
-        return array (
+        return  [
             'codeRetour' => 0,
             'libelle' => 'GCU_MSG_01_000',
             'idFacture' => 2194673,
             'numeroFacture' => "FAC19-2512",
             'dateTraitement' => date("Y-m-d"),
             'nouveauStatut' => $statut_cible
-        );
+        ];
     }
 }

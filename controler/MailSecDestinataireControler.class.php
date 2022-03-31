@@ -133,13 +133,13 @@ class MailSecDestinataireControler extends PastellControler
         $this->setViewParameter('template_milieu', "MailSecIndex");
         $this->setViewParameter('reponse_url', WEBSEC_BASE . "/repondre.php?key={$mailSecInfo->key}");
 
-        $this->setViewParameter('inject', array(
+        $this->setViewParameter('inject', [
             'id_e' => $mailSecInfo->id_e,
             'id_d' => $mailSecInfo->id_d,
             'action' => '',
             'id_ce' => false,
             'key' => $mailSecInfo->key
-        ));
+        ]);
         $this->setViewParameter('download_all_link', WEBSEC_BASE . "/download_all.php?key={$mailSecInfo->key}");
         $this->renderPage($mailSecInfo);
     }
@@ -190,13 +190,13 @@ class MailSecDestinataireControler extends PastellControler
         }
 
         $this->setViewParameter('action_url', "reponse-edition.php");
-        $this->setViewParameter('inject', array(
+        $this->setViewParameter('inject', [
             'id_e' => $mailSecInfo->id_e,
             'id_d' => $id_d_reponse,
             'action' => '',
             'id_ce' => '',
             'key' => $mailSecInfo->key
-        ));
+        ]);
         $this->setViewParameter('page', 0);
 
         $this->renderPage($mailSecInfo);
@@ -242,13 +242,13 @@ class MailSecDestinataireControler extends PastellControler
         $this->setViewParameter('reponse_url', WEBSEC_BASE . "/repondre.php?key={$mailSecInfo->key}");
         $this->setViewParameter('validation_url', WEBSEC_BASE . "/do-validation.php?key={$mailSecInfo->key}");
         $this->setViewParameter('download_all_link', WEBSEC_BASE . "/download_all.php?key={$mailSecInfo->key}");
-        $this->setViewParameter('inject', array(
+        $this->setViewParameter('inject', [
             'id_e' => $mailSecInfo->id_e,
             'id_d' => $mailSecInfo->id_d,
             'action' => '',
             'id_ce' => '',
             'key' => $mailSecInfo->key
-        ));
+        ]);
         $this->renderPage($mailSecInfo);
     }
 

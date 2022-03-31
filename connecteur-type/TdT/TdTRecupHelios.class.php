@@ -45,7 +45,7 @@ class TdTRecupHelios extends ConnecteurTypeActionExecutor
 
         $next_message = "La transaction est dans l'état : $status_info ($status) ";
 
-        if (in_array($status, array(TdtConnecteur::STATUS_ACQUITTEMENT_RECU,TdtConnecteur::STATUS_REFUSE,TdtConnecteur::STATUS_HELIOS_INFO))) {
+        if (in_array($status, [TdtConnecteur::STATUS_ACQUITTEMENT_RECU,TdtConnecteur::STATUS_REFUSE,TdtConnecteur::STATUS_HELIOS_INFO])) {
             $next_action = $info_tdt_action;
             $next_message = "Une réponse est disponible pour ce fichier PES";
             $this->getDonneesFormulaire()->setData($has_reponse_element, true);

@@ -39,12 +39,12 @@ class ExtensionsTest extends PastellTestCase
     private function getExtensionsTest()
     {
         $extension_test_path = $this->getExtensionTestPath();
-        return $this->getExtensions(array(array('id_e' => '42','path' => $extension_test_path)));
+        return $this->getExtensions([['id_e' => '42','path' => $extension_test_path]]);
     }
 
     public function testGetAllEmpty()
     {
-        $extensions = $this->getExtensions(array());
+        $extensions = $this->getExtensions([]);
         $this->assertEmpty($extensions->getAll());
     }
 
@@ -57,7 +57,7 @@ class ExtensionsTest extends PastellTestCase
 
     public function testGetAllConnecteurEmpty()
     {
-        $extensions = $this->getExtensions(array());
+        $extensions = $this->getExtensions([]);
         $this->assertEmpty($extensions->getAllConnecteur());
     }
 
@@ -111,7 +111,7 @@ class ExtensionsTest extends PastellTestCase
     public function testGetInfoRevisionNotOK()
     {
         $extension_test_path = $this->getExtensionTestPath();
-        $extensionSQLGetAllResult = array(array('id_e' => '42','path' => $extension_test_path));
+        $extensionSQLGetAllResult = [['id_e' => '42','path' => $extension_test_path]];
 
         $extensions = $this->getExtensions($extensionSQLGetAllResult);
         $info = $extensions->getInfo(42);
@@ -120,7 +120,7 @@ class ExtensionsTest extends PastellTestCase
 
     public function testGetInfoNotExists()
     {
-        $extensionSQLGetAllResult = array(array('id_e' => '42','path' => 'toto'));
+        $extensionSQLGetAllResult = [['id_e' => '42','path' => 'toto']];
         $extensions = $this->getExtensions($extensionSQLGetAllResult);
         $info = $extensions->getInfo(42);
         $this->assertNotEmpty($info['error']);
@@ -128,7 +128,7 @@ class ExtensionsTest extends PastellTestCase
 
     public function testGetInfoNoManifest()
     {
-        $extensionSQLGetAllResult = array(array('id_e' => '42','path' => '/tmp'));
+        $extensionSQLGetAllResult = [['id_e' => '42','path' => '/tmp']];
         $extensions = $this->getExtensions($extensionSQLGetAllResult);
         $info = $extensions->getInfo(42);
         $this->assertEquals("Le fichier manifest.yml n'a pas été trouvé dans /tmp", $info['warning-detail']);

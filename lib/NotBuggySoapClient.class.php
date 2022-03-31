@@ -31,7 +31,7 @@ class NotBuggySoapClient extends SoapClient
     private $no_proxy;
 
 //PHP SUCKS : https://bugs.php.net/bug.php?id=47584
-    public function __construct($wsdl, array $options = array(), $is_jax_ws = false)
+    public function __construct($wsdl, array $options = [], $is_jax_ws = false)
     {
         global $soapErrorException;
         $this->is_jax_ws = $is_jax_ws;
@@ -134,13 +134,13 @@ class NotBuggySoapClient extends SoapClient
 
     public function doRequestWithCurl($request, $location, $action, $version)
     {
-        $headers = array
-        (
+        $headers =
+        [
             'Method: POST',
             'Connection: Keep-Alive',
             'User-Agent: PHP-SOAP-CURL',
             'Content-Type: text/xml; charset=utf-8',
-        );
+        ];
 
         $ch = curl_init($location);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -214,7 +214,7 @@ class NotBuggySoapClient extends SoapClient
     private function remplacerRefParContentPart($content_enveloppe, $contentId, $content_part)
     {
         // Recherche du contentId
-        $matches = array();
+        $matches = [];
         if (preg_match('/(<xop:.*' . $contentId . '.*\/>)/i', $content_enveloppe, $matches) === 1) {
             $content_part64 = base64_encode($content_part);
             $content_enveloppe = str_replace($matches[1], $content_part64, $content_enveloppe);
@@ -224,9 +224,9 @@ class NotBuggySoapClient extends SoapClient
 
     private function formaterRetourMultiPartXOPToXML($response, $headers)
     {
-        $boundary = array();
-        $start = array();
-        $multiParts = array();
+        $boundary = [];
+        $start = [];
+        $multiParts = [];
         $CRLF  = "\r\n";
         // Boundary hyphens
         $BHYP  = "--";
@@ -279,7 +279,7 @@ class NotBuggySoapClient extends SoapClient
             }
 
             // Insertion des parts dans l'enveloppe principale
-            $parts = array();
+            $parts = [];
             foreach ($multiParts as $mpart) {
                 if ($mpart->isEnv == true) {
                     $content_enveloppe = $mpart->content;

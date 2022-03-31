@@ -45,7 +45,7 @@ class MailSecConnecteurTest extends PastellTestCase
 
         $result = $this->getInternalAPI()->post(
             "/entite/1/connecteur",
-            array('libelle' => 'Connecteur mailsec de test','id_connecteur' => 'mailsec')
+            ['libelle' => 'Connecteur mailsec de test','id_connecteur' => 'mailsec']
         );
 
         $id_ce  = $result['id_ce'];

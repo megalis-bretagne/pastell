@@ -10,9 +10,9 @@ class DocumentTypeValidationTest extends PHPUnit\Framework\TestCase
     {
         $this->documentTypeValidation = new DocumentTypeValidation(new YMLLoader(new MemoryCacheNone()));
         $this->documentTypeValidation->setListPack(["pack_chorus_pro" => false, "pack_marche" => false]);
-        $this->documentTypeValidation->setConnecteurTypeList(array('mailsec'));
-        $this->documentTypeValidation->setActionClassList(array('Supprimer', 'StandardAction', 'Defaut'));
-        $this->documentTypeValidation->setEntiteTypeList(array());
+        $this->documentTypeValidation->setConnecteurTypeList(['mailsec']);
+        $this->documentTypeValidation->setActionClassList(['Supprimer', 'StandardAction', 'Defaut']);
+        $this->documentTypeValidation->setEntiteTypeList([]);
         $this->documentTypeValidation->setConnecteurTypeActionClassList(
             ['MailsecEnvoyer', 'MailsecRenvoyer', 'MailsecComputeReadMail']
         );
@@ -38,8 +38,8 @@ class DocumentTypeValidationTest extends PHPUnit\Framework\TestCase
 
     public function testConnecteurType()
     {
-        $this->documentTypeValidation->setConnecteurTypeList(array("signature"));
-        $this->documentTypeValidation->setConnecteurTypeActionClassList(array("SignatureEnvoie"));
+        $this->documentTypeValidation->setConnecteurTypeList(["signature"]);
+        $this->documentTypeValidation->setConnecteurTypeActionClassList(["SignatureEnvoie"]);
         $this->assertTrue($this->documentTypeValidation->validate(__DIR__ . "/fixtures/definition-with-connecteur-type.yml"));
     }
 
@@ -52,8 +52,8 @@ class DocumentTypeValidationTest extends PHPUnit\Framework\TestCase
 
     public function testConnecteurTypeMappingFailed()
     {
-        $this->documentTypeValidation->setConnecteurTypeList(array("signature"));
-        $this->documentTypeValidation->setConnecteurTypeActionClassList(array("SignatureEnvoie"));
+        $this->documentTypeValidation->setConnecteurTypeList(["signature"]);
+        $this->documentTypeValidation->setConnecteurTypeActionClassList(["SignatureEnvoie"]);
         $this->assertFalse($this->documentTypeValidation->validate(__DIR__ . "/fixtures/definition-with-connecteur-type-failed.yml"));
         $this->assertEquals("action:<b>test</b>:connecteur-type-mapping:document:<b>toto</b> n'est pas un élément du formulaire", $this->documentTypeValidation->getLastError()[0]);
     }

@@ -20,7 +20,7 @@ class PESMarcheInfo extends PESV2XMLFile
     {
         $xml = $this->getSimpleXMLFromFile($pes_aller_path);
 
-        $info = array();
+        $info = [];
 
         // EnTetePES
         $info[self::NOM_FIC] = $this->getValueFromXPath($xml, "//Enveloppe/Parametres/NomFic/@V");
@@ -63,10 +63,10 @@ class PESMarcheInfo extends PESV2XMLFile
             $info['Libelle_nature_marche'] = $this->getNatureMarche($info['is_concession'], $zone_marche);
             $info['Libelle_procedure_marche'] = $this->getProcedureMarche($info['is_concession'], $zone_marche);
 
-            $info['Acheteur'] = array();
+            $info['Acheteur'] = [];
             $info['Acheteur'] = $this->getAcheteur($info['is_concession'], $zone_marche);
 
-            $info['Titulaire'] = array();
+            $info['Titulaire'] = [];
             $info['accord_cadre'] = "";
             $info['date_notification'] = "";
             if (!$info['is_concession']) {
@@ -97,7 +97,7 @@ class PESMarcheInfo extends PESV2XMLFile
     private function getNatureMarche($is_concession, $zone_marche)
     {
 
-        $nature_contrat = array (
+        $nature_contrat =  [
             "01" => "01 : Marché",
             "02" => "02 : Marché De Partenariat",
             "03" => "03 : Accord Cadre À Bons De Commande",
@@ -105,13 +105,13 @@ class PESMarcheInfo extends PESV2XMLFile
             "05" => "05 : Marché Subséquent",
             "06" => "06 : Complémentaire",
             "07" => "07 : Autre",
-        );
-        $nature_concession = array (
+        ];
+        $nature_concession =  [
             "01" => "01 : Concession de travaux",
             "02" => "02 : Concession de service",
             "03" => "03 : Concession de service public",
             "04" => "04 : Délégation de service public",
-        );
+        ];
         if ($is_concession) {
             return $nature_concession[strval($zone_marche->NatureConcession['V'])];
         }
@@ -121,7 +121,7 @@ class PESMarcheInfo extends PESV2XMLFile
     private function getProcedureMarche($is_concession, $zone_marche)
     {
 
-        $procedure_contrat = array (
+        $procedure_contrat =  [
             "01" => "01 : Procédure adaptée",
             "02" => "02 : Appel d'offres ouvert",
             "03" => "03 : Appel d'offres restreint",
@@ -133,13 +133,13 @@ class PESMarcheInfo extends PESV2XMLFile
             "09" => "09 : Système d'acquisition dynamique",
             "10" => "10 : Autre",
 
-        );
-        $procedure_concession = array (
+        ];
+        $procedure_concession =  [
             "01" => "01 : Procédure négociée ouverte",
             "02" => "02 : Procédure non négociée ouverte",
             "03" => "03 : Procédure négociée restreinte",
             "04" => "04 : Procédure non négociée restreinte",
-        );
+        ];
         if ($is_concession) {
             return $procedure_concession[strval($zone_marche->ProcedureConcession['V'])];
         }
@@ -149,7 +149,7 @@ class PESMarcheInfo extends PESV2XMLFile
     private function getAcheteur($is_concession, $zone_marche)
     {
 
-        $result = array();
+        $result = [];
 
         if ($is_concession) {
             foreach ($zone_marche->Concessionnaires->Concessionnaire as $concessionnaire) {
@@ -172,16 +172,16 @@ class PESMarcheInfo extends PESV2XMLFile
     private function getTitulaire($is_concession, $zone_marche)
     {
 
-        $result = array();
+        $result = [];
 
         if ($is_concession) {
             return $result;
         }
 
-        $type_titulaire = array (
+        $type_titulaire =  [
             "01" => "Titulaire du marché",
             "02" => "Co-traitant",
-        );
+        ];
 
         foreach ($zone_marche->Operateurs->Titulaire as $titulaire) {
             $chaine = $type_titulaire[strval($titulaire->TypeTitulaireMarche['V'])];

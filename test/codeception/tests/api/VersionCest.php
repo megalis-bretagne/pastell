@@ -23,7 +23,7 @@ class VersionCest
         $I->wantTo("vérifier qu'on peut pas utiliser l'API sans être authentifié");
         $I->sendGET("/version");
         $I->seeResponseCodeIs(\Codeception\Util\HttpCode::UNAUTHORIZED);
-        $I->seeResponseContainsJson(array('status' => 'error','error-message' => 'Accès interdit'));
+        $I->seeResponseContainsJson(['status' => 'error','error-message' => 'Accès interdit']);
     }
 
     public function tryNotAuthenticatedV1(NoGuy $I)
@@ -31,7 +31,7 @@ class VersionCest
         $I->wantTo("vérifier qu'on peut pas utiliser l'API sans être authentifié [V1]");
         $I->sendGETV1("/version.php");
         $I->seeResponseCodeIs(\Codeception\Util\HttpCode::UNAUTHORIZED);
-        $I->seeResponseContainsJson(array('status' => 'error','error-message' => 'Accès interdit'));
+        $I->seeResponseContainsJson(['status' => 'error','error-message' => 'Accès interdit']);
     }
 
     public function tryNotAuhtorizedMethod(NoGuy $I)

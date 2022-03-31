@@ -25,14 +25,14 @@ class ZenMail
     private $all_info;
 
     private $return_path;
-    private $extra_headers = array();
+    private $extra_headers = [];
 
     private $logger;
 
     public function __construct(FileContentType $fileContentType, Logger $logger)
     {
         $this->setCharset(self::DEFAULT_CHARSET);
-        $this->image = array();
+        $this->image = [];
         $this->fileContentType = $fileContentType;
         $this->disable_mail_sending = false;
         $this->logger = $logger;
@@ -107,12 +107,12 @@ class ZenMail
 
     private function getFormatedMimeHeadder($value)
     {
-        $preferences = array(
+        $preferences = [
                 "input-charset" => $this->charset,
                 "output-charset" => "UTF-8",
                 "line-break-chars" => PHP_EOL,
                 "scheme" => 'Q',
-        );
+        ];
         $formated_header = mb_substr(iconv_mime_encode("", $value, $preferences), 2);
         return $formated_header;
     }
@@ -127,7 +127,7 @@ class ZenMail
 
     public function resetExtraHeaders()
     {
-        $this->extra_headers = array();
+        $this->extra_headers = [];
     }
 
     public function addExtraHeaders($header_line)
@@ -142,7 +142,7 @@ class ZenMail
 
     public function resetAttachment()
     {
-        $this->attachment = array();
+        $this->attachment = [];
     }
 
     public function addAttachment($filename, $filepath)
@@ -255,11 +255,11 @@ class ZenMail
 
     private function getTxtAlternative($html_content)
     {
-            $search = array('@<script[^>]*?>.*?</script>@si',  // Strip out javascript
+            $search = ['@<script[^>]*?>.*?</script>@si',  // Strip out javascript
                     '@<style[^>]*?>.*?</style>@siU',    // Strip style tags properly
                     '@<[\/\!]*?[^<>]*?>@si',            // Strip out HTML tags
                     '@<![\s\S]*?--[ \t\n\r]*>@'        // Strip multi-line comments i
-            );
+            ];
             return preg_replace($search, '', $html_content);
     }
 

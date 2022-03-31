@@ -18,13 +18,13 @@ class PESMarcheFichierPESChange extends ActionExecutor
     {
         $info = $this->PESMarcheInfo->getAllInfo($this->getDonneesFormulaire()->getFilePath('fichier_pes'));
 
-        $info_to_retrieve = array (
+        $info_to_retrieve =  [
             PESMarcheInfo::ID_COLL => 'id_coll',
             PESMarcheInfo::DTE_STR => 'dte_str',
             PESMarcheInfo::COD_BUD => 'cod_bud',
             PESMarcheInfo::ID_CONTRAT => 'id_contrat',
             PESMarcheInfo::ID_PJ => 'id_pj',
-        );
+        ];
 
         if (! $this->getDonneesFormulaire()->get('objet')) {
             $this->getDonneesFormulaire()->setData('objet', $info[PESMarcheInfo::NOM_FIC]);

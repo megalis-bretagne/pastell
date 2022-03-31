@@ -77,7 +77,8 @@ class FluxDataSedaFactureCPP extends FluxDataSedaDefault
 
     public function get_facture_cadre()
     {
-        $valeur_cadre = array ( "A1" => "A1- Dépôt par un fournisseur d'une facture",
+        $valeur_cadre =  [
+        "A1" => "A1- Dépôt par un fournisseur d'une facture",
                 "A2" => "A2- Dépôt par un fournisseur d'une facture déjà payée",
                 "A3" => "A3- Dépôt par un fournisseur d'un mémoire de frais de justice",
                 "A4" => "A4- Dépôt par un fournisseur d'un projet de décompte mensuel",
@@ -100,7 +101,8 @@ class FluxDataSedaFactureCPP extends FluxDataSedaDefault
                 "A22" => "A22- Projet de décompte général déposé par le fournisseur ou le mandataire",
                 "A23" => "A23- Décompte général et définitif tacite déposé par le fournisseur ou le mandataire",
                 "A24" => "A24- Dépôt d'un décompte gérénral et définitif par la maitrise d oeuvrage",
-                "A25" => "A25- Décompte général et définitif déposé par la maitrise d ouvrage dans le cadre de la facturation d un marché de travaux");
+                "A25" => "A25- Décompte général et définitif déposé par la maitrise d ouvrage dans le cadre de la facturation d un marché de travaux"
+        ];
 
         return $valeur_cadre[$this->metadata['facture_cadre']];
     }
@@ -141,7 +143,7 @@ class FluxDataSedaFactureCPP extends FluxDataSedaDefault
     public function get_facture_pj_02_size_in_bytes()
     {
 
-        $result = array();
+        $result = [];
 
         foreach ($this->donneesFormulaire->get('facture_pj_02') as $i => $title) {
             $result[] = filesize($this->donneesFormulaire->getFilePath('facture_pj_02', $i));

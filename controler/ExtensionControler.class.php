@@ -25,7 +25,7 @@ class ExtensionControler extends PastellControler
         $this->setViewParameter('template_milieu', "ExtensionIndex");
         $this->setViewParameter('page_title', "Extensions");
         if ($this->hasDroit(0, "system:edition")) {
-            $this->setViewParameter('nouveau_bouton_url', array("Ajouter" => "Extension/edition"));
+            $this->setViewParameter('nouveau_bouton_url', ["Ajouter" => "Extension/edition"]);
         }
         $this->renderDefault();
     }
@@ -75,7 +75,7 @@ class ExtensionControler extends PastellControler
         $id_e = $this->getGetInfo()->get("id_extension", 0);
         $extension_info = $this->getExtensionSQL()->getInfo($id_e);
         if (!$extension_info) {
-            $extension_info = array('id_e' => 0,'path' => '');
+            $extension_info = ['id_e' => 0,'path' => ''];
         }
         $this->setViewParameter('extension_info', $extension_info);
         $this->setViewParameter('template_milieu', "ExtensionEdition");

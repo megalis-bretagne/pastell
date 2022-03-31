@@ -17,7 +17,7 @@ class SedaNGFluxInfo extends ChoiceActionExecutor
         $properties = $sedaNG->getProprietePastellFlux();
 
         $recuperateur = $this->getRecuperateur();
-        $data = array();
+        $data = [];
         foreach ($properties as $property) {
             $data[$property] = $recuperateur->get($property);
         }

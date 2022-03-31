@@ -58,8 +58,8 @@ class FluxDefinitionFiles
         if ($result !== false) {
             return $result;
         }
-        $result_all = array();
-        $result_restricted = array();
+        $result_all = [];
+        $result_restricted = [];
         $all_module = $this->extensions->getAllModule();
         foreach ($all_module as $module_path) {
             $file_config = $module_path . "/" . self::DEFINITION_FILENAME;
@@ -71,7 +71,7 @@ class FluxDefinitionFiles
                 $result_all[$id_flux] = $config;
             }
         }
-        uasort($result_all, array($this,"compareFluxDefinition"));
+        uasort($result_all, [$this,"compareFluxDefinition"]);
         $this->memoryCache->store(
             self::PASTELL_ALL_FLUX_CACHE_KEY,
             $result_all,

@@ -160,9 +160,9 @@ class PastellDaemon
         $this->jobQueueSQL->unlock($id_job);
 
         if ($job->type == Job::TYPE_DOCUMENT) {
-            $this->actionExecutorFactory->executeOnDocument($job->id_e, $job->id_u, $job->id_d, $job->etat_cible, array(), true, array(), $id_worker);
+            $this->actionExecutorFactory->executeOnDocument($job->id_e, $job->id_u, $job->id_d, $job->etat_cible, [], true, [], $id_worker);
         } elseif ($job->type == Job::TYPE_TRAITEMENT_LOT) {
-            $result = $this->actionExecutorFactory->executeOnDocument($job->id_e, $job->id_u, $job->id_d, $job->etat_cible, array(), true, array(), $id_worker);
+            $result = $this->actionExecutorFactory->executeOnDocument($job->id_e, $job->id_u, $job->id_d, $job->etat_cible, [], true, [], $id_worker);
             if (!$result) {
                 $info = $this->document->getInfo($job->id_d);
                 $message = "Echec de l'execution de l'action dans la cadre d'un traitement par lot : " . $this->actionExecutorFactory->getLastMessage();
@@ -170,7 +170,7 @@ class PastellDaemon
                 $this->notificationMail->notify($job->id_e, $job->id_d, $job->etat_cible, $info['type'], $message);
             }
         } elseif ($job->type == Job::TYPE_CONNECTEUR) {
-            $this->actionExecutorFactory->executeOnConnecteur($job->id_ce, $job->id_u, $job->etat_cible, true, array(), $id_worker);
+            $this->actionExecutorFactory->executeOnConnecteur($job->id_ce, $job->id_u, $job->etat_cible, true, [], $id_worker);
         } else {
             throw new Exception("Type de job {$job->type} inconnu");
         }

@@ -67,10 +67,12 @@ class SystemControler extends PastellControler
 
     public function getPageNumber($page_name): int
     {
-        $tab_number = array("system" => 0,
+        $tab_number = [
+        "system" => 0,
                                 "flux" => 1,
                                 "definition" => 2,
-                                "connecteurs" => 4);
+                                "connecteurs" => 4
+        ];
         return $tab_number[$page_name];
     }
 
@@ -79,8 +81,8 @@ class SystemControler extends PastellControler
      */
     public function fluxAction()
     {
-        $all_flux = array();
-        $all_flux_restricted = array();
+        $all_flux = [];
+        $all_flux_restricted = [];
 
         $documentTypeValidation = $this->getDocumentTypeValidation();
         foreach ($this->getFluxDefinitionFiles()->getAll() as $id_flux => $flux) {
@@ -134,20 +136,20 @@ class SystemControler extends PastellControler
     private function getAllActionInfo(DocumentType $documentType, $type = 'flux'): array
     {
         $id = $documentType->getModuleId();
-        $all_action = array();
+        $all_action = [];
         $action = $documentType->getAction();
         $action_list = $action->getAll();
         sort($action_list);
         foreach ($action_list as $action_name) {
             $class_name = $action->getActionClass($action_name);
-            $element = array(
+            $element = [
                 'id' => $action_name,
                 'name' => $action->getActionName($action_name),
                 'do_name' => $action->getDoActionName($action_name),
                 'class' => $class_name,
 
                 'action_auto' => $action->getActionAutomatique($action_name)
-            );
+            ];
 
             if ($type == 'connecteur') {
                 $element['path'] = $this->getActionExecutorFactory()->getConnecteurActionPath($id, $class_name);
@@ -165,7 +167,7 @@ class SystemControler extends PastellControler
         $formulaire = $documentType->getFormulaire();
 
         $allFields = $formulaire->getAllFields();
-        $form_fields = array();
+        $form_fields = [];
         foreach ($allFields as $field) {
             $form_fields[$field->getName()] = $field->getAllProperties();
         }
@@ -317,7 +319,7 @@ class SystemControler extends PastellControler
             __DIR__ . '/../connecteur/iParapheur/data-exemple/test-pastell-i-parapheur.pdf'
         );
 
-        $this->getZenMail()->setContenu(PASTELL_PATH . "/mail/test.php", array());
+        $this->getZenMail()->setContenu(PASTELL_PATH . "/mail/test.php", []);
         $this->getZenMail()->send();
 
         $this->setLastMessage("Un email a été envoyé à l'adresse  : " . get_hecho($email));

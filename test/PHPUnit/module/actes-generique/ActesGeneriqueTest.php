@@ -7,7 +7,7 @@ class ActesGeneriqueTest extends PastellTestCase
     public function testCasNominal()
     {
 
-        $result = $this->getInternalAPI()->post("/Document/" . PastellTestCase::ID_E_COL, array('type' => self::FLUX_ID));
+        $result = $this->getInternalAPI()->post("/Document/" . PastellTestCase::ID_E_COL, ['type' => self::FLUX_ID]);
         $this->assertNotEmpty($result['id_d']);
 
         $info['id_d'] = $result['id_d'];
@@ -35,7 +35,7 @@ class ActesGeneriqueTest extends PastellTestCase
         copy(__DIR__ . "/fixtures/Delib Adullact.pdf", $uploaded_file);
         $result = $this->getInternalAPI()->post(
             "/Document/{$info['id_e']}/actes-generique/{$info['id_d']}/file/arrete",
-            array('file_name' => 'Delib Adullact.pdf','file_content' => file_get_contents($uploaded_file))
+            ['file_name' => 'Delib Adullact.pdf','file_content' => file_get_contents($uploaded_file)]
         );
         $this->assertEquals('Delib Adullact.pdf', $result['content']['data']['arrete'][0]);
 

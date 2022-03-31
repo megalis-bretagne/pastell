@@ -44,7 +44,7 @@ class FluxEntiteSQL extends SQL
             " JOIN connecteur_entite ON flux_entite.id_ce=connecteur_entite.id_ce " .
             " LEFT JOIN entite ON connecteur_entite.id_e=entite.id_e " .
             " WHERE flux_entite.id_e=?";
-        $result = array();
+        $result = [];
         foreach ($this->query($sql, $id_e) as $line) {
             $result[$line['flux']][$line['type']][$line['num_same_type']] = $line;
         }
@@ -62,7 +62,7 @@ class FluxEntiteSQL extends SQL
                 " JOIN connecteur_entite ON flux_entite.id_ce=connecteur_entite.id_ce " .
                 " LEFT JOIN entite ON connecteur_entite.id_e=entite.id_e " .
                 " WHERE flux_entite.id_e=?";
-        $result = array();
+        $result = [];
         foreach ($this->query($sql, $id_e) as $line) {
             $result[$line['flux']][$line['type']] = $line;
         }
@@ -72,7 +72,7 @@ class FluxEntiteSQL extends SQL
     public function getAllFluxEntite($id_e, $flux = null, $type = null)
     {
         $sql = "SELECT * FROM flux_entite WHERE id_e=? ";
-        $data = array($id_e);
+        $data = [$id_e];
         if ($flux) {
             $sql .= " AND flux=? ";
             $data[] = $flux;
@@ -130,7 +130,7 @@ class FluxEntiteSQL extends SQL
     public function getUsedByConnecteur($id_ce, $flux = null, $id_e = null)
     {
         $sql = "SELECT * FROM flux_entite WHERE id_ce=? ";
-        $data = array($id_ce);
+        $data = [$id_ce];
         if ($flux) {
             $sql .= " AND flux=? ";
             $data[] = $flux;

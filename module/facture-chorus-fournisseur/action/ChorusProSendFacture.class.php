@@ -13,11 +13,11 @@ class ChorusProSendFacture extends ActionExecutor
             $message = "{$result['libelle']} - Code retour : {$result['codeRetour']}";
             throw new Exception($message);
         }
-        $map = array (
+        $map =  [
             "identifiantFactureCPP" => 'identifiant_facture_cpp',
             "statutFacture" => 'statut_facture',
             "dateDepot" => 'date_depot'
-        );
+        ];
         foreach ($map as $item_chorus => $item_pastell) {
             $this->getDonneesFormulaire()->setData($item_pastell, $result[$item_chorus]);
         }

@@ -21,7 +21,7 @@ class TdtRetourTeletransmettre extends ActionExecutor
         $status =  $tdt->getStatus($tedetis_transaction_id);
 
         //A priori, c'est le seul cas que je vois ou la transaction n'a pas encore été posté
-        if (in_array($status, array(TdtConnecteur::STATUS_ACTES_EN_ATTENTE_DE_POSTER))) {
+        if (in_array($status, [TdtConnecteur::STATUS_ACTES_EN_ATTENTE_DE_POSTER])) {
             throw new Exception("La transaction n'a pas le bon statut : " . TdtConnecteur::getStatusString($status) . " trouvé") ;
         }
 

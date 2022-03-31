@@ -8,7 +8,7 @@ class FluxDataTest extends FluxData
     public function __construct(array $flux_info)
     {
         $this->flux_info = $flux_info;
-        $this->file_list = array();
+        $this->file_list = [];
     }
 
     public function getData($key)
@@ -26,10 +26,11 @@ class FluxDataTest extends FluxData
 
     public function setFileList($key, $filename, $filepath)
     {
-        $this->file_list[] = array(
+        $this->file_list[] = [
             'key' => $key,
             'filename' => $filename,
-            'filepath' => $filepath);
+            'filepath' => $filepath
+        ];
     }
 
     public function getFilename($key)

@@ -16,7 +16,7 @@ class NotificationMail
         $this->notificationDigestSQL = $notificationDigestSQL;
     }
 
-    public function notify($id_e, $id_d, $action, $type, $message, array $attachment = array())
+    public function notify($id_e, $id_d, $action, $type, $message, array $attachment = [])
     {
         $lesEmails = $this->notification->getAllInfo($id_e, $type, $action);
 
@@ -29,7 +29,7 @@ class NotificationMail
         }
     }
 
-    private function sendMail($mail, $id_e, $id_d, $action, $type, $message, array $attachment = array())
+    private function sendMail($mail, $id_e, $id_d, $action, $type, $message, array $attachment = [])
     {
         $this->zenMail->setEmetteur("Pastell", PLATEFORME_MAIL);
         $this->zenMail->setDestinataire($mail);
@@ -38,7 +38,7 @@ class NotificationMail
         foreach ($attachment as $filename => $filepath) {
             $this->zenMail->addAttachment($filename, $filepath);
         }
-        $info = array('message' => $message,'id_e' => $id_e,'id_d' => $id_d,'action' => $action,'type' => $type);
+        $info = ['message' => $message,'id_e' => $id_e,'id_d' => $id_d,'action' => $action,'type' => $type];
         $this->zenMail->setContenu(PASTELL_PATH . "/mail/notification.php", $info);
         $this->zenMail->send();
         $this->journal->addActionAutomatique(Journal::NOTIFICATION, $id_e, $id_d, $action, "notification envoyée à $mail");

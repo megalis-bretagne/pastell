@@ -44,7 +44,7 @@ class ConnecteurModificationServiceTest extends PastellTestCase
     {
         $info = $this->getInternalAPI()->patch(
             "/entite/1/connecteur/12/externalData/external_data",
-            array('choix' => 'foo')
+            ['choix' => 'foo']
         );
         $this->assertEquals('foo', $info['data']['external_data']);
 

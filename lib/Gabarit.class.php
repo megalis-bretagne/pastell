@@ -7,7 +7,7 @@ class Gabarit
 
     public function __construct(ObjectInstancier $objectInstancier)
     {
-        $this->viewParameter = array();
+        $this->viewParameter = [];
         $this->objectInstancier = $objectInstancier;
     }
 

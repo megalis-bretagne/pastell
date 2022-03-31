@@ -2,7 +2,7 @@
 
 class MultiPart
 {
-    public $header = array();
+    public $header = [];
     public $content = '';
     public $isEnv = false;
 }

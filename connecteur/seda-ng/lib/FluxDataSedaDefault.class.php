@@ -22,7 +22,7 @@ class FluxDataSedaDefault extends FluxData
     public function __construct(DonneesFormulaire $donneesFormulaire)
     {
         $this->donneesFormulaire = $donneesFormulaire;
-        $this->file_list = array();
+        $this->file_list = [];
     }
 
     public function getFileList()
@@ -32,11 +32,11 @@ class FluxDataSedaDefault extends FluxData
 
     public function setFileList($key, $filename, $filepath)
     {
-        $this->file_list[] = array(
+        $this->file_list[] = [
             'key' => $key,
             'filename' => $filename,
             'filepath' => $filepath
-        );
+        ];
     }
 
     public function setMetadata(array $metadata)

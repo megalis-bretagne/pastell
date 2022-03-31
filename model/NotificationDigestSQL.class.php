@@ -11,7 +11,7 @@ class NotificationDigestSQL extends SQL
     public function getAll()
     {
         $sql = "SELECT * FROM notification_digest";
-        $result = array();
+        $result = [];
         foreach ($this->query($sql) as $info) {
             $result[$info['mail']][] = $info;
         }

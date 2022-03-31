@@ -4,7 +4,7 @@ class ScriptManager
 {
     private $argv;
 
-    private $mandatory_arg = array();
+    private $mandatory_arg = [];
 
     public function setMandatoryArg($option, $description)
     {

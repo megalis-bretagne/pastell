@@ -40,8 +40,8 @@ class AcceptanceTester extends \Codeception\Actor
 
     public const PHPSESSID = "PHPSESSID";
 
-    protected static $session_cookie = array();
-    protected static $session_information = array();
+    protected static $session_cookie = [];
+    protected static $session_information = [];
 
     public function loadSessionSnapshot($key)
     {

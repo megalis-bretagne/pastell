@@ -161,7 +161,7 @@ class Journal extends SQL
 
     public function getQueryAll($id_e, $type, $id_d, $id_u, $offset, $limit, $recherche = "", $date_debut = false, $date_fin = false, $tri_croissant = false)
     {
-        $value = array();
+        $value = [];
         $sql = "SELECT journal.*,document.titre,entite.denomination, utilisateur.nom, utilisateur.prenom,entite.siren " .
             " FROM journal " .
             " LEFT JOIN document ON journal.id_d = document.id_d " .
@@ -206,7 +206,7 @@ class Journal extends SQL
         if ($limit != -1) {
             $sql .= " LIMIT $offset,$limit";
         }
-        return array($sql,$value);
+        return [$sql,$value];
     }
 
 
@@ -214,8 +214,8 @@ class Journal extends SQL
     public function countAll($id_e, $type, $id_d, $id_u, $recherche, $date_debut, $date_fin)
     {
         $join = "";
-        $where = array();
-        $value = array();
+        $where = [];
+        $value = [];
 
         if ($id_e) {
             $where[] = " id_e = ?";
@@ -259,7 +259,7 @@ class Journal extends SQL
 
     public function getTypeAsString($type)
     {
-        $type_string = array(1 => "Action sur un dossier",
+        $type_string = [1 => "Action sur un dossier",
                         "Notification",
                         "Gestion des entités",
                         "Gestion des utilisateurs",
@@ -273,7 +273,7 @@ class Journal extends SQL
                         "Action sur un type de dossier personnalisé",
                         "Action sur le journal",
                         "Action par commande"
-        );
+        ];
         return $type_string[$type];
     }
 

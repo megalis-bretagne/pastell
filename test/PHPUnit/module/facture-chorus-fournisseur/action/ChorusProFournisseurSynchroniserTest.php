@@ -11,35 +11,40 @@ class ChorusProFournisseurSynchroniserTest extends ExtensionCppTestCase
                 "MISE_A_DISPOSITION",
                 "Le status de la facture est : MISE_A_DISPOSITION",
                 '',
-                "creation"],
+                "creation"
+            ],
             'TermineDate' => [
                 '',
                 "2018-04-19 11:16",
                 "MISE_A_DISPOSITION",
                 "La facture est en statut MISE_A_DISPOSITION depuis plus de 30 jours : fin de synchronisation",
                 '',
-                "termine"],
+                "termine"
+            ],
             'TermineStatut' => [
                 '',
                 date("Y-m-d H:i"),
                 "MISE_EN_PAIEMENT",
                 "La facture est en statut final MISE_EN_PAIEMENT : fin de synchronisation",
                 '',
-                "termine"],
+                "termine"
+            ],
             'TermineParam' => [
                 '',
                 date("Y-m-d H:i"),
                 "MISE_A_DISPOSITION",
                 "La facture est en statut MISE_A_DISPOSITION : pas de récupération de statut : fin de synchronisation",
                 '',
-                "termine"],
+                "termine"
+            ],
             'TermineEnvoiSAE' => [
                 '',
                 date("Y-m-d H:i"),
                 "MISE_EN_PAIEMENT",
                 "La facture est en statut final MISE_EN_PAIEMENT : fin de synchronisation",
                 'on',
-                "preparation-send-sae"],
+                "preparation-send-sae"
+            ],
         ];
     }
 

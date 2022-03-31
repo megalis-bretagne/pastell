@@ -138,13 +138,13 @@ class ConnecteurFrequenceSQL extends SQL
     public function getNearestConnecteurFromConnecteur(ConnecteurFrequence $connecteurFrequence)
     {
         $id_cf = false;
-        $criteria = array(
+        $criteria = [
             'type_connecteur' => $connecteurFrequence->type_connecteur,
             'famille_connecteur' => $connecteurFrequence->famille_connecteur,
             'id_connecteur' => $connecteurFrequence->id_connecteur,
             'id_ce' => $connecteurFrequence->id_ce
-        );
-        $criteria_mask = array();
+        ];
+        $criteria_mask = [];
 
         foreach ($this->getCriteriaMaskList($criteria) as $criteria_mask) {
             $id_cf = $this->getConnecteurIdWithCriteria($criteria, $criteria_mask);
@@ -181,7 +181,7 @@ class ConnecteurFrequenceSQL extends SQL
 
     private function getCriteriaMaskList($criteria)
     {
-        $result = array();
+        $result = [];
         $keys = array_reverse(array_keys($criteria));
         $keys[] = '';
         foreach ($keys as $key) {
@@ -194,8 +194,8 @@ class ConnecteurFrequenceSQL extends SQL
     private function getConnecteurIdWithCriteria($criteria, $criteria_mask)
     {
 
-        $sql_criteria = array();
-        $param = array();
+        $sql_criteria = [];
+        $param = [];
         foreach ($criteria as $key => $value) {
             $sql_criteria[] = " $key = ? ";
             if (in_array($key, $criteria_mask)) {

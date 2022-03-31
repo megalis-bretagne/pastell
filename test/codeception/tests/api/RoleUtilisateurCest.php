@@ -7,7 +7,7 @@ class RoleUtilisateurCest
         $I->wantTo("lister les rôles d'un utilisateur");
         $I->amHttpAuthenticatedAsAdmin();
         $I->sendGET("/utilisateur/1/role");
-        $I->verifyJsonResponseOK(array(array('id_u' => 1,'id_e' => 0,'role' => 'admin')));
+        $I->verifyJsonResponseOK([['id_u' => 1,'id_e' => 0,'role' => 'admin']]);
     }
 
     public function listRoleUtilisateurV1(NoGuy $I)
@@ -15,17 +15,17 @@ class RoleUtilisateurCest
         $I->wantTo("lister les rôles d'un utilisateur [V1]");
         $I->amHttpAuthenticatedAsAdmin();
         $I->sendGETV1("list-role-utilisateur.php?id_u=1");
-        $I->verifyJsonResponseOK(array(array('id_u' => 1,'id_e' => 0,'role' => 'admin')));
+        $I->verifyJsonResponseOK([['id_u' => 1,'id_e' => 0,'role' => 'admin']]);
     }
 
     private function createUser(NoGuy $I, $login)
     {
-        $user_info = array(
+        $user_info = [
             'nom' => 'foo',
             'login' => $login,
             'prenom' => 'baz',
             'email' => 'toto@toto.fr',
-        );
+        ];
         $user_info['password'] = 'password';
         $I->sendPOST(
             "/utilisateur",
@@ -37,7 +37,7 @@ class RoleUtilisateurCest
     private function createUserWithRole(NoGuy $I, $login)
     {
         $id_u = $this->createUser($I, "$login");
-        $I->sendPOST("/utilisateur/$id_u/role", array('role' => 'admin'));
+        $I->sendPOST("/utilisateur/$id_u/role", ['role' => 'admin']);
         return $id_u;
     }
 
@@ -46,13 +46,13 @@ class RoleUtilisateurCest
         $I->wantTo("ajouter un rôle à un utilisateur");
         $I->amHttpAuthenticatedAsAdmin();
         $id_u = $this->createUser($I, "ajouter-role");
-        $I->sendPOST("/utilisateur/$id_u/role", array('role' => 'admin'));
+        $I->sendPOST("/utilisateur/$id_u/role", ['role' => 'admin']);
         $I->verifyJsonResponseOK(
-            array('result' => 'ok'),
+            ['result' => 'ok'],
             \Codeception\Util\HttpCode::CREATED
         );
         $I->sendGET("/utilisateur/$id_u/role");
-        $I->verifyJsonResponseOK(array(array('id_u' => $id_u,'id_e' => 0,'role' => 'admin')));
+        $I->verifyJsonResponseOK([['id_u' => $id_u,'id_e' => 0,'role' => 'admin']]);
     }
 
     public function ajouterRoleUtilisateurV1(NoGuy $I)
@@ -60,13 +60,13 @@ class RoleUtilisateurCest
         $I->wantTo("ajouter un rôle à un utilisateur [V1]");
         $I->amHttpAuthenticatedAsAdmin();
         $id_u = $this->createUser($I, "ajouter-role-v1");
-        $I->sendPOSTV1("add-role-utilisateur.php", array('role' => 'admin','id_u' => $id_u));
+        $I->sendPOSTV1("add-role-utilisateur.php", ['role' => 'admin','id_u' => $id_u]);
         $I->verifyJsonResponseOK(
-            array('result' => 'ok'),
+            ['result' => 'ok'],
             \Codeception\Util\HttpCode::OK
         );
         $I->sendGET("/utilisateur/$id_u/role");
-        $I->verifyJsonResponseOK(array(array('id_u' => $id_u,'id_e' => 0,'role' => 'admin')));
+        $I->verifyJsonResponseOK([['id_u' => $id_u,'id_e' => 0,'role' => 'admin']]);
     }
 
     public function deleteRoleUtilisateur(NoGuy $I)
@@ -76,10 +76,10 @@ class RoleUtilisateurCest
         $id_u = $this->createUserWithRole($I, 'delete-role');
         $I->sendDELETE("/utilisateur/$id_u/role?role=admin");
         $I->verifyJsonResponseOK(
-            array('result' => 'ok')
+            ['result' => 'ok']
         );
         $I->sendGET("/utilisateur/$id_u/role");
-        $I->verifyJsonResponseOK(array(array('id_u' => $id_u,'id_e' => 0,'role' => 'aucun droit')));
+        $I->verifyJsonResponseOK([['id_u' => $id_u,'id_e' => 0,'role' => 'aucun droit']]);
     }
 
     public function deleteRoleUtilisateurV1(NoGuy $I)
@@ -89,9 +89,9 @@ class RoleUtilisateurCest
         $id_u = $this->createUserWithRole($I, 'delete-role-v1');
         $I->sendGETV1("delete-role-utilisateur.php?id_u=$id_u&role=admin");
         $I->verifyJsonResponseOK(
-            array('result' => 'ok')
+            ['result' => 'ok']
         );
         $I->sendGET("/utilisateur/$id_u/role");
-        $I->verifyJsonResponseOK(array(array('id_u' => $id_u,'id_e' => 0,'role' => 'aucun droit')));
+        $I->verifyJsonResponseOK([['id_u' => $id_u,'id_e' => 0,'role' => 'aucun droit']]);
     }
 }

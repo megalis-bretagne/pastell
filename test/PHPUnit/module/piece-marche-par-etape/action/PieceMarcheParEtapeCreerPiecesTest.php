@@ -17,7 +17,7 @@ class PieceMarcheParEtapeCreerPiecesTest extends PastellMarcheTestCase
 
         $result = $this->getInternalAPI()->post(
             "/Document/" . PastellTestCase::ID_E_COL,
-            array('type' => 'piece-marche-par-etape')
+            ['type' => 'piece-marche-par-etape']
         );
         $this->id_d = $result['id_d'];
     }
@@ -27,7 +27,8 @@ class PieceMarcheParEtapeCreerPiecesTest extends PastellMarcheTestCase
 
         $this->getInternalAPI()->patch(
             "/entite/1/document/$this->id_d",
-            array('libelle' => 'Test marché numéro 2018REF201810',
+            [
+            'libelle' => 'Test marché numéro 2018REF201810',
                 'numero_marche' => '2018REF201810',
                 'type_marche' => 'T',
                 'numero_consultation' => 'Consultation 2018REF201810',
@@ -35,7 +36,7 @@ class PieceMarcheParEtapeCreerPiecesTest extends PastellMarcheTestCase
                 'etape' => 'ONR',
                 'soumissionnaire' => 'entreprise xx',
                 'date_document' => '2018-10-05',
-            )
+            ]
         );
     }
 

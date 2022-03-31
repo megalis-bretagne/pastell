@@ -52,7 +52,7 @@ class TdtChoiceTypologieActes extends ConnecteurTypeChoiceActionExecutor
      */
     public function displayAPI()
     {
-        $result = array();
+        $result = [];
 
         $connecteur_type_action = $this->getMappingList();
 
@@ -117,7 +117,7 @@ class TdtChoiceTypologieActes extends ConnecteurTypeChoiceActionExecutor
     public function go()
     {
 
-        $result = array();
+        $result = [];
 
 
 

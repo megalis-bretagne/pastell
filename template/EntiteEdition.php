@@ -22,7 +22,7 @@
     <tr>
     <td class='w300'>Type d'entité</td>
     <td><select name='type' class="form-control col-md-4">
-    <?php foreach (array(Entite::TYPE_COLLECTIVITE, Entite::TYPE_CENTRE_DE_GESTION) as $type) :?>
+    <?php foreach ([Entite::TYPE_COLLECTIVITE, Entite::TYPE_CENTRE_DE_GESTION] as $type) :?>
         <option value='<?php echo $type?>'
              <?php echo $infoEntite['type'] == $type ? 'selected="selected"' : ''?>> 
         <?php echo Entite::getNom($type) ?> </option>   

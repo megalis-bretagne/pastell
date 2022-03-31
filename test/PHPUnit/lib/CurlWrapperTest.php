@@ -86,7 +86,7 @@ class CurlWrapperTest extends PHPUnit\Framework\TestCase
         $curlFunction->method("curl_exec")->willReturn("OK");
 
         $curlWrapper = new CurlWrapper($curlFunction);
-        $curlWrapper->setPostDataUrlEncode(array("foo" => "bar"));
+        $curlWrapper->setPostDataUrlEncode(["foo" => "bar"]);
 
         $this->assertEquals("OK", $curlWrapper->get("http://pastell.adullact.org"));
     }

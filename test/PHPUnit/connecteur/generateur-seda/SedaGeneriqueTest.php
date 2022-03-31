@@ -6,7 +6,7 @@ class SedaGeneriqueTest extends PastellTestCase
 
     private $tmp_folder = "";
 
-    public function __construct($name = null, array $data = array(), $dataName = '')
+    public function __construct($name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
         $tmpFolder = new TmpFolder();

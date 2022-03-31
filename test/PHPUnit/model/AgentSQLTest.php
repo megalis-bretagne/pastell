@@ -10,7 +10,7 @@ class AgentSQLTest extends PastellTestCase
 
     private function getInfo()
     {
-        return array("007","M.","Bond","Bond","James","XYZ","Agent secret","UK","Royaume-Uni de Grande Bretagne et d'Irlande du Nord","123456789","2","Libelle","42","43");
+        return ["007","M.","Bond","Bond","James","XYZ","Agent secret","UK","Royaume-Uni de Grande Bretagne et d'Irlande du Nord","123456789","2","Libelle","42","43"];
     }
 
     private function getAgentSQLWithInfo()
@@ -33,7 +33,7 @@ class AgentSQLTest extends PastellTestCase
 
     public function testAddSirenCol()
     {
-        $info_collectivite = array("siren" => "444444444");
+        $info_collectivite = ["siren" => "444444444"];
         $this->getAgentSQL()->add($this->getInfo(), $info_collectivite);
         $this->assertEquals(0, $this->getAgentSQL()->getNbAgent("123456789"));
         $this->assertEquals(1, $this->getAgentSQL()->getNbAgent("444444444"));

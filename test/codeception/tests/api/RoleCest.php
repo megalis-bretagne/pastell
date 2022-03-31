@@ -7,6 +7,6 @@ class RoleCest
         $I->wantTo("lister les rôles");
         $I->amHttpAuthenticatedAsAdmin();
         $I->sendGET("/role");
-        $I->verifyJsonResponseOK(array(array('role' => 'admin','libelle' => 'Administrateur')));
+        $I->verifyJsonResponseOK([['role' => 'admin','libelle' => 'Administrateur']]);
     }
 }

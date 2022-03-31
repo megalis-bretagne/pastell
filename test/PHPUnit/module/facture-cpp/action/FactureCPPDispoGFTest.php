@@ -7,7 +7,7 @@ class FactureCPPDispoGFTest extends ExtensionCppTestCase
      */
     public function testMiseADispoGFIsEditable()
     {
-        $data = array (
+        $data =  [
             'id_facture_cpp' => "3325390",
             'statut_cpp' => "MISE_A_DISPOSITION",
             'fournisseur' => "00000000000727",
@@ -37,7 +37,7 @@ class FactureCPPDispoGFTest extends ExtensionCppTestCase
             'envoi_sae' => "",
             'check_mise_a_dispo_gf' => "",
             'envoi_auto' => "",
-        );
+        ];
 
         $document = $this->createDocument("facture-cpp");
         $this->configureDocument($document['id_d'], $data, 1);

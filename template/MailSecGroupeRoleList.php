@@ -30,7 +30,7 @@
 <?php foreach ($listGroupe as $groupe) :
     $utilisateur = $annuaireRole->getUtilisateur($groupe['id_r']);
     $nbUtilisateur = count($utilisateur);
-    $r = array();
+    $r = [];
     foreach ($utilisateur as $u) {
         $r[] = htmlentities("\"{$u['nom']} {$u['prenom']}\" <{$u['email']}>", ENT_QUOTES);
     }
@@ -129,7 +129,7 @@
     <?php foreach ($groupe_herited as $groupe) :
         $utilisateur = $annuaireRole->getUtilisateur($groupe['id_r']);
         $nbUtilisateur = count($utilisateur);
-        $r = array();
+        $r = [];
         foreach ($utilisateur as $u) {
             $r[] = htmlentities("\"{$u['nom']} {$u['prenom']}\" <{$u['email']}>", ENT_QUOTES, "utf-8");
         }

@@ -63,11 +63,11 @@ class UtilisateurAPIController extends BaseAPIController
         $this->checkDroit($id_e, "utilisateur:lecture");
 
         $listUtilisateur = $this->utilisateurListe->getAllUtilisateurSimple($id_e);
-        $result = array();
+        $result = [];
         if ($listUtilisateur) {
             // Création d'un nouveau tableau pour ne retourner que les valeurs retenues
             foreach ($listUtilisateur as $id_u => $utilisateur) {
-                $result[$id_u] = array('id_u' => $utilisateur['id_u'], 'login' => $utilisateur['login'], 'email' => $utilisateur['email']);
+                $result[$id_u] = ['id_u' => $utilisateur['id_u'], 'login' => $utilisateur['login'], 'email' => $utilisateur['email']];
             }
         }
         return $result;
@@ -98,7 +98,7 @@ class UtilisateurAPIController extends BaseAPIController
         $infoUtilisateur = $this->verifExists($id_u);
         $this->checkDroit($infoUtilisateur['id_e'], "utilisateur:lecture");
 
-        $result = array();
+        $result = [];
         $result['id_u'] = $infoUtilisateur['id_u'];
         $result['login'] = $infoUtilisateur['login'];
         $result['nom'] = $infoUtilisateur['nom'];
@@ -206,8 +206,8 @@ class UtilisateurAPIController extends BaseAPIController
 
         $newInfo = $this->utilisateur->getInfo($id_u);
 
-        $infoToRetrieve = array('email','login','nom','prenom');
-        $infoChanged = array();
+        $infoToRetrieve = ['email','login','nom','prenom'];
+        $infoChanged = [];
         foreach ($infoToRetrieve as $key) {
             if ($oldInfo[$key] != $newInfo[$key]) {
                 $infoChanged[] = "$key : {$oldInfo[$key]} -> {$newInfo[$key]}";

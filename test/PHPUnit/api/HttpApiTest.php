@@ -16,8 +16,8 @@ class HttpApiTest extends PastellTestCase
     private function getCall($ressource, $method = 'GET')
     {
         $this->http_api = new HttpApi($this->getObjectInstancier());
-        $this->http_api->setServerArray(array('REQUEST_METHOD' => $method));
-        $this->http_api->setGetArray(array(HttpApi::PARAM_API_FUNCTION => "$ressource"));
+        $this->http_api->setServerArray(['REQUEST_METHOD' => $method]);
+        $this->http_api->setGetArray([HttpApi::PARAM_API_FUNCTION => "$ressource"]);
         $this->http_api->dispatch();
     }
 

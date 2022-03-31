@@ -119,7 +119,7 @@ class UtilisateurControler extends PastellControler
         $zenMail->setEmetteur("Pastell", PLATEFORME_MAIL);
         $zenMail->setDestinataire($email);
         $zenMail->setSujet("Changement de mail sur Pastell");
-        $info = array("password" => $password);
+        $info = ["password" => $password];
         $zenMail->setContenu(PASTELL_PATH . "/mail/changement-email.php", $info);
         $zenMail->send();
 
@@ -167,7 +167,7 @@ class UtilisateurControler extends PastellControler
 
         /** @var DonneesFormulaire $donneesFormulaire */
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
-        foreach (array('id_u', 'login', 'nom', 'prenom') as $key) {
+        foreach (['id_u', 'login', 'nom', 'prenom'] as $key) {
             $data[$key] = $utilisateur_info[$key];
         }
         $data['email_actuel'] = $utilisateur_info['email'];
@@ -216,13 +216,14 @@ class UtilisateurControler extends PastellControler
         $id_u = $recuperateur->get('id_u');
         $id_e = $recuperateur->getInt('id_e');
 
-        $infoUtilisateur = array('login' => $this->getLastError()->getLastInput('login'),
+        $infoUtilisateur = [
+        'login' => $this->getLastError()->getLastInput('login'),
             'nom' => $this->getLastError()->getLastInput('nom'),
             'prenom' => $this->getLastError()->getLastInput('prenom'),
             'email' => $this->getLastError()->getLastInput('email'),
             'certificat' => '',
             'id_e' => $id_e,
-        );
+        ];
 
         if ($id_u) {
             $infoUtilisateur = $this->getUtilisateur()->getInfo($id_u);
@@ -274,7 +275,7 @@ class UtilisateurControler extends PastellControler
         if ($this->hasDroit($info['id_e'], 'role:lecture')) {
             $this->setViewParameter('role_authorized', $this->apiGet('role'));
         } else {
-            $this->setViewParameter('role_authorized', array());
+            $this->setViewParameter('role_authorized', []);
         }
 
         if (!$this->getRoleUtilisateur()->hasDroit($this->getId_u(), "utilisateur:lecture", $info['id_e'])) {
@@ -588,7 +589,7 @@ class UtilisateurControler extends PastellControler
 
         $all_checked = true;
         $no_checked = false;
-        $action_checked = array();
+        $action_checked = [];
         foreach ($action_list as $action) {
             $checked = !!$recuperateur->get($action['id']);
             $action_checked[$action['id']] = $checked;

@@ -37,7 +37,7 @@ class DonneesFormulaire
     {
         $this->filePath = $filePath;
         $this->documentType = $documentType;
-        $this->onChangeAction = array();
+        $this->onChangeAction = [];
         $this->fichierCleValeur = new FichierCleValeur($filePath, $ymlLoader);
         $this->setOnglet();
         /** @var Field $field */
@@ -58,7 +58,7 @@ class DonneesFormulaire
 
             $field = $this->getFormulaire()->getField($fieldName, $onglet_name);
             if (! $field) {
-                $field = new Field($fieldName, array());
+                $field = new Field($fieldName, []);
             }
             $this->fieldDataList[$fieldName] = new FieldData($field, $this->getDisplayValue($field));
         }
@@ -108,7 +108,7 @@ class DonneesFormulaire
     public function getFieldDataListAllOnglet($my_role)
     {
         $ongletList = $this->getOngletList();
-        $fieldsList = array();
+        $fieldsList = [];
         foreach ($ongletList as $onglet_num => $onglet) {
             $fieldsList = array_merge($fieldsList, $this->getFieldDataList($my_role, $onglet_num));
         }
@@ -119,7 +119,7 @@ class DonneesFormulaire
     {
         $ongletList = $this->getOngletList();
         if (empty($ongletList[$ongletNum])) {
-            return array();
+            return [];
         }
         $fieldNameList = $this->getFormulaire()->getFieldsForOnglet($ongletList[$ongletNum]);
         return $this->getFieldDataListByFieldName($my_role, $fieldNameList, $ongletNum);
@@ -127,7 +127,7 @@ class DonneesFormulaire
 
     private function getFieldDataListByFieldName($my_role, array $fieldNameList, $ongletNum = -1)
     {
-        $result = array();
+        $result = [];
         foreach ($fieldNameList as $field) {
             if ($field->isShowForRole($my_role)) {
                 $result[] = $this->getFieldData($field->getName(), $ongletNum);
@@ -156,9 +156,9 @@ class DonneesFormulaire
         }
         $cible = $this->get($field->getProperties('depend'));
         if (!$cible) {
-            $cible = array();
+            $cible = [];
         }
-        $value = array();
+        $value = [];
         foreach ($cible as $j => $file) {
             $value[$file] = $this->get($field->getName() . "_$j");
         }
@@ -168,7 +168,7 @@ class DonneesFormulaire
     /*Fonction pour la construction de l'objet*/
     private function setOnglet()
     {
-        $onglet_to_remove = array();
+        $onglet_to_remove = [];
         $page_condition = $this->documentType->getPageCondition();
         foreach ($page_condition as $page => $condition) {
             foreach ($condition as $field => $value) {
@@ -213,11 +213,11 @@ class DonneesFormulaire
         }
         $value = $this->fichierCleValeur->get($item);
         if (!is_array($value)) {
-            if (in_array(strtolower($value), array('true', 'on', '+', 'yes', 'y'))) {
+            if (in_array(strtolower($value), ['true', 'on', '+', 'yes', 'y'])) {
                 return true;
             }
 
-            if (in_array(strtolower($value), array('false', 'off', '-', 'no', 'n'))) {
+            if (in_array(strtolower($value), ['false', 'off', '-', 'no', 'n'])) {
                 return false;
             }
         }
@@ -644,7 +644,7 @@ class DonneesFormulaire
     private function getOpenXMLMimeType($file_name)
     {
         $ext = pathinfo($file_name, PATHINFO_EXTENSION);
-        $openXMLExtension = array(
+        $openXMLExtension = [
             'xlsx' => "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
             'xltx' => "application/vnd.openxmlformats-officedocument.spreadsheetml.template",
             'potx' =>  "application/vnd.openxmlformats-officedocument.presentationml.template",
@@ -656,7 +656,7 @@ class DonneesFormulaire
             'xlam'   =>  "application/vnd.ms-excel.addin.macroEnabled.12",
             'xlsb'   =>  "application/vnd.ms-excel.sheet.binary.macroEnabled.12",
             'txt' => "text/plain"
-        );
+        ];
         if (isset($openXMLExtension[$ext])) {
             return $openXMLExtension[$ext];
         }
@@ -838,7 +838,7 @@ class DonneesFormulaire
 
     public function getAllFile()
     {
-        $result = array();
+        $result = [];
         /** @var Field $field */
         foreach ($this->getFormulaire()->getAllFields() as $field) {
             if ($field->getType() != 'file') {
@@ -859,7 +859,7 @@ class DonneesFormulaire
         $fileInfo = new finfo();
         $contentType = $fileInfo->file($file_path, FILEINFO_MIME_TYPE);
 
-        $map = array(
+        $map = [
             'application/pdf'   => '.pdf',
             'application/zip'   => '.zip',
             'application/xml'   => '.xml',
@@ -871,7 +871,7 @@ class DonneesFormulaire
             'text/javascript'   => '.js',
             'text/plain'        => '.txt',
             'text/xml'          => '.xml',
-        );
+        ];
         $result = "";
 
         if (isset($map[$contentType])) {
@@ -879,7 +879,7 @@ class DonneesFormulaire
         }
 
         if ($result == ".zip") {
-            if (in_array($path_parts['extension'], array('xltx','potx','ppsx','sldx','docx','dotx','xlam','xlsb'))) {
+            if (in_array($path_parts['extension'], ['xltx','potx','ppsx','sldx','docx','dotx','xlam','xlsb'])) {
                 return "." . $path_parts['extension'];
             }
         }
@@ -935,7 +935,7 @@ class DonneesFormulaire
 
     public function copyAllFiles($field_name, $folder_destination, $new_filename = false)
     {
-        $result = array();
+        $result = [];
         if (!$this->get($field_name)) {
             return $result;
         }

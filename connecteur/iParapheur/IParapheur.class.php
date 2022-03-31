@@ -105,7 +105,7 @@ class IParapheur extends SignatureConnecteur
 
     public function getBordereau($result)
     {
-        $info = array();
+        $info = [];
         if (! isset($result->DocumentsAnnexes)) {
             $info['document'] = false;
             $info['nom_document'] = false;
@@ -195,7 +195,7 @@ class IParapheur extends SignatureConnecteur
 
     private function getDocumentSigne($result)
     {
-        $info = array();
+        $info = [];
         if (! isset($result->DocPrincipal)) {
             $info['document'] = false;
             $info['nom_document'] = false;
@@ -208,7 +208,7 @@ class IParapheur extends SignatureConnecteur
 
     public function getAllMetaDonnees($result)
     {
-        $info = array();
+        $info = [];
         if (! isset($result->MetaDonnees)) {
             return false;
         }
@@ -394,7 +394,7 @@ class IParapheur extends SignatureConnecteur
     public function setSendingMetadata(DonneesFormulaire $donneesFormulaire)
     {
         $all_metadata = explode(",", $this->iparapheur_metadata);
-        $result = array();
+        $result = [];
         foreach ($all_metadata as $metadata_association) {
             $data = explode(":", $metadata_association);
             if (count($data) < 2) {
@@ -425,7 +425,7 @@ class IParapheur extends SignatureConnecteur
         $document_content,
         $content_type,
         $visuel_pdf,
-        array $metadata = array()
+        array $metadata = []
     ) {
         return $this->sendDocument(
             $typeTechnique,
@@ -573,14 +573,14 @@ class IParapheur extends SignatureConnecteur
         $dossierID,
         $document_content,
         $content_type,
-        array $all_annexes = array(),
+        array $all_annexes = [],
         $date_limite = false,
         $visuelPDFContent = "",
         $xPathPourSignatureXML = false,
         $annotationPublic = "",
         $annotationPrivee = "",
         $emailEmetteur = "",
-        $metadata = array(),
+        $metadata = [],
         $dossierTitre = "",
         $signature_content = "",
         $signature_type = "",
@@ -590,20 +590,20 @@ class IParapheur extends SignatureConnecteur
         try {
             $client = $this->getClient();
 
-            $data = array(
+            $data = [
                         "TypeTechnique" => $typeTechnique,
                         "SousType" => $sousType,
                         "DossierID" => $dossierID,
-                        "DocumentPrincipal" => array("_" => $document_content,"contentType" => $content_type),
+                        "DocumentPrincipal" => ["_" => $document_content,"contentType" => $content_type],
                         "Visibilite" => $this->visibilite,
-            );
+            ];
 
             if ($nom_doc_principal) {
                 $data['NomDocPrincipal'] = $nom_doc_principal;
             }
 
             if ($signature_content) {
-                $data['SignatureDocPrincipal'] = array("_" => $signature_content,"contentType" => $signature_type);
+                $data['SignatureDocPrincipal'] = ["_" => $signature_content,"contentType" => $signature_type];
             }
 
             if ($dossierTitre) {
@@ -614,7 +614,7 @@ class IParapheur extends SignatureConnecteur
                 $data['DateLimite'] = $date_limite;
             }
             if ($all_annexes) {
-                $data["DocumentsAnnexes"] = array();
+                $data["DocumentsAnnexes"] = [];
             }
 
             if ($content_type == 'application/xml' && ! $visuelPDFContent) {
@@ -622,7 +622,7 @@ class IParapheur extends SignatureConnecteur
             }
 
             if ($visuelPDFContent) {
-                $data["VisuelPDF"] = array("_" => $visuelPDFContent, "contentType" => "application/pdf");
+                $data["VisuelPDF"] = ["_" => $visuelPDFContent, "contentType" => "application/pdf"];
             }
 
             if ($content_type == 'application/xml' && ! $xPathPourSignatureXML) {
@@ -647,12 +647,15 @@ class IParapheur extends SignatureConnecteur
 
 
             foreach ($all_annexes as $annexe) {
-                    $data["DocumentsAnnexes"][] = array("nom" => $annexe['name'],
-                                                    "fichier" => array("_" => $annexe['file_content'],
-                                                    "contentType" => $annexe['content_type']),
+                    $data["DocumentsAnnexes"][] = [
+                "nom" => $annexe['name'],
+                                                    "fichier" => [
+                "_" => $annexe['file_content'],
+                                                    "contentType" => $annexe['content_type']
+                    ],
                                                     "mimetype" => $annexe['content_type'],
                                                     "encoding" => "UTF-8"
-                    );
+                    ];
             }
 
             if ($this->sending_metadata) {
@@ -660,10 +663,10 @@ class IParapheur extends SignatureConnecteur
             }
 
             if ($metadata) {
-                $data['MetaData'] = array('MetaDonnee' => array());
+                $data['MetaData'] = ['MetaDonnee' => []];
 
                 foreach ($metadata as $nom => $valeur) {
-                    $data['MetaData']['MetaDonnee'][] = array('nom' => $nom,'valeur' => $valeur);
+                    $data['MetaData']['MetaDonnee'][] = ['nom' => $nom,'valeur' => $valeur];
                 }
             }
 
@@ -787,18 +790,18 @@ class IParapheur extends SignatureConnecteur
          * En PHP 5.6, SoapClient vérifie forcément le peer lors de la récupération du WDSL
          */
         $stream_context = stream_context_create(
-            array(
-                "ssl" => array(
+            [
+                "ssl" => [
                     "verify_peer" => false,
                     "verify_peer_name" => false
-                )
-            )
+                ]
+            ]
         );
 
 
         $client = $this->soapClientFactory->getInstance(
             $this->wsdl,
-            array(
+            [
                     'local_cert' => $this->userCert,
                     'passphrase' => $this->userCertPassword,
                     'login' => $this->login_http,
@@ -809,7 +812,7 @@ class IParapheur extends SignatureConnecteur
                     'userKeyOnly' => $this->userKeyOnly,
                     'userCertOnly' => $this->userCertOnly,
                     "stream_context" => $stream_context
-                ),
+                ],
             true
         );
 
@@ -852,7 +855,7 @@ class IParapheur extends SignatureConnecteur
             }
             $sousType = $listeSousType->SousType;
 
-            $result = array();
+            $result = [];
             if (is_array($sousType)) {
                 foreach ($sousType as $n => $v) {
                     $result[$n] = $v;

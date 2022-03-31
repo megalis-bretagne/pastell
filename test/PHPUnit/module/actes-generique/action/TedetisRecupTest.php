@@ -47,7 +47,7 @@ class TedetisRecupTest extends PastellTestCase
 
         $result = $this->getInternalAPI()->post(
             "/Document/1",
-            array('type' => 'actes-generique')
+            ['type' => 'actes-generique']
         );
         $id_d = $result['id_d'];
 
@@ -165,7 +165,7 @@ class TedetisRecupTest extends PastellTestCase
 
         $result = $this->getInternalAPI()->post(
             "/Document/1",
-            array('type' => 'actes-generique')
+            ['type' => 'actes-generique']
         );
         $id_d = $result['id_d'];
 
@@ -233,7 +233,7 @@ class TedetisRecupTest extends PastellTestCase
 
         $result = $this->getInternalAPI()->post(
             "/Document/1",
-            array('type' => 'actes-generique')
+            ['type' => 'actes-generique']
         );
         $id_d = $result['id_d'];
 

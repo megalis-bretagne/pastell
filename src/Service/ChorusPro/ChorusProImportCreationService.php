@@ -96,7 +96,7 @@ class ChorusProImportCreationService
         } else {
             $id_d = $this->getDocumentFacture($facture_a_creer['id_facture_cpp']);
         }
-        $result = array();
+        $result = [];
         if ($id_d) {
             // La facture existe. Il faut charger l'id_e pour le message d'erreur.
             $donneesEntite = $this->documentEntite->getEntite($id_d);
@@ -159,12 +159,12 @@ class ChorusProImportCreationService
         $this->documentSQL->save($id_d, $authorized_flux);
         $this->documentEntite->addRole($id_d, $this->id_e, "editeur");
 
-        $actionExecutorFactory->executeOnDocumentThrow($id_d, $this->id_e, $this->id_u, 'create-facture', array(), false, array('factureCPP' => $factureCPP), 0);
+        $actionExecutorFactory->executeOnDocumentThrow($id_d, $this->id_e, $this->id_u, 'create-facture', [], false, ['factureCPP' => $factureCPP], 0);
 
         if ($nommage_csv == ChorusProImportUtilService::NOMMAGE_ID_FACTURE_CSV) {
             $this->valorisationSpecifiqueCSV($factureCPP, $id_d);
         }
-        return array ('id_d' => $id_d, 'message' => $actionExecutorFactory->getLastMessage());
+        return  ['id_d' => $id_d, 'message' => $actionExecutorFactory->getLastMessage()];
     }
 
     /**

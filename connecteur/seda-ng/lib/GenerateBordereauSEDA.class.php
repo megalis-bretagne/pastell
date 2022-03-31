@@ -32,7 +32,7 @@ class GenerateBordereauSEDA
 
         //STAGE 1 : IF
         $annotation_list = $xpath->query("//pastell:annotation");
-        $nodeToRemove = array();
+        $nodeToRemove = [];
         foreach ($annotation_list as $annotation) {
             if ($annotationWrapper->getCommand($annotation->nodeValue) == 'if') {
                 if (! $annotationWrapper->testIf($annotation->nodeValue)) {
@@ -56,8 +56,8 @@ class GenerateBordereauSEDA
 
         //STAGE 3 : REPLACE
         $annotation_list = $xpath->query("//pastell:annotation");
-        $nodeToRemove = array();
-        $nodeToReplace = array();
+        $nodeToRemove = [];
+        $nodeToReplace = [];
         /** @var DOMElement $annotation */
         foreach ($annotation_list as $annotation) {
             $annotationReturn = $annotationWrapper->wrap((string) $annotation->nodeValue);
@@ -71,7 +71,7 @@ class GenerateBordereauSEDA
                 $parent->nodeValue = '';
                 $parent->appendChild($dom->createTextNode($annotationReturn->string)) ;
             } elseif ($annotationReturn->type == AnnotationReturn::XML_REPLACE) {
-                $nodeToReplace[] = array($annotation->parentNode,$annotationReturn->string);
+                $nodeToReplace[] = [$annotation->parentNode,$annotationReturn->string];
             } elseif ($annotationReturn->type == AnnotationReturn::EMPTY_RETURN) {
                 $nodeToRemove[] = $annotation;
             } elseif ($annotationReturn->type == AnnotationReturn::ATTACHMENT_INFO) {
@@ -99,7 +99,7 @@ class GenerateBordereauSEDA
 
 
         //STAGE 4 remove empty node
-        $nodeToRemove = array();
+        $nodeToRemove = [];
         $xpath = new DOMXPath($dom);
         $attribute_list = $xpath->query('//*/@*');
 
@@ -145,15 +145,15 @@ class GenerateBordereauSEDA
         $has_repeat = false;
         $annotation_list = $xpath->query("//pastell:annotation");
 
-        $nodeToRemove = array();
-        $nodeToClone = array();
+        $nodeToRemove = [];
+        $nodeToClone = [];
 
         foreach ($annotation_list as $annotation) {
             $nb_repeat = $annotationWrapper->getNbRepeat($annotation->nodeValue);
             if ($nb_repeat === false) {
                 continue;
             }
-            $nodeToClone[] = array($annotation->parentNode,$nb_repeat);
+            $nodeToClone[] = [$annotation->parentNode,$nb_repeat];
             $nodeToRemove[] = $annotation;
             $has_repeat = true;
             break;

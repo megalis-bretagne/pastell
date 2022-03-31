@@ -21,7 +21,7 @@ class DocumentTypeTest extends PHPUnit\Framework\TestCase
 
     public function testExists()
     {
-        $documentType = new DocumentType("test", array());
+        $documentType = new DocumentType("test", []);
         $this->assertFalse($documentType->exists());
     }
 
@@ -36,13 +36,13 @@ class DocumentTypeTest extends PHPUnit\Framework\TestCase
     public function testGetListRestrictionPack()
     {
         $documentType = $this->getDocumentType();
-        $this->assertEquals(array('pack_marche'), $documentType->getListRestrictionPack());
+        $this->assertEquals(['pack_marche'], $documentType->getListRestrictionPack());
     }
 
     public function testGetConnecteur()
     {
         $documentType = $this->getDocumentType();
-        $this->assertEquals(array('SAE'), $documentType->getConnecteur());
+        $this->assertEquals(['SAE'], $documentType->getConnecteur());
     }
 
     public function testGetFormulaire()
@@ -114,7 +114,7 @@ class DocumentTypeTest extends PHPUnit\Framework\TestCase
     public function testGetDroitEmpty()
     {
         $droit_list = $this->getEmptyDocumentType()->getListDroit();
-        $this->assertEquals(array("test:lecture","test:edition"), $droit_list);
+        $this->assertEquals(["test:lecture","test:edition"], $droit_list);
     }
 
     public function testGetDroit()
@@ -131,26 +131,26 @@ class DocumentTypeTest extends PHPUnit\Framework\TestCase
         $connecteur_list = $documentType->getConnecteurAllInfo();
 
         $this->assertEquals(
-            array (
+            [
                 0 =>
-                    array (
+                     [
                         DocumentType::CONNECTEUR_ID => 'SAE',
                         DocumentType::NUM_SAME_TYPE => 0,
                         DocumentType::CONNECTEUR_WITH_SAME_TYPE => false
-                    ),
+                    ],
                 1 =>
-                    array (
+                     [
                         DocumentType::CONNECTEUR_ID => 'test',
                         DocumentType::NUM_SAME_TYPE => 0,
                         DocumentType::CONNECTEUR_WITH_SAME_TYPE => true
-                    ),
+                    ],
                 2 =>
-                    array (
+                     [
                         DocumentType::CONNECTEUR_ID => 'test',
                         DocumentType::NUM_SAME_TYPE => 1,
                         DocumentType::CONNECTEUR_WITH_SAME_TYPE => true
-                    ),
-            ),
+                    ],
+             ],
             $connecteur_list
         );
     }

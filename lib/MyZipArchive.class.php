@@ -28,7 +28,7 @@ class MyZipArchive
                 //$file = str_replace('\\', '/', $file);
 
                 // Ignore "." and ".." folders
-                if (in_array(mb_substr($file, strrpos($file, '/') + 1), array('.', '..'))) {
+                if (in_array(mb_substr($file, strrpos($file, '/') + 1), ['.', '..'])) {
                     continue;
                 }
 

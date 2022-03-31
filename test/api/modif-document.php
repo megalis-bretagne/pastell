@@ -2,13 +2,13 @@
 
 $file_path = __DIR__ . "/vide.pdf";
 
-$post_data = array(
+$post_data = [
         "field_name" => "fichier_pes",
         "file_name" => "vide.pdf",
         "file_content" => "@$file_path",
         'id_d' => 'q17fx3d',
         'id_e' => '1',
-);
+];
 
 $curl = curl_init();
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);

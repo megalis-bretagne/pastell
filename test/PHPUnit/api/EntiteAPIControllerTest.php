@@ -12,11 +12,11 @@ class EntiteAPIControllerTest extends PastellTestCase
     {
         $result = $this->getInternalAPI()->post(
             "/entite",
-            array(
+            [
                     'denomination' => 'Métropolis',
                     'type' => 'collectivite',
                     'siren' => '677203002'
-            )
+            ]
         );
         $this->assertNotEmpty($result['id_e']);
     }
@@ -33,7 +33,7 @@ class EntiteAPIControllerTest extends PastellTestCase
     {
         $info = $this->getInternalAPI()->patch(
             "/entite/1",
-            array('denomination' => 'Mâcon','siren' => '677203002')
+            ['denomination' => 'Mâcon','siren' => '677203002']
         );
         $this->assertEquals('Mâcon', $info['denomination']);
     }
@@ -48,12 +48,12 @@ class EntiteAPIControllerTest extends PastellTestCase
     {
         $info = $this->getInternalAPI()->patch(
             "/entite/1",
-            array(
+            [
                 'denomination' => 'Métropolis',
                 'type' => 'collectivite',
                 'siren' => '677203002',
                 'create' => true
-            )
+            ]
         );
         $this->assertNotEmpty($info['id_e']);
         $this->assertNotEquals(1, $info['id_e']);
@@ -63,13 +63,13 @@ class EntiteAPIControllerTest extends PastellTestCase
     {
         $info = $this->getInternalAPI()->patch(
             "/entite/1",
-            array(
+            [
                 'id_e' => 2,
                 'denomination' => 'Métropolis',
                 'type' => 'collectivite',
                 'siren' => '677203002',
                 'centre_de_gestion' => 1,
-            )
+            ]
         );
         $this->assertEquals(1, $info['centre_de_gestion']);
     }
@@ -78,12 +78,12 @@ class EntiteAPIControllerTest extends PastellTestCase
     {
         $info = $this->getInternalAPI()->patch(
             "/entite/2",
-            array(
+            [
                 'denomination' => 'Métropolis',
                 'type' => 'collectivite',
                 'siren' => '677203002',
                 'entite_mere' => 1,
-            )
+            ]
         );
         $this->assertEquals(1, $info['entite_mere']);
     }
@@ -99,7 +99,7 @@ class EntiteAPIControllerTest extends PastellTestCase
     {
         $this->expectException("Exception");
         $this->expectExceptionMessage("Le type d'entité doit être renseigné");
-        $this->getInternalAPI()->post("/entite", array("denomination" => "toto"));
+        $this->getInternalAPI()->post("/entite", ["denomination" => "toto"]);
     }
 
     public function testCreateWithoutSiren()
@@ -120,11 +120,11 @@ class EntiteAPIControllerTest extends PastellTestCase
         $this->expectExceptionMessage("Le siren « 123456789 » ne semble pas valide");
         $this->getInternalAPI()->post(
             "/entite",
-            array(
+            [
                 "denomination" => "toto",
                 'type' => Entite::TYPE_COLLECTIVITE,
                 'siren' => '123456789'
-            )
+            ]
         );
     }
 
@@ -134,11 +134,11 @@ class EntiteAPIControllerTest extends PastellTestCase
         $this->expectExceptionMessage("Un service doit être ataché à une entité mère");
         $this->getInternalAPI()->post(
             "/entite",
-            array(
+            [
                 "denomination" => "toto",
                 'type' => Entite::TYPE_SERVICE,
                 'siren' => '123456789'
-            )
+            ]
         );
     }
 }

@@ -13,7 +13,7 @@
  * @var int $id_e_menu
  */
 if (! isset($nouveau_bouton_url)) {
-    $nouveau_bouton_url = array();
+    $nouveau_bouton_url = [];
 }
 if (! is_array($nouveau_bouton_url)) {
     $nb['Créer'] = $nouveau_bouton_url ;

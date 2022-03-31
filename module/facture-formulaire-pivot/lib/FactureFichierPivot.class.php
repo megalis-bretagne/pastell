@@ -36,7 +36,7 @@ class FactureFichierPivot
 
     public function checkInformation(array $information)
     {
-        $info = array('siret','fournisseur','no_facture','date_facture','montant_ttc');
+        $info = ['siret','fournisseur','no_facture','date_facture','montant_ttc'];
         foreach ($info as $key) {
             if (empty($information[$key])) {
                 throw new Exception("Impossible de générer le fichier facture PIVOT: le paramètre $key est manquant. ");

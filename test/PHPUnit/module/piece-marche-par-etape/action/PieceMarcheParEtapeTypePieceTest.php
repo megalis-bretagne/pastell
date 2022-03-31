@@ -17,7 +17,7 @@ class PieceMarcheParEtapeTypePieceTest extends PastellMarcheTestCase
 
         $result = $this->getInternalAPI()->post(
             "/Document/" . PastellTestCase::ID_E_COL,
-            array('type' => 'piece-marche-par-etape')
+            ['type' => 'piece-marche-par-etape']
         );
         $this->id_d = $result['id_d'];
     }
@@ -30,7 +30,8 @@ class PieceMarcheParEtapeTypePieceTest extends PastellMarcheTestCase
 
         $this->getInternalAPI()->patch(
             "/entite/1/document/$this->id_d",
-            array('libelle' => 'Test marché numéro 2018REF201810',
+            [
+            'libelle' => 'Test marché numéro 2018REF201810',
                 'numero_marche' => '2018REF201810',
                 'type_marche' => 'T',
                 'numero_consultation' => 'Consultation 2018REF201810',
@@ -38,7 +39,7 @@ class PieceMarcheParEtapeTypePieceTest extends PastellMarcheTestCase
                 'etape' => 'ONR',
                 'soumissionnaire' => 'entreprise xx',
                 'date_document' => '2018-10-05',
-            )
+            ]
         );
 
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($this->id_d);
@@ -55,9 +56,9 @@ class PieceMarcheParEtapeTypePieceTest extends PastellMarcheTestCase
         $this->postPiecesLot();
         $info = $this->getInternalAPI()->get("/entite/1/document/$this->id_d/externalData/type_piece");
 
-        $expected = array (
+        $expected =  [
             'pieces_type_pj_list' =>
-                array (
+                 [
                     "ARN" => "Accusé de Réception de Notification (ARN)",
                     "AE" => "Acte d'Engagement (AE)",
                     "AS" => "Acte de sous-traitance (AS)",
@@ -94,13 +95,13 @@ class PieceMarcheParEtapeTypePieceTest extends PastellMarcheTestCase
                     "RP" => "Rapport de Présentation (RP)",
                     "RDP" => "Récépissé de dépôt de pli (RDP)",
                     "RC" => "Règlement de la Consultation (RC)"
-                ),
+                ],
             'pieces' =>
-                array (
+                 [
                     0 => self::FILENAME_PIECE1,
                     1 => self::FILENAME_PIECE2,
-                ),
-        );
+                ],
+        ];
 
         $this->assertEquals($expected, $info);
     }
@@ -113,7 +114,7 @@ class PieceMarcheParEtapeTypePieceTest extends PastellMarcheTestCase
     {
 
         $this->postPiecesLot();
-        $info = $this->getInternalAPI()->patch("/entite/1/document/$this->id_d/externalData/type_piece", array('type_pj' => array('BPU','CCAP')));
+        $info = $this->getInternalAPI()->patch("/entite/1/document/$this->id_d/externalData/type_piece", ['type_pj' => ['BPU','CCAP']]);
         $this->assertEquals('2018BPU.pdf : Bordereau des Prix Unitaires (BPU) ;
 2018CCAP.pdf : Cahier des Clauses Administratives Particulières (CCAP)', $info['data']['type_piece']);
     }

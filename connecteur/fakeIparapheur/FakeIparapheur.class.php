@@ -75,7 +75,7 @@ class FakeIparapheur extends SignatureConnecteur
         $dossierID,
         $document_content,
         $content_type,
-        array $all_annexes = array(),
+        array $all_annexes = [],
         $date_limite = false,
         $visuel_pdf = ''
     ) {
@@ -136,7 +136,7 @@ class FakeIparapheur extends SignatureConnecteur
         $document_content,
         $content_type,
         $visuel_pdf,
-        array $metadata = array()
+        array $metadata = []
     ) {
         return true;
     }

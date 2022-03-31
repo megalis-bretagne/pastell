@@ -5,7 +5,7 @@ class ActesTypePieceTest extends PastellTestCase
     private function postActes()
     {
         $fileUploader = new FileUploaderMock();
-        $fileUploader->setFiles(array('file_content' => file_get_contents(__DIR__ . "/../fixtures/classification.xml")));
+        $fileUploader->setFiles(['file_content' => file_get_contents(__DIR__ . "/../fixtures/classification.xml")]);
         $this->getInternalAPI()->setFileUploader($fileUploader);
 
         $this->getInternalAPI()->post(
@@ -14,7 +14,7 @@ class ActesTypePieceTest extends PastellTestCase
 
         $info = $this->getInternalAPI()->post(
             "/entite/1/document",
-            array('type' => 'actes-generique')
+            ['type' => 'actes-generique']
         );
 
         $id_d =  $info['id_d'];
@@ -26,7 +26,7 @@ class ActesTypePieceTest extends PastellTestCase
 
         $this->getInternalAPI()->patch(
             "/entite/1/document/$id_d",
-            array('acte_nature' => '3','classification' => '4.1')
+            ['acte_nature' => '3','classification' => '4.1']
         );
 
         return $id_d;
@@ -37,9 +37,9 @@ class ActesTypePieceTest extends PastellTestCase
         $id_d = $this->postActes();
         $info = $this->getInternalAPI()->get("/entite/1/document/$id_d/externalData/type_piece");
 
-        $expected = array (
+        $expected =  [
             'actes_type_pj_list' =>
-                array (
+                 [
                     '99_AI' => 'Acte individuel (99_AI)',
                     '22_AR' => 'Accusé de réception (22_AR)',
                     '22_AG' => 'Agrément ou certificat (22_AG)',
@@ -60,12 +60,12 @@ class ActesTypePieceTest extends PastellTestCase
                     '22_PN' => 'Plans (22_PN)',
                     '22_PE' => 'Présentation des états initiaux et futurs (22_PE)',
                     '22_TA' => 'Tableau (22_TA)',
-                ),
+                ],
             'pieces' =>
-                array (
+                 [
                     0 => 'arrete.pdf',
-                ),
-        );
+                ],
+        ];
 
         $this->assertEquals($expected, $info);
     }
@@ -73,7 +73,7 @@ class ActesTypePieceTest extends PastellTestCase
     public function testGo()
     {
         $id_d = $this->postActes();
-        $info = $this->getInternalAPI()->patch("/entite/1/document/$id_d/externalData/type_piece", array('type_pj' => array('41_NC')));
+        $info = $this->getInternalAPI()->patch("/entite/1/document/$id_d/externalData/type_piece", ['type_pj' => ['41_NC']]);
         $this->assertEquals('1 fichier(s) typé(s)', $info['data']['type_piece']);
 
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);

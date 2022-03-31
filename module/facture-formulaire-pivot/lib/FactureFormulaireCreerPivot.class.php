@@ -49,7 +49,7 @@ class FactureFormulaireCreerPivot
     {
         $file_path = '';
         $donneesFormulaire = $this->donneesFormulaire;
-        $facture_lignes = array();
+        $facture_lignes = [];
         if ($csv_name = $donneesFormulaire->getFileName('facture_fichier_lignes_csv')) {
             $csv_path = $donneesFormulaire->getFilePath('facture_fichier_lignes_csv');
             $facture_lignes = $this->getFactureLignesCSV($csv_name, $csv_path);
@@ -60,13 +60,13 @@ class FactureFormulaireCreerPivot
             $name_pj01 = "FAC" . $name_pj01;
         }
         $file_path = $donneesFormulaire->copyFile('facture_pj_01', $tmp_folder, 0, "facture_pj_01");
-        $facture_pj_01 = array(
+        $facture_pj_01 = [
             'path' => $this->zipFile($file_path, $name_pj01),
             'name' => $name_pj01,
             'type' => $this->getContentType($file_path),
-        );
+        ];
 
-        $facture_pj_02 = array();
+        $facture_pj_02 = [];
         if ($donneesFormulaire->get('facture_pj_02')) {
             foreach ($donneesFormulaire->get('facture_pj_02') as $num => $fileName) {
                 $name_pj02 = $donneesFormulaire->getFileName('facture_pj_02', $num);
@@ -74,11 +74,11 @@ class FactureFormulaireCreerPivot
                     $name_pj02 = "PJ0" . $num . $name_pj02;
                 }
                 $file_path = $donneesFormulaire->copyFile('facture_pj_02', $tmp_folder, $num, "facture_pj_02" . "-" . $num);
-                $facture_pj_02[] = array(
+                $facture_pj_02[] = [
                     'path' => $this->zipFile($file_path, $name_pj02),
                     'name' => $name_pj02,
                     'type' => $this->getContentType($file_path),
-                );
+                ];
             }
         }
 
@@ -90,7 +90,7 @@ class FactureFormulaireCreerPivot
 
         $donneesFormulaire->setData('id_facture', $id_facture);
 
-        $docInfo = array(
+        $docInfo = [
             /* Données de l'enveloppe : on s'en fiche */
             'date_production' => date("Y-m-d"),
             'id_flux' => $id_facture,
@@ -131,7 +131,7 @@ class FactureFormulaireCreerPivot
             'facture_lignes' => $facture_lignes,
             'facture_pj_01' => $facture_pj_01,
             'facture_pj_02' => $facture_pj_02,
-        );
+        ];
 
         /** @var FactureFichierPivot $pivot */
         $pivot = new FactureFichierPivot();
@@ -161,7 +161,7 @@ class FactureFormulaireCreerPivot
     private function getFactureLignesCSV($csv_name, $csv_path)
     {
 
-        $facture_lignes = array();
+        $facture_lignes = [];
 
         if (!(substr($csv_name, -4) == ".csv")) {
             throw new Exception("Le fichier facture lignes csv n'est pas au format .csv");
@@ -169,13 +169,13 @@ class FactureFormulaireCreerPivot
         $CSV = new CSV();
         $lignes = $CSV->get($csv_path);
         foreach ($lignes as $ligneInfo) {
-            $facture_lignes[] = array(
+            $facture_lignes[] = [
                 'ligne_ref_produit' => $ligneInfo[0],
                 'ligne_prix_unitaire' => $ligneInfo[1],
                 'ligne_quantite' => $ligneInfo[2],
                 'ligne_montant_ht' => $ligneInfo[3],
                 'ligne_tva' => $ligneInfo[4],
-            );
+            ];
         }
         return $facture_lignes;
     }

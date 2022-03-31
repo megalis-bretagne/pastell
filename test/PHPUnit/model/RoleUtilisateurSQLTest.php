@@ -164,20 +164,20 @@ class RoleUtilisateurSQLTest extends PastellTestCase
         //var_export($arbre_fille);
 
         $this->assertEquals(
-            array (
+            [
                 0 =>
-                    array (
+                     [
                         'id_e' => $id_e_1,
                         'denomination' => 'Entité 1',
                         'profondeur' => 0,
-                    ),
+                    ],
                 1 =>
-                    array (
+                     [
                         'id_e' => $id_e_3,
                         'denomination' => 'Entité 3',
                         'profondeur' => 0,
-                    ),
-            ),
+                    ],
+             ],
             $arbre_fille
         );
     }

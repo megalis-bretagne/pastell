@@ -35,11 +35,11 @@ class WebdavWrapper
 
     public function setDataConnexion($url, $user, $password)
     {
-        $settings = array(
+        $settings = [
             'baseUri' => $url,
             'userName' => $user,
             'password' => $password,
-        );
+        ];
         // Creation d'un nouveau client SabreDAV
         $this->dav = $this->webdavClientFactory->getInstance($settings);
     }
@@ -143,9 +143,9 @@ class WebdavWrapper
              * Only check the current resource
              * @see http://www.webdav.org/specs/rfc4918.html#HEADER_Depth
              */
-            $this->dav->propfind($element, array(
+            $this->dav->propfind($element, [
                 '{DAV:}displayname',
-            ), 0);
+            ], 0);
         } catch (ClientHttpException $e) {
             if ($e->getCode() == '404') {
                 return false;
@@ -163,14 +163,14 @@ class WebdavWrapper
     public function listFolder($folder)
     {
 
-        $nlist = $this->dav->propfind($folder, array(
+        $nlist = $this->dav->propfind($folder, [
             '{DAV:}displayname',
-        ), 1);
+        ], 1);
 
         if (!$nlist) {
-            return array();
+            return [];
         }
-        $result = array();
+        $result = [];
         foreach ($nlist as $file => $value) {
             $result[] = basename($file);
         }

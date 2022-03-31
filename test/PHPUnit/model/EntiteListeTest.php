@@ -52,7 +52,7 @@ class EntiteListeTest extends PastellTestCase
     {
         $this->assertEquals(
             "Bourg-en-Bresse",
-            $this->entiteListe->getInfoFromArray(array("1"))[0]['denomination']
+            $this->entiteListe->getInfoFromArray(["1"])[0]['denomination']
         );
     }
 

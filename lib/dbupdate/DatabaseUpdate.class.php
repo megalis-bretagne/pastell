@@ -3,7 +3,7 @@
 class DatabaseUpdate
 {
     private $fileContent;
-    private $databaseDefinition = array();
+    private $databaseDefinition = [];
     /** @var DatabaseDiff */
     private $databaseDiff;
 
@@ -11,7 +11,7 @@ class DatabaseUpdate
     {
         $this->fileContent = json_decode($fileContent, true);
         if (!$this->fileContent) {
-            $this->fileContent = array();
+            $this->fileContent = [];
         }
         $databaseEvent = new DatabaseEventMySQL();
         $this->databaseDiff = new DatabaseDiff($databaseEvent);
@@ -30,7 +30,7 @@ class DatabaseUpdate
 
     public function getAllSQLCommand()
     {
-        return $this->databaseDiff->getDiff($this->databaseDefinition, array());
+        return $this->databaseDiff->getDiff($this->databaseDefinition, []);
     }
 
     /**

@@ -39,7 +39,7 @@ class PieceMarcheOrientationTest extends PastellMarcheTestCase
 
         $this->getInternalAPI()->patch(
             "/entite/1/document/$this->id_d",
-            array("envoi_ged" => "on")
+            ["envoi_ged" => "on"]
         );
 
         $this->assertTrue(

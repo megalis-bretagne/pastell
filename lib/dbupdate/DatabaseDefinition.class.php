@@ -11,15 +11,15 @@ class DatabaseDefinition
 
     public function getDefinition()
     {
-        $result = array();
+        $result = [];
         $tables = $this->sqlQuery->query('SHOW TABLE STATUS');
         foreach ($tables as $table) {
             $tableName = $table['Name'];
-            $result[$tableName] = array (
+            $result[$tableName] =  [
                 'Engine' => $table['Engine'],
                 'Column' => $this->getColumnDefinition($tableName),
                 'Index' =>  $this->getIndexDefinition($tableName),
-            );
+            ];
         }
 
         return $result;
@@ -27,7 +27,7 @@ class DatabaseDefinition
 
     private function getColumnDefinition($tableName)
     {
-        $r = array();
+        $r = [];
         $result = $this->sqlQuery->query("SHOW COLUMNS FROM $tableName");
         foreach ($result as $line) {
             $r[$line['Field']] = $line;
@@ -37,13 +37,15 @@ class DatabaseDefinition
 
     private function getIndexDefinition($tableName)
     {
-        $result = array();
+        $result = [];
         $r = $this->sqlQuery->query("SHOW INDEX FROM $tableName");
         foreach ($r as $line) {
             if (empty($result[$line['Key_name']])) {
-                $result[$line['Key_name']] = array('type' => $line['Index_type'],
-                                            'col' => array(),
-                                            'unique' => ! $line['Non_unique']);
+                $result[$line['Key_name']] = [
+                'type' => $line['Index_type'],
+                                            'col' => [],
+                                            'unique' => ! $line['Non_unique']
+                ];
             }
             $result[$line['Key_name']]['col'][$line['Seq_in_index'] - 1] = $line['Column_name'];
         }

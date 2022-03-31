@@ -75,7 +75,7 @@ class SQLQuery
             $message = $e->getMessage() . " - " . $pdoStatement->queryString . "|" . implode(",", $param);
             throw new Exception($message, -1, $e);
         }
-        $result = array();
+        $result = [];
         if ($pdoStatement->columnCount()) {
             $result = $pdoStatement->fetchAll(PDO::FETCH_ASSOC);
         }
@@ -115,9 +115,9 @@ class SQLQuery
         }
         $result = $this->query($query, $param);
         if (! $result) {
-            return array();
+            return [];
         }
-        $r = array();
+        $r = [];
         foreach ($result as $line) {
             $line = array_values($line);
             $r[] = $line[0];

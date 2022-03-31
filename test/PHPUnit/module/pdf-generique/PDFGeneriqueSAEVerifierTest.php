@@ -32,7 +32,7 @@ class PDFGeneriqueSAEVerifierTest extends PastellTestCase
 
         $result = $this->getInternalAPI()->post(
             "/entite/" . self::ID_E_COL . "/connecteur",
-            array('libelle' => 'SAE', 'id_connecteur' => 'as@lae-rest')
+            ['libelle' => 'SAE', 'id_connecteur' => 'as@lae-rest']
         );
 
         $id_ce = $result['id_ce'];
@@ -46,22 +46,22 @@ class PDFGeneriqueSAEVerifierTest extends PastellTestCase
 
         $this->getInternalAPI()->post(
             "/entite/" . self::ID_E_COL . "/flux/pdf-generique/connecteur/$id_ce",
-            array('type' => 'SAE')
+            ['type' => 'SAE']
         );
 
         $result = $this->getInternalAPI()->post(
             "/Document/" . PastellTestCase::ID_E_COL,
-            array('type' => 'pdf-generique')
+            ['type' => 'pdf-generique']
         );
         $id_d = $result['id_d'];
 
         $this->getInternalAPI()->patch(
             "/entite/1/document/$id_d",
-            array(
+            [
                 'libelle' => 'Test pdf générique',
                 'envoi_sae' => '1',
                 'sae_transfert_id' => '15ef78ef665a8777c33d1125783707f8dfb190f82869dc9248e46c5ed396d70b_1542893421'
-            )
+            ]
         );
         $this->getDonneesFormulaireFactory()->get($id_d)->addFileFromCopy(
             'sae_bordereau',
@@ -70,11 +70,11 @@ class PDFGeneriqueSAEVerifierTest extends PastellTestCase
         );
         $this->getInternalAPI()->patch(
             "/entite/1/document/$id_d",
-            array(
+            [
                 'libelle' => 'Test pdf générique',
                 'envoi_sae' => '1',
                 'sae_transfert_id' => '15ef78ef665a8777c33d1125783707f8dfb190f82869dc9248e46c5ed396d70b_1542893421'
-            )
+            ]
         );
 
         $actionExecutorFactory = $this->getObjectInstancier()->getInstance(ActionExecutorFactory::class);
@@ -103,7 +103,7 @@ class PDFGeneriqueSAEVerifierTest extends PastellTestCase
     {
         $result = $this->getInternalAPI()->post(
             "/entite/" . self::ID_E_COL . "/connecteur",
-            array('libelle' => 'SAE', 'id_connecteur' => 'as@lae-rest')
+            ['libelle' => 'SAE', 'id_connecteur' => 'as@lae-rest']
         );
 
         $id_ce = $result['id_ce'];
@@ -117,21 +117,21 @@ class PDFGeneriqueSAEVerifierTest extends PastellTestCase
 
         $this->getInternalAPI()->post(
             "/entite/" . self::ID_E_COL . "/flux/pdf-generique/connecteur/$id_ce",
-            array('type' => 'SAE')
+            ['type' => 'SAE']
         );
 
         $result = $this->getInternalAPI()->post(
             "/Document/" . PastellTestCase::ID_E_COL,
-            array('type' => 'pdf-generique')
+            ['type' => 'pdf-generique']
         );
         $id_d = $result['id_d'];
 
         $this->getInternalAPI()->patch(
             "/entite/1/document/$id_d",
-            array(
+            [
                 'libelle' => 'Test pdf générique',
                 'envoi_sae' => '1',
-            )
+            ]
         );
 
         $this->getDonneesFormulaireFactory()->get($id_d)->addFileFromCopy(
@@ -183,7 +183,7 @@ class PDFGeneriqueSAEVerifierTest extends PastellTestCase
 
         $result = $this->getInternalAPI()->post(
             "/entite/" . self::ID_E_COL . "/connecteur",
-            array('libelle' => 'SAE', 'id_connecteur' => 'as@lae-rest')
+            ['libelle' => 'SAE', 'id_connecteur' => 'as@lae-rest']
         );
 
         $id_ce = $result['id_ce'];
@@ -197,22 +197,22 @@ class PDFGeneriqueSAEVerifierTest extends PastellTestCase
 
         $this->getInternalAPI()->post(
             "/entite/" . self::ID_E_COL . "/flux/pdf-generique/connecteur/$id_ce",
-            array('type' => 'SAE')
+            ['type' => 'SAE']
         );
 
         $result = $this->getInternalAPI()->post(
             "/Document/" . PastellTestCase::ID_E_COL,
-            array('type' => 'pdf-generique')
+            ['type' => 'pdf-generique']
         );
         $id_d = $result['id_d'];
 
         $this->getInternalAPI()->patch(
             "/entite/1/document/$id_d",
-            array(
+            [
                 'libelle' => 'Test pdf générique',
                 'envoi_sae' => '1',
                 'sae_transfert_id' => 'mon_id_de_transfert_phpunit'
-            )
+            ]
         );
 
         $this->getDonneesFormulaireFactory()->get($id_d)->addFileFromCopy(

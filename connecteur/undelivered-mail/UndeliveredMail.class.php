@@ -48,16 +48,16 @@ class UndeliveredMail extends Connecteur
 
         $overview = $imapWrapper->fetchOverview(1, $nb_message);
 
-        $result = array();
+        $result = [];
         foreach ($overview as $data) {
-            $line_result = array(
+            $line_result = [
                 'uid' => $data->uid,
                 'subject' => get_hecho($this->decodeHeader($data->subject)),
                 'from' => get_hecho($this->decodeHeader($data->from)),
                 'body' => false,
                 'pastell_header' => false,
                 'id_de' => false,
-            );
+            ];
             $body = $imapWrapper->getBody($data->uid);
             $line_result['is_pastell_return'] = preg_match("#" . self::PASTELL_RETURN_INFO_HEADER . ": (.*)$#m", $body, $matches);
             if ($line_result['is_pastell_return']) {

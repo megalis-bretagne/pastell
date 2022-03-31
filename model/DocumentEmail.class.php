@@ -13,7 +13,7 @@ class DocumentEmail extends SQL
 
     public static function getChaineTypeDestinataire($code)
     {
-        $type = array('to' => 'Destinataire', 'cc' => 'Copie à' , 'bcc' => 'Copie caché à' );
+        $type = ['to' => 'Destinataire', 'cc' => 'Copie à' , 'bcc' => 'Copie caché à' ];
         return $type[$code];
     }
 

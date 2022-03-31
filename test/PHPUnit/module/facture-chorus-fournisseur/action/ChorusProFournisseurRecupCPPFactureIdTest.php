@@ -9,7 +9,7 @@ class ChorusProFournisseurRecupCPPFactureIdTest extends ExtensionCppTestCase
     public function ChorusProFournisseurRecupCPPFactureId()
     {
 
-        $consulterCompteRenduImport_result = array (
+        $consulterCompteRenduImport_result =  [
             'codeRetour' => 0,
             'libelle' => 'TRA_MSG_00.000',
             'codeInterfaceDepotFlux' => 'FSO1113A',
@@ -17,12 +17,12 @@ class ChorusProFournisseurRecupCPPFactureIdTest extends ExtensionCppTestCase
             'dateHeureEtatCourantFlux' => '2019-03-27T11:12:24.777+01:00',
             'etatCourantDepotFlux' => 'IN_INTEGRE',
             'nomFichier' => 'FSO1113A_CPP001_CPP0011113000000000044750'
-        );
+        ];
 
-        $getInfoByNumeroFluxDepot_result = array (
+        $getInfoByNumeroFluxDepot_result =  [
             'identifiantFactureCPP' => 3125108,
             'statut' => 'MISE_A_DISPOSITION'
-        );
+        ];
 
         $cppWrapper = $this->getMockBuilder(CPPWrapper::class)
             ->disableOriginalConstructor()

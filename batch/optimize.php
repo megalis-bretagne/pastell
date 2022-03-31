@@ -8,11 +8,11 @@ require_once __DIR__ . "/../init.php";
 /** @var SQLQuery $sqlQuery */
 $sqlQuery = $objectInstancier->getInstance(SQLQuery::class);
 
-$list = array(
+$list = [
     "OPTIMIZE TABLE worker",
     "OPTIMIZE TABLE job_queue",
     "OPTIMIZE TABLE journal",
-);
+];
 foreach ($list as $command) {
     echo "$command:...";
     $sqlQuery->query($command);
