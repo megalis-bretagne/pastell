@@ -56,7 +56,7 @@ class S2lowGlobalTest extends ControlerTestCase
 
         $this->setGetInfo(['id_ce' => $id_ce,'field' => 'changement_certificat','id_ce_list' => [$id_ce_entite]]);
 
-        $this->expectOutputRegex("#Location: editionModif\?id_ce=$id_ce#");
+        $this->expectOutputRegex("#Location: " . SITE_BASE . "(.*)editionModif\?id_ce=$id_ce#");
         $connecteurControler->doExternalDataAction();
     }
 }
