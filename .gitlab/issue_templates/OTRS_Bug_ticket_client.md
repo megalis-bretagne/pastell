@@ -21,5 +21,5 @@ Lister ici le(s) message(s) d'erreur(s) afficher à l'utilisateur ou des logs
 
 
 
-/label ~"Cible:patch"  ~"Origine: Ticket client" ~"Priorité:Haute" 
+/label ~"Cible:Patch"  ~"Origine: Ticket client" ~"Priorité:Haute" 
 /cc @epommateau @iruiz @mreyrolle @rbarlet   
