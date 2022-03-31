@@ -19,12 +19,6 @@ Lister ici le(s) message(s) d'erreur(s) afficher à l'utilisateur ou des logs
 
 - Ville [Ticket](lien vers le ticket)
 
-## Check List pour le dev
-- [ ] Add spend time `/estimate`
-- [ ] Update ChangeLog
-- [ ] Update description of the function(s) (@since, @version)
-- [ ] Functional tests (at least manual)
-- [ ] Add spend time `/spend`
 
 ## Check List pour la maintenance
 - [ ] Avertissement de la disponibilité de la demande
