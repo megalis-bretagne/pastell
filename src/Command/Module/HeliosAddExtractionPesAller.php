@@ -39,7 +39,7 @@ class HeliosAddExtractionPesAller extends BaseCommand
      * @var ActionExecutorFactory
      */
     private $actionExecutorFactory;
-    
+
     public function __construct(
         DocumentSQL $documentSQL,
         DocumentEntite $documentEntite,
