@@ -10,6 +10,8 @@ le document envoyé n'est pas celui signé mais celui d'origine #1482
 ## Évolutions
 
 - Le glaneur permet l'extration des données d'un PES avec le flux Hélios automatique en appelant l'action importation #711
+- Il faut lancer la commande `app:module:helios-add-extraction-pes-aller` suivie de `helios-automatique` ou `helios-generique`
+  pour extraire les informations des fichier_pes (dans le cas où elles seraient manquantes) #1484
 
 # [3.1.12] - 2022-02-16
 
