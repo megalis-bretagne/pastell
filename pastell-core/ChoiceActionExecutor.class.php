@@ -60,14 +60,26 @@ abstract class ChoiceActionExecutor extends ActionExecutor
         $this->objectInstancier->PastellControler->renderDefault();
     }
 
-    public function redirectToFormulaire()
+    public function redirectToFormulaire(): void
     {
-        header("Location: edition?id_d={$this->id_d}&id_e={$this->id_e}&page={$this->page}");
+        $url = sprintf(
+            "%sDocument/edition?id_d=%s&id_e=%s&page=%s",
+            rtrim(SITE_BASE, '/') . '/',
+            $this->id_d,
+            $this->id_e,
+            $this->page
+        );
+        header("Location: $url");
     }
 
-    public function redirectToConnecteurFormulaire()
+    public function redirectToConnecteurFormulaire(): void
     {
-        header_wrapper("Location: editionModif?id_ce={$this->id_ce}");
+        $url = sprintf(
+            "%sConnecteur/editionModif?id_ce=%s",
+            rtrim(SITE_BASE, '/') . '/',
+            $this->id_ce
+        );
+        header_wrapper("Location: $url");
     }
 
 

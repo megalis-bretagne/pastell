@@ -106,7 +106,7 @@ class JournalControler extends PastellControler
         $this->{'offset'} = $recuperateur->getInt('offset', 0);
         $this->{'type'} = $recuperateur->get('type');
         $this->{'id_d'} = $recuperateur->get('id_d');
-        $this->{'id_u'} = $recuperateur->get('id_u');
+        $this->{'id_u'} = $recuperateur->getInt('id_u');
         $this->{'recherche'} = $recuperateur->get('recherche');
         $this->{'date_debut'} = $recuperateur->get('date_debut');
         $this->{'date_fin'} = $recuperateur->get('date_fin');
