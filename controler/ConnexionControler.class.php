@@ -449,6 +449,7 @@ class ConnexionControler extends PastellControler
 
         $id_u = $this->getId_uFromTokenOrFailed($mail_verif_password);
 
+        /* Cf #1002 le composant graphique Libriciel n'intègre pas encore de message d'erreur personnalisé.*/
         if (! $password) {
             /* Note : on ne peut pas mettre de message d'erreur personnalisé pour le moment */
             $this->setLastError("Le mot de passe est obligatoire");
@@ -457,16 +458,17 @@ class ConnexionControler extends PastellControler
         if ($password != $password2) {
             /* Note : on ne peut pas mettre de message d'erreur personnalisé pour le moment */
             $this->setLastError("Les mots de passe ne correspondent pas");
-            $this->redirect("/Connexion/index");
             $this->redirect("/Connexion/changementMdp?mail_verif=$mail_verif_password");
             exit;
         }
 
         $passwordEntropy = $this->getObjectInstancier()->getInstance(PasswordEntropy::class);
         if (! $passwordEntropy->isPasswordStrongEnough($password)) {
+            /* Note : on ne peut pas mettre de message d'erreur personnalisé pour le moment */
             $this->setLastError(
                 "Le mot de passe n'a pas été changé car le nouveau mot de passe n'est pas assez fort.<br/>" .
-                "Essayez de l'allonger ou de mettre des caractères de différents types. La barre de vérification doit être entièrement remplie"
+                "Essayez de l'allonger ou de mettre des caractères de différents types.<br/>" .
+                "La barre de vérification doit être entièrement remplie"
             );
             $this->redirect("/Connexion/changementMdp?mail_verif=$mail_verif_password");
         }
