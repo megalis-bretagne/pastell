@@ -4,9 +4,9 @@ class HistoStatutCPP
 {
     public function create()
     {
-        $result = array();
+        $result = [];
         $result['statut_courant'] = '';
-        $result['histo_statut'] = array();
+        $result['histo_statut'] = [];
         return json_encode($result);
     }
 

@@ -134,7 +134,7 @@ class DocumentSQL extends SQL
 
     public static function clearCache()
     {
-        self::$cache = array();
+        self::$cache = [];
     }
 
     public function getDocumentsLastActionByTypeEntityAndCreationDate(

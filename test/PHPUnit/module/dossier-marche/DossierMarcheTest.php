@@ -9,7 +9,7 @@ class DossierMarcheTest extends PastellMarcheTestCase
     {
         $result = $this->getInternalAPI()->post(
             "/Document/" . PastellTestCase::ID_E_COL,
-            array('type' => 'dossier-marche')
+            ['type' => 'dossier-marche']
         );
         $id_d = $result['id_d'];
 

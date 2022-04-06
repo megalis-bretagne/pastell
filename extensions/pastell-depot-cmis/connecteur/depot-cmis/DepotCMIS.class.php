@@ -32,7 +32,7 @@ class DepotCMIS extends DepotConnecteur
 
     public function listDirectory()
     {
-        $result = array();
+        $result = [];
         foreach ($this->getFolder()->getChildren() as $children) {
             $result[] = $children->getName();
         }
@@ -115,10 +115,10 @@ class DepotCMIS extends DepotConnecteur
 
         $httpInvoker->setDefaultOption(
             'auth',
-            array(
+            [
                 $this->connecteurConfig->get(self::DEPOT_CMIS_LOGIN),
                 $this->connecteurConfig->get(self::DEPOT_CMIS_PASSWORD),
-            )
+            ]
         );
 
         $parameters = [

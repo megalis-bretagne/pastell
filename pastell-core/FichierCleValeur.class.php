@@ -62,7 +62,7 @@ class FichierCleValeur
 
     public function save()
     {
-        $result = array();
+        $result = [];
         if ($this->info) {
             foreach ($this->info as $field_name => $field_value) {
                 if (is_array($field_value)) {

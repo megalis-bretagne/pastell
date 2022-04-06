@@ -57,7 +57,7 @@ class SedaNG extends SEDAConnecteur
     public function getBordereauTest()
     {
         $flux_info = $this->connecteurConfig->getFileContent('flux_info_content');
-        $data = array();
+        $data = [];
         if ($flux_info) {
             foreach (json_decode($flux_info, true) as $key => $value) {
                 $data[$key] = $value;
@@ -109,7 +109,7 @@ class SedaNG extends SEDAConnecteur
         $bordereau_seda_with_annotation = $generateXMLFromAnnotedRelaxNG->generateFromRelaxNGString($relaxNG_with_annotation);
 
         $connecteur_info = $this->connecteurConfig->getFileContent('connecteur_info_content');
-        $data = array();
+        $data = [];
         if ($connecteur_info) {
             foreach (json_decode($connecteur_info, true) as $key => $value) {
                 $data[$key] = $value;
@@ -213,11 +213,11 @@ class SedaNG extends SEDAConnecteur
 
         $annotation_list = $agapeFile->getAllAnnotation($agape_file_path);
         $annotationWrapper = new AnnotationWrapper();
-        $result = array();
+        $result = [];
         foreach ($annotation_list as $annotation) {
             $result = array_merge($result, $annotationWrapper->extractInfo($annotation));
         }
-        $the_result = array();
+        $the_result = [];
         foreach ($result as $command_info) {
             list($command,$data) = $command_info;
             if ($command == $type) {

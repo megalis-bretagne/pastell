@@ -103,7 +103,8 @@ class DossierMarcheEnvoieSAETest extends PastellMarcheTestCase
             '2. Lancement',
             '3. Analyses',
             'OFFRES DEMAT',
-            'archive.tgz'], scandir("$tmp_folder/"));
+            'archive.tgz'
+        ], scandir("$tmp_folder/"));
 
         $this->assertEquals("non vide\n", file_get_contents("$tmp_folder/OFFRES DEMAT/ADULLACT/foo.txt"));
 

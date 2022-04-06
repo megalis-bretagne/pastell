@@ -39,7 +39,7 @@ class InternalAPI
         $this->fileUploader = $fileUploader;
     }
 
-    public function get($ressource, $data = array())
+    public function get($ressource, $data = [])
     {
         $path = parse_url($ressource, PHP_URL_PATH);
         $query = parse_url($ressource, PHP_URL_QUERY);
@@ -48,12 +48,12 @@ class InternalAPI
         return $this->callMethod('get', $path, $data);
     }
 
-    public function post($ressource, $data = array())
+    public function post($ressource, $data = [])
     {
         return $this->callMethod('post', $ressource, $data);
     }
 
-    public function delete($ressource, $data = array())
+    public function delete($ressource, $data = [])
     {
         $path = parse_url($ressource, PHP_URL_PATH);
         $query = parse_url($ressource, PHP_URL_QUERY);
@@ -62,12 +62,12 @@ class InternalAPI
         return $this->callMethod('delete', $path, $data);
     }
 
-    public function patch($ressource, $data = array())
+    public function patch($ressource, $data = [])
     {
         return $this->callMethod('patch', $ressource, $data);
     }
 
-    public function compatV1Edition($ressource, $data = array())
+    public function compatV1Edition($ressource, $data = [])
     {
         return $this->callMethod('compatV1Edition', $ressource, $data);
     }
@@ -86,7 +86,7 @@ class InternalAPI
         return $controllerObject->$request_method();
     }
 
-    private function getInstance($controllerName, $data = array())
+    private function getInstance($controllerName, $data = [])
     {
         $controller_name = ucfirst("{$controllerName}APIController");
 
@@ -134,6 +134,6 @@ class InternalAPI
             $controller_name = "EntiteFlux";
         }
 
-        return array($controller_name,$query_arg);
+        return [$controller_name,$query_arg];
     }
 }

@@ -65,7 +65,7 @@ class SAEEnvoyer extends ConnecteurTypeActionExecutor
             $donneesFormulaire
         );
 
-        $metadata = json_decode($donneesFormulaire->getFileContent($sae_config), true) ?: array();
+        $metadata = json_decode($donneesFormulaire->getFileContent($sae_config), true) ?: [];
         if (method_exists($fluxData, "setMetadata")) {
             $fluxData->setMetadata($metadata);
         }

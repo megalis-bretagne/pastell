@@ -26,7 +26,7 @@ $CSVoutput->end();
 
 function getQueryAll($date_debut = false, $date_fin = false)
 {
-    $value = array();
+    $value = [];
     $sql = "SELECT journal_historique.*,document.titre,entite.denomination, utilisateur.nom, utilisateur.prenom,entite.siren " .
             " FROM journal_historique " .
             " LEFT JOIN document ON journal_historique.id_d = document.id_d " .
@@ -44,5 +44,5 @@ function getQueryAll($date_debut = false, $date_fin = false)
     }
 
     $sql .= " ORDER BY id_j DESC " ;
-    return array($sql,$value);
+    return [$sql,$value];
 }

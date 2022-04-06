@@ -105,49 +105,49 @@ class TypeDossierTranslatorTest extends PastellTestCase
 
         $ymlLoader = new YMLLoader(new MemoryCacheNone());
         $result = $ymlLoader->getArray($this->getWorkspacePath() . "/type-dossier-personnalise/module/double-parapheur-optional-step/definition.yml");
-        $this->assertEquals(array (
+        $this->assertEquals([
             'envoi_signature_1' =>
-                array (
+                 [
                     'name' => 'Visa/Signature #1',
                     'type' => 'checkbox',
                     'onchange' => 'cheminement-change',
                     'default' => '',
                     'read-only' => false,
-                ),
+                ],
             'envoi_signature_2' =>
-                array (
+                 [
                     'name' => 'Visa/Signature #2',
                     'type' => 'checkbox',
                     'onchange' => 'cheminement-change',
                     'default' => '',
                     'read-only' => false,
-                ),
-        ), $result['formulaire']['Cheminement']);
+                ],
+        ], $result['formulaire']['Cheminement']);
 
-        $this->assertEquals(array (
+        $this->assertEquals([
             'i-Parapheur #1' =>
-                array (
+                 [
                     'envoi_iparapheur_1' => true,
-                ),
+                ],
             'Signature #1' =>
-                array (
+                 [
                     'has_signature_1' => true,
-                ),
+                ],
             'i-Parapheur #2' =>
-                array (
+                 [
                     'envoi_iparapheur_2' => true,
-                ),
+                ],
             'Signature #2' =>
-                array (
+                 [
                     'has_signature_2' => true,
-                ),
+                ],
             'Parapheur FAST #1' => [
                 'envoi_fast_1' => true,
             ],
             'Parapheur FAST #2' => [
                 'envoi_fast_2' => true,
             ],
-        ), $result['page-condition']);
+        ], $result['page-condition']);
     }
 
     /**

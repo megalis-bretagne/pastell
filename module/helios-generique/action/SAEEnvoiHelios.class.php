@@ -37,7 +37,7 @@ class SAEEnvoiHelios extends ActionExecutor
             $iparapheur_historique = false;
         }
 
-        $transactionsInfo = array(
+        $transactionsInfo = [
                 'unique_id' => $donneesFormulaire->get('tedetis_transaction_id'),
                 'date' => date("Y-m-d"),
                 'description' => 'inconnu',
@@ -49,7 +49,7 @@ class SAEEnvoiHelios extends ActionExecutor
                 'pes_description' => 'inconnu',
                 'pes_aller_content' => $donneesFormulaire->getFileContent('fichier_pes_signe'),
                 'iparapheur_historique' => $iparapheur_historique
-        );
+        ];
 
         /** @var SEDAConnecteur $heliosSEDA */
         $heliosSEDA = $this->getConnecteur('Bordereau SEDA');

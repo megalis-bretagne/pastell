@@ -10,24 +10,24 @@ class Array2XMLTest extends PHPUnit\Framework\TestCase
 
     public function testGetXMLEmpty()
     {
-        $this->assertEquals("foo", $this->getSimpleXML(array())->getName());
+        $this->assertEquals("foo", $this->getSimpleXML([])->getName());
     }
 
     public function testGetOneTag()
     {
-        $xml = $this->getSimpleXML(array("bar" => "baz"));
+        $xml = $this->getSimpleXML(["bar" => "baz"]);
         $this->assertEquals("baz", $xml->{'bar'});
     }
 
     public function testGetOneTagNum()
     {
-        $xml = $this->getSimpleXML(array("baz"));
+        $xml = $this->getSimpleXML(["baz"]);
         $this->assertEquals("baz", $xml->{'foo'});
     }
 
     public function testNeestadArray()
     {
-        $xml = $this->getSimpleXML(array("bar" => array("fizz" => "buzz")));
+        $xml = $this->getSimpleXML(["bar" => ["fizz" => "buzz"]]);
         $this->assertEquals("buzz", $xml->{'bar'}->{'fizz'});
     }
 }

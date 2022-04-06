@@ -22,6 +22,6 @@ class PastellCoreTestExternalData extends ChoiceActionExecutor
 
     public function displayAPI()
     {
-        return array('pierre','feuille','ciseaux','lézard','Spock');
+        return ['pierre','feuille','ciseaux','lézard','Spock'];
     }
 }

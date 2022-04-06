@@ -11,10 +11,10 @@ class GlaneurFilenameMatcher
      */
     public function getFilenameMatching(string $file_preg_match, array $cardinalite_element, array $files_list)
     {
-        $result = array();
-        $file_match = array();
+        $result = [];
+        $file_match = [];
         $preg_match_list = $this->getArrayFromFilePregMatch($file_preg_match);
-        $matches = array();
+        $matches = [];
         $num_regexp = 0;
         foreach ($preg_match_list as $key => $regexp) {
             foreach ($files_list as $i => $filename) {
@@ -58,7 +58,7 @@ class GlaneurFilenameMatcher
      */
     private function getArrayFromFilePregMatch($file_preg_match)
     {
-        $result = array();
+        $result = [];
         foreach (explode("\n", $file_preg_match) as $line) {
             $l = explode(':', $line);
             if (count($l) < 2) {

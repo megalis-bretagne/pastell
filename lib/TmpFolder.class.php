@@ -22,7 +22,7 @@ class TmpFolder
                 return;
         }
         foreach (scandir($folder_name) as $object) {
-            if (in_array($object, array(".",".."))) {
+            if (in_array($object, [".",".."])) {
                 continue;
             }
             if (is_dir("$folder_name/$object")) {

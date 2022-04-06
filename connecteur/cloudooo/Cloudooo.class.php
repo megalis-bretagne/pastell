@@ -33,9 +33,9 @@ class Cloudooo extends ConvertisseurPDF
         $dataExtention = pathinfo($source, PATHINFO_EXTENSION);
         $dataSortieExtention = "pdf";
 
-        $options = array(
+        $options = [
                 'uglyStructHack' => true
-        );
+        ];
 
         $url = "http://{$this->cloudooo_hostname}:{$this->cloudooo_port}" ;
         $client = @ XML_RPC2_Client::create($url, $options);

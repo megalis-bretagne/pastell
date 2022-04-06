@@ -8,7 +8,7 @@ class FluxDataTestRepeat extends FluxData
     public function __construct()
     {
         $this->flux_info = [];
-        $this->file_list = array();
+        $this->file_list = [];
     }
 
     public function getData($key)
@@ -41,7 +41,7 @@ class FluxDataTestRepeat extends FluxData
 
     public function get_folder()
     {
-        return array('foo','Bar','Baz');
+        return ['foo','Bar','Baz'];
     }
 
     public function getFileList()
@@ -51,10 +51,11 @@ class FluxDataTestRepeat extends FluxData
 
     public function setFileList($key, $filename, $filepath)
     {
-        $this->file_list[] = array(
+        $this->file_list[] = [
             'key' => $key,
             'filename' => $filename,
-            'filepath' => $filepath);
+            'filepath' => $filepath
+        ];
     }
 
     private $num_fichier = 0;

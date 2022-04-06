@@ -14,7 +14,7 @@ class PKCS12
             return false;
         }
         openssl_pkey_export($certs['pkey'], $pkey, $p12_password);
-        return array('cert' => $certs['cert'],'pkey' => $pkey);
+        return ['cert' => $certs['cert'],'pkey' => $pkey];
     }
 
     public function getUnencryptedKey($p12_file_path, $p12_password)

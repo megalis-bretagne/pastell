@@ -83,7 +83,7 @@ class S2lowActesTest extends PastellTestCase
         $this->assertEquals("666", $donneesFormulaire->get('tedetis_transaction_id'));
 
         $this->assertEquals(
-            array (
+            [
                 'api' => 1,
                 'nature_code' => '3',
                 'number' => '201903251130',
@@ -95,7 +95,7 @@ class S2lowActesTest extends PastellTestCase
                 'type_pj[]' => '99_AI',
                 'classif1' => '2',
                 'classif2' => '1',
-            ),
+             ],
             $addPostDataCall
         );
     }

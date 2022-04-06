@@ -1,12 +1,12 @@
 <?php
 
-$onglet_tab  = array(
+$onglet_tab  = [
     "" => "Gestionnaire de tâches",
     "job" => "Tous les travaux",
     "job?filtre=actif" => "Travaux actifs",
     "job?filtre=lock" => "Travaux suspendus",
     "job?filtre=wait" => "Travaux en attente"
-);
+];
 ?>
 
 <ul class="nav nav-pills">

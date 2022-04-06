@@ -11,8 +11,7 @@ class SAEEnvoiHeliosTest extends PastellTestCase
 
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
 
-        $donneesFormulaire->setTabData([
-        ]);
+        $donneesFormulaire->setTabData([]);
 
         $this->assertTrue(
             $this->triggerActionOnDocument($id_d, 'send-archive')

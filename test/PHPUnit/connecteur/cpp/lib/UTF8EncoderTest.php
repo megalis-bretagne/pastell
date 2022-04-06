@@ -11,15 +11,15 @@ class UTF8EncoderTest extends ExtensionCppTestCase
     {
         parent::setUp();
         $this->utf8Encoding = new UTF8Encoder();
-        $this->testArray = array(
+        $this->testArray = [
             'foo' => 'bar',
-            'baz' => array(
+            'baz' => [
                 'pim' => "0000012",
                 'pam' => 42,
                 'poum' => 'toto',
                 'toto' => 'école'
-            )
-        );
+            ]
+        ];
     }
 
     public function testEncode()

@@ -6,17 +6,18 @@ class PieceMarcheDocumentChange extends ActionExecutor
     {
         $content_type = $this->getDonneesFormulaire()->getContentType('document');
         //Vérifier que le doc est en xml ou en pdf
-        if (in_array($content_type, array("application/pdf"))) {
+        if (in_array($content_type, ["application/pdf"])) {
             return true;
         }
 
         $filename = $this->getDonneesFormulaire()->getFileName('document');
 
         if (
-            ! in_array($content_type, array("application/vnd.oasis.opendocument.text",
+            ! in_array($content_type, ["application/vnd.oasis.opendocument.text",
                 "application/vnd.ms-office",
                 "application/msword",
-                "application/vnd.openxmlformats-officedocument.wordprocessingml.document"))
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            ])
         ) {
             throw new Exception("Le document $filename est au format $content_type ! Or, il doit être au format PDF");
         }

@@ -129,7 +129,7 @@ class DocumentActionEntite extends SQL
         $sql = "SELECT count(*) FROM document_entite " .
                 " JOIN document ON document_entite.id_d = document.id_d" .
                 " WHERE document_entite.id_e = ? AND document.type=? AND document.titre LIKE ?" ;
-        $data = array($id_e,$type,"%$search%");
+        $data = [$id_e,$type,"%$search%"];
         if ($etat) {
             $sql .= " AND document_entite.last_action=?";
             $data[] = $etat;
@@ -183,7 +183,7 @@ class DocumentActionEntite extends SQL
                 " JOIN document ON document_entite.id_d = document.id_d" .
                 " WHERE document_entite.id_e = ? AND document.type=? " .
                 " AND document.titre LIKE ?" ;
-        $data = array($id_e,$type,"%$search%");
+        $data = [$id_e,$type,"%$search%"];
 
         if ($etat) {
             $sql .= " AND document_entite.last_action=?";
@@ -198,7 +198,7 @@ class DocumentActionEntite extends SQL
 
     public function getListByTypeAndEtatAndIdeancetre($type = false, $etats = false, $id_e = false)
     {
-        $binding = array();
+        $binding = [];
         $sql = 'SELECT *';
         $sql .= ' FROM document_entite de';
         $sql .= ' INNER JOIN document d ON de.id_d = d.id_d';
@@ -275,7 +275,7 @@ class DocumentActionEntite extends SQL
     }
 
 
-    public function getNbDocumentBySearch($id_e, $type, $search, $state, $last_state_begin, $last_state_end, $allDroitEntite, $etatTransit, $state_begin, $state_end, $indexedFieldValue = array())
+    public function getNbDocumentBySearch($id_e, $type, $search, $state, $last_state_begin, $last_state_end, $allDroitEntite, $etatTransit, $state_begin, $state_end, $indexedFieldValue = [])
     {
         $col = "count(*) as nb";
         $order = "";
@@ -283,11 +283,11 @@ class DocumentActionEntite extends SQL
         return $result[0]['nb'];
     }
 
-    public function getListBySearch($id_e, $type, $offset, $limit, $search, $state, $last_state_begin, $last_state_end, $tri, $allDroitEntite, $etatTransit, $state_begin, $state_end, $indexedFieldValue = array(), $sens_tri = 'DESC')
+    public function getListBySearch($id_e, $type, $offset, $limit, $search, $state, $last_state_begin, $last_state_end, $tri, $allDroitEntite, $etatTransit, $state_begin, $state_end, $indexedFieldValue = [], $sens_tri = 'DESC')
     {
         $col = "*,document.type as type,document_entite.last_action as last_action,document_entite.last_action_date as last_action_date, entite.denomination as entite_base";
 
-        if (! in_array($sens_tri, array('ASC','DESC'))) {
+        if (! in_array($sens_tri, ['ASC','DESC'])) {
             $sens_tri = 'DESC';
         }
 
@@ -312,7 +312,7 @@ class DocumentActionEntite extends SQL
         return $this->addEntiteToList($id_e, $list);
     }
 
-    private function getSearchSQL($col, $order, $id_e, $type, $search, $state, $last_state_begin, $last_state_end, $allDroitEntite, $etatTransit, $state_begin, $state_end, $indexedFieldValue = array(), $triIndexColName = false)
+    private function getSearchSQL($col, $order, $id_e, $type, $search, $state, $last_state_begin, $last_state_end, $allDroitEntite, $etatTransit, $state_begin, $state_end, $indexedFieldValue = [], $triIndexColName = false)
     {
 
         $type_list = "'" . implode("','", $allDroitEntite) . "'";
@@ -327,7 +327,7 @@ class DocumentActionEntite extends SQL
             $sql .= " JOIN document_action ON document_action.id_d=document.id_d AND document_action.id_e=entite.id_e ";
         }
 
-        $binding = array();
+        $binding = [];
 
         $i = 0;
         foreach ($indexedFieldValue as $indexName => $indexValue) {

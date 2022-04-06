@@ -40,7 +40,7 @@ class PDFGeneriqueEnvoiSAE extends ActionExecutor
             $this->getDonneesFormulaire()
         );
 
-        $metadata = json_decode($this->getDonneesFormulaire()->getFileContent('sae_config'), true) ?: array();
+        $metadata = json_decode($this->getDonneesFormulaire()->getFileContent('sae_config'), true) ?: [];
         $fluxData->setMetadata($metadata);
 
         $bordereau = $sedaNG->getBordereauNG($fluxData);

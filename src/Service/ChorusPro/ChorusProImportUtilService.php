@@ -107,7 +107,7 @@ class ChorusProImportUtilService
     public function miseEnFormeResult($result): string
     {
         $message = "";
-        $retour = array();
+        $retour = [];
 
         foreach ($result as $line) {
             if (empty($retour[$line['message']])) {

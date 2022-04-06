@@ -15,7 +15,7 @@ class ActesTypePJTest extends PHPUnit\Framework\TestCase
 
         $actesTypePJ = new ActesTypePJ();
         $result = $actesTypePJ->getTypePJListe($actesTypePJData);
-        $expected_value = array (
+        $expected_value =  [
             '99_CO' => 'Contrat (99_CO)',
             '42_AT' => 'Attestation (42_AT)',
             '42_AC' => 'Avenant au contrat (42_AC)',
@@ -43,7 +43,7 @@ class ActesTypePJTest extends PHPUnit\Framework\TestCase
             '17_RC' => 'Règlement de concours (17_RC)',
             '11_RC' => 'Règlement de consultation (11_RC)',
             '12_ST' => 'Spécifications techniques et fonctionnelles (12_ST)',
-        );
+        ];
         $this->assertEquals($expected_value, $result);
     }
 }

@@ -117,7 +117,7 @@ class MailSec extends MailsecConnecteur
         $this->replaceElement(self::ENTITE_REPLACEMENT_REGEXP, $entite_info['denomination'] ?? '');
 
         $this->zenMail->setSujet($this->sujet);
-        $this->embeded_image = array();
+        $this->embeded_image = [];
         if ($this->connecteurConfig->get('embeded_image')) {
             foreach ($this->connecteurConfig->get('embeded_image') as $i => $filename) {
                 $this->embeded_image[$filename] = $this->connecteurConfig->getFilePath("embeded_image", $i);

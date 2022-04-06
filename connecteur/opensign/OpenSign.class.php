@@ -49,14 +49,14 @@ class OpenSign extends Horodateur
 
     private function getSoapClient()
     {
-        $soapClient = $this->soapClientFactory->getInstance($this->wsdl, array('connection_timeout' => $this->opensign_timeout));
+        $soapClient = $this->soapClientFactory->getInstance($this->wsdl, ['connection_timeout' => $this->opensign_timeout]);
         return $soapClient;
     }
 
     private function getToken($timestampRequest)
     {
         $soapClient = $this->getSoapClient();
-        $response = $soapClient->createResponse(array('request' => base64_encode($timestampRequest)));
+        $response = $soapClient->createResponse(['request' => base64_encode($timestampRequest)]);
         if (!$response) {
             throw new OpenSignException("Impossible de récupérer le token");
         }

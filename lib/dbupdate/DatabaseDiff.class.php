@@ -71,7 +71,7 @@ class DatabaseDiff
 
     private function canonicalizeIndexName($indexDefinition)
     {
-        $canoniqueForm  = array();
+        $canoniqueForm  = [];
         foreach ($indexDefinition as $name => $def) {
             $new_name = md5(serialize($def));
             $canoniqueForm[$new_name] = $def;

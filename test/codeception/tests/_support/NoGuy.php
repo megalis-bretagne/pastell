@@ -26,32 +26,32 @@ class NoGuy extends Actor
         sendDELETE as sendDELETETrait;
     }
 
-    public function sendGet($url, $params = array())
+    public function sendGet($url, $params = [])
     {
         return $this->sendGETTrait($this->getAPIV2URL($url), $params);
     }
 
-    public function sendGETV1($url, $params = array())
+    public function sendGETV1($url, $params = [])
     {
         return $this->sendGETTrait($this->getAPIV1URL($url), $params);
     }
 
-    public function sendPOST($url, $params = array())
+    public function sendPOST($url, $params = [])
     {
         return $this->sendPOSTTrait($this->getAPIV2URL($url), $params);
     }
 
-    public function sendPOSTV1($url, $params = array())
+    public function sendPOSTV1($url, $params = [])
     {
         return $this->sendPOSTTrait($this->getAPIV1URL($url), $params);
     }
 
-    public function sendPATCH($url, $params = array(), $files = array())
+    public function sendPATCH($url, $params = [], $files = [])
     {
         return $this->sendPATCHTrait($this->getAPIV2URL($url), $params, $files);
     }
 
-    public function sendDELETE($url, $params = array(), $files = array())
+    public function sendDELETE($url, $params = [], $files = [])
     {
         return $this->sendDELETETrait($this->getAPIV2URL($url), $params, $files);
     }

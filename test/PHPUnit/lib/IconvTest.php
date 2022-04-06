@@ -21,7 +21,7 @@ class IconvTest extends TestCase
 
         $this->iconv = new Iconv();
 
-        org\bovigo\vfs\vfsStream::setup('IconvTest', null, array());
+        org\bovigo\vfs\vfsStream::setup('IconvTest', null, []);
         $this->streamURL = org\bovigo\vfs\vfsStream::url('IconvTest');
         $this->temporary_file = $this->streamURL . '/temporary_file.txt';
     }
@@ -44,7 +44,7 @@ class IconvTest extends TestCase
     {
         $this->expectException("Exception");
         $this->expectExceptionMessage("Impossible de lire le fichier vfs://IconvTest/temporary_file.txt");
-        $this->iconv->convert($this->temporary_file, array('txt'));
+        $this->iconv->convert($this->temporary_file, ['txt']);
     }
 
     private function createDirectory()
@@ -62,7 +62,7 @@ class IconvTest extends TestCase
     public function testConvertDirectory()
     {
         $temporary_dir = rtrim($this->createDirectory(), "/");
-        $this->iconv->convert($temporary_dir, array("txt"), true);
+        $this->iconv->convert($temporary_dir, ["txt"], true);
         $this->assertFileEquals($this->file_in_utf8, $temporary_dir . "/test1.txt");
         $this->assertFileEquals($this->file_in_utf8, $temporary_dir . "/test2.txt");
         $this->assertFileEquals($this->file_in_iso, $temporary_dir . ".old/test1.txt");
@@ -72,7 +72,7 @@ class IconvTest extends TestCase
     public function testExcludeFromDirectory()
     {
         copy($this->file_in_iso, $this->temporary_file);
-        $this->iconv->convert($this->temporary_file, array("php"));
+        $this->iconv->convert($this->temporary_file, ["php"]);
         $this->assertFileEquals($this->file_in_iso, $this->temporary_file);
     }
 
@@ -82,14 +82,14 @@ class IconvTest extends TestCase
         mkdir($temporary_dir . "/subdir");
         $file3 = $temporary_dir . "/subdir/test3.txt";
         copy($this->file_in_iso, $file3);
-        $this->iconv->convert($temporary_dir, array("txt"));
+        $this->iconv->convert($temporary_dir, ["txt"]);
         $this->assertFileEquals($this->file_in_utf8, $file3);
     }
 
     public function testConvertDirectoryAll()
     {
         $temporary_dir = $this->createDirectory();
-        $this->iconv->convert($temporary_dir, array("txt"));
+        $this->iconv->convert($temporary_dir, ["txt"]);
         $this->assertFileEquals($this->file_in_utf8, $temporary_dir . "/test1.txt");
         $this->assertFileEquals($this->file_in_utf8, $temporary_dir . "/test2.txt");
     }

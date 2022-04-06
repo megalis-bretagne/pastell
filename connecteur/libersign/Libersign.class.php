@@ -104,7 +104,7 @@ class Libersign extends SignatureConnecteur
         $dossierID,
         $document_content,
         $content_type,
-        array $all_annexes = array(),
+        array $all_annexes = [],
         $date_limite = false,
         $visuel_pdf = ''
     ) {
@@ -128,7 +128,7 @@ class Libersign extends SignatureConnecteur
         $document_content,
         $content_type,
         $visuel_pdf,
-        array $metadata = array()
+        array $metadata = []
     ) {
         throw new Exception("Not implemented");
     }

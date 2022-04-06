@@ -18,11 +18,11 @@ class Notification extends SQL
     public function getAll($id_u)
     {
         $sql = "SELECT notification.*,entite.denomination FROM notification LEFT JOIN entite ON notification.id_e = entite.id_e WHERE id_u=?";
-        $result = array();
+        $result = [];
         foreach ($this->query($sql, $id_u) as $line) {
             if (empty($result[$line['id_e'] . "-" . $line['type']])) {
                 $result[$line['id_e'] . "-" . $line['type']] = $line;
-                $result[$line['id_e'] . "-" . $line['type']]['action'] = array();
+                $result[$line['id_e'] . "-" . $line['type']]['action'] = [];
             }
             $result[$line['id_e'] . "-" . $line['type']]['action'][] = $line['action'];
         }
@@ -38,7 +38,7 @@ class Notification extends SQL
     public function getNotificationActionList($id_u, $id_e, $type, $action_list)
     {
         $sql = "SELECT * FROM notification WHERE id_u=? AND id_e=? AND type=?";
-        $result = array();
+        $result = [];
         foreach ($this->query($sql, $id_u, $id_e, $type) as $line) {
             $result[$line['action']] = 1;
         }
@@ -62,7 +62,7 @@ class Notification extends SQL
 
     public function getMail($id_e, $type, $action)
     {
-        $result = array();
+        $result = [];
 
         $sql = "SELECT * FROM notification " .
                 " JOIN utilisateur ON notification.id_u = utilisateur.id_u " .

@@ -10,7 +10,7 @@ class PESMarcheFichierPESChangeTest extends PastellMarcheTestCase
     {
         $info = $this->getInternalAPI()->post(
             "/entite/1/document",
-            array('type' => 'pes-marche')
+            ['type' => 'pes-marche']
         );
 
         return $info['id_d'];
@@ -20,11 +20,11 @@ class PESMarcheFichierPESChangeTest extends PastellMarcheTestCase
     {
         $this->getInternalAPI()->post(
             "/entite/1/document/$id_d/file/fichier_pes",
-            array(
+            [
                 'file_name' => self::FILENAME,
                 'file_content' =>
                     file_get_contents(__DIR__ . "/../fixtures/" . self::FILENAME)
-            )
+            ]
         );
         $actionExecutorFactory = $this->getObjectInstancier()->getInstance(ActionExecutorFactory::class);
         $actionExecutorFactory->executeOnDocument(1, 0, $id_d, 'fichier_pes_change');
@@ -46,9 +46,9 @@ class PESMarcheFichierPESChangeTest extends PastellMarcheTestCase
 
         $this->getInternalAPI()->patch(
             "/entite/1/document/$id_d/",
-            array(
+            [
                     'objet' => self::OBJET
-                )
+                ]
         );
 
         $this->postPES($id_d);

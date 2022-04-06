@@ -60,7 +60,7 @@ class ActionExecutorFactory
         return $lockFactory->createLock($lock_name, self::LOCK_TTL_IN_SECONDS);
     }
 
-    public function executeOnConnecteur($id_ce, $id_u, $action_name, $from_api = false, $action_params = array(), $id_worker = 0): ?bool
+    public function executeOnConnecteur($id_ce, $id_u, $action_name, $from_api = false, $action_params = [], $id_worker = 0): ?bool
     {
         $lock = $this->getLock("connecteur-$id_ce");
         if (! $lock->acquire()) {
@@ -76,7 +76,7 @@ class ActionExecutorFactory
         return $result;
     }
 
-    private function executeOnConnecteurCritical($id_ce, $id_u, $action_name, $from_api = false, $action_params = array(), $id_worker = 0): ?bool
+    private function executeOnConnecteurCritical($id_ce, $id_u, $action_name, $from_api = false, $action_params = [], $id_worker = 0): ?bool
     {
         try {
             $this->getLogger()->addInfo("executeOnConnecteur - appel - id_ce=$id_ce,id_u=$id_u,action_name=$action_name");
@@ -120,9 +120,9 @@ class ActionExecutorFactory
         $id_u,
         $id_d,
         $action_name,
-        $id_destinataire = array(),
+        $id_destinataire = [],
         $from_api = false,
-        $action_params = array(),
+        $action_params = [],
         $id_worker = 0
     ): ?bool {
         $lock = $this->getLock("document-$id_d");
@@ -145,9 +145,9 @@ class ActionExecutorFactory
         $id_u,
         $id_d,
         $action_name,
-        $id_destinataire = array(),
+        $id_destinataire = [],
         $from_api = false,
-        $action_params = array(),
+        $action_params = [],
         $id_worker = 0
     ): ?bool {
         try {
@@ -382,7 +382,7 @@ class ActionExecutorFactory
         return $actionClass;
     }
 
-    private function executeOnConnecteurThrow($id_ce, $id_u, $action_name, $from_api = false, $action_params = array())
+    private function executeOnConnecteurThrow($id_ce, $id_u, $action_name, $from_api = false, $action_params = [])
     {
         $connecteur_entite_info = $this->objectInstancier->getInstance(ConnecteurEntiteSQL::class)->getInfo($id_ce);
         if ($connecteur_entite_info['id_e']) {
@@ -505,7 +505,7 @@ class ActionExecutorFactory
     public function getAllActionClass()
     {
         $action_class_file = PASTELL_PATH . "/" . self::ACTION_FOLDERNAME;
-        $result = array();
+        $result = [];
         foreach (glob($action_class_file . "/*.class.php") as $action_class_path) {
             preg_match("#/([^/]+).class.php$#", $action_class_path, $matches);
             $result[] = $matches[1];
@@ -519,7 +519,7 @@ class ActionExecutorFactory
         return $result;
     }
 
-    public function executeLotDocument($id_e, $id_u, array $all_id_d, $action_name, $id_destinataire = array(), $from_api = false, $action_params = array(), $id_worker = 0)
+    public function executeLotDocument($id_e, $id_u, array $all_id_d, $action_name, $id_destinataire = [], $from_api = false, $action_params = [], $id_worker = 0)
     {
         $actionClass = $this->getActionClass($all_id_d[0], $id_e, $id_u, $action_name, $id_destinataire, $from_api, $action_params, $id_worker);
         $actionClass->goLot($all_id_d);

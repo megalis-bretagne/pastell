@@ -27,7 +27,7 @@ class SFTPPastellTest extends PHPUnit\Framework\TestCase
             if ($a == 'foo bar') {
                 throw new Exception("NET_SFTP_STATUS_NO_SUCH_FILE: No such file");
             }
-            return   array('.','..','foo');
+            return   ['.','..','foo'];
         };
 
         $netSFTP

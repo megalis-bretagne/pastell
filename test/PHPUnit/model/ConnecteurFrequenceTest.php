@@ -4,13 +4,13 @@ class ConnecteurFrequenceTest extends PastellTestCase
 {
     public function testConstruct()
     {
-        $connecteurFrequence = new ConnecteurFrequence(array('type_connecteur' => 'toto','id_cf' => 12));
+        $connecteurFrequence = new ConnecteurFrequence(['type_connecteur' => 'toto','id_cf' => 12]);
         $this->assertEquals('toto', $connecteurFrequence->type_connecteur);
     }
 
     public function testGetArray()
     {
-        $connecteurFrequence = new ConnecteurFrequence(array('type_connecteur' => 'toto','id_cf' => 12));
+        $connecteurFrequence = new ConnecteurFrequence(['type_connecteur' => 'toto','id_cf' => 12]);
         $this->assertEquals('toto', $connecteurFrequence->getArray()['type_connecteur']);
     }
 

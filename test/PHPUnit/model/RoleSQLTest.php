@@ -5,14 +5,14 @@ class RoleSQLTest extends PastellTestCase
     /** @var  RoleSQL */
     private $roleSQL;
 
-    private $role_droit = array();
+    private $role_droit = [];
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->roleSQL = new RoleSQL($this->getSQLQuery());
-        $this->createRole('role1', 'Rôle 1', array('entite:edition','entite:lecture','test:lecture','test:edition'));
-        $this->createRole('role2', 'Rôle 2', array('entite:edition','entite:lecture'));
+        $this->createRole('role1', 'Rôle 1', ['entite:edition','entite:lecture','test:lecture','test:edition']);
+        $this->createRole('role2', 'Rôle 2', ['entite:edition','entite:lecture']);
     }
 
     private function createRole($id, $libelle, array $droit_list)

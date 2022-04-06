@@ -119,12 +119,12 @@ class AnnuaireGroupe extends SQL
 
     public function getGroupeHerite($all_ancetre, $debut = "")
     {
-        $result = array();
+        $result = [];
         foreach ($all_ancetre as $id_e) {
             $sql = "SELECT annuaire_groupe.*,entite.denomination FROM annuaire_groupe " .
                     " LEFT JOIN entite ON annuaire_groupe.id_e = entite.id_e" .
                     " WHERE annuaire_groupe.id_e=? AND partage=1";
-            $data = array($id_e);
+            $data = [$id_e];
             if ($debut) {
                 $sql .= " AND nom LIKE ?";
                 $data[] = "$debut%";

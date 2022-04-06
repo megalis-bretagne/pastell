@@ -43,7 +43,7 @@ class YMLLoaderTest extends PHPUnit\Framework\TestCase
     public function testSaveArray()
     {
         $filename = "/tmp/" . uniqid("yml_loader_test_");
-        $this->ymlLoader->saveArray($filename, array("foo" => "bar"));
+        $this->ymlLoader->saveArray($filename, ["foo" => "bar"]);
         $result = file_get_contents($filename);
         $this->assertEquals("---\nfoo: bar\n", $result);
         unlink($filename);
@@ -54,12 +54,12 @@ class YMLLoaderTest extends PHPUnit\Framework\TestCase
      */
     public function testSaveArrayInvalidateCache()
     {
-        $array = array("foo" => "bar");
+        $array = ["foo" => "bar"];
         $filename = "/tmp/" . uniqid("yml_loader_test_");
         $this->ymlLoader->saveArray($filename, $array);
         $this->assertEquals($array, $this->ymlLoader->getArray($filename));
         $this->assertEquals($array, $this->staticWrapper->fetch(YMLLoader::CACHE_PREFIX . $filename));
-        $array = array("foo2" => "baz");
+        $array = ["foo2" => "baz"];
         $this->ymlLoader->saveArray($filename, $array);
         $this->assertEquals($array, $this->ymlLoader->getArray($filename));
         $this->assertEquals($array, $this->staticWrapper->fetch(YMLLoader::CACHE_PREFIX . $filename));

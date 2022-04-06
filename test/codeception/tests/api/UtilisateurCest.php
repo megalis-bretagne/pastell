@@ -4,17 +4,17 @@ class UtilisateurCest
 {
     private function getUser1()
     {
-        return array('id_u' => 1,'login' => 'admin','email' => 'noreply@libriciel.coop');
+        return ['id_u' => 1,'login' => 'admin','email' => 'noreply@libriciel.coop'];
     }
 
     private function getCreatedUser($login = 'bar')
     {
-        return array(
+        return [
             'nom' => 'foo',
             'login' => $login,
             'prenom' => 'baz',
             'email' => 'toto@toto.fr',
-        );
+        ];
     }
 
     public function listUtilisateur(NoGuy $I)
@@ -23,9 +23,9 @@ class UtilisateurCest
         $I->amHttpAuthenticatedAsAdmin();
         $I->sendGET("/utilisateur");
         $I->verifyJsonResponseOK(
-            array(
+            [
                 $this->getUser1()
-            )
+            ]
         );
     }
 
@@ -35,9 +35,9 @@ class UtilisateurCest
         $I->amHttpAuthenticatedAsAdmin();
         $I->sendGETV1("list-utilisateur.php");
         $I->verifyJsonResponseOK(
-            array(
+            [
                 $this->getUser1()
-            )
+            ]
         );
     }
 
@@ -109,7 +109,7 @@ class UtilisateurCest
         $I->wantTo("modifier un utilisateur");
         $I->amHttpAuthenticatedAsAdmin();
         $id_u = $this->createUser($I, 'modif-user');
-        $I->sendPATCH("/utilisateur/$id_u", array('nom' => 'Gaudreau'));
+        $I->sendPATCH("/utilisateur/$id_u", ['nom' => 'Gaudreau']);
         $info = $this->getCreatedUser('modif-user');
         $info['nom'] = 'Gaudreau';
         $I->verifyJsonResponseOK($info);
@@ -120,7 +120,7 @@ class UtilisateurCest
         $I->wantTo("modifier un utilisateur [V1]");
         $I->amHttpAuthenticatedAsAdmin();
         $id_u = $this->createUser($I, 'modif-user-v1');
-        $I->sendPOSTV1("modif-utilisateur.php", array('id_u' => $id_u,'nom' => 'Gaudreau'));
+        $I->sendPOSTV1("modif-utilisateur.php", ['id_u' => $id_u,'nom' => 'Gaudreau']);
         $info = $this->getCreatedUser('modif-user-v1');
         $info['nom'] = 'Gaudreau';
         $I->verifyJsonResponseOK($info);
@@ -132,7 +132,7 @@ class UtilisateurCest
         $I->amHttpAuthenticatedAsAdmin();
         $id_u = $this->createUser($I, 'delete-user');
         $I->sendDELETE("/utilisateur/$id_u");
-        $I->verifyJsonResponseOK(array('result' => 'ok'));
+        $I->verifyJsonResponseOK(['result' => 'ok']);
         $I->sendGET("/utilisateur/$id_u");
         $I->seeResponseCodeIs(\Codeception\Util\HttpCode::NOT_FOUND);
     }
@@ -143,7 +143,7 @@ class UtilisateurCest
         $I->amHttpAuthenticatedAsAdmin();
         $id_u = $this->createUser($I, 'delete-user-v1');
         $I->sendGETV1("delete-utilisateur.php?id_u=$id_u");
-        $I->verifyJsonResponseOK(array('result' => 'ok'));
+        $I->verifyJsonResponseOK(['result' => 'ok']);
         $I->sendGET("/utilisateur/$id_u");
         $I->seeResponseCodeIs(\Codeception\Util\HttpCode::NOT_FOUND);
     }

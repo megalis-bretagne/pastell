@@ -66,7 +66,7 @@ class Recuperateur
 
     public function getAll()
     {
-        $result = array();
+        $result = [];
         foreach ($this->tableauInput as $name => $item) {
             $result[$name] = $this->get($name);
         }

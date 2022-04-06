@@ -7,13 +7,13 @@ class CSRFTokenTest extends TestCase
     /** @var  CSRFToken */
     private $csrfToken;
 
-    private $session = array();
+    private $session = [];
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->csrfToken = new CSRFToken();
-        $this->csrfToken->setPostParameter(array());
+        $this->csrfToken->setPostParameter([]);
         $this->csrfToken->setSession($this->session);
     }
 
@@ -29,7 +29,7 @@ class CSRFTokenTest extends TestCase
     public function testVerif()
     {
         $this->session[CSRFToken::TOKEN_NAME] = 'foo';
-        $this->csrfToken->setPostParameter(array(CSRFToken::TOKEN_NAME => 'foo'));
+        $this->csrfToken->setPostParameter([CSRFToken::TOKEN_NAME => 'foo']);
         $this->assertTrue($this->csrfToken->verifToken());
     }
 
@@ -39,7 +39,7 @@ class CSRFTokenTest extends TestCase
     public function testVerifFailed()
     {
         $this->session[CSRFToken::TOKEN_NAME] = 'foo';
-        $this->csrfToken->setPostParameter(array(CSRFToken::TOKEN_NAME => 'bar'));
+        $this->csrfToken->setPostParameter([CSRFToken::TOKEN_NAME => 'bar']);
         $this->expectException("Exception");
         $this->expectExceptionMessage("Votre session n'était plus valide.");
         $this->csrfToken->verifToken();
@@ -51,7 +51,7 @@ class CSRFTokenTest extends TestCase
     public function testDeleteToken()
     {
         $this->session[CSRFToken::TOKEN_NAME] = 'foo';
-        $this->csrfToken->setPostParameter(array(CSRFToken::TOKEN_NAME => 'foo'));
+        $this->csrfToken->setPostParameter([CSRFToken::TOKEN_NAME => 'foo']);
         $this->csrfToken->deleteToken();
         $this->expectException("Exception");
         $this->expectExceptionMessage("Votre session n'était plus valide.");

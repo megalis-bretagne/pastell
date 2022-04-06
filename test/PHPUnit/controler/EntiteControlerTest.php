@@ -37,7 +37,7 @@ class EntiteControlerTest extends ControlerTestCase
     {
         $this->expectOutputRegex("#Informations - Pastell#");
 
-        $this->setGetInfo(array('id_e' => 1));
+        $this->setGetInfo(['id_e' => 1]);
         $this->entiteControler->detailEntite();
         $info = $this->entiteControler->getViewParameter()['entiteExtendedInfo'];
         $this->assertEquals('Bourg-en-Bresse', $info['denomination']);

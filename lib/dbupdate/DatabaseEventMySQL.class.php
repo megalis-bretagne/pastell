@@ -2,7 +2,7 @@
 
 class DatabaseEventMySQL
 {
-    private $sqlCommand = array();
+    private $sqlCommand = [];
 
     public function getSQLCommand()
     {
@@ -40,7 +40,7 @@ class DatabaseEventMySQL
 
     private function linearizeTableDefinition(array $tableDefinition)
     {
-        $result = array();
+        $result = [];
         foreach ($tableDefinition['Column'] as $name => $column) {
             $result[] = $this->getColumnDefinition($name, $column);
         }

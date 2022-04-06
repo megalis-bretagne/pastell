@@ -9,14 +9,14 @@ class GradeSQLTest extends PastellTestCase
     {
         parent::setUp();
         $this->gradeSQL = new GradeSQL($this->getSQLQuery());
-        $info = array (
+        $info =  [
             "FS_ADMINISTR",
             "Administrative",
             "CE_ADJADM",
             "Adjoints administratifs territoriaux",
             "GR_ADM037" ,
             "Adjoint administratif territorial de 2ème classe"
-        );
+        ];
 
 
         $this->gradeSQL->add($info);

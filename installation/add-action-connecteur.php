@@ -25,7 +25,7 @@ if (!$result) {
     exit;
 }
 
-$list_connecteur = array();
+$list_connecteur = [];
 
 foreach ($result as $connecteur) {
     $id_ce = $connecteur['id_ce'];

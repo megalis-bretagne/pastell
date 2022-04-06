@@ -5,9 +5,9 @@ class FrequenceConnecteurAPIControllerTest extends PastellTestCase
     public function testList()
     {
         $result = $this->getInternalAPI()->get("/frequenceConnecteur");
-        $this->assertEquals(array(
+        $this->assertEquals([
             0 =>
-                array(
+                [
                     'id_cf' => '1',
                     'type_connecteur' => '',
                     'famille_connecteur' => '',
@@ -20,9 +20,9 @@ class FrequenceConnecteurAPIControllerTest extends PastellTestCase
                     'id_verrou' => 'DEFAULT_FREQUENCE',
                     'libelle' => null,
                     'denomination' => null,
-                ),
+                ],
             1 =>
-                array(
+                [
                     'id_cf' => '2',
                     'type_connecteur' => 'entite',
                     'famille_connecteur' => '',
@@ -35,14 +35,14 @@ class FrequenceConnecteurAPIControllerTest extends PastellTestCase
                     'id_verrou' => '',
                     'libelle' => null,
                     'denomination' => null,
-                ),
-        ), $result);
+                ],
+        ], $result);
     }
 
     public function testDetail()
     {
         $result = $this->getInternalAPI()->get("/frequenceConnecteur/1");
-        $this->assertEquals($result, array(
+        $this->assertEquals($result, [
             'id_cf' => '1',
             'type_connecteur' => '',
             'famille_connecteur' => '',
@@ -55,7 +55,7 @@ class FrequenceConnecteurAPIControllerTest extends PastellTestCase
             'id_verrou' => 'DEFAULT_FREQUENCE',
             'libelle' => null,
             'denomination' => null,
-        ));
+        ]);
     }
 
     public function testDetailNotFound()
@@ -69,7 +69,7 @@ class FrequenceConnecteurAPIControllerTest extends PastellTestCase
     {
         $result = $this->getInternalAPI()->post("/frequenceConnecteur", ['type_connecteur' => 'entite', 'famille_connecteur' => 'signature', 'expression' => 42]);
         $this->assertEquals(
-            array(
+            [
                 'id_cf' => '3',
                 'type_connecteur' => 'entite',
                 'famille_connecteur' => 'signature',
@@ -82,7 +82,7 @@ class FrequenceConnecteurAPIControllerTest extends PastellTestCase
                 'id_verrou' => '',
                 'libelle' => null,
                 'denomination' => null,
-            ),
+            ],
             $result
         );
     }

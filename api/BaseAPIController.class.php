@@ -7,7 +7,7 @@ abstract class BaseAPIController
     public const RESULT_OK = "ok";
 
     private $id_u;
-    private $request = array();
+    private $request = [];
 
     private $caller_type;
 

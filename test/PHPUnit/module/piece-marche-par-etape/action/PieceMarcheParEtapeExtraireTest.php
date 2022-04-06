@@ -58,13 +58,13 @@ class PieceMarcheParEtapeExtraireTest extends PastellMarcheTestCase
 
         $info = $this->getInternalAPI()->get("/entite/1/document/$this->id_d");
 
-        $this->assertEquals(array (
+        $this->assertEquals([
             0 => '2018BPU.pdf',
             1 => '2018CCAP.pdf',
             2 => '2018CCTP.pdf',
             3 => '2018LR.pdf',
             4 => '2018RC.pdf',
-        ), $info['data']['piece']);
+        ], $info['data']['piece']);
 
         $doc = $this->getDonneesFormulaireFactory()->get($this->id_d);
         $this->assertTrue($doc->isEditable('libelle'));

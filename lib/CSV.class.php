@@ -6,10 +6,10 @@ class CSV
     {
         $file = $this->openFile($file_path);
         if (! $file) {
-            return array();
+            return [];
         }
 
-        $result = array();
+        $result = [];
         while (($data = fgetcsv($file, 1000, ";")) !== false) {
             $result[] = $data ;
         }

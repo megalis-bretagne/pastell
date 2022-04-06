@@ -87,7 +87,7 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase
      */
     public function testRelaxNGValide()
     {
-        $data_test = array(
+        $data_test = [
             'date_ack_iso_8601' => '2015-02-10',
             'date_debut_iso_8601' => '2015-02-10',
             'archive_size_ko' => 12,
@@ -99,7 +99,7 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase
             "identifiant_bordereau" => "toto",
             "fichier_reponse" => "test.xml",
             "fichier_pes" => "aller.xml"
-        );
+        ];
 
         $fluxDataTest = new FluxDataTest($data_test);
         $fluxDataTest->setFileList("fichier_pes", "fichier_pes", "fichier_pes");
@@ -116,9 +116,9 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase
      */
     public function testConnecteur()
     {
-        $fluxDataTest = new FluxDataTest(array());
+        $fluxDataTest = new FluxDataTest([]);
         $this->annotationWrapper->setFluxData($fluxDataTest);
-        $this->annotationWrapper->setConnecteurInfo(array('service_versant_description' => 'FooBar'));
+        $this->annotationWrapper->setConnecteurInfo(['service_versant_description' => 'FooBar']);
         $xml = $this->generate();
         $xmlFile = new XMLFile();
         $xml_result = $xmlFile->getFromString($xml);
@@ -138,16 +138,16 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase
 
         $generateBordereauSEDA = new GenerateBordereauSEDA();
 
-        $connecteur_info = array(
+        $connecteur_info = [
             "nom_service_archive" => "Service d'Archive",
             "id_service_archive" => "archive01",
             'transfert_id' => '12',
             'id_service_versant' => 'versant01',
             'nom_service_versant' => 'Service versant',
             'accord_versement' => 'AV001',
-        );
+        ];
 
-        $data_test = array(
+        $data_test = [
             'fichier_pes' => 'toto.xml',
             "pes_aller" => "toto.xml",
             "fichier_reponse" => "reponse.xml",
@@ -156,7 +156,7 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase
             'date_mandatement' => date('c'),
             'archive_size_ko' => '2',
             'date_generation_acquit' => date('c'),
-        );
+        ];
 
         $fluxDataTest = new FluxDataTest($data_test);
         $fluxDataTest->setFileList("fichier_pes", "fichier_pes", "fichier_pes");
@@ -190,12 +190,11 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase
 
         $generateBordereauSEDA = new GenerateBordereauSEDA();
 
-        $connecteur_info = array(
-        );
+        $connecteur_info = [];
 
-        $data_test = array(
-            'test_tableau' => array('un','deux','trois')
-        );
+        $data_test = [
+            'test_tableau' => ['un','deux','trois']
+        ];
 
         $fluxDataTest = new FluxDataTest($data_test);
 
@@ -230,8 +229,7 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase
 
         $generateBordereauSEDA = new GenerateBordereauSEDA();
 
-        $connecteur_info = array(
-        );
+        $connecteur_info = [];
         $fluxDataTest = new FluxDataTest($data_test);
 
         $annotationWrapper->setFluxData($fluxDataTest);
@@ -245,9 +243,9 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase
      */
     public function testWithIfTrue()
     {
-        $data_test = array(
+        $data_test = [
             'latest_date' => 'toto'
-        );
+        ];
         $bordereau_xml = $this->getBordereauWithIf($data_test);
 
         $xml = simplexml_load_string($bordereau_xml);
@@ -262,7 +260,7 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase
      */
     public function testWithIfFalse()
     {
-        $bordereau_xml = $this->getBordereauWithIf(array());
+        $bordereau_xml = $this->getBordereauWithIf([]);
 
         $xml = simplexml_load_string($bordereau_xml);
 
@@ -314,12 +312,11 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase
 
         $generateBordereauSEDA = new GenerateBordereauSEDA();
 
-        $connecteur_info = array(
-        );
+        $connecteur_info = [];
 
-        $data_test = array(
-            'langue' => array('fra','eng','deu')
-        );
+        $data_test = [
+            'langue' => ['fra','eng','deu']
+        ];
 
         $fluxDataTest = new FluxDataTest($data_test);
 
@@ -357,12 +354,11 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase
 
         $generateBordereauSEDA = new GenerateBordereauSEDA();
 
-        $connecteur_info = array(
-        );
+        $connecteur_info = [];
 
-        $data_test = array(
+        $data_test = [
             'langue' => 'fra'
-        );
+        ];
 
         $fluxDataTest = new FluxDataTest($data_test);
 
@@ -401,13 +397,13 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase
 
         $generateBordereauSEDA = new GenerateBordereauSEDA();
 
-        $connecteur_info = array(
+        $connecteur_info = [
             'service_versant' => $string_to_test
-        );
+        ];
 
-        $data_test = array(
+        $data_test = [
             'langue' => 'fra'
-        );
+        ];
 
         $fluxDataTest = new FluxDataTest($data_test);
 
@@ -502,16 +498,16 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase
 
         $generateBordereauSEDA = new GenerateBordereauSEDA();
 
-        $connecteur_info = array(
+        $connecteur_info = [
             "nom_service_archive" => "Service d'Archive",
             "id_service_archive" => "archive01",
             'transfert_id' => '12',
             'id_service_versant' => 'versant01',
             'nom_service_versant' => 'Service versant',
             'accord_versement' => 'AV001',
-        );
+        ];
 
-        $data_test = array(
+        $data_test = [
             'fichier_pes' => 'foo & bar',
             "pes_aller" => "toto.xml",
             "fichier_reponse" => "reponse & toto.xml", //Ici test d'un fichier avec un &
@@ -520,7 +516,7 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase
             'date_mandatement' => date('c'),
             'archive_size_ko' => '2',
             'date_generation_acquit' => date('c'),
-        );
+        ];
 
         $fluxDataTest = new FluxDataTest($data_test);
         $fluxDataTest->setFileList("fichier_pes", "fichier_pes", "fichier_pes");
@@ -547,16 +543,16 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase
 
         $generateBordereauSEDA = new GenerateBordereauSEDA();
 
-        $connecteur_info = array(
+        $connecteur_info = [
             "nom_service_archive" => "Service d'Archive",
             "id_service_archive" => "archive01",
             'transfert_id' => '12',
             'id_service_versant' => 'versant01',
             'nom_service_versant' => 'Service versant',
             'accord_versement' => 'AV001',
-        );
+        ];
 
-        $data_test = array(
+        $data_test = [
             'fichier_pes' => 'foo & bar',
             "pes_aller" => "toto.xml",
             "fichier_reponse" => "réponse.xml",
@@ -565,7 +561,7 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase
             'date_mandatement' => date('c'),
             'archive_size_ko' => '2',
             'date_generation_acquit' => date('c'),
-        );
+        ];
 
         $fluxDataTest = new FluxDataTest($data_test);
         $fluxDataTest->setFileList("fichier_pes", "fichier_pes", "fichier_pes");

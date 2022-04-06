@@ -4,7 +4,7 @@ class PESV2XMLFile
 {
     public function getValueFromXPath(SimpleXMLElement $xml, $xpath_str)
     {
-        $result = array();
+        $result = [];
         $attr_list = $xml->xpath($xpath_str);
         foreach ($attr_list as $attr) {
             $result[] = strval($attr);

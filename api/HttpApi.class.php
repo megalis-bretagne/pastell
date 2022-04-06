@@ -9,18 +9,18 @@ class HttpApi
 
     public const API_VERSION = 'v2';
 
-    public static $HTTP_AUTHORIZED_METHOD =  array('get','post','patch','delete');
+    public static $HTTP_AUTHORIZED_METHOD =  ['get','post','patch','delete'];
 
     /** @var JSONoutput */
     private $jsonOutput;
 
     private $objectInstancier;
 
-    private $get = array();
+    private $get = [];
 
-    private $request = array();
+    private $request = [];
 
-    private $server = array();
+    private $server = [];
 
     private $is_legacy = false;
 
@@ -171,7 +171,7 @@ class HttpApi
             $this->request = utf8_encode_array($this->request);
         }
         $result = $internalAPI->$request_method($ressource, $this->request);
-        if (in_array($request_method, array('post')) && ! $is_legacy) {
+        if (in_array($request_method, ['post']) && ! $is_legacy) {
             header_wrapper('HTTP/1.1 201 Created');
         }
         if ($is_legacy) {
@@ -192,7 +192,7 @@ class HttpApi
         if (! is_array($array) && !is_object($array)) {
             return strval($array);
         }
-        $result = array();
+        $result = [];
         foreach ($array as $cle => $value) {
             $result[strval($cle)] = $this->string_encode_array($value);
         }
@@ -208,77 +208,77 @@ class HttpApi
 
     public function getAPINameFromLegacyScript($old_script_name)
     {
-        $legacy_script = array(
-            'version.php' => array('version', 'get'),
+        $legacy_script = [
+            'version.php' => ['version', 'get'],
 
-            'list-roles.php' => array('role', 'get'),
+            'list-roles.php' => ['role', 'get'],
 
-            'document-type.php' => array('flux', 'get'),
-            'document-type-info.php' => array("flux/{$this->getFromRequest('type')}", 'get'),
-            'document-type-action.php' => array("flux/{$this->getFromRequest('type')}/action", 'get'),
+            'document-type.php' => ['flux', 'get'],
+            'document-type-info.php' => ["flux/{$this->getFromRequest('type')}", 'get'],
+            'document-type-action.php' => ["flux/{$this->getFromRequest('type')}/action", 'get'],
 
-            'list-extension.php' => array('extension', 'get'),
-            'edit-extension.php' => array('extension', 'compatV1Edition'),
-            'delete-extension.php' => array("extension/{$this->getFromRequest('id_extension')}", 'delete'),
-            'journal.php' => array('journal', 'get'),
-            'list-utilisateur.php' => array('utilisateur', 'get'),
-            'detail-utilisateur.php' => array("utilisateur/{$this->getFromRequest('id_u')}", 'get'),
-            'delete-utilisateur.php' => array("utilisateur/{$this->getFromRequest('id_u')}", 'delete'),
-            'modif-utilisateur.php' => array("utilisateur/{$this->getFromRequest('id_u')}", 'patch', 'edit'),
-            'create-utilisateur.php' => array('utilisateur', 'post'),
-            'list-role-utilisateur.php' => array("utilisateur/{$this->getFromRequest('id_u')}/role", 'get'),
-            'delete-role-utilisateur.php' => array("utilisateur/{$this->getFromRequest('id_u')}/role",'delete'),
-            'add-role-utilisateur.php' => array("utilisateur/{$this->getFromRequest('id_u')}/role", 'post'),
-            'add-several-role-utilisateur.php' => array("utilisateur/{$this->getFromRequest('id_u')}/role/add",'compatV1Edition'),
-            'delete-several-roles-utilisateur.php' => array("utilisateur/{$this->getFromRequest('id_u')}/role/delete", 'compatV1Edition'),
+            'list-extension.php' => ['extension', 'get'],
+            'edit-extension.php' => ['extension', 'compatV1Edition'],
+            'delete-extension.php' => ["extension/{$this->getFromRequest('id_extension')}", 'delete'],
+            'journal.php' => ['journal', 'get'],
+            'list-utilisateur.php' => ['utilisateur', 'get'],
+            'detail-utilisateur.php' => ["utilisateur/{$this->getFromRequest('id_u')}", 'get'],
+            'delete-utilisateur.php' => ["utilisateur/{$this->getFromRequest('id_u')}", 'delete'],
+            'modif-utilisateur.php' => ["utilisateur/{$this->getFromRequest('id_u')}", 'patch', 'edit'],
+            'create-utilisateur.php' => ['utilisateur', 'post'],
+            'list-role-utilisateur.php' => ["utilisateur/{$this->getFromRequest('id_u')}/role", 'get'],
+            'delete-role-utilisateur.php' => ["utilisateur/{$this->getFromRequest('id_u')}/role",'delete'],
+            'add-role-utilisateur.php' => ["utilisateur/{$this->getFromRequest('id_u')}/role", 'post'],
+            'add-several-role-utilisateur.php' => ["utilisateur/{$this->getFromRequest('id_u')}/role/add",'compatV1Edition'],
+            'delete-several-roles-utilisateur.php' => ["utilisateur/{$this->getFromRequest('id_u')}/role/delete", 'compatV1Edition'],
 
-            'list-entite.php' => array('entite', 'get'),
-            'detail-entite.php' => array("entite/{$this->getFromRequest('id_e')}", 'get'),
-            'modif-entite.php' => array("entite/{$this->getFromRequest('id_e')}", 'patch'),
-            'delete-entite.php' => array("entite/{$this->getFromRequest('id_e')}", 'delete'),
-            'create-entite.php' => array('entite', 'post'),
+            'list-entite.php' => ['entite', 'get'],
+            'detail-entite.php' => ["entite/{$this->getFromRequest('id_e')}", 'get'],
+            'modif-entite.php' => ["entite/{$this->getFromRequest('id_e')}", 'patch'],
+            'delete-entite.php' => ["entite/{$this->getFromRequest('id_e')}", 'delete'],
+            'create-entite.php' => ['entite', 'post'],
 
-            'list-connecteur-entite.php' => array("entite/{$this->getFromRequest('id_e')}/connecteur", 'get'),
-            'detail-connecteur-entite.php' => array("entite/{$this->getFromRequest('id_e')}/connecteur/{$this->getFromRequest('id_ce')}", 'get'),
-            'delete-connecteur-entite.php' => array("entite/{$this->getFromRequest('id_e')}/connecteur/{$this->getFromRequest('id_ce')}", 'delete'),
-            'modif-connecteur-entite.php' => array("entite/{$this->getFromRequest('id_e')}/connecteur/{$this->getFromRequest('id_ce')}", 'patch'),
-            'edit-connecteur-entite.php' => array("entite/{$this->getFromRequest('id_e')}/connecteur/{$this->getFromRequest('id_ce')}/content", 'patch'),
+            'list-connecteur-entite.php' => ["entite/{$this->getFromRequest('id_e')}/connecteur", 'get'],
+            'detail-connecteur-entite.php' => ["entite/{$this->getFromRequest('id_e')}/connecteur/{$this->getFromRequest('id_ce')}", 'get'],
+            'delete-connecteur-entite.php' => ["entite/{$this->getFromRequest('id_e')}/connecteur/{$this->getFromRequest('id_ce')}", 'delete'],
+            'modif-connecteur-entite.php' => ["entite/{$this->getFromRequest('id_e')}/connecteur/{$this->getFromRequest('id_ce')}", 'patch'],
+            'edit-connecteur-entite.php' => ["entite/{$this->getFromRequest('id_e')}/connecteur/{$this->getFromRequest('id_ce')}/content", 'patch'],
 
-            'create-connecteur-entite.php' => array("entite/{$this->getFromRequest('id_e')}/connecteur/{$this->getFromRequest('id_ce')}", 'post'),
+            'create-connecteur-entite.php' => ["entite/{$this->getFromRequest('id_e')}/connecteur/{$this->getFromRequest('id_ce')}", 'post'],
             'action-connecteur-entite.php' =>
-                array(
+                [
                     "entite/{$this->getFromRequest('id_e')}/flux/{$this->getFromRequest('flux')}/action",
                     'post'
-                ),
+                ],
 
-            'create-flux-connecteur.php' => array("entite/{$this->getFromRequest('id_e')}/flux/{$this->getFromRequest('flux')}/connecteur/{$this->getFromRequest('id_ce')}?type={$this->getFromRequest('type')}", 'post'),
-            'delete-flux-connecteur.php' => array("entite/{$this->getFromRequest('id_e')}/flux/{$this->getFromRequest('id_fe')}", 'delete'),
+            'create-flux-connecteur.php' => ["entite/{$this->getFromRequest('id_e')}/flux/{$this->getFromRequest('flux')}/connecteur/{$this->getFromRequest('id_ce')}?type={$this->getFromRequest('type')}", 'post'],
+            'delete-flux-connecteur.php' => ["entite/{$this->getFromRequest('id_e')}/flux/{$this->getFromRequest('id_fe')}", 'delete'],
 
 
-            'list-flux-connecteur.php' => array(
+            'list-flux-connecteur.php' => [
                 "/entite/{$this->getFromRequest('id_e')}/flux?type={$this->getFromRequest('type')}&flux={$this->getFromRequest('flux')}",
                 'get'
-            ),
+            ],
 
-            'list-document.php' => array("entite/{$this->getFromRequest('id_e')}/document", 'get'),
-            'detail-document.php' => array("entite/{$this->getFromRequest('id_e')}/document/{$this->getFromRequest('id_d')}", 'get'),
-            'detail-several-document.php' => array("entite/{$this->getFromRequest('id_e')}/document/", 'get'),
+            'list-document.php' => ["entite/{$this->getFromRequest('id_e')}/document", 'get'],
+            'detail-document.php' => ["entite/{$this->getFromRequest('id_e')}/document/{$this->getFromRequest('id_d')}", 'get'],
+            'detail-several-document.php' => ["entite/{$this->getFromRequest('id_e')}/document/", 'get'],
 
-            'create-document.php' =>  array("entite/{$this->getFromRequest('id_e')}/document", 'post'),
-            'modif-document.php' => array("entite/{$this->getFromRequest('id_e')}/document/{$this->getFromRequest('id_d')}", 'patch'),
-            'recherche-document.php' => array("entite/{$this->getFromRequest('id_e')}/document", 'get'),
+            'create-document.php' =>  ["entite/{$this->getFromRequest('id_e')}/document", 'post'],
+            'modif-document.php' => ["entite/{$this->getFromRequest('id_e')}/document/{$this->getFromRequest('id_d')}", 'patch'],
+            'recherche-document.php' => ["entite/{$this->getFromRequest('id_e')}/document", 'get'],
 
-            'external-data.php' => array("entite/{$this->getFromRequest('id_e')}/document/{$this->getFromRequest('id_d')}/externalData/{$this->getFromRequest('field')}", 'get'),
-            'recuperation-fichier.php' => array("entite/{$this->getFromRequest('id_e')}/document/{$this->getFromRequest('id_d')}/file/{$this->getFromRequest('field')}/{$this->getFromRequest('num')}", 'get'),
+            'external-data.php' => ["entite/{$this->getFromRequest('id_e')}/document/{$this->getFromRequest('id_d')}/externalData/{$this->getFromRequest('field')}", 'get'],
+            'recuperation-fichier.php' => ["entite/{$this->getFromRequest('id_e')}/document/{$this->getFromRequest('id_d')}/file/{$this->getFromRequest('field')}/{$this->getFromRequest('num')}", 'get'],
 
             ## oops : field => field_name num=>file_number pour faire comme en V1
 
-            'receive-file.php' => array("entite/{$this->getFromRequest('id_e')}/document/{$this->getFromRequest('id_d')}/file/{$this->getFromRequest('field_name')}/{$this->getFromRequest('file_number')}?receive=true", 'get'),
+            'receive-file.php' => ["entite/{$this->getFromRequest('id_e')}/document/{$this->getFromRequest('id_d')}/file/{$this->getFromRequest('field_name')}/{$this->getFromRequest('file_number')}?receive=true", 'get'],
 
-            'send-file.php' => array("entite/{$this->getFromRequest('id_e')}/document/{$this->getFromRequest('id_d')}/file/{$this->getFromRequest('field')}/{$this->getFromRequest('num')}", 'post'),
-            'action.php' => array("entite/{$this->getFromRequest('id_e')}/document/{$this->getFromRequest('id_d')}/action/{$this->getFromRequest('action')}", 'post'),
+            'send-file.php' => ["entite/{$this->getFromRequest('id_e')}/document/{$this->getFromRequest('id_d')}/file/{$this->getFromRequest('field')}/{$this->getFromRequest('num')}", 'post'],
+            'action.php' => ["entite/{$this->getFromRequest('id_e')}/document/{$this->getFromRequest('id_d')}/action/{$this->getFromRequest('action')}", 'post'],
 
-        );
+        ];
         if (empty($legacy_script[$old_script_name])) {
             throw new NotFoundException("Impossible de trouver le script $old_script_name");
         }

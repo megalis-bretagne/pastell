@@ -16,7 +16,7 @@ class VersionAPIController extends BaseAPIController
             return $this->alloAction();
         }
         $info = $this->manifestFactory->getPastellManifest()->getInfo();
-        $result = array();
+        $result = [];
         $result['version'] = $info['version'];
         $result['revision'] = $info['revision'];
         $result['last_changed_date'] = $info['last_changed_date'];
@@ -29,6 +29,6 @@ class VersionAPIController extends BaseAPIController
     public function alloAction()
     {
         $info = $this->manifestFactory->getPastellManifest()->getInfo();
-        return array("produit" => "Pastell","version" => $info['version']);
+        return ["produit" => "Pastell","version" => $info['version']];
     }
 }

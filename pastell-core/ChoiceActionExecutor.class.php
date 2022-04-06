@@ -14,7 +14,7 @@ abstract class ChoiceActionExecutor extends ActionExecutor
     public function __construct(ObjectInstancier $objectInstancier)
     {
         parent::__construct($objectInstancier);
-        $this->viewParameter = array();
+        $this->viewParameter = [];
         $this->setRecuperateur(new Recuperateur($_POST));
     }
 

@@ -135,8 +135,7 @@ class CPPWrapperTest extends ExtensionCppTestCase
         $returnData = [
             'codeRetour' => 0,
             'libelle' => 'libelle',
-            'listeFactures' => [
-            ]
+            'listeFactures' => []
         ];
         $curlWrapper = $this->getMockBuilder(CurlWrapper::class)->disableOriginalConstructor()->getMock();
         $curlWrapper->expects($this->any())->method('get')->willReturn(json_encode($returnData));

@@ -97,7 +97,7 @@ class FluxDataSedaActes extends FluxDataSedaDefault
     {
         $classification = $this->donneesFormulaire->get('classification');
         $nature = $this->donneesFormulaire->get('acte_nature');
-        if (in_array($nature, array(3,4)) && preg_match("#^4.#", $classification)) {
+        if (in_array($nature, [3,4]) && preg_match("#^4.#", $classification)) {
             return true;
         }
         if ($nature == 3 && preg_match("#^8.2#", $classification)) {

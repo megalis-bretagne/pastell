@@ -91,7 +91,7 @@ class FluxEntiteSQLTest extends PastellTestCase
     public function testGetFluxByConnecteur()
     {
         $result = $this->getFluxEntiteSQL()->getFluxByConnecteur(1);
-        $this->assertEquals(array('actes-generique'), $result);
+        $this->assertEquals(['actes-generique'], $result);
     }
 
     public function testGetUsedByConnecteur()

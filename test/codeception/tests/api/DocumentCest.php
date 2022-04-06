@@ -8,7 +8,7 @@ class DocumentCest
         $I->amHttpAuthenticatedAsAdmin();
         $I->sendPOST("/entite/1/document?type=actes-generique");
         $I->sendGET("/entite/1/document");
-        $I->verifyJsonResponseOK(array());
+        $I->verifyJsonResponseOK([]);
     }
 
     public function listDocumentV1(NoGuy $I)
@@ -17,7 +17,7 @@ class DocumentCest
         $I->amHttpAuthenticatedAsAdmin();
         $I->sendPOST("/entite/1/document?type=actes-generique");
         $I->sendGETV1("list-document.php?id_e=1");
-        $I->verifyJsonResponseOK(array());
+        $I->verifyJsonResponseOK([]);
     }
 
     public function rechercheDocumentV1(NoGuy $I)
@@ -26,16 +26,16 @@ class DocumentCest
         $I->amHttpAuthenticatedAsAdmin();
         $I->sendPOST("/entite/1/document?type=actes-generique");
         $I->sendGETV1("recherche-document.php?id_e=1");
-        $I->verifyJsonResponseOK(array());
+        $I->verifyJsonResponseOK([]);
     }
 
     public function createDocument(NoGuy $I)
     {
         $I->wantTo("créer un document");
         $I->amHttpAuthenticatedAsAdmin();
-        $I->sendPOST("/entite/1/document", array('type' => 'actes-generique'));
+        $I->sendPOST("/entite/1/document", ['type' => 'actes-generique']);
         $I->verifyJsonResponseOK(
-            array("info" => array("type" => "actes-generique")),
+            ["info" => ["type" => "actes-generique"]],
             \Codeception\Util\HttpCode::CREATED
         );
     }
@@ -44,9 +44,9 @@ class DocumentCest
     {
         $I->wantTo("créer un document [V1]");
         $I->amHttpAuthenticatedAsAdmin();
-        $I->sendPOSTV1("create-document.php", array('id_e' => 1,'type' => 'actes-generique'));
+        $I->sendPOSTV1("create-document.php", ['id_e' => 1,'type' => 'actes-generique']);
         $I->verifyJsonResponseOK(
-            array("info" => array("type" => "actes-generique")),
+            ["info" => ["type" => "actes-generique"]],
             \Codeception\Util\HttpCode::OK
         );
     }
@@ -58,7 +58,7 @@ class DocumentCest
         $I->sendPOST("/entite/1/document?type=actes-generique");
         $id_d = $I->grabDataFromResponseByJsonPath('$.id_d')[0];
         $I->sendGET("/entite/1/document/$id_d");
-        $I->verifyJsonResponseOK(array('info' => array('id_d' => $id_d)));
+        $I->verifyJsonResponseOK(['info' => ['id_d' => $id_d]]);
     }
 
     public function detailDocumentV1(NoGuy $I)
@@ -69,15 +69,15 @@ class DocumentCest
         $id_d = $I->grabDataFromResponseByJsonPath('$.id_d')[0];
         $I->sendGETV1("detail-document.php?id_e=1&id_d=$id_d");
         $I->verifyJsonResponseOK(
-            array(
-                'info' => array('id_d' => $id_d),
-                'action-possible' => array(
+            [
+                'info' => ['id_d' => $id_d],
+                'action-possible' => [
                     'modification','supression'
-                ),
-                'action_possible' => array(
+                ],
+                'action_possible' => [
                     'modification','supression'
-                )
-            )
+                ]
+            ]
         );
     }
 
@@ -91,10 +91,10 @@ class DocumentCest
         $id_d_2 = $I->grabDataFromResponseByJsonPath('$.id_d')[0];
         $I->sendGETV1("detail-several-document.php?id_e=1&id_d[]=$id_d_1&id_d[]=$id_d_2");
         $I->verifyJsonResponseOK(
-            array(
-                $id_d_1 => array('info' => array('id_d' => $id_d_1)),
-                $id_d_2 => array('info' => array('id_d' => $id_d_2))
-            )
+            [
+                $id_d_1 => ['info' => ['id_d' => $id_d_1]],
+                $id_d_2 => ['info' => ['id_d' => $id_d_2]]
+            ]
         );
     }
 
@@ -104,8 +104,8 @@ class DocumentCest
         $I->amHttpAuthenticatedAsAdmin();
         $I->sendPOST("/entite/1/document?type=actes-generique");
         $id_d = $I->grabDataFromResponseByJsonPath('$.id_d')[0];
-        $I->sendPATCH("/entite/1/document/$id_d", array('objet' => 'école'));
-        $I->verifyJsonResponseOK(array('content' => array('data' => array('objet' => 'école'))));
+        $I->sendPATCH("/entite/1/document/$id_d", ['objet' => 'école']);
+        $I->verifyJsonResponseOK(['content' => ['data' => ['objet' => 'école']]]);
     }
 
     /* Ce test ne fonctionne plus, mais ca retourne bien ça via l'API... */
@@ -134,9 +134,9 @@ class DocumentCest
         //$objet = utf8_decode("école");
         $objet = "ecole";
 
-        $I->sendPOSTV1("modif-document.php", array('id_e' => 1,'id_d' => $id_d,'objet' => $objet));
+        $I->sendPOSTV1("modif-document.php", ['id_e' => 1,'id_d' => $id_d,'objet' => $objet]);
         $I->verifyJsonResponseOK(
-            array('content' => array('data' => array('objet' => 'ecole')))
+            ['content' => ['data' => ['objet' => 'ecole']]]
         );
     }
 
@@ -149,9 +149,9 @@ class DocumentCest
 
         $objet = "école";
 
-        $I->sendPOSTV1("modif-document.php", array('id_e' => 1,'id_d' => $id_d,'objet' => $objet));
+        $I->sendPOSTV1("modif-document.php", ['id_e' => 1,'id_d' => $id_d,'objet' => $objet]);
         $I->verifyJsonResponseOK(
-            array('content' => array('data' => array('objet' => 'Ã©cole')))
+            ['content' => ['data' => ['objet' => 'Ã©cole']]]
         );
     }
 
@@ -164,16 +164,16 @@ class DocumentCest
         /* TODO on arrive plus a poster des trucs en pas UTF8, y compris des fichiers PDF */
         $I->sendPOST(
             "/entite/1/document/$id_d/file/annexe",
-            array('file_name' => 'toto.pdf','file_content' => "aaa")
+            ['file_name' => 'toto.pdf','file_content' => "aaa"]
         );
         $I->verifyJsonResponseOK(
-            array(
-                'data' => array(
-                    'annexe' => array(
+            [
+                'data' => [
+                    'annexe' => [
                         'toto.pdf'
-                    )
-                )
-            ),
+                    ]
+                ]
+            ],
             \Codeception\Util\HttpCode::CREATED
         );
         $I->sendGET("/entite/1/document/$id_d/file/annexe");
@@ -189,12 +189,12 @@ class DocumentCest
         $id_d = $I->grabDataFromResponseByJsonPath('$.id_d')[0];
         $I->sendPOST(
             "/entite/1/document/$id_d/file/fichier_pes",
-            array('file_name' => 'PES_ALR2_TEST.xml','file_content' => file_get_contents(__DIR__ . "/../_data/HELIOS_SIMU_ALR2_1546508114_320550647.xml"))
+            ['file_name' => 'PES_ALR2_TEST.xml','file_content' => file_get_contents(__DIR__ . "/../_data/HELIOS_SIMU_ALR2_1546508114_320550647.xml")]
         );
 
 
         $I->verifyJsonResponseOK(
-            array(
+            [
                 "data" => [
             "fichier_pes" => [
                 "PES_ALR2_TEST.xml"
@@ -212,7 +212,7 @@ class DocumentCest
               "etat_ack" => "0"
                 ],
 
-            ),
+            ],
             \Codeception\Util\HttpCode::CREATED
         );
         $I->sendGET("/entite/1/document/$id_d/file/fichier_pes");
@@ -227,7 +227,7 @@ class DocumentCest
         $I->sendPOST("/entite/1/document?type=test");
         $id_d = $I->grabDataFromResponseByJsonPath('$.id_d')[0];
         $I->sendGET("/entite/1/document/$id_d/externalData/test_external_data");
-        $I->verifyJsonResponseOK(array("Spock"));
+        $I->verifyJsonResponseOK(["Spock"]);
     }
 
     public function patchExternalData(NoGuy $I)
@@ -236,8 +236,8 @@ class DocumentCest
         $I->amHttpAuthenticatedAsAdmin();
         $I->sendPOST("/entite/1/document?type=test");
         $id_d = $I->grabDataFromResponseByJsonPath('$.id_d')[0];
-        $I->sendPATCH("/entite/1/document/$id_d/externalData/test_external_data", array('choix' => 'Spock'));
-        $I->verifyJsonResponseOK(array('result' => 'ok','data' => ['test_external_data' => 'Spock']));
+        $I->sendPATCH("/entite/1/document/$id_d/externalData/test_external_data", ['choix' => 'Spock']);
+        $I->verifyJsonResponseOK(['result' => 'ok','data' => ['test_external_data' => 'Spock']]);
     }
 
 
@@ -248,7 +248,7 @@ class DocumentCest
         $I->sendPOST("/entite/1/document?type=test");
         $id_d = $I->grabDataFromResponseByJsonPath('$.id_d')[0];
         $I->sendGETV1("external-data.php?id_e=1&id_d=$id_d&field=test_external_data");
-        $I->verifyJsonResponseOK(array("Spock"));
+        $I->verifyJsonResponseOK(["Spock"]);
     }
 
     public function action(NoGuy $I)
@@ -259,7 +259,7 @@ class DocumentCest
         $id_d = $I->grabDataFromResponseByJsonPath('$.id_d')[0];
         $I->sendPOST("/entite/1/document/$id_d/action/ok");
         $I->verifyJsonResponseOK(
-            array("result" => true,"message" => "OK !"),
+            ["result" => true,"message" => "OK !"],
             \Codeception\Util\HttpCode::CREATED
         );
     }
@@ -272,7 +272,7 @@ class DocumentCest
         $id_d = $I->grabDataFromResponseByJsonPath('$.id_d')[0];
         $I->sendGETV1("action.php?id_e=1&id_d=$id_d&action=ok");
         $I->verifyJsonResponseOK(
-            array("result" => "1","message" => "OK !"),
+            ["result" => "1","message" => "OK !"],
             \Codeception\Util\HttpCode::OK
         );
     }

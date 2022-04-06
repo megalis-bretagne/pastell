@@ -33,7 +33,7 @@ class DepotLocalTest extends PastellTestCase
     public function testListDirectory()
     {
         $this->assertEquals(
-            array('.','..','foo'),
+            ['.','..','foo'],
             $this->depotLocal->listDirectory()
         );
     }
@@ -55,7 +55,7 @@ class DepotLocalTest extends PastellTestCase
     {
         $this->depotLocal->makeDirectory("toto");
         $this->assertEquals(
-            array('.','..','foo','toto'),
+            ['.','..','foo','toto'],
             $this->depotLocal->listDirectory()
         );
     }

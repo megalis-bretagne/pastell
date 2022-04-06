@@ -41,7 +41,7 @@ class ObjectInstancier
 
     private function bindParameters(array $allParameters, $className)
     {
-        $param = array();
+        $param = [];
         /** @var ReflectionParameter $parameters */
         foreach ($allParameters as $parameters) {
             if ($parameters->getType() && !$parameters->getType()->isBuiltin()) {

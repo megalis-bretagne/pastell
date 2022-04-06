@@ -4,7 +4,7 @@ class EnvWrapper
 {
     private $env;
 
-    public function __construct(array $env = array())
+    public function __construct(array $env = [])
     {
         if (! $env) {
             $env = $_ENV;

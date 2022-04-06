@@ -36,7 +36,7 @@ class FluxDataSedaHelios extends FluxDataSedaDefault
     public function get_Domaine()
     {
         $info = $this->getInfoFromPesAller();
-        $result = array();
+        $result = [];
         if ($info['is_recette']) {
             $result[] = "PES_RecetteAller";
         }
@@ -84,7 +84,7 @@ class FluxDataSedaHelios extends FluxDataSedaDefault
 
     public function get_IdBord_IdPce()
     {
-        $result = array();
+        $result = [];
         $info = $this->getInfoFromPesAller();
         foreach ($info['id_bord'] as $id_bord) {
             $result[] = "IdBord $id_bord";
@@ -147,14 +147,14 @@ class FluxDataSedaHelios extends FluxDataSedaDefault
     public function get_nom_megalis()
     {
         $info = $this->getInfoFromPesAller();
-        $result = array();
+        $result = [];
         foreach (
-            array(
+            [
                 'is_recette' => "recettes",
                 "is_depense" => "dépenses",
                 'is_pj' => 'pièces justificatives',
                 'is_facture' => 'facture'
-            ) as $id => $libelle
+            ] as $id => $libelle
         ) {
             if ($info[$id]) {
                 $result[] = $libelle;
@@ -214,7 +214,7 @@ class FluxDataSedaHelios extends FluxDataSedaDefault
     {
         if (! $this->xpath_from_pes_aller) {
             $info = $this->getInfoFromPesAller();
-            $info_xpath = array();
+            $info_xpath = [];
             $pes_aller = $this->donneesFormulaire->getFilePath('fichier_pes');
 
             $PESV2XMLFile = new PESV2XMLFile();
@@ -246,7 +246,7 @@ class FluxDataSedaHelios extends FluxDataSedaDefault
     {
         $xml =  simplexml_load_string($pes_aller_content, 'SimpleXMLElement', LIBXML_PARSEHUGE);
 
-        $info = array();
+        $info = [];
         $info['nomFic'] =  strval($xml->Enveloppe->Parametres->NomFic['V']);
         $info['Id'] = $xml['Id'];
 
@@ -256,7 +256,7 @@ class FluxDataSedaHelios extends FluxDataSedaDefault
         $info['is_pj'] = isset($xml->PES_PJ);
         $info['is_facture'] = isset($xml->PES_Facture);
 
-        foreach (array('IdPost','DteStr','IdColl','CodCol','CodBud','LibelleColBud') as $nodeName) {
+        foreach (['IdPost','DteStr','IdColl','CodCol','CodBud','LibelleColBud'] as $nodeName) {
             $node = $xml->EnTetePES->$nodeName;
             $info[$nodeName] = strval($node['V']);
         }
@@ -264,9 +264,9 @@ class FluxDataSedaHelios extends FluxDataSedaDefault
             $info['LibelleColBud'] = $info['CodCol'];
         }
 
-        $info['id_bord'] = array();
-        $info['id_piece'] = array();
-        foreach (array('PES_RecetteAller','PES_DepenseAller') as $pes_Aller) {
+        $info['id_bord'] = [];
+        $info['id_piece'] = [];
+        foreach (['PES_RecetteAller','PES_DepenseAller'] as $pes_Aller) {
             if (! isset($xml->$pes_Aller)) {
                 continue;
             }
@@ -290,7 +290,7 @@ class FluxDataSedaHelios extends FluxDataSedaDefault
         $pes_retour_content = file_get_contents($pes_retour);
         $xml =  simplexml_load_string($pes_retour_content, 'SimpleXMLElement', LIBXML_PARSEHUGE);
 
-        $info = array();
+        $info = [];
         $info['DteStr'] =  strval($xml->EnTetePES->DteStr['V']);
 
         return $info;

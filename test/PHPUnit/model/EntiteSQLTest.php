@@ -37,13 +37,13 @@ class EntiteSQLTest extends PastellTestCase
 
     public function testGetEntiteFromData()
     {
-        $info = $this->entiteSQL->getEntiteFromData(array('id_e' => 1));
+        $info = $this->entiteSQL->getEntiteFromData(['id_e' => 1]);
         $this->assertEquals("Bourg-en-Bresse", $info['denomination']);
     }
 
     public function testGetEntiteFromDataFromDenomination()
     {
-        $info = $this->entiteSQL->getEntiteFromData(array('denomination' => "Bourg-en-Bresse"));
+        $info = $this->entiteSQL->getEntiteFromData(['denomination' => "Bourg-en-Bresse"]);
         $this->assertEquals(1, $info['id_e']);
     }
 
@@ -51,21 +51,21 @@ class EntiteSQLTest extends PastellTestCase
     {
         $this->expectException("Exception");
         $this->expectExceptionMessage("L'identifiant de l'entite n'existe pas : {id_e=42}");
-        $this->entiteSQL->getEntiteFromData(array('id_e' => 42));
+        $this->entiteSQL->getEntiteFromData(['id_e' => 42]);
     }
 
     public function testGetEntiteFromDataDenominationNotExisting()
     {
         $this->expectException("Exception");
         $this->expectExceptionMessage("La dénomination de l'entité n'existe pas : {denomination=FizzBuzz}");
-        $this->entiteSQL->getEntiteFromData(array('denomination' => "FizzBuzz"));
+        $this->entiteSQL->getEntiteFromData(['denomination' => "FizzBuzz"]);
     }
 
     public function testGetEntiteFromDataFailed()
     {
         $this->expectException("Exception");
         $this->expectExceptionMessage("Aucun paramètre permettant la recherche de l'entité n'a été renseigné");
-        $this->entiteSQL->getEntiteFromData(array());
+        $this->entiteSQL->getEntiteFromData([]);
     }
 
     public function testGetEntiteFromDataSameDenomination()
@@ -74,7 +74,7 @@ class EntiteSQLTest extends PastellTestCase
         $this->getSQLQuery()->query($sql);
         $this->expectException("Exception");
         $this->expectExceptionMessage("Plusieurs entités portent le même nom, préférez utiliser son identifiant");
-        $this->entiteSQL->getEntiteFromData(array('denomination' => "Bourg-en-Bresse"));
+        $this->entiteSQL->getEntiteFromData(['denomination' => "Bourg-en-Bresse"]);
     }
 
     public function testExists()

@@ -15,7 +15,7 @@ class ExtensionLoader
 
     public function loadExtension(array $extension_path_list)
     {
-        $result = array();
+        $result = [];
         foreach ($extension_path_list as $ext) {
             $this->extensionSQL->edit(0, $ext);
             $result[$ext] = $this->extensionSQL->getLastInsertId();

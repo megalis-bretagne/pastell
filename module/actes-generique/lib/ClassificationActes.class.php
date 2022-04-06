@@ -53,7 +53,7 @@ class ClassificationActes
     public function getAllInternal(SimpleXMLElement $xml, $niveau, $classif)
     {
         $matiere = "Matiere$niveau";
-        $result = array();
+        $result = [];
         foreach ($xml->$matiere as $matiere1) {
             $result[$classif . $matiere1['CodeMatiere'] . ' ' . $matiere1['Libelle']] = true;
             $result = array_merge($result, $this->getAllInternal($matiere1, $niveau + 1, $classif . $matiere1['CodeMatiere'] . "."));

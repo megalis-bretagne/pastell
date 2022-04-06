@@ -81,7 +81,7 @@ class MailSecControler extends PastellControler
         if ($id_e) {
             $this->setViewParameter('infoEntite', $this->getEntiteSQL()->getInfo($id_e));
         } else {
-            $this->setViewParameter('infoEntite', array("denomination" => "Annuaire global"));
+            $this->setViewParameter('infoEntite', ["denomination" => "Annuaire global"]);
         }
     }
 
@@ -97,7 +97,7 @@ class MailSecControler extends PastellControler
 
         $infoEntite = $this->getEntiteSQL()->getInfo($id_e);
         if ($id_e == 0) {
-            $infoEntite = array("denomination" => "Annuaire global");
+            $infoEntite = ["denomination" => "Annuaire global"];
         }
 
         $all_ancetre = $this->getEntiteSQL()->getAncetreId($id_e);
@@ -128,7 +128,7 @@ class MailSecControler extends PastellControler
         if ($id_e) {
             $this->setViewParameter('infoEntite', $this->getEntiteSQL()->getInfo($id_e));
         } else {
-            $this->setViewParameter('infoEntite', array("denomination" => "Annuaire global"));
+            $this->setViewParameter('infoEntite', ["denomination" => "Annuaire global"]);
         }
 
         $this->setViewParameter('id_e', $id_e);
@@ -156,7 +156,7 @@ class MailSecControler extends PastellControler
         if ($id_e) {
             $this->setViewParameter('infoEntite', $this->getEntiteSQL()->getInfo($id_e));
         } else {
-            $this->setViewParameter('infoEntite', array("denomination" => "Annuaire global"));
+            $this->setViewParameter('infoEntite', ["denomination" => "Annuaire global"]);
         }
 
         $all_ancetre = $this->getEntiteSQL()->getAncetreId($id_e);
@@ -202,7 +202,7 @@ class MailSecControler extends PastellControler
 
         $finfo = new finfo();
 
-        if (! in_array($finfo->file($file_path, FILEINFO_MIME_TYPE), array( 'text/plain','text/csv'))) {
+        if (! in_array($finfo->file($file_path, FILEINFO_MIME_TYPE), [ 'text/plain','text/csv'])) {
             $this->setLastError("Le fichier doit être en CSV");
             $this->redirect("/MailSec/import?id_e=$id_e");
         }
@@ -323,7 +323,7 @@ class MailSecControler extends PastellControler
         $annuaireGroupe = new AnnuaireGroupe($this->getSQLQuery(), $id_e);
 
         if (! is_array($id_a_list)) {
-            $id_a_list = array($id_a_list);
+            $id_a_list = [$id_a_list];
         }
 
         foreach ($id_a_list as $id_a) {
@@ -458,7 +458,7 @@ class MailSecControler extends PastellControler
     {
         $recuperateur = new Recuperateur($_POST);
         $id_e = $recuperateur->getInt('id_e');
-        $id_g = $recuperateur->get('id_g', array());
+        $id_g = $recuperateur->get('id_g', []);
 
         $this->verifDroit($id_e, "annuaire:edition", "MailSec/annuaire?id_e=$id_e");
 
@@ -486,7 +486,7 @@ class MailSecControler extends PastellControler
 
         $annuaireGroupe = new AnnuaireGroupe($this->getSQLQuery(), $id_e);
 
-        $result = array();
+        $result = [];
 
         $all_ancetre = $this->getEntiteSQL()->getAncetreId($id_e);
 
@@ -523,7 +523,7 @@ class MailSecControler extends PastellControler
     public function operationGroupeRoleAction()
     {
         $recuperateur = new Recuperateur($_POST);
-        $all_id_r = $recuperateur->get('id_r', array());
+        $all_id_r = $recuperateur->get('id_r', []);
         $id_e = $recuperateur->getInt('id_e');
         $submit = $recuperateur->get('submit');
 

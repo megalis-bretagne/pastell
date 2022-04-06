@@ -10,7 +10,7 @@ class IParapheurEmptyWSDLCacheTest extends PastellTestCase
 
         $result = $this->getInternalAPI()->post(
             "/entite/" . self::ID_E_COL . "/connecteur",
-            array('libelle' => 'I parapheur' , 'id_connecteur' => 'iParapheur')
+            ['libelle' => 'I parapheur' , 'id_connecteur' => 'iParapheur']
         );
 
         $id_ce = $result['id_ce'];
@@ -38,7 +38,7 @@ class IParapheurEmptyWSDLCacheTest extends PastellTestCase
 
         $result = $this->getInternalAPI()->post(
             "/entite/" . self::ID_E_COL . "/connecteur",
-            array('libelle' => 'I parapheur' , 'id_connecteur' => 'iParapheur')
+            ['libelle' => 'I parapheur' , 'id_connecteur' => 'iParapheur']
         );
 
         $id_ce = $result['id_ce'];

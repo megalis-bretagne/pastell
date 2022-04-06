@@ -50,11 +50,11 @@ class Extensions
 
     public function getAll()
     {
-        $extensions_list = array();
+        $extensions_list = [];
         foreach ($this->extensionSQL->getAll() as $extension) {
             $extensions_list[$extension['id_e']] = $this->getInfo($extension['id_e']);
         }
-        uasort($extensions_list, array($this,"compareExtension"));
+        uasort($extensions_list, [$this,"compareExtension"]);
         return $extensions_list;
     }
 
@@ -128,7 +128,7 @@ class Extensions
         if ($result) {
             return $result;
         }
-        $result = array();
+        $result = [];
         foreach ($this->getAllExtensionsPath() as $search) {
             $glob_all = $this->globAll($search . "/" . $extensions_sub_directory . "/*");
             foreach ($glob_all as $id_connecteur) {
@@ -217,8 +217,8 @@ class Extensions
             $info['pastell-version-ok'] = false;
             return $info;
         }
-        $extension_absente = array();
-        $extension_bad_version = array();
+        $extension_absente = [];
+        $extension_bad_version = [];
         foreach ($info['manifest']['extension_needed'] as $extension_needed => $extension_needed_info) {
             $info['manifest']['extension_needed'][$extension_needed] = $this->checkExtensionNeeded($extension_needed, $extension_needed_info);
             if (! $info['manifest']['extension_needed'][$extension_needed]['extension_presente']) {
@@ -322,7 +322,7 @@ class Extensions
 
     private function globAll($glob_expression)
     {
-        $result = array();
+        $result = [];
         foreach (glob($glob_expression) as $file_config) {
             if (is_dir($file_config)) {
                 $result[] = basename($file_config);

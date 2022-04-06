@@ -16,9 +16,9 @@ class Controler
     public function __construct(ObjectInstancier $objectInstancier)
     {
         $this->objectInstancier = $objectInstancier;
-        $this->viewParameter = array();
-        $this->setGetInfo(new Recuperateur(array()));
-        $this->setPostInfo(new Recuperateur(array()));
+        $this->viewParameter = [];
+        $this->setGetInfo(new Recuperateur([]));
+        $this->setPostInfo(new Recuperateur([]));
     }
 
 

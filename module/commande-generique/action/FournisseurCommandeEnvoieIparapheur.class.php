@@ -22,17 +22,17 @@ class FournisseurCommandeEnvoieIparapheur extends ActionExecutor
         $filename_commande = $donneesFormulaire->getFileName('commande');
         $content_type = $finfo->file($donneesFormulaire->getFilePath('commande'), FILEINFO_MIME_TYPE);
 
-        $annexe = array();
+        $annexe = [];
         if ($donneesFormulaire->get('autre_document_attache')) {
             foreach ($donneesFormulaire->get('autre_document_attache') as $num => $fileName) {
                 $annexe_content =  file_get_contents($donneesFormulaire->getFilePath('autre_document_attache', $num));
                 $annexe_content_type = $finfo->file($donneesFormulaire->getFilePath('autre_document_attache', $num), FILEINFO_MIME_TYPE);
 
-                $annexe[] = array(
+                $annexe[] = [
                         'name' => $fileName,
                         'file_content' => $annexe_content,
                         'content_type' => $annexe_content_type,
-                );
+                ];
             }
         }
 

@@ -9,7 +9,7 @@ class MetaDataXML
         $this->sanitizeFileName = $sanitizeFileName;
     }
 
-    public function getMetaDataAsXML(DonneesFormulaire $donneesFormulaire, $fileNamePastell = false, array $meta_data_included = array())
+    public function getMetaDataAsXML(DonneesFormulaire $donneesFormulaire, $fileNamePastell = false, array $meta_data_included = [])
     {
 
         $fluxXML = new SimpleXMLElement("<flux></flux>");

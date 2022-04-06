@@ -375,7 +375,7 @@ abstract class GlaneurConnecteur extends Connecteur
         $glaneurLocalGlanerRepertoire = $this->getGlaneurGlanerRepertoire();
 
         $file_match = $glaneurLocalGlanerRepertoire->getFileMatch($repertoire, $this->listAllFile($repertoire));
-        $menage = array();
+        $menage = [];
         foreach ($file_match['file_match'] as $id => $file_list) {
             foreach ($file_list as $i => $filename) {
                 $this->copy($repertoire . "/$filename", $tmp_folder . "/$filename");

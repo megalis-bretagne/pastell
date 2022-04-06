@@ -8,7 +8,7 @@ class CPPDeposerPDFTest extends ExtensionCppTestCase
     public function testDeposerPDF()
     {
 
-        $deposer_pdf_result = array (
+        $deposer_pdf_result =  [
             'codeRetour' => 0,
             'libelle' => 'GCU_MSG_01_000',
             'numeroFacture' => null,
@@ -25,7 +25,7 @@ class CPPDeposerPDFTest extends ExtensionCppTestCase
             'montantHtTotal' => null,
             'montantTVA' => null,
             'pieceJointeId' => 6921279
-        );
+        ];
 
         $cppWrapper = $this->getMockBuilder(CPPWrapper::class)
             ->disableOriginalConstructor()

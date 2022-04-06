@@ -32,14 +32,14 @@ class RoleControlerTest extends ControlerTestCase
     public function testEditionAction2()
     {
         $this->expectOutputRegex("##");
-        $_GET = array('role' => 'admin');
+        $_GET = ['role' => 'admin'];
         $this->roleControler->editionAction();
     }
 
     public function testDoEditionAction()
     {
         $this->expectException("LastMessageException");
-        $this->setPostInfo(array('role' => 'test','libelle' => 'test'));
+        $this->setPostInfo(['role' => 'test','libelle' => 'test']);
         $this->roleControler->doEditionAction();
     }
 
@@ -52,7 +52,7 @@ class RoleControlerTest extends ControlerTestCase
     public function testDoDetailAction()
     {
         $this->expectException("LastMessageException");
-        $this->setPostInfo(array('role' => 'test','droit' => array('system:lecture' => 'selected')));
+        $this->setPostInfo(['role' => 'test','droit' => ['system:lecture' => 'selected']]);
         $this->roleControler->doDetailAction();
     }
 }

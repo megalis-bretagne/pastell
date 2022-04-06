@@ -6,7 +6,7 @@ class FileContentType
     private function getOpenXMLMimeType($file_name)
     {
         $ext = pathinfo($file_name, PATHINFO_EXTENSION);
-        $openXMLExtension = array(
+        $openXMLExtension = [
                 'xlsx' => "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                 'xltx' => "application/vnd.openxmlformats-officedocument.spreadsheetml.template",
                 'potx' =>  "application/vnd.openxmlformats-officedocument.presentationml.template",
@@ -18,7 +18,7 @@ class FileContentType
                 'xlam'   =>  "application/vnd.ms-excel.addin.macroEnabled.12",
                 'xlsb'   =>  "application/vnd.ms-excel.sheet.binary.macroEnabled.12",
                 'txt' => 'text/plain'
-        );
+        ];
         if (isset($openXMLExtension[$ext])) {
             return $openXMLExtension[$ext];
         }

@@ -18,16 +18,16 @@ class DonneesFormulaireTest extends PastellTestCase
      */
     public function testPassword($password)
     {
-        $recuperateur = new Recuperateur(array('password' => $password));
+        $recuperateur = new Recuperateur(['password' => $password]);
         $this->getDonneesFormulaire()->saveTab($recuperateur, new FileUploader(), 0);
         $this->assertEquals($password, $this->getDonneesFormulaire()->get('password'));
     }
 
     public function getPassword()
     {
-        return array(
-                array('215900689B')
-        );
+        return [
+                ['215900689B']
+        ];
     }
 
     /*
@@ -82,7 +82,7 @@ class DonneesFormulaireTest extends PastellTestCase
         $file_path = $this->getObjectInstancier()->getInstance('workspacePath') . "/test.txt";
         file_put_contents($file_path, "texte");
 
-        $files = array('fichier_visible' => array('tmp_name' => $file_path,'error' => UPLOAD_ERR_OK,'name' => 'test.txt'));
+        $files = ['fichier_visible' => ['tmp_name' => $file_path,'error' => UPLOAD_ERR_OK,'name' => 'test.txt']];
 
         $fileUploader = new FileUploader();
         $fileUploader->setFiles($files);
@@ -98,7 +98,7 @@ class DonneesFormulaireTest extends PastellTestCase
         $file_path = $this->getObjectInstancier()->getInstance('workspacePath') . "/test.txt";
         file_put_contents($file_path, "texte");
 
-        $files = array('fichier_hidden' => array('tmp_name' => $file_path,'error' => UPLOAD_ERR_OK,'name' => 'test.txt'));
+        $files = ['fichier_hidden' => ['tmp_name' => $file_path,'error' => UPLOAD_ERR_OK,'name' => 'test.txt']];
 
         $fileUploader = new FileUploader();
         $fileUploader->setFiles($files);
@@ -115,7 +115,7 @@ class DonneesFormulaireTest extends PastellTestCase
         $file_path = $this->getObjectInstancier()->getInstance('workspacePath') . "/test.txt";
         file_put_contents($file_path, "foo");
 
-        $files = array('mon_fichier' => array('tmp_name' => $file_path,'error' => UPLOAD_ERR_OK,'name' => 'test.txt'));
+        $files = ['mon_fichier' => ['tmp_name' => $file_path,'error' => UPLOAD_ERR_OK,'name' => 'test.txt']];
 
         $fileUploader = new FileUploader();
         $fileUploader->setFiles($files);
@@ -220,7 +220,7 @@ class DonneesFormulaireTest extends PastellTestCase
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("Clé metadata absente du fichier");
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get("bar", "baz");
-        $donneesFormulaire->jsonImport(json_encode(array("foo" => "bar")));
+        $donneesFormulaire->jsonImport(json_encode(["foo" => "bar"]));
     }
 
     /**
@@ -229,7 +229,7 @@ class DonneesFormulaireTest extends PastellTestCase
     public function testImportFileNoFile()
     {
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get("bar", "baz");
-        $donneesFormulaire->jsonImport(json_encode(array("metadata" => array("fichier" => array(0 => "toto.txt")))));
+        $donneesFormulaire->jsonImport(json_encode(["metadata" => ["fichier" => [0 => "toto.txt"]]]));
         $this->assertEmpty($donneesFormulaire->getFileContent("fichier"));
         $this->assertEquals("toto.txt", $donneesFormulaire->getFileName("fichier"));
     }
@@ -260,7 +260,7 @@ class DonneesFormulaireTest extends PastellTestCase
     public function testGetFileNameWithoutExtension()
     {
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get("bar", "baz");
-        $donneesFormulaire->jsonImport(json_encode(array("metadata" => array("fichier" => array(0 => "toto.txt")))));
+        $donneesFormulaire->jsonImport(json_encode(["metadata" => ["fichier" => [0 => "toto.txt"]]]));
         $this->assertEquals("toto", $donneesFormulaire->getFileNameWithoutExtension("fichier"));
     }
 
@@ -293,7 +293,7 @@ class DonneesFormulaireTest extends PastellTestCase
 
     public function testEmptyForms()
     {
-        $documentType = new DocumentType("test", array());
+        $documentType = new DocumentType("test", []);
         $donneesFormulaire = new DonneesFormulaire("/tmp/toto.yml", $documentType);
         $donneesFormulaire->setDocumentIndexor(new DocumentIndexor(new DocumentIndexSQL($this->getSQLQuery()), '1'));
         $donneesFormulaire->saveTab(new Recuperateur(), new FileUploader(), 0);

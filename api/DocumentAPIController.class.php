@@ -125,7 +125,7 @@ class DocumentAPIController extends BaseAPIController
 
         $allDroitEntite = $this->getDroitService()->getAllDocumentLecture($this->getUtilisateurId(), $id_e);
 
-        $indexedFieldValue = array();
+        $indexedFieldValue = [];
         if ($type) {
             $this->checkDroit($id_e, "$type:lecture");
             $documentType = $this->documentTypeFactory->getFluxDocumentType($type);
@@ -260,7 +260,7 @@ class DocumentAPIController extends BaseAPIController
         }
 
         $max_execution_time = ini_get('max_execution_time');
-        $result = array();
+        $result = [];
         foreach ($all_id_d as $id_d) {
             ini_set('max_execution_time', $max_execution_time);
             $result[$id_d] = $this->internalDetail($id_e, $id_d);
@@ -516,8 +516,8 @@ class DocumentAPIController extends BaseAPIController
     public function actionAction($id_e, $id_d)
     {
         $action = $this->getFromQueryArgs(4);
-        $id_destinataire = $this->getFromRequest('id_destinataire', array());
-        $action_params = $this->getFromRequest('action_params', array());
+        $id_destinataire = $this->getFromRequest('id_destinataire', []);
+        $action_params = $this->getFromRequest('action_params', []);
 
         $document = $this->document;
         $info = $document->getInfo($id_d);
@@ -535,7 +535,7 @@ class DocumentAPIController extends BaseAPIController
         if (! $result) {
             throw new Exception($message);
         }
-        return array("result" => $result,"message" => $message);
+        return ["result" => $result,"message" => $message];
     }
 
     /**

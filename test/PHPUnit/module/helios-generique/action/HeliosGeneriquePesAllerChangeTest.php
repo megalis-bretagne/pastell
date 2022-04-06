@@ -9,7 +9,7 @@ class HeliosGeneriquePesAllerChangeTest extends PastellTestCase
     {
         $info = $this->getInternalAPI()->post(
             "/entite/1/document",
-            array('type' => 'helios-generique')
+            ['type' => 'helios-generique']
         );
 
         return $info['id_d'];
@@ -19,11 +19,11 @@ class HeliosGeneriquePesAllerChangeTest extends PastellTestCase
     {
         $this->getInternalAPI()->post(
             "/entite/1/document/$id_d/file/fichier_pes",
-            array(
+            [
                 'file_name' => self::FILENAME,
                 'file_content' =>
                     file_get_contents(__DIR__ . "/../fixtures/" . self::FILENAME)
-            )
+            ]
         );
         $actionExecutorFactory = $this->getObjectInstancier()->getInstance(ActionExecutorFactory::class);
         $actionExecutorFactory->executeOnDocument(1, 0, $id_d, 'fichier_pes_change');
@@ -45,9 +45,9 @@ class HeliosGeneriquePesAllerChangeTest extends PastellTestCase
 
         $this->getInternalAPI()->patch(
             "/entite/1/document/$id_d/",
-            array(
+            [
                     'objet' => self::OBJET
-                )
+                ]
         );
 
         $this->postPES($id_d);

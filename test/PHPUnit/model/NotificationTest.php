@@ -38,7 +38,7 @@ class NotificationTest extends PastellTestCase
     public function testGetNotificationActionList()
     {
         $this->notification->add(1, 1, 'actes-generique', 'send-tdt', false);
-        $info = $this->notification->getNotificationActionList(1, 1, 'actes-generique', array(array('id' => 'send-tdt')));
+        $info = $this->notification->getNotificationActionList(1, 1, 'actes-generique', [['id' => 'send-tdt']]);
         $this->assertEquals(1, $info[0]['checked']);
     }
 
@@ -65,7 +65,7 @@ class NotificationTest extends PastellTestCase
     {
         $this->notification->add(1, 1, 'actes-generique', 'send-tdt', false);
         $info = $this->notification->getMail(1, 'actes-generique', 'send-tdt');
-        $this->assertEquals(array("eric@sigmalis.com"), $info);
+        $this->assertEquals(["eric@sigmalis.com"], $info);
     }
 
     public function testRemoveAll()

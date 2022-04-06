@@ -82,7 +82,7 @@ class LDAPVerification extends Connecteur
 
         $result =  $this->ldapWrapper->ldap_search($ldap, $this->ldap_root, $filter);
         if (! $result ||  $this->ldapWrapper->ldap_count_entries($ldap, $result) < 1) {
-            return array();
+            return [];
         }
         $entries = $this->ldapWrapper->ldap_get_entries($ldap, $result);
         if (empty($entries[0]['dn'])) {
@@ -113,14 +113,14 @@ class LDAPVerification extends Connecteur
         if (!$filter) {
             $filter = "(objectClass=*)";
         }
-        $result = @ $this->ldapWrapper->ldap_search($ldap, $dn, $filter, array($this->ldap_login_attribute,'sn','mail','givenname'));
+        $result = @ $this->ldapWrapper->ldap_search($ldap, $dn, $filter, [$this->ldap_login_attribute,'sn','mail','givenname']);
 
         if ($result === false) {
             $error = $this->ldapWrapper->ldap_error($ldap);
             if ($error) {
                 throw new UnrecoverableException($error);
             }
-            return array();
+            return [];
         }
         if ($this->ldapWrapper->ldap_count_entries($ldap, $result) < 1) {
             throw new UnrecoverableException("Aucun utilisateur n'a été retourné");
@@ -146,7 +146,7 @@ class LDAPVerification extends Connecteur
     {
         $entries = $this->getAllUser();
         unset($entries['count']);
-        $result = array();
+        $result = [];
         foreach ($entries as $entry) {
             $login = $this->getAttribute($entry, $this->ldap_login_attribute);
             if (!$login) {
@@ -156,7 +156,7 @@ class LDAPVerification extends Connecteur
             $prenom = $this->getAttribute($entry, 'givenname');
             $nom = $this->getAttribute($entry, 'sn');
 
-            $ldap_info = array('login' => $login,'prenom' => $prenom,'nom' => $nom,'email' => $email);
+            $ldap_info = ['login' => $login,'prenom' => $prenom,'nom' => $nom,'email' => $email];
             $id_u = $utilisateur->getIdFromLogin($login);
             if (! $id_u) {
                 $ldap_info['create'] = true;

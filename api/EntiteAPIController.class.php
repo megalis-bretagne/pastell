@@ -45,17 +45,17 @@ class EntiteAPIController extends BaseAPIController
         $this->checkDroit($id_e, "entite:lecture");
 
         // Chargement des entités filles
-        $resultFille = array();
+        $resultFille = [];
         $entiteFille = $this->entiteSQL->getFille($id_e);
         if ($entiteFille) {
             //GDON : completer les TU pour passer dans la boucle.
             foreach ($entiteFille as $key => $valeur) {
-                $resultFille[$key] = array('id_e' => $valeur['id_e']);
+                $resultFille[$key] = ['id_e' => $valeur['id_e']];
             }
         }
 
         // Construction du tableau resultat
-        $result = array();
+        $result = [];
         $result['id_e'] = $infoEntite['id_e'];
         $result['denomination'] = $infoEntite['denomination'];
         $result['siren'] = $infoEntite['siren'];
@@ -154,7 +154,7 @@ class EntiteAPIController extends BaseAPIController
         if (!$nom) {
             throw new Exception("Le nom (denomination) est obligatoire");
         }
-        if (! in_array($type, array(Entite::TYPE_SERVICE,Entite::TYPE_CENTRE_DE_GESTION,Entite::TYPE_COLLECTIVITE))) {
+        if (! in_array($type, [Entite::TYPE_SERVICE,Entite::TYPE_CENTRE_DE_GESTION,Entite::TYPE_COLLECTIVITE])) {
             throw new Exception("Le type d'entité doit être renseigné. Les valeurs possibles sont collectivite, service ou centre_de_gestion.");
         }
 

@@ -26,7 +26,7 @@ class CASAuthentication extends AuthenticationConnecteur
         phpCAS::client(CAS_VERSION_2_0, $this->host, intval($this->port), $this->context);
         phpCAS::setCasServerCACert($this->ca_file);
         if ($this->proxy) {
-            phpCAS::allowProxyChain(new CAS_ProxyChain(array($this->proxy)));
+            phpCAS::allowProxyChain(new CAS_ProxyChain([$this->proxy]));
         }
     }
 

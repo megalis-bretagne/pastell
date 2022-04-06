@@ -17,7 +17,7 @@ class TdtTypologieChangeByApi extends ConnecteurTypeActionExecutor
     public function go()
     {
 
-        $result = array();
+        $result = [];
 
         $type_acte_element = $this->getMappingValue('type_acte');
         $type_pj_element = $this->getMappingValue('type_pj');
@@ -68,7 +68,7 @@ class TdtTypologieChangeByApi extends ConnecteurTypeActionExecutor
      */
     public function displayAPI()
     {
-        $result = array();
+        $result = [];
 
         $id_ce = $this->getConnecteurFactory()->getConnecteurId(
             $this->id_e,

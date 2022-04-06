@@ -41,9 +41,9 @@ function integre_extension($ext)
     }
 
     // integration de l'extension $ext à pastell
-    $post_data = array(
+    $post_data = [
         'path' => $dir . "/" . $ext,
-    );
+    ];
     $retour = pastell_api($url, $post_data);
     $info .= "Integration de l'extension " . $ext . ": ";
 

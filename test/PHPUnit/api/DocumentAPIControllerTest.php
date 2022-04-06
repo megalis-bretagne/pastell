@@ -57,7 +57,7 @@ class DocumentAPIControllerTest extends PastellTestCase
     public function testRechercheIndexedField()
     {
         $id_d = $this->createTestDocument();
-        $this->getInternalAPI()->patch("entite/1/document/$id_d", array('test1' => 'toto'));
+        $this->getInternalAPI()->patch("entite/1/document/$id_d", ['test1' => 'toto']);
         $list = $this->getInternalAPI()->get("entite/1/document?test1=toto");
         $this->assertEquals($id_d, $list[0]['id_d']);
     }
@@ -65,7 +65,7 @@ class DocumentAPIControllerTest extends PastellTestCase
     public function testRechercheIndexedDateField()
     {
         $id_d = $this->createTestDocument();
-        $this->getInternalAPI()->patch("entite/1/document/$id_d", array('date_indexed' => '2001-09-11'));
+        $this->getInternalAPI()->patch("entite/1/document/$id_d", ['date_indexed' => '2001-09-11']);
         $list = $this->getInternalAPI()->get("entite/1/document?type=test&date_in_fr=true&date_indexed=2001-09-11");
         $this->assertEquals($id_d, $list[0]['id_d']);
     }
@@ -91,7 +91,7 @@ class DocumentAPIControllerTest extends PastellTestCase
         $id_d = $this->createTestDocument();
         $info = $this->getInternalAPI()->patch(
             "entite/1/document/$id_d/externalData/test_external_data",
-            array('choix' => 'foo')
+            ['choix' => 'foo']
         );
         $this->assertEquals('foo', $info['data']['test_external_data']);
     }
@@ -103,14 +103,14 @@ class DocumentAPIControllerTest extends PastellTestCase
         $this->expectExceptionMessage("Type test_external_data_not_existing introuvable");
         $this->getInternalAPI()->patch(
             "entite/1/document/$id_d/externalData/test_external_data_not_existing",
-            array('choix' => 'foo')
+            ['choix' => 'foo']
         );
     }
 
     public function testEditAction()
     {
         $id_d = $this->createTestDocument();
-        $info = $this->getInternalAPI()->patch("entite/1/document/$id_d", array('test1' => 'toto'));
+        $info = $this->getInternalAPI()->patch("entite/1/document/$id_d", ['test1' => 'toto']);
         $this->assertEquals("toto", $info['content']['data']['test1']);
     }
 
@@ -118,10 +118,10 @@ class DocumentAPIControllerTest extends PastellTestCase
     {
         $info = $this->getInternalAPI()->post(
             "entite/1/document/$id_d/file/fichier/$fileNumber",
-            array(
+            [
                 'file_name' => 'toto.txt',
                 'file_content' => 'xxxx'
-            )
+            ]
         );
         return $info;
     }
@@ -169,7 +169,7 @@ class DocumentAPIControllerTest extends PastellTestCase
     public function testEditOnChange()
     {
         $id_d = $this->createTestDocument();
-        $info = $this->getInternalAPI()->patch("entite/1/document/$id_d", array('test_on_change' => 'foo'));
+        $info = $this->getInternalAPI()->patch("entite/1/document/$id_d", ['test_on_change' => 'foo']);
         $this->assertEquals("foo", $info['content']['data']['test2']);
     }
 
@@ -180,7 +180,7 @@ class DocumentAPIControllerTest extends PastellTestCase
 
         $id_d = $this->createTestDocument();
         $this->getInternalAPI()->post("entite/1/document/$id_d/action/no-way");
-        $this->getInternalAPI()->patch("entite/1/document/$id_d", array('test2' => 'ok'));
+        $this->getInternalAPI()->patch("entite/1/document/$id_d", ['test2' => 'ok']);
     }
 
     public function testRecuperationFichier()
@@ -227,21 +227,21 @@ class DocumentAPIControllerTest extends PastellTestCase
 
     public function testCount()
     {
-        $this->getInternalAPI()->post("entite/1/document", array('type' => 'actes-generique'));
-        $info = $this->getInternalAPI()->get("document/count", array('id_e' => 1,'type' => 'actes-generique'));
+        $this->getInternalAPI()->post("entite/1/document", ['type' => 'actes-generique']);
+        $info = $this->getInternalAPI()->get("document/count", ['id_e' => 1,'type' => 'actes-generique']);
         $this->assertEquals(
-            array (
+            [
             1 =>
-                array (
+                 [
                     'flux' =>
-                        array (
+                         [
                             'actes-generique' =>
-                                array (
+                                 [
                                     'creation' => '1',
-                                ),
-                        ),
+                                ],
+                        ],
                     'info' =>
-                        array (
+                         [
                             'id_e' => '1',
                             'type' => 'collectivite',
                             'denomination' => 'Bourg-en-Bresse',
@@ -251,9 +251,9 @@ class DocumentAPIControllerTest extends PastellTestCase
                             'entite_mere' => '0',
                             'centre_de_gestion' => '0',
                             'is_active' => '1',
-                        ),
-                ),
-            ),
+                        ],
+                ],
+             ],
             $info
         );
     }
@@ -363,22 +363,21 @@ class DocumentAPIControllerTest extends PastellTestCase
         $info['email_info'][0]['date_envoie'] = "NOT TESTABLE";
 
         $this->assertEquals(
-            array (
+            [
                 'info' =>
-                    array (
+                     [
                         'id_d' => 'NOT TESTABLE',
                         'type' => 'mailsec-bidir',
                         'titre' => '',
                         'creation' => 'NOT TESTABLE',
                         'modification' => 'NOT TESTABLE',
-                    ),
+                    ],
                 'data' =>
-                    array (
-                    ),
+                     [],
                 'email_info' =>
-                    array (
+                     [
                         0 =>
-                            array (
+                             [
                                 'id_de' => '1',
                                 'id_d' => 'NOT TESTABLE',
                                 'email' => 'foo@bar.com',
@@ -391,35 +390,35 @@ class DocumentAPIControllerTest extends PastellTestCase
                                 'reponse' => '',
                                 'has_error' => '0',
                                 'last_error' => '',
-                            ),
-                    ),
+                            ],
+                    ],
                 'email_reponse' =>
-                    array (
+                     [
                         1 =>
-                            array (
+                             [
                                 'id_de' => '1',
                                 'id_d_reponse' => $id_d_reponse,
                                 'is_lu' => '0',
                                 'titre' => '',
-                            ),
-                    ),
+                            ],
+                    ],
                 'action_possible' =>
-                    array (
+                     [
                         0 => 'modification',
                         1 => 'supression',
-                    ),
+                    ],
                 'action-possible' =>
-                    array (
+                     [
                         0 => 'modification',
                         1 => 'supression',
-                    ),
+                    ],
                 'last_action' =>
-                    array (
+                     [
                         'action' => 'creation',
                         'message' => 'Création du document',
                         'date' => 'NOT TESTABLE',
-                    ),
-            ),
+                    ],
+             ],
             $info
         );
     }

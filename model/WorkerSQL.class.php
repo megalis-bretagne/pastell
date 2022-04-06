@@ -48,7 +48,7 @@ class WorkerSQL extends SQL
     public function getJobToLaunch($limit)
     {
         if ($limit <= 0) {
-            return array();
+            return [];
         }
         $sql = "SELECT job_queue.id_job,next_try FROM job_queue " .
             " LEFT JOIN worker ON job_queue.id_job=worker.id_job AND worker.termine=0" .
@@ -130,7 +130,7 @@ class WorkerSQL extends SQL
 
     public function getJobListWithWorker($offset = 0, $limit = 20, $filtre = "")
     {
-        if (! in_array($filtre, array("lock","actif","wait"))) {
+        if (! in_array($filtre, ["lock","actif","wait"])) {
             $filtre = "";
         }
 

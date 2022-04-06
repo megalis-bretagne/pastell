@@ -29,7 +29,7 @@
 <?php foreach ($listGroupe as $groupe) :
     $nbUtilisateur = $annuaireGroupe->getNbUtilisateur($groupe['id_g']);
     $utilisateur = $annuaireGroupe->getUtilisateur($groupe['id_g'], 0, 3);
-    $r = array();
+    $r = [];
     foreach ($utilisateur as $u) {
         $r[] = htmlentities('"' . $u['description'] . '"' . " <" . $u['email'] . ">", ENT_QUOTES, "utf-8");
     }
@@ -99,7 +99,7 @@
     <?php foreach ($groupe_herited as $groupe) :
         $nbUtilisateur = $annuaireGroupe->getNbUtilisateur($groupe['id_g']);
         $utilisateur = $annuaireGroupe->getUtilisateur($groupe['id_g']);
-        $r = array();
+        $r = [];
         foreach ($utilisateur as $u) {
             $r[] = htmlentities('"' . $u['description'] . '"' . " <" . $u['email'] . ">", ENT_QUOTES, "utf-8");
         }

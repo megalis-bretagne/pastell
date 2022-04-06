@@ -104,7 +104,7 @@ class RoleUtilisateur extends SQL
 
     public function getAllDocumentLecture($id_u, $id_e)
     {
-        $liste_type = array();
+        $liste_type = [];
         $allDroit = $this->getAllDroitEntite($id_u, $id_e);
         foreach ($allDroit as $droit) {
             if (preg_match('/^(.*):lecture$/', $droit, $result)) {
@@ -122,7 +122,7 @@ class RoleUtilisateur extends SQL
         if ($result) {
             return $result;
         }
-        $allDroit[$id_u . "-" . $id_e] = array();
+        $allDroit[$id_u . "-" . $id_e] = [];
         $sql = "SELECT droit FROM entite_ancetre " .
             " JOIN utilisateur_role ON entite_ancetre.id_e_ancetre = utilisateur_role.id_e " .
             " JOIN role_droit ON utilisateur_role.role=role_droit.role " .
@@ -157,7 +157,7 @@ class RoleUtilisateur extends SQL
             return $result;
         }
         if (! isset($allDroit[$id_u])) {
-            $allDroit[$id_u] = array();
+            $allDroit[$id_u] = [];
             $sql = "SELECT droit FROM  utilisateur_role " .
             " JOIN role_droit ON utilisateur_role.role=role_droit.role " .
             " WHERE  utilisateur_role.id_u=? ";
@@ -196,7 +196,7 @@ class RoleUtilisateur extends SQL
 
     private function linearizeTabRecursif($id_e, &$all, $profondeur)
     {
-        $result = array();
+        $result = [];
         if (empty($all[$id_e])) {
             $id_e = array_keys($all)[0];
         }
@@ -249,14 +249,14 @@ class RoleUtilisateur extends SQL
                 " JOIN entite ON entite_ancetre.id_e=entite.id_e " .
                 " WHERE utilisateur_role.id_u=? AND droit=? " .
                 " ORDER BY entite_mere,denomination";
-                $result = array();
+                $result = [];
         $db_result = $this->query($sql, $id_u, $droit);
 
         foreach ($db_result as $line) {
-            $result[$line['entite_mere']][] = array(
+            $result[$line['entite_mere']][] = [
                                                 'id_e' => $line['id_e'],
                                                 'denomination' => $line['denomination'],
-                                                );
+                                                ];
         }
         return $this->linearizeTab($result);
     }
@@ -279,7 +279,7 @@ class RoleUtilisateur extends SQL
                 " JOIN role_droit ON utilisateur_role.role=role_droit.role " .
                 " LEFT JOIN entite ON utilisateur_role.id_e=entite.id_e " .
                 " WHERE id_u = ?  AND droit=? ";
-        $result = array();
+        $result = [];
         foreach ($this->query($sql, $id_u, $droit) as $line) {
             $result[] = $line['id_e'];
         }
@@ -293,7 +293,7 @@ class RoleUtilisateur extends SQL
                 " JOIN role_droit ON utilisateur_role.role=role_droit.role " .
                 " LEFT JOIN entite ON utilisateur_role.id_e=entite.id_e " .
                 " WHERE id_u = ?  ";
-        $result = array();
+        $result = [];
         foreach ($this->query($sql, $id_u) as $line) {
             $result[] = $line['id_e'];
         };

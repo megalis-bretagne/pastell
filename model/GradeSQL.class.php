@@ -37,7 +37,7 @@ class GradeSQL extends SQL
 
     public function getAll()
     {
-        $result = array();
+        $result = [];
         $sql = "SELECT filiere,cadre_emploi,libelle FROM grade ORDER BY filiere,cadre_emploi,libelle";
         foreach ($this->query($sql) as $line) {
             $result[$line['filiere']][$line['cadre_emploi']][] = $line['libelle'];

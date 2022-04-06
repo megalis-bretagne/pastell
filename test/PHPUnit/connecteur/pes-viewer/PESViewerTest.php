@@ -25,8 +25,7 @@ Set-Cookie: JSESSIONID=B7537D7BA5DF6F2875F010AE449F5E6E; Max-Age=900; Expires=We
         ], 302);
 
         $info = $this->createConnector('pes-viewer', "PES Viewer", 0);
-        $this->configureConnector($info['id_ce'], [
-        ], 0);
+        $this->configureConnector($info['id_ce'], [], 0);
 
         /** @var PESViewer $pesViewer */
         $pesViewer = $this->getConnecteurFactory()->getConnecteurById($info['id_ce']);

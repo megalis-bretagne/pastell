@@ -102,7 +102,7 @@ class EntiteSQL extends SQL
     {
         $result = $this->getInfo($id_e);
         $cdg_id_e = $this->getCDG($id_e);
-        $result['cdg'] = array();
+        $result['cdg'] = [];
         if ($cdg_id_e) {
             $result['cdg'] = $this->getInfo($cdg_id_e) ;
         }
@@ -134,15 +134,15 @@ class EntiteSQL extends SQL
         return $children;
     }
 
-    public function getFilleInfoNavigation($id_e, array $liste_collectivite = array())
+    public function getFilleInfoNavigation($id_e, array $liste_collectivite = [])
     {
         if ($id_e != 0 || ! $liste_collectivite || ($liste_collectivite[0] == 0)) {
             return $this->getNavigationFilleWithType(
                 $id_e,
-                array(Entite::TYPE_COLLECTIVITE,Entite::TYPE_CENTRE_DE_GESTION,Entite::TYPE_SERVICE)
+                [Entite::TYPE_COLLECTIVITE,Entite::TYPE_CENTRE_DE_GESTION,Entite::TYPE_SERVICE]
             );
         }
-        $liste_fille = array();
+        $liste_fille = [];
 
         foreach ($liste_collectivite as $id_e_fille) {
             $info_fille = $this->getInfo($id_e_fille);
@@ -170,7 +170,7 @@ class EntiteSQL extends SQL
     {
         $ancetre = $this->getAncetre($id_e);
         array_pop($ancetre);
-        $result = array(0);
+        $result = [0];
         foreach ($ancetre as $entite) {
             $result[] = $entite['id_e'];
         }
@@ -201,7 +201,7 @@ class EntiteSQL extends SQL
             return $all_ancetre;
         }
 
-        $allParent = array();
+        $allParent = [];
         foreach ($all_ancetre as $parent) {
             $allParent[] = $parent['id_e'];
         }

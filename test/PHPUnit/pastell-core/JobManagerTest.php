@@ -42,7 +42,7 @@ class JobManagerTest extends PastellTestCase
 
     public function testSetJobForDocument()
     {
-        $info = $this->getInternalAPI()->post("Entite/1/Document", array('type' => 'test'));
+        $info = $this->getInternalAPI()->post("Entite/1/Document", ['type' => 'test']);
         $id_d = $info['info']['id_d'];
         $this->getInternalAPI()->post("Entite/1/Document/$id_d/action/action-auto");
         $id_job = $this->jobQueueSQL->getJobIdForDocument(1, $id_d);
@@ -61,7 +61,7 @@ class JobManagerTest extends PastellTestCase
 
     public function testSetJobForTraitementLot()
     {
-        $info = $this->getInternalAPI()->post("Entite/1/Document", array('type' => 'test'));
+        $info = $this->getInternalAPI()->post("Entite/1/Document", ['type' => 'test']);
         $id_d = $info['info']['id_d'];
         $id_job = $this->jobManager->setTraitementLot(1, $id_d, 0, 'ok');
         $job = $this->jobQueueSQL->getJob($id_job);
@@ -71,7 +71,7 @@ class JobManagerTest extends PastellTestCase
 
     public function testJobEnding()
     {
-        $info = $this->getInternalAPI()->post("Entite/1/Document", array('type' => 'test'));
+        $info = $this->getInternalAPI()->post("Entite/1/Document", ['type' => 'test']);
         $id_d = $info['info']['id_d'];
         $this->getInternalAPI()->post("Entite/1/Document/$id_d/action/action-auto");
         $this->getInternalAPI()->post("Entite/1/Document/$id_d/action/action-auto-end");
@@ -88,7 +88,7 @@ class JobManagerTest extends PastellTestCase
 
     public function testHasActionProgramme()
     {
-        $info = $this->getInternalAPI()->post("Entite/1/Document", array('type' => 'test'));
+        $info = $this->getInternalAPI()->post("Entite/1/Document", ['type' => 'test']);
         $id_d = $info['info']['id_d'];
         $this->jobManager->setTraitementLot(1, $id_d, 0, 'ok');
         $this->assertTrue($this->jobManager->hasActionProgramme(1, $id_d));
@@ -104,7 +104,7 @@ class JobManagerTest extends PastellTestCase
 
     public function testChainedAction()
     {
-        $info = $this->getInternalAPI()->post("Entite/1/Document", array('type' => 'test'));
+        $info = $this->getInternalAPI()->post("Entite/1/Document", ['type' => 'test']);
         $id_d = $info['info']['id_d'];
         $this->getInternalAPI()->post("Entite/1/Document/$id_d/action/chained-action-1");
         $this->getInternalAPI()->post("Entite/1/Document/$id_d/action/chained-action-2");
@@ -121,7 +121,7 @@ class JobManagerTest extends PastellTestCase
         foreach ($connecteurFrequenceSQL->getAll() as $connecteurFrequence) {
             $connecteurFrequenceSQL->delete($connecteurFrequence->id_cf);
         }
-        $info = $this->getInternalAPI()->post("Entite/1/Document", array('type' => 'test'));
+        $info = $this->getInternalAPI()->post("Entite/1/Document", ['type' => 'test']);
         $id_d = $info['info']['id_d'];
         $this->jobManager->setTraitementLot(1, $id_d, 0, 'ok');
         $id_job = $this->jobQueueSQL->getJobIdForDocument(1, $id_d);
@@ -204,7 +204,7 @@ class JobManagerTest extends PastellTestCase
 
     public function testsetTraitementParLotBulk()
     {
-        $info = $this->getInternalAPI()->post("Entite/1/Document", array('type' => 'test'));
+        $info = $this->getInternalAPI()->post("Entite/1/Document", ['type' => 'test']);
 
         $id_d = $info['info']['id_d'];
         $this->getInternalAPI()->post("Entite/1/Document/$id_d/action/to-never-ending-action");

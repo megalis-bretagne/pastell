@@ -18,11 +18,11 @@ class TypeDossierImportServiceTest extends PastellTestCase
         $result = $typeDossierImportService->import(file_get_contents(self::FIXTURE_FILE));
         unset($result[TypeDossierUtilService::TIMESTAMP]);
         $this->assertEquals(
-            array (
+            [
                 'id_t' => '1',
                 'id_type_dossier' =>  self::ID_TYPE_DOSSIER,
                 'orig_id_type_dossier' => self::ID_TYPE_DOSSIER,
-            ),
+             ],
             $result
         );
     }
@@ -59,11 +59,11 @@ class TypeDossierImportServiceTest extends PastellTestCase
         $result = $typeDossierImportService->import(file_get_contents(self::FIXTURE_FILE));
         unset($result[TypeDossierUtilService::TIMESTAMP]);
         $this->assertEquals(
-            array (
+            [
                 'id_t' => '2',
                 'id_type_dossier' => 'arrete-rh-1',
                 'orig_id_type_dossier' => self::ID_TYPE_DOSSIER,
-            ),
+             ],
             $result
         );
     }

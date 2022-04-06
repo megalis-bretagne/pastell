@@ -32,16 +32,18 @@ class Entite extends SQL
 
     public static function getAllType()
     {
-        return array(self::TYPE_COLLECTIVITE => "Collectivité",
+        return [
+        self::TYPE_COLLECTIVITE => "Collectivité",
                             self::TYPE_FOURNISSEUR => "Fournisseur",
                             self::TYPE_CENTRE_DE_GESTION => "Centre de gestion",
                             self::TYPE_SERVICE => 'Service',
-                            self::TYPE_CITOYEN => 'Citoyen');
+                            self::TYPE_CITOYEN => 'Citoyen'
+        ];
     }
 
     public static function getChaineEtat($etat)
     {
-        $strEtat = array("Initié","En cours de validation","Validé", "Refusé","Suspendu");
+        $strEtat = ["Initié","En cours de validation","Validé", "Refusé","Suspendu"];
         return $strEtat[$etat];
     }
 
@@ -82,7 +84,7 @@ class Entite extends SQL
     {
         $result = $this->getInfo();
         $cdg_id_e = $this->getCDG();
-        $result['cdg'] = array();
+        $result['cdg'] = [];
         if ($cdg_id_e) {
             $result['cdg'] = $this->getInfoWithId($cdg_id_e) ;
         }
@@ -153,7 +155,7 @@ class Entite extends SQL
     {
         $sql = "SELECT id_e FROM entite_ancetre WHERE id_e_ancetre=?";
         $r = $this->query($sql, $id_e);
-        $result = array();
+        $result = [];
         foreach ($r as $entite) {
             $result[] = $entite['id_e'];
         }
@@ -176,7 +178,7 @@ class Entite extends SQL
     {
         $ancetre = $this->getAncetre();
         array_pop($ancetre);
-        $result = array(0);
+        $result = [0];
         foreach ($ancetre as $entite) {
             $result[] = $entite['id_e'];
         }

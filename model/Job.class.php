@@ -53,7 +53,7 @@ class Job
 
     public function isTypeOK()
     {
-        return in_array($this->type, array(Job::TYPE_CONNECTEUR,Job::TYPE_DOCUMENT,self::TYPE_TRAITEMENT_LOT));
+        return in_array($this->type, [Job::TYPE_CONNECTEUR,Job::TYPE_DOCUMENT,self::TYPE_TRAITEMENT_LOT]);
     }
 
     public function getLastMessage()

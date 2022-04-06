@@ -112,7 +112,7 @@ class ModificationAction extends ActionExecutor
         $last_action = $this->getDocumentActionEntite()->getLastActionNotModif($id_e, $id_d);
         $editable_content = $this->getDocumentTypeFactory()->getFluxDocumentType($type_document)->getAction()->getEditableContent($last_action);
 
-        if ((! in_array($last_action, array("creation","modification"))) && ! $editable_content) {
+        if ((! in_array($last_action, ["creation","modification"])) && ! $editable_content) {
             throw new ForbiddenException("Ce document n'est pas modifiable");
         }
 

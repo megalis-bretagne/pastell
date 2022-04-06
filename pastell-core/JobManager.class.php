@@ -203,7 +203,7 @@ class JobManager
         $all_flux = $this->fluxEntiteSQL->getFluxByConnecteur($connecteur_info['id_ce']);
         $connecteurFrequence = $this->getConnecteurFrequenceByIdCe($id_ce);
 
-        $connecteurFrequenceByFlux = array();
+        $connecteurFrequenceByFlux = [];
 
         if ($connecteurFrequence->type_connecteur == ConnecteurFrequence::TYPE_ENTITE) {
             foreach ($all_flux as $flux) {

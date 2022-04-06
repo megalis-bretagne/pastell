@@ -28,7 +28,7 @@ class DocumentActionSQL extends SQL
     {
         $sql = "SELECT * FROM document_action " .
                " WHERE id_d=? AND id_e=?";
-        $params = array($id_d, $id_e);
+        $params = [$id_d, $id_e];
         if ($action) {
             $sql .= " AND action=?";
             $params[] = $action;

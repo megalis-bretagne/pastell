@@ -16,7 +16,7 @@ class EntiteListe extends SQL
 
     public function getAll($type)
     {
-        $param = array($type);
+        $param = [$type];
 
         $sql = "SELECT * FROM entite WHERE type=? " ;
         if ($this->recherche) {

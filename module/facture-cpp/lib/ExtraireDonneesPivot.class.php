@@ -26,7 +26,7 @@ class ExtraireDonneesPivot
         }
         $fournisseur = $xml->{'CPPFactures'}->{'CPPFacturePivotUnitaire'}->{'Fournisseur'};
 
-        return array(
+        return [
             'fournisseur_type_id' => strval($fournisseur->TypeIdentifiant), // ref flux pivot
             'type_identifiant'  => strval($fournisseur->TypeIdentifiant), // ref flux cpp
             'fournisseur' => strval($fournisseur->Identifiant),
@@ -36,7 +36,7 @@ class ExtraireDonneesPivot
             'fournisseur_ref_bancaire_compte' => strval($fournisseur->ReferenceBancaire->Compte),
             'fournisseur_ref_bancaire_etablissement' => strval($fournisseur->ReferenceBancaire->Etablissement),
             'fournisseur_mode_emission' => strval($fournisseur->ModeEmission),
-        );
+        ];
     }
 
     /**
@@ -56,11 +56,11 @@ class ExtraireDonneesPivot
         }
         $debiteur = $xml->{'CPPFactures'}->{'CPPFacturePivotUnitaire'}->{'Debiteur'};
 
-        return array(
+        return [
             'siret' => strval($debiteur->Identifiant),
             'destinataire_nom' => strval($debiteur->Nom),
             'service_destinataire_code' => strval($debiteur->CodeService),
-        );
+        ];
     }
 
     /**
@@ -80,7 +80,7 @@ class ExtraireDonneesPivot
         }
         $donnees_facture = $xml->{'CPPFactures'}->{'CPPFacturePivotUnitaire'}->{'DonneesFacture'};
 
-        return array(
+        return [
             'no_facture' => strval($donnees_facture->Id),
             'facture_type' => strval($donnees_facture->Type), // ref flux pivot
             'type_facture' => strval($donnees_facture->Type), // ref flux cpp
@@ -95,7 +95,7 @@ class ExtraireDonneesPivot
             'facture_montant_net' => strval($donnees_facture->Montants->MontantNetAPayer),
             'facture_numero_marche' => strval($donnees_facture->Engagement->NumeroMarche),
             'facture_numero_engagement' => strval($donnees_facture->Engagement->NumeroEngagement),
-        );
+        ];
     }
 
     /**

@@ -29,7 +29,7 @@ class Action
 
     private $tabAction;
 
-    public function __construct(array $tabAction = array())
+    public function __construct(array $tabAction = [])
     {
         $this->tabAction = $tabAction;
     }
@@ -65,7 +65,7 @@ class Action
     private function getActionArray($action_internal_name)
     {
         if (! isset($this->tabAction[$action_internal_name])) {
-            return array();
+            return [];
         }
         return $this->tabAction[$action_internal_name];
     }
@@ -74,7 +74,7 @@ class Action
     {
         $tabAction = $this->getActionArray($action_internal_name);
         if (empty($tabAction[self::ACTION_RULE])) {
-            return array();
+            return [];
         }
         return $tabAction[self::ACTION_RULE];
     }
@@ -114,7 +114,7 @@ class Action
 
     public function getAutoAction()
     {
-        $result = array();
+        $result = [];
         foreach ($this->getAll() as $actionName) {
             $autoClass = $this->getProperties($actionName, self::ACTION_AUTOMATIQUE);
             if ($autoClass) {
@@ -139,7 +139,7 @@ class Action
 
     public function getWorkflowAction()
     {
-        $result = array();
+        $result = [];
         foreach ($this->getAll() as $actionName) {
             $no_workflow = $this->getProperties($actionName, self::NO_WORKFLOW);
             if (! $no_workflow) {
@@ -156,9 +156,9 @@ class Action
 
     public function getActionWithNotificationPossible()
     {
-        $result = array();
+        $result = [];
         foreach ($this->getWorkflowAction() as $id => $name) {
-            $result[] = array('id' => $id,'action_name' => $name);
+            $result[] = ['id' => $id,'action_name' => $name];
         }
         return $result;
     }
@@ -170,7 +170,7 @@ class Action
 
     public function getAllDroit()
     {
-        $all_droit = array();
+        $all_droit = [];
         foreach ($this->tabAction as $action_id => $properties) {
             if (empty($properties['rule'])) {
                 continue;
@@ -183,7 +183,7 @@ class Action
 
     private function getAllDroitRecusif($properties)
     {
-        $result = array();
+        $result = [];
         if (isset($properties['droit_id_u'])) {
             $result[] = $properties['droit_id_u'];
         }

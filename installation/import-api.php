@@ -21,13 +21,13 @@ $ymlLoader = new YMLLoader(new MemoryCacheNone());
 
 $data = $ymlLoader->getArray($yml_file);
 
-$global_data = array();
+$global_data = [];
 
 foreach ($data as $api_call => $post_data) {
     if (isset($post_data['input'])) {
         $input = $post_data['input'];
     } else {
-        $input = array();
+        $input = [];
     }
 
     foreach ($input as $key => $value) {

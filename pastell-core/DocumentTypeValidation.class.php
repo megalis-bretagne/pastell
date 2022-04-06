@@ -8,11 +8,11 @@ class DocumentTypeValidation
     private $module_definition;
     private $last_error;
 
-    private $list_pack = array();
-    private $connecteur_type_list = array();
-    private $entite_type_list = array();
-    private $action_class_list = array();
-    private $connecteur_type_action_class_list = array();
+    private $list_pack = [];
+    private $connecteur_type_list = [];
+    private $entite_type_list = [];
+    private $action_class_list = [];
+    private $connecteur_type_action_class_list = [];
 
 
     public function __construct(YMLLoader $yml_loader)
@@ -69,7 +69,7 @@ class DocumentTypeValidation
 
     public function validate($definition_file_path)
     {
-        $this->last_error = array();
+        $this->last_error = [];
 
         $typeDefinition = $this->yml_loader->getArray($definition_file_path);
         if (! is_array($typeDefinition)) {
@@ -108,7 +108,7 @@ class DocumentTypeValidation
         $all_champs_affiche = $this->getList($typeDefinition, 'champs-recherche-avancee');
         $all_element_name = $this->getAllElementIndexed($typeDefinition);
         foreach ($all_champs_affiche as $champs) {
-            if (in_array($champs, array('type','id_e','lastetat','last_state_begin','etatTransit','state_begin','search','tri'))) {
+            if (in_array($champs, ['type','id_e','lastetat','last_state_begin','etatTransit','state_begin','search','tri'])) {
                 continue;
             }
             if (in_array($champs, $all_element_name)) {
@@ -126,7 +126,7 @@ class DocumentTypeValidation
         $all_champs_affiche = $this->getList($typeDefinition, 'champs-affiches');
         $all_element_name = $this->getAllElementIndexed($typeDefinition);
         foreach ($all_champs_affiche as $champs) {
-            if (in_array($champs, array('titre','entite','dernier_etat','date_dernier_etat'))) {
+            if (in_array($champs, ['titre','entite','dernier_etat','date_dernier_etat'])) {
                 continue;
             }
             if (in_array($champs, $all_element_name)) {
@@ -208,7 +208,7 @@ class DocumentTypeValidation
     private function validateEditableContent($typeDefinition)
     {
         $all_element_name = $this->getAllElementName($typeDefinition);
-        $editable_content_list = array();
+        $editable_content_list = [];
         $all_action = $this->getList($typeDefinition, 'action');
         foreach ($all_action as $action) {
             if (empty($action['editable-content'])) {
@@ -275,7 +275,7 @@ class DocumentTypeValidation
 
     private function getAllElementName($typeDefinition)
     {
-        $result = array();
+        $result = [];
         foreach ($this->getList($typeDefinition, 'formulaire') as $onglet => $element_list) {
             if (! $element_list) {
                 $this->last_error[] = "formulaire:onglet: est vide";
@@ -291,7 +291,7 @@ class DocumentTypeValidation
 
     private function getAllElementIndexed($typeDefinition)
     {
-        $result = array();
+        $result = [];
         foreach ($this->getList($typeDefinition, 'formulaire') as $onglet => $element_list) {
             foreach ($element_list as $name => $prop) {
                 if (empty($prop['index'])) {
@@ -340,7 +340,7 @@ class DocumentTypeValidation
     private function getKeys(array $definition, $key_name)
     {
         if (empty($definition[$key_name])) {
-            return array();
+            return [];
         }
         return array_keys($definition[$key_name]);
     }
@@ -348,7 +348,7 @@ class DocumentTypeValidation
     private function getList(array $definition, $key_name)
     {
         if (empty($definition[$key_name])) {
-            return array();
+            return [];
         }
         return $definition[$key_name];
     }
@@ -434,9 +434,9 @@ class DocumentTypeValidation
     private function getActionPropertiesValue($typeDefinition, $properties_name)
     {
         if (empty($typeDefinition['action'])) {
-            return array();
+            return [];
         }
-        $properties_list = array();
+        $properties_list = [];
         foreach ($typeDefinition['action'] as $action_name => $action_properties) {
             if (empty($action_properties[$properties_name])) {
                 continue;
@@ -450,9 +450,9 @@ class DocumentTypeValidation
     private function getElementRuleValue($typeDefinition, $rule_name)
     {
         if (empty($typeDefinition['action'])) {
-            return array();
+            return [];
         }
-        $properties_list = array();
+        $properties_list = [];
         foreach ($typeDefinition['action'] as $action_name => $action_properties) {
             if (empty($action_properties['rule'])) {
                 continue;
@@ -467,10 +467,10 @@ class DocumentTypeValidation
 
     private function findRule(array $rule_array, $rule_name)
     {
-        $result = array();
+        $result = [];
         if (isset($rule_array[$rule_name])) {
             if (! is_array($rule_array[$rule_name])) {
-                $result = array($rule_array[$rule_name]);
+                $result = [$rule_array[$rule_name]];
             } else {
                 $result = $rule_array[$rule_name];
             }
@@ -489,9 +489,9 @@ class DocumentTypeValidation
     private function getElementPropertiesValue($typeDefinition, $properties)
     {
         if (empty($typeDefinition['formulaire'])) {
-            return array();
+            return [];
         }
-        $properties_list = array();
+        $properties_list = [];
         foreach ($typeDefinition['formulaire'] as $onglet => $formulaire_properties) {
             foreach ($formulaire_properties as $element_name => $element_properties) {
                 if (isset($element_properties[$properties])) {
@@ -531,7 +531,7 @@ class DocumentTypeValidation
         if (empty($typeDefinition['formulaire'])) {
             return true;
         }
-        $titre = array();
+        $titre = [];
         foreach ($typeDefinition['formulaire'] as $onglet => $formulaire_properties) {
             foreach ($formulaire_properties as $element_name => $element_properties) {
                 if (isset($element_properties['title'])) {

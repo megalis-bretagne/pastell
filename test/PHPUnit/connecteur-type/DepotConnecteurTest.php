@@ -57,7 +57,7 @@ class DepotConnecteurTest extends PastellTestCase
     {
         $this->DepotConnecteur
             ->method('listDirectory')
-            ->willReturn(array("mock"));
+            ->willReturn(["mock"]);
         $this->assertEquals('Contenu du répertoire : ["mock"]', $this->DepotConnecteur->testLecture());
     }
 

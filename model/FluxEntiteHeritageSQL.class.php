@@ -35,7 +35,7 @@ class FluxEntiteHeritageSQL extends SQL
                 if (isset($all_inherited[$flux])) {
                     $result[$flux] = $all_inherited[$flux];
                 } else {
-                    $result[$flux] = array();
+                    $result[$flux] = [];
                 }
                 $result[$flux]['inherited_flux'] = true;
             }
@@ -69,7 +69,7 @@ class FluxEntiteHeritageSQL extends SQL
                 if (isset($all_inherited[$flux])) {
                     $result[$flux] = $all_inherited[$flux];
                 } else {
-                    $result[$flux] = array();
+                    $result[$flux] = [];
                 }
                 $result[$flux]['inherited_flux'] = true;
             }

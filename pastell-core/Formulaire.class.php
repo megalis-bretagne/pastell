@@ -21,7 +21,7 @@ class Formulaire
         $this->formArray = $formulaireDefinition;
         $this->origFormArray = $this->formArray;
         $this->setTabNumber(0);
-        $this->fieldsList = array();
+        $this->fieldsList = [];
     }
 
     /**
@@ -30,7 +30,7 @@ class Formulaire
      */
     public function getOngletList()
     {
-        $result = array();
+        $result = [];
         foreach ($this->origFormArray as $name => $tab) {
             $result[] = $name;
         }
@@ -42,7 +42,7 @@ class Formulaire
      */
     public function getFieldsList()
     {
-        $fields = array();
+        $fields = [];
         foreach ($this->origFormArray as $name => $tab) {
             if (! $tab) {
                 continue;
@@ -62,9 +62,9 @@ class Formulaire
      */
     public function getFieldsForOnglet($ongletName)
     {
-        $fieldsList = array();
+        $fieldsList = [];
         if (empty($this->formArray[$ongletName])) {
-            return array();
+            return [];
         }
         foreach ($this->formArray[$ongletName] as $fieldName => $fieldProperties) {
             $fieldsList[] = $this->createField($fieldName, $fieldProperties);
@@ -79,7 +79,7 @@ class Formulaire
      */
     public function getFieldsForOngletList(array $ongletList)
     {
-        $fieldsList = array();
+        $fieldsList = [];
         foreach ($ongletList as $ongletName) {
             $fieldsList = array_merge($fieldsList, $this->getFieldsForOnglet($ongletName));
         }
@@ -123,7 +123,7 @@ class Formulaire
 
     public function getTab()
     {
-        $result = array();
+        $result = [];
         foreach ($this->formArray as $name => $tab) {
             $result[] = $name;
         }
@@ -143,7 +143,7 @@ class Formulaire
 
     public function getFields()
     {
-        $fields = array();
+        $fields = [];
         if (! $this->tabSelected) {
             return $fields;
         }
@@ -170,7 +170,7 @@ class Formulaire
      */
     public function getAllFieldsDisplayedFirst()
     {
-        $fields = array();
+        $fields = [];
         foreach ($this->origFormArray as $name => $tab) {
             if (! $tab) {
                 continue;
@@ -198,7 +198,7 @@ class Formulaire
      */
     public function getAllFields()
     {
-        $fields = array();
+        $fields = [];
 
         foreach ($this->formArray as $name => $tab) {
             if (! is_array($tab)) {
@@ -216,7 +216,7 @@ class Formulaire
 
     public function getIndexedFields()
     {
-        $result = array();
+        $result = [];
         foreach ($this->getAllFields() as $fields) {
             if ($fields->isIndexed()) {
                 $result[$fields->getName()] = $fields->getLibelle();

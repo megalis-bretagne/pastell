@@ -17,7 +17,7 @@ class RoleControler extends PastellControler
         $this->verifDroit(0, "role:lecture");
         $this->setViewParameter('allRole', $this->getRoleSQL()->getAllRole());
         if ($this->hasDroit(0, "role:edition")) {
-            $this->setViewParameter('nouveau_bouton_url', array("Ajouter" => "Role/edition"));
+            $this->setViewParameter('nouveau_bouton_url', ["Ajouter" => "Role/edition"]);
         }
         $this->setViewParameter('page_title', "Rôles");
         $this->setViewParameter('template_milieu', "RoleIndex");
@@ -53,7 +53,7 @@ class RoleControler extends PastellControler
             $this->setViewParameter('role_info', $this->getRoleSQL()->getInfo($role));
         } else {
             $this->setViewParameter('page_title', "Ajout d'un rôle");
-            $this->setViewParameter('role_info', array('libelle' => '','role' => ''));
+            $this->setViewParameter('role_info', ['libelle' => '','role' => '']);
         }
         $this->setViewParameter('template_milieu', "RoleEdition");
         $this->renderDefault();
@@ -88,7 +88,7 @@ class RoleControler extends PastellControler
     {
         $this->verifDroit(0, "role:edition");
         $role = $this->getPostInfo()->get('role');
-        $droit = $this->getPostInfo()->get('droit', array());
+        $droit = $this->getPostInfo()->get('droit', []);
         $this->getRoleSQL()->updateDroit($role, $droit);
         $this->setLastMessage("Le rôle $role a été mis à jour");
         $this->redirect("/Role/detail?role=$role");

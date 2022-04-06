@@ -86,7 +86,7 @@ $this->render("DonneesFormulaireDetail");
 <?php
 $infoDocumentEmail = $documentEmail->getInfo($id_d);
 if ($infoDocumentEmail) :
-    $reponse_column = array();
+    $reponse_column = [];
     foreach ($infoDocumentEmail as $i => $infoEmail) {
         if ($infoEmail['reponse']) {
             $reponse = json_decode($infoEmail['reponse']);

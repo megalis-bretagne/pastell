@@ -11,7 +11,7 @@ class ActionPossibleTest extends PastellTestCase
     {
         parent::setUp();
         $this->actionPossible = $this->getObjectInstancier()->getInstance(ActionPossible::class);
-        $info = $this->getInternalAPI()->post("entite/1/document/", array("type" => "test"));
+        $info = $this->getInternalAPI()->post("entite/1/document/", ["type" => "test"]);
         $this->id_d = $info['id_d'];
     }
 
@@ -48,7 +48,7 @@ class ActionPossibleTest extends PastellTestCase
      */
     public function testGetLastBadRule()
     {
-        $info = $this->getInternalAPI()->post("entite/1/document/", array("type" => "actes-generique"));
+        $info = $this->getInternalAPI()->post("entite/1/document/", ["type" => "actes-generique"]);
         $id_d = $info['id_d'];
         $this->assertFalse($this->actionPossible->isActionPossible(1, 1, $id_d, 'send-tdt'));
         $this->assertEquals("document_is_valide n'est pas vérifiée", $this->actionPossible->getLastBadRule());

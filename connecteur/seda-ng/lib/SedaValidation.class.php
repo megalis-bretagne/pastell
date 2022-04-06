@@ -14,10 +14,10 @@ class SedaValidation
 
     public function getSchemaPath($xmlns)
     {
-        $all_schema = array (
+        $all_schema =  [
             self::SEDA_V_0_2_NS => __DIR__ . "/../xsd/seda_v0-2/seda_v0-2.xsd",
             self::SEDA_V_1_0_NS => __DIR__ . "/../xsd/seda_v1-0/seda_v1-0.xsd",
-        );
+        ];
 
         if (empty($all_schema[$xmlns])) {
             throw new SchemaNotFoundException("Impossible de trouver le schéma correspondant à l'espace de nom $xmlns");
@@ -28,7 +28,7 @@ class SedaValidation
 
     public function validateSEDA($xml_content)
     {
-        $this->last_errors = array();
+        $this->last_errors = [];
         $previous = libxml_use_internal_errors(true);
         $dom = new DOMDocument();
         $dom->loadXML($xml_content);
@@ -46,7 +46,7 @@ class SedaValidation
 
     public function validateRelaxNG($xml_content, $relax_ng_path)
     {
-        $this->last_errors = array();
+        $this->last_errors = [];
         $previous = libxml_use_internal_errors(true);
         $dom = new DOMDocument();
         $dom->loadXML($xml_content);

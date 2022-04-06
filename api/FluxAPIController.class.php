@@ -33,11 +33,11 @@ class FluxAPIController extends BaseAPIController
     public function listFlux()
     {
         $allDocType = $this->documentTypeFactory->getAllType();
-        $allType = array();
+        $allType = [];
         foreach ($allDocType as $type_flux => $les_flux) {
             foreach ($les_flux as $nom => $affichage) {
                 if ($this->hasOneDroit($nom . ":lecture")) {
-                    $allType[$nom]  = array('type' => $type_flux,'nom' => $affichage);
+                    $allType[$nom]  = ['type' => $type_flux,'nom' => $affichage];
                 }
             }
         }
@@ -48,7 +48,7 @@ class FluxAPIController extends BaseAPIController
     {
         $documentType = $this->documentTypeFactory->getFluxDocumentType($id_flux);
         $formulaire = $documentType->getFormulaire();
-        $result = array();
+        $result = [];
         /**
          * @var Field $fields
          */

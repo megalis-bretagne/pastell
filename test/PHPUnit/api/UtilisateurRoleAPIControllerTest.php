@@ -10,7 +10,7 @@ class UtilisateurRoleAPIControllerTest extends PastellTestCase
 
     public function testAdd()
     {
-        $this->getInternalAPI()->post("utilisateur/1/role", array('id_e' => 0,'role' => 'utilisateur'));
+        $this->getInternalAPI()->post("utilisateur/1/role", ['id_e' => 0,'role' => 'utilisateur']);
         $list = $this->getInternalAPI()->get("utilisateur/1/role");
         $this->assertEquals('utilisateur', $list[1]['role']);
     }
@@ -19,14 +19,14 @@ class UtilisateurRoleAPIControllerTest extends PastellTestCase
     {
         $this->expectException("NotFoundException");
         $this->expectExceptionMessage("L'utilisateur n'existe pas : {id_u=42}");
-        $this->getInternalAPI()->post("utilisateur/42/role", array('id_e' => 0,'role' => 'utilisateur'));
+        $this->getInternalAPI()->post("utilisateur/42/role", ['id_e' => 0,'role' => 'utilisateur']);
     }
 
     public function testAddBadRole()
     {
         $this->expectException("NotFoundException");
         $this->expectExceptionMessage("Le role spécifié n'existe pas {role=foo}");
-        $this->getInternalAPI()->post("utilisateur/1/role", array('id_e' => 0,'role' => 'foo'));
+        $this->getInternalAPI()->post("utilisateur/1/role", ['id_e' => 0,'role' => 'foo']);
     }
 
     public function testAddSeveral()

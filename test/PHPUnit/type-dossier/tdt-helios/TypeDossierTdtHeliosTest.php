@@ -56,12 +56,12 @@ class TypeDossierTdtHeliosTest extends PastellTestCase
         );
         $this->assertLastMessage("Les données ont été extraites du fichier PES ALLER");
 
-        $this->assertEquals(array (
+        $this->assertEquals([
             'objet' => 'Foo',
             'pes_aller' =>
-                array (
+                 [
                     0 => 'fichier.xml',
-                ),
+                ],
             'id_coll' => '12345678912345',
             'dte_str' => '2017-06-09',
             'cod_bud' => '12',
@@ -74,7 +74,7 @@ class TypeDossierTdtHeliosTest extends PastellTestCase
             'pes_etat_ack' => '0',
             'pes_information_pes_aller' => '1',
             'envoi_tdt_helios' => 'checked',
-        ), $this->getDonneesFormulaireFactory()->get($info['id_d'])->getRawData());
+        ], $this->getDonneesFormulaireFactory()->get($info['id_d'])->getRawData());
 
         $this->assertTrue(
             $this->triggerActionOnDocument($info['id_d'], "send-tdt")

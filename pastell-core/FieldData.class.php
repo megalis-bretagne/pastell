@@ -19,7 +19,7 @@ class FieldData
     {
         $field = $this->field;
         if ($field->getProperties('depend') && is_array($value)) {
-            $new_value = array();
+            $new_value = [];
 
             foreach ($value as $filename => $value) {
                 if ($field->getType() == 'checkbox') {
@@ -82,10 +82,10 @@ class FieldData
     public function getValue()
     {
         if (! $this->value) {
-            return array();
+            return [];
         }
         if (! is_array($this->value)) {
-            return array($this->value);
+            return [$this->value];
         }
         return $this->value;
     }
@@ -108,7 +108,7 @@ class FieldData
 
     public function isURL()
     {
-        return (in_array($this->field->getType(), array('file','url','link')));
+        return (in_array($this->field->getType(), ['file','url','link']));
     }
 
     public function getURL($recuperation_fichier_url, $num, $id_e)
@@ -196,7 +196,7 @@ class FieldData
 
     private function get_mail_list($scalar_mail_list)
     {
-        $mails = array(0 => '');
+        $mails = [0 => ''];
         $i = 0;
         $state = 1;
         foreach (str_split($scalar_mail_list) as $letter) {
@@ -209,7 +209,7 @@ class FieldData
                 $mails[$i] .= $letter;
             }
         }
-        $result = array();
+        $result = [];
         foreach ($mails as $mail) {
             $mail = trim($mail);
             if ($mail) {

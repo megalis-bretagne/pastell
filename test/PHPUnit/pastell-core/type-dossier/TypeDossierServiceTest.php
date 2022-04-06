@@ -40,16 +40,16 @@ class TypeDossierServiceTest extends PastellTestCase
         $this->getTypeDossierService()->editionElement($id_t, $recuperateur);
         $file_content = $typeDossierManager->getRawData($id_t);
         $this->assertEquals(
-            array(
+            [
                 'id_type_dossier' => 'test',
                 'nom' => '',
                 'type' => '',
                 'description' => '',
                 'nom_onglet' => '',
                 'formulaireElement' =>
-                    array(
+                    [
                         0 =>
-                            array(
+                            [
                                 'element_id' => 'nom_agent',
                                 'name' => 'Nom de l\'agent',
                                 'type' => 'text',
@@ -63,12 +63,12 @@ class TypeDossierServiceTest extends PastellTestCase
                                 'preg_match_error' => '',
                                 'content_type' => '',
 
-                            ),
-                    ),
+                            ],
+                    ],
                 'etape' =>
-                    array(),
+                    [],
                 'restriction_pack' => ''
-            ),
+            ],
             $file_content
         );
         $type_dossier_data = $typeDossierManager->getTypeDossierProperties($id_t);

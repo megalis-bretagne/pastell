@@ -16,11 +16,11 @@ class CPPDeposerXML extends ActionExecutor
             throw new Exception($message);
         }
 
-        $map = array (
+        $map =  [
             "numeroFluxDepot" => 'numero_flux_depot',
             "syntaxeFlux" => 'syntaxe_flux',
             "dateDepot" => 'date_depot'
-        );
+        ];
         foreach ($map as $item_chorus => $item_pastell) {
             $this->getDonneesFormulaire()->setData($item_pastell, $result[$item_chorus]);
         }

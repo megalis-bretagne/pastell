@@ -32,7 +32,7 @@ class ConnecteurDisponible
         array_shift($ancetre);
         $ancetre[] = $id_e;
         $ancetre = array_reverse($ancetre);
-        $result = array();
+        $result = [];
 
         foreach ($ancetre as $entite_id_e) {
             if (! $this->roleUtilisateur->hasDroit($id_u, self::DROIT_NEDEED, $entite_id_e)) {

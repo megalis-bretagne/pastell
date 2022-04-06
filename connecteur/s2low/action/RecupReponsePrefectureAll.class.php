@@ -6,7 +6,7 @@ class RecupReponsePrefectureAll extends ActionExecutor
     {
         $all_col =  $this->getEntiteSQL()->getAll();
 
-        $envoye = array();
+        $envoye = [];
         foreach ($all_col as $infoCollectivite) {
             try {
                 /** @var S2low $tdT */

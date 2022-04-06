@@ -21,21 +21,21 @@ class FrontControllerTest extends PastellTestCase
     public function testDispatchBadController()
     {
         $this->expectOutputRegex("#HTTP/1.1 404 Not Found#");
-        $this->frontController->setGetParameter(array(FrontController::PAGE_REQUEST => 'Foo/bar'));
+        $this->frontController->setGetParameter([FrontController::PAGE_REQUEST => 'Foo/bar']);
         $this->frontController->dispatch();
     }
 
     public function testDispatchBadMethod()
     {
         $this->expectOutputRegex("#HTTP/1.1 404 Not Found#");
-        $this->frontController->setGetParameter(array(FrontController::PAGE_REQUEST => 'Document/bar'));
+        $this->frontController->setGetParameter([FrontController::PAGE_REQUEST => 'Document/bar']);
         $this->frontController->dispatch();
     }
 
     public function testDispatchDefaultMethod()
     {
         $this->expectOutputRegex("#Liste des dossiers - Pastell#");
-        $this->frontController->setGetParameter(array(FrontController::PAGE_REQUEST => 'Document'));
+        $this->frontController->setGetParameter([FrontController::PAGE_REQUEST => 'Document']);
         $this->frontController->dispatch();
     }
 }

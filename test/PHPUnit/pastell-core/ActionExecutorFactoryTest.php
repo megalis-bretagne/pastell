@@ -87,9 +87,10 @@ class ActionExecutorFactoryTest extends PastellTestCase
         $id_d = $document['id_d'];
         $this->getInternalAPI()->patch(
             "/entite/1/document/$id_d",
-            array('libelle' => 'Test pdf générique',
+            [
+            'libelle' => 'Test pdf générique',
                 'envoi_ged_1' => '1',
-            )
+            ]
         );
 
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);

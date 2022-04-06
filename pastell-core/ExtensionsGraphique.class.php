@@ -24,14 +24,14 @@ class ExtensionsGraphique
         $file = $this->workspace_path . "/extensions_graphe.dot";
         $file_jpg = $this->getGraphiquePath();
 
-        $color = array(
+        $color = [
             "extension" => "lavender",
             "version_ko" => "lightblue2",
             "manque_extension" => "lightblue3",
             "connecteur_type" => "blue4",
             "connecteur" => "darkorchid4",
             "flux" => "deeppink4",
-        );
+        ];
 
         if ($fp = @ fopen($file, "w")) {
             fputs($fp, "digraph G {\n");

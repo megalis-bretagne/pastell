@@ -285,7 +285,7 @@ class RechercheAvanceFormulaireHTML extends PastellControler
 
     private function getLibelle($field_name)
     {
-        $defaultLibelle = array(
+        $defaultLibelle = [
             'tri' => 'Trier le résultat par',
             'lastetat' => 'Dernier état',
             'last_state_begin' => 'Date de passage dans le dernier état',
@@ -293,7 +293,8 @@ class RechercheAvanceFormulaireHTML extends PastellControler
             'state_begin' => 'Date de passage dans cet état',
             'search' => 'Dont le titre contient',
             'type' => 'Type de dossier',
-            'id_e' => 'Collectivité');
+            'id_e' => 'Collectivité'
+        ];
         if (isset($defaultLibelle[$field_name])) {
             return $defaultLibelle[$field_name];
         }

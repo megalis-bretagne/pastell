@@ -28,7 +28,7 @@ class CppModifStatut extends ActionExecutor
                 $statut_consomme_array = substr($statut_consomme_array, 0, -1);
                 $statut_consomme_array = explode(';', $statut_consomme_array);
             }
-            return array("statut" => $statut_cpp, "statut_consomme_array" => $statut_consomme_array);
+            return ["statut" => $statut_cpp, "statut_consomme_array" => $statut_consomme_array];
         }
         // Controle de la validité de la liste des statuts cibles.
         if (!$this->controlerListeStatutCible($statut_cible_liste, $motif_maj)) {
@@ -53,7 +53,7 @@ class CppModifStatut extends ActionExecutor
             $statut_consomme_array = substr($statut_consomme_array, 0, -1);
             $statut_consomme_array = explode(';', $statut_consomme_array);
         }
-        return array("statut" => $statut_done, "statut_consomme_array" => $statut_consomme_array);
+        return ["statut" => $statut_done, "statut_consomme_array" => $statut_consomme_array];
     }
 
     /**
@@ -217,7 +217,7 @@ class CppModifStatut extends ActionExecutor
             return false;
         }
 
-        $statuts_cible_autorisees = array(
+        $statuts_cible_autorisees = [
             PortailFactureConnecteur::STATUT_MISE_A_DISPOSITION,
             PortailFactureConnecteur::STATUT_A_RECYCLER,
             PortailFactureConnecteur::STATUT_REJETEE,
@@ -226,7 +226,8 @@ class CppModifStatut extends ActionExecutor
             PortailFactureConnecteur::STATUT_MANDATEE,
             PortailFactureConnecteur::STATUT_MISE_A_DISPOSITION_COMPTABLE,
             PortailFactureConnecteur::STATUT_COMPTABILISEE,
-            PortailFactureConnecteur::STATUT_MISE_EN_PAIEMENT);
+            PortailFactureConnecteur::STATUT_MISE_EN_PAIEMENT
+        ];
 
         $statut_cible_tab = explode(";", $statut_cible_liste);
 

@@ -11,17 +11,17 @@ $configuration_menu = [
     "Extension/index" => "Extensions"
 ];
 
-$test_menu = array(
+$test_menu = [
     "System/index" => "Test du système",
     "System/connecteur" => "Connecteurs disponibles",
     "System/definition" => "Définition des types de dossier"
 
-);
+];
 
-$type_de_dossier = array(
+$type_de_dossier = [
     "System/flux" => "Types de dossier",
     "TypeDossier/list" => "Types de dossier (studio)",
-);
+];
 
 ?>
 <div id="main_gauche" class="no-breadcrumb ls-on">

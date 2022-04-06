@@ -84,10 +84,10 @@ class RoleSQL extends SQL
 
     public function getRoleLibelle(array $role_id)
     {
-        $result = array();
+        $result = [];
         foreach ($this->getAllRole() as $role) {
             if (in_array($role['role'], $role_id)) {
-                $result[] = array('role' => $role['role'],'libelle' => $role['libelle']);
+                $result[] = ['role' => $role['role'],'libelle' => $role['libelle']];
             }
         };
         return $result;

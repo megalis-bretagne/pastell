@@ -96,7 +96,7 @@ class ChorusProImportSynchroService
     private function synchroniseStatus(string $id_d): string
     {
         $actionExecutorFactory = $this->actionExecutorFactory;
-        if (! $actionExecutorFactory->executeOnDocumentThrow($id_d, $this->id_e, $this->id_u, 'synchroniser-statut', array(), false, array(), 0)) {
+        if (! $actionExecutorFactory->executeOnDocumentThrow($id_d, $this->id_e, $this->id_u, 'synchroniser-statut', [], false, [], 0)) {
             throw new CPPException($actionExecutorFactory->getLastMessage());
         }
         return $actionExecutorFactory->getLastMessage();

@@ -18,10 +18,10 @@ if ($droit_lecture_on_connecteur) {
     $admninistration_menu["Flux/index"] = $id_e ? "Types de dossier (association)" : 'Associations connecteurs globaux';
 }
 
-$donnees_menu = array(
+$donnees_menu = [
     "MailSec/annuaire" => "Annuaire (mail sécurisé)",
     "Entite/agents" => "Agents (Actes)",
-);
+];
 
 
 ?>

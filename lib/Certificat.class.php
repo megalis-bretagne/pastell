@@ -81,7 +81,7 @@ class Certificat
 
     public function getIssuer()
     {
-        $data = array();
+        $data = [];
         foreach ($this->certData['issuer'] as $name => $value) {
             $data[] = "$name=$value";
         }

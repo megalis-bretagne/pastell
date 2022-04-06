@@ -15,7 +15,7 @@ class OpensslTSWrapper
 
     public function setHashAlgorithm($hash_algorithm)
     {
-        if (in_array($hash_algorithm, array('sha1','sha256',))) {
+        if (in_array($hash_algorithm, ['sha1','sha256',])) {
             $this->hash_algorithm = $hash_algorithm;
         }
     }

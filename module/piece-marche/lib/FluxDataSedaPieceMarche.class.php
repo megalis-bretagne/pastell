@@ -101,7 +101,7 @@ class FluxDataSedaPieceMarche extends FluxDataSedaDefault
 
     public function get_primo_signature_detachee_size_in_bytes()
     {
-        $result = array();
+        $result = [];
 
         foreach ($this->donneesFormulaire->get('primo_signature_detachee') as $i => $title) {
             $result[] = filesize($this->donneesFormulaire->getFilePath('primo_signature_detachee', $i));
@@ -146,7 +146,7 @@ class FluxDataSedaPieceMarche extends FluxDataSedaDefault
     public function get_annexe_size_in_bytes()
     {
 
-        $result = array();
+        $result = [];
 
         foreach ($this->donneesFormulaire->get('annexe') as $i => $title) {
             $result[] = filesize($this->donneesFormulaire->getFilePath('annexe', $i));
@@ -194,7 +194,7 @@ class FluxDataSedaPieceMarche extends FluxDataSedaDefault
             return 'AR038';
         }
         $type_piece_marche = $this->donneesFormulaire->get('type_piece_marche');
-        if (in_array($type_piece_marche, array('LC', 'RC', 'CCAP', 'CCTP', 'ARN'))) {
+        if (in_array($type_piece_marche, ['LC', 'RC', 'CCAP', 'CCTP', 'ARN'])) {
             return 'AR038';
         }
 
@@ -205,7 +205,7 @@ class FluxDataSedaPieceMarche extends FluxDataSedaDefault
     {
 
         $etape = $this->donneesFormulaire->get('etape');
-        if (in_array($etape, array('DCE', 'ONR'))) {
+        if (in_array($etape, ['DCE', 'ONR'])) {
             return 'detruire';
         }
         if (($etape == 'OR') && ($this->donneesFormulaire->get('recurrent') == true)) {
@@ -224,7 +224,7 @@ class FluxDataSedaPieceMarche extends FluxDataSedaDefault
 
         if ($this->donneesFormulaire->get('etape') == 'DCE') {
             $type_piece_marche = $this->donneesFormulaire->get('type_piece_marche');
-            if (!(in_array($type_piece_marche, array('AC', 'AL')))) {
+            if (!(in_array($type_piece_marche, ['AC', 'AL']))) {
                 return 'P5Y';
             }
         }

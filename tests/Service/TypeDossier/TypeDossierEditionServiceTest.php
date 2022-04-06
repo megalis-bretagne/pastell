@@ -99,18 +99,18 @@ class TypeDossierEditionServiceTest extends PastellTestCase
             "Information"
         );
         $this->assertEquals(
-            array(
+            [
                 'id_type_dossier' => 'arrete-rh',
                 'nom' => 'arrete-rh',
                 'type' => 'Flux CD 99',
                 'description' => 'Ceci est un flux de test',
                 'nom_onglet' => 'Information',
                 'formulaireElement' =>
-                    array(),
+                    [],
                 'etape' =>
-                    array(),
+                    [],
                 'restriction_pack' => ''
-            ),
+            ],
             $this->getObjectInstancier()->getInstance(TypeDossierManager::class)->getRawData($id_t)
         );
     }

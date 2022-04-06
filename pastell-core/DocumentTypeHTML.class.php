@@ -3,7 +3,7 @@
 //TODO a mettre dans template
 class DocumentTypeHTML
 {
-    private function getOption($type_selected = "", $all_module = array())
+    private function getOption($type_selected = "", $all_module = [])
     {
         ?>
         <option value=''>Tous les types de dossiers</option>
@@ -19,7 +19,7 @@ class DocumentTypeHTML
         <?php
     }
 
-    public function displaySelect($type_selected = "", $all_module = array())
+    public function displaySelect($type_selected = "", $all_module = [])
     {
         ?>
         <select name='type' class="form-control col-md-3 select2_document">
@@ -28,7 +28,7 @@ class DocumentTypeHTML
         <?php
     }
 
-    public function displaySelectWithCollectivite($all_module = array())
+    public function displaySelectWithCollectivite($all_module = [])
     {
         ?>
         <select name='type' class='select2_document form-control col-md-3'>

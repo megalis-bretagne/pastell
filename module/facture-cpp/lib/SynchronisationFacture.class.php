@@ -64,7 +64,7 @@ class SynchronisationFacture
             $donneesFormulaire->setData(AttrFactureCPP::ATTR_IS_ANNULE, true);
         }
 
-        return array('action' => $action, 'statut' => $statut_courant);
+        return ['action' => $action, 'statut' => $statut_courant];
     }
 
     /**

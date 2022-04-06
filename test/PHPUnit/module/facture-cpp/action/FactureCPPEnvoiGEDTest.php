@@ -9,17 +9,20 @@ class FactureCPPEnvoiGEDTest extends ExtensionCppTestCase
                 "MISE_A_DISPOSITION",
                 "",
                 "Le dossier FAC19-2512 a été versé sur le dépôt",
-                "send-ged"],
+                "send-ged"
+            ],
             'HasSendGED' => [
                 "MISE_A_DISPOSITION",
                 "1",
                 "La facture a déja été déposée en GED",
-                "modification"],
+                "modification"
+            ],
             'StatutFinal' => [
                 "MISE_EN_PAIEMENT",
                 "",
                 "Le statut MISE_EN_PAIEMENT de la facture ne permet pas l'envoi en GED",
-                "send-ged-annule"],
+                "send-ged-annule"
+            ],
         ];
     }
 

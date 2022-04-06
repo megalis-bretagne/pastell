@@ -80,10 +80,11 @@ abstract class PortailFactureConnecteur extends Connecteur
      */
     public static function getListeStatutCourant()
     {
-        return array (self::STATUT_MISE_A_DISPOSITION,
+        return  [self::STATUT_MISE_A_DISPOSITION,
             self::STATUT_SERVICE_FAIT,
             self::STATUT_MANDATEE,
-            self::STATUT_COMPLETEE);
+            self::STATUT_COMPLETEE
+        ];
     }
 
     /**
@@ -91,7 +92,7 @@ abstract class PortailFactureConnecteur extends Connecteur
      */
     public static function getListeStatutCible()
     {
-        return array (self::STATUT_MISE_A_DISPOSITION,
+        return  [self::STATUT_MISE_A_DISPOSITION,
             self::STATUT_SUSPENDUE,
             self::STATUT_A_RECYCLER,
             self::STATUT_REJETEE,
@@ -99,7 +100,8 @@ abstract class PortailFactureConnecteur extends Connecteur
             self::STATUT_MANDATEE,
             self::STATUT_MISE_A_DISPOSITION_COMPTABLE,
             self::STATUT_COMPTABILISEE,
-            self::STATUT_MISE_EN_PAIEMENT);
+            self::STATUT_MISE_EN_PAIEMENT
+        ];
     }
 
     /**
@@ -113,7 +115,7 @@ abstract class PortailFactureConnecteur extends Connecteur
         string $periodeDateHeureEtatCourantDu = "",
         string $periodeDateHeureEtatCourantAu = ""
     ) {
-        $ListeFacturesCPPFormat = array();
+        $ListeFacturesCPPFormat = [];
         $ListeFacturesCPP = $this->rechercheFactureParRecipiendaire(
             $idFournisseur,
             $periodeDateHeureEtatCourantDu,
@@ -152,7 +154,7 @@ abstract class PortailFactureConnecteur extends Connecteur
         string $periodeDateHeureEtatCourantDu = "",
         string $periodeDateHeureEtatCourantAu = ""
     ) {
-        $ListeFacturesCPPFormat = array();
+        $ListeFacturesCPPFormat = [];
         $ListeFacturesCPP = $this->rechercheFactureTravaux(
             $periodeDateHeureEtatCourantDu,
             $periodeDateHeureEtatCourantAu
@@ -188,7 +190,7 @@ abstract class PortailFactureConnecteur extends Connecteur
      */
     public function getHistoStatutFacture($IdFacture)
     {
-        $HistoStatutFactureCPPFormat = array();
+        $HistoStatutFactureCPPFormat = [];
         $HistoStatutFactureCPP = $this->consulterHistoriqueFacture($IdFacture);
         if (!empty($HistoStatutFactureCPP['codeRetour'])) {
             throw new Exception('Le service Chorus Portail Pro a retourné une erreur : ' . $HistoStatutFactureCPP['codeRetour'] . ' - ' . $HistoStatutFactureCPP['libelle']);

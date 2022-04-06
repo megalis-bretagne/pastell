@@ -47,7 +47,7 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor
         }
 
         $erreur = false;
-        $all_historique = array();
+        $all_historique = [];
         try {
             $all_historique = $signature->getAllHistoriqueInfo($dossierID);
             if (! $all_historique) {

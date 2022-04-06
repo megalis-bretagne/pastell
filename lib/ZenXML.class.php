@@ -20,8 +20,8 @@ class ZenXML implements ArrayAccess
     {
         $this->tag_name = $tag_name;
         $this->cdata = $cdata;
-        $this->child = array();
-        $this->attributs = array();
+        $this->child = [];
+        $this->attributs = [];
         $this->multipleValue = [];
         $this->escape_cdata = $escape_cdata;
     }

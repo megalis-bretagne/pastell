@@ -66,7 +66,7 @@ class FileUploader
 
     public function getAll()
     {
-        $result = array();
+        $result = [];
         foreach ($this->files as $filename => $value) {
             $result[$filename] = $this->getName($filename);
         }

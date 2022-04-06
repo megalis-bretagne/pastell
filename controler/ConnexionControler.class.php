@@ -477,7 +477,7 @@ class ConnexionControler extends PastellControler
         $zenMail->setEmetteur("Pastell", PLATEFORME_MAIL);
         $zenMail->setDestinataire($info['email']);
         $zenMail->setSujet("[Pastell] Procédure de modification de mot de passe");
-        $infoMessage = array('mail_verif_password' => $mailVerifPassword);
+        $infoMessage = ['mail_verif_password' => $mailVerifPassword];
         $zenMail->setContenu(PASTELL_PATH . "/mail/changement-mdp.php", $infoMessage);
         $zenMail->send();
 

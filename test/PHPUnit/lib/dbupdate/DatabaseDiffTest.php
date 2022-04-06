@@ -4,41 +4,41 @@ class DatabaseDiffTest extends PHPUnit\Framework\TestCase
 {
     private function getDatabaseDefinitionArray()
     {
-        return array(
-            "utilisateur" => array(
+        return [
+            "utilisateur" => [
                 "Engine" => "MyISAM",
-                "Column" => array(
-                    "id_u" => array(
+                "Column" => [
+                    "id_u" => [
                         "Field" => "id_u",
                         "Type" => "int(11)",
                         "Null" => "NO",
                         "Key" => "PRI",
                         "Default" => "",
                         "Extra" => "auto_increment"
-                    )
-                ),
-                "Index" => array(
-                    "PRIMARY" => array(
+                    ]
+                ],
+                "Index" => [
+                    "PRIMARY" => [
                         "type" => "BTREE",
-                        "col" => array("id_u"),
+                        "col" => ["id_u"],
                         "unique" => 1
-                    )
-                )
-            )
-        );
+                    ]
+                ]
+            ]
+        ];
     }
 
     public function testAddTable()
     {
         $databaseDiff = new DatabaseDiff();
-        $diff = $databaseDiff->getDiff($this->getDatabaseDefinitionArray(), array());
+        $diff = $databaseDiff->getDiff($this->getDatabaseDefinitionArray(), []);
         $this->assertMatchesRegularExpression("#CREATE TABLE `utilisateur`#", $diff[0]);
     }
 
     public function testDropTable()
     {
         $databaseDiff = new DatabaseDiff();
-        $diff = $databaseDiff->getDiff(array(), $this->getDatabaseDefinitionArray());
+        $diff = $databaseDiff->getDiff([], $this->getDatabaseDefinitionArray());
         $this->assertMatchesRegularExpression("#DROP TABLE `utilisateur`#", $diff[0]);
     }
 
@@ -47,14 +47,14 @@ class DatabaseDiffTest extends PHPUnit\Framework\TestCase
         $databaseDiff = new DatabaseDiff();
         $db2 = $this->getDatabaseDefinitionArray();
         $db1 = $db2;
-        $db1["utilisateur"]["Column"]["nom"] = array(
+        $db1["utilisateur"]["Column"]["nom"] = [
             "Field" => "nom",
             "Type" => "varchar(256)",
             "Null" => "NO",
             "Key" => "",
             "Default" => "",
             "Extra" => ""
-        );
+        ];
         $diff = $databaseDiff->getDiff($db1, $db2);
         $this->assertEquals("ALTER TABLE `utilisateur` ADD `nom` varchar(256) NOT NULL DEFAULT '';", $diff[0]);
     }
@@ -64,14 +64,14 @@ class DatabaseDiffTest extends PHPUnit\Framework\TestCase
         $databaseDiff = new DatabaseDiff();
         $db2 = $this->getDatabaseDefinitionArray();
         $db1 = $db2;
-        $db1["utilisateur"]["Column"]["nom"] = array(
+        $db1["utilisateur"]["Column"]["nom"] = [
             "Field" => "nom",
             "Type" => "varchar(256)",
             "Null" => "NO",
             "Key" => "",
             "Default" => "",
             "Extra" => ""
-        );
+        ];
         $diff = $databaseDiff->getDiff($db2, $db1);
         $this->assertEquals("ALTER TABLE `utilisateur` DROP `nom`;", $diff[0]);
     }
@@ -100,20 +100,20 @@ class DatabaseDiffTest extends PHPUnit\Framework\TestCase
     {
         $databaseDiff = new DatabaseDiff();
         $db2 = $this->getDatabaseDefinitionArray();
-        $db2["utilisateur"]["Column"]["nom"] = array(
+        $db2["utilisateur"]["Column"]["nom"] = [
             "Field" => "nom",
             "Type" => "varchar(256)",
             "Null" => "NO",
             "Key" => "",
             "Default" => "",
             "Extra" => ""
-        );
+        ];
         $db1 = $db2;
-        $db1['utilisateur']['Index']["toto"] = array(
+        $db1['utilisateur']['Index']["toto"] = [
             "type" => "BTREE",
-            "col" => array("nom"),
+            "col" => ["nom"],
             "unique" => 1
-        );
+        ];
         $diff = $databaseDiff->getDiff($db1, $db2);
         $this->assertEquals("CREATE  UNIQUE INDEX `toto` ON `utilisateur` (`nom`) ;", $diff[0]);
     }
@@ -122,20 +122,20 @@ class DatabaseDiffTest extends PHPUnit\Framework\TestCase
     {
         $databaseDiff = new DatabaseDiff();
         $db2 = $this->getDatabaseDefinitionArray();
-        $db2["utilisateur"]["Column"]["nom"] = array(
+        $db2["utilisateur"]["Column"]["nom"] = [
             "Field" => "nom",
             "Type" => "varchar(256)",
             "Null" => "NO",
             "Key" => "",
             "Default" => "",
             "Extra" => ""
-        );
+        ];
         $db1 = $db2;
-        $db1['utilisateur']['Index']["toto"] = array(
+        $db1['utilisateur']['Index']["toto"] = [
             "type" => "FULLTEXT",
-            "col" => array("nom"),
+            "col" => ["nom"],
             "unique" => 0
-        );
+        ];
         $diff = $databaseDiff->getDiff($db1, $db2);
         $this->assertEquals("CREATE  FULLTEXT INDEX `toto` ON `utilisateur` (`nom`) ;", $diff[0]);
     }
@@ -144,20 +144,20 @@ class DatabaseDiffTest extends PHPUnit\Framework\TestCase
     {
         $databaseDiff = new DatabaseDiff();
         $db2 = $this->getDatabaseDefinitionArray();
-        $db2["utilisateur"]["Column"]["nom"] = array(
+        $db2["utilisateur"]["Column"]["nom"] = [
             "Field" => "nom",
             "Type" => "varchar(256)",
             "Null" => "NO",
             "Key" => "",
             "Default" => "",
             "Extra" => ""
-        );
+        ];
         $db1 = $db2;
-        $db1['utilisateur']['Index']["toto"] = array(
+        $db1['utilisateur']['Index']["toto"] = [
             "type" => "BTREE",
-            "col" => array("nom"),
+            "col" => ["nom"],
             "unique" => 1
-        );
+        ];
         $diff = $databaseDiff->getDiff($db2, $db1);
         $this->assertEquals("DROP INDEX `toto` ON `utilisateur`;", $diff[0]);
     }
@@ -166,19 +166,19 @@ class DatabaseDiffTest extends PHPUnit\Framework\TestCase
     {
         $databaseDiff = new DatabaseDiff();
         $db2 = $this->getDatabaseDefinitionArray();
-        $db2["utilisateur"]["Column"]["nom"] = array(
+        $db2["utilisateur"]["Column"]["nom"] = [
             "Field" => "nom",
             "Type" => "varchar(256)",
             "Null" => "NO",
             "Key" => "",
             "Default" => "",
             "Extra" => ""
-        );
-        $db2['utilisateur']['Index']["toto"] = array(
+        ];
+        $db2['utilisateur']['Index']["toto"] = [
             "type" => "BTREE",
-            "col" => array("nom"),
+            "col" => ["nom"],
             "unique" => 1
-        );
+        ];
         $db1 = $db2;
         unset($db1["utilisateur"]['Index']['toto']);
         $db1["utilisateur"]["Index"]["titi"] = $db2['utilisateur']['Index']["toto"];
@@ -222,14 +222,14 @@ class DatabaseDiffTest extends PHPUnit\Framework\TestCase
         $databaseDiff = new DatabaseDiff();
         $db2 = $this->getDatabaseDefinitionArray();
         $db1 = $db2;
-        $db1["utilisateur"]["Column"]["nom"] = array(
+        $db1["utilisateur"]["Column"]["nom"] = [
             "Field" => "nom",
             "Type" => "timestamp",
             "Null" => "NO",
             "Key" => "",
             "Default" => "now()",
             "Extra" => ""
-        );
+        ];
         $diff = $databaseDiff->getDiff($db1, $db2);
         $this->assertEquals("ALTER TABLE `utilisateur` ADD `nom` timestamp NOT NULL DEFAULT now();", $diff[0]);
     }

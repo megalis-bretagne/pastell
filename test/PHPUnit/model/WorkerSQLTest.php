@@ -84,7 +84,7 @@ class WorkerSQLTest extends PastellTestCase
         $id_worker = $this->workerSQL->create(42);
 
         $id_job_list = $this->workerSQL->getJobToLaunch(5);
-        $this->assertEquals(array($id_job), $id_job_list);
+        $this->assertEquals([$id_job], $id_job_list);
 
         $this->workerSQL->attachJob($id_worker, $id_job);
         $this->assertEmpty($this->workerSQL->getJobToLaunch(5));
@@ -164,13 +164,13 @@ class WorkerSQLTest extends PastellTestCase
         $id_job_1 = $jobQueueSQL->createJob($job);
 
         $id_job_list = $this->workerSQL->getJobToLaunch(5);
-        $this->assertEquals(array($id_job_1), $id_job_list);
+        $this->assertEquals([$id_job_1], $id_job_list);
 
         $id_worker = $this->workerSQL->create(42);
         $this->workerSQL->attachJob($id_worker, $id_job_1);
 
         $all_verrou = $this->workerSQL->getVerrou();
-        $this->assertEquals(array("VERROU"), $all_verrou);
+        $this->assertEquals(["VERROU"], $all_verrou);
 
         $job->id_d = "ABCD";
         $jobQueueSQL->createJob($job);
@@ -195,7 +195,7 @@ class WorkerSQLTest extends PastellTestCase
         $jobQueueSQL->createJob($job);
 
         $id_job_list = $this->workerSQL->getJobToLaunch(5);
-        $this->assertEquals(array($id_job_1), $id_job_list);
+        $this->assertEquals([$id_job_1], $id_job_list);
     }
 
     private function addJobWithVerrou()
@@ -216,7 +216,7 @@ class WorkerSQLTest extends PastellTestCase
     {
         $this->addJobWithVerrou();
         $all_verrou = $this->workerSQL->getAllVerrou();
-        $this->assertEquals(array("VERROU"), $all_verrou);
+        $this->assertEquals(["VERROU"], $all_verrou);
     }
 
     public function testGetFirstJobToLaunch()

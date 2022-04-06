@@ -310,7 +310,7 @@ class DaemonControler extends PastellControler
         $global = $this->getGetInfo()->get("global");
         $result = $this->apiGet("/FamilleConnecteur/$famille_connecteur/$id_connecteur?global=$global");
         if (empty($result['action'])) {
-            echo json_encode(array());
+            echo json_encode([]);
             return;
         }
         echo json_encode(array_keys($result['action']));

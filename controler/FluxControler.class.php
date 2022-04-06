@@ -54,7 +54,7 @@ class FluxControler extends PastellControler
             $this->setViewParameter('template_milieu', "FluxList");
         } else {
             $all_connecteur_type = $this->getConnecteurDefinitionFiles()->getAllGlobalType();
-            $all_type = array();
+            $all_type = [];
             foreach ($all_connecteur_type as $connecteur_type) {
                 try {
                     $global_connecteur = $this->getConnecteurFactory()->getGlobalConnecteur($connecteur_type);
@@ -69,7 +69,7 @@ class FluxControler extends PastellControler
             if (isset($this->{'all_flux_entite'}['global'])) {
                 $this->setViewParameter('all_flux_global', $this->{'all_flux_entite'}['global']);
             } else {
-                $this->setViewParameter('all_flux_global', array());
+                $this->setViewParameter('all_flux_global', []);
             }
             $this->setViewParameter('template_milieu', "FluxGlobalList");
         }
@@ -176,7 +176,7 @@ class FluxControler extends PastellControler
 
     public function getListFlux($id_e)
     {
-        $result = array();
+        $result = [];
 
         $fluxEntiteHeritageSQL = $this->getObjectInstancier()->getInstance(FluxEntiteHeritageSQL::class);
 
@@ -186,7 +186,7 @@ class FluxControler extends PastellControler
             $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($id_flux);
             foreach ($documentType->getConnecteurAllInfo() as $j => $connecteur_type_info) {
                 $connecteur_id = $connecteur_type_info[DocumentType::CONNECTEUR_ID];
-                $line = array();
+                $line = [];
                 $line['nb_connecteur'] = count($documentType->getConnecteur());
                 $line['num_connecteur'] = $j;
                 $line['id_flux'] = $id_flux;

@@ -37,13 +37,15 @@ class ParametrageFluxFactureCPP extends Connecteur
      */
     public function getParametres()
     {
-        return array("envoi_visa" => $this->envoi_visa,
+        return [
+        "envoi_visa" => $this->envoi_visa,
             "iparapheur_type" => $this->iparapheur_type,
             "iparapheur_sous_type" => $this->iparapheur_sous_type,
             "envoi_ged" => $this->envoi_ged,
             "envoi_sae" => $this->envoi_sae,
             "check_mise_a_dispo_gf" => $this->check_mise_a_dispo_gf,
-            "envoi_auto" => $this->envoi_auto);
+            "envoi_auto" => $this->envoi_auto
+        ];
     }
 
     /**

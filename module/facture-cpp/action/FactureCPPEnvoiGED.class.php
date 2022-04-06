@@ -14,7 +14,7 @@ class FactureCPPEnvoiGED extends GEDEnvoyer
             return false;
         }
         // Dans le cas de l'héritage on fait le mapping ici (il n'est pas dans le definition.yml)
-        $this->setMapping(array("fatal-error" => "error-ged"));
+        $this->setMapping(["fatal-error" => "error-ged"]);
         $result_ged = parent::go();
 
         if ($result_ged) {

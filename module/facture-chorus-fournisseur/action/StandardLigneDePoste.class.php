@@ -13,9 +13,9 @@ class StandardLigneDePoste extends ChoiceActionExecutor
 
         $ligne_de_poste = $this->getLigneDePoste();
 
-        $data = array('lignePosteReference','lignePosteDenomination','lignePosteQuantite');
+        $data = ['lignePosteReference','lignePosteDenomination','lignePosteQuantite'];
 
-        $one_line = array();
+        $one_line = [];
         foreach ($data as $id) {
             $one_line[$id] = $recuperateur->get($id);
         }
@@ -38,7 +38,7 @@ class StandardLigneDePoste extends ChoiceActionExecutor
         if ($ligne_de_poste) {
             $ligne_de_poste = json_decode($ligne_de_poste, true);
         } else {
-            $ligne_de_poste = array();
+            $ligne_de_poste = [];
         }
         return $ligne_de_poste;
     }

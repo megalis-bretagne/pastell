@@ -16,11 +16,11 @@ class Iconv
     private function log($message)
     {
         if ($this->loging_function) {
-            call_user_func_array($this->loging_function, array($message));
+            call_user_func_array($this->loging_function, [$message]);
         }
     }
 
-    public function convert($path, array $limit_extension = array('txt','php','yml'), $xcopy_before = false)
+    public function convert($path, array $limit_extension = ['txt','php','yml'], $xcopy_before = false)
     {
         $path = rtrim($path, "/");
         if ($xcopy_before) {
@@ -42,7 +42,7 @@ class Iconv
             mkdir($destination);
             $directory_handle = opendir($source);
             while ($file = readdir($directory_handle)) {
-                if (in_array($file, array('.','..'))) {
+                if (in_array($file, ['.','..'])) {
                     continue;
                 }
                 $this->xcopy("$source/$file", "$destination/$file");
@@ -64,7 +64,7 @@ class Iconv
         }
         $fileInfo = new finfo();
         $encoding = $fileInfo->file($filepath, FILEINFO_MIME_ENCODING);
-        if (! in_array($encoding, array('iso-8859-15','iso-8859-1'))) {
+        if (! in_array($encoding, ['iso-8859-15','iso-8859-1'])) {
             $this->log("[$filepath] encoding is $encoding : PASS");
             return;
         }
@@ -93,7 +93,7 @@ class Iconv
     {
         $directory_handle = opendir($directory_path);
         while (false !== ($file = readdir($directory_handle))) {
-            if (in_array($file, array('.','..'))) {
+            if (in_array($file, ['.','..'])) {
                 continue;
             }
             $file_path = $directory_path . "/" . $file;

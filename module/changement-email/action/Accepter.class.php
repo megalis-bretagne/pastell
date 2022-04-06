@@ -16,7 +16,7 @@ class Accepter extends ActionExecutor
         $zenMail->setEmetteur("Pastell", PLATEFORME_MAIL);
         $zenMail->setDestinataire($utilisateur_info['email']);
         $zenMail->setSujet("Votre changement de mail a été accepté");
-        $info = array("message" => $message);
+        $info = ["message" => $message];
         $zenMail->setContenu(PASTELL_PATH . "/mail/changement-email-accepter.php", $info);
         $zenMail->send();
 

@@ -18,7 +18,8 @@ class SedaNGTest extends PastellTestCase
             'key' => 'fichier',
             'filename' => 'connecteur_exemple.yml',
             'filepath' => __DIR__ . '/fixtures/connecteur_exemple.yml',
-        ]]);
+        ]
+        ]);
 
         /** @var FluxData $fluxData */
 
@@ -50,7 +51,8 @@ class SedaNGTest extends PastellTestCase
             'key' => 'fichier',
             'filename' => 'fixtures/connecteur_exemple.yml',
             'filepath' => __DIR__ . '/fixtures/connecteur_exemple.yml',
-        ]]);
+        ]
+        ]);
 
         /** @var FluxData $fluxData */
 

@@ -499,8 +499,8 @@ abstract class ActionExecutor
 
         $connecteurTypeActionExecutor->setDocumentId($this->type, $this->id_d);
         $connecteurTypeActionExecutor->setConnecteurId($this->type, $this->id_ce);
-        $connecteurTypeActionExecutor->setDestinataireId($this->id_destinataire ?: array());
-        $connecteurTypeActionExecutor->setActionParams($this->action_params ?: array());
+        $connecteurTypeActionExecutor->setDestinataireId($this->id_destinataire ?: []);
+        $connecteurTypeActionExecutor->setActionParams($this->action_params ?: []);
         $connecteurTypeActionExecutor->setFromApi($this->from_api);
         $connecteurTypeActionExecutor->setIdWorker($this->id_worker);
 

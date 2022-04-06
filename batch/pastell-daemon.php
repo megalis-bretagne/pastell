@@ -11,7 +11,7 @@ $daemonManager = $objectInstancier->getInstance(DaemonManager::class);
 
 $arg = get_argv(1);
 
-if (! in_array($arg, array('start','stop','restart','status'))) {
+if (! in_array($arg, ['start','stop','restart','status'])) {
     echo "{$argv[0]} gestion du démarrage et de l'arrêt du script de lancement des workers\n";
     echo "Usage : {$argv[0]} {start|stop|restart|status}\n";
     exit;

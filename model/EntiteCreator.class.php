@@ -54,8 +54,8 @@ class EntiteCreator extends SQL
 
         $sql = "SELECT * FROM entite WHERE id_e = ?";
         $newInfo = $this->queryOne($sql, $id_e);
-        $infoToRetrieve = array('siren','denomination','type','entite_mere','centre_de_gestion');
-        $infoChanged = array();
+        $infoToRetrieve = ['siren','denomination','type','entite_mere','centre_de_gestion'];
+        $infoChanged = [];
         foreach ($infoToRetrieve as $key) {
             if ($oldInfo[$key] != $newInfo[$key]) {
                 $infoChanged[] = "$key : {$oldInfo[$key]} -> {$newInfo[$key]}";

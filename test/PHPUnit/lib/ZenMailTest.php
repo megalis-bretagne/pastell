@@ -69,9 +69,9 @@ class ZenMailTest extends PastellTestCase
 
         $info = $this->zenMail->getAllInfo();
 
-        $this->assertEquals(array (
+        $this->assertEquals([
             0 =>
-                array (
+                 [
                     'destinataire' => 'baz@baz.com',
                     'sujet' => '=?UTF-8?Q?mon=20sujet?=',
                     'contenu' => 'test',
@@ -80,8 +80,8 @@ Reply-To: ' . $expected_reply_to . '
 Content-Type: text/plain; charset="UTF-8"
 Return-Path: return-path@bar.com',
                     'return_path' => '-f return-path@bar.com'
-                ),
-        ), $info);
+                ],
+        ], $info);
     }
 
     public function testGetContenu()

@@ -8,7 +8,7 @@ class FluxDataTestConnecteurInfo extends FluxData
     public function __construct()
     {
         $this->flux_info = [];
-        $this->file_list = array();
+        $this->file_list = [];
     }
 
     public function getData($key)

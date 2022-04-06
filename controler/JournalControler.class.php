@@ -193,10 +193,11 @@ class JournalControler extends PastellControler
 
         $CSVoutput->begin();
         if ($en_tete_colonne) {
-            $headers = array(
+            $headers = [
                 'id_journal', 'type', 'id_entite', 'id_utilisateur', 'id_document', 'action', 'message', 'date',
                 'horodatage', 'message_horodate', 'type_document', 'numero_acte', 'collectivite_libelle',
-                'utilisateur_nom', 'utilisateur_prenom', 'collectivite_siren');
+                'utilisateur_nom', 'utilisateur_prenom', 'collectivite_siren'
+            ];
             $CSVoutput->displayLine($headers);
         }
         while ($this->getSQLQuery()->hasMoreResult()) {

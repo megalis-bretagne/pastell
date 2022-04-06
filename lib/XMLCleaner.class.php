@@ -58,7 +58,7 @@ class XMLCleaner
 
     private function getAttributesList(DOMElement $dom)
     {
-        $domAttributesList = array();
+        $domAttributesList = [];
         foreach ($dom->attributes as $attr) {
             $domAttributesList[] = $attr;
         }
@@ -68,7 +68,7 @@ class XMLCleaner
     private function getChildsNode(DOMElement $dom)
     {
         //Attention : $dom->childNodes est vidé si on supprime un des noeuds !
-        $domNodeList = array();
+        $domNodeList = [];
         foreach ($dom->childNodes as $child) {
             $domNodeList[] = $child;
         }

@@ -22,66 +22,66 @@ class DocumentEmailReponseSQLTest extends PastellTestCase
     public function testGetInfo()
     {
         $this->getDocumentEmailReponseSQL()->addDocumentReponseId(42, 43);
-        $this->assertEquals(array (
+        $this->assertEquals([
             'id_reponse' => '1',
             'id_de' => '42',
             'id_d_reponse' => '43',
             'is_lu' => '0',
             'has_reponse' => '0',
-        ), $this->getDocumentEmailReponseSQL()->getInfo(42));
+        ], $this->getDocumentEmailReponseSQL()->getInfo(42));
     }
 
     public function testValidateReponse()
     {
         $this->getDocumentEmailReponseSQL()->addDocumentReponseId(42, 43);
-        $this->assertEquals(array (
+        $this->assertEquals([
             'id_reponse' => '1',
             'id_de' => '42',
             'id_d_reponse' => '43',
             'is_lu' => '0',
             'has_reponse' => '0',
-        ), $this->getDocumentEmailReponseSQL()->getInfo(42));
+        ], $this->getDocumentEmailReponseSQL()->getInfo(42));
         $this->getDocumentEmailReponseSQL()->validateReponse(42);
-        $this->assertEquals(array (
+        $this->assertEquals([
             'id_reponse' => '1',
             'id_de' => '42',
             'id_d_reponse' => '43',
             'is_lu' => '0',
             'has_reponse' => '1',
-        ), $this->getDocumentEmailReponseSQL()->getInfo(42));
+        ], $this->getDocumentEmailReponseSQL()->getInfo(42));
     }
 
     public function testgetInfoFromIdReponse()
     {
         $this->getDocumentEmailReponseSQL()->addDocumentReponseId(42, 43);
-        $this->assertEquals(array (
+        $this->assertEquals([
             'id_reponse' => '1',
             'id_de' => '42',
             'id_d_reponse' => '43',
             'is_lu' => '0',
             'has_reponse' => '0',
-        ), $this->getDocumentEmailReponseSQL()->getInfoFromIdReponse(43));
+        ], $this->getDocumentEmailReponseSQL()->getInfoFromIdReponse(43));
     }
 
 
     public function testSetLu()
     {
         $this->getDocumentEmailReponseSQL()->addDocumentReponseId(42, 43);
-        $this->assertEquals(array (
+        $this->assertEquals([
             'id_reponse' => '1',
             'id_de' => '42',
             'id_d_reponse' => '43',
             'is_lu' => '0',
             'has_reponse' => '0',
-        ), $this->getDocumentEmailReponseSQL()->getInfo(42));
+        ], $this->getDocumentEmailReponseSQL()->getInfo(42));
         $this->getDocumentEmailReponseSQL()->setLu(43);
-        $this->assertEquals(array (
+        $this->assertEquals([
             'id_reponse' => '1',
             'id_de' => '42',
             'id_d_reponse' => '43',
             'is_lu' => '1',
             'has_reponse' => '0',
-        ), $this->getDocumentEmailReponseSQL()->getInfo(42));
+        ], $this->getDocumentEmailReponseSQL()->getInfo(42));
     }
 
     public function testgetAllReponse()
@@ -104,15 +104,15 @@ class DocumentEmailReponseSQLTest extends PastellTestCase
         $this->getDocumentEmailReponseSQL()->addDocumentReponseId($info['id_de'], $id_d_reponse);
         $this->getDocumentEmailReponseSQL()->validateReponse($info['id_de']);
         $this->assertEquals(
-            array (
+            [
                 1 =>
-                    array (
+                     [
                         'id_de' => '1',
                         'id_d_reponse' => 'REPONSE',
                         'is_lu' => '0',
                         'titre' => 'MON TITRE',
-                    ),
-            ),
+                    ],
+             ],
             $this->getDocumentEmailReponseSQL()->getAllReponse($id_d_mailsec)
         );
 

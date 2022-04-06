@@ -11,7 +11,7 @@ class VerifEnvironnement
 
     public function checkPHP()
     {
-        return array("min_value" => "7.2","environnement_value" => phpversion());
+        return ["min_value" => "7.2","environnement_value" => phpversion()];
     }
 
     private function getExtensionsNedeed()
@@ -38,7 +38,7 @@ class VerifEnvironnement
         if (($key = array_search("zend-opcache", $extensionNeeded, true)) !== false) {
             $extensionNeeded[$key] = "Zend OPcache";
         }
-        $result = array();
+        $result = [];
         foreach ($extensionNeeded as $extension) {
             $result[$extension] = extension_loaded($extension);
         }
@@ -64,7 +64,7 @@ class VerifEnvironnement
 
     public function checkCommande(array $allCommande)
     {
-        $result = array();
+        $result = [];
         foreach ($allCommande as $commande) {
             $result[$commande] = exec("which $commande");
         }

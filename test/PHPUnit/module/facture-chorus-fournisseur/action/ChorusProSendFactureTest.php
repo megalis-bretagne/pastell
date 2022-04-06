@@ -9,7 +9,7 @@ class ChorusProSendFactureTest extends ExtensionCppTestCase
     public function ChorusProSendFacture()
     {
 
-        $soumettreFacure_result = array (
+        $soumettreFacure_result =  [
             'codeRetour' => 0,
             'libelle' => 'GCU_MSG_01_000',
             'dateDepot' => '2019-03-27',
@@ -17,7 +17,7 @@ class ChorusProSendFactureTest extends ExtensionCppTestCase
             'identifiantStructure' => '00000000000727',
             'numeroFacture' => 'FAC20190327',
             'statutFacture' => 'DEPOSEE'
-        );
+        ];
 
         $cppWrapper = $this->getMockBuilder(CPPWrapper::class)
             ->disableOriginalConstructor()

@@ -157,7 +157,7 @@ class DocumentControler extends PastellControler
         $this->setViewParameter('return_url', urlencode("Document/detail?id_e={$this->{'id_e'}}&id_d={$this->{'id_d'}}"));
 
         $this->setViewParameter('template_milieu', "DocumentDetail");
-        $this->setViewParameter('inject', array('id_e' => $id_e,'id_ce' => '','id_d' => $id_d,'action' => $action));
+        $this->setViewParameter('inject', ['id_e' => $id_e,'id_ce' => '','id_d' => $id_d,'action' => $action]);
 
         $this->renderDefault();
     }
@@ -274,7 +274,7 @@ class DocumentControler extends PastellControler
         }
 
 
-        $this->setViewParameter('inject', array('id_e' => $id_e,'id_d' => $id_d,'form_type' => $type,'action' => $action,'id_ce' => ''));
+        $this->setViewParameter('inject', ['id_e' => $id_e,'id_d' => $id_d,'form_type' => $type,'action' => $action,'id_ce' => '']);
         $this->setViewParameter('page_title', "Modification du dossier « " . $documentType->getName() . " » ( " . $infoEntite['denomination'] . " ) ");
 
         $this->setViewParameter('info', $info);
@@ -317,7 +317,7 @@ class DocumentControler extends PastellControler
         $search = $recuperateur->get('search');
         $limit = 20;
 
-        $liste_type = array();
+        $liste_type = [];
         $allDroit = $this->getDroitService()->getAllDroit($this->getId_u());
 
         foreach ($allDroit as $droit) {
@@ -382,7 +382,7 @@ class DocumentControler extends PastellControler
 
     private function getAllType(array $listDocument)
     {
-        $type = array();
+        $type = [];
         foreach ($listDocument as $doc) {
             $type[$doc['type']] = $doc['type'];
         }
@@ -469,7 +469,7 @@ class DocumentControler extends PastellControler
         $this->setViewParameter('allDroitEntite', $this->getDroitService()->getAllDocumentLecture($this->getId_u(), $this->{'id_e'}));
 
         $this->setViewParameter('indexedFieldsList', $documentType->getFormulaire()->getIndexedFields());
-        $indexedFieldValue = array();
+        $indexedFieldValue = [];
         foreach ($this->{'indexedFieldsList'} as $indexField => $indexLibelle) {
             $indexedFieldValue[$indexField] = $recuperateur->get($indexField);
         }
@@ -537,7 +537,7 @@ class DocumentControler extends PastellControler
         $this->setViewParameter('search', $recuperateur->get('search'));
         $this->setViewParameter('limit', $recuperateur->getInt('limit', 100));
 
-        $indexedFieldValue = array();
+        $indexedFieldValue = [];
         if ($this->{'type'}) {
             $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($this->{'type'});
             $this->setViewParameter('indexedFieldsList', $documentType->getFormulaire()->getIndexedFields());
@@ -551,7 +551,7 @@ class DocumentControler extends PastellControler
             $this->setViewParameter('champs_affiches', $documentType->getChampsAffiches());
         } else {
             $this->setViewParameter('champs_affiches', DocumentType::getDefaultDisplayField());
-            $this->setViewParameter('indexedFieldsList', array());
+            $this->setViewParameter('indexedFieldsList', []);
         }
 
         $this->setViewParameter('indexedFieldValue', $indexedFieldValue);
@@ -612,7 +612,7 @@ class DocumentControler extends PastellControler
         $allDroitEntite = $this->getDroitService()->getAllDocumentLecture($this->getId_u(), $id_e);
 
 
-        $indexedFieldValue = array();
+        $indexedFieldValue = [];
         if ($type) {
             $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($type);
             $indexedFieldsList = $documentType->getFormulaire()->getIndexedFields();
@@ -622,20 +622,20 @@ class DocumentControler extends PastellControler
             /*$champs_affiches = $documentType->getChampsAffiches();*/
         } else {
             //$champs_affiches = array('titre'=>'Objet','type'=>'Type','entite'=>'Entité','dernier_etat'=>'Dernier état','date_dernier_etat'=>'Date');
-            $indexedFieldsList = array();
+            $indexedFieldsList = [];
         }
 
 
         $limit = $this->getDocumentActionEntite()->getNbDocumentBySearch($id_e, $type, $search, $lastEtat, $last_state_begin_iso, $last_state_end_iso, $allDroitEntite, $etatTransit, $state_begin, $state_end, $indexedFieldValue);
         $listDocument = $this->getDocumentActionEntite()->getListBySearch($id_e, $type, $offset, $limit, $search, $lastEtat, $last_state_begin_iso, $last_state_end_iso, $tri, $allDroitEntite, $etatTransit, $state_begin, $state_end, $indexedFieldValue, $sens_tri);
 
-        $line = array("ENTITE","ID_D","TYPE","TITRE","DERNIERE ACTION","DATE DERNIERE ACTION");
+        $line = ["ENTITE","ID_D","TYPE","TITRE","DERNIERE ACTION","DATE DERNIERE ACTION"];
         foreach ($indexedFieldsList as $indexField => $indexLibelle) {
             $line[] = $indexLibelle;
         }
-        $result = array($line);
+        $result = [$line];
         foreach ($listDocument as $i => $document) {
-             $line = array(
+             $line = [
                     $document['denomination'],
                     $document['id_d'],
                     $document['type'],
@@ -643,7 +643,7 @@ class DocumentControler extends PastellControler
                     $document['last_action'],
                     $document['last_action_date'],
 
-             );
+             ];
              foreach ($indexedFieldsList as $indexField => $indexLibelle) {
                  $line[] = $this->getInstance(DocumentIndexSQL::class)->get($document['id_d'], $indexField);
              }
@@ -728,7 +728,7 @@ class DocumentControler extends PastellControler
         $this->searchDocument();
         $listDocument = $this->listDocument;
 
-        $all_action = array();
+        $all_action = [];
         foreach ($this->listDocument as $i => $document) {
             $listDocument[$i]['action_possible'] =  $this->getActionPossible()->getActionPossibleLot($this->{'id_e'}, $this->getId_u(), $document['id_d']);
             $all_action = array_merge($all_action, $listDocument[$i]['action_possible']);
@@ -768,7 +768,7 @@ class DocumentControler extends PastellControler
         }
 
         $error = "";
-        $listDocument = array();
+        $listDocument = [];
 
         foreach ($all_id_d as $id_d) {
             $infoDocument  = $this->getDocumentActionEntite()->getInfo($id_d, $this->{'id_e'});
@@ -857,7 +857,7 @@ class DocumentControler extends PastellControler
             $tedetis_transaction_id = $this->getDonneesFormulaireFactory()->get($id_d)->get($stringMapper->get('tedetis_transaction_id'));
             $status =  $tdt->getStatus($tedetis_transaction_id);
 
-            if (in_array($status, array(TdtConnecteur::STATUS_ACTES_EN_ATTENTE_DE_POSTER))) {
+            if (in_array($status, [TdtConnecteur::STATUS_ACTES_EN_ATTENTE_DE_POSTER])) {
                 $message .= "La transaction pour le document « {$infoDocument['titre']} » n'a pas le bon status : " . TdtConnecteur::getStatusString($status) . " trouvé<br/>";
             } else {
                 $this->getActionChange()->addAction($id_d, $id_e, $id_u, $stringMapper->get("send-tdt"), "Le document a été télétransmis à la préfecture");
@@ -883,7 +883,7 @@ class DocumentControler extends PastellControler
         $formulaire = $documentType->getFormulaire();
 
         if (!is_array($all_field_name)) {
-            $all_field_name = array($all_field_name);
+            $all_field_name = [$all_field_name];
         }
         foreach ($all_field_name as $field_name) {
             $field = $formulaire->getField($field_name);
@@ -1025,7 +1025,7 @@ class DocumentControler extends PastellControler
         }
 
 
-        $id_destinataire = $recuperateur->get('destinataire') ?: array();
+        $id_destinataire = $recuperateur->get('destinataire') ?: [];
 
         $action_destinataire =  $theAction->getActionDestinataire($action);
         if ($action_destinataire) {

@@ -79,12 +79,12 @@ class IParapheurTest extends PastellTestCase
 
     public function testMetadataSimpleValue()
     {
-        $this->assertEquals(array('bar' => 'value'), $this->callWithMetadata("foo:bar"));
+        $this->assertEquals(['bar' => 'value'], $this->callWithMetadata("foo:bar"));
     }
 
     public function testMetadataMultipleValue()
     {
-        $this->assertEquals(array('bar' => 'value','buz' => 'value'), $this->callWithMetadata("foo:bar,baz:buz"));
+        $this->assertEquals(['bar' => 'value','buz' => 'value'], $this->callWithMetadata("foo:bar,baz:buz"));
     }
 
     public function testMetadataFailded()
