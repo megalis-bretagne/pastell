@@ -415,7 +415,8 @@ class ConnexionControler extends PastellControler
 
         $id_u = $this->getId_uFromTokenOrFailed($mail_verif_password);
 
-        /* Cf #1002 le composant graphique Libriciel n'intègre pas encore de message d'erreur personnalisé.*/
+        /* Cf issue #1002 le composant graphique Libriciel n'intègre pas encore de message d'erreur personnalisé.*/
+        /* Cf également MR #883 */
         if (! $password) {
             /* Note : on ne peut pas mettre de message d'erreur personnalisé pour le moment */
             $this->setLastError("Le mot de passe est obligatoire");
@@ -455,7 +456,7 @@ class ConnexionControler extends PastellControler
             "{$infoUtilisateur['login']} ({$infoUtilisateur['id_u']}) a modifié son mot de passe"
         );
 
-        /* Note : on ne peut pas mettre de message d'erreur personnalisé pour le moment */
+        /* Note : on ne peut pas mettre de message personnalisé pour le moment */
         $this->setLastMessage("Votre mot de passe a été modifié");
         $this->redirect("/Connexion/index");
     }
