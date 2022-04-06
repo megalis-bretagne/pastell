@@ -21,6 +21,11 @@ $javascript_files_list = [
 >
     <?php $this->displayCSRFInput() ?>
     <input type='hidden' name='mail_verif_password' value='<?php echo $mail_verif_password?>'/>
+    <?php if ($this->getLastError()->getLastError()) :?>
+        <div class="alert alert-danger">
+            <?php hecho($this->getLastError()->getLastError());?>
+        </div>
+    <?php endif; ?>
     <div class="box">
         <div class="alert alert-info">
             Le calcul de la force du mot de passe est basé sur
