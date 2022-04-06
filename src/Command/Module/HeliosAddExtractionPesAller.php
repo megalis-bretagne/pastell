@@ -53,12 +53,12 @@ class HeliosAddExtractionPesAller extends BaseCommand
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('app:module:helios-add-extraction-pes-aller')
             ->setDescription(
-                'Extract informations fichier_pes for source module helios-generique or helios-automatique'
+                'Extract informations from fichier_pes for module helios-generique or helios-automatique'
             )
             ->addArgument(
                 'source',
@@ -158,13 +158,11 @@ class HeliosAddExtractionPesAller extends BaseCommand
     /**
      * @throws Exception
      */
-    private function extractPesInfo(string $id_d, int $id_e): bool
+    private function extractPesInfo(string $id_d, int $id_e): void
     {
         $donneesFormulaire = $this->donneesFormulaireFactory->get($id_d);
         $pes_etat_ack = $donneesFormulaire->get(self::FIELD_ETAT_ACK);
         $this->actionExecutorFactory->executeOnDocumentCritical($id_e, 0, $id_d, self::ACTION_EXTRACT);
         $this->donneesFormulaireFactory->get($id_d)->setData(self::FIELD_ETAT_ACK, $pes_etat_ack);
-
-        return true;
     }
 }
