@@ -433,9 +433,9 @@ class ConnexionControler extends PastellControler
         if (! $passwordEntropy->isPasswordStrongEnough($password)) {
             /* Note : on ne peut pas mettre de message d'erreur personnalisé pour le moment */
             $this->setLastError(
-                "Le mot de passe n'a pas été changé car le nouveau mot de passe n'est pas assez fort.<br/>" .
-                "Essayez de l'allonger ou de mettre des caractères de différents types.<br/>" .
-                "La barre de vérification doit être entièrement remplie"
+                "Le mot de passe n'a pas été changé car le nouveau mot de passe n'est pas assez fort. " .
+                "Essayez de l'allonger ou de mettre des caractères de différents types. " .
+                "La barre de vérification doit être entièrement remplie."
             );
             $this->redirect("/Connexion/changementMdp?mail_verif=$mail_verif_password");
         }
