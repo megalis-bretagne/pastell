@@ -2,6 +2,7 @@
 
 use Pastell\Service\TokenGenerator;
 use Pastell\Service\LoginAttemptLimit;
+use Pastell\Service\PasswordEntropy;
 
 class ConnexionControler extends PastellControler
 {
@@ -244,6 +245,8 @@ class ConnexionControler extends PastellControler
     public function changementMdpAction()
     {
         $recuperateur = new Recuperateur($_GET);
+        $passwordEntropy = $this->getObjectInstancier()->getInstance(PasswordEntropy::class);
+        $this->{'password_min_entropy'} = $passwordEntropy->getEntropyForDisplay();
         $this->{'login_page_configuration'} = file_exists(LOGIN_PAGE_CONFIGURATION_LOCATION)
             ? file_get_contents(LOGIN_PAGE_CONFIGURATION_LOCATION)
             : '';
@@ -446,6 +449,8 @@ class ConnexionControler extends PastellControler
 
         $id_u = $this->getId_uFromTokenOrFailed($mail_verif_password);
 
+        /* Cf issue #1002 le composant graphique Libriciel n'intègre pas encore de message d'erreur personnalisé.*/
+        /* Cf également MR #883 */
         if (! $password) {
             /* Note : on ne peut pas mettre de message d'erreur personnalisé pour le moment */
             $this->setLastError("Le mot de passe est obligatoire");
@@ -454,11 +459,20 @@ class ConnexionControler extends PastellControler
         if ($password != $password2) {
             /* Note : on ne peut pas mettre de message d'erreur personnalisé pour le moment */
             $this->setLastError("Les mots de passe ne correspondent pas");
-            $this->redirect("/Connexion/index");
             $this->redirect("/Connexion/changementMdp?mail_verif=$mail_verif_password");
             exit;
         }
 
+        $passwordEntropy = $this->getObjectInstancier()->getInstance(PasswordEntropy::class);
+        if (! $passwordEntropy->isPasswordStrongEnough($password)) {
+            /* Note : on ne peut pas mettre de message d'erreur personnalisé pour le moment */
+            $this->setLastError(
+                "Le mot de passe n'a pas été changé car le nouveau mot de passe n'est pas assez fort. " .
+                "Essayez de l'allonger ou de mettre des caractères de différents types. " .
+                "La barre de vérification doit être entièrement remplie."
+            );
+            $this->redirect("/Connexion/changementMdp?mail_verif=$mail_verif_password");
+        }
 
         $utilisateur = new UtilisateurSQL($this->getSQLQuery());
         $infoUtilisateur = $utilisateur->getInfo($id_u);
@@ -468,9 +482,15 @@ class ConnexionControler extends PastellControler
         $mailVerifPassword = $passwordGenerator->getPassword();
         $utilisateur->reinitPassword($id_u, $mailVerifPassword);
 
-        $this->getJournal()->add(Journal::MODIFICATION_UTILISATEUR, $infoUtilisateur['id_e'], 0, "mot de passe modifié", "{$infoUtilisateur['login']} ({$infoUtilisateur['id_u']}) a modifié son mot de passe");
+        $this->getJournal()->add(
+            Journal::MODIFICATION_UTILISATEUR,
+            $infoUtilisateur['id_e'],
+            0,
+            "mot de passe modifié",
+            "{$infoUtilisateur['login']} ({$infoUtilisateur['id_u']}) a modifié son mot de passe"
+        );
 
-        /* Note : on ne peut pas mettre de message d'erreur personnalisé pour le moment */
+        /* Note : on ne peut pas mettre de message personnalisé pour le moment */
         $this->setLastMessage("Votre mot de passe a été modifié");
         $this->redirect("/Connexion/index");
     }
