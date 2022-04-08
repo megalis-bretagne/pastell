@@ -41,19 +41,19 @@
   Il faut lancer la commande `app:force-update-field connector mailsec mailsec_reply_to "{% if mailsec_reply_to == '' %}{{mailsec_from}}{% else %}{{mailsec_reply_to}}{% endif %}"` 
   pour reporter l'ancien mailsec_from à mailsec_reply_to (s'il n'est pas déjà renseigné) #1465
 
-# [3.1.13]
+# [3.1.13] - 2022-04-18
 
 ## Corrections
 
 - Actes générique/automatique : Si l'étape de signature est faite avec un connecteur parapheur fast,
-le document envoyé n'est pas celui signé mais celui d'origine #1482
+  le document envoyé n'est pas celui signé mais celui d'origine #1482
 - l'API POST /entite/:id_e/flux/:flux/connecteur/:id_ce?type=:type renvoyait un int depuis la version 3.1.9.
   C'est maintenant rétablit avec un string #1479
 - Il manquait le contrôle de la force de mot de passe pour la page "Mot de passe oublié" #1478
 
 ## Évolutions
 
-- Le glaneur permet l'extration des données d'un PES avec le flux Hélios automatique en appelant l'action importation #711
+- Le glaneur permet l'extraction des données d'un PES avec le flux Hélios automatique en appelant l'action importation #711
 - Il faut lancer la commande `app:module:helios-add-extraction-pes-aller` suivie de `helios-automatique` ou `helios-generique`
   pour extraire les informations des fichier_pes (dans le cas où elles seraient manquantes) #1484
 
