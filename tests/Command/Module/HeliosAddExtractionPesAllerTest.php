@@ -37,7 +37,7 @@ class HeliosAddExtractionPesAllerTest extends PastellTestCase
         $output = $commandTester->getDisplay();
         $this->assertStringContainsString('[OK] Success for 1 and failure for 0 ', $output);
 
-        $this->assertEquals(array (
+        $this->assertEquals([
             'objet' => 'HELIOS_SIMU_ALR2_1496987735_826268894.xml',
             'id_coll' => '12345678912345',
             'dte_str' => '2017-06-09',
@@ -50,6 +50,6 @@ class HeliosAddExtractionPesAllerTest extends PastellTestCase
             'id_fonction' => '113',
             'fichier_pes' => [0 => 'fichier.xml'],
             'etat_ack' => '2'
-        ), $this->getDonneesFormulaireFactory()->get($id_d)->getRawData());
+        ], $this->getDonneesFormulaireFactory()->get($id_d)->getRawData());
     }
 }
