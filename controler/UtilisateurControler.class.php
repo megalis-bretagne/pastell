@@ -689,7 +689,7 @@ class UtilisateurControler extends PastellControler
         if (! $passwordEntropy->isPasswordStrongEnough($password)) {
             $this->setLastError(
                 "Le mot de passe n'a pas été changé car le nouveau mot de passe n'est pas assez fort.<br/>" .
-                "Essayez de l'allonger  de l'allonger ou de mettre des caractères de différents types. La barre de vérification doit être entièrement remplie"
+                "Essayez de l'allonger ou de mettre des caractères de différents types. La barre de vérification doit être entièrement remplie"
             );
             $this->redirect("Utilisateur/modifPassword");
         }

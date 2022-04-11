@@ -312,7 +312,7 @@ class DocumentControler extends PastellControler
     public function indexAction()
     {
         $recuperateur = $this->getGetInfo();
-        $id_e = $recuperateur->get('id_e', 0);
+        $id_e = $recuperateur->getInt('id_e', 0);
         $offset = $recuperateur->getInt('offset', 0);
         $search = $recuperateur->get('search');
         $limit = 20;

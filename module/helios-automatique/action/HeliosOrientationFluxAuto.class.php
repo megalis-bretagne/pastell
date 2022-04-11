@@ -2,15 +2,22 @@
 
 class HeliosOrientationFluxAuto extends ActionExecutor
 {
-    private function notifyAndExit($message)
+    /**
+     * @throws Exception
+     */
+    private function notifyAndExit(string $message): void
     {
         $this->notify($this->action, $this->type, $message);
         throw new Exception($message);
     }
 
+    /**
+     * @throws UnrecoverableException
+     * @throws NotFoundException
+     * @throws Exception
+     */
     public function go()
     {
-
         $documentActionEntite = $this->getDocumentActionEntite();
         $last_action = $documentActionEntite->getLastAction($this->id_e, $this->id_d);
         $donneesFormulaire = $this->getDonneesFormulaire();
@@ -20,13 +27,18 @@ class HeliosOrientationFluxAuto extends ActionExecutor
         $envoi_sae = $donneesFormulaire->get('envoi_sae');
         switch ($last_action) {
             case 'importation':
-                if (! $donneesFormulaire->isValidable()) {
+                $this->objectInstancier
+                    ->getInstance(ActionExecutorFactory::class)
+                    ->executeOnDocumentCritical($this->id_e, 0, $this->id_d, 'fichier_pes_change');
+                $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($this->id_d);
+
+                if (!$donneesFormulaire->isValidable()) {
                     $this->notifyAndExit("Impossible de faire avancer le document depuis l'état : $last_action");
                 }
                 if ($envoi_signature_check == true) {
                     $localSignature = $this->getConnecteur('signature')->isLocalSignature();
-                    $this->getDonneesFormulaire()->setData('envoi_signature', ! $localSignature);
-                    $this->getDonneesFormulaire()->setData('has_signature_locale', $localSignature);
+                    $donneesFormulaire->setData('envoi_signature', !$localSignature);
+                    $donneesFormulaire->setData('has_signature_locale', $localSignature);
                     if ($localSignature) {
                         $action_cible = 'prepare-signature-locale';
                     } else {
@@ -54,14 +66,6 @@ class HeliosOrientationFluxAuto extends ActionExecutor
                 }
                 break;
             case 'acquiter-tdt':
-                if ($envoi_ged == true) {
-                    $action_cible = 'prepare-ged';
-                } elseif ($envoi_sae == true) {
-                    $action_cible = 'prepare-sae';
-                } else {
-                    $action_cible = 'termine';
-                }
-                break;
             case 'info-tdt':
                 if ($envoi_ged == true) {
                     $action_cible = 'prepare-ged';
@@ -70,7 +74,7 @@ class HeliosOrientationFluxAuto extends ActionExecutor
                 } else {
                     $action_cible = 'termine';
                 }
-                break;//info-tdt
+                break;
             case 'send-ged':
                 if ($envoi_sae == true) {
                     $action_cible = 'prepare-sae';

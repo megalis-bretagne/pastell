@@ -12,7 +12,7 @@ class IParapheurMajCertifTest extends PastellTestCase
         ];
         $globalIparapheur = $this->createConnector('iParapheur', 'iParapheur GLOBAL', 0);
         $id_ce = $globalIparapheur['id_ce'];
-        $this->expectOutputRegex("/Location: editionModif\?id_ce=$id_ce/");
+        $this->expectOutputRegex("/Location: (.*)editionModif\?id_ce=$id_ce/");
 
         $this->getObjectInstancier()->getInstance(ActionExecutorFactory::class)->goChoiceOnConnecteur(
             $id_ce,

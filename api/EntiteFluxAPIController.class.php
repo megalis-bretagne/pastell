@@ -121,7 +121,7 @@ class EntiteFluxAPIController extends BaseAPIController
             $flux,
             $num_same_type
         );
-        $result['id_fe'] = $id_fe;
+        $result['id_fe'] = strval($id_fe);
         return $result;
     }
 
