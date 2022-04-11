@@ -65,7 +65,7 @@ class LibersignTestV2 extends ChoiceActionExecutor
      */
     public function display()
     {
-        $this->libersignConnecteur = $this->getMyConnecteur();
+        $this->setViewParameter('libersignConnecteur', $this->getMyConnecteur());
         $this->renderPage('Test de Libersign', __DIR__ . '/../template/LibersignTest.php');
         return true;
     }

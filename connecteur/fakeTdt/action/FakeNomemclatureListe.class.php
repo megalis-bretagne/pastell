@@ -32,7 +32,7 @@ class FakeNomemclatureListe extends ChoiceActionExecutor
             );
         }
 
-        $this->classifCDG = $donneesFormulaire->get("classification_cdg");
+        $this->setViewParameter('classifCDG', $donneesFormulaire->get("classification_cdg"));
 
         $this->renderPage("Fichier de nomemclauture", __DIR__ . "/../../s2low/template/NomemclatureListeSelect.php");
         return true;

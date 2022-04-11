@@ -83,18 +83,18 @@ class SedaGeneriqueFillFiles extends ChoiceActionExecutor
 
     public function display()
     {
-        $this->{'node_id'} = $this->getRecuperateur()->get('node_id');
+        $this->setViewParameter('node_id', $this->getRecuperateur()->get('node_id'));
         $fluxEntiteSQL = $this->objectInstancier->getInstance(FluxEntiteSQL::class);
-        $this->{'flux'} = $fluxEntiteSQL->getUsedByConnecteurIfUnique($this->id_ce, $this->id_e);
-        $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($this->{'flux'});
-        $this->{'fieldsList'} = ($documentType->getFormulaire()->getFieldsList());
+        $this->setViewParameter('flux', $fluxEntiteSQL->getUsedByConnecteurIfUnique($this->id_ce, $this->id_e));
+        $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($this->getViewParameter('flux'));
+        $this->setViewParameter('fieldsList', $documentType->getFormulaire()->getFieldsList());
 
         $files = $this->getConnecteurConfig($this->id_ce)->getFileContent('files');
 
-        $this->{'generateurSedaFillFiles'} = new GenerateurSedaFillFiles($files);
+        $this->setViewParameter('generateurSedaFillFiles', new GenerateurSedaFillFiles($files));
 
 
-        $this->{'pastell_to_seda'} = SedaGenerique::getPastellToSeda();
+        $this->setViewParameter('pastell_to_seda', SedaGenerique::getPastellToSeda());
 
         $this->renderPage(
             "Gestion des fichiers de l'archive",

@@ -19,7 +19,7 @@ class IparapheurType extends ChoiceActionExecutor
 
     public function display()
     {
-        $this->{'type_iparapheur'} = $this->getType();
+        $this->setViewParameter('type_iparapheur', $this->getType());
         $this->renderPage("Choix du type i-Parapheur", __DIR__ . "/../template/IparapheurType.php");
         return true;
     }

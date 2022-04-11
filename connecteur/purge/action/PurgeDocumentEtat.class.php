@@ -40,9 +40,9 @@ class PurgeDocumentEtat extends ChoiceActionExecutor
      */
     public function display()
     {
-        $this->{'document_etat'} = $this->getConnecteurProperties()->get('document_etat');
+        $this->setViewParameter('document_etat', $this->getConnecteurProperties()->get('document_etat'));
 
-        $this->{'list_etat'} = $this->displayAPI();
+        $this->setViewParameter('list_etat', $this->displayAPI());
         $this->renderPage(
             "Choix de l'état du dossier",
             __DIR__ . "/../template/PurgeDocumentEtat.php"

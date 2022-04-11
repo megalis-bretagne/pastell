@@ -60,10 +60,10 @@ class GlobalUpdateCertificate extends ConnecteurTypeChoiceActionExecutor
         $limit = self::DISPLAY_LIMIT;
 
         $connecteurEntiteSQL = $this->objectInstancier->getInstance(ConnecteurEntiteSQL::class);
-        $this->{'connectors'} = $connecteurEntiteSQL->getAllEntiteConnectorById($this->type, $offset, $limit);
-        $this->{'count'} = $connecteurEntiteSQL->getCountAllEntiteConnectorById($this->type);
-        $this->{'offset'} = $offset;
-        $this->{'limit'} = $limit;
+        $this->setViewParameter('connectors', $connecteurEntiteSQL->getAllEntiteConnectorById($this->type, $offset, $limit));
+        $this->setViewParameter('count', $connecteurEntiteSQL->getCountAllEntiteConnectorById($this->type));
+        $this->setViewParameter('offset', $offset);
+        $this->setViewParameter('limit', $limit);
 
         $this->renderPage($pageTitle, __DIR__ . '/template/GlobalUpdateCertificate.php');
         return true;

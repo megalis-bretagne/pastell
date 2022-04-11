@@ -47,7 +47,7 @@ class SedaNGConnecteurInfo extends ChoiceActionExecutor
                 }
             }
         }
-        $this->properties = $properties;
+        $this->setViewParameter('properties', $properties);
 
         $this->renderPage("Propriétés « pastell:connecteur » du profil", __DIR__ . "/../template/SedaNGConnecteurProperties.php");
         return true;

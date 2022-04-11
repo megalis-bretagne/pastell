@@ -11,11 +11,6 @@ class Gabarit
         $this->objectInstancier = $objectInstancier;
     }
 
-    public function __set($key, $value)
-    {
-        $this->viewParameter[$key] = $value;
-    }
-
     public function setViewParameter($key, $value)
     {
         $this->viewParameter[$key] = $value;

@@ -31,14 +31,14 @@ class SedaGeneriqueFillData extends ChoiceActionExecutor
     {
 
         $fluxEntiteSQL = $this->objectInstancier->getInstance(FluxEntiteSQL::class);
-        $this->{'flux'} = $fluxEntiteSQL->getUsedByConnecteurIfUnique($this->id_ce, $this->id_e);
-        $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($this->{'flux'});
-        $this->{'fieldsList'} = ($documentType->getFormulaire()->getFieldsList());
+        $this->setViewParameter('flux', $fluxEntiteSQL->getUsedByConnecteurIfUnique($this->id_ce, $this->id_e));
+        $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($this->getViewParameter('flux'));
+        $this->setViewParameter('fieldsList', $documentType->getFormulaire()->getFieldsList());
 
         $json = $this->getConnecteurConfig($this->id_ce)->getFileContent('data');
-        $this->{'data'} =  json_decode($json, true);
+        $this->setViewParameter('data', json_decode($json, true));
 
-        $this->{'pastell_to_seda'} = SedaGenerique::getPastellToSeda();
+        $this->setViewParameter('pastell_to_seda', SedaGenerique::getPastellToSeda());
 
         $this->renderPage(
             "Sélection des méta-données du bordereau",

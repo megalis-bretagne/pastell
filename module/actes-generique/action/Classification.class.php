@@ -17,7 +17,7 @@ class Classification extends ChoiceActionExecutor
 
     public function display()
     {
-        $this->{'classificationActes'} = $this->getClassificationActes();
+        $this->setViewParameter('classificationActes', $this->getClassificationActes());
         $this->renderPage("Choix de la classification en matière et sous matière", __DIR__ . "/../template/ChoixClassification.php");
         return true;
     }

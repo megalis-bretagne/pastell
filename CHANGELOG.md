@@ -40,6 +40,8 @@
 - Suppression de la constante MODE_MUTUALISE. Lors de l'envoi d'un mail sécurisé, mailsec_from prend la valeur de PLATEFORME_MAIL.
   Il faut lancer la commande `app:force-update-field connector mailsec mailsec_reply_to "{% if mailsec_reply_to == '' %}{{mailsec_from}}{% else %}{{mailsec_reply_to}}{% endif %}"` 
   pour reporter l'ancien mailsec_from à mailsec_reply_to (s'il n'est pas déjà renseigné) #1465
+- Suppression de la fonction Controler::exitToIndex
+- Suppression des méthodes magiques ChoiceActionExecutor::__set, Gabarit::__set
 
 # [3.1.13] - 2022-04-18
 

@@ -36,7 +36,7 @@ class CPPChoixService extends ChoiceActionExecutor
      */
     public function display()
     {
-        $this->service_list = $this->displayAPI();
+        $this->setViewParameter('service_list', $this->displayAPI());
         $this->renderPage("Choix d'un service Chorus Pro", __DIR__ . "/../template/CPPChoixServiceTemplate.php");
         return true;
     }

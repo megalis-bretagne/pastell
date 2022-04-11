@@ -33,10 +33,9 @@ abstract class ChoiceActionExecutor extends ActionExecutor
         $this->field = $field;
     }
 
-    public function __set($key, $value)
+    public function setViewParameter($key, $value)
     {
         $this->viewParameter[$key] = $value;
-        $this->$key  = $value;
     }
 
     public function getViewParameter()
@@ -53,8 +52,8 @@ abstract class ChoiceActionExecutor extends ActionExecutor
     public function renderPage($page_title, $template)
     {
         $this->displayMenuGauche();
-        $this->page_title = $page_title;
-        $this->template_milieu = $template;
+        $this->setViewParameter('page_title', $page_title);
+        $this->setViewParameter('template_milieu', $template);
         $this->objectInstancier->getInstance(PastellControler::class)->setAllViewParameter($this->getViewParameter());
         $this->objectInstancier
             ->getInstance(PastellControler::class)
@@ -90,11 +89,11 @@ abstract class ChoiceActionExecutor extends ActionExecutor
         if (! $this->id_ce) {
             return;
         }
-        $this->{'id_e_menu'} = $this->id_e;
-        $this->{'type_e_menu'} = "";
-        $this->{'menu_gauche_template'} = "EntiteMenuGauche";
-        $this->{'menu_gauche_select'} = "Entite/connecteur";
-        $this->{'droit_lecture_on_connecteur'} = $this->objectInstancier
+        $this->viewParameter['id_e_menu'] = $this->id_e;
+        $this->viewParameter['type_e_menu'] = "";
+        $this->viewParameter['menu_gauche_template'] = "EntiteMenuGauche";
+        $this->viewParameter['menu_gauche_select'] = "Entite/connecteur";
+        $this->viewParameter['droit_lecture_on_connecteur'] = $this->objectInstancier
             ->getInstance(DroitService::class)
             ->hasDroitConnecteurLecture($this->id_e, $this->id_u);
     }

@@ -9,20 +9,20 @@ class PieceMarcheParEtapeTypePiece extends ChoiceActionExecutor
     {
 
         $document_info = $this->getDocument()->getInfo($this->id_d);
-        $this->{'info'} = $document_info;
+        $this->setViewParameter('info', $document_info);
 
         $result = $this->displayAPI();
-        $this->{'pieces_type_pj_list'} = $result['pieces_type_pj_list'];
-        $this->{'pieces'} = $result['pieces'];
+        $this->setViewParameter('pieces_type_pj_list', $result['pieces_type_pj_list']);
+        $this->setViewParameter('pieces', $result['pieces']);
 
         $type_pj_selection = [];
         $type_pj = $this->getDonneesFormulaire()->get('type_pj');
         if ($type_pj) {
             $type_pj_selection = array_merge($type_pj_selection, json_decode($type_pj));
         }
-        $type_pj_selection = array_pad($type_pj_selection, count($this->{'pieces'}), 0);
+        $type_pj_selection = array_pad($type_pj_selection, count($this->getViewParameter()['pieces']), 0);
 
-        $this->{'type_pj_selection'} = $type_pj_selection;
+        $this->setViewParameter('type_pj_selection', $type_pj_selection);
 
         $this->renderPage("Choix des types de pièces", __DIR__ . "/../template/PieceMarcheLotTypePiece.php");
     }
