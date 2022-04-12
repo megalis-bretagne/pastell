@@ -95,8 +95,15 @@ class FluxControler extends PastellControler
         $this->setViewParameter('entite_denomination', $this->getEntiteSQL()->getDenomination($this->getViewParameterOrObject('id_e')));
 
         $this->setViewParameter('connecteur_disponible', $this->getConnecteurDispo($this->getViewParameterOrObject('id_e'), $this->getViewParameterOrObject('type_connecteur')));
-        $this->setViewParameter('connecteur_info', $this->getFluxEntiteSQL()->getConnecteur($this->getViewParameterOrObject('id_e'), $this->getViewParameterOrObject('flux'), $this->getViewParameterOrObject('type_connecteur'), $this->getViewParameterOrObject('num_same_type')));
-
+        $this->setViewParameter(
+            'connecteur_info',
+            $this->getFluxEntiteSQL()->getConnecteur(
+                $this->getViewParameterOrObject('id_e'),
+                $this->getViewParameterOrObject('flux'),
+                $this->getViewParameterOrObject('type_connecteur'),
+                $this->getViewParameterOrObject('num_same_type')
+            )
+        );
 
         $all_info = $this->getDocumentTypeFactory()->getFluxDocumentType($this->getViewParameterOrObject('flux'))->getConnecteurAllInfo();
         $type_connecteur_info = [];

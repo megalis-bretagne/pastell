@@ -154,7 +154,20 @@ class JournalControler extends PastellControler
         }
 
         $this->setViewParameter('limit', 20);
-        $this->setViewParameter('all', $this->getJournal()->getAll($this->getViewParameterOrObject('id_e'), $this->getViewParameterOrObject('type'), $this->getViewParameterOrObject('id_d'), $this->getViewParameterOrObject('id_u'), $this->getViewParameterOrObject('offset'), $this->getViewParameterOrObject('limit'), $this->getViewParameterOrObject('recherche'), $this->getViewParameterOrObject('date_debut'), $this->getViewParameterOrObject('date_fin'))) ;
+        $this->setViewParameter(
+            'all',
+            $this->getJournal()->getAll(
+                $this->getViewParameterOrObject('id_e'),
+                $this->getViewParameterOrObject('type'),
+                $this->getViewParameterOrObject('id_d'),
+                $this->getViewParameterOrObject('id_u'),
+                $this->getViewParameterOrObject('offset'),
+                $this->getViewParameterOrObject('limit'),
+                $this->getViewParameterOrObject('recherche'),
+                $this->getViewParameterOrObject('date_debut'),
+                $this->getViewParameterOrObject('date_fin')
+            )
+        );
         $this->setViewParameter('liste_collectivite', $liste_collectivite);
 
         $this->setNavigationInfo($id_e, "Journal/index?a=a");

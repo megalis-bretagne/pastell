@@ -567,7 +567,12 @@ class DocumentControler extends PastellControler
 
 
         try {
-            $this->setViewParameter('listDocument', $this->apiGet("entite/{$this->id_e}/document"));
+            $this->setViewParameter(
+                'listDocument',
+                $this->apiGet(
+                    sprintf('entite/%d/document', $this->getViewParameterOrObject('id_e'))
+                )
+            );
         } catch (Exception $e) {
             $this->setLastError($e->getMessage());
             $this->redirect("");
@@ -726,10 +731,10 @@ class DocumentControler extends PastellControler
 
 
         $this->searchDocument();
-        $listDocument = $this->listDocument;
+        $listDocument = $this->getViewParameterOrObject('listDocument');
 
         $all_action = [];
-        foreach ($this->listDocument as $i => $document) {
+        foreach ($this->getViewParameter('listDocument') as $i => $document) {
             $listDocument[$i]['action_possible'] =  $this->getActionPossible()->getActionPossibleLot($this->getViewParameterOrObject('id_e'), $this->getId_u(), $document['id_d']);
             $all_action = array_merge($all_action, $listDocument[$i]['action_possible']);
         }
@@ -745,15 +750,22 @@ class DocumentControler extends PastellControler
 
     public function confirmTraitementLotAction()
     {
-
         $this->validTraitementParLot($_GET);
         $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($this->getViewParameterOrObject('type'));
         $this->setViewParameter('page_title', "Confirmation du traitement par lot pour les  documents " . $documentType->getName() . " pour " .
             $this->getViewParameterOrObject('infoEntite')['denomination']);
 
-        $this->setViewParameter('url_retour', "Document/traitementLot?id_e={$this->getViewParameterOrObject('id_e')}&type={$this->getViewParameterOrObject('type')}&search={$this->getViewParameterOrObject('search')}&filtre={$this->getViewParameterOrObject('filtre')}&offset={$this->getViewParameterOrObject('offset')}");
-
-
+        $this->setViewParameter(
+            'url_retour',
+            sprintf(
+                'Document/traitementLot?id_e=%s&type=%s&search=%s&filtre=%s&offset=%s',
+                $this->getViewParameterOrObject('id_e'),
+                $this->getViewParameterOrObject('type'),
+                $this->getViewParameterOrObject('search'),
+                $this->getViewParameterOrObject('filtre'),
+                $this->getViewParameterOrObject('offset')
+            )
+        );
 
         $recuperateur = new Recuperateur($_GET);
         $this->setViewParameter('action_selected', $recuperateur->get('action'));
@@ -823,7 +835,14 @@ class DocumentControler extends PastellControler
 
         $this->getActionExecutorFactory()->executeLotDocument($this->getViewParameterOrObject('id_e'), $this->getId_u(), $all_id_d, $action_selected);
         $this->setLastMessage($message);
-        $url_retour = "Document/list?id_e={$this->getViewParameterOrObject('id_e')}&type={$this->getViewParameterOrObject('type')}&search={$this->getViewParameterOrObject('search')}&filtre={$this->getViewParameterOrObject('filtre')}&offset={$this->getViewParameterOrObject('offset')}";
+        $url_retour = sprintf(
+            'Document/list?id_e=%d&type=%s&search=%s&filtre=%s&offset=%s',
+            $this->getViewParameterOrObject('id_e'),
+            $this->getViewParameterOrObject('type'),
+            $this->getViewParameterOrObject('search'),
+            $this->getViewParameterOrObject('filtre'),
+            $this->getViewParameterOrObject('offset')
+        );
         $this->redirect($url_retour);
     }
 
