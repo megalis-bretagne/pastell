@@ -14,9 +14,9 @@ if (!$id_d) {
     exit;
 }
 
-$info = $objectInstancier->getInstance(Document::class)->getInfo($id_d);
+$info = $objectInstancier->getInstance(DocumentSQL::class)->getInfo($id_d);
 $objectInstancier->getInstance(DonneesFormulaireFactory::class)->get($id_d)->delete();
-$objectInstancier->getInstance(Document::class)->delete($id_d);
+$objectInstancier->getInstance(DocumentSQL::class)->delete($id_d);
 
 $message = "Le document « {$info['titre']} » ($id_d) a été supprimé par un administrateur";
 $objectInstancier->getInstance(Journal::class)->add(Journal::DOCUMENT_ACTION, 0, $id_d, "suppression", $message);

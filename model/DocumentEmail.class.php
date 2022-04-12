@@ -129,7 +129,7 @@ class DocumentEmail extends SQL
             $actionCreator->addAction($id_e, 0, $next_action, $message_action);
         }
 
-        $document = new Document($this->sqlQuery, new PasswordGenerator());
+        $document = new DocumentSQL($this->sqlQuery, new PasswordGenerator());
         $infoDocument = $document->getInfo($result['id_d']);
 
 

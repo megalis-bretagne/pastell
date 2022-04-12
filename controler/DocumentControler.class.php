@@ -16,7 +16,7 @@ class DocumentControler extends PastellControler
 
 
         if ($id_d && ! is_array($id_d)) {
-            $document_info = $this->getDocument()->getInfo($id_d);
+            $document_info = $this->getDocumentSQL()->getInfo($id_d);
             $type = $document_info['type'];
             $this->setViewParameter('type_e_menu', $type);
         }
@@ -235,7 +235,7 @@ class DocumentControler extends PastellControler
         $page = $this->getGetInfo()->getInt('page', 0);
         $action = $this->getGetInfo()->get('action');
 
-        $document = $this->getDocument();
+        $document = $this->getDocumentSQL();
 
         if (! $id_d) {
             $this->setLastError("id_d n'a pas été fourni");
@@ -671,7 +671,7 @@ class DocumentControler extends PastellControler
         $this->setViewParameter('page', $recuperateur->getInt('page', 0));
 
 
-        $this->setViewParameter('infoDocument', $this->getDocument()->getInfo($this->{'id_d'}));
+        $this->setViewParameter('infoDocument', $this->getDocumentSQL()->getInfo($this->{'id_d'}));
 
         $type = $this->{'infoDocument'}['type'];
         $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($type);
@@ -897,7 +897,7 @@ class DocumentControler extends PastellControler
             }
         }
 
-        $document_list = $this->getDocument()->getAllByType($document_type);
+        $document_list = $this->getDocumentSQL()->getAllByType($document_type);
         if ($limit > 0) {
             $document_list = array_slice($document_list, $offset, $limit);
         }
@@ -924,7 +924,7 @@ class DocumentControler extends PastellControler
 
     public function fixModuleChamps($document_type, $old_field_name, $new_field_name)
     {
-        foreach ($this->getDocument()->getAllByType($document_type) as $document_info) {
+        foreach ($this->getDocumentSQL()->getAllByType($document_type) as $document_info) {
             $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($document_info['id_d']);
             $value = $donneesFormulaire->get($old_field_name);
             $donneesFormulaire->setData($new_field_name, $value);
@@ -1002,8 +1002,7 @@ class DocumentControler extends PastellControler
         $page = $recuperateur->getInt('page', 0);
         $go = $recuperateur->getInt('go', 0);
 
-        /** @var Document $document */
-        $document = $this->getDocument();
+        $document = $this->getDocumentSQL();
         $infoDocument = $document->getInfo($id_d);
         $type = $infoDocument['type'];
 
@@ -1170,7 +1169,7 @@ class DocumentControler extends PastellControler
         $field = $recuperateur->get('field');
         $page = $recuperateur->get('page');
 
-        $document = $this->getDocument();
+        $document = $this->getDocumentSQL();
         $info = $document->getInfo($id_d);
         $type = $info['type'];
 
@@ -1247,7 +1246,7 @@ class DocumentControler extends PastellControler
 
         $this->verifDroitLecture($id_e, $id_d);
 
-        $document = $this->getDocument();
+        $document = $this->getDocumentSQL();
         $info = $document->getInfo($id_d);
 
 

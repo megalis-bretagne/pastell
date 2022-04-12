@@ -191,7 +191,7 @@ class GlaneurConnecteurTest extends PastellTestCase
         $this->assertMatchesRegularExpression("#Création du document#", $this->last_message[0]);
         $id_d = $this->created_id_d;
 
-        $document = $this->getObjectInstancier()->getInstance(Document::class);
+        $document = $this->getObjectInstancier()->getInstance(DocumentSQL::class);
         $info = $document->getInfo($id_d);
         $this->assertEquals("Bordereau de test", $info['titre']);
         $this->assertEquals("helios-automatique", $info['type']);
@@ -272,7 +272,7 @@ class GlaneurConnecteurTest extends PastellTestCase
         $this->assertMatchesRegularExpression("#Création du document#", $this->last_message[0]);
         $id_d = $this->created_id_d;
 
-        $document = $this->getObjectInstancier()->getInstance(Document::class);
+        $document = $this->getObjectInstancier()->getInstance(DocumentSQL::class);
         $info = $document->getInfo($id_d);
         $this->assertEquals("test.xml", $info['titre']);
 
@@ -366,7 +366,7 @@ class GlaneurConnecteurTest extends PastellTestCase
         $this->assertMatchesRegularExpression("#Création du document#", $this->last_message[0]);
 
         $id_d = $this->created_id_d;
-        $document = $this->getObjectInstancier()->getInstance(Document::class);
+        $document = $this->getObjectInstancier()->getInstance(DocumentSQL::class);
         $info = $document->getInfo($id_d);
         $this->assertEquals("PESALR2_49101169800000_171227_2045.xml", $info['titre']);
         $this->assertEquals("helios-automatique", $info['type']);
@@ -425,7 +425,7 @@ class GlaneurConnecteurTest extends PastellTestCase
         $this->assertMatchesRegularExpression("#Création du document#", $this->last_message[0]);
 
         $id_d = $this->created_id_d;
-        $document = $this->getObjectInstancier()->getInstance(Document::class);
+        $document = $this->getObjectInstancier()->getInstance(DocumentSQL::class);
         $info = $document->getInfo($id_d);
         $this->assertEquals("PESALR2_49101169800000_171227_2045.xml", $info['titre']);
         $this->assertEquals("helios-automatique", $info['type']);
@@ -527,7 +527,7 @@ class GlaneurConnecteurTest extends PastellTestCase
         $this->assertMatchesRegularExpression("#Création du document#", $this->last_message[0]);
 
         $id_d = $this->created_id_d;
-        $document = $this->getObjectInstancier()->getInstance(Document::class);
+        $document = $this->getObjectInstancier()->getInstance(DocumentSQL::class);
         $info = $document->getInfo($id_d);
         $this->assertEquals("Exemple d'import d'un fichier PES", $info['titre']);
         $this->assertEquals("helios-automatique", $info['type']);

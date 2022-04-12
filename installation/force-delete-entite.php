@@ -25,7 +25,7 @@ if (! $id_e) {
 
 $entiteSQL = $objectInstancier->getInstance(EntiteSQL::class);
 $documentEntite = $objectInstancier->getInstance(DocumentEntite::class);
-$document = $objectInstancier->getInstance(Document::class);
+$document = $objectInstancier->getInstance(DocumentSQL::class);
 $donneesFormulaireFactory = $objectInstancier->getInstance(DonneesFormulaireFactory::class);
 $connecteurEntiteSQL = $objectInstancier->getInstance(ConnecteurEntiteSQL::class);
 $fluxEntiteSQL = $objectInstancier->getInstance(FluxEntiteSQL::class);

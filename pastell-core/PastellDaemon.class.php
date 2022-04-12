@@ -1,31 +1,18 @@
 <?php
 
+use Monolog\Logger;
+
 class PastellDaemon
 {
-    private $workerSQL;
-    private $jobQueueSQL;
-    private $actionExecutorFactory;
-    private $document;
-    private $notificationMail;
-    private $daemon_log_file;
-    private $logger;
-
     public function __construct(
-        WorkerSQL $workerSQL,
-        JobQueueSQL $jobQueueSQL,
-        ActionExecutorFactory $actionExecutorFactory,
-        Document $document,
-        NotificationMail $notificationMail,
-        $daemon_log_file,
-        Monolog\Logger $logger
+        private WorkerSQL $workerSQL,
+        private JobQueueSQL $jobQueueSQL,
+        private ActionExecutorFactory $actionExecutorFactory,
+        private DocumentSQL $document,
+        private NotificationMail $notificationMail,
+        private string $daemon_log_file,
+        private Logger $logger,
     ) {
-        $this->workerSQL = $workerSQL;
-        $this->jobQueueSQL = $jobQueueSQL;
-        $this->actionExecutorFactory = $actionExecutorFactory;
-        $this->document = $document;
-        $this->notificationMail = $notificationMail;
-        $this->daemon_log_file = $daemon_log_file;
-        $this->logger = $logger;
     }
 
     public function jobMaster()

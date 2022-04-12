@@ -167,12 +167,9 @@ abstract class ActionExecutor
         return $this->objectInstancier->getInstance(DocumentEntite::class);
     }
 
-    /**
-     * @return Document
-     */
-    public function getDocument()
+    public function getDocument(): DocumentSQL
     {
-        return $this->objectInstancier->getInstance(Document::class);
+        return $this->objectInstancier->getInstance(DocumentSQL::class);
     }
 
     /**

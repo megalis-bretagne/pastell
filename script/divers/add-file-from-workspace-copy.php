@@ -28,7 +28,7 @@ echo "Récupération depuis $folder vers $id_e:$flux_id dans l'état $action_id\
 $all = glob("$folder/*/*/*.yml");
 echo count($all) . " fichiers trouvés\n";
 
-$documentSQL = $objectInstancier->getInstance(Document::class);
+$documentSQL = $objectInstancier->getInstance(DocumentSQL::class);
 $documentEntiteSQL = $objectInstancier->getInstance(DocumentEntite::class);
 $actionCreatorSQL = $objectInstancier->getInstance(ActionCreatorSQL::class);
 $donneesFormulaireFactory = $objectInstancier->getInstance(DonneesFormulaireFactory::class);

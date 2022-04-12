@@ -35,7 +35,7 @@ class ActionPossible
 
     public function __construct(ObjectInstancier $objectInstancier)
     {
-        $this->document = $objectInstancier->getInstance(Document::class);
+        $this->document = $objectInstancier->getInstance(DocumentSQL::class);
         $this->documentActionEntite = $objectInstancier->getInstance(DocumentActionEntite::class);
         $this->documentEntite = $objectInstancier->getInstance(DocumentEntite::class);
         $this->roleUtilisateur = $objectInstancier->getInstance(RoleUtilisateur::class);

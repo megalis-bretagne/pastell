@@ -66,7 +66,7 @@ class MailSecDestinataireControler extends PastellControler
         $mailSecInfo->id_e =
             $this->getInstance(DocumentEntite::class)->getEntiteWithRole($mailSecInfo->id_d, 'editeur');
         $mailSecInfo->denomination_entite = get_hecho($this->getEntiteSQL()->getInfo($mailSecInfo->id_e)['denomination']);
-        $mailSecInfo->type_document = $this->getInstance(Document::class)->getInfo($mailSecInfo->id_d)['type'];
+        $mailSecInfo->type_document = $this->getInstance(DocumentSQL::class)->getInfo($mailSecInfo->id_d)['type'];
 
         $mailSecInfo->flux_destinataire = $this->getFluxDestinataire($mailSecInfo->type_document);
 
@@ -213,7 +213,7 @@ class MailSecDestinataireControler extends PastellControler
         $fileUploader = new FileUploader();
         $mailSecInfo->donneesFormulaireReponse->saveTab($this->getPostInfo(), $fileUploader, 0);
 
-        $this->getObjectInstancier()->getInstance(Document::class)->setTitre(
+        $this->getObjectInstancier()->getInstance(DocumentSQL::class)->setTitre(
             $mailSecInfo->id_d_reponse,
             $mailSecInfo->donneesFormulaireReponse->getTitre()
         );

@@ -107,7 +107,7 @@ class GlaneurSFTPTest extends PastellTestCase
             ], $sftpFactory)
         );
 
-        $document = $this->getObjectInstancier()->getInstance(Document::class);
+        $document = $this->getObjectInstancier()->getInstance(DocumentSQL::class);
         $id_d = $document->getAllByType('actes-generique')[0]['id_d'];
         $donneesFormulaireFactory = $this->getDonneesFormulaireFactory()->get($id_d);
         $this->assertEquals('vide1.pdf', $donneesFormulaireFactory->getFileName('arrete'));
@@ -174,7 +174,7 @@ class GlaneurSFTPTest extends PastellTestCase
             ], $sftpFactory)
         );
 
-        $document = $this->getObjectInstancier()->getInstance(Document::class);
+        $document = $this->getObjectInstancier()->getInstance(DocumentSQL::class);
         $id_d = $document->getAllByType('actes-generique')[0]['id_d'];
         $donneesFormulaireFactory = $this->getDonneesFormulaireFactory()->get($id_d);
         $this->assertEquals('vide1.pdf', $donneesFormulaireFactory->getFileName('arrete'));

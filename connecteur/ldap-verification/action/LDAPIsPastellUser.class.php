@@ -6,7 +6,7 @@ class LDAPIsPastellUser extends ActionExecutor
     {
         /** @var LDAPVerification $ldap */
         $ldap = $this->getMyConnecteur();
-        $users = $ldap->getUserToCreate($this->objectInstancier->getInstance(Utilisateur::class));
+        $users = $ldap->getUserToCreate($this->objectInstancier->getInstance(UtilisateurSQL::class));
         $result = "<table border='1'><tr>
 						
 					<th>login</th>

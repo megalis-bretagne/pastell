@@ -11,7 +11,7 @@ class JournalControler extends PastellControler
 
 
         if ($id_d) {
-            $document_info = $this->getDocument()->getInfo($id_d);
+            $document_info = $this->getDocumentSQL()->getInfo($id_d);
             $type = $document_info['type'];
             $this->setViewParameter('type_e_menu', $type);
         }
@@ -38,7 +38,7 @@ class JournalControler extends PastellControler
 
         $this->setViewParameter('entite_info', $this->getEntiteSQL()->getInfo($this->{'id_e'}));
         $this->setViewParameter('utilisateur_info', $this->getUtilisateur()->getInfo($this->{'id_u'}));
-        $this->setViewParameter('document_info', $this->getDocument()->getInfo($this->{'id_d'}));
+        $this->setViewParameter('document_info', $this->getDocumentSQL()->getInfo($this->{'id_d'}));
 
 
         $this->setViewParameter('recherche', $recuperateur->get('recherche'));
@@ -145,7 +145,7 @@ class JournalControler extends PastellControler
             $page_title .= " - " . $this->{'type'};
         }
         if ($this->{'id_d'}) {
-            $documentInfo = $this->getDocument()->getInfo($this->{'id_d'});
+            $documentInfo = $this->getDocumentSQL()->getInfo($this->{'id_d'});
             $page_title .= " - " . $documentInfo['titre'];
         }
         if ($this->{'id_u'}) {
