@@ -4,9 +4,9 @@ use Pastell\Service\Droit\DroitService;
 
 abstract class ChoiceActionExecutor extends ActionExecutor
 {
-    private $viewParameter;
-    protected $field;
-    protected $page;
+    private array $viewParameter;
+    protected string $field;
+    protected int $page = 0;
 
     private $recuperateur;
 
@@ -28,9 +28,14 @@ abstract class ChoiceActionExecutor extends ActionExecutor
         return $this->recuperateur;
     }
 
-    public function setField($field)
+    public function setField(string $field): void
     {
         $this->field = $field;
+    }
+
+    public function setPage(int $page): void
+    {
+        $this->page = $page;
     }
 
     public function setViewParameter($key, $value)
@@ -38,7 +43,7 @@ abstract class ChoiceActionExecutor extends ActionExecutor
         $this->viewParameter[$key] = $value;
     }
 
-    public function getViewParameter()
+    public function getViewParameter(): array
     {
         $this->viewParameter['id_d'] = $this->id_d;
         $this->viewParameter['id_e'] = $this->id_e;

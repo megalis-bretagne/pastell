@@ -109,7 +109,7 @@ class NotBuggySoapClient extends SoapClient
 
         // Analyse de la response pour la formater en XML valide
         // Pour le format multipart XOP MTOM, il faut fusionner les parts dans l'enveloppe XML.
-        $headers = $this->__getLastResponseHeaders();
+        $headers = $this->__getLastResponseHeaders() ?? '';
         if (preg_match('/Content-Type: Multipart\/Related;.*type="application\/xop\+xml";/i', $headers) === 1) {
             $response = $this->formaterRetourMultiPartXOPToXML($response, $headers);
         } else {
