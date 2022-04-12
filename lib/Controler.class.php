@@ -118,7 +118,11 @@ class Controler
 
     public function __get($key)
     {
+        return $this->getViewParameterOrObject($key);
+    }
 
+    public function getViewParameterOrObject($key)
+    {
         if ($this->isViewParameter($key)) {
             return $this->viewParameter[$key];
         }
