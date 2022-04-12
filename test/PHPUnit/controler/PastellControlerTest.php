@@ -6,10 +6,10 @@ class PastellControlerTest extends ControlerTestCase
     {
         $pastellControler = $this->getControlerInstance(PastellControler::class);
         $pastellControler->setNavigationInfo(0, 'test');
-        $this->assertCount(1, $pastellControler->navigation);
+        $this->assertCount(1, $pastellControler->getViewParameterOrObject('navigation'));
         $this->assertEquals(
             "Bourg-en-Bresse",
-            $pastellControler->navigation[0]['children'][0]['denomination']
+            $pastellControler->getViewParameterOrObject('navigation')[0]['children'][0]['denomination']
         );
     }
 
@@ -17,10 +17,10 @@ class PastellControlerTest extends ControlerTestCase
     {
         $pastellControler = $this->getControlerInstance(PastellControler::class);
         $pastellControler->setNavigationInfo(1, 'test');
-        $this->assertCount(2, $pastellControler->navigation);
+        $this->assertCount(2, $pastellControler->getViewParameterOrObject('navigation'));
         $this->assertEquals(
             "Bourg-en-Bresse",
-            $pastellControler->navigation[1]['name']
+            $pastellControler->getViewParameterOrObject('navigation')[1]['name']
         );
     }
 
@@ -28,10 +28,10 @@ class PastellControlerTest extends ControlerTestCase
     {
         $pastellControler = $this->getControlerInstance(PastellControler::class);
         $pastellControler->setNavigationInfo(2, 'test');
-        $this->assertCount(3, $pastellControler->navigation);
+        $this->assertCount(3, $pastellControler->getViewParameterOrObject('navigation'));
         $this->assertEquals(
             "CCAS",
-            $pastellControler->navigation[2]['name']
+            $pastellControler->getViewParameterOrObject('navigation')[2]['name']
         );
     }
 
@@ -45,7 +45,7 @@ class PastellControlerTest extends ControlerTestCase
         $pastellControler = $this->getObjectInstancier()->getInstance(PastellControler::class);
 
         $pastellControler->setNavigationInfo(0, 'test');
-        $this->assertCount(1, $pastellControler->navigation[0]['children']);
+        $this->assertCount(1, $pastellControler->getViewParameterOrObject('navigation')[0]['children']);
     }
 
     public function testSetNavigationWhenUserHasNoRightAtAll()
@@ -58,7 +58,7 @@ class PastellControlerTest extends ControlerTestCase
         $pastellControler = $this->getObjectInstancier()->getInstance(PastellControler::class);
 
         $pastellControler->setNavigationInfo(0, 'test');
-        $this->assertCount(1, $pastellControler->navigation[0]['children']);
+        $this->assertCount(1, $pastellControler->getViewParameterOrObject('navigation')[0]['children']);
     }
 
     public function testSetNavigationWhenUserHasNoRightOnSecondLevel()
@@ -83,10 +83,10 @@ class PastellControlerTest extends ControlerTestCase
 
         $pastellControler = $this->getObjectInstancier()->getInstance(PastellControler::class);
         $pastellControler->setNavigationInfo($id_e_fille, 'test');
-        $this->assertCount(1, $pastellControler->navigation[1]['same_level_entities']);
+        $this->assertCount(1, $pastellControler->getViewParameterOrObject('navigation')[1]['same_level_entities']);
         $this->assertEquals(
             "Nouvelle entité",
-            $pastellControler->navigation[1]['same_level_entities'][0]['denomination']
+            $pastellControler->getViewParameterOrObject('navigation')[1]['same_level_entities'][0]['denomination']
         );
     }
 }

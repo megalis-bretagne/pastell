@@ -115,12 +115,6 @@ class Controler
         $lastMessage->setLastMessage($message);
     }
 
-
-    public function __get($key)
-    {
-        return $this->getViewParameterOrObject($key);
-    }
-
     public function getViewParameterOrObject($key)
     {
         if ($this->isViewParameter($key)) {

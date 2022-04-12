@@ -29,16 +29,16 @@ class RoleControler extends PastellControler
         $this->verifDroit(0, "role:lecture");
         $this->setViewParameter('role', $this->getGetInfo()->get('role'));
         $this->setViewParameter('role_edition', $this->hasDroit(0, "role:edition"));
-        $this->setViewParameter('role_info', $this->getRoleSQL()->getInfo($this->{'role'}));
+        $this->setViewParameter('role_info', $this->getRoleSQL()->getInfo($this->getViewParameterOrObject('role')));
 
         /** @var RoleDroit $roleDroit */
         $roleDroit = $this->getInstance(RoleDroit::class);
 
         $all_droit = $roleDroit->getAllDroit();
-        $all_droit_sql = $this->getRoleSQL()->getDroit($all_droit, $this->{'role'});
+        $all_droit_sql = $this->getRoleSQL()->getDroit($all_droit, $this->getViewParameterOrObject('role'));
         $this->setViewParameter('all_droit_utilisateur', $this->getObjectInstancier()->getInstance(DroitService::class)->clearRestrictedDroit($all_droit_sql));
 
-        $this->setViewParameter('page_title', "Gestion du rôle {$this->{'role'}} et des droits associés");
+        $this->setViewParameter('page_title', "Gestion du rôle {$this->getViewParameterOrObject('role')} et des droits associés");
         $this->setViewParameter('template_milieu', "RoleDetail");
         $this->renderDefault();
     }

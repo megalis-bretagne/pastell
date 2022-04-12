@@ -70,7 +70,6 @@ class Gabarit
         return $this->objectInstancier->getInstance($key);
     }
 
-
     public function suivantPrecedent($offset, $limit, $nb_total, $link = null, $message = null)
     {
         if (! $message) {

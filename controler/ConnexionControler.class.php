@@ -225,7 +225,7 @@ class ConnexionControler extends PastellControler
         $this->setViewParameter('page', "oublie_identifiant");
         $this->setViewParameter('page_title', "Oubli des identifiants");
         $this->setViewParameter('template_milieu', "ConnexionChangementMdp");
-        $this->getId_uFromTokenOrFailed($this->{'mail_verif_password'});
+        $this->getId_uFromTokenOrFailed($this->getViewParameterOrObject('mail_verif_password'));
         $this->render("PageConnexion");
     }
 

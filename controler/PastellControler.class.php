@@ -186,10 +186,10 @@ class PastellControler extends Controler
         if (! $this->isViewParameter('menu_gauche_template')) {
             $this->setViewParameter('menu_gauche_template', "DocumentMenuGauche");
             $this->setViewParameter('menu_gauche_select', "");
-            if ($this->id_e_menu) {
-                $this->setViewParameter('menu_gauche_link', "Document/list?id_e=" . $this->{'id_e_menu'});
+            if ($this->getViewParameterOrObject('id_e_menu')) {
+                $this->setViewParameter('menu_gauche_link', "Document/list?id_e=" . $this->getViewParameterOrObject('id_e_menu'));
             } elseif (isset($this->getViewParameter()['id_e'])) {
-                    $this->setViewParameter('menu_gauche_link', "Document/list?id_e=" . $this->{'id_e'});
+                    $this->setViewParameter('menu_gauche_link', "Document/list?id_e=" . $this->getViewParameterOrObject('id_e'));
             } else {
                 $this->setViewParameter('menu_gauche_link', "Document/list?id_e=0");
             }
@@ -226,14 +226,14 @@ class PastellControler extends Controler
             $this->setViewParameter('type_e_menu', get_hecho(
                 $recuperateur->get(
                     'type',
-                    $this->isViewParameter('type_e_menu') ? $this->{'type_e_menu'} : ''
+                    $this->isViewParameter('type_e_menu') ? $this->getViewParameterOrObject('type_e_menu') : ''
                 )
             ));
         }
 
         $listeCollectivite = $this->getRoleUtilisateur()->getEntite($this->getId_u(), "entite:lecture");
 
-        $this->setViewParameter('display_entite_racine', $this->{'id_e_menu'} != 0
+        $this->setViewParameter('display_entite_racine', $this->getViewParameterOrObject('id_e_menu') != 0
         && (count($listeCollectivite) > 1 || (isset($listeCollectivite[0]) && $listeCollectivite[0] == 0)));
     }
 

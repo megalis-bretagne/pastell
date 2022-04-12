@@ -27,7 +27,7 @@ class DocumentControler extends PastellControler
     public function renderDefault()
     {
         $this->setViewParameter('show_choice_entity_message', !(bool)$this->getPostOrGetInfo()->getInt('id_e')
-        && $this->{'id_e'} === 0);
+        && $this->getViewParameterOrObject('id_e') === 0);
         parent::renderDefault();
     }
 
@@ -117,7 +117,7 @@ class DocumentControler extends PastellControler
         $this->setViewParameter('infoEntite', $this->getEntiteSQL()->getInfo($id_e));
         $this->setViewParameter('formulaire', $documentType->getFormulaire());
         $this->setViewParameter('donneesFormulaire', $this->getDonneesFormulaireFactory()->get($id_d, $info_document['type']));
-        $this->{'donneesFormulaire'}->getFormulaire()->setTabNumber($page);
+        $this->getViewParameterOrObject('donneesFormulaire')->getFormulaire()->setTabNumber($page);
 
         $this->setViewParameter('actionPossible', $this->getActionPossible());
         $this->setViewParameter('theAction', $documentType->getAction());
@@ -126,20 +126,20 @@ class DocumentControler extends PastellControler
         $this->setViewParameter('documentEmail', $this->getInstance(DocumentEmail::class));
         $this->setViewParameter('documentActionEntite', $this->getDocumentActionEntite());
 
-        $this->setViewParameter('next_action_automatique', $this->{'theAction'}->getActionAutomatique($true_last_action));
+        $this->setViewParameter('next_action_automatique', $this->getViewParameterOrObject('theAction')->getActionAutomatique($true_last_action));
         $this->setViewParameter('droit_erreur_fatale', $this->getDroitService()->hasDroit($this->getId_u(), $this->getDroitService()->getDroitEdition($info_document['type']), 0));
 
         $this->setViewParameter('is_super_admin', $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "system:edition", 0));
-        if ($this->{'is_super_admin'}) {
+        if ($this->getViewParameterOrObject('is_super_admin')) {
             $this->setViewParameter('all_action', $documentType->getAction()->getWorkflowAction());
         }
 
         $this->setViewParameter('page_title', $info_document['titre'] . " (" . $documentType->getName() . ")");
 
         if ($documentType->isAfficheOneTab()) {
-            $this->setViewParameter('fieldDataList', $this->{'donneesFormulaire'}->getFieldDataListAllOnglet($this->{'my_role'}));
+            $this->setViewParameter('fieldDataList', $this->getViewParameterOrObject('donneesFormulaire')->getFieldDataListAllOnglet($this->getViewParameterOrObject('my_role')));
         } else {
-            $this->setViewParameter('fieldDataList', $this->{'donneesFormulaire'}->getFieldDataList($this->{'my_role'}, $page));
+            $this->setViewParameter('fieldDataList', $this->getViewParameterOrObject('donneesFormulaire')->getFieldDataList($this->getViewParameterOrObject('my_role'), $page));
         }
 
         $document_email_reponse_list =
@@ -149,12 +149,12 @@ class DocumentControler extends PastellControler
         $this->setViewParameter('document_email_reponse_list', $document_email_reponse_list);
 
         $this->setViewParameter('recuperation_fichier_url', "Document/recuperationFichier?id_d=$id_d&id_e=$id_e");
-        if ($this->hasDroit($this->{'id_e'}, "system:lecture")) {
-            $this->setViewParameter('job_list', $this->getWorkerSQL()->getJobListWithWorkerForDocument($this->{'id_e'}, $this->{'id_d'}));
+        if ($this->hasDroit($this->getViewParameterOrObject('id_e'), "system:lecture")) {
+            $this->setViewParameter('job_list', $this->getWorkerSQL()->getJobListWithWorkerForDocument($this->getViewParameterOrObject('id_e'), $this->getViewParameterOrObject('id_d')));
         } else {
             $this->setViewParameter('job_list', false);
         }
-        $this->setViewParameter('return_url', urlencode("Document/detail?id_e={$this->{'id_e'}}&id_d={$this->{'id_d'}}"));
+        $this->setViewParameter('return_url', urlencode("Document/detail?id_e={$this->getViewParameterOrObject('id_e')}&id_d={$this->getViewParameterOrObject('id_d')}"));
 
         $this->setViewParameter('template_milieu', "DocumentDetail");
         $this->setViewParameter('inject', ['id_e' => $id_e,'id_ce' => '','id_d' => $id_d,'action' => $action]);
@@ -204,7 +204,7 @@ class DocumentControler extends PastellControler
         }
 
         $this->setViewParameter('donneesFormulaire', $this->getDonneesFormulaireFactory()->get($id_d_reponse));
-        $this->setViewParameter('fieldDataList', $this->{'donneesFormulaire'}->getFieldDataList("", 0));
+        $this->setViewParameter('fieldDataList', $this->getViewParameterOrObject('donneesFormulaire')->getFieldDataList("", 0));
         $this->setViewParameter('recuperation_fichier_url', "Document/recuperationFichier?id_d=$id_d_reponse&id_e=$id_e");
 
         $this->setViewParameter('page_title', $info_document['titre'] . " ( Réponse de " . $mail_info['email'] . ")");
@@ -357,7 +357,7 @@ class DocumentControler extends PastellControler
         if ($id_e) {
             $this->setViewParameter('listDocument', $this->getDocumentActionEntite()->getListDocumentByEntite($id_e, $liste_type, $offset, $limit, $search));
             $this->setViewParameter('count', $this->getDocumentActionEntite()->getNbDocumentByEntite($id_e, $liste_type, $search));
-            $this->setViewParameter('type_list', $this->getAllType($this->{'listDocument'}));
+            $this->setViewParameter('type_list', $this->getAllType($this->getViewParameterOrObject('listDocument')));
         }
 
         $this->setViewParameter('infoEntite', $this->getEntiteSQL()->getInfo($id_e));
@@ -370,8 +370,8 @@ class DocumentControler extends PastellControler
         $this->setViewParameter('champs_affiches', DocumentType::getDefaultDisplayField());
 
         $this->setNavigationInfo($id_e, "Document/index?a=a");
-        if ($this->{'infoEntite'}) {
-            $this->setViewParameter('page_title', "Liste des dossiers " . $this->{'infoEntite'}['denomination']) ;
+        if ($this->getViewParameterOrObject('infoEntite')) {
+            $this->setViewParameter('page_title', "Liste des dossiers " . $this->getViewParameterOrObject('infoEntite')['denomination']) ;
         } else {
             $this->setViewParameter('page_title', "Liste des dossiers");
         }
@@ -429,7 +429,7 @@ class DocumentControler extends PastellControler
 
         $page_title = "Liste des dossiers " . $documentType->getName();
         if ($id_e) {
-            $page_title .= " pour " . $this->{'infoEntite'}['denomination'];
+            $page_title .= " pour " . $this->getViewParameterOrObject('infoEntite')['denomination'];
         }
 
         $this->setViewParameter('page_title', $page_title);
@@ -466,11 +466,11 @@ class DocumentControler extends PastellControler
         $this->setViewParameter('champs_affiches', $documentType->getChampsAffiches());
 
 
-        $this->setViewParameter('allDroitEntite', $this->getDroitService()->getAllDocumentLecture($this->getId_u(), $this->{'id_e'}));
+        $this->setViewParameter('allDroitEntite', $this->getDroitService()->getAllDocumentLecture($this->getId_u(), $this->getViewParameterOrObject('id_e')));
 
         $this->setViewParameter('indexedFieldsList', $documentType->getFormulaire()->getIndexedFields());
         $indexedFieldValue = [];
-        foreach ($this->{'indexedFieldsList'} as $indexField => $indexLibelle) {
+        foreach ($this->getViewParameterOrObject('indexedFieldsList') as $indexField => $indexLibelle) {
             $indexedFieldValue[$indexField] = $recuperateur->get($indexField);
         }
 
@@ -483,19 +483,19 @@ class DocumentControler extends PastellControler
             $filtre,
             false,
             false,
-            $this->{'tri'},
-            $this->{'allDroitEntite'},
+            $this->getViewParameterOrObject('tri'),
+            $this->getViewParameterOrObject('allDroitEntite'),
             false,
             false,
             false,
             $indexedFieldValue,
-            $this->{'sens_tri'}
+            $this->getViewParameterOrObject('sens_tri')
         ));
 
 
         $this->setViewParameter('url_tri', "Document/list?id_e=$id_e&type=$type&search=$search&filtre=$filtre");
 
-        $this->setViewParameter('type_list', $this->getAllType($this->{'listDocument'}));
+        $this->setViewParameter('type_list', $this->getAllType($this->getViewParameterOrObject('listDocument')));
 
         $this->setViewParameter('template_milieu', "DocumentList");
         $this->renderDefault();
@@ -513,19 +513,19 @@ class DocumentControler extends PastellControler
         $this->setViewParameter('state_end', $recuperateur->get('state_end'));
 
 
-        $this->setViewParameter('last_state_begin_iso', getDateIso($this->{'last_state_begin'}));
-        $this->setViewParameter('last_state_end_iso', getDateIso($this->{'last_state_end'}));
-        $this->setViewParameter('state_begin_iso', getDateIso($this->{'state_begin'}));
-        $this->setViewParameter('state_end_iso', getDateIso($this->{'state_end'}));
+        $this->setViewParameter('last_state_begin_iso', getDateIso($this->getViewParameterOrObject('last_state_begin')));
+        $this->setViewParameter('last_state_end_iso', getDateIso($this->getViewParameterOrObject('last_state_end')));
+        $this->setViewParameter('state_begin_iso', getDateIso($this->getViewParameterOrObject('state_begin')));
+        $this->setViewParameter('state_end_iso', getDateIso($this->getViewParameterOrObject('state_end')));
 
-        if (! $this->{'id_e'}) {
+        if (! $this->getViewParameterOrObject('id_e')) {
             $error_message = "id_e est obligatoire";
             $this->setLastError($error_message);
             $this->redirect("");
         }
-        $this->verifDroit($this->{'id_e'}, "entite:lecture");
+        $this->verifDroit($this->getViewParameterOrObject('id_e'), "entite:lecture");
 
-        $this->setViewParameter('allDroitEntite', $this->getDroitService()->getAllDocumentLecture($this->getId_u(), $this->{'id_e'}));
+        $this->setViewParameter('allDroitEntite', $this->getDroitService()->getAllDocumentLecture($this->getId_u(), $this->getViewParameterOrObject('id_e')));
 
         $this->setViewParameter('etatTransit', $recuperateur->get('etatTransit'));
 
@@ -538,11 +538,11 @@ class DocumentControler extends PastellControler
         $this->setViewParameter('limit', $recuperateur->getInt('limit', 100));
 
         $indexedFieldValue = [];
-        if ($this->{'type'}) {
-            $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($this->{'type'});
+        if ($this->getViewParameterOrObject('type')) {
+            $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($this->getViewParameterOrObject('type'));
             $this->setViewParameter('indexedFieldsList', $documentType->getFormulaire()->getIndexedFields());
 
-            foreach ($this->{'indexedFieldsList'} as $indexField => $indexLibelle) {
+            foreach ($this->getViewParameterOrObject('indexedFieldsList') as $indexField => $indexLibelle) {
                 $indexedFieldValue[$indexField] = $recuperateur->get($indexField);
                 if ($documentType->getFormulaire()->getField($indexField)->getType() == 'date') {
                     $indexedFieldValue[$indexField] = date_fr_to_iso($recuperateur->get($indexField));
@@ -563,7 +563,7 @@ class DocumentControler extends PastellControler
         $this->setViewParameter('documentActionEntite', $this->getDocumentActionEntite());
         $this->setViewParameter('documentTypeFactory', $this->getDocumentTypeFactory());
 
-        $this->setViewParameter('my_id_e', $this->{'id_e'});
+        $this->setViewParameter('my_id_e', $this->getViewParameterOrObject('id_e'));
 
 
         try {
@@ -573,18 +573,18 @@ class DocumentControler extends PastellControler
             $this->redirect("");
         }
 
-        $url_tri = "Document/search?id_e={$this->{'id_e'}}&search={$this->{'search'}}&type={$this->{'type'}}&lastetat={$this->{'lastEtat'}}" .
-                        "&last_state_begin={$this->{'last_state_begin_iso'}}&last_state_end={$this->{'last_state_end_iso'}}&etatTransit={$this->{'etatTransit'}}" .
-                        "&state_begin={$this->{'state_begin_iso'}}&state_end={$this->{'state_end_iso'}}&date_in_fr=true";
+        $url_tri = "Document/search?id_e={$this->getViewParameterOrObject('id_e')}&search={$this->getViewParameterOrObject('search')}&type={$this->getViewParameterOrObject('type')}&lastetat={$this->getViewParameterOrObject('lastEtat')}" .
+                        "&last_state_begin={$this->getViewParameterOrObject('last_state_begin_iso')}&last_state_end={$this->getViewParameterOrObject('last_state_end_iso')}&etatTransit={$this->getViewParameterOrObject('etatTransit')}" .
+                        "&state_begin={$this->getViewParameterOrObject('state_begin_iso')}&state_end={$this->getViewParameterOrObject('state_end_iso')}&date_in_fr=true";
 
-        if ($this->{'type'}) {
+        if ($this->getViewParameterOrObject('type')) {
             foreach ($indexedFieldValue as $indexName => $indexValue) {
                 $url_tri .= "&" . urlencode($indexName) . "=" . urlencode($indexValue);
             }
         }
 
         $this->setViewParameter('url_tri', $url_tri);
-        $this->setViewParameter('type_list', $this->getAllType($this->{'listDocument'}));
+        $this->setViewParameter('type_list', $this->getAllType($this->getViewParameterOrObject('listDocument')));
     }
 
     public function exportAction()
@@ -671,13 +671,13 @@ class DocumentControler extends PastellControler
         $this->setViewParameter('page', $recuperateur->getInt('page', 0));
 
 
-        $this->setViewParameter('infoDocument', $this->getDocumentSQL()->getInfo($this->{'id_d'}));
+        $this->setViewParameter('infoDocument', $this->getDocumentSQL()->getInfo($this->getViewParameterOrObject('id_d')));
 
-        $type = $this->{'infoDocument'}['type'];
+        $type = $this->getViewParameterOrObject('infoDocument')['type'];
         $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($type);
         $theAction = $documentType->getAction();
 
-        $this->setViewParameter('actionName', $theAction->getDoActionName($this->{'action'}));
+        $this->setViewParameter('actionName', $theAction->getDoActionName($this->getViewParameterOrObject('action')));
 
         $this->setViewParameter('page_title', "Attention ! Action irréversible");
         $this->setViewParameter('template_milieu', "DocumentWarning");
@@ -695,32 +695,32 @@ class DocumentControler extends PastellControler
         $this->setViewParameter('filtre', $recuperateur->get('filtre'));
         $this->setViewParameter('limit', 20);
 
-        if (! $this->{'type'}) {
-            $this->redirect("/Document/index?id_e={$this->{'id_e'}}");
+        if (! $this->getViewParameterOrObject('type')) {
+            $this->redirect("/Document/index?id_e={$this->getViewParameterOrObject('id_e')}");
         }
-        if (!$this->{'id_e'}) {
+        if (!$this->getViewParameterOrObject('id_e')) {
             $this->redirect("/Document/index");
         }
 
-        $this->setViewParameter('id_e_menu', $this->{'id_e'});
-        $this->verifDroit($this->{'id_e'}, "{$this->{'type'}}:lecture");
-        $this->setViewParameter('infoEntite', $this->getEntiteSQL()->getInfo($this->{'id_e'}));
+        $this->setViewParameter('id_e_menu', $this->getViewParameterOrObject('id_e'));
+        $this->verifDroit($this->getViewParameterOrObject('id_e'), "{$this->getViewParameterOrObject('type')}:lecture");
+        $this->setViewParameter('infoEntite', $this->getEntiteSQL()->getInfo($this->getViewParameterOrObject('id_e')));
 
-        $this->setViewParameter('id_e_menu', $this->{'id_e'});
-        $this->setViewParameter('type_e_menu', $this->{'type'});
+        $this->setViewParameter('id_e_menu', $this->getViewParameterOrObject('id_e'));
+        $this->setViewParameter('type_e_menu', $this->getViewParameterOrObject('type'));
         $this->setViewParameter('url_retour', $recuperateur->get('url_retour'));
     }
 
     public function traitementLotAction()
     {
         $this->validTraitementParLot($_GET);
-        $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($this->{'type'});
+        $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($this->getViewParameterOrObject('type'));
         $page_title = "Traitement par lot pour les  documents " . $documentType->getName();
-        $page_title .= " pour " . $this->{'infoEntite'}['denomination'];
+        $page_title .= " pour " . $this->getViewParameterOrObject('infoEntite')['denomination'];
         $this->setViewParameter('page_title', $page_title);
 
         $this->setViewParameter('documentTypeFactory', $this->getDocumentTypeFactory());
-        $this->setNavigationInfo($this->{'id_e'}, "Document/list?type={$this->{'type'}}");
+        $this->setNavigationInfo($this->getViewParameterOrObject('id_e'), "Document/list?type={$this->getViewParameterOrObject('type')}");
         $this->setViewParameter('theAction', $documentType->getAction());
 
 
@@ -730,7 +730,7 @@ class DocumentControler extends PastellControler
 
         $all_action = [];
         foreach ($this->listDocument as $i => $document) {
-            $listDocument[$i]['action_possible'] =  $this->getActionPossible()->getActionPossibleLot($this->{'id_e'}, $this->getId_u(), $document['id_d']);
+            $listDocument[$i]['action_possible'] =  $this->getActionPossible()->getActionPossibleLot($this->getViewParameterOrObject('id_e'), $this->getId_u(), $document['id_d']);
             $all_action = array_merge($all_action, $listDocument[$i]['action_possible']);
         }
         $this->setViewParameter('listDocument', $listDocument);
@@ -738,7 +738,7 @@ class DocumentControler extends PastellControler
         $all_action = array_unique($all_action);
 
         $this->setViewParameter('all_action', $all_action);
-        $this->setViewParameter('type_list', $this->getAllType($this->{'listDocument'}));
+        $this->setViewParameter('type_list', $this->getAllType($this->getViewParameterOrObject('listDocument')));
         $this->setViewParameter('template_milieu', "DocumentTraitementLot");
         $this->renderDefault();
     }
@@ -747,11 +747,11 @@ class DocumentControler extends PastellControler
     {
 
         $this->validTraitementParLot($_GET);
-        $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($this->{'type'});
+        $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($this->getViewParameterOrObject('type'));
         $this->setViewParameter('page_title', "Confirmation du traitement par lot pour les  documents " . $documentType->getName() . " pour " .
-            $this->{'infoEntite'}['denomination']);
+            $this->getViewParameterOrObject('infoEntite')['denomination']);
 
-        $this->setViewParameter('url_retour', "Document/traitementLot?id_e={$this->{'id_e'}}&type={$this->{'type'}}&search={$this->{'search'}}&filtre={$this->{'filtre'}}&offset={$this->{'offset'}}");
+        $this->setViewParameter('url_retour', "Document/traitementLot?id_e={$this->getViewParameterOrObject('id_e')}&type={$this->getViewParameterOrObject('type')}&search={$this->getViewParameterOrObject('search')}&filtre={$this->getViewParameterOrObject('filtre')}&offset={$this->getViewParameterOrObject('offset')}");
 
 
 
@@ -759,30 +759,30 @@ class DocumentControler extends PastellControler
         $this->setViewParameter('action_selected', $recuperateur->get('action'));
         $this->setViewParameter('theAction', $documentType->getAction());
 
-        $action_libelle = $this->{'theAction'}->getActionName($this->{'action_selected'});
+        $action_libelle = $this->getViewParameterOrObject('theAction')->getActionName($this->getViewParameterOrObject('action_selected'));
 
         $all_id_d = $recuperateur->get('id_d');
         if (! $all_id_d) {
             $this->setLastError("Vous devez sélectionner au moins un document");
-            $this->redirect($this->{'url_retour'});
+            $this->redirect($this->getViewParameterOrObject('url_retour'));
         }
 
         $error = "";
         $listDocument = [];
 
         foreach ($all_id_d as $id_d) {
-            $infoDocument  = $this->getDocumentActionEntite()->getInfo($id_d, $this->{'id_e'});
-            if (! $this->getActionPossible()->isActionPossible($this->{'id_e'}, $this->getId_u(), $id_d, $this->{'action_selected'})) {
+            $infoDocument  = $this->getDocumentActionEntite()->getInfo($id_d, $this->getViewParameterOrObject('id_e'));
+            if (! $this->getActionPossible()->isActionPossible($this->getViewParameterOrObject('id_e'), $this->getId_u(), $id_d, $this->getViewParameterOrObject('action_selected'))) {
                 $error .= "L'action « $action_libelle » n'est pas possible pour le document « {$infoDocument['titre']} »<br/>";
             }
-            if ($this->getInstance(JobManager::class)->hasActionProgramme($this->{'id_e'}, $id_d)) {
+            if ($this->getInstance(JobManager::class)->hasActionProgramme($this->getViewParameterOrObject('id_e'), $id_d)) {
                 $error .= "Il y a déjà une action programmée pour le document « {$infoDocument['titre']} »<br/>";
             }
             $listDocument[] = $infoDocument;
         }
         if ($error) {
             $this->setLastError($error . "<br/><br/>Aucune action n'a été executée");
-            $this->redirect($this->{'url_retour'});
+            $this->redirect($this->getViewParameterOrObject('url_retour'));
         }
 
         $this->setViewParameter('listDocument', $listDocument);
@@ -796,19 +796,19 @@ class DocumentControler extends PastellControler
         $recuperateur = new Recuperateur($_POST);
         $action_selected = $recuperateur->get('action');
         $all_id_d = $recuperateur->get('id_d');
-        $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($this->{'type'});
+        $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($this->getViewParameterOrObject('type'));
 
         $action_libelle = $documentType->getAction()->getDoActionName($action_selected);
 
         $error = "";
         $message = "";
         foreach ($all_id_d as $id_d) {
-            $infoDocument  = $this->getDocumentActionEntite()->getInfo($id_d, $this->{'id_e'});
-            if (! $this->getActionPossible()->isActionPossible($this->{'id_e'}, $this->getId_u(), $id_d, $action_selected)) {
+            $infoDocument  = $this->getDocumentActionEntite()->getInfo($id_d, $this->getViewParameterOrObject('id_e'));
+            if (! $this->getActionPossible()->isActionPossible($this->getViewParameterOrObject('id_e'), $this->getId_u(), $id_d, $action_selected)) {
                 $error .= "L'action « $action_libelle » n'est pas possible pour le document « {$infoDocument['titre']} »<br/>";
             }
 
-            if ($this->getInstance(JobManager::class)->hasActionProgramme($this->{'id_e'}, $id_d)) {
+            if ($this->getInstance(JobManager::class)->hasActionProgramme($this->getViewParameterOrObject('id_e'), $id_d)) {
                 $error .= "Il y a déjà une action programmée pour le document « {$infoDocument['titre']} »<br/>";
             }
 
@@ -818,12 +818,12 @@ class DocumentControler extends PastellControler
         }
         if ($error) {
             $this->setLastError($error . "<br/><br/>Aucune action n'a été executée");
-            $this->redirect($this->{'url_retour'});
+            $this->redirect($this->getViewParameterOrObject('url_retour'));
         }
 
-        $this->getActionExecutorFactory()->executeLotDocument($this->{'id_e'}, $this->getId_u(), $all_id_d, $action_selected);
+        $this->getActionExecutorFactory()->executeLotDocument($this->getViewParameterOrObject('id_e'), $this->getId_u(), $all_id_d, $action_selected);
         $this->setLastMessage($message);
-        $url_retour = "Document/list?id_e={$this->{'id_e'}}&type={$this->{'type'}}&search={$this->{'search'}}&filtre={$this->{'filtre'}}&offset={$this->{'offset'}}";
+        $url_retour = "Document/list?id_e={$this->getViewParameterOrObject('id_e')}&type={$this->getViewParameterOrObject('type')}&search={$this->getViewParameterOrObject('search')}&filtre={$this->getViewParameterOrObject('filtre')}&offset={$this->getViewParameterOrObject('offset')}";
         $this->redirect($url_retour);
     }
 
@@ -915,7 +915,7 @@ class DocumentControler extends PastellControler
                 $documentIndexor->index($field_name, $fieldData->getValueForIndex());
             }
             // Libération mémoire; GC par paquet pour optimiser la fréquence d'appel
-            $this->DonneesFormulaireFactory->clearCache();
+            $this->getViewParameterOrObject('DonneesFormulaireFactory')->clearCache();
             if (++$document_index % 100 == 0) {
                 gc_collect_cycles();
             }
@@ -1315,7 +1315,7 @@ class DocumentControler extends PastellControler
         $id_de = $recuperateur->get('id_de');
         $id_e = $recuperateur->get('id_e');
         /** @var DocumentEmail $documentEmail */
-        $documentEmail = $this->{'DocumentEmail'};
+        $documentEmail = $this->getViewParameterOrObject('DocumentEmail');
         $info = $documentEmail->getInfoFromPK($id_de);
 
         $this->verifDroitLecture($id_e, $info['id_d']);

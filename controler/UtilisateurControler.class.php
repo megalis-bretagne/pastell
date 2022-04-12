@@ -44,14 +44,14 @@ class UtilisateurControler extends PastellControler
             $this->setViewParameter('type_e_menu', "");
             $this->setViewParameter('id_e', $this->getGetInfo()->get('id_e'));
             $this->setViewParameter('id_e_menu', $this->getGetInfo()->get('id_e'));
-            $this->setNavigationInfo($this->{'id_e'}, "Entite/utilisateur?");
+            $this->setNavigationInfo($this->getViewParameterOrObject('id_e'), "Entite/utilisateur?");
         } else {
             $this->setViewParameter('id_e', 0);
             $this->setNavigationInfo(0, "Entite/utilisateur?");
         }
         $this->setViewParameter('menu_gauche_template', "EntiteMenuGauche");
         $this->setViewParameter('menu_gauche_select', "Entite/utilisateur");
-        $this->setDroitLectureOnConnecteur($this->{'id_e'});
+        $this->setDroitLectureOnConnecteur($this->getViewParameterOrObject('id_e'));
     }
 
     /**
@@ -63,7 +63,7 @@ class UtilisateurControler extends PastellControler
     {
         $authentificationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur("authentification");
         if ($authentificationConnecteur) {
-            $this->{'LastError'}->setLastError("Vous ne pouvez pas modifier votre mot de passe en dehors du CAS");
+            $this->getViewParameterOrObject('LastError')->setLastError("Vous ne pouvez pas modifier votre mot de passe en dehors du CAS");
             $this->redirect("/Utilisateur/moi");
         }
         $this->setViewParameter('pages_without_left_menu', true);
@@ -83,8 +83,8 @@ class UtilisateurControler extends PastellControler
     public function modifEmailAction()
     {
         $this->setViewParameter('utilisateur_info', $this->getUtilisateur()->getInfo($this->getId_u()));
-        if ($this->{'utilisateur_info'}['id_e'] == 0) {
-            $this->{'LastError'}->setLastError("Les utilisateurs de l'entité racine ne peuvent pas utiliser cette procédure");
+        if ($this->getViewParameterOrObject('utilisateur_info')['id_e'] == 0) {
+            $this->getViewParameterOrObject('LastError')->setLastError("Les utilisateurs de l'entité racine ne peuvent pas utiliser cette procédure");
             $this->redirect("/Utilisateur/moi");
         }
         $this->setViewParameter('page_title', "Modification de votre email");
@@ -102,12 +102,12 @@ class UtilisateurControler extends PastellControler
         $recuperateur = new Recuperateur($_POST);
         $password = $recuperateur->get('password');
         if (!$this->getUtilisateur()->verifPassword($this->getId_u(), $password)) {
-            $this->{'LastError'}->setLastError("Le mot de passe est incorrect.");
+            $this->getViewParameterOrObject('LastError')->setLastError("Le mot de passe est incorrect.");
             $this->redirect("/Utilisateur/modifEmail");
         }
         $email = $recuperateur->get('email');
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $this->{'LastError'}->setLastError("L'email que vous avez saisi ne semble pas être valide");
+            $this->getViewParameterOrObject('LastError')->setLastError("L'email que vous avez saisi ne semble pas être valide");
             $this->redirect("/Utilisateur/modifEmail");
         }
 
@@ -191,14 +191,14 @@ class UtilisateurControler extends PastellControler
 
         $this->setViewParameter('limit', 20);
 
-        $this->setViewParameter('count', $this->getUtilisateurListe()->getNbUtilisateurByCertificat($this->{'verif_number'}));
-        $this->setViewParameter('liste', $this->getUtilisateurListe()->getUtilisateurByCertificat($this->{'verif_number'}, $this->{'offset'}, $this->{'limit'}));
+        $this->setViewParameter('count', $this->getUtilisateurListe()->getNbUtilisateurByCertificat($this->getViewParameterOrObject('verif_number')));
+        $this->setViewParameter('liste', $this->getUtilisateurListe()->getUtilisateurByCertificat($this->getViewParameterOrObject('verif_number'), $this->getViewParameterOrObject('offset'), $this->getViewParameterOrObject('limit')));
 
-        if (!$this->{'count'}) {
+        if (!$this->getViewParameterOrObject('count')) {
             $this->redirect("/index.php");
         }
 
-        $this->setViewParameter('certificat', new Certificate($this->{'liste'}[0]['certificat']));
+        $this->setViewParameter('certificat', new Certificate($this->getViewParameterOrObject('liste')[0]['certificat']));
 
         $this->setViewParameter('page_title', "Certificat");
         $this->setViewParameter('template_milieu', "UtilisateurCertificat");
@@ -286,7 +286,7 @@ class UtilisateurControler extends PastellControler
 
         if ($info['id_e']) {
             $this->setViewParameter('infoEntiteDeBase', $this->getEntiteSQL()->getInfo($info['id_e']));
-            $this->setViewParameter('denominationEntiteDeBase', $this->{'infoEntiteDeBase'}['denomination']);
+            $this->setViewParameter('denominationEntiteDeBase', $this->getViewParameterOrObject('infoEntiteDeBase')['denomination']);
         }
         $this->setViewParameter('info', $info);
         $this->setViewParameter('id_u', $id_u);

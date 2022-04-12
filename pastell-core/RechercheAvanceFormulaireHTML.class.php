@@ -150,7 +150,7 @@ class RechercheAvanceFormulaireHTML extends PastellControler
         $tri = $this->getParameter('tri');
         $sens_tri = $this->getParameter('sens_tri');
         $type = $this->getParameter('type');
-        $documentType = $this->DocumentTypeFactory->getFluxDocumentType($type);
+        $documentType = $this->getInstance(DocumentTypeFactory::class)->getFluxDocumentType($type);
         $indexedFieldsList = $documentType->getFormulaire()->getIndexedFields();
         ?>
         <select name='tri' class="form-control col-md-8 select2_appearance">
@@ -188,8 +188,8 @@ class RechercheAvanceFormulaireHTML extends PastellControler
 
     private function displayEtatTransit()
     {
-        $allDroit = $this->RoleUtilisateur->getAllDroit($this->getId_u());
-        $listeEtat = $this->DocumentTypeFactory->getActionByRole($allDroit);
+        $allDroit = $this->getInstance(RoleUtilisateur::class)->getAllDroit($this->getId_u());
+        $listeEtat = $this->getInstance(DocumentTypeFactory::class)->getActionByRole($allDroit);
         $etatTransit = $this->getParameter('etatTransit');
         ?>
         <select name='etatTransit' class="form-control col-md-8">
@@ -231,8 +231,8 @@ class RechercheAvanceFormulaireHTML extends PastellControler
 
     private function displayLastState()
     {
-        $allDroit = $this->RoleUtilisateur->getAllDroit($this->getId_u());
-        $listeEtat = $this->DocumentTypeFactory->getActionByRole($allDroit);
+        $allDroit = $this->getInstance(RoleUtilisateur::class)->getAllDroit($this->getId_u());
+        $listeEtat = $this->getInstance(DocumentTypeFactory::class)->getActionByRole($allDroit);
         $lastEtat = $this->getParameter('lastetat');
         ?>
         <select name='lastetat' class="form-control col-md-8">
@@ -261,12 +261,12 @@ class RechercheAvanceFormulaireHTML extends PastellControler
 
     private function displayTypeDocument()
     {
-        $this->DocumentTypeHTML->displaySelect($this->getParameter('type'), $this->getAllModule());
+        $this->getInstance(DocumentTypeHTML::class)->displaySelect($this->getParameter('type'), $this->getAllModule());
     }
 
     private function displayEntite()
     {
-        $arbre = $this->RoleUtilisateur->getArbreFille($this->getId_u(), "entite:lecture");
+        $arbre = $this->getInstance(RoleUtilisateur::class)->getArbreFille($this->getId_u(), "entite:lecture");
         $id_e = $this->getParameter('id_e');
 
         ?>
