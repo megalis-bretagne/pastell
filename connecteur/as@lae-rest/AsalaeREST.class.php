@@ -159,16 +159,6 @@ class AsalaeREST extends SAEConnecteur
         return "Erreur non identifié";
     }
 
-    /**
-     * @param $id_transfert
-     * @return string Le contenu du fichier XML contenant l'accusé de reception
-     * @throws Exception
-     */
-    public function getAcuseReception($id_transfert)
-    {
-        return $this->getAck($id_transfert, $this->originatingAgency);
-    }
-
     public function getAck(string $transfert_id, string $originating_agency_id): string
     {
         if (! $transfert_id) {
@@ -179,16 +169,6 @@ class AsalaeREST extends SAEConnecteur
             . urlencode($transfert_id),
             "application/xml"
         );
-    }
-
-    /**
-     * @param $id_transfert
-     * @return bool|mixed
-     * @throws Exception
-     */
-    public function getReply($id_transfert)
-    {
-        return $this->getAtr($id_transfert, $this->originatingAgency);
     }
 
     public function getAtr(string $transfert_id, string $originating_agency_id): string

@@ -44,17 +44,6 @@ class FakeSAE extends SAEConnecteur
 
     public function getAck(string $transfert_id, string $originating_agency_id): string
     {
-        return $this->getAcuseReception($transfert_id);
-    }
-
-    public function getAtr(string $transfert_id, string $originating_agency_id): string
-    {
-        return $this->getReply($transfert_id);
-    }
-
-    public function getAcuseReception($id_transfert)
-    {
-
         $result_ack = $this->collectiviteProperties->get('result_ack') ?: 1;
         if ($result_ack == 2) {
             throw new Exception("Erreur provoquer par le bouchon SAE - code d'erreur HTTP : 500");
@@ -63,9 +52,23 @@ class FakeSAE extends SAEConnecteur
         $simpleXMLWrapper = new SimpleXMLWrapper();
         $xml = $simpleXMLWrapper->loadFile(__DIR__ . "/fixtures/ACK.xml");
         $xml->{'Date'} = date("c");
-        $xml->{'MessageReceivedIdentifier'} = "$id_transfert";
+        $xml->{'MessageReceivedIdentifier'} = "$transfert_id";
         $xml->{'AcknowledgementIdentifier'}  = "ACK_" . mt_rand(0, mt_getrandmax());
         return $xml->asXML();
+    }
+
+    public function getAtr(string $transfert_id, string $originating_agency_id): string
+    {
+        $result_verif = $this->collectiviteProperties->get('result_verif') ?: 1;
+
+        if ($result_verif == 1) {
+            return $this->getATRintern($transfert_id, __DIR__ . "/fixtures/ATR.xml");
+        }
+        if ($result_verif == 2) {
+            return $this->getATRintern($transfert_id, __DIR__ . "/fixtures/ATR_refused.xml");
+        }
+
+        throw new UnrecoverableException("Impossible de lire le message");
     }
 
     /**
@@ -83,20 +86,6 @@ class FakeSAE extends SAEConnecteur
         $xml->{'TransferReplyIdentifier'}  = "ATR_" . mt_rand(0, mt_getrandmax());
         $xml->{'Archive'}->{'ArchivalAgencyArchiveIdentifier'} = mt_rand(0, mt_getrandmax());
         return $xml->asXML();
-    }
-
-    public function getReply($id_transfer)
-    {
-        $result_verif = $this->collectiviteProperties->get('result_verif') ?: 1;
-
-        if ($result_verif == 1) {
-            return $this->getATRintern($id_transfer, __DIR__ . "/fixtures/ATR.xml");
-        }
-        if ($result_verif == 2) {
-            return $this->getATRintern($id_transfer, __DIR__ . "/fixtures/ATR_refused.xml");
-        }
-
-        throw new UnrecoverableException("Impossible de lire le message");
     }
 
     public function getURL($cote)
