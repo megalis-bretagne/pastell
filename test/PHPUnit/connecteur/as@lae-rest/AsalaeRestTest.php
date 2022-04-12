@@ -161,31 +161,6 @@ class AsalaeRestTest extends PastellTestCase
         $asalaeRest->sendArchive("test bordereau SEDA", __FILE__);
     }
 
-    /**
-     * @throws Exception
-     */
-    public function testGetAcuseReception()
-    {
-        $asalaeRest = $this->getAsalaeRest('"ok"');
-        $this->assertEquals(
-            '"ok"',
-            $asalaeRest->getAcuseReception(42)
-        );
-    }
-
-
-    /**
-     * @throws Exception
-     */
-    public function testGetReply()
-    {
-        $asalaeRest = $this->getAsalaeRest('"ok"');
-        $this->assertEquals(
-            '"ok"',
-            $asalaeRest->getReply(42)
-        );
-    }
-
     public function testGetURL()
     {
         $asalaeRest = $this->getAsalaeRest('"ok"');

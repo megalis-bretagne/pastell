@@ -44,30 +44,12 @@ abstract class SAEConnecteur extends Connecteur
     abstract public function sendArchive($bordereauSEDA, $archivePath, $file_type = "TARGZ", $archive_file_name = "archive.tar.gz");
 
     /**
-     * @param $id_transfert
-     * @return mixed
-     * @throws UnrecoverableException
-     * @throws Exception
-     * @deprecated 3.1.5 use self::getAck instead
-     */
-    abstract public function getAcuseReception($id_transfert);
-
-    /**
      * @param string $transfert_id
      * @param string $originating_agency_id
      * @return string
      * @throws UnrecoverableException
      */
     abstract public function getAck(string $transfert_id, string $originating_agency_id): string;
-
-    /**
-     * @param $id_transfer
-     * @return mixed
-     * @throws UnrecoverableException
-     * @throws Exception
-     * @deprecated 3.1.5 use self::getAtr instead
-     */
-    abstract public function getReply($id_transfer);
 
     /**
      * @param string $transfert_id

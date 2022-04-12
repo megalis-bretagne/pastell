@@ -42,6 +42,7 @@
 - Suppression des scripts permettant une installation hors d'un environnement Docker. En particulier les scripts de création de connecteurs initiaux et de fréquences sont gérés par la séquence d'initialisation du conteneur.
 - Suppression du modèle `Document`, remplacé par `DocumentSQL`
 - Suppression du modèle `Utilisateur`, remplacé par `UtilisateurSQL`
+- Suppression des fonctions SAEConnecteur::getAcuseReception et SAEConnecteur::getReply 
 
 # [3.1.13] - 2022-04-18
 
