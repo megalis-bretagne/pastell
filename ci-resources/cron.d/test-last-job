@@ -1,1 +1,1 @@
-0 * * * * www-data /usr/bin/php /var/www/pastell/installation/test-last-job.php > /data/log/test-last-job.php 2>&1
+0 * * * * www-data /usr/bin/php /var/www/pastell/installation/test-last-job.php >> /data/log/test-last-job.php 2>&1

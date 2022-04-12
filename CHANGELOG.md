@@ -42,7 +42,7 @@
   pour reporter l'ancien mailsec_from à mailsec_reply_to (s'il n'est pas déjà renseigné) #1465
 - Suppression de la fonction Controler::exitToIndex
 - Suppression des méthodes magiques ChoiceActionExecutor::__set, Gabarit::__set
-- Suppression des scripts permettant une installation hors d'un environnement Docker
+- Suppression des scripts permettant une installation hors d'un environnement Docker. En particulier les scripts de création de connecteurs initiaux et de fréquences sont gérés par la séquence d'initialisation du conteneur.
 
 # [3.1.13] - 2022-04-18
 
