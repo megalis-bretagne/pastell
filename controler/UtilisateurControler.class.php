@@ -1,6 +1,7 @@
 <?php
 
 use Pastell\Service\PasswordEntropy;
+use Pastell\Utilities\Certificate;
 
 class UtilisateurControler extends PastellControler
 {
@@ -197,8 +198,7 @@ class UtilisateurControler extends PastellControler
             $this->redirect("/index.php");
         }
 
-        $this->setViewParameter('certificat', new Certificat($this->{'liste'}[0]['certificat']));
-        $this->setViewParameter('certificatInfo', $this->{'certificat'}->getInfo());
+        $this->setViewParameter('certificat', new Certificate($this->{'liste'}[0]['certificat']));
 
         $this->setViewParameter('page_title', "Certificat");
         $this->setViewParameter('template_milieu', "UtilisateurCertificat");
@@ -235,7 +235,7 @@ class UtilisateurControler extends PastellControler
         $this->verifDroit($infoUtilisateur['id_e'], "utilisateur:edition");
 
         $this->setViewParameter('infoEntite', $this->getEntiteSQL()->getInfo($infoUtilisateur['id_e']));
-        $this->setViewParameter('certificat', new Certificat($infoUtilisateur['certificat']));
+        $this->setViewParameter('certificat', new Certificate($infoUtilisateur['certificat']));
         $this->setViewParameter('arbre', $this->getRoleUtilisateur()->getArbreFille($this->getId_u(), "entite:edition"));
 
         if ($id_u) {
@@ -266,7 +266,7 @@ class UtilisateurControler extends PastellControler
             $this->redirect("index.php");
         }
 
-        $this->setViewParameter('certificat', new Certificat($info['certificat']));
+        $this->setViewParameter('certificat', new Certificate($info['certificat']));
         $this->setViewParameter('page_title', "Utilisateur " . $info['prenom'] . " " . $info['nom']);
         $this->setViewParameter('entiteListe', $this->getEntiteListe());
         $this->setViewParameter('tabEntite', $this->getRoleUtilisateur()->getEntite($this->getId_u(), 'entite:edition'));
@@ -314,7 +314,7 @@ class UtilisateurControler extends PastellControler
     {
         $id_u = $this->getId_u();
         $info = $this->getUtilisateur()->getInfo($id_u);
-        $this->setViewParameter('certificat', new Certificat($info['certificat']));
+        $this->setViewParameter('certificat', new Certificate($info['certificat']));
 
         $this->setViewParameter('page_title', "Espace utilisateur : " . $info['prenom'] . " " . $info['nom']);
 
@@ -651,7 +651,7 @@ class UtilisateurControler extends PastellControler
         }
 
 
-        $certificat = new Certificat($liste[0]['certificat']);
+        $certificat = new Certificate($liste[0]['certificat']);
 
 
         header("Content-type: text/plain");

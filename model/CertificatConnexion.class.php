@@ -1,8 +1,10 @@
 <?php
 
+use Pastell\Utilities\Certificate;
+
 class CertificatConnexion extends SQL
 {
-    private $certificat;
+    private Certificate $certificat;
 
     public function __construct(SQLQuery $sqlQuery)
     {
@@ -12,10 +14,10 @@ class CertificatConnexion extends SQL
         if (isset($_SERVER['SSL_CLIENT_CERT'])) {
             $certificat_client = $_SERVER['SSL_CLIENT_CERT'];
         }
-        $this->setCertificat(new Certificat($certificat_client));
+        $this->setCertificat(new Certificate($certificat_client));
     }
 
-    public function setCertificat(Certificat $certificat)
+    public function setCertificat(Certificate $certificat)
     {
         $this->certificat = $certificat;
     }
@@ -29,12 +31,12 @@ class CertificatConnexion extends SQL
             return true;
         }
 
-        return $certif_verif_number == $this->certificat->getVerifNumber();
+        return $certif_verif_number == $this->certificat->getMD5();
     }
 
     public function autoConnect()
     {
-        $verifNumber = $this->certificat->getVerifNumber();
+        $verifNumber = $this->certificat->getMD5();
         if (! $verifNumber) {
             return false;
         }

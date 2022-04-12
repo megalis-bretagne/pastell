@@ -3,10 +3,11 @@
 /**
  * @var Gabarit $this
  * @var array $liste
- * @var Certificat $certificat
- * @var array $certificatInfo
+ * @var Certificate $certificat
  * @var string $verif_number
  */
+
+use Pastell\Utilities\Certificate;
 
 $this->SuivantPrecedent($offset, $limit, $count);
 ?>
@@ -47,14 +48,14 @@ $this->SuivantPrecedent($offset, $limit, $count);
         <tr>
         <th>Nom</th>
         <td>
-            <?php echo $certificatInfo['name'] ?>
+            <?php echo $certificat->getName() ?>
         </td>
     </tr>
     <tr>
-        <th>Emis pour </th>
+        <th>Émis pour </th>
         <td>
         <ul>
-        <?php foreach ($certificatInfo['subject'] as $col => $value) : ?>
+        <?php foreach ($certificat->getSubjectAsArray() as $col => $value) : ?>
         <li><?php echo "$col : $value" ;?></li>     
         <?php endforeach;?>
         </ul>
@@ -62,10 +63,10 @@ $this->SuivantPrecedent($offset, $limit, $count);
     </tr>
 
     <tr>
-        <th>Emis par </th>
+        <th>Émis par </th>
         <td>
         <ul>
-        <?php foreach ($certificatInfo['issuer'] as $col => $value) : ?>
+        <?php foreach ($certificat->getIssuerAsArray() as $col => $value) : ?>
         <li><?php echo "$col : $value" ;?></li>     
         <?php endforeach;?>
         </ul>
@@ -76,8 +77,8 @@ $this->SuivantPrecedent($offset, $limit, $count);
         <td>
         <ul>
         
-            <li><?php echo "Emis le " . date(Date::DATE_FR, $certificatInfo['validFrom_time_t']) ;?></li> 
-            <li><?php echo "Expire le " . date(Date::DATE_FR, $certificatInfo['validTo_time_t']) ;?></li> 
+            <li><?php echo 'Émis le ' . date(Date::DATE_FR, $certificat->getValidFrom()) ;?></li>
+            <li><?php echo 'Expire le ' . date(Date::DATE_FR, $certificat->getValidTo()) ;?></li>
         </ul>
     </td>
     </tr>
