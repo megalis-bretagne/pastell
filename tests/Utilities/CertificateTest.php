@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace Pastell\Tests\Utilities;
 
-use Pastell\Utilities\Certificat;
-use PHPUnit;
+use Pastell\Utilities\Certificate;
+use PHPUnit\Framework\TestCase;
 
-class CertificatTest extends PHPUnit\Framework\TestCase
+class CertificateTest extends TestCase
 {
-    private Certificat $certificat;
-    private Certificat $badCertificat;
+    private Certificate $certificat;
+    private Certificate $badCertificat;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->certificat = new Certificat(
+        $this->certificat = new Certificate(
             file_get_contents(__DIR__ . '/fixtures/autorite-cert.pem') ?: ''
         );
-        $this->badCertificat = new Certificat('toto');
+        $this->badCertificat = new Certificate('toto');
     }
 
     public function testIsValid(): void

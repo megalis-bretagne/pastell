@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Pastell\Utilities;
 
-class Certificat
+use DivisionByZeroError;
+
+class Certificate
 {
     private bool $isValid;
     /**
@@ -88,6 +90,11 @@ class Certificat
     }
 
     //http://stackoverflow.com/questions/6426438/php-ssl-certificate-serial-number-in-hexadecimal
+
+    /**
+     * @throws DivisionByZeroError
+     * @return string
+     */
     public function getSerialNumber(): string
     {
         $base = bcpow('2', '32');

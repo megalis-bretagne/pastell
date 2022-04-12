@@ -1,7 +1,7 @@
 <?php
 
 use Pastell\Service\Utilisateur\UtilisateurDeletionService;
-use Pastell\Utilities\Certificat;
+use Pastell\Utilities\Certificate;
 
 class UtilisateurAPIController extends BaseAPIController
 {
@@ -165,7 +165,7 @@ class UtilisateurAPIController extends BaseAPIController
 
 
         if ($certificat_content) {
-            $certificat = new Certificat($certificat_content);
+            $certificat = new Certificate($certificat_content);
             if (! $certificat->isValid()) {
                 throw new Exception("Le certificat ne semble pas être valide");
             }

@@ -3,12 +3,11 @@
 /**
  * @var Gabarit $this
  * @var array $liste
- * @var Certificat $certificat
- * @var array $certificatInfo
+ * @var Certificate $certificat
  * @var string $verif_number
  */
 
-use Pastell\Utilities\Certificat;
+use Pastell\Utilities\Certificate;
 
 $this->SuivantPrecedent($offset, $limit, $count);
 ?>

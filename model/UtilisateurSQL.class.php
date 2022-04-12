@@ -1,6 +1,6 @@
 <?php
 
-use Pastell\Utilities\Certificat;
+use Pastell\Utilities\Certificate;
 
 class UtilisateurSQL extends SQL
 {
@@ -80,7 +80,7 @@ class UtilisateurSQL extends SQL
         $this->updateCertificat($id_u, "", "");
     }
 
-    public function setCertificat($id_u, Certificat $certificat)
+    public function setCertificat($id_u, Certificate $certificat)
     {
 
         if (! $certificat->isValid()) {

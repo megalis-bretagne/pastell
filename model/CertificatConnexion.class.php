@@ -1,10 +1,10 @@
 <?php
 
-use Pastell\Utilities\Certificat;
+use Pastell\Utilities\Certificate;
 
 class CertificatConnexion extends SQL
 {
-    private Certificat $certificat;
+    private Certificate $certificat;
 
     public function __construct(SQLQuery $sqlQuery)
     {
@@ -14,10 +14,10 @@ class CertificatConnexion extends SQL
         if (isset($_SERVER['SSL_CLIENT_CERT'])) {
             $certificat_client = $_SERVER['SSL_CLIENT_CERT'];
         }
-        $this->setCertificat(new Certificat($certificat_client));
+        $this->setCertificat(new Certificate($certificat_client));
     }
 
-    public function setCertificat(Certificat $certificat)
+    public function setCertificat(Certificate $certificat)
     {
         $this->certificat = $certificat;
     }

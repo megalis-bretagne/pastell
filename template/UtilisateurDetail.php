@@ -5,14 +5,14 @@
  * @var array $role_authorized
  * @var array $info
  * @var string $denominationEntiteDeBase
- * @var Certificat $certificat
+ * @var Certificate $certificat
  * @var bool $utilisateur_edition
  * @var array $arbre
  * @var array $notification_list
  * @var array $all_module
  */
 
-use Pastell\Utilities\Certificat;
+use Pastell\Utilities\Certificate;
 
 ?>
 
