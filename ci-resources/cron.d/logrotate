@@ -1,1 +1,1 @@
-*   *   *   *   *   root    /usr/sbin/logrotate -f /etc/logrotate.conf >> /data/log/logrotate.log 2>&1
+* * * * * root /usr/sbin/logrotate -f /etc/logrotate.conf >> /data/log/logrotate.log 2>&1
