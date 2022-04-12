@@ -5,7 +5,7 @@ class LDAPCreateUser extends ActionExecutor
     public function go()
     {
         $ldap = $this->getMyConnecteur();
-        $utilisateur = $this->objectInstancier->getInstance(Utilisateur::class);
+        $utilisateur = $this->objectInstancier->getInstance(UtilisateurSQL::class);
         $users = $ldap->getUserToCreate($utilisateur);
 
         foreach ($users as $user) {

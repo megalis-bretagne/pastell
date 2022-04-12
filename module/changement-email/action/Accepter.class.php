@@ -8,9 +8,9 @@ class Accepter extends ActionExecutor
         $message = $this->getDonneesFormulaire()->get('message');
         $email = $this->getDonneesFormulaire()->get('email_demande');
 
-        $this->objectInstancier->getInstance(Utilisateur::class)->setEmail($id_u, $email);
+        $this->objectInstancier->getInstance(UtilisateurSQL::class)->setEmail($id_u, $email);
 
-        $utilisateur_info = $this->objectInstancier->getInstance(Utilisateur::class)->getInfo($id_u);
+        $utilisateur_info = $this->objectInstancier->getInstance(UtilisateurSQL::class)->getInfo($id_u);
 
         $zenMail = $this->getZenMail();
         $zenMail->setEmetteur("Pastell", PLATEFORME_MAIL);

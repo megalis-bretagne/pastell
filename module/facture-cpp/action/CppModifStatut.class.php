@@ -76,8 +76,7 @@ class CppModifStatut extends ActionExecutor
 
             $histo_content = $doc->getFileContent('histo_statut_cpp');
 
-            /** @var Utilisateur $utilisateurSQL */
-            $utilisateurSQL = $this->objectInstancier->getInstance(Utilisateur::class);
+            $utilisateurSQL = $this->objectInstancier->getInstance(UtilisateurSQL::class);
             $utilisateur_info = $utilisateurSQL->getInfo($this->id_u);
 
             $commentaire = $doc->get(AttrFactureCPP::ATTR_MOTIF_MAJ);

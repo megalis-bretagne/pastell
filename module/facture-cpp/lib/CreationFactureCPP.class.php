@@ -193,8 +193,7 @@ class CreationFactureCPP
         $donneesFormulaire->setData('date_mise_a_dispo', date("Y-m-d"));
         $donneesFormulaire->setData('date_passage_statut', date("Y-m-d"));
 
-        /** @var Utilisateur $utilisateurSQL */
-        $utilisateurSQL = $this->objectInstancier->getInstance(Utilisateur::class);
+        $utilisateurSQL = $this->objectInstancier->getInstance(UtilisateurSQL::class);
         $utilisateur_info = $utilisateurSQL->getInfo($id_u);
 
         $histoStatutCPP = new HistoStatutCPP();

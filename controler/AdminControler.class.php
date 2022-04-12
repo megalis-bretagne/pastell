@@ -20,10 +20,9 @@ class AdminControler extends Controler
         return $this->getInstance(RoleSQL::class);
     }
 
-    /** @return UtilisateurSQL */
-    private function getUtilisateur()
+    private function getUtilisateur(): UtilisateurSQL
     {
-        return $this->getInstance(Utilisateur::class);
+        return $this->getInstance(UtilisateurSQL::class);
     }
 
     /** @return RoleUtilisateur */
