@@ -2,70 +2,24 @@
 
 class DocumentAPIController extends BaseAPIController
 {
-    private $documentActionEntite;
-
-    private $document;
-
-    private $donneesFormulaireFactory;
-
-    private $actionPossible;
-
-    private $documentEntite;
-
-    private $actionCreatorSQL;
-
-    private $documentTypeFactory;
-
-    private $actionExecutorFactory;
-
-    private $journal;
-
-    private $utilisateur;
-
-    private $entiteSQL;
-
-    private $documentCount;
-
-    private $documentCreationService;
-    private $documentModificationService;
-
-    private $documentEmail;
-    private $documentEmailReponseSQL;
-
     public function __construct(
-        DocumentActionEntite $documentActionEntite,
-        Document $document,
-        DonneesFormulaireFactory $donneesFormulaireFactory,
-        ActionPossible $actionPossible,
-        DocumentEntite $documentEntite,
-        ActionCreatorSQL $actionCreatorSQL,
-        DocumentTypeFactory $documentTypeFactory,
-        ActionExecutorFactory $actionExecutorFactory,
-        Journal $journal,
-        UtilisateurSQL $utilisateur,
-        EntiteSQL $entiteSQL,
-        DocumentCount $documentCount,
-        DocumentCreationService $documentCreationService,
-        DocumentModificationService $documentModificationService,
-        DocumentEmail $documentEmail,
-        DocumentEmailReponseSQL $documentEmailReponseSQL
+        private DocumentActionEntite $documentActionEntite,
+        private DocumentSQL $document,
+        private DonneesFormulaireFactory $donneesFormulaireFactory,
+        private ActionPossible $actionPossible,
+        private DocumentEntite $documentEntite,
+        private ActionCreatorSQL $actionCreatorSQL,
+        private DocumentTypeFactory $documentTypeFactory,
+        private ActionExecutorFactory $actionExecutorFactory,
+        private Journal $journal,
+        private UtilisateurSQL $utilisateur,
+        private EntiteSQL $entiteSQL,
+        private DocumentCount $documentCount,
+        private DocumentCreationService $documentCreationService,
+        private DocumentModificationService $documentModificationService,
+        private DocumentEmail $documentEmail,
+        private DocumentEmailReponseSQL $documentEmailReponseSQL,
     ) {
-        $this->documentActionEntite = $documentActionEntite;
-        $this->document = $document;
-        $this->donneesFormulaireFactory = $donneesFormulaireFactory;
-        $this->actionPossible = $actionPossible;
-        $this->documentEntite = $documentEntite;
-        $this->actionCreatorSQL = $actionCreatorSQL;
-        $this->documentTypeFactory = $documentTypeFactory;
-        $this->actionExecutorFactory = $actionExecutorFactory;
-        $this->journal = $journal;
-        $this->utilisateur = $utilisateur;
-        $this->entiteSQL = $entiteSQL;
-        $this->documentCount = $documentCount;
-        $this->documentCreationService = $documentCreationService;
-        $this->documentModificationService = $documentModificationService;
-        $this->documentEmail = $documentEmail;
-        $this->documentEmailReponseSQL = $documentEmailReponseSQL;
     }
 
     private function checkedEntite()

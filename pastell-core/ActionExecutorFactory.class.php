@@ -198,7 +198,7 @@ class ActionExecutorFactory
     public function displayChoice($id_e, $id_u, $id_d, $action_name, $from_api, $field, $page = 0)
     {
 
-        $infoDocument = $this->objectInstancier->getInstance(Document::class)->getInfo($id_d);
+        $infoDocument = $this->objectInstancier->getInstance(DocumentSQL::class)->getInfo($id_d);
         $documentType = $this->objectInstancier
             ->getInstance(DocumentTypeFactory::class)
             ->getFluxDocumentType($infoDocument['type']);
@@ -238,7 +238,7 @@ class ActionExecutorFactory
     public function isChoiceEnabled($id_e, $id_u, $id_d, $action_name)
     {
 
-        $infoDocument = $this->objectInstancier->getInstance(Document::class)->getInfo($id_d);
+        $infoDocument = $this->objectInstancier->getInstance(DocumentSQL::class)->getInfo($id_d);
 
 
         $documentType = $this->objectInstancier
@@ -290,7 +290,7 @@ class ActionExecutorFactory
 
     public function goChoice($id_e, $id_u, $id_d, $action_name, $from_api, $field, $page = 0, $post_data = false)
     {
-        $infoDocument = $this->objectInstancier->getInstance(Document::class)->getInfo($id_d);
+        $infoDocument = $this->objectInstancier->getInstance(DocumentSQL::class)->getInfo($id_d);
         $documentType = $this->objectInstancier
             ->getInstance(DocumentTypeFactory::class)
             ->getFluxDocumentType($infoDocument['type']);
@@ -362,7 +362,7 @@ class ActionExecutorFactory
 
     private function getActionClass($id_d, $id_e, $id_u, $action_name, $id_destinataire, $from_api, $action_params, $id_worker)
     {
-        $infoDocument = $this->objectInstancier->getInstance(Document::class)->getInfo($id_d);
+        $infoDocument = $this->objectInstancier->getInstance(DocumentSQL::class)->getInfo($id_d);
         $documentType = $this->objectInstancier
             ->getInstance(DocumentTypeFactory::class)
             ->getFluxDocumentType($infoDocument['type']);

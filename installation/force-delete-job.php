@@ -14,7 +14,7 @@ if (!$flux) {
     exit;
 }
 
-$result = $objectInstancier->getInstance(Document::class)->getAllByType($flux);
+$result = $objectInstancier->getInstance(DocumentSQL::class)->getAllByType($flux);
 
 if (!$result) {
     echo "Il n'y a pas de document de type $flux\n";

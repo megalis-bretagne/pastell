@@ -21,7 +21,7 @@ class VisionneuseFactory
      */
     public function display($id_d, $field, $num = 0)
     {
-        $document_info = $this->objectInstancier->getInstance(Document::class)->getInfo($id_d);
+        $document_info = $this->objectInstancier->getInstance(DocumentSQL::class)->getInfo($id_d);
         $type = $document_info['type'];
 
         $donneesFormulaire = $this->objectInstancier->getInstance(DonneesFormulaireFactory::class)->get($id_d);

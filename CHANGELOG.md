@@ -16,9 +16,6 @@
 - Suppression du chargement automatique des fichiers PHP des extensions
 - Suppression du endpoint divers/receive-ocre.php et des constantes OCRE_RECEIVE_PASSPHRASE et OCRE_INPUT_DIRECTORY
 - Suppression de la constante NB_ENTITE_BEFORE_COLLAPSE
-
-## Retraits d'éléments dépréciés
-
 - Suppression de l'authentification par certificat au services Chorus Pro #1453
 - Suppression de la constante CONNECTEUR_DROIT. Il faut maintenant ajouter les droits 'connecteur:lecture' et 'connecteur:edition'
   afin de gérer les connecteurs et les associations de types de documents!!
@@ -43,6 +40,7 @@
 - Suppression de la fonction Controler::exitToIndex
 - Suppression des méthodes magiques ChoiceActionExecutor::__set, Gabarit::__set
 - Suppression des scripts permettant une installation hors d'un environnement Docker. En particulier les scripts de création de connecteurs initiaux et de fréquences sont gérés par la séquence d'initialisation du conteneur.
+- Suppression du modèle `Document`, remplacé par `DocumentSQL
 
 # [3.1.13] - 2022-04-18
 

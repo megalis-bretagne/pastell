@@ -14,7 +14,7 @@ if (!$flux) {
     exit;
 }
 
-$result = $objectInstancier->getInstance(Document::class)->getAllByType($flux);
+$result = $objectInstancier->getInstance(DocumentSQL::class)->getAllByType($flux);
 
 if (!$result) {
     echo "Il n'y a pas de document de type $flux\n";
@@ -73,9 +73,9 @@ foreach ($result as $document) {
         }
     }
 
-    $info = $objectInstancier->getInstance(Document::class)->getInfo($id_d);
+    $info = $objectInstancier->getInstance(DocumentSQL::class)->getInfo($id_d);
     $objectInstancier->getInstance(DonneesFormulaireFactory::class)->get($id_d)->delete();
-    $objectInstancier->getInstance(Document::class)->delete($id_d);
+    $objectInstancier->getInstance(DocumentSQL::class)->delete($id_d);
 
     $message = "Le document « {$info['titre']} » ($id_d) a été supprimé par un administrateur";
     $objectInstancier->getInstance(Journal::class)->add(Journal::DOCUMENT_ACTION, 0, $id_d, "suppression", $message);

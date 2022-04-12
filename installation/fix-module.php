@@ -20,7 +20,7 @@ if (count($argv) != 3) {
 }
 
 
-$result = $objectInstancier->getInstance(Document::class)->getAllByType($old_flux_name);
+$result = $objectInstancier->getInstance(DocumentSQL::class)->getAllByType($old_flux_name);
 
 if (!$result) {
     echo "Il n'y a pas de document de type $old_flux_name\n";
@@ -42,5 +42,5 @@ if ($entree != 'o') {
     exit;
 }
 
-$objectInstancier->getInstance(Document::class)->fixModule($old_flux_name, $new_flux_name);
+$objectInstancier->getInstance(DocumentSQL::class)->fixModule($old_flux_name, $new_flux_name);
 echo "Les documents ont ete modifies\n";

@@ -164,7 +164,7 @@ class UtilisateurControler extends PastellControler
 
         $documentCreationService = $this->getObjectInstancier()->getInstance(DocumentCreationService::class);
         $id_d = $documentCreationService->createDocument($utilisateur_info['id_e'], $id_u, 'changement-email');
-        $this->getDocument()->setTitre($id_d, $utilisateur_info['login']);
+        $this->getDocumentSQL()->setTitre($id_d, $utilisateur_info['login']);
 
         /** @var DonneesFormulaire $donneesFormulaire */
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);

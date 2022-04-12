@@ -22,8 +22,8 @@ class JournalTest extends PastellTestCase
         //Ne pas utilise le journal de l'objectInstancier !
         $journal = new Journal(
             $this->getSQLQuery(),
-            $this->getObjectInstancier()->getInstance(Utilisateur::class),
-            $this->getObjectInstancier()->getInstance(Document::class),
+            $this->getObjectInstancier()->getInstance(UtilisateurSQL::class),
+            $this->getObjectInstancier()->getInstance(DocumentSQL::class),
             $this->getObjectInstancier()->getInstance(DocumentTypeFactory::class),
             $this->getLogger()
         );

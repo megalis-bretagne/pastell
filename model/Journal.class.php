@@ -1,5 +1,7 @@
 <?php
 
+use Monolog\Logger;
+
 class Journal extends SQL
 {
     public const DOCUMENT_ACTION = 1;
@@ -25,11 +27,6 @@ class Journal extends SQL
     public const ACTION_AJOUTE = 'Ajouté';
 
     private $id_u;
-    private $utilisateurSQL;
-    private $documentSQL;
-    private $documentTypeFactory;
-
-    private $logger;
     /**
      * @var Horodateur
      */
@@ -37,16 +34,12 @@ class Journal extends SQL
 
     public function __construct(
         SQLQuery $sqlQuery,
-        UtilisateurSQL $utilisateurSQL,
-        Document $documentSQL,
-        DocumentTypeFactory $documentTypeFactory,
-        Monolog\Logger $logger
+        private UtilisateurSQL $utilisateurSQL,
+        private DocumentSQL $documentSQL,
+        private DocumentTypeFactory $documentTypeFactory,
+        private Logger $logger,
     ) {
         parent::__construct($sqlQuery);
-        $this->utilisateurSQL = $utilisateurSQL;
-        $this->documentSQL = $documentSQL;
-        $this->documentTypeFactory = $documentTypeFactory;
-        $this->logger = $logger;
     }
 
     public function setHorodateur(Horodateur $horodateur)
@@ -145,7 +138,7 @@ class Journal extends SQL
         $tri_croissant = false,
         $with_preuve = true
     ) {
-        list($sql,$value) = $this->getQueryAll($id_e, $type, $id_d, $id_u, $offset, $limit, $recherche, $date_debut, $date_fin, $tri_croissant);
+        [$sql,$value] = $this->getQueryAll($id_e, $type, $id_d, $id_u, $offset, $limit, $recherche, $date_debut, $date_fin, $tri_croissant);
 
         $result = $this->query($sql, $value);
         foreach ($result as $i => $line) {
