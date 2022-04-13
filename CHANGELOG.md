@@ -45,6 +45,7 @@
 - Suppression des fonctions SAEConnecteur::getAcuseReception et SAEConnecteur::getReply 
 - Suppression de TdtConnecteur::postHelios(), remplacé par TdtConnecteur::sendHelios()
 - Suppression de la méthode magique `Controler::__get`
+- Suppression de TdtConnecteur::postActes(), remplacé par TdtConnecteur::sendActes()
 
 # [3.1.13] - 2022-04-18
 

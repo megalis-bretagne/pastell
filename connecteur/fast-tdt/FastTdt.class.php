@@ -282,54 +282,6 @@ class FastTdt extends TdtConnecteur
     }
 
     /**
-     * @param DonneesFormulaire $donneesFormulaire
-     * @return bool
-     * @throws Exception
-     * @deprecated PA 3.0. Use sendActes() instead.
-     */
-    public function postActes(DonneesFormulaire $donneesFormulaire)
-    {
-        $tdtActe = new TdtActes();
-        $tdtActe->acte_nature = $donneesFormulaire->get('acte_nature');
-        $tdtActe->numero_de_lacte = $donneesFormulaire->get('numero_de_lacte');
-        $tdtActe->objet = $donneesFormulaire->get('objet');
-        $tdtActe->date_de_lacte = $donneesFormulaire->get('date_de_lacte');
-        $tdtActe->document_papier = $donneesFormulaire->get('document_papier');
-        $tdtActe->type_acte = $donneesFormulaire->get('type_acte');
-        $tdtActe->type_pj = $donneesFormulaire->get('type_pj');
-        $tdtActe->classification = $donneesFormulaire->get('classification');
-
-        $tdtActe->arrete = new Fichier();
-        if ($donneesFormulaire->get('is_pades')) {
-            $field = self::SIGNATURE_FIELD;
-        } else {
-            $field = self::ACTE_FIELD;
-        }
-        $tdtActe->arrete->filename = $donneesFormulaire->getFileName($field);
-        $tdtActe->arrete->filepath = $donneesFormulaire->getFilePath($field);
-        $tdtActe->arrete->content = $donneesFormulaire->getFileContent($field);
-        $tdtActe->arrete->contentType = $donneesFormulaire->getContentType($field);
-
-        $annexes = [];
-        if ($donneesFormulaire->get(self::ANNEXES_FIELD)) {
-            for ($i = 0; $i < count($donneesFormulaire->get(self::ANNEXES_FIELD)); ++$i) {
-                $annexe = new Fichier();
-                $annexe->filename = $donneesFormulaire->getFileName(self::ANNEXES_FIELD, $i);
-                $annexe->filepath = $donneesFormulaire->getFilePath(self::ANNEXES_FIELD, $i);
-                $annexe->content = $donneesFormulaire->getFileContent(self::ANNEXES_FIELD, $i);
-                $annexe->contentType = $donneesFormulaire->getContentType(self::ANNEXES_FIELD, $i);
-                $annexes[] = $annexe;
-            }
-        }
-        $tdtActe->autre_document_attache = $annexes;
-
-        $id_transaction = $this->sendActes($tdtActe);
-        $donneesFormulaire->setData('tedetis_transaction_id', $id_transaction);
-
-        return true;
-    }
-
-    /**
      * @param TdtActes $tdtActes
      * @return string
      * @throws ClientHttpException

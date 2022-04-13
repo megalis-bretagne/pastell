@@ -41,11 +41,6 @@ class TdtAdapter extends TdtConnecteur
         throw new Exception("Not implemented");
     }
 
-    public function postActes(DonneesFormulaire $donneesFormulaire)
-    {
-        throw new Exception("Not implemented");
-    }
-
     public function sendActes(TdtActes $tdtActes)
     {
         throw new Exception("Not implemented");

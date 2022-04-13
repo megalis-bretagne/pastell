@@ -2,12 +2,19 @@
 
 class TedetisEnvoie extends ActionExecutor
 {
+    /**
+     * @throws UnrecoverableException
+     * @throws NotFoundException
+     * @throws Exception
+     */
     public function go()
     {
         /** @var TdtConnecteur $tdT */
         $tdT = $this->getConnecteur("TdT");
         try {
-            $tdT->postActes($this->getDonneesFormulaire());
+            $act = $this->getAct($this->getDonneesFormulaire());
+            $transactionId = $tdT->sendActes($act);
+            $this->getDonneesFormulaire()->setData('tedetis_transaction_id', $transactionId);
         } catch (Exception $e) {
             if ($this->id_worker) {
                 $message = "Erreur lors de l'envoi au Tdt : " . $e->getMessage();
@@ -48,5 +55,38 @@ class TedetisEnvoie extends ActionExecutor
             }
         }
         $this->setJobManagerForLot($all_id_d);
+    }
+
+    private function getAct(DonneesFormulaire $donneesFormulaire): TdtActes
+    {
+        $acte = new TdtActes();
+        $acte->acte_nature = $donneesFormulaire->get('acte_nature');
+
+        if ($donneesFormulaire->get('is_pades')) {
+            $field = 'signature';
+        } else {
+            $field = 'arrete';
+        }
+        $acte->arrete = new Fichier();
+        $acte->arrete->filename = $donneesFormulaire->getFileName($field);
+        $acte->arrete->filepath = $donneesFormulaire->getFilePath($field);
+        $acte->arrete->content = $donneesFormulaire->getFileContent($field);
+        $acte->arrete->contentType = $donneesFormulaire->getContentType($field);
+
+        $annexes = [];
+        $annexesField = 'autre_document_attache';
+        if ($donneesFormulaire->get($annexesField)) {
+            for ($i = 0, $annexesNumber = \count($donneesFormulaire->get($annexesField)); $i < $annexesNumber; ++$i) {
+                $annexe = new Fichier();
+                $annexe->filename = $donneesFormulaire->getFileName($annexesField, $i);
+                $annexe->filepath = $donneesFormulaire->getFilePath($annexesField, $i);
+                $annexe->content = $donneesFormulaire->getFileContent($annexesField, $i);
+                $annexe->contentType = $donneesFormulaire->getContentType($annexesField, $i);
+                $annexes[] = $annexe;
+            }
+        }
+        $acte->autre_document_attache = $annexes;
+
+        return $acte;
     }
 }

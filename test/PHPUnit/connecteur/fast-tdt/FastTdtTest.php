@@ -21,10 +21,9 @@ class FastTdtTest extends PastellTestCase
     }
 
     /**
-     * @param int $numberOfAnnexes
-     * @return DonneesFormulaire
+     * @throws DonneesFormulaireException
      */
-    private function getDefaultActeDonneesFormulaire($numberOfAnnexes): DonneesFormulaire
+    private function getDefaultActeDonneesFormulaire(int $numberOfAnnexes): DonneesFormulaire
     {
         $acteDonneesFormulaire = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
         $acteDonneesFormulaire->setData('acte_nature', '3');
@@ -44,6 +43,31 @@ class FastTdtTest extends PastellTestCase
             );
         }
         return $acteDonneesFormulaire;
+    }
+
+    private function getDefaultTdtActe(int $numberOfAnnexes): TdtActes
+    {
+        $acte = new TdtActes();
+        $acte->acte_nature = '3';
+        $acte->numero_de_lacte = '201905151412';
+        $acte->objet = 'This is a test';
+        $acte->date_de_lacte = '2019-05-15';
+        $acte->classification = '1.1 Marchés publics';
+        $acte->type_acte = '99_AI';
+        $acte->arrete = new Fichier();
+        $acte->arrete->filepath = __DIR__ . '/fixtures/vide.pdf';
+        $acte->arrete->filename = 'arrete.pdf';
+
+        $annexes = [];
+        for ($i = 0; $i < $numberOfAnnexes; ++$i) {
+            $annexe = new Fichier();
+            $annexe->filepath = __DIR__ . '/fixtures/vide.pdf';
+            $annexe->filename = "$i.pdf";
+            $annexes[] = $annexe;
+        }
+        $acte->autre_document_attache = $annexes;
+
+        return $acte;
     }
 
     /**
@@ -273,25 +297,23 @@ class FastTdtTest extends PastellTestCase
         ]);
     }
 
-    public function whenSendingAnActProvider()
+    public function whenSendingAnActProvider(): iterable
     {
-        return [
-            [0, ''],
-            [1, '["22_CO"]'],
-            [10, '']
-        ];
+        yield [0, ''];
+        yield [1, '["22_CO"]'];
+        yield [10, ''];
     }
 
     /**
      * When successfully sending an act
      *
      * @dataProvider whenSendingAnActProvider
-     * @param $numberOfAnnexes
-     * @param $typePj
-     * @test
-     * @throws Exception
+     * @throws ClientHttpException
+     * @throws DonneesFormulaireException
+     * @throws FastTdtException
+     * @throws UnrecoverableException
      */
-    public function whenSendingAnAct($numberOfAnnexes, $typePj)
+    public function testWhenSendingAnAct(int $numberOfAnnexes, string $typePj): void
     {
         $connecteurConfig = $this->getDefaultConnecteurConfig();
         $connecteurConfig->addFileFromCopy(
@@ -325,20 +347,21 @@ class FastTdtTest extends PastellTestCase
         $this->fastTdt = new FastTdt($webdavWrapper, $soapClientFactory, $this->getJournal());
         $this->fastTdt->setConnecteurConfig($connecteurConfig);
 
-        $acteDonneesFormulaire = $this->getDefaultActeDonneesFormulaire($numberOfAnnexes);
-        $acteDonneesFormulaire->setData('type_pj', $typePj);
+        $acte = $this->getDefaultTdtActe($numberOfAnnexes);
+        $acte->type_pj = $typePj;
 
-        $this->assertTrue($this->fastTdt->postActes($acteDonneesFormulaire));
-        $this->assertSame('999-1234-20190515-201905151412-AI', $acteDonneesFormulaire->get('tedetis_transaction_id'));
+        $this->assertSame('999-1234-20190515-201905151412-AI', $this->fastTdt->sendActes($acte));
     }
 
     /**
      * When sending an act with an error
      *
-     * @test
-     * @throws Exception
+     * @throws ClientHttpException
+     * @throws DonneesFormulaireException
+     * @throws FastTdtException
+     * @throws UnrecoverableException
      */
-    public function whenSendingAnActWithAnError()
+    public function testWhenSendingAnActWithAnError(): void
     {
         $this->expectException(FastTdtException::class);
         $this->expectExceptionMessage("Erreur lors du traitement de l'acte : 1x2 : Enveloppe mal formée");
@@ -367,7 +390,7 @@ class FastTdtTest extends PastellTestCase
             ->with('traiterACTES')
             ->willReturn(json_decode(json_encode([
                 'code' => '1x2',
-                'detail' => 'Enveloppe mal formée'
+                'detail' => 'Enveloppe mal formée',
             ])));
 
         $soapClientFactory = $this->createMock(SoapClientFactory::class);
@@ -382,10 +405,10 @@ class FastTdtTest extends PastellTestCase
         $this->fastTdt = new FastTdt($webdavWrapper, $soapClientFactory, $this->getJournal());
         $this->fastTdt->setConnecteurConfig($connecteurConfig);
 
-        $acteDonneesFormulaire = $this->getDefaultActeDonneesFormulaire(5);
-        $acteDonneesFormulaire->setData('type_pj', '');
+        $acte = $this->getDefaultTdtActe(5);
+        $acte->type_pj = '';
 
-        $this->fastTdt->postActes($acteDonneesFormulaire);
+        $this->fastTdt->sendActes($acte);
     }
 
     public function whenGettingStatusProvider()
