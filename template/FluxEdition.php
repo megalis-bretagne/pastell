@@ -72,12 +72,24 @@ aucun connecteur sélectionné
             <td>&nbsp;</td>
             <td>&nbsp;</td>
         </tr>
-    <?php foreach ($connecteur_disponible as $connecteur) : ?>
+    <?php foreach ($connecteur_disponible as $connecteur) :?>
         <tr>
             <td>
-                <input type='radio' name='id_ce' value='<?php hecho($connecteur['id_ce'])?>' <?php echo  $connecteur_info['id_ce'] == $connecteur['id_ce'] ? "checked='checked'" : ""?> />
-                &nbsp;&nbsp;
+                <input
+                        type='radio'
+                        name='id_ce'
+                        value='<?php hecho($connecteur['id_ce'])?>'
+                        id='radio_id_ce_<?php hecho($connecteur['id_ce'])?>'
+                        <?php
+                        if (
+                            isset($connecteur_info['id_ce']) && $connecteur_info['id_ce'] === $connecteur['id_ce']
+                        ) : ?>
+                            checked='checked'
+                        <?php endif; ?>
+                />
+                <label for='radio_id_ce_<?php hecho($connecteur['id_ce'])?>'>
                 <a href='<?php $this->url("Connecteur/edition?id_ce={$connecteur['id_ce']}")?>'><?php hecho($connecteur['libelle'])?></a>
+                </label>
             </td>
             <td><?php hecho($connecteur['id_connecteur'])?></td>
             <td>
