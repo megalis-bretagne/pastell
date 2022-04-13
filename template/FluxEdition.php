@@ -79,6 +79,7 @@ aucun connecteur sélectionné
                         type='radio'
                         name='id_ce'
                         value='<?php hecho($connecteur['id_ce'])?>'
+                        id='radio_id_ce_<?php hecho($connecteur['id_ce'])?>'
                         <?php
                         if (
                             isset($connecteur_info['id_ce']) && $connecteur_info['id_ce'] === $connecteur['id_ce']
@@ -86,8 +87,9 @@ aucun connecteur sélectionné
                             checked='checked'
                         <?php endif; ?>
                 />
-                &nbsp;&nbsp;
+                <label for='radio_id_ce_<?php hecho($connecteur['id_ce'])?>'>
                 <a href='<?php $this->url("Connecteur/edition?id_ce={$connecteur['id_ce']}")?>'><?php hecho($connecteur['libelle'])?></a>
+                </label>
             </td>
             <td><?php hecho($connecteur['id_connecteur'])?></td>
             <td>
