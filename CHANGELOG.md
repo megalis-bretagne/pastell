@@ -1,3 +1,9 @@
+# [3.1.14]
+
+## Évolutions
+
+- Pack Chorus Pro: Prise en compte du nouveau schéma de données CPPFacturePivot_V2_02.xsd #1494
+
 # [3.1.13] - 2022-04-18
 
 ## Corrections
