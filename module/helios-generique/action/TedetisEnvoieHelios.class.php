@@ -19,7 +19,13 @@ class TedetisEnvoieHelios extends ActionExecutor
         /** @var TdtConnecteur $tdT */
         $tdT = $this->getConnecteur("TdT");
         try {
-            $tdT->postHelios($this->getDonneesFormulaire());
+            $file = new Fichier();
+            $file->filepath = $donneesFormulaire->getFilePath('fichier_pes_signe');
+            $file->filename = $donneesFormulaire->getFileName('fichier_pes_signe');
+            $file->content = $donneesFormulaire->getFileContent('fichier_pes_signe');
+            $file->contentType = $donneesFormulaire->getContentType('fichier_pes_signe');
+            $transactionId = $tdT->sendHelios($file);
+            $donneesFormulaire->setData('tedetis_transaction_id', $transactionId);
         } catch (Exception $exception) {
             if (preg_match("#Doublon#i", $exception->getMessage())) {
                 $message = $exception->getMessage();

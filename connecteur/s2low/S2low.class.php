@@ -285,7 +285,7 @@ class S2low extends TdtConnecteur
         $this->verifyForwardCertificate();
         $file_path = $fichierHelios->filepath;
         $file_name = $fichierHelios->filename;
-        $file_name = $this->getHeliosEnveloppeFileName($file_name);
+        $file_name = $this->getHeliosEnveloppeFileName($file_name ?? '');
         $this->curlWrapper->addPostFile('enveloppe', $file_path, $file_name);
         $result = $this->exec(self::URL_POST_HELIOS);
 
@@ -300,36 +300,6 @@ class S2low extends TdtConnecteur
             throw new S2lowException("Erreur lors de l'envoi du PES : " . $xml->{'message'});
         }
         return $xml->{'id'};
-    }
-
-    /**
-     *
-     * @deprecated PA 3.0 use sendHelios() instead
-     * @param DonneesFormulaire $donneesFormulaire
-     * @return bool
-     * @throws S2lowException
-     */
-    public function postHelios(DonneesFormulaire $donneesFormulaire)
-    {
-        $this->verifyForwardCertificate();
-        $file_path = $donneesFormulaire->getFilePath('fichier_pes_signe');
-        $file_name = $donneesFormulaire->get('fichier_pes_signe');
-        $file_name = $this->getHeliosEnveloppeFileName($file_name[0] ?? '');
-        $this->curlWrapper->addPostFile('enveloppe', $file_path, $file_name);
-        $result = $this->exec(self::URL_POST_HELIOS);
-
-        $simpleXMLWrapper = new SimpleXMLWrapper();
-        try {
-            $xml = $simpleXMLWrapper->loadString($result);
-        } catch (Exception $e) {
-            throw new S2lowException("La réponse de S²low n'a pas pu être analysée : " . get_hecho($result));
-        }
-
-        if ($xml->{'resultat'} == "OK") {
-            $donneesFormulaire->setData('tedetis_transaction_id', $xml->{'id'});
-            return true;
-        }
-        throw new S2lowException("Erreur lors de l'envoi du PES : " . $xml->{'message'});
     }
 
     public function getHeliosEnveloppeFileName(?string $name): string

@@ -266,22 +266,6 @@ class FastTdt extends TdtConnecteur
     }
 
     /**
-     * @param DonneesFormulaire $donneesFormulaire
-     * @throws DocapostParapheurSoapClientException
-     * @throws Exception
-     * @deprecated PA 3.0. Use sendHelios() instead.
-     */
-    public function postHelios(DonneesFormulaire $donneesFormulaire)
-    {
-        $heliosFile = new Fichier();
-        $heliosFile->filename = $donneesFormulaire->getFileName('fichier_pes_signe');
-        $heliosFile->content = $donneesFormulaire->getFileContent('fichier_pes_signe');
-        $documentId = $this->sendHelios($heliosFile);
-
-        $this->getDocDonneesFormulaire()->setData('tedetis_transaction_id', $documentId);
-    }
-
-    /**
      * @param Fichier $fichierHelios
      * @return mixed
      * @throws DocapostParapheurSoapClientException

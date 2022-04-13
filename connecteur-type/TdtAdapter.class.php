@@ -36,11 +36,6 @@ class TdtAdapter extends TdtConnecteur
         throw new Exception("Not implemented");
     }
 
-    public function postHelios(DonneesFormulaire $donneesFormulaire)
-    {
-        throw new Exception("Not implemented");
-    }
-
     public function sendHelios(Fichier $fichierHelios)
     {
         throw new Exception("Not implemented");

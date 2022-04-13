@@ -539,10 +539,10 @@ class FastTdtTest extends PastellTestCase
     }
 
     /**
-     * @test
      * @throws DocapostParapheurSoapClientException
+     * @throws DonneesFormulaireException
      */
-    public function whenSendingAPes()
+    public function testWhenSendingAPes(): void
     {
         $webdavWrapper = $this->createMock(WebdavWrapper::class);
         $soapClient = $this->createMock(SoapClient::class);
@@ -573,11 +573,14 @@ class FastTdtTest extends PastellTestCase
         );
         $this->fastTdt->setDocDonneesFormulaire($heliosDonneesFormulaire);
 
-        $this->fastTdt->postHelios($heliosDonneesFormulaire);
+        $file = new Fichier();
+        $file->filename = $heliosDonneesFormulaire->getFileName('fichier_pes_signe');
+        $file->filepath = $heliosDonneesFormulaire->getFilePath('fichier_pes_signe');
+        $file->content = $heliosDonneesFormulaire->getFileContent('fichier_pes_signe');
 
         $this->assertSame(
             '1234abcd',
-            $this->fastTdt->getDocDonneesFormulaire()->get('tedetis_transaction_id')
+            $this->fastTdt->sendHelios($file)
         );
     }
 
