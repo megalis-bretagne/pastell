@@ -56,12 +56,6 @@ class FakeTdT extends TdtAdapter
         return [];
     }
 
-    public function postHelios(DonneesFormulaire $donneesFormulaire)
-    {
-        $donneesFormulaire->setData('tedetis_transaction_id', mt_rand(1, mt_getrandmax()));
-        return true;
-    }
-
     public function sendHelios(Fichier $fichierHelios)
     {
         return  mt_rand(1, mt_getrandmax());

@@ -49,20 +49,20 @@ class S2lowTest extends PastellTestCase
     /**
      * @throws S2lowException
      */
-    public function testPostHeliosS2lowOK()
+    public function testPostHeliosS2lowOK(): void
     {
-        $s2low = $this->getS2low("<import><resultat>OK</resultat></import>");
-        $this->assertTrue($s2low->postHelios($this->getDonneesFormulaire()));
+        $s2low = $this->getS2low("<import><resultat>OK</resultat><id>123</id></import>");
+        $this->assertEquals('123', $s2low->sendHelios(new Fichier()));
     }
 
     /**
      * @throws S2lowException
      */
-    public function testPostHeliosS2lowKO()
+    public function testPostHeliosS2lowKO(): void
     {
         $s2low = $this->getS2low("<import><resultat>KO</resultat><message>foo</message></import>");
         $this->expectExceptionMessage("Erreur lors de l'envoi du PES : foo");
-        $s2low->postHelios($this->getDonneesFormulaire());
+        $s2low->sendHelios(new Fichier());
     }
 
     /**
