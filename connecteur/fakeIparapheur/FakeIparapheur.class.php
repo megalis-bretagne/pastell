@@ -66,25 +66,6 @@ class FakeIparapheur extends SignatureConnecteur
         return "Dossier déposé pour signature";
     }
 
-    /**
-     * @deprecated 3.0
-     */
-    public function sendDocument(
-        $typeTechnique,
-        $sousType,
-        $dossierID,
-        $document_content,
-        $content_type,
-        array $all_annexes = [],
-        $date_limite = false,
-        $visuel_pdf = ''
-    ) {
-        if ($this->iparapheur_envoi_status == 'error') {
-            throw new Exception("Erreur déclenchée par le connecteur fake Iparapheur (iparapheur_envoi_status configuré à 'error')");
-        }
-        return "Dossier déposé pour signature";
-    }
-
     public function getHistorique($dossierID)
     {
         if ($this->retour == 'Fatal') {
@@ -127,18 +108,6 @@ class FakeIparapheur extends SignatureConnecteur
         }
 
         return $info;
-    }
-
-    public function sendHeliosDocument(
-        $typeTechnique,
-        $sousType,
-        $dossierID,
-        $document_content,
-        $content_type,
-        $visuel_pdf,
-        array $metadata = []
-    ) {
-        return true;
     }
 
     public function getAllHistoriqueInfo($dossierID)

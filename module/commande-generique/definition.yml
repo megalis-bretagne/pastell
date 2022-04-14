@@ -248,16 +248,20 @@ action:
             name: Transmis au parapheur
             rule:
                 last-action:
-                    creation
-                    modification
+                    - creation
+                    - modification
                 document_is_valide: true
                 content:
                     envoi_signature: true
                 no-action:
-                    send-iparapheur
-            action-class: FournisseurCommandeEnvoieIparapheur
+                    - send-iparapheur
+            action-class: StandardAction
             action-automatique: verif-iparapheur
             connecteur-type: signature
+            connecteur-type-action: SignatureEnvoie
+            connecteur-type-mapping:
+                objet: libelle
+                document: commande
 
     verif-iparapheur:
         name-action: Vérifier le statut de signature

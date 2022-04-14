@@ -2,21 +2,15 @@
 
 trait SoapUtilitiesTestTrait
 {
-    /**
-     * @param callable $__call_callback
-     */
     public function mockSoapClient(callable $__call_callback): void
     {
-
         $soapClient = $this->createMock(SoapClient::class);
         $soapClient
-            ->expects($this->any())
             ->method('__call')
-            ->will($this->returnCallback($__call_callback));
+            ->willReturnCallback($__call_callback);
 
         $soapClientFactory = $this->createMock(SoapClientFactory::class);
         $soapClientFactory
-            ->expects($this->any())
             ->method('getInstance')
             ->willReturn($soapClient);
 

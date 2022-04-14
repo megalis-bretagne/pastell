@@ -95,22 +95,6 @@ class Libersign extends SignatureConnecteur
         throw new BadMethodCallException("Not implemented");
     }
 
-    /**
-     * @deprecated 3.0
-     */
-    public function sendDocument(
-        $typeTechnique,
-        $sousType,
-        $dossierID,
-        $document_content,
-        $content_type,
-        array $all_annexes = [],
-        $date_limite = false,
-        $visuel_pdf = ''
-    ) {
-        throw new Exception("Not implemented --");
-    }
-
     public function getHistorique($dossierID)
     {
         throw new Exception("Not implemented");
@@ -118,18 +102,6 @@ class Libersign extends SignatureConnecteur
 
     public function getSignature($dossierID, $archive = true)
     {
-        throw new Exception("Not implemented");
-    }
-
-    public function sendHeliosDocument(
-        $typeTechnique,
-        $sousType,
-        $dossierID,
-        $document_content,
-        $content_type,
-        $visuel_pdf,
-        array $metadata = []
-    ) {
         throw new Exception("Not implemented");
     }
 
