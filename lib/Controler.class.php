@@ -115,10 +115,13 @@ class Controler
         $lastMessage->setLastMessage($message);
     }
 
-
-    public function __get($key)
+    /**
+     * @deprecated Use getInstance() or getViewParameterByKey() instead
+     * @param $key
+     * @return mixed|object|ObjectInstancier|null
+     */
+    public function getViewParameterOrObject($key)
     {
-
         if ($this->isViewParameter($key)) {
             return $this->viewParameter[$key];
         }
@@ -133,6 +136,19 @@ class Controler
     public function getInstance($class_name)
     {
         return $this->getObjectInstancier()->getInstance($class_name);
+    }
+
+    /**
+     * @param $key
+     * @return mixed
+     * @throws UnrecoverableException
+     */
+    public function getViewParameterByKey($key): mixed
+    {
+        if (! $this->isViewParameter($key)) {
+            throw new UnrecoverableException("Impossible de récupérer la valeur du paramètre $key");
+        }
+        return $this->viewParameter[$key];
     }
 
     public function setViewParameter($key, $value)

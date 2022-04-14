@@ -5,13 +5,13 @@ declare(strict_types=1);
 use Rector\Core\Configuration\Option;
 
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use Utils\Rector\UseSetViewParametersInsteadMagicMethod;
+use Utils\Rector\UseGetViewParametersInsteadMagicMethod;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     // get parameters
     $parameters = $containerConfigurator->parameters();
     $parameters->set(Option::PATHS, [
-        __DIR__ . '/connecteur/generateur-seda'
+        __DIR__ . '/controler'
     ]);
 
     // Define what rule sets will be applied
@@ -19,7 +19,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     // get services (needed for register a single rule)
     $services = $containerConfigurator->services();
-    $services->set(UseSetViewParametersInsteadMagicMethod::class);
+    $services->set(UseGetViewParametersInsteadMagicMethod::class);
 
     // register a single rule
     // $services->set(TypedPropertyRector::class);

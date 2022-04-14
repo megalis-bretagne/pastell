@@ -212,10 +212,10 @@ class DaemonControler extends PastellControler
         $this->setViewParameter('limit', self::NB_JOB_DISPLAYING);
         $this->setViewParameter('filtre', $filtre);
 
-        $this->setViewParameter('return_url', urlencode("Daemon/job?filtre=$filtre&offset=" . $this->{'offset'}));
+        $this->setViewParameter('return_url', urlencode("Daemon/job?filtre=$filtre&offset=" . $this->getViewParameterOrObject('offset')));
 
         $this->setViewParameter('count', $this->getWorkerSQL()->getNbJob($filtre));
-        $this->setViewParameter('job_list', $this->getWorkerSQL()->getJobListWithWorker($this->{'offset'}, $this->{'limit'}, $filtre));
+        $this->setViewParameter('job_list', $this->getWorkerSQL()->getJobListWithWorker($this->getViewParameterOrObject('offset'), $this->getViewParameterOrObject('limit'), $filtre));
 
         $this->renderDefault();
     }
@@ -227,7 +227,7 @@ class DaemonControler extends PastellControler
 
         $this->setViewParameter('page_title', "Détail du travail #{$id_job}");
         /** @var JobQueueSQL $jobQueueSQL */
-        $jobQueueSQL = $this->{'JobQueueSQL'};
+        $jobQueueSQL = $this->getViewParameterOrObject('JobQueueSQL');
         $this->setViewParameter('job_info', $jobQueueSQL->getJobInfo($id_job));
         $this->setViewParameter('return_url', "Daemon/detail?id_job=$id_job");
         $this->setViewParameter('template_milieu', "DaemonDetail");

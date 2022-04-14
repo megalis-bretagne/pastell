@@ -29,9 +29,9 @@ class EntiteControler extends PastellControler
         $this->setViewParameter('id_e', $recuperateur->getInt('id_e', 0));
 
         $this->setViewParameter('has_many_collectivite', $this->hasManyCollectivite());
-        $this->setViewParameter('info', $this->getEntiteSQL()->getInfo($this->{'id_e'}));
+        $this->setViewParameter('info', $this->getEntiteSQL()->getInfo($this->getViewParameterOrObject('id_e')));
 
-        if ($this->{'id_e'}) {
+        if ($this->getViewParameterOrObject('id_e')) {
             $this->detailEntite();
         } else {
             $this->listEntite();
@@ -41,7 +41,7 @@ class EntiteControler extends PastellControler
     private function setPageTitle($texte)
     {
         if ($this->isViewParameter('id_e')) {
-            $info = $this->getEntiteSQL()->getInfo($this->{'id_e'});
+            $info = $this->getEntiteSQL()->getInfo($this->getViewParameterOrObject('id_e'));
 
             if ($info) {
                 $texte = $info['denomination'] . " - $texte ";
@@ -265,7 +265,7 @@ class EntiteControler extends PastellControler
             $infoEntite = $this->getEntiteInfoFromLastError();
             if ($entite_mere) {
                 $this->setViewParameter('infoMere', $this->getEntiteSQL()->getInfo($entite_mere));
-                $this->setViewParameter('page_title', "Ajout d'une entité fille pour " . $this->{'infoMere'}['denomination']);
+                $this->setViewParameter('page_title', "Ajout d'une entité fille pour " . $this->getViewParameterOrObject('infoMere')['denomination']);
             } else {
                 $this->setViewParameter('page_title', "Ajout d'une entité");
             }
@@ -299,15 +299,15 @@ class EntiteControler extends PastellControler
         $this->setViewParameter('action', $recuperateur->get('action'));
         $this->setViewParameter('type', $recuperateur->get('type', Entite::TYPE_COLLECTIVITE));
 
-        if ($this->{'type'} == 'service') {
-            $this->setViewParameter('liste', $this->getEntiteListe()->getAllDescendant($this->{'id_e'}));
+        if ($this->getViewParameterOrObject('type') == 'service') {
+            $this->setViewParameter('liste', $this->getEntiteListe()->getAllDescendant($this->getViewParameterOrObject('id_e')));
         } else {
-            $this->setViewParameter('liste', $this->getEntiteListe()->getAll($this->{'type'}));
+            $this->setViewParameter('liste', $this->getEntiteListe()->getAll($this->getViewParameterOrObject('type')));
         }
 
-        if (! $this->{'liste'}) {
-            $this->setLastError("Aucune entité ({$this->{'type'}}) n'est disponible pour cette action");
-            $this->redirect("/Document/detail?id_e={$this->{'id_e'}}&id_d={$this->{'id_d'}}");
+        if (! $this->getViewParameterOrObject('liste')) {
+            $this->setLastError("Aucune entité ({$this->getViewParameterOrObject('type')}) n'est disponible pour cette action");
+            $this->redirect("/Document/detail?id_e={$this->getViewParameterOrObject('id_e')}&id_d={$this->getViewParameterOrObject('id_d')}");
         }
         $this->setViewParameter('page_title', "Veuillez choisir le ou les destinataires du document ");
         $this->setViewParameter('template_milieu', "EntiteChoix");
@@ -356,7 +356,7 @@ class EntiteControler extends PastellControler
             $siren = $info['siren'];
         } else {
             $this->setViewParameter('infoAncetre', $this->getEntiteSQL()->getInfo($id_ancetre));
-            $siren = $this->{'infoAncetre'}['siren'];
+            $siren = $this->getViewParameterOrObject('infoAncetre')['siren'];
         }
 
         /** @var AgentSQL $agentSQL */

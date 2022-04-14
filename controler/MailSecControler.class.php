@@ -22,7 +22,7 @@ class MailSecControler extends PastellControler
      */
     private function getAnnuaireSQL()
     {
-        return $this->{'AnnuaireSQL'};
+        return $this->getViewParameterOrObject('AnnuaireSQL');
     }
 
     /**
@@ -30,7 +30,7 @@ class MailSecControler extends PastellControler
      */
     private function getAnnuaireRoleSQL()
     {
-        return $this->{'AnnuaireRoleSQL'};
+        return $this->getViewParameterOrObject('AnnuaireRoleSQL');
     }
 
     public function annuaireAction()
@@ -49,13 +49,13 @@ class MailSecControler extends PastellControler
 
         $listUtilisateur = $this->getAnnuaireSQL()->getUtilisateurList(
             $id_e,
-            $this->{'offset'},
-            $this->{'limit'},
-            $this->{'search'},
-            $this->{'id_g'}
+            $this->getViewParameterOrObject('offset'),
+            $this->getViewParameterOrObject('limit'),
+            $this->getViewParameterOrObject('search'),
+            $this->getViewParameterOrObject('id_g')
         );
 
-        $this->setViewParameter('nb_email', $this->getAnnuaireSQL()->getNbUtilisateur($id_e, $this->{'search'}, $this->{'id_g'}));
+        $this->setViewParameter('nb_email', $this->getAnnuaireSQL()->getNbUtilisateur($id_e, $this->getViewParameterOrObject('search'), $this->getViewParameterOrObject('id_g')));
 
         $annuaireGroupe = new AnnuaireGroupe($this->getSQLQuery(), $id_e);
 
@@ -71,7 +71,7 @@ class MailSecControler extends PastellControler
         $this->setInfoEntite($id_e);
         $this->setViewParameter('id_e', $id_e);
         $this->setViewParameter('page', "Carnet d'adresses");
-        $this->setViewParameter('page_title', $this->{'infoEntite'}['denomination'] . " - Carnet d'adresses");
+        $this->setViewParameter('page_title', $this->getViewParameterOrObject('infoEntite')['denomination'] . " - Carnet d'adresses");
         $this->setViewParameter('template_milieu', "MailSecAnnuaire");
         $this->renderDefault();
     }
@@ -136,7 +136,7 @@ class MailSecControler extends PastellControler
         $this->setViewParameter('offset', $offset);
 
         $this->setViewParameter('page', "Carnet d'adresses");
-        $this->setViewParameter('page_title', $this->{'infoEntite'}['denomination'] . " - Carnet d'adresses");
+        $this->setViewParameter('page_title', $this->getViewParameterOrObject('infoEntite')['denomination'] . " - Carnet d'adresses");
 
         $this->setViewParameter('template_milieu', "MailSecGroupe");
         $this->renderDefault();
@@ -164,7 +164,7 @@ class MailSecControler extends PastellControler
         $this->setViewParameter('id_e', $id_e);
         $this->setViewParameter('annuaireRole', $this->getAnnuaireRoleSQL());
         $this->setViewParameter('page', "Carnet d'adresses");
-        $this->setViewParameter('page_title', $this->{'infoEntite'}['denomination'] . " - Carnet d'adresses");
+        $this->setViewParameter('page_title', $this->getViewParameterOrObject('infoEntite')['denomination'] . " - Carnet d'adresses");
         $this->setViewParameter('template_milieu', "MailSecGroupeRoleList");
         $this->renderDefault();
     }
@@ -176,9 +176,9 @@ class MailSecControler extends PastellControler
     {
         $recuperateur = $this->getGetInfo();
         $this->setViewParameter('id_e', $recuperateur->getInt('id_e'));
-        $this->verifDroit($this->{'id_e'}, "annuaire:edition");
+        $this->verifDroit($this->getViewParameterOrObject('id_e'), "annuaire:edition");
 
-        $this->setInfoEntite($this->{'id_e'});
+        $this->setInfoEntite($this->getViewParameterOrObject('id_e'));
 
         $this->setViewParameter('page_title', "Importer un carnet d'adresse");
         $this->setViewParameter('template_milieu', "MailSecImporter");
@@ -239,17 +239,17 @@ class MailSecControler extends PastellControler
         $id_a = $recuperateur->getInt('id_a');
         $this->setViewParameter('info', $this->getAnnuaireSQL()->getInfo($id_a));
 
-        $annuaireGroupe = new AnnuaireGroupe($this->getSQLQuery(), $this->{'info'}['id_e']);
+        $annuaireGroupe = new AnnuaireGroupe($this->getSQLQuery(), $this->getViewParameterOrObject('info')['id_e']);
 
         $this->setViewParameter('groupe_list', $annuaireGroupe->getGroupeFromUtilisateur($id_a));
 
-        $this->verifDroit($this->{'info'}['id_e'], "annuaire:lecture");
-        $this->setInfoEntite($this->{'info'}['id_e']);
-        $this->setViewParameter('can_edit', $this->hasDroit($this->{'info'}['id_e'], "annuaire:edition"));
+        $this->verifDroit($this->getViewParameterOrObject('info')['id_e'], "annuaire:lecture");
+        $this->setInfoEntite($this->getViewParameterOrObject('info')['id_e']);
+        $this->setViewParameter('can_edit', $this->hasDroit($this->getViewParameterOrObject('info')['id_e'], "annuaire:edition"));
 
 
-        $this->setViewParameter('page_title', $this->{'infoEntite'}['denomination'] .
-            " - Détail de l'adresse « {$this->{'info'}['email']} »");
+        $this->setViewParameter('page_title', $this->getViewParameterOrObject('infoEntite')['denomination'] .
+            " - Détail de l'adresse « {$this->getViewParameterOrObject('info')['email']} »");
         $this->setViewParameter('template_milieu', "MailSecDetail");
         $this->renderDefault();
     }
@@ -259,15 +259,15 @@ class MailSecControler extends PastellControler
         $recuperateur = new Recuperateur($_GET);
         $id_a = $recuperateur->getInt('id_a');
         $this->setViewParameter('info', $this->getAnnuaireSQL()->getInfo($id_a));
-        $this->verifDroit($this->{'info'}['id_e'], "annuaire:edition");
-        $this->setInfoEntite($this->{'info'}['id_e']);
+        $this->verifDroit($this->getViewParameterOrObject('info')['id_e'], "annuaire:edition");
+        $this->setInfoEntite($this->getViewParameterOrObject('info')['id_e']);
 
-        $annuaireGroupe = new AnnuaireGroupe($this->getSQLQuery(), $this->{'info'}['id_e']);
+        $annuaireGroupe = new AnnuaireGroupe($this->getSQLQuery(), $this->getViewParameterOrObject('info')['id_e']);
 
         $this->setViewParameter('groupe_list', $annuaireGroupe->getGroupeWithHasUtilisateur($id_a));
 
-        $this->setViewParameter('page_title', $this->{'infoEntite'}['denomination'] .
-            " - Édition de l'adresse « {$this->{'info'}['email']} »");
+        $this->setViewParameter('page_title', $this->getViewParameterOrObject('infoEntite')['denomination'] .
+            " - Édition de l'adresse « {$this->getViewParameterOrObject('info')['email']} »");
         $this->setViewParameter('template_milieu', "MailSecEdit");
         $this->renderDefault();
     }

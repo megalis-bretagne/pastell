@@ -113,7 +113,7 @@ class SystemControler extends PastellControler
     private function getDocumentTypeValidation(): DocumentTypeValidation
     {
         /** @var ActionExecutorFactory $actionExecutorFactory */
-        $actionExecutorFactory = $this->{'ActionExecutorFactory'};
+        $actionExecutorFactory = $this->getViewParameterOrObject('ActionExecutorFactory');
         $all_action_class = $actionExecutorFactory->getAllActionClass();
 
         /** @var PackService $packService */
@@ -122,7 +122,7 @@ class SystemControler extends PastellControler
         $all_type_entite = array_keys(Entite::getAllType());
 
 
-        $connecteur_type_action_class_list = $this->{'ConnecteurTypeFactory'}->getAllActionExecutor();
+        $connecteur_type_action_class_list = $this->getViewParameterOrObject('ConnecteurTypeFactory')->getAllActionExecutor();
 
         $documentTypeValidation = $this->getObjectInstancier()->getInstance(DocumentTypeValidation::class);
         $documentTypeValidation->setListPack($list_pack);
