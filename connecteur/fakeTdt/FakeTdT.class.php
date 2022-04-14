@@ -15,12 +15,6 @@ class FakeTdT extends TdtAdapter
         return "FakeTdT";
     }
 
-    public function postActes(DonneesFormulaire $donneesFormulaire)
-    {
-        $donneesFormulaire->setData('tedetis_transaction_id', mt_rand(1, mt_getrandmax()));
-        return true;
-    }
-
     public function sendActes(TdtActes $tdtActes)
     {
         return mt_rand(1, mt_getrandmax());

@@ -79,8 +79,6 @@ abstract class TdtConnecteur extends Connecteur
 
     abstract public function sendHelios(Fichier $fichierHelios);
 
-    abstract public function postActes(DonneesFormulaire $donneesFormulaire);
-
     abstract public function sendActes(TdtActes $tdtActes);
 
     abstract public function getStatusHelios($id_transaction);
