@@ -12,7 +12,7 @@ class TedetisEnvoie extends ActionExecutor
         /** @var TdtConnecteur $tdT */
         $tdT = $this->getConnecteur("TdT");
         try {
-            $act = $this->getAct($this->getDonneesFormulaire());
+            $act = $this->getTdtActes($this->getDonneesFormulaire());
             $transactionId = $tdT->sendActes($act);
             $this->getDonneesFormulaire()->setData('tedetis_transaction_id', $transactionId);
         } catch (Exception $e) {
@@ -57,10 +57,17 @@ class TedetisEnvoie extends ActionExecutor
         $this->setJobManagerForLot($all_id_d);
     }
 
-    private function getAct(DonneesFormulaire $donneesFormulaire): TdtActes
+    private function getTdtActes(DonneesFormulaire $donneesFormulaire): TdtActes
     {
         $acte = new TdtActes();
         $acte->acte_nature = $donneesFormulaire->get('acte_nature');
+        $acte->numero_de_lacte = $donneesFormulaire->get('numero_de_lacte');
+        $acte->objet = $donneesFormulaire->get('objet');
+        $acte->date_de_lacte = $donneesFormulaire->get('date_de_lacte');
+        $acte->document_papier = $donneesFormulaire->get('document_papier');
+        $acte->type_acte = $donneesFormulaire->get('type_acte');
+        $acte->type_pj = $donneesFormulaire->get('type_pj');
+        $acte->classification = $donneesFormulaire->get('classification');
 
         if ($donneesFormulaire->get('is_pades')) {
             $field = 'signature';
