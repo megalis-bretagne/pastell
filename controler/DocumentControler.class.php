@@ -734,7 +734,7 @@ class DocumentControler extends PastellControler
         $listDocument = $this->getViewParameterOrObject('listDocument');
 
         $all_action = [];
-        foreach ($this->getViewParameter('listDocument') as $i => $document) {
+        foreach ($listDocument as $i => $document) {
             $listDocument[$i]['action_possible'] =  $this->getActionPossible()->getActionPossibleLot($this->getViewParameterOrObject('id_e'), $this->getId_u(), $document['id_d']);
             $all_action = array_merge($all_action, $listDocument[$i]['action_possible']);
         }

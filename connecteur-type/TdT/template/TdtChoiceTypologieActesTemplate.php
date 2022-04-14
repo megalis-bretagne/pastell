@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @var Gabarit $this
+ * @var string $id_d
+ * @var int $id_e
+ * @var int $page
+ * @var string $field
  * @var array $pieces
  * @var array $actes_type_pj_list
  * @var array $type_pj_selection

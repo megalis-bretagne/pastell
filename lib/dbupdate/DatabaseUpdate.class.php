@@ -13,8 +13,7 @@ class DatabaseUpdate
         if (!$this->fileContent) {
             $this->fileContent = [];
         }
-        $databaseEvent = new DatabaseEventMySQL();
-        $this->databaseDiff = new DatabaseDiff($databaseEvent);
+        $this->databaseDiff = new DatabaseDiff();
 
         if ($sqlQuery) {
             $databaseDefinition = new DatabaseDefinition($sqlQuery);

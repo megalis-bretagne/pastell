@@ -2,13 +2,13 @@
 
 class Gabarit
 {
-    private $viewParameter;
-    private $objectInstancier;
+    private array $viewParameter;
 
-    public function __construct(ObjectInstancier $objectInstancier)
-    {
+    public function __construct(
+        private ObjectInstancier $objectInstancier,
+        private string $template_path,
+    ) {
         $this->viewParameter = [];
-        $this->objectInstancier = $objectInstancier;
     }
 
     public function setViewParameter($key, $value)
@@ -23,9 +23,11 @@ class Gabarit
 
     protected function getAPIController($controllerName)
     {
-        /** @var BaseAPIControllerFactory $baseAPIControllerFactory */
         $baseAPIControllerFactory = $this->objectInstancier->getInstance(BaseAPIControllerFactory::class);
-        return $baseAPIControllerFactory->getInstance($controllerName, $this->Authentification->getId());
+        return $baseAPIControllerFactory->getInstance(
+            $controllerName,
+            $this->objectInstancier->getInstance(Authentification::class)->getId()
+        );
     }
 
 

@@ -85,8 +85,9 @@ class SedaGeneriqueFillFiles extends ChoiceActionExecutor
     {
         $this->setViewParameter('node_id', $this->getRecuperateur()->get('node_id'));
         $fluxEntiteSQL = $this->objectInstancier->getInstance(FluxEntiteSQL::class);
-        $this->setViewParameter('flux', $fluxEntiteSQL->getUsedByConnecteurIfUnique($this->id_ce, $this->id_e));
-        $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($this->getViewParameter('flux'));
+        $flux = $fluxEntiteSQL->getUsedByConnecteurIfUnique($this->id_ce, $this->id_e);
+        $this->setViewParameter('flux', $flux);
+        $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($flux);
         $this->setViewParameter('fieldsList', $documentType->getFormulaire()->getFieldsList());
 
         $files = $this->getConnecteurConfig($this->id_ce)->getFileContent('files');

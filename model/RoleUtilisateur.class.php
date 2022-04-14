@@ -156,14 +156,12 @@ class RoleUtilisateur extends SQL
         if ($result) {
             return $result;
         }
-        if (! isset($allDroit[$id_u])) {
-            $allDroit[$id_u] = [];
-            $sql = "SELECT droit FROM  utilisateur_role " .
+        $allDroit[$id_u] = [];
+        $sql = "SELECT droit FROM  utilisateur_role " .
             " JOIN role_droit ON utilisateur_role.role=role_droit.role " .
             " WHERE  utilisateur_role.id_u=? ";
-            foreach ($this->query($sql, $id_u) as $line) {
-                $allDroit[$id_u][] = $line['droit'];
-            }
+        foreach ($this->query($sql, $id_u) as $line) {
+            $allDroit[$id_u][] = $line['droit'];
         }
         $this->memoryCache->store(
             $memory_key,
