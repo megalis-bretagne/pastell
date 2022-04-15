@@ -1,6 +1,10 @@
 #! /usr/bin/php
 <?php
 
+// TODO a supprimer.
+// Vérifier s'il faut faire quelque chose sur le connecteur global
+// Peut-être à lancer tous les jours ?
+
 /**
  * @var ObjectInstancier $objectInstancier
  */

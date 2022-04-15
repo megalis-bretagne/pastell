@@ -1,5 +1,6 @@
 #! /usr/bin/php
 <?php
+//TODO à supprimer
 
 /**
  * Ce script permet de mettre à jour automatiquement un Pastell en fonction d'une branche du SVN

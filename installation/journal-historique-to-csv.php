@@ -1,4 +1,5 @@
 <?php
+//TODO à mettre dans un connecteur global #1356
 
 require_once(__DIR__ . "/../init.php");
 

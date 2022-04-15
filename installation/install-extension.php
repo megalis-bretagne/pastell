@@ -1,4 +1,5 @@
 <?php
+// TODO à supprimer
 
 /*
  * script d'installation et d'intégration à pastell d'extensions

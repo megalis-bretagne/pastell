@@ -1,6 +1,8 @@
 #! /usr/bin/php
 <?php
 
+// TODO à transformer en connecteur global
+
 /**
  * @var ObjectInstancier $objectInstancier
  */

@@ -1,5 +1,7 @@
 <?php
 
+//TODO a mettre dans une Commande
+
 //Crée un admin (crée aussi le rôle admin et fixe les droits si il n'existe pas
 
 require_once(__DIR__ . "/../init.php");

@@ -1,4 +1,5 @@
 <?php
+//TODO a mettre dans une Commande
 
 /**
  * @var ObjectInstancier $objectInstancier

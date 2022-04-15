@@ -1,4 +1,5 @@
 <?php
+//TODO à supprimer
 
 require_once(__DIR__ . "/../../init.php");
 

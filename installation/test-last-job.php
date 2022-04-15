@@ -1,5 +1,5 @@
 <?php
-
+// TODO a mettre dans le HEALTHCHECK
 require_once(__DIR__ . "/../init.php");
 $modenagios = false;
 $message = "OK";

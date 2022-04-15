@@ -1,6 +1,5 @@
 <?php
 
-// @deprecated 3.0 use general-update.php
 
 require_once __DIR__ . "/../../init.php";
 

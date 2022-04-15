@@ -1,5 +1,6 @@
 #! /usr/bin/php
 <?php
+//TODO à supprimer
 
 /**
  * Ce script permet de mettre automatiquement à jour toutes les extensions d'une liste de la forme :

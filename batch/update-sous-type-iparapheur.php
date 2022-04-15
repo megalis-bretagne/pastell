@@ -1,6 +1,7 @@
 #! /usr/bin/php
 <?php
 
+// TODO à supprimer
 /**
  * @var ObjectInstancier $objectInstancier
  */

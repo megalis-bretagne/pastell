@@ -1,5 +1,7 @@
 <?php
 
+//TODO  à supprimer - eventuellement mettre l'état dans ForceUpdateField (et faire 2 commande, une pour connecteur et une pour document)
+
 /**
  * @var ObjectInstancier $objectInstancier
  */
