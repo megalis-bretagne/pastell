@@ -1,10 +1,4 @@
-# [3.1.14]
-
-## Évolutions
-
-- Pack Chorus Pro: Prise en compte du nouveau schéma de données CPPFacturePivot_V2_02.xsd #1494
-
-# [3.1.13] - 2022-04-18
+# [3.1.13] - 2022-04-19
 
 ## Corrections
 
@@ -16,6 +10,7 @@
 
 ## Évolutions
 
+- Pack Chorus Pro: Prise en compte du nouveau schéma de données CPPFacturePivot_V2_02.xsd #1494
 - Le glaneur permet l'extraction des données d'un PES avec le flux Hélios automatique en appelant l'action importation #711
 - Il faut lancer la commande `app:module:helios-add-extraction-pes-aller` suivie de `helios-automatique` ou `helios-generique`
   pour extraire les informations des fichier_pes (dans le cas où elles seraient manquantes) #1484
