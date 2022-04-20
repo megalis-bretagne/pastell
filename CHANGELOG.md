@@ -4,7 +4,7 @@
 
 - Les extensions doivent charger leurs fichiers PHP dans un fichier `autoload.php` à la racine de l'application ou via
   composer avec un fichier `vendor/autoload.php`
-- Le champ SIREN n'est plus obligatoire sur la définition d'une entité #1009 
+- Le champ SIREN n'est plus obligatoire sur la définition d'une entité #1009
 - La constante PASSWORD_MIN_ENTROPY passe par défaut à 80 suivant les recommandations de l'ANSSI
 
 ## Suppressions
@@ -31,23 +31,23 @@
   EnvoieSAEChange, IParapheurEnvoie, SAEVerif, TedetisAnnulation, TedetisRecupAnnulation, TedetisSendReponsePref
   TedetisVerifReponsePref, FournisseurCommandeEnvoiGED, FournisseurCommandeEnvoiSAE, GEDEnvoiDocumentASigner
   IParapheurEnvoieDocumentASigner, IParapheurRecupDocumentASigner, HeliosEnvoieSAEChange, HeliosGEDEnvoi, HeliosGeneriqueSAEValidation
-  HeliosGeneriqueSAEVerif, IparapheurEnvoieHelios 
+  HeliosGeneriqueSAEVerif, IparapheurEnvoieHelios
 - Suppression de la propriété Controler::lastError
 - La récupération des acquittements du flux pes-marché est standardisé avec les autres flux (modification du nom du fichier de l'acquittement)
 - Suppression de la constante MODE_MUTUALISE. Lors de l'envoi d'un mail sécurisé, mailsec_from prend la valeur de PLATEFORME_MAIL.
-  Il faut lancer la commande `app:force-update-field connector mailsec mailsec_reply_to "{% if mailsec_reply_to == '' %}{{mailsec_from}}{% else %}{{mailsec_reply_to}}{% endif %}"` 
+  Il faut lancer la commande `app:force-update-field connector mailsec mailsec_reply_to "{% if mailsec_reply_to == '' %}{{mailsec_from}}{% else %}{{mailsec_reply_to}}{% endif %}"`
   pour reporter l'ancien mailsec_from à mailsec_reply_to (s'il n'est pas déjà renseigné) #1465
 - Suppression de la fonction Controler::exitToIndex
 - Suppression des méthodes magiques ChoiceActionExecutor::__set, Gabarit::__set
 - Suppression des scripts permettant une installation hors d'un environnement Docker. En particulier les scripts de création de connecteurs initiaux et de fréquences sont gérés par la séquence d'initialisation du conteneur.
 - Suppression du modèle `Document`, remplacé par `DocumentSQL`
 - Suppression du modèle `Utilisateur`, remplacé par `UtilisateurSQL`
-- Suppression des fonctions SAEConnecteur::getAcuseReception et SAEConnecteur::getReply 
+- Suppression des fonctions SAEConnecteur::getAcuseReception et SAEConnecteur::getReply
 - Suppression de TdtConnecteur::postHelios(), remplacé par TdtConnecteur::sendHelios()
 - Suppression de la méthode magique `Controler::__get`
 - Suppression de TdtConnecteur::postActes(), remplacé par TdtConnecteur::sendActes()
 
-# [3.1.13] - 2022-04-18
+# [3.1.13] - 2022-04-19
 
 ## Corrections
 
@@ -59,6 +59,7 @@
 
 ## Évolutions
 
+- Pack Chorus Pro: Prise en compte du nouveau schéma de données CPPFacturePivot_V2_02.xsd #1494
 - Le glaneur permet l'extraction des données d'un PES avec le flux Hélios automatique en appelant l'action importation #711
 - Il faut lancer la commande `app:module:helios-add-extraction-pes-aller` suivie de `helios-automatique` ou `helios-generique`
   pour extraire les informations des fichier_pes (dans le cas où elles seraient manquantes) #1484
