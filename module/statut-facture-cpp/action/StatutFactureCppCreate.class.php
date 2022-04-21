@@ -23,7 +23,8 @@ class StatutFactureCppCreate extends ActionExecutor
             $xsdValidator->schemaValidate($schemaPath, $filePath);
         } catch (Exception $e) {
             $errorMessage = "Le fichier CPPStatutPivot est incorrect: " . $e->getMessage();
-            $this->getActionCreator()->addAction($this->id_e, $this->id_u, 'create-statut-facture-cpp-error', $errorMessage);
+            $this->getActionCreator()
+                ->addAction($this->id_e, $this->id_u, 'create-statut-facture-cpp-error', $errorMessage);
             $this->notify('create-statut-facture-cpp-error', $this->type, $errorMessage);
             throw new Exception($errorMessage);
         }
@@ -33,41 +34,58 @@ class StatutFactureCppCreate extends ActionExecutor
 
         if (!$content->CPPFactureStatuts) {
             $errorMessage = "Le fichier CPPStatutPivot est incorrect : Il ne présente pas l'élément CPPFactureStatuts";
-            $this->getActionCreator()->addAction($this->id_e, $this->id_u, 'create-statut-facture-cpp-error', $errorMessage);
+            $this->getActionCreator()
+                ->addAction($this->id_e, $this->id_u, 'create-statut-facture-cpp-error', $errorMessage);
             $this->notify('create-statut-facture-cpp-error', $this->type, $errorMessage);
-
             throw new Exception($errorMessage);
         }
+
         $supplier = $content->CPPFactureStatuts->CPPFactureStatutUnitaire->Fournisseur;
         $supplierIdentifier = (string)$supplier->Identifiant;
-
         $donneesFormulaire->setData('fournisseur', $supplierIdentifier);
-
         $supplierCppId = $portailFature->getIdentifiantStructureCPPByIdentifiantStructure($supplierIdentifier, false);
-
         if (!$supplierCppId) {
             $donneesFormulaire->setData('identifiant_cpp_fournisseur', "1-IDENTIFIANT NON TROUVE");
-            throw new Exception("L'identifiant de structure $supplierIdentifier n'a pas été trouvé. L'identifiant CPP est invalide");
+            $errorMessage = "L'identifiant de structure $supplierIdentifier n'a pas été trouvé. L'identifiant CPP est invalide";
+            $this->getActionCreator()
+                ->addAction($this->id_e, $this->id_u, 'create-statut-facture-cpp-error', $errorMessage);
+            $this->notify('create-statut-facture-cpp-error', $this->type, $errorMessage);
+            throw new Exception($errorMessage);
         }
-
         $donneesFormulaire->setData('identifiant_cpp_fournisseur', $supplierCppId);
-
         $donneesFormulaire->setData('fournisseur_raison_sociale', (string)$supplier->RaisonSociale);
 
         $recipient = $content->CPPFactureStatuts->CPPFactureStatutUnitaire->Debiteur;
         $donneesFormulaire->setData('destinataire', (string)$recipient->Identifiant);
 
         $invoiceStatusData = $content->CPPFactureStatuts->CPPFactureStatutUnitaire->DonneesStatut;
-
         $donneesFormulaire->setData('numero_facture', (string)$invoiceStatusData->IdFacture);
 
-        $invoiceCppId = $portailFature->getInvoicePerSupplier($supplierCppId, (string)$invoiceStatusData->IdFacture);
-        $donneesFormulaire->setData('identifiant_facture_cpp', $invoiceCppId);
+        try {
+            $invoiceCppId = $portailFature->getInvoicePerSupplier($supplierCppId, (string)$invoiceStatusData->IdFacture);
+            $donneesFormulaire->setData('identifiant_facture_cpp', $invoiceCppId);
+        } catch (Exception $e) {
+            $errorMessage = $e->getMessage();
+            $this->getActionCreator()
+                ->addAction($this->id_e, $this->id_u, 'create-statut-facture-cpp-error', $errorMessage);
+            $this->notify('create-statut-facture-cpp-error', $this->type, $errorMessage);
+            throw new Exception($errorMessage);
+        }
 
         $targetStatusId = (string)$invoiceStatusData->IdStatut;
         $donneesFormulaire->setData('identifiant_statut_cible', $targetStatusId);
-        $donneesFormulaire->setData('statut_cible', $this->getStatusFromId($targetStatusId));
+        try {
+            $statutCible = $this->getStatusFromId($targetStatusId);
+            $donneesFormulaire->setData('statut_cible', $statutCible);
+        } catch (Exception $e) {
+            $errorMessage = $e->getMessage();
+            $this->getActionCreator()
+                ->addAction($this->id_e, $this->id_u, 'create-statut-facture-cpp-error', $errorMessage);
+            $this->notify('create-statut-facture-cpp-error', $this->type, $errorMessage);
+            throw new Exception($errorMessage);
+        }
         $donneesFormulaire->setData('commentaire', (string)$invoiceStatusData->Commentaire);
+
         $this->addActionOK("Importation du document Pastell");
 
         return true;

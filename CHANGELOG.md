@@ -1,3 +1,9 @@
+# [3.1.14]
+
+## Corrections
+
+- Il manquait des cas d'erreur pour la mise en état 'create-statut-facture-cpp-error' du flux `statut-facture-cpp` #1506
+
 # [3.1.13] - 2022-04-19
 
 ## Corrections
