@@ -284,8 +284,8 @@ class S2low extends TdtConnecteur
     {
         $this->verifyForwardCertificate();
         $file_path = $fichierHelios->filepath;
-        $file_name = $fichierHelios->filename;
-        $file_name = $this->getHeliosEnveloppeFileName($file_name ?? '');
+        $file_name = $fichierHelios->filename ?? '';
+        $file_name = $this->getHeliosEnveloppeFileName($file_name);
         $this->curlWrapper->addPostFile('enveloppe', $file_path, $file_name);
         $result = $this->exec(self::URL_POST_HELIOS);
 

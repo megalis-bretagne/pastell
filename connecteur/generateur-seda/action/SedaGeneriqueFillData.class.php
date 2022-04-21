@@ -29,10 +29,10 @@ class SedaGeneriqueFillData extends ChoiceActionExecutor
 
     public function display()
     {
-
         $fluxEntiteSQL = $this->objectInstancier->getInstance(FluxEntiteSQL::class);
-        $this->setViewParameter('flux', $fluxEntiteSQL->getUsedByConnecteurIfUnique($this->id_ce, $this->id_e));
-        $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($this->getViewParameter('flux'));
+        $flux = $fluxEntiteSQL->getUsedByConnecteurIfUnique($this->id_ce, $this->id_e);
+        $this->setViewParameter('flux', $flux);
+        $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($flux);
         $this->setViewParameter('fieldsList', $documentType->getFormulaire()->getFieldsList());
 
         $json = $this->getConnecteurConfig($this->id_ce)->getFileContent('data');

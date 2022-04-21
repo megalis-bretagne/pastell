@@ -5,6 +5,9 @@
  * @var int $id_ce
  * @var string $action
  * @var string $field
+ * @var int $offset
+ * @var int $limit
+ * @var int $count
  * @var array $connectors
  */
 ?>

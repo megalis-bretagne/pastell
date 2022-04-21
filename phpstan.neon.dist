@@ -1,4 +1,6 @@
 parameters:
+  scanFiles:
+    - init.php
   bootstrapFiles:
     - init-no-db.php
   level: 0
