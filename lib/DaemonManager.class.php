@@ -59,13 +59,6 @@ class DaemonManager
 
         $command = "nohup {$this->daemon_command} > {$this->log_file} 2>&1 & echo $! > {$this->pid_file} ";
 
-
-        $user_info = posix_getpwuid(posix_getuid());
-        if ($user_info['name'] != $this->user) {
-            echo "Starting daemon as {$this->user}\n";
-            $command = "su - {$this->user} -s /bin/bash -c '$command' 2>&1";
-        }
-
         exec($command, $ouput, $return_var);
         return $this->status();
     }
@@ -85,10 +78,6 @@ class DaemonManager
         $err = @ file_put_contents($file, "");
         if ($err === false) {
             throw new Exception("Impossible d'écrire le fichier {$file}");
-        }
-        $user_info = posix_getpwuid(posix_getuid());
-        if ($user_info['name'] != $this->user) {
-            chown($file, $this->user);
         }
     }
 

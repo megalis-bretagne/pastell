@@ -8,6 +8,9 @@ services:
       target: pastell_dev
       args:
         GITHUB_API_TOKEN: ${GITHUB_API_TOKEN:-}
+        UID: ${UID:-33}
+        GID: ${GID:-33}
+        USERNAME: ${USERNAME:-www-data}
     volumes:
       - .:/var/www/pastell:cached
 
