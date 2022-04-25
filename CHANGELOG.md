@@ -27,11 +27,12 @@
 - Suppression de la fonction PastellTestCase::loadExtension
 - Suppression de la fonction SAEConnecteur::getLastErrorCode
 - Suppression du script create-default-horodatage.php
-- Suppression des classes PDFGeneriqueSendGED, PDFGeneriqueSAEVerif, PDFGeneriqueSAEValidation, PDFGeneriqueReceptionIParapheur, PDFGeneriqueEnvoieIParapheur
-  EnvoieSAEChange, IParapheurEnvoie, SAEVerif, TedetisAnnulation, TedetisRecupAnnulation, TedetisSendReponsePref
-  TedetisVerifReponsePref, FournisseurCommandeEnvoiGED, FournisseurCommandeEnvoiSAE, GEDEnvoiDocumentASigner
-  IParapheurEnvoieDocumentASigner, IParapheurRecupDocumentASigner, HeliosEnvoieSAEChange, HeliosGEDEnvoi, HeliosGeneriqueSAEValidation
-  HeliosGeneriqueSAEVerif, IparapheurEnvoieHelios
+- Suppression des classes PDFGeneriqueSendGED, PDFGeneriqueSAEVerif, PDFGeneriqueSAEValidation,
+  PDFGeneriqueReceptionIParapheur, PDFGeneriqueEnvoieIParapheur, EnvoieSAEChange, IParapheurEnvoie, SAEVerif,
+  TedetisAnnulation, TedetisRecupAnnulation, TedetisSendReponsePref, TedetisVerifReponsePref,
+  FournisseurCommandeEnvoiGED, FournisseurCommandeEnvoiSAE, GEDEnvoiDocumentASigner, IParapheurEnvoieDocumentASigner,
+  IParapheurRecupDocumentASigner, HeliosEnvoieSAEChange, HeliosGEDEnvoi, HeliosGeneriqueSAEValidation,
+  HeliosGeneriqueSAEVerif, IparapheurEnvoieHelios 
 - Suppression de la propriété Controler::lastError
 - La récupération des acquittements du flux pes-marché est standardisé avec les autres flux (modification du nom du fichier de l'acquittement)
 - Suppression de la constante MODE_MUTUALISE. Lors de l'envoi d'un mail sécurisé, mailsec_from prend la valeur de PLATEFORME_MAIL.
@@ -39,13 +40,19 @@
   pour reporter l'ancien mailsec_from à mailsec_reply_to (s'il n'est pas déjà renseigné) #1465
 - Suppression de la fonction Controler::exitToIndex
 - Suppression des méthodes magiques ChoiceActionExecutor::__set, Gabarit::__set
-- Suppression des scripts permettant une installation hors d'un environnement Docker. En particulier les scripts de création de connecteurs initiaux et de fréquences sont gérés par la séquence d'initialisation du conteneur.
+- Suppression des scripts permettant une installation hors d'un environnement Docker.
+  En particulier les scripts de création de connecteurs initiaux et de fréquences sont gérés par la séquence 
+  d'initialisation du conteneur.
 - Suppression du modèle `Document`, remplacé par `DocumentSQL`
 - Suppression du modèle `Utilisateur`, remplacé par `UtilisateurSQL`
 - Suppression des fonctions SAEConnecteur::getAcuseReception et SAEConnecteur::getReply
 - Suppression de TdtConnecteur::postHelios(), remplacé par TdtConnecteur::sendHelios()
 - Suppression de la méthode magique `Controler::__get`
 - Suppression de TdtConnecteur::postActes(), remplacé par TdtConnecteur::sendActes()
+- Suppression de SignatureConnecteur::sendDocument() et SignatureConnecteur::sendHeliosDocument(), remplacés par
+  SignatureConnecteur::sendDossier()
+- Suppression de la classe d'action `FournisseurCommandeEnvoieIparapheur`
+- L'envoi au iparapheur du flux Commande générique est standardisé avec les autres flux
 
 # [3.1.13] - 2022-04-19
 

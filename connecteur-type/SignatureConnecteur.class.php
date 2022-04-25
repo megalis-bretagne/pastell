@@ -15,16 +15,9 @@ abstract class SignatureConnecteur extends Connecteur
      */
     abstract public function sendDossier(FileToSign $dossier);
 
-    /**
-     * @deprecated 3.0 Use sendDossier() instead.
-     */
-    abstract public function sendDocument($typeTechnique, $sousType, $dossierID, $document_content, $content_type, array $all_annexes = [], $date_limite = false, $visuel_pdf = '');
-
     abstract public function getHistorique($dossierID);
 
     abstract public function getSignature($dossierID, $archive = true);
-
-    abstract public function sendHeliosDocument($typeTechnique, $sousType, $dossierID, $document_content, $content_type, $visuel_pdf, array $metadata = []);
 
     abstract public function getAllHistoriqueInfo($dossierID);
 

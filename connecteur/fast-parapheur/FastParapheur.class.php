@@ -250,46 +250,6 @@ class FastParapheur extends SignatureConnecteur
         }
     }
 
-    /**
-     * @param $filename
-     * @param $sousType
-     * @param $file_path
-     * @param $document_content
-     * @param $content_type
-     * @param array $all_annexes
-     * @param bool $date_limite
-     * @param string $visuel_pdf
-     * @return bool
-     * @throws Exception
-     * @deprecated 3.0. Use sendDossier() instead.
-     */
-    public function sendDocument(
-        $filename,
-        $sousType,
-        $file_path,
-        $document_content,
-        $content_type,
-        array $all_annexes = [],
-        $date_limite = false,
-        $visuel_pdf = ''
-    ) {
-        $file = new FileToSign();
-        $file->circuit = $sousType;
-        $file->document = new Fichier();
-        $file->document->filename = $filename;
-        $file->document->filepath = $file_path;
-        $file->document->content = $document_content;
-
-        foreach ($all_annexes as $annexe) {
-            $currentAnnexe = new Fichier();
-            $currentAnnexe->filepath = $annexe['file_path'] ?? null;
-            $currentAnnexe->filename = $annexe['name'] ?? null;
-            $file->annexes[] = $currentAnnexe;
-        }
-
-        return $this->sendDossier($file);
-    }
-
     public function getHistorique($dossierID)
     {
         // TODO: Implement getHistorique() method.
@@ -299,34 +259,6 @@ class FastParapheur extends SignatureConnecteur
     {
         try {
             return $this->getClient()->download($documentId);
-        } catch (Exception $e) {
-            $this->lastError = $e->getMessage();
-            return false;
-        }
-    }
-
-    /**
-     * @param $filename
-     * @param $sousType
-     * @param $dossierID
-     * @param $document_content
-     * @param $content_type
-     * @param $visuel_pdf
-     * @param array $metadata
-     * @return bool
-     */
-    public function sendHeliosDocument(
-        $filename,
-        $sousType,
-        $dossierID,
-        $document_content,
-        $content_type,
-        $visuel_pdf,
-        array $metadata = []
-    ) {
-
-        try {
-            return $this->getClient()->upload($this->subscriberNumber, $sousType, $filename, $document_content);
         } catch (Exception $e) {
             $this->lastError = $e->getMessage();
             return false;

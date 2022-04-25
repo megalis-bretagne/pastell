@@ -32,6 +32,18 @@ class FastParapheurTest extends PastellTestCase
         return $fastParapheur;
     }
 
+    private function getFileToSign(): FileToSign
+    {
+        $fileToSign = new FileToSign();
+        $fileToSign->document = new Fichier();
+        $fileToSign->document->filepath = __DIR__ . '/fixtures/empty.txt';
+        $fileToSign->document->filename = 'empty.txt';
+        $fileToSign->document->content = '';
+        $fileToSign->circuit = 'circuit';
+
+        return $fileToSign;
+    }
+
     /**
      * When the connection is ok
      *
@@ -104,13 +116,12 @@ class FastParapheurTest extends PastellTestCase
     /**
      * When sending a document
      *
-     * @test
      * @throws Exception
      */
-    public function whenSendingADocument()
+    public function testWhenSendingADocument(): void
     {
         $this->mockSoapClient(
-            function ($soapMethod, $arguments) {
+            function (string $soapMethod) {
                 if ($soapMethod === 'upload') {
                     return json_decode(json_encode([
                         'return' => '1234-abcd'
@@ -121,19 +132,18 @@ class FastParapheurTest extends PastellTestCase
         );
         $this->fastParapheur = $this->getFastParapheur();
 
-        $this->assertSame('1234-abcd', $this->fastParapheur->sendDocument("", "", "", "", ""));
+        $this->assertSame('1234-abcd', $this->fastParapheur->sendDossier($this->getFileToSign()));
     }
 
     /**
      * When sending a document and the server returns an error
      *
-     * @test
      * @throws Exception
      */
-    public function whenSendingADocumentWithAnUploadError()
+    public function testWhenSendingADocumentWithAnUploadError(): void
     {
         $this->mockSoapClient(
-            function ($soapMethod, $arguments) {
+            function (string $soapMethod) {
                 if ($soapMethod === 'upload') {
                     throw new Exception("Fichier deja depose par un agent");
                 }
@@ -142,7 +152,7 @@ class FastParapheurTest extends PastellTestCase
         );
 
         $this->fastParapheur = $this->getFastParapheur();
-        $this->assertFalse($this->fastParapheur->sendDocument("", "", "", "", ""));
+        $this->assertFalse($this->fastParapheur->sendDossier($this->getFileToSign()));
 
         $this->assertSame("Fichier deja depose par un agent", $this->fastParapheur->getLastError());
     }
@@ -150,13 +160,12 @@ class FastParapheurTest extends PastellTestCase
     /**
      * When sending a document without error but without receiving its id on the parapheur
      *
-     * @test
      * @throws Exception
      */
-    public function whenSendingADocumentWithoutReceivingItsId()
+    public function testWhenSendingADocumentWithoutReceivingItsId(): void
     {
         $this->mockSoapClient(
-            function ($soapMethod, $arguments) {
+            function (string $soapMethod) {
                 if ($soapMethod === 'upload') {
                     return json_decode(json_encode([
                         'return' => ''
@@ -168,7 +177,7 @@ class FastParapheurTest extends PastellTestCase
 
         $this->fastParapheur = $this->getFastParapheur();
 
-        $this->assertFalse($this->fastParapheur->sendDocument("", "", "", "", ""));
+        $this->assertFalse($this->fastParapheur->sendDossier($this->getFileToSign()));
 
         $this->assertSame(
             "Le parapheur n'a pas retourné d'identifiant de document : {\"return\":\"\"}",
@@ -179,13 +188,12 @@ class FastParapheurTest extends PastellTestCase
     /**
      * When sending a document with annexes
      *
-     * @test
      * @throws Exception
      */
-    public function whenSendingADocumentWithAnnexes()
+    public function testWhenSendingADocumentWithAnnexes(): void
     {
         $this->mockSoapClient(
-            function ($soapMethod, $arguments) {
+            function (string $soapMethod) {
                 if ($soapMethod === 'upload') {
                     return json_decode(json_encode([
                         'return' => '1234-abcd'
@@ -198,32 +206,24 @@ class FastParapheurTest extends PastellTestCase
         $this->fastParapheur = $this->getFastParapheur();
         $this->fastParapheur->setTmpFolder($this->getObjectInstancier()->getInstance(TmpFolder::class));
 
+        $fileToSign = $this->getFileToSign();
+        $annex = new Fichier();
+        $annex->filename = 'empty.txt';
+        $annex->filepath = __DIR__ . '/fixtures/empty.txt';
+        $annex->content = 'content';
+        $fileToSign->annexes = [$annex];
         $this->assertSame(
             '1234-abcd',
-            $this->fastParapheur->sendDocument(
-                "empty.txt",
-                "",
-                __DIR__ . '/fixtures/empty.txt',
-                "content of the main file",
-                "",
-                [
-                    [
-                        'file_path' => __DIR__ . '/fixtures/empty.txt',
-                        'file_content' => 'content',
-                        'name' => 'empty.txt'
-                    ]
-                ]
-            )
+            $this->fastParapheur->sendDossier($fileToSign)
         );
     }
 
     /**
      * When sending a document with annexes but the archive cannot be built
      *
-     * @test
      * @throws Exception
      */
-    public function whenTheArchiveCannotBeBuilt()
+    public function testWhenTheArchiveCannotBeBuilt(): void
     {
         $zipArchive = $this->createMock(ZipArchive::class);
         $zipArchive
@@ -233,8 +233,13 @@ class FastParapheurTest extends PastellTestCase
 
         $this->fastParapheur = $this->getFastParapheur();
 
-        $this->assertFalse($this->fastParapheur->sendDocument("", "", "", "", "", ['not empty']));
-        $this->assertStringContainsString("Impossible de créer le fichier d'archive : ", $this->fastParapheur->getLastError());
+        $fileToSign = $this->getFileToSign();
+        $fileToSign->annexes = ['not empty'];
+        $this->assertFalse($this->fastParapheur->sendDossier($fileToSign));
+        $this->assertStringContainsString(
+            "Impossible de créer le fichier d'archive : ",
+            $this->fastParapheur->getLastError()
+        );
     }
 
     /**
@@ -437,39 +442,14 @@ class FastParapheurTest extends PastellTestCase
     }
 
     /**
-     * When sending an helios document
-     *
-     * @test
-     * @throws Exception
-     */
-    public function whenSendingAnHeliosDocument()
-    {
-        $this->mockSoapClient(
-            function ($soapMethod, $arguments) {
-                if ($soapMethod === 'upload') {
-                    return json_decode(json_encode([
-                        'return' => '1234-abcd'
-                    ]));
-                }
-                throw new UnrecoverableException("Unexpected call to SOAP method : $soapMethod");
-            }
-        );
-
-        $this->fastParapheur = $this->getFastParapheur();
-
-        $this->assertSame('1234-abcd', $this->fastParapheur->sendHeliosDocument("", "", "", "", "", ""));
-    }
-
-    /**
      * When sending an helios document and the server returns an error
      *
-     * @test
      * @throws Exception
      */
-    public function whenSendingAnHeliosDocumentWithAnError()
+    public function testWhenSendingAnHeliosDocumentWithAnError(): void
     {
         $this->mockSoapClient(
-            function ($soapMethod, $arguments) {
+            function (string $soapMethod) {
                 if ($soapMethod === 'upload') {
                     throw new Exception("Fichier refusé : un fichier PES avec le même nomfic a deja ete envoye");
                 }
@@ -479,7 +459,7 @@ class FastParapheurTest extends PastellTestCase
 
         $this->fastParapheur = $this->getFastParapheur();
 
-        $this->assertFalse($this->fastParapheur->sendHeliosDocument("", "", "", "", "", ""));
+        $this->assertFalse($this->fastParapheur->sendDossier($this->getFileToSign()));
 
         $this->assertSame(
             "Doublon | Fichier refusé : un fichier PES avec le même nomfic a deja ete envoye",
@@ -490,13 +470,12 @@ class FastParapheurTest extends PastellTestCase
     /**
      * When sending an helios document without error but without receiving its id on the parapheur
      *
-     * @test
      * @throws Exception
      */
-    public function whenSendingAnHeliosDocumentWithoutReceivingItsId()
+    public function testWhenSendingAnHeliosDocumentWithoutReceivingItsId(): void
     {
         $this->mockSoapClient(
-            function ($soapMethod, $arguments) {
+            function (string $soapMethod) {
                 if ($soapMethod === 'upload') {
                     return json_decode(json_encode([
                         'return' => ''
@@ -508,7 +487,7 @@ class FastParapheurTest extends PastellTestCase
 
         $this->fastParapheur = $this->getFastParapheur();
 
-        $this->assertFalse($this->fastParapheur->sendHeliosDocument("", "", "", "", "", ""));
+        $this->assertFalse($this->fastParapheur->sendDossier($this->getFileToSign()));
 
         $this->assertSame(
             "Le parapheur n'a pas retourné d'identifiant de document : {\"return\":\"\"}",
