@@ -2,32 +2,38 @@
 
 class PDFGeneriqueEnvoiSAE extends ActionExecutor
 {
+    /**
+     * @throws UnrecoverableException
+     * @throws NotFoundException
+     * @throws DonneesFormulaireException
+     * @throws Exception
+     */
     public function go()
     {
-        /** @var TmpFolder $tmpFolder */
         $tmpFolder = $this->objectInstancier->getInstance(TmpFolder::class);
         $tmp_folder = $tmpFolder->create();
 
-        $result = false;
         try {
             $result = $this->goThrow($tmp_folder);
-        } catch (Exception $e) {
-            throw $e;
         } finally {
             $tmpFolder->delete($tmp_folder);
         }
         return $result;
     }
 
+    /**
+     * @throws DonneesFormulaireException
+     * @throws UnrecoverableException
+     * @throws NotFoundException
+     * @throws Exception
+     */
     public function goThrow($tmp_folder)
     {
-
         $this->getDonneesFormulaire()->setData("sae_show", true);
 
         $this->createJournal();
 
-        /** @var SEDANG $sedaNG */
-
+        /** @var SEDAConnecteur $sedaNG */
         $sedaNG = $this->getConnecteur('Bordereau SEDA');
         if (! $sedaNG) {
             throw new Exception("Connnecteur SEDA NG non trouvé");
@@ -78,7 +84,7 @@ class PDFGeneriqueEnvoiSAE extends ActionExecutor
         return true;
     }
 
-    private function createJournal()
+    private function createJournal(): void
     {
         $journal = $this->getJournal()->getAll($this->id_e, false, $this->id_d, 0, 0, 10000);
         foreach ($journal as $i => $journal_item) {
@@ -87,7 +93,6 @@ class PDFGeneriqueEnvoiSAE extends ActionExecutor
 
         $date_journal_debut = $journal[count($journal) - 1]['date'];
         $date_cloture_journal = $journal[0]['date'];
-        //$journal = utf8_encode_array($journal);
         $journal = json_encode($journal);
 
         $this->getDonneesFormulaire()->addFileFromData('journal', 'journal.json', $journal);

@@ -12,7 +12,6 @@ class SedaNG extends SEDAConnecteur
     /** @var  FluxData */
     private $fluxData;
 
-
     /**
      * @param DonneesFormulaire $connecteurConfig
      */
@@ -26,7 +25,7 @@ class SedaNG extends SEDAConnecteur
      */
     public function getLastValidationError()
     {
-        return $this->last_validation_error ;
+        return $this->last_validation_error;
     }
 
     /**
@@ -78,35 +77,20 @@ class SedaNG extends SEDAConnecteur
     }
 
     /**
-     * @param array $transactionInfo
-     * @return null|string|string[]
-     * @throws Exception
-     */
-    public function getBordereau(array $transactionInfo)
-    {
-        if (! $this->fluxData) {
-            throw new Exception("Le connecteur SEDA NG n'est pas supporté par ce flux...");
-        }
-        return $this->getBordereauNG($this->fluxData);
-    }
-
-    /**
-     * @param FluxData $fluxData
-     * @return null|string|string[]
      * @throws Exception
      */
     public function getBordereauNG(FluxData $fluxData): string
     {
-
         $relax_ng_path = $this->getSchemaRngPath();
         $agape_file_path = $this->getAgapeFilePath();
 
         $relaxNGImportAgapeAnnotation = new RelaxNgImportAgapeAnnotation();
         $relaxNG_with_annotation = $relaxNGImportAgapeAnnotation->importAnnotation($relax_ng_path, $agape_file_path);
 
-
         $generateXMLFromAnnotedRelaxNG = new GenerateXMLFromAnnotedRelaxNG(new RelaxNG());
-        $bordereau_seda_with_annotation = $generateXMLFromAnnotedRelaxNG->generateFromRelaxNGString($relaxNG_with_annotation);
+        $bordereau_seda_with_annotation = $generateXMLFromAnnotedRelaxNG->generateFromRelaxNGString(
+            $relaxNG_with_annotation
+        );
 
         $connecteur_info = $this->connecteurConfig->getFileContent('connecteur_info_content');
         $data = [];
@@ -115,7 +99,6 @@ class SedaNG extends SEDAConnecteur
                 $data[$key] = $value;
             }
         }
-
 
         $annotationWrapper = new AnnotationWrapper();
         $annotationWrapper->setConnecteurInfo($data);
@@ -137,7 +120,7 @@ class SedaNG extends SEDAConnecteur
     private function getSchemaRngPath()
     {
         $relax_ng_path = $this->connecteurConfig->getFilePath('schema_rng');
-        if (! file_exists($relax_ng_path)) {
+        if (!file_exists($relax_ng_path)) {
             throw new Exception("Le profil SEDA (RelaxNG) n'a pas été trouvé.");
         }
         return $relax_ng_path;
@@ -151,7 +134,7 @@ class SedaNG extends SEDAConnecteur
     {
         $agape_file_path = $this->connecteurConfig->getFilePath('profil_agape');
 
-        if (! file_exists($agape_file_path)) {
+        if (!file_exists($agape_file_path)) {
             throw new Exception("Le profil SEDA (fichier Agape) n'a pas été trouvé.");
         }
         return $agape_file_path;
@@ -166,12 +149,12 @@ class SedaNG extends SEDAConnecteur
     {
         $relax_ng_path = $this->getSchemaRngPath();
         $sedaValidation = new SedaValidation();
-        if (! $sedaValidation->validateRelaxNG($bordereau, $relax_ng_path)) {
+        if (!$sedaValidation->validateRelaxNG($bordereau, $relax_ng_path)) {
             $this->last_validation_error = $sedaValidation->getLastErrors();
             throw new Exception("Erreur lors de la validation du bordereau (validation du schéma RelaxNG)");
         }
 
-        if (! $sedaValidation->validateSEDA($bordereau)) {
+        if (!$sedaValidation->validateSEDA($bordereau)) {
             $this->last_validation_error = $sedaValidation->getLastErrors();
             throw new Exception("Erreur lors de la validation du bordereau (validation du schéma SEDA)");
         }
@@ -219,7 +202,7 @@ class SedaNG extends SEDAConnecteur
         }
         $the_result = [];
         foreach ($result as $command_info) {
-            list($command,$data) = $command_info;
+            [$command,$data] = $command_info;
             if ($command == $type) {
                 $the_result[] = $data;
             }
@@ -228,8 +211,6 @@ class SedaNG extends SEDAConnecteur
     }
 
     /**
-     * @param FluxData $fluxData
-     * @param string $archive_path
      * @throws Exception
      */
     public function generateArchive(FluxData $fluxData, string $archive_path): void
@@ -238,8 +219,6 @@ class SedaNG extends SEDAConnecteur
         $tmp_folder = $tmpFolder->create();
         try {
             $this->generateArchiveThrow($fluxData, $archive_path, $tmp_folder);
-        } catch (Exception $e) {
-            throw new Exception($e);
         } finally {
             $tmpFolder->delete($tmp_folder);
         }
