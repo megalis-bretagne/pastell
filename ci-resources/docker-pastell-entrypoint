@@ -3,22 +3,14 @@ set -e
 
 /bin/bash /var/www/pastell/ci-resources/docker-pastell-init > /data/config/DockerSettings.php
 
-#A mettre dans le dockerfile ?
-usermod -s /bin/bash www-data
-
 # Génération fichier ssmtp.conf
-/bin/bash /var/www/pastell/ci-resources/generate-msmtp.conf.sh > /etc/msmtprc
-
+if [ "$SMTP_SERVER" ] ; then
+  /bin/bash /var/www/pastell/ci-resources/generate-msmtp.conf.sh > /data/config/msmtprc
+fi
 
 # Utilisation de l'authentification cliente si nécessaire
 if [ "$AUTHENTICATION_WITH_CLIENT_CERTIFICATE" ] ; then
     sed -i 's/# SSLVerifyclient optional/SSLVerifyclient optional/' /etc/apache2/sites-available/pastell-apache-config.conf
-fi
-
-
-# first arg is `-f` or `--some-option`
-if [ "${1#-}" != "$1" ]; then
-	set -- apache2-foreground "$@"
 fi
 
 
@@ -42,7 +34,7 @@ if [ -z "$DONT_RETRIEVE_VALIDCA" ] ; then
 fi
 
 if [ -z "$DONT_INIT_DATABASE" ] ; then
-  su -c "php /var/www/pastell/ci-resources/init-docker.php" www-data
+  php /var/www/pastell/ci-resources/init-docker.php
 fi
 
 exec "$@"

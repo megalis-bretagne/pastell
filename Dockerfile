@@ -29,7 +29,12 @@ RUN composer install --ignore-platform-reqs \
 FROM ubuntu:22.04 as pastell_base
 
 ARG GITHUB_API_TOKEN
-EXPOSE 443 80
+ARG UID=33
+ARG GID=33
+ARG USERNAME=www-data
+ARG GROUPNAME=www-data
+
+EXPOSE 4443 8080
 
 WORKDIR /var/www/pastell/
 ENV PATH="${PATH}:/var/www/pastell/vendor/bin/"
@@ -42,9 +47,10 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # Create Pastell needs
 COPY ./ci-resources /var/www/pastell/ci-resources
+
 RUN /bin/bash /var/www/pastell/ci-resources/docker-construction.sh
 
-COPY --chown=www-data:www-data --from=node_modules /var/www/pastell/node_modules /var/www/pastell/node_modules
+COPY --chown=${USERNAME}:${GROUPNAME} --from=node_modules /var/www/pastell/node_modules /var/www/pastell/node_modules
 
 # Composer stuff
 COPY ./composer.* /var/www/pastell/
@@ -54,16 +60,26 @@ RUN /bin/bash /var/www/pastell/ci-resources/github/create-auth-file.sh && \
     rm -rf /root/.composer/
 
 # Pastell sources
-COPY --chown=www-data:www-data ./ /var/www/pastell/
-COPY --chown=www-data:www-data --from=extensions_builder /app/build /var/www/pastell/extensions/pastell-depot-cmis/build
+COPY --chown=${USERNAME}:${GROUPNAME} ./ /var/www/pastell/
+COPY --chown=${USERNAME}:${GROUPNAME} --from=extensions_builder /app/build /var/www/pastell/extensions/pastell-depot-cmis/build
+
+RUN chown ${USERNAME}:${GROUPNAME} /var/www/pastell/
 
 RUN composer dump-autoload --no-dev --optimize
+
+USER "${USERNAME}"
 
 ENTRYPOINT ["docker-pastell-entrypoint"]
 CMD ["/usr/bin/supervisord"]
 
 FROM pastell_base as pastell_dev
 
-RUN /bin/bash /var/www/pastell/ci-resources/install-dev-requirements.sh
+ARG UID=33
+ARG GID=33
+ARG USERNAME=www-data
+ARG GROUPNAME=www-data
 
+USER root
+RUN /bin/bash /var/www/pastell/ci-resources/install-dev-requirements.sh
+USER "${USERNAME}"
 FROM pastell_base as pastell_prod

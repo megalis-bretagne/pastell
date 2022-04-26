@@ -2,6 +2,14 @@
 
 set -e -x
 
+if [ ${GID} -ne 33 ] ; then
+  addgroup --gid "${GID}" "${GROUPNAME}"
+fi
+
+if [ ${UID} -ne 33 ] ; then
+  adduser --uid "${UID}" --gid "${GID}" --gecos "" --disabled-password "${USERNAME}"
+fi
+
 export DEBIAN_FRONTEND=noninteractive
 
 apt-get update
@@ -17,6 +25,7 @@ apt-get install -y --no-install-recommends \
     git \
     graphviz \
     language-pack-fr \
+    logrotate \
     msmtp \
     php \
     php-bcmath \
@@ -48,3 +57,5 @@ dpkg-reconfigure --frontend=noninteractive locales
 update-locale LANG=fr_FR.UTF-8
 
 rm /etc/localtime && ln -s /usr/share/zoneinfo/Europe/Paris /etc/localtime
+
+chmod u+s /usr/sbin/cron
