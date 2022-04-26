@@ -22,4 +22,3 @@ $sqlCommand = $databaseUpdate->getDiff();
 foreach ($sqlCommand as $sql) {
     $sqlQuery->query($sql);
 }
-

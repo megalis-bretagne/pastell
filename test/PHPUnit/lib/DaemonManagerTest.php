@@ -15,7 +15,7 @@ class DaemonManagerTest extends PHPUnit\Framework\TestCase
 
         $fake_daemon_command = PHP_PATH . " " . __DIR__ . "/fixtures/fake_daemon.php";
 
-        $this->daemonManager = new DaemonManager($fake_daemon_command, $pid_file, $log_file, $user);
+        $this->daemonManager = new DaemonManager();
     }
 
     public function testStatus()
