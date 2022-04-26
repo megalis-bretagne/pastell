@@ -2,8 +2,11 @@
 
 set -e -x
 
+if [ ${GID} -ne 33 ] ; then
+  addgroup --gid "${GID}" "${GROUPNAME}"
+fi
+
 if [ ${UID} -ne 33 ] ; then
-  addgroup --gid "${UID}" "${USERNAME}"
   adduser --uid "${UID}" --gid "${GID}" --gecos "" --disabled-password "${USERNAME}"
 fi
 
@@ -22,6 +25,7 @@ apt-get install -y --no-install-recommends \
     git \
     graphviz \
     language-pack-fr \
+    logrotate \
     msmtp \
     php \
     php-bcmath \

@@ -11,6 +11,7 @@ services:
         UID: ${UID:-33}
         GID: ${GID:-33}
         USERNAME: ${USERNAME:-www-data}
+        GROUPNAME: ${GROUPNAME:-www-data}
     volumes:
       - .:/var/www/pastell:cached
 

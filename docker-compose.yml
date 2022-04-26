@@ -14,7 +14,6 @@ services:
             - redis
         tmpfs:
             - /data/config:mode=770,uid=${UID:-33},gid=${GID:-33}
-            - /tmp:mode=770,uid=${UID:-33},gid=${GID:-33}
             - /data/run:mode=770,uid=${UID:-33},gid=${GID:-33}
             - /data/lock:mode=770,uid=${UID:-33},gid=${GID:-33}
             - /data/html_purifier:mode=770,uid=${UID:-33},gid=${GID:-33}
@@ -26,6 +25,7 @@ services:
             - ${PASTELL_SESSION:-app_session}:/var/lib/php/session
             - ${LETSENCRYPT_DATADIR:-letsencrypt_datadir}:/etc/letsencrypt
             - ${LOGS_PATH:-logs_datadir}:/data/log
+            - ${TMP_PATH:-tmp_datadir}:/tmp
         environment:
             REDIS_SERVER: ${REDIS_HOST:-redis}
             REDIS_PORT: ${REDIS_PORT:-6379}
@@ -98,3 +98,4 @@ volumes:
     db_datadir_test:
     letsencrypt_datadir:
     logs_datadir:
+    tmp_datadir:

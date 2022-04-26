@@ -32,6 +32,7 @@ ARG GITHUB_API_TOKEN
 ARG UID=33
 ARG GID=33
 ARG USERNAME=www-data
+ARG GROUPNAME=www-data
 
 EXPOSE 4443 8080
 
@@ -49,7 +50,7 @@ COPY ./ci-resources /var/www/pastell/ci-resources
 
 RUN /bin/bash /var/www/pastell/ci-resources/docker-construction.sh
 
-COPY --chown=www-data:www-data --from=node_modules /var/www/pastell/node_modules /var/www/pastell/node_modules
+COPY --chown=${USERNAME}:${GROUPNAME} --from=node_modules /var/www/pastell/node_modules /var/www/pastell/node_modules
 
 # Composer stuff
 COPY ./composer.* /var/www/pastell/
@@ -59,10 +60,10 @@ RUN /bin/bash /var/www/pastell/ci-resources/github/create-auth-file.sh && \
     rm -rf /root/.composer/
 
 # Pastell sources
-COPY --chown=www-data:www-data ./ /var/www/pastell/
-COPY --chown=www-data:www-data --from=extensions_builder /app/build /var/www/pastell/extensions/pastell-depot-cmis/build
+COPY --chown=${USERNAME}:${GROUPNAME} ./ /var/www/pastell/
+COPY --chown=${USERNAME}:${GROUPNAME} --from=extensions_builder /app/build /var/www/pastell/extensions/pastell-depot-cmis/build
 
-RUN chown www-data:www-data /var/www/pastell/
+RUN chown ${USERNAME}:${GROUPNAME} /var/www/pastell/
 
 RUN composer dump-autoload --no-dev --optimize
 
@@ -76,6 +77,7 @@ FROM pastell_base as pastell_dev
 ARG UID=33
 ARG GID=33
 ARG USERNAME=www-data
+ARG GROUPNAME=www-data
 
 USER root
 RUN /bin/bash /var/www/pastell/ci-resources/install-dev-requirements.sh

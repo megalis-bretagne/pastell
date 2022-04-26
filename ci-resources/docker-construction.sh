@@ -37,7 +37,7 @@ mkdir -p /var/www/pastell/vendor/
 chown "${USERNAME}": /var/www/pastell/vendor/
 
 # Apache configuration
-sed -e "s/%USERNAME%/$USERNAME/g" /var/www/pastell/ci-resources/apache/envvars > /etc/apache2/envvars
+sed -e "s/%USERNAME%/$USERNAME/g"  -e "s/%GROUPNAME%/$GROUPNAME/g" /var/www/pastell/ci-resources/apache/envvars > /etc/apache2/envvars
 cp /var/www/pastell/ci-resources/pastell-apache-config.conf /etc/apache2/sites-available/pastell-apache-config.conf
 a2ensite pastell-apache-config.conf
 a2dissite 000-default.conf
