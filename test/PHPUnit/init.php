@@ -22,7 +22,4 @@ $sqlCommand = $databaseUpdate->getDiff();
 foreach ($sqlCommand as $sql) {
     $sqlQuery->query($sql);
 }
-$daemon_command = PHP_PATH . " " . realpath(__DIR__ . "/../../batch/pastell-job-master.php");
 
-$daemonManger = new DaemonManager($daemon_command, PID_FILE, DAEMON_LOG_FILE, DAEMON_USER);
-$daemonManger->stop();

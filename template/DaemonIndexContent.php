@@ -21,14 +21,6 @@
     <td><?php echo $daemon_pid?></td>
 </tr>
 <tr>
-    <th>Fichier PID</th>
-    <td><?php echo $pid_file?></td>
-</tr>
-<tr>
-    <th>Fichier PID accessible en lecture/écriture</th>
-    <td><?php echo is_writable($pid_file) ? '<b style=\'color:green\'>ok</b>' : '<b style=\'color:red\'>ko</b>' ?></td>
-</tr>
-<tr>
     <th>Processus simultanés maximum</th>
     <td><?php echo NB_WORKERS?></td>
 </tr>

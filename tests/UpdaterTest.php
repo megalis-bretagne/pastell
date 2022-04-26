@@ -12,8 +12,8 @@ class UpdaterTest extends PastellTestCase
     {
         $updater = $this->getObjectInstancier()->getInstance(Updater::class);
         $updater->update();
-        $this->assertGreaterThan(2, count($this->getLogRecords()));
-        $this->assertSame('Start script to 3.0.1', $this->getLogRecords()[0]['message']);
+        $this->assertGreaterThan(1, count($this->getLogRecords()));
+        $this->assertSame('Start script to 3.0.2', $this->getLogRecords()[0]['message']);
     }
 
     /**
@@ -22,9 +22,9 @@ class UpdaterTest extends PastellTestCase
     public function testTo()
     {
         $updater = $this->getObjectInstancier()->getInstance(Updater::class);
-        $updater->to('3.0.1');
+        $updater->to('3.0.2');
         $this->assertCount(2, $this->getLogRecords());
-        $this->assertSame('Start script to 3.0.1', $this->getLogRecords()[0]['message']);
+        $this->assertSame('Start script to 3.0.2', $this->getLogRecords()[0]['message']);
     }
 
     /**

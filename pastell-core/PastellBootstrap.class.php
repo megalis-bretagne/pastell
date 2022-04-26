@@ -18,7 +18,6 @@ class PastellBootstrap
     {
         try {
             $this->createOrUpdateAdmin($utilisateurObject);
-            $this->startDaemon();
             $this->installCertificate();
             $this->installHorodateur();
             $this->installCloudooo();
@@ -42,14 +41,6 @@ class PastellBootstrap
                 $this->pastellLogger->info($message);
             }
         );
-    }
-
-    private function startDaemon()
-    {
-        $this->pastellLogger->info("Démon Pastell");
-        $daemonManager = $this->objectInstancier->getInstance(DaemonManager::class);
-        $result =  $daemonManager->start() ? "Le démon est démarré\n" : "Le démon est arrêté\n";
-        $this->pastellLogger->info($result);
     }
 
     private function getHostname()
@@ -143,7 +134,6 @@ class PastellBootstrap
             $cert_file
         );
 
-        $this->fixConnecteurRight($id_ce);
         $this->pastellLogger->info("Horodateur interne installé et configuré avec un nouveau certificat autosigné");
     }
 
@@ -170,7 +160,6 @@ class PastellBootstrap
             ]
         );
 
-        $this->fixConnecteurRight($id_ce);
         $this->pastellLogger->info("Le connecteur de conversion Office vers PDF a été configuré sur l'hote $server_name et le port 8011");
     }
 
@@ -199,18 +188,6 @@ class PastellBootstrap
         );
 
         $this->pastellLogger->info("Le connecteur de visualisation de PES a été installé sur l'URL $url_pes_viewer");
-        $this->fixConnecteurRight($id_ce);
-    }
-
-    private function fixConnecteurRight($id_ce)
-    {
-        $daemon_user = $this->objectInstancier->getInstance('daemon_user');
-        $workspacePath = $this->objectInstancier->getInstance('workspacePath');
-
-        $this->pastellLogger->info("Fix les droits sur les connecteur : chown " . $daemon_user);
-        foreach (glob($workspacePath . "/connecteur_$id_ce.yml*") as $file) {
-            chown("$file", $daemon_user);
-        }
     }
 
     public function installConnecteurFrequenceDefault()
