@@ -53,6 +53,8 @@
   SignatureConnecteur::sendDossier()
 - Suppression de la classe d'action `FournisseurCommandeEnvoieIparapheur`
 - L'envoi au iparapheur du flux Commande générique est standardisé avec les autres flux
+- Suppression de la plupart des scripts dans batch/ installation/ et script/. Ceux qui restent ne devrait plus être utilisé car ils doivent être remplacés par un script console
+
 
 # [3.1.13] - 2022-04-19
 

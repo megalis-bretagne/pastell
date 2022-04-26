@@ -1,5 +1,7 @@
 <?php
 
+//TODO à mettre dans un connecteur global #1356
+
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
