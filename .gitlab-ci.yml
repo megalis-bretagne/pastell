@@ -104,21 +104,19 @@ acceptance_test:
         GIT_STRATEGY: none
         REDIS_SERVER: redis
         REDIS_PORT: 6379
+        PASTELL_SITE_BASE: https://localhost:4443/
     image :  "$CONTAINER_IMAGE"
     services:
         - mysql:5.7.23
         - redis:latest
     script:
-        - service apache2 start
         - cd /var/www/pastell
-        - chown www-data /data/log/pastell.log
-        - chown www-data -R /data/workspace/
+        - /bin/bash -c "source /etc/apache2/envvars && exec /usr/sbin/apache2"
         - composer codecept
     artifacts:
         when: on_failure
         paths:
             - /var/www/pastell/test/codeception/tests/_output/
-    allow_failure: true #TODO En attente de codeception/codeception:5.0.0
 
 security_scan:
   allow_failure: true
