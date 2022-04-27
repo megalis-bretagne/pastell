@@ -1,39 +1,16 @@
 <?php
 
-$soapErrorException = null;
-
-function soapErrorHandler($errno, $errstr, $errfile, $errline, $errcontext)
-{
-    global $soapErrorException;
-    $soapErrorException = soapErrorAdd($errstr, $errno);
-    return false;
-}
-
-function soapErrorAdd($errstr, $errno = 0)
-{
-    global $soapErrorException;
-    $cause = $soapErrorException;
-    $error = $errstr;
-    if ($errno != 0) {
-        $error = '(' . $errno . ') ' . $error;
-    }
-    if ($cause) {
-        $error .= " - Cause : " . $cause;
-    }
-    return $error;
-}
-
 class NotBuggySoapClient extends SoapClient
 {
     private $is_jax_ws;
     private $option;
     private $http_proxy_url;
     private $no_proxy;
+    private ?string $soapErrorException = null;
 
 //PHP SUCKS : https://bugs.php.net/bug.php?id=47584
     public function __construct($wsdl, array $options = [], $is_jax_ws = false)
     {
-        global $soapErrorException;
         $this->is_jax_ws = $is_jax_ws;
         $this->option = $options;
         $options['exceptions'] = 1;
@@ -41,33 +18,23 @@ class NotBuggySoapClient extends SoapClient
         if (function_exists('xdebug_disable')) {
             xdebug_disable();
         }
-        $soapErrorException = null;
-        $errorHandlerSave = set_error_handler('soapErrorHandler');
+        set_error_handler([$this, 'soapErrorHandler']);
         try {
             parent::__construct($wsdl, $options);
         } catch (SoapFault $soapFault) {
-            $this->construct_finally($errorHandlerSave);
-            $exEtCauses = soapErrorAdd($soapFault->getMessage());
+            $exEtCauses = $this->soapErrorAdd($soapFault->getMessage());
             throw new SoapFault($soapFault->faultcode, $exEtCauses);
         } catch (Exception $ex) {
-            $this->construct_finally($errorHandlerSave);
-            $exEtCauses = soapErrorAdd($ex->getMessage());
+            $exEtCauses = $this->soapErrorAdd($ex->getMessage());
             throw new Exception($exEtCauses, $ex->getCode(), $ex);
-        }
-        $this->construct_finally($errorHandlerSave);
-    }
-
-    private function construct_finally($errorHandlerSave)
-    {
-        restore_error_handler();
-        if (function_exists('xdebug_enable')) {
-            xdebug_enable();
+        } finally {
+            restore_error_handler();
+            if (function_exists('xdebug_enable')) {
+                xdebug_enable();
+            }
         }
     }
 
-    /**
-     * @param string $http_proxy_url
-     */
     public function setProxy(string $http_proxy_url): void
     {
         $this->http_proxy_url = $http_proxy_url;
@@ -85,24 +52,22 @@ class NotBuggySoapClient extends SoapClient
         if (isset($this->option['use_curl'])) {
             $response = $this->doRequestWithCurl($request, $location, $action, $version);
         } else {
-            global $soapErrorException;
-            $soapErrorException = null;
-            $errorHandlerSave = set_error_handler('soapErrorHandler');
+            $this->soapErrorException = null;
+            set_error_handler([$this, 'soapErrorHandler']);
             try {
                 $response = parent::__doRequest($request, $location, $action, $version, $one_way);
             } catch (SoapFault $soapFault) {
-                $this->doRequest_finally($errorHandlerSave);
-                $exEtCauses = soapErrorAdd($soapFault->getMessage());
+                $exEtCauses = $this->soapErrorAdd($soapFault->getMessage());
                 throw new SoapFault($soapFault->faultcode, $exEtCauses);
             } catch (Exception $ex) {
-                $this->doRequest_finally($errorHandlerSave);
-                $exEtCauses = soapErrorAdd($ex->getMessage());
+                $exEtCauses = $this->soapErrorAdd($ex->getMessage());
                 throw new Exception($exEtCauses, $ex->getCode(), $ex);
+            } finally {
+                restore_error_handler();
             }
-            $this->doRequest_finally($errorHandlerSave);
             if (isset($this->__soap_fault) && ($this->__soap_fault != null)) {
                 //this is where the exception from __doRequest is stored
-                $exEtCauses = soapErrorAdd($this->__soap_fault->getMessage());
+                $exEtCauses = $this->soapErrorAdd($this->__soap_fault->getMessage());
                 throw new SoapFault($this->__soap_fault->faultcode, $exEtCauses);
             }
         }
@@ -125,11 +90,6 @@ class NotBuggySoapClient extends SoapClient
         }
 
         return $response;
-    }
-
-    private function doRequest_finally($errorHandlerSave)
-    {
-        restore_error_handler();
     }
 
     public function doRequestWithCurl($request, $location, $action, $version)
@@ -292,5 +252,24 @@ class NotBuggySoapClient extends SoapClient
 
             return $result;
         }
+    }
+
+    public function soapErrorHandler(int $errno, string $errstr, $errfile, $errline, $errcontext): bool
+    {
+        $this->soapErrorException = $this->soapErrorAdd($errstr, $errno);
+        return false;
+    }
+
+    public function soapErrorAdd(string $errstr, int $errno = 0): string
+    {
+        $cause = $this->soapErrorException;
+        $error = $errstr;
+        if ($errno != 0) {
+            $error = '(' . $errno . ') ' . $error;
+        }
+        if ($cause) {
+            $error .= " - Cause : " . $cause;
+        }
+        return $error;
     }
 }
