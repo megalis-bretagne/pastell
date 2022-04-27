@@ -1,0 +1,809 @@
+nom: 'Actes (générique)'
+threshold_size: '157286400'
+threshold_fields:
+    - arrete
+    - autre_document_attache
+description: "Le type de dossier « Actes (générique) » permet de créer des actes et de les envoyer à un ou plusieurs des connecteurs suivant : signature, TdT, GED et SAE.\nLe cheminement est le suivant : signature -> TdT -> GED -> SAE. Chacune de ces étapes est facultative.\nCe type de dossier peut servir de base à tous les types de dossier utilisant des actes."
+connecteur:
+    - signature
+    - TdT
+    - GED
+    - 'Bordereau SEDA'
+    - SAE
+formulaire:
+    Acte:
+        acte_nature:
+            name: 'Nature de l''acte'
+            type: select
+            requis: true
+            value:
+                3: 'Actes individuels'
+                2: 'Actes réglementaires'
+                6: Autres
+                4: 'Contrats, conventions et avenants'
+                1: Délibérations
+                5: 'Documents budgétaires et financiers'
+            onchange: autre_document_attache-change
+        numero_de_lacte:
+            name: 'Numéro de l''acte'
+            requis: true
+            commentaire: '15 caractères maximum (chiffres, lettres en majuscule ou _)'
+            preg_match: '#^[0-9A-Z_]{1,15}$#'
+            preg_match_error: '15 caractères maximum (chiffres, lettres en majuscule ou _)'
+            index: true
+        objet:
+            name: Objet
+            requis: true
+            title: true
+            type: textarea
+            preg_match: '#^.{1,499}$#us'
+            preg_match_error: 'L''objet doit faire entre 1 et 499 charactères sans retour chariot'
+        date_de_lacte:
+            name: 'Date de l''acte'
+            type: date
+            requis: true
+            commentaire: 'Date de la décision'
+        document_papier:
+            name: 'Envoi de documents papiers complémentaires'
+            type: checkbox
+        arrete:
+            name: Acte
+            type: file
+            requis: true
+            commentaire: 'format PDF ou XML'
+            onchange: arrete-change
+        autre_document_attache:
+            name: 'Autre document attaché'
+            type: file
+            multiple: true
+            commentaire: 'Attention ! La taille totale des documents acte + annexes ne peut pas dépasser 150 Mo.'
+            onchange: autre_document_attache-change
+    Cheminement:
+        classification:
+            name: 'Classification en matière et sous-matière'
+            type: externalData
+            requis: true
+            link_name: 'Sélectionner dans la classification en matière et sous-matière'
+            choice-action: classification
+        type_piece:
+            name: 'Typologie des pièces'
+            type: externalData
+            link_name: 'Sélectionner des types de pièces'
+            choice-action: type-piece
+            edit-only: true
+            requis: true
+        type_piece_fichier:
+            name: 'Typologie des pièces'
+            type: file
+            visionneuse: TypologieActesVisionneuse
+            read-only: true
+            requis: true
+            visionneuse-no-link: true
+        type_acte:
+            no-show: true
+            onchange: type-acte-change-by-api
+        type_pj:
+            no-show: true
+            onchange: type-acte-change-by-api
+        envoi_signature_check:
+            name: 'Transmission à la signature'
+            type: checkbox
+            onchange: envoi-signature-change
+        envoi_tdt:
+            name: 'Transmission au contrôle de légalité'
+            type: checkbox
+            onchange: envoi-cheminement-change
+        envoi_ged:
+            name: 'Transmission à la GED'
+            type: checkbox
+            onchange: envoi-cheminement-change
+        envoi_sae:
+            name: 'Transmission au SAE'
+            type: checkbox
+            onchange: envoi-cheminement-change
+    Parapheur:
+        envoi_signature:
+            no-show: true
+            onchange: envoi-signature-api-change
+        iparapheur_type:
+            name: 'Type i-Parapheur'
+            read-only: true
+        iparapheur_sous_type:
+            name: 'Sous-type i-Parapheur'
+            requis: true
+            read-only: true
+            type: externalData
+            choice-action: iparapheur-sous-type
+            link_name: 'Sélectionner un sous-type'
+    'Parapheur FAST':
+        envoi_signature_fast:
+            no-show: true
+            onchange: envoi-signature-api-change
+        fast_parapheur_circuit:
+            name: 'Circuit sur le parapheur'
+            type: externalData
+            choice-action: iparapheur-sous-type
+            link_name: 'Liste des circuits'
+        fast_parapheur_circuit_configuration:
+            name: 'Configuration du circuit à la volée (au format JSON)'
+            commentaire: 'Si ce fichier est déposé, il remplace le circuit choisi dans le champ "Circuit sur le parapheur"'
+            type: file
+        fast_parapheur_email_destinataire:
+            name: 'Email du destinataire'
+            commentaire: "Email de la personne à qui l’on souhaite envoyer le document après sa signature<br />\nUniquement avec le mode \"circuit à la volée\""
+        fast_parapheur_email_cc:
+            name: 'Email des destinataires en copie carbone'
+            commentaire: "Permet de rajouter des destinataires mais en copie carbone<br />\nUniquement avec le mode \"circuit à la volée\""
+        fast_parapheur_agents:
+            name: 'Emails des agents'
+            commentaire: "Les emails des utilisateurs à rajouter en tant qu’agent. Séparé par des virgules<br />\nUniquement avec le mode \"circuit à la volée\""
+    'Signature locale':
+        has_signature_locale:
+            no-show: true
+        signature_locale_display:
+            no-show: true
+        signature_link:
+            name: 'Signer l''acte'
+            type: externalData
+            choice-action: signature-locale
+            link_name: 'Signer l''acte'
+        signature:
+            name: 'Signature de l''acte'
+            read-only: true
+            type: file
+            requis: true
+    'Retour Parapheur':
+        iparapheur_dossier_id:
+            name: 'Identifiant du dossier sur le parapheur'
+        has_historique:
+            no-show: true
+        iparapheur_historique:
+            name: 'Historique parapheur'
+            type: file
+        parapheur_last_message:
+            name: 'Dernier message reçu du parapheur'
+        has_signature:
+            no-show: true
+        is_pades:
+            no-show: true
+        signature:
+            name: 'Signature de l''acte'
+            type: file
+        document_signe:
+            name: 'Bordereau de signature'
+            type: file
+        iparapheur_annexe_sortie:
+            name: 'Annexe(s) de sortie du parapheur'
+            type: file
+            multiple: true
+    'Informations complémentaires':
+        has_information_complementaire:
+            no-show: true
+            read-only: true
+            commentaire: 'Utiliser pour remplir les informations de réponse si le document ne passe pas par une étape de TDT'
+        signature:
+            name: 'Signature de l''acte'
+            type: file
+        document_signe:
+            name: 'Bordereau de signature'
+            type: file
+        bordereau:
+            name: 'Bordereau d''acquittement'
+            type: file
+        date_tdt_postage:
+            name: 'Date de postage'
+            type: date
+        aractes:
+            name: 'Accusé de réception technique'
+            type: file
+            commentaire: 'Accusé de réception (XML) envoyé par la préfecture'
+        echange_prefecture:
+            name: 'Documents échangés avec la préfecture'
+            commentaire: 'faire suivre les échanges aller par les échanges retours, faire suivre l''échange retour principal par les annexes'
+            type: file
+            multiple: true
+        echange_prefecture_ar:
+            name: 'Accusé de réception des documents échangés'
+            commentaire: 'l''ordre des accusés de réception doit correspondre à celle des documents échangés.'
+            type: file
+            multiple: true
+        echange_prefecture_type:
+            name: 'Type de l''échange'
+            type: select
+            depend: echange_prefecture
+            value:
+                2A: 'Courrier simple'
+                2B: 'Réponse courrier simple'
+                3A: 'Demande de pièces complémentaires'
+                4A: 'Lettre d''observations'
+                5A: 'Déféré au tribunal administratif'
+                2R: 'Réponse à un courrier simple'
+                3R: 'Réponse à une demande de pièces complémentaires'
+                3RB: 'Annexe d''une réponse à une demande de pièce complémentaires'
+                4R: 'Réponse à une lettre d''observations'
+    Bordereau:
+        has_bordereau:
+            no-show: true
+            read-only: true
+        bordereau:
+            name: 'Bordereau d''acquittement'
+            type: file
+        aractes:
+            name: 'Accusé de réception technique'
+            type: file
+            commentaire: 'Accusé de réception (XML) envoyé par la préfecture'
+        acte_unique_id:
+            no-show: true
+            index: true
+        acte_tamponne:
+            name: 'Acte tamponné par le TdT'
+            type: file
+        annexes_tamponnees:
+            name: 'Annexe(s) tamponnée(s) par le TdT'
+            type: file
+            multiple: true
+    'Retour GED':
+        has_ged_document_id:
+            no-show: true
+        ged_document_id_file:
+            name: 'Identifiants des documents sur la GED'
+            type: file
+            visionneuse: GedIdDocumentsVisionneuse
+            read-only: true
+            requis: true
+            visionneuse-no-link: true
+    SAE:
+        sae_transfert_id:
+            name: 'Identifiant du transfert'
+            index: true
+        sae_bordereau:
+            name: 'Bordereau SEDA'
+            type: file
+        sae_archive:
+            name: Archive
+            type: file
+        ar_sae:
+            type: file
+            name: 'Accusé de réception SAE'
+        sae_ack_comment:
+            name: 'Commentaire de l''accusé de réception'
+        reply_sae:
+            type: file
+            name: 'Réponse du SAE'
+        sae_archival_identifier:
+            name: 'Identifiant de l''archive sur le SAE'
+        sae_atr_comment:
+            name: 'Commentaire de la réponse du SAE'
+        url_archive:
+            name: 'URL de l''archive'
+            type: url
+    Annulation:
+        has_annulation:
+            no-show: true
+        tedetis_annulation_id:
+            name: 'Identifiant de la transaction d''annulation'
+    'Réponses de la préfecture':
+        has_reponse_prefecture:
+            no-show: true
+        reponse_prefecture_file:
+            name: 'Réponse préfecture'
+            type: file
+            visionneuse: ReponsePrefectureLinkVisionneuse
+            read-only: true
+            visionneuse-no-link: true
+champs-affiches:
+    - titre
+    - numero_de_lacte
+    - dernier_etat
+    - date_dernier_etat
+page-condition:
+    Parapheur:
+        envoi_signature: true
+    'Parapheur FAST':
+        envoi_signature_fast: true
+    'Signature locale':
+        signature_locale_display: true
+    'Retour Parapheur':
+        has_historique: true
+    'Informations complémentaires':
+        has_information_complementaire: true
+    Bordereau:
+        has_bordereau: true
+    'Retour GED':
+        has_ged_document_id: true
+    SAE:
+        sae_transfert_id: true
+    Annulation:
+        has_annulation: true
+    'Réponses de la préfecture':
+        has_reponse_prefecture: true
+action:
+    creation:
+        name-action: Créer
+        name: Créé
+        rule:
+            no-last-action: ''
+            droit_id_u: 'actes-generique:edition'
+            type_id_e:
+                - service
+                - collectivite
+    modification:
+        name-action: Modifier
+        name: 'En cours de rédaction'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - send-signature-local
+                - send-signature-error
+                - recu-iparapheur
+                - send-tdt-erreur
+                - acquiter-tdt
+                - send-ged
+            role_id_e: editeur
+            droit_id_u: 'actes-generique:edition'
+    supression:
+        name-action: Supprimer
+        name: Supprimé
+        rule:
+            or_1:
+                and_1:
+                    last-action:
+                        - creation
+                        - modification
+                        - send-signature-local
+                        - recu-iparapheur
+                        - rejet-iparapheur
+                        - fatal-error
+                    no-action:
+                        - send-tdt
+                and_2:
+                    last-action:
+                        - accepter-sae
+                        - rejet-sae
+                and_3:
+                    last-action:
+                        - send-ged
+                    content:
+                        envoi_sae: false
+                and_4:
+                    last-action:
+                        - acquiter-tdt
+                        - erreur-verif-tdt
+                    content:
+                        envoi_sae: false
+                        envoi_ged: false
+                and_5:
+                    last-action:
+                        - termine
+                        - error-ged
+                        - send-tdt-erreur
+                        - annuler-tdt
+            role_id_e: editeur
+            droit_id_u: 'actes-generique:edition'
+        action-class: Supprimer
+        warning: 'Êtes-vous sûr ?'
+    send-signature-local:
+        name-action: Signer
+        name: 'Document à faire signer'
+        rule:
+            last-action:
+                - creation
+                - modification
+            no-action:
+                - recu-iparapheur
+            document_is_valide: true
+            content:
+                has_signature_locale: true
+        editable-content:
+            - signature
+            - signature_link
+        action-class: SignatureLocaleNotif
+    send-iparapheur:
+        name-action: 'Transmettre au parapheur'
+        name: 'Transmis au parapheur'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - send-signature-error
+            no-action:
+                - recu-iparapheur
+            document_is_valide: true
+            or_1:
+                and_1:
+                    content:
+                        envoi_signature: true
+                and_2:
+                    content:
+                        envoi_signature_fast: true
+        connecteur-type: signature
+        connecteur-type-action: SignatureEnvoie
+        connecteur-type-mapping:
+            document: arrete
+        action-class: StandardAction
+        action-automatique: verif-iparapheur
+    send-signature-error:
+        name: 'Erreur lors de l''envoi du dossier à la signature'
+        editable-content:
+            - fast_parapheur_circuit
+            - fast_parapheur_circuit_configuration
+            - fast_parapheur_email_destinataire
+            - fast_parapheur_email_cc
+            - fast_parapheur_agents
+        rule:
+            role_id_e: no-role
+    verif-iparapheur:
+        name-action: 'Vérifier le statut de signature'
+        name: 'Signature vérifiée'
+        rule:
+            last-action:
+                - send-iparapheur
+                - erreur-verif-iparapheur
+            role_id_e: editeur
+            droit_id_u: 'actes-generique:edition'
+        action-class: IParapheurRecup
+        connecteur-type: signature
+    recu-iparapheur:
+        name: 'Signature récupérée'
+        editable-content:
+            - date_de_lacte
+            - classification
+            - envoi_tdt
+            - envoi_ged
+            - envoi_sae
+            - type_piece
+            - type_acte
+            - type_pj
+        rule:
+            role_id_e: no-role
+    rejet-iparapheur:
+        name: 'Signature refusée'
+        rule:
+            role_id_e: no-role
+    erreur-verif-iparapheur:
+        name: 'Erreur lors de la vérification du statut de signature'
+        rule:
+            role_id_e: no-role
+    send-tdt:
+        name-action: 'Transmettre au TdT'
+        name: 'Transmis au TdT'
+        rule:
+            role_id_e: editeur
+            droit_id_u: 'actes-generique:edition'
+            document_is_valide: true
+            or_1:
+                and_1:
+                    last-action:
+                        - creation
+                        - modification
+                    no_1:
+                        has-action:
+                            - send-tdt
+                            - document-transmis-tdt
+                    content:
+                        envoi_tdt: true
+                        envoi_signature: false
+                        envoi_signature_fast: false
+                        has_signature_locale: false
+                and_2:
+                    has-action:
+                        - recu-iparapheur
+                    no_1:
+                        has-action:
+                            - send-tdt
+                            - document-transmis-tdt
+                    content:
+                        envoi_tdt: true
+                        envoi_signature: true
+                and_3:
+                    no_1:
+                        has-action:
+                            - send-tdt
+                            - document-transmis-tdt
+                    content:
+                        envoi_tdt: true
+                        has_signature_locale: true
+                        signature: true
+                and_4:
+                    last-action:
+                        - send-tdt-erreur
+                and_5:
+                    has-action:
+                        - recu-iparapheur
+                    no_1:
+                        has-action:
+                            - send-tdt
+                            - document-transmis-tdt
+                    content:
+                        envoi_tdt: true
+                        envoi_signature_fast: true
+        action-class: TedetisEnvoie
+        action-automatique: verif-tdt
+    send-tdt-erreur:
+        name: 'Erreur lors de l''envoi des données au TdT'
+        rule:
+            role_id_e: no-role
+        editable-content:
+            - numero_de_lacte
+            - envoi_tdt
+            - envoi_ged
+            - envoi_sae
+    document-transmis-tdt:
+        name-action: 'Transmettre les documents au TdT'
+        name: 'En attente du certificat RGS**'
+        rule:
+            role_id_e: no-role
+    teletransmission-tdt:
+        name-action: 'Ordonner la télétransmission au TdT'
+        name: 'Tentative de télétransmission sur le TDT'
+        rule:
+            role_id_e: editeur
+            droit_id_u: 'actes-generique:edition'
+            last-action:
+                - teletransmission-tdt
+                - document-transmis-tdt
+        action-class: TdtTeletransmettre
+    return-teletransmission-tdt:
+        name: 'Ordre de télétransmission envoyé sur le TDT'
+        rule:
+            role_id_e: editeur
+            droit_id_u: 'actes-generique:edition'
+            last-action:
+                - teletransmission-tdt
+        action-class: TdtRetourTeletransmettre
+        action-automatique: verif-tdt
+    verif-tdt:
+        name-action: 'Vérifier le statut de la transaction'
+        name: 'Statut vérifié par le TdT'
+        rule:
+            last-action:
+                - send-tdt
+                - tdt-error
+                - erreur-verif-tdt
+                - document-transmis-tdt
+                - teletransmission-tdt
+                - return-teletransmission-tdt
+            role_id_e: editeur
+            droit_id_u: 'actes-generique:edition'
+        action-class: TedetisRecup
+        connecteur-type: TdT
+    erreur-verif-tdt:
+        name: 'Erreur lors de la vérification du statut de l''acte'
+        rule:
+            role_id_e: no-role
+    tdt-error:
+        name: 'Erreur sur le TdT'
+        rule:
+            role_id_e: no-role
+    acquiter-tdt:
+        name: 'Acquitté par la préfecture'
+        rule:
+            role_id_e: no-role
+        editable-content:
+            - envoi_ged
+            - envoi_sae
+    termine:
+        name: 'Traitement terminé'
+        rule:
+            role_id_e: no-role
+    annulation-tdt:
+        name-action: 'Annuler la transaction'
+        name: 'Demande d''annulation envoyée'
+        rule:
+            has-action:
+                - acquiter-tdt
+            no-action:
+                - annulation-tdt
+            role_id_e: editeur
+            droit_id_u: 'actes-generique:edition'
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdTAnnulation
+        action-automatique: verif-annulation-tdt
+        warning: 'Attention cette action n''est pas réversible'
+    verif-annulation-tdt:
+        name-action: 'Vérifier le statut de la transaction d''annulation'
+        name: 'Statut vérifié par le TdT'
+        rule:
+            last-action:
+                - annulation-tdt
+            role_id_e: editeur
+            droit_id_u: 'actes-generique:edition'
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdTRecupAnnulation
+    annuler-tdt:
+        name: 'Transaction annulée'
+        rule:
+            role_id_e: no-role
+    send-ged:
+        name-action: 'Verser à la GED'
+        name: 'Versé à la GED'
+        rule:
+            content:
+                envoi_ged: true
+            or_1:
+                and_1:
+                    last-action:
+                        - creation
+                        - modification
+                    document_is_valide: true
+                    content:
+                        envoi_signature: false
+                        envoi_tdt: false
+                and_2:
+                    last-action:
+                        - recu-iparapheur
+                    content:
+                        envoi_tdt: false
+                and_3:
+                    has-action:
+                        - acquiter-tdt
+                    no-action:
+                        - send-ged
+                and_4:
+                    last-action:
+                        - error-ged
+        editable-content:
+            - envoi_sae
+        action-class: StandardAction
+        connecteur-type: GED
+        connecteur-type-action: GEDEnvoyer
+        connecteur-type-mapping:
+            fatal-error: error-ged
+    error-ged:
+        name: 'Erreur irrécupérable lors du dépôt'
+        rule:
+            role_id_e: no-role
+    send-archive:
+        name-action: 'Verser au SAE'
+        name: 'Versé au SAE'
+        rule:
+            content:
+                envoi_sae: true
+            or_1:
+                and_1:
+                    last-action:
+                        - creation
+                        - modification
+                    document_is_valide: true
+                    content:
+                        envoi_signature: false
+                        envoi_tdt: false
+                        envoi_ged: false
+                and_2:
+                    last-action:
+                        - recu-iparapheur
+                    content:
+                        envoi_tdt: false
+                        envoi_ged: false
+                and_3:
+                    has-action:
+                        - acquiter-tdt
+                    content:
+                        envoi_ged: false
+                    no-action:
+                        - send-archive
+                and_4:
+                    has-action:
+                        - send-ged
+                    no-action:
+                        - send-archive
+                and_5:
+                    last-action:
+                        - erreur-envoie-sae
+                        - rejet-sae
+        action-class: SAEEnvoiActes
+        action-automatique: verif-sae
+    erreur-envoie-sae:
+        name: 'Erreur lors de l''envoi au SAE'
+        rule:
+            role_id_e: no-role
+    verif-sae:
+        name-action: 'Récupérer l''AR du document sur le SAE'
+        name: 'Récupération de l''AR sur le SAE'
+        rule:
+            last-action:
+                - send-archive
+                - verif-sae-erreur
+            droit_id_u: 'actes-generique:edition'
+        action-class: StandardAction
+        connecteur-type: SAE
+        connecteur-type-action: SAEVerifier
+    verif-sae-erreur:
+        name: 'Erreur lors de la récupération de l''AR'
+        rule:
+            role_id_e: no-role
+    ar-recu-sae:
+        name: 'AR SAE reçu'
+        rule:
+            role_id_e: no-role
+        action-automatique: validation-sae
+    validation-sae:
+        name-action: 'Vérifier l''acceptation par le SAE'
+        name: 'Vérification de l''acceptation par le SAE'
+        rule:
+            last-action:
+                - ar-recu-sae
+                - validation-sae-erreur
+            droit_id_u: 'actes-generique:edition'
+        action-class: StandardAction
+        connecteur-type: SAE
+        connecteur-type-action: SAEValider
+    validation-sae-erreur:
+        name: 'Erreur lors de la vérification de la validité du transfert'
+        rule:
+            role_id_e: no-role
+    accepter-sae:
+        name: 'Archive acceptée par le SAE'
+        rule:
+            role_id_e: no-role
+    rejet-sae:
+        name: 'Archive rejetée par le SAE'
+        rule:
+            role_id_e: no-role
+    arrete-change:
+        name: 'Modificatio de l''arrêté'
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: ActesGeneriqueArreteChange
+    envoi-signature-change:
+        name: 'Modification envoi-signature'
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: EnvoieSignatureChange
+    envoi-signature-api-change:
+        name: 'Modification envoi-signature'
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: EnvoieSignatureChangeAPI
+    envoi-cheminement-change:
+        name: 'Modification envoi_sae'
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: ActesGeneriqueCheminementChange
+    iparapheur-sous-type:
+        name: 'Liste des sous-type iParapheur'
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: IparapheurSousType
+    classification:
+        name: 'Classification ACTES'
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: Classification
+    signature-locale:
+        name: 'Signature locale'
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: SignatureLocale
+    type-piece:
+        name: 'Typologie des pièces'
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: StandardChoiceAction
+        connecteur-type: TdT
+        connecteur-type-action: TdtChoiceTypologieActes
+    autre_document_attache-change:
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdtAnnexeTypologieAnnexeChange
+    type-acte-change-by-api:
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdtTypologieChangeByApi
