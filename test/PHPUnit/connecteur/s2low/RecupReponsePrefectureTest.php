@@ -9,12 +9,15 @@ class RecupReponsePrefectureTest extends PastellTestCase
      */
     public function testLinksBetweenActes()
     {
+        $acte_id_e = 2;
         $uniqueId = '034-491011698-20190829-201908291002-AI';
 
-        $acteDocument = $this->createDocument('actes-generique');
-        $this->configureDocument($acteDocument['id_d'], [
-            'acte_unique_id' => $uniqueId
-        ]);
+        $acteDocument = $this->createDocument('actes-generique', $acte_id_e);
+        $this->configureDocument(
+            $acteDocument['id_d'],
+            ['acte_unique_id' => $uniqueId],
+            $acte_id_e
+        );
 
         $this->mockCurl([
             '/admin/users/api-list-login.php' => true,
@@ -28,13 +31,13 @@ class RecupReponsePrefectureTest extends PastellTestCase
 
         $this->assertLastMessage('1 réponse de la préfecture a été récupérée.');
 
-        $documents = $this->getInternalAPI()->get('/entite/' . self::ID_E_COL . '/document?type=actes-reponse-prefecture');
+        $documents = $this->getInternalAPI()->get('/entite/' . $acte_id_e . '/document?type=actes-reponse-prefecture');
         $reponsePrefectureIdDocument = $documents[0]['id_d'];
 
         $reponsePrefectureDocument = $this->getDonneesFormulaireFactory()->get($reponsePrefectureIdDocument);
 
         $this->assertSame(
-            sprintf("%s/Document/detail?id_d=%s&id_e=%s", SITE_BASE, $acteDocument['id_d'], self::ID_E_COL),
+            sprintf("%s/Document/detail?id_d=%s&id_e=%s", SITE_BASE, $acteDocument['id_d'], $acte_id_e),
             $reponsePrefectureDocument->get('url_acte')
         );
 
@@ -42,7 +45,7 @@ class RecupReponsePrefectureTest extends PastellTestCase
         $this->assertSame('1', $acteDocument->get('has_reponse_prefecture'));
         $this->assertSame(
             json_encode([
-                2 => sprintf("/Document/detail?id_d=%s&id_e=%s", $reponsePrefectureDocument->id_d, self::ID_E_COL)
+                2 => sprintf("/Document/detail?id_d=%s&id_e=%s", $reponsePrefectureDocument->id_d, $acte_id_e)
             ]),
             $acteDocument->getFileContent('reponse_prefecture_file')
         );
