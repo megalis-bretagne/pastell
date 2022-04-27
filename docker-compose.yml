@@ -26,6 +26,7 @@ services:
             - ${LETSENCRYPT_DATADIR:-letsencrypt_datadir}:/etc/letsencrypt
             - ${LOGS_PATH:-logs_datadir}:/data/log
             - ${TMP_PATH:-tmp_datadir}:/tmp
+            - ${UPLOAD_CHUNK_PATH:-upload_chunk_datadir}:/data/upload_chunk
         environment:
             REDIS_SERVER: ${REDIS_HOST:-redis}
             REDIS_PORT: ${REDIS_PORT:-6379}
@@ -99,3 +100,4 @@ volumes:
     letsencrypt_datadir:
     logs_datadir:
     tmp_datadir:
+    upload_chunk_datadir:
