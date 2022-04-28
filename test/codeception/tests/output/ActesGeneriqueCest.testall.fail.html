@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Gestionnaire de tâches - Pastell</title>
+
+        <meta name="description" content="Pastell est un logiciel de gestion de flux de documents. Les documents peuvent être crées via un système de formulaires configurables. Chaque document suit alors un workflow prédéfini, également configurable." />
+        <meta name="keywords" content="Pastell, collectivité territoriale, flux, document, données, logiciel, logiciel libre, open source" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="chrome=1">
+        <base href='https://localhost:4443/' />
+
+        <link rel="shortcut icon" type="images/x-icon" href="https://localhost:4443/favicon.ico" />
+
+                    <link rel="stylesheet" href="https://localhost:4443/node_modules/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
+                    <link rel="stylesheet" href="https://localhost:4443/node_modules/fork-awesome/css/fork-awesome.min.css" type="text/css" />
+                    <link rel="stylesheet" href="https://localhost:4443/node_modules/select2/dist/css/select2.min.css" type="text/css" />
+                    <link rel="stylesheet" href="https://localhost:4443/node_modules/components-jqueryui/themes/cupertino/jquery-ui.min.css" type="text/css" />
+                    <link rel="stylesheet" href="https://localhost:4443/img/commun.css" type="text/css" />
+                    <link rel="stylesheet" href="https://localhost:4443/node_modules/@libriciel/ls-bootstrap-4/dist/pa-bootstrap-4.css" type="text/css" />
+                    <link rel="stylesheet" href="https://localhost:4443/img/bs_surcharge.css" type="text/css" />
+                    <link rel="stylesheet" href="https://localhost:4443/img/jquery.autocomplete.css" type="text/css" />
+                    <link rel="stylesheet" href="https://localhost:4443/img/jquery.treeview.css" type="text/css" />
+                    <link rel="stylesheet" href="https://localhost:4443/node_modules/@libriciel/ls-jquery-password/dist/css/ls-jquery-password.css" type="text/css" />
+        
+                    <script type="text/javascript" src="https://localhost:4443/node_modules/jquery/dist/jquery.min.js"></script>
+                    <script type="text/javascript" src="https://localhost:4443/node_modules/select2/dist/js/select2.min.js"></script>
+                    <script type="text/javascript" src="https://localhost:4443/node_modules/select2/dist/js/i18n/fr.js"></script>
+                    <script type="text/javascript" src="https://localhost:4443/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+                    <script type="text/javascript" src="https://localhost:4443/node_modules/components-jqueryui/jquery-ui.js"></script>
+                    <script type="text/javascript" src="https://localhost:4443/node_modules/components-jqueryui/ui/widgets/datepicker.js"></script>
+                    <script type="text/javascript" src="https://localhost:4443/node_modules/components-jqueryui/ui/i18n/datepicker-fr.js"></script>
+                    <script type="text/javascript" src="https://localhost:4443/node_modules/@libriciel/ls-composants/ls-elements.js"></script>
+                    <script type="text/javascript" src="https://localhost:4443/node_modules/@libriciel/ls-jquery-password/dist/js/ls-jquery-password.min.js"></script>
+                    <script type="text/javascript" src="https://localhost:4443/js/flow.js"></script>
+                    <script type="text/javascript" src="https://localhost:4443/js/jquery.treeview.js"></script>
+                    <script type="text/javascript" src="https://localhost:4443/js/pastell.js"></script>
+                    <script type="text/javascript" src="https://localhost:4443/js/css-vars-ponyfill.min.js"></script>
+                    <script type="text/javascript" src="https://localhost:4443/js/search.js"></script>
+                    <script type="text/javascript" src="https://localhost:4443/js/ie-ponyfill.js"></script>
+                    <script type="text/javascript" src="https://localhost:4443/js/top.js"></script>
+                    <script type="text/javascript" src="https://localhost:4443/js/mdp.js"></script>
+        
+    </head>
+    <body>
+
+    <div id="global">
+
+            <div id="header">
+
+                <div id="bloc_logo">
+                    <a href='https://localhost:4443/'>
+                        <div class="logo" alt="Retour à l'accueil"></div>
+                    </a>
+                </div>
+
+                                    <div id="bloc_login">
+                        <a href='https://localhost:4443/Utilisateur/moi'>admin</a>
+                        <div class="dropdown">
+                            <button class="btn burger-menu dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a href="Aide/index" class="new_picto dropdown-item"><i class="fa fa-question"></i>&nbsp;<span>Aide</span></a>
+                                <a href="https://localhost:4443/Aide/APropos" class="new_picto dropdown-item"><i class="fa fa-info"></i>&nbsp;<span>À propos</span></a>
+                                <a href="https://localhost:4443/Aide/RGPD" class="new_picto dropdown-item"><i class="fa fa-user-secret"></i>&nbsp;<span>RGPD</span></a>
+                                <a href="https://localhost:4443/Connexion/logout" class="dropdown-item separator"><i class="fa fa-sign-out"></i>&nbsp;<span> Se déconnecter</span></a>
+                            </div>
+                        </div>
+
+                    </div>
+                            </div>
+                            <div id="main_menu">
+                    <a href="https://localhost:4443/Document/list?id_e=0" class="new_picto"><i class="fa fa-folder-open"></i>&nbsp;Dossiers</a>
+                    <a href="https://localhost:4443/Journal/index?type=&id_e=0" class="new_picto" id="journal_link"><i class="fa fa-list-alt"></i>&nbsp;Journal des évènements</a>
+                                        <a href="https://localhost:4443/Entite/detail?id_e=0" class="new_picto"><i class="fa fa-wrench"></i>&nbsp;Administration</a>
+                                                                <a href="https://localhost:4443/System/loginPageConfiguration" class="new_picto" style="float: right;">
+                            <i class="fa fa-puzzle-piece"></i>
+                            <span>
+                            Administration avancée
+                            </span>
+                        </a>
+                                                                <a href="https://localhost:4443/Daemon/index" class='new_picto' style="float: right;">
+
+                                                            <p class="badge badge-daemon">!</p>
+                                                                                    <i class="fa fa-clock-o"></i>
+
+                            Tâches automatiques</a>
+                    
+                </div>
+            
+            
+            <div id="main">
+                                    
+<div id="main_gauche" class="ls-on">
+
+    <h3 data-toggle="collapse" data-target="#collapse-0" aria-expanded="false" aria-controls="collapse-0">Tâches automatiques</h3>
+    <div class="menu collapse show" id="collapse-0">
+        <ul>
+                            <li >
+                    <a class="actif"                            href='Daemon/index'>
+                        Gestionnaire de tâches                    </a>
+                </li>
+                            <li >
+                    <a                             href='Daemon/verrou'>
+                        Files d'attente                    </a>
+                </li>
+                            <li >
+                    <a                             href='Daemon/job'>
+                        Tous les travaux                    </a>
+                </li>
+                            <li >
+                    <a                             href='Daemon/job?filtre=actif'>
+                        Travaux actifs                    </a>
+                </li>
+                            <li >
+                    <a                             href='Daemon/job?filtre=lock'>
+                        Travaux suspendus                    </a>
+                </li>
+                            <li >
+                    <a                             href='Daemon/job?filtre=wait'>
+                        Travaux en attente                    </a>
+                </li>
+                    </ul>
+    </div>
+
+    <h3 data-toggle="collapse" data-target="#collapse-1" aria-expanded="false" aria-controls="collapse-1">Configuration</h3>
+    <div class="menu collapse " id="collapse-1">
+        <ul>
+            <li>
+                <a  href="https://localhost:4443/Daemon/config">Fréquence des connecteurs</a>
+            </li>
+        </ul>
+    </div>
+
+
+</div><!-- main_gauche  -->
+                
+                <div id="main_droite" >
+                    <div id="bloc_titre_bouton">
+                        <div id="bloc_h1">
+                        <h1>Gestionnaire de t&acirc;ches</h1>
+                                                </div>
+                                            </div><!-- fin bloc_titre_bouton -->
+
+                    
+                    <div id='daemon-content'>
+<div class="box">
+<table class='table'>
+<tr>
+    <th class="w300">État</th>
+    <td>
+                    <span class='alert alert-danger'>Le gestionnaire de tâches est arrêté</span>
+            <a href="https://localhost:4443/Daemon/daemonStart" class="btn btn-success"><i class="fa fa-play"></i>&nbsp;Démarrer</a>
+            </td>
+</tr>
+<tr>
+    <th>PID</th>
+    <td>0</td>
+</tr>
+<tr>
+    <th>Processus simultanés maximum</th>
+    <td>5</td>
+</tr>
+<tr>
+    <th>Processus en cours d'exécution</th>
+    <td>0</td>
+</tr>
+<tr>
+    <th>Travaux en attente</th>
+    <td>
+        0    </td>
+</tr>
+<tr>
+    <th>Travaux suspendus</th>
+    <td>
+        0            </td>
+</tr>
+<tr>
+    <th>Nombre total de travaux</th>
+    <td>
+        0    </td>
+</tr>
+<tr>
+    <th>Date du système</th>
+    <td>
+        28/04/2022 11:41:27    </td>
+</tr>
+
+</table>
+</div>
+
+<div class='box'>
+<h2>
+    Liste de tous les travaux
+</h2>
+
+
+    
+<table class="table table-striped">
+    <tr>
+        <th>#ID travail</th>
+        <th>Type</th>
+        <th>Suspendu</th>
+        <th>Entité</th>
+        <th>Dossier / Connecteur</th>
+        <th>Etat source<br/>Etat cible</th>
+        <th>Premier essai</th>
+        <th>Dernier essai</th>
+        <th>Nombre d'essais</th>
+        <th>Dernier message</th>
+        <th>Prochain essai</th>
+        <th>File d'attente</th>
+        <th>#ID processus</th>
+        <th>PID processus</th>
+        <th>Début processus</th>
+    </tr>
+    </table>
+
+
+</div>
+</div>
+
+
+<script type="text/javascript">
+
+function reload(){
+    $("#daemon-content").load("Daemon/indexContent");
+}
+
+$(document).ready(function(){
+    setInterval(function(){reload();},1000);
+});
+</script>
+
+                </div>
+            </div>
+        </div>
+    <script>
+        $(document).ready(function() {
+            $('.dropdown-toggle').dropdown()
+
+        });
+    </script>
+
+        
+<div class="tothetop">
+  <a href="#header" id="top"><i class="fa fa-chevron-up"></i></a>
+</div>
+
+    
+<br/>
+<div id="bottom">
+
+    <div class="bloc_copyright">
+        <div class="bloc_logo_libriciel">
+            <a href='https://www.libriciel.fr/' target="_blank">
+                <img src="img/commun/libriciel_white_blue.svg" alt="Libriciel" />
+            </a>
+        </div>
+        <div class="bloc_mentions">
+            <p> Pastell&nbsp;%VERSION%                 -
+                <a href="https://www.libriciel.fr" target="_blank">Libriciel SCOP</a>
+                - <em>0.368s</em></p>
+        </div>
+    <div id="bloc_left">
+
+    </div>
+
+    </div>
+</div>
+
+    </body>
+</html>

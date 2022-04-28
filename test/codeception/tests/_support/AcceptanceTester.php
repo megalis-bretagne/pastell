@@ -77,11 +77,5 @@ class AcceptanceTester extends \Codeception\Actor
         $I->amOnPage("/");
         $I->saveSessionSnapshot('anonymous');
     }
-
-    public function disableDaemon()
-    {
-        $I = $this;
-        $I->amOnPage("/Daemon/index");
-        $I->click("Arrêter");
-    }
+    
 }
