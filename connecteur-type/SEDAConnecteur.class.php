@@ -4,10 +4,8 @@ abstract class SEDAConnecteur extends Connecteur
 {
     /**
      * Crée le bordereau en fonction des informations provenant du flux
-     * @param FluxData $fluxData
-     * @return string
      */
-    abstract public function getBordereauNG(FluxData $fluxData): string;
+    abstract public function getBordereau(FluxData $fluxData): string;
 
     /**
      * Permet de valider un bordereau SEDA en fonction des schéma du connecteur

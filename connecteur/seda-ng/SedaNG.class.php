@@ -65,7 +65,7 @@ class SedaNG extends SEDAConnecteur
 
         $fluxDataTest = new FluxDataTest($data);
 
-        return $this->getBordereauNG($fluxDataTest);
+        return $this->getBordereau($fluxDataTest);
     }
 
     /**
@@ -79,7 +79,7 @@ class SedaNG extends SEDAConnecteur
     /**
      * @throws Exception
      */
-    public function getBordereauNG(FluxData $fluxData): string
+    public function getBordereau(FluxData $fluxData): string
     {
         $relax_ng_path = $this->getSchemaRngPath();
         $agape_file_path = $this->getAgapeFilePath();

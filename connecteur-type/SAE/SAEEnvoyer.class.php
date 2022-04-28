@@ -70,7 +70,7 @@ class SAEEnvoyer extends ConnecteurTypeActionExecutor
             $fluxData->setMetadata($metadata);
         }
 
-        $bordereau = $sedaNG->getBordereauNG($fluxData);
+        $bordereau = $sedaNG->getBordereau($fluxData);
         $donneesFormulaire->addFileFromData($sae_bordereau, "bordereau.xml", $bordereau);
         $transferId = $sae->getTransferId($bordereau);
         $donneesFormulaire->setData($sae_transfert_id, $transferId);

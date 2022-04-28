@@ -13,7 +13,7 @@ class FakeSEDATest extends PastellTestCase
 
         $this->assertStringEqualsFile(
             PASTELL_PATH . '/connecteur/FakeSEDA/fixtures/bordereau.xml',
-            $fakeSEDA->getBordereauNG($fluxData)
+            $fakeSEDA->getBordereau($fluxData)
         );
 
         $this->assertTrue($fakeSEDA->validateBordereau(""));

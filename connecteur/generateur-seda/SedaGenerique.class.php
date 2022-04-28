@@ -524,7 +524,7 @@ class SedaGenerique extends SEDAConnecteur
      * @throws UnrecoverableException
      * @throws Exception
      */
-    public function getBordereauNG(FluxData $fluxData): string
+    public function getBordereau(FluxData $fluxData): string
     {
         if (! $this->getSedaGeneratorURL()) {
             throw new UnrecoverableException("L'URL du générateur n'a pas été trouvé. Avez-vous pensé à créer un connecteur global Generateur SEDA et à l'associer ?");

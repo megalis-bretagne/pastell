@@ -49,7 +49,7 @@ class PDFGeneriqueEnvoiSAE extends ActionExecutor
         $metadata = json_decode($this->getDonneesFormulaire()->getFileContent('sae_config'), true) ?: [];
         $fluxData->setMetadata($metadata);
 
-        $bordereau = $sedaNG->getBordereauNG($fluxData);
+        $bordereau = $sedaNG->getBordereau($fluxData);
         $this->getDonneesFormulaire()->addFileFromData('sae_bordereau', "bordereau.xml", $bordereau);
         $transferId = $sae->getTransferId($bordereau);
         $this->getDonneesFormulaire()->setData("sae_transfert_id", $transferId);

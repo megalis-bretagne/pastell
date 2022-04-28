@@ -7,7 +7,7 @@ class FakeSEDA extends SEDAConnecteur
         /* Nothing to do */
     }
 
-    public function getBordereauNG(FluxData $fluxData): string
+    public function getBordereau(FluxData $fluxData): string
     {
         return file_get_contents(__DIR__ . '/fixtures/bordereau.xml');
     }

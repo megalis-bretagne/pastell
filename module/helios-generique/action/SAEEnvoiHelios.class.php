@@ -43,7 +43,7 @@ class SAEEnvoiHelios extends ActionExecutor
         $sae = $this->getConnecteur('SAE');
 
         $fluxData = new FluxDataSedaHelios($donneesFormulaire);
-        $bordereau = $heliosSEDA->getBordereauNG($fluxData);
+        $bordereau = $heliosSEDA->getBordereau($fluxData);
 
         try {
             $heliosSEDA->validateBordereau($bordereau);
