@@ -4,12 +4,8 @@ use Pastell\Service\SimpleTwigRenderer;
 use Twig\Error\LoaderError;
 use Twig\Error\SyntaxError;
 
-class SedaGenerique extends SedaNG
+class SedaGenerique extends SEDAConnecteur
 {
-    /** @var DonneesFormulaire */
-    private $connecteurConfig;
-    private $curlWrapperFactory;
-
     private const SEDA_GENERATOR_VERSION_PATH = "/version";
     private const SEDA_GENERATOR_GENERATE_PATH = "/generate";
     private const SEDA_GENERATOR_GENERATE_PATH_WITH_TEMPLATE = "/generateWithTemplate";
@@ -17,31 +13,22 @@ class SedaGenerique extends SedaNG
     private const SEDA_GENERATOR_URL_ID = 'seda_generator_url';
     private const SEDA_GENERATOR_GLOBAL_TYPE = 'Generateur SEDA';
 
-    private $idGeneratorFunction = false;
+    /** @var DonneesFormulaire */
+    private $connecteurConfig;
 
-    /**
-     * @var ConnecteurFactory
-     */
-    private $connecteurFactory;
-    /**
-     * @var TmpFolder
-     */
-    private $tmpFolder;
+    private $idGeneratorFunction = false;
 
     /** @var string */
     private $zipDirectory;
 
     public function __construct(
-        CurlWrapperFactory $curlWrapperFactory,
-        ConnecteurFactory $connecteurFactory,
-        TmpFolder $tmpFolder
+        private CurlWrapperFactory $curlWrapperFactory,
+        private ConnecteurFactory $connecteurFactory,
+        private TmpFolder $tmpFolder,
     ) {
-        $this->curlWrapperFactory = $curlWrapperFactory;
         $this->setIdGeneratorFunction(function () {
             return "id_" . uuid_create(UUID_TYPE_RANDOM);
         });
-        $this->connecteurFactory = $connecteurFactory;
-        $this->tmpFolder = $tmpFolder;
     }
 
     public function __destruct()
@@ -91,15 +78,6 @@ class SedaGenerique extends SedaNG
             throw new UnrecoverableException("SedaGenerator did not return a 200 response. " . $curlWrapper->getFullMessage());
         }
         return $result;
-    }
-
-    /**
-     * @param array $transactionInfo
-     * @throws UnrecoverableException
-     */
-    public function getBordereau(array $transactionInfo)
-    {
-        throw new UnrecoverableException("Le connecteur SEDA n'est pas supporté par ce flux...");
     }
 
     public static function getPastellToSeda(): array
@@ -546,7 +524,7 @@ class SedaGenerique extends SedaNG
      * @throws UnrecoverableException
      * @throws Exception
      */
-    public function getBordereauNG(FluxData $fluxData): string
+    public function getBordereau(FluxData $fluxData): string
     {
         if (! $this->getSedaGeneratorURL()) {
             throw new UnrecoverableException("L'URL du générateur n'a pas été trouvé. Avez-vous pensé à créer un connecteur global Generateur SEDA et à l'associer ?");

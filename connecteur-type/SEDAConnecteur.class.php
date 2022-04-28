@@ -3,18 +3,9 @@
 abstract class SEDAConnecteur extends Connecteur
 {
     /**
-     * @deprecated
-     * @param array $transactionsInfo
-     * @return string
-     */
-    abstract public function getBordereau(array $transactionsInfo);
-
-    /**
      * Crée le bordereau en fonction des informations provenant du flux
-     * @param FluxData $fluxData
-     * @return string
      */
-    abstract public function getBordereauNG(FluxData $fluxData): string;
+    abstract public function getBordereau(FluxData $fluxData): string;
 
     /**
      * Permet de valider un bordereau SEDA en fonction des schéma du connecteur
@@ -59,16 +50,7 @@ abstract class SEDAConnecteur extends Connecteur
         if (!$attr) {
             throw new Exception("Le fichier AR actes $file_name n'est pas exploitable");
         }
-        return ['DateReception' => $attr['DateReception'],'IDActe' => $attr['IDActe']];
-    }
-
-    public function getIntegrityMarkup($fileName)
-    {
-        $node = new ZenXML("Integrity");
-        $node->{'Contains'} = hash_file("sha256", $fileName);
-        $node->{'Contains'}['algorithme'] = "http://www.w3.org/2001/04/xmlenc#sha256";
-        $node->{'UnitIdentifier'} = basename($fileName);
-        return $node;
+        return ['DateReception' => $attr['DateReception'], 'IDActe' => $attr['IDActe']];
     }
 
     /**
@@ -83,11 +65,11 @@ abstract class SEDAConnecteur extends Connecteur
             $filename = $file_id['filename'];
             $filepath = $file_id['filepath'];
 
-            if (! $filepath) {
+            if (!$filepath) {
                 break;
             }
             $dirname = dirname($tmp_folder . "/" . $filename);
-            if (! file_exists($dirname)) {
+            if (!file_exists($dirname)) {
                 mkdir($dirname, 0777, true);
             }
             copy($filepath, "$tmp_folder/$filename");
@@ -99,7 +81,9 @@ abstract class SEDAConnecteur extends Connecteur
 
         if ($return_var != 0) {
             $output = implode("\n", $output);
-            throw new Exception("Impossible de créer le fichier d'archive $archive_path - status : $return_var - output: $output");
+            throw new Exception(
+                "Impossible de créer le fichier d'archive $archive_path - status : $return_var - output: $output"
+            );
         }
     }
 }

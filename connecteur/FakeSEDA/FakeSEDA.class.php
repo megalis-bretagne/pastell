@@ -1,20 +1,15 @@
 <?php
 
-class FakeSEDA extends SedaNG
+class FakeSEDA extends SEDAConnecteur
 {
     public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire)
     {
         /* Nothing to do */
     }
 
-    public function getBordereau(array $transactionsInfo)
+    public function getBordereau(FluxData $fluxData): string
     {
-        return file_get_contents(__DIR__ . "/fixtures/bordereau.xml");
-    }
-
-    public function getBordereauNG(FluxData $fluxData): string
-    {
-        return $this->getBordereau([]);
+        return file_get_contents(__DIR__ . '/fixtures/bordereau.xml');
     }
 
     public function validateBordereau(string $bordereau): bool

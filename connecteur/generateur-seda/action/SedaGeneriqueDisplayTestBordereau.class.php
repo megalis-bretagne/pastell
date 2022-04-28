@@ -74,7 +74,7 @@ class SedaGeneriqueDisplayTestBordereau extends ActionExecutor
 
         $sedaGenerique->setDocDonneesFormulaire($fakeDonneesFormulaire);
 
-        $result = $sedaGenerique->getBordereauNG($fluxDataTest);
+        $result = $sedaGenerique->getBordereau($fluxDataTest);
 
         if (!$result) {
             $this->setLastMessage($sedaGenerique->getLastValidationError());

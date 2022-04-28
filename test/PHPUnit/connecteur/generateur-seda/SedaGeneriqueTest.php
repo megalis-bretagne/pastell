@@ -156,7 +156,7 @@ class SedaGeneriqueTest extends PastellTestCase
         $docDonneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
         $sedaGeneriqueConnector->setDocDonneesFormulaire($docDonneesFormulaire);
 
-        $bordereau = $sedaGeneriqueConnector->getBordereauNG(new FluxDataTestSedaGenerique());
+        $bordereau = $sedaGeneriqueConnector->getBordereau(new FluxDataTestSedaGenerique());
         $this->assertStringContainsString("OK", $bordereau);
     }
 
@@ -187,7 +187,7 @@ class SedaGeneriqueTest extends PastellTestCase
         $sedaGeneriqueConnector->setDocDonneesFormulaire($docDonneesFormulaire);
         $this->expectExceptionMessage('Erreur sur le template {{ arrete }} : An exception has been thrown during the rendering of a template ("Array to string conversion")');
         $this->expectException(UnrecoverableException::class);
-        $sedaGeneriqueConnector->getBordereauNG(new FluxDataTestSedaGenerique());
+        $sedaGeneriqueConnector->getBordereau(new FluxDataTestSedaGenerique());
     }
 
     public function testWhenGeneratorReturnANon200HttpCode()
@@ -200,7 +200,7 @@ class SedaGeneriqueTest extends PastellTestCase
         $sedaGeneriqueConnector->setDocDonneesFormulaire($docDonneesFormulaire);
         $this->expectException(UnrecoverableException::class);
         $this->expectExceptionMessage("SedaGenerator did not return a 200 response. Code HTTP: 503.");
-        $sedaGeneriqueConnector->getBordereauNG(new FluxDataTestSedaGenerique());
+        $sedaGeneriqueConnector->getBordereau(new FluxDataTestSedaGenerique());
     }
 
     /**
