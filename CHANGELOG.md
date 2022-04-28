@@ -61,6 +61,10 @@ Le script console dev:fix-yaml permet de modifier ce qui était permis (de mani�
 - La méthode SEDAConnecteur::getBordereau() prend la signature de SEDAConnecteur::getBordereauNG() qui est supprimée
 - Suppression de DAEMON_USER, DAEMON_LOG_FILE, PID_FILE
 
+## Évolutions
+
+- L'entropie de mot de passe minimum au niveau de la plateforme PASSWORD_MIN_ENTROPY est fixé à 80 par défaut #1499
+
 # [3.1.13] - 2022-04-19
 
 ## Corrections
