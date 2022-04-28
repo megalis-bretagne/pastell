@@ -77,5 +77,4 @@ class AcceptanceTester extends \Codeception\Actor
         $I->amOnPage("/");
         $I->saveSessionSnapshot('anonymous');
     }
-    
 }
