@@ -6,6 +6,7 @@ paths:
     data: tests/_data
     support: tests/_support
     envs: tests/_envs
+    output: tests/output
 settings:
     colors: true
     memory_limit: 1024M
