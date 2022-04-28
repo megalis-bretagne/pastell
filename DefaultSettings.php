@@ -297,5 +297,5 @@ if (!defined("PASSWORD_MIN_ENTROPY")) {
     // Pour assurer la compatibilité de la version 3.1.X
     // Voir https://www.ssi.gouv.fr/administration/precautions-elementaires/calculer-la-force-dun-mot-de-passe/
     // pour fixer l'entropie
-    define("PASSWORD_MIN_ENTROPY", 0);
+    define("PASSWORD_MIN_ENTROPY", 80);
 }
