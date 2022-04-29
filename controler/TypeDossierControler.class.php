@@ -98,6 +98,7 @@ class TypeDossierControler extends PastellControler
      * @throws LastErrorException
      * @throws LastMessageException
      * @throws NotFoundException
+     * @throws UnrecoverableException
      */
     public function editionAction()
     {
@@ -105,8 +106,8 @@ class TypeDossierControler extends PastellControler
         $id_t = $this->getPostOrGetInfo()->getInt('id_t');
         $this->setViewParameter('flux_info', $this->getTypeDossierSQL()->getInfo($id_t));
 
-        if ($this->getViewParameterOrObject('flux_info')['id_type_dossier']) {
-            $id_type_dossier = $this->getViewParameterOrObject('flux_info')['id_type_dossier'];
+        if ($this->getViewParameterByKey('flux_info')) {
+            $id_type_dossier = $this->getViewParameterByKey('flux_info')['id_type_dossier'];
 
             if ($this->getDocumentSQL()->isTypePresent($id_type_dossier)) {
                 $this->setLastError(
