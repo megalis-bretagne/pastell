@@ -27,6 +27,8 @@ class RecupReponsePrefectureTest extends PastellTestCase
         ]);
 
         $s2low = $this->createConnector('s2low', 's2low');
+        $this->associateFluxWithConnector($s2low['id_ce'], "actes-generique", "TdT", $acte_id_e);
+
         $this->triggerActionOnConnector($s2low['id_ce'], 'recup-reponse-prefecture');
 
         $this->assertLastMessage('1 réponse de la préfecture a été récupérée.');

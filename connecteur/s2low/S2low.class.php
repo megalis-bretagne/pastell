@@ -692,6 +692,7 @@ class S2low extends TdtConnecteur
     {
         // création document flux actes réponse préfecture non lu
         // création sur l'entité de l'acte d'origine si acte_unique_id est trouvé
+        // et que le connecteur s2low est associé au flux de l'acte d'origine
 
         $connecteur_info = $this->getConnecteurInfo();
         $id_e = $connecteur_info['id_e'];
@@ -709,7 +710,15 @@ class S2low extends TdtConnecteur
             ->getByFieldValue('acte_unique_id', $reponse['unique_id']);
         if ($acteDocumentId) {
             $acteEntite = $this->objectInstancier->getInstance(DocumentEntite::class)->getEntite($acteDocumentId);
-            $id_e = $acteEntite[0]['id_e'];
+            $id_e_acte = $acteEntite[0]['id_e'];
+            $id_ce_acte = $this->objectInstancier->getInstance(FluxEntiteSQL::class)->getConnecteurId(
+                $id_e_acte,
+                $acteEntite[0]['last_type'],
+                $connecteur_info['type']
+            );
+            if ($connecteur_info['id_ce'] == $id_ce_acte) {
+                $id_e = $id_e_acte;
+            }
         }
 
         $documentCreationService = $this->objectInstancier->getInstance(DocumentCreationService::class);

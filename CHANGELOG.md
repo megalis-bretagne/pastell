@@ -65,7 +65,8 @@ Le script console dev:fix-yaml permet de modifier ce qui était permis (de mani�
 
 - L'entropie minimum du mot de passe (PASSWORD_MIN_ENTROPY) est fixée à 80 par défaut #1499
 - Connecteur S2low, Récupérer les réponses de la préfecture: 
-  Si un document acte avec `acte_unique_id` correspondant à la réponse de la préfécture `unique_id` est présent sur Pastell 
+  Si un document acte avec `acte_unique_id` correspondant à la réponse de la préfécture `unique_id` est présent sur Pastell
+  et que le connecteur s2low est associé au flux de cet acte d'origine 
   alors le document `actes-reponse-prefecture` est créé sur la même entité que cet acte (Sinon, c'est sur l'entité du connecteur S2low) #1513
 
 # [3.1.13] - 2022-04-19
