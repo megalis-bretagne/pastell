@@ -28,7 +28,7 @@ use Pastell\Service\TypeDossier\TypeDossierEditionService;
                             type='text'
                             name='id_type_dossier'
                             id="id_type_dossier"
-                            value='<?php hecho($flux_info['id_type_dossier'])?>'
+                            value='<?php hecho($flux_info['id_type_dossier'] ?? '')?>'
                             maxlength="<?php echo TypeDossierEditionService::TYPE_DOSSIER_ID_MAX_LENGTH; ?>"
                             pattern="<?php echo TypeDossierEditionService::TYPE_DOSSIER_ID_REGEXP; ?>"
                     />
