@@ -1,10 +1,14 @@
 <?php
 
+/**
+ * TODO: Move functions in Pastell namespace
+ */
+
 use Monolog\Logger;
 
 function get_hecho(?string $message = '', int $quote_style = ENT_QUOTES): string
 {
-    return htmlentities($message, $quote_style, "utf-8") ?? '';
+    return htmlentities($message ?? '', $quote_style, "utf-8") ?? '';
 }
 
 function hecho(?string $message = '', int $quot_style = ENT_QUOTES): void

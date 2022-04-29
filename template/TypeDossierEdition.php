@@ -2,8 +2,10 @@
 
 use Pastell\Service\TypeDossier\TypeDossierEditionService;
 
-/** @var Gabarit $this */
-/** @var array $flux_info */
+/**
+ * @var Gabarit $this
+ * @var array $flux_info
+ */
 ?>
 
 <div class="box" style="min-height: 500px;">
@@ -14,7 +16,7 @@ use Pastell\Service\TypeDossier\TypeDossierEditionService;
 
     <form action='<?php $this->url("TypeDossier/doEdition"); ?>' method='post' >
         <?php $this->displayCSRFInput() ?>
-        <input type='hidden' name='id_t' value='<?php hecho($flux_info['id_t'])?>' />
+        <input type='hidden' name='id_t' value='<?php hecho($flux_info['id_t'] ?? ''); ?>' />
         <table class='table table-striped'>
             <tr>
                 <th class="w400">
@@ -28,7 +30,7 @@ use Pastell\Service\TypeDossier\TypeDossierEditionService;
                             type='text'
                             name='id_type_dossier'
                             id="id_type_dossier"
-                            value='<?php hecho($flux_info['id_type_dossier'])?>'
+                            value='<?php hecho($flux_info['id_type_dossier'] ?? ''); ?>'
                             maxlength="<?php echo TypeDossierEditionService::TYPE_DOSSIER_ID_MAX_LENGTH; ?>"
                             pattern="<?php echo TypeDossierEditionService::TYPE_DOSSIER_ID_REGEXP; ?>"
                     />
