@@ -32,13 +32,28 @@ formulaire:
 
     login_attribute:
       name: Nom de l'attribut utilisé pour le login
-      requis: true
       commentaire: |
         Cet attribut doit être disponible pour tous les utilisateurs lors de l'appel sur l'endpoint 'userinfo' <br />
         Exemple: given_name, email, name, preferred_username, ...
 
+    given_name_attribute:
+      name: Nom de l'attribut utilisé pour le prénom
+      commentaire:
+
+    family_name_attribute:
+      name: Nom de l'attribut utilisé pour le nom de famille
+      commentaire:
+
+    email_attribute:
+      name: Nom de l'attribut utilisé pour l'email
+      commentaire:
+
     redirect_url:
       name: URL de redirection après déconnexion
+
+    user_creation:
+      name: Créer automatiquement les utilisateurs reconnus sur Pastell
+      type: checkbox
 
 action:
   test-authentication:
