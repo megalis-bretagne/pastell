@@ -31,6 +31,9 @@ abstract class SAEConnecteur extends Connecteur
         return $archive_path;
     }
 
+    /**
+     * @deprecated: Use SEDAConnecteur::getTransferId()
+     */
     public function getTransferId($bordereau)
     {
         $xml = simplexml_load_string($bordereau);

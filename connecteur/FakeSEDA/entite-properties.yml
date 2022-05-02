@@ -5,7 +5,13 @@ description: |
 	Connecteur SEDA pour les tests
 
 formulaire:
-	page0:
-
+	page:
+		seda_archive_generation_response:
+			name: Réponse lors de la génération de l'archive
+			type: select
+			value:
+				ok: OK
+				error: Erreur
+			default: ok
 
 action:

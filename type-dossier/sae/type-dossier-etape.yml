@@ -77,19 +77,36 @@ action:
         name: Préparation de l'envoi au SAE
         rule:
             role_id_e: no-role
+        action-automatique: generate-archive
+
+    generate-archive:
+        name-action: Générer l'archive
+        name: Archive générée
+        rule:
+            last-action:
+                - preparation-send-sae
+                - generate-archive-error
+        action-class: StandardAction
+        connecteur-type: SAE
+        connecteur-type-action: Pastell\Step\SAE\Action\SAEGenerateArchiveAction
         action-automatique: send-archive
+
+    generate-archive-error:
+        name: Erreur lors de la génération de l'archive
+        rule:
+            role_id_e: no-role
 
     send-archive:
         name-action: Verser au SAE
         name: Versé au SAE
         rule:
             last-action:
-                preparation-send-sae
-                rejet-sae
-                erreur-envoie-sae
+                - generate-archive
+                - rejet-sae
+                - erreur-envoie-sae
         action-class: StandardAction
         connecteur-type: SAE
-        connecteur-type-action: SAEEnvoyer
+        connecteur-type-action: Pastell\Step\SAE\Action\SAESendArchiveAction
         action-automatique: verif-sae
 
     erreur-envoie-sae:
@@ -102,8 +119,8 @@ action:
         name: Récuperation de l'AR sur le SAE
         rule:
             last-action:
-                send-archive
-                verif-sae-erreur
+                - send-archive
+                - verif-sae-erreur
         action-class: StandardAction
         connecteur-type: SAE
         connecteur-type-action: SAEVerifier
@@ -125,8 +142,8 @@ action:
         name: Vérification de l'acceptation par le SAE
         rule:
             last-action:
-                ar-recu-sae
-                validation-sae-erreur
+                - ar-recu-sae
+                - validation-sae-erreur
         action-class: StandardAction
         connecteur-type: SAE
         connecteur-type-action: SAEValider

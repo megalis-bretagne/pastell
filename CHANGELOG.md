@@ -6,6 +6,8 @@
   composer avec un fichier `vendor/autoload.php`
 - Le champ SIREN n'est plus obligatoire sur la définition d'une entité #1009
 - La constante PASSWORD_MIN_ENTROPY passe par défaut à 80 suivant les recommandations de l'ANSSI
+- Studio: La génération du bordereau et de l'archive est indépendant de l'envoi au SAE grâce à un nouvel état
+intermédiaire : "Archive générée" #1357
 
 ## Suppressions
 
