@@ -393,7 +393,9 @@ class DocumentTypeValidation
             if (empty($action_properties['connecteur-type-action'])) {
                 continue;
             }
-            if (! in_array($action_properties['connecteur-type-action'], $this->connecteur_type_action_class_list)) {
+            if (
+                !is_subclass_of($action_properties['connecteur-type-action'], ActionExecutor::class)
+            ) {
                 $this->last_error[] = "action:<b>{$action_name}</b>:connecteur-type-action:" .
                     "<b>{$action_properties['connecteur-type-action']}</b> n'est pas une classe d'action du système";
                 $result = false;

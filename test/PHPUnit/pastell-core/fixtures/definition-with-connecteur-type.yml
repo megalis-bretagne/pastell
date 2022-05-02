@@ -16,7 +16,7 @@ action:
 		name-action: Modifier
 		name: En cours de rédaction
 		connecteur-type: signature
-		connecteur-type-action: SignatureEnvoie
+		connecteur-type-action: FakeSignatureEnvoie
 		connecteur-type-mapping:
 		    document: test
 
