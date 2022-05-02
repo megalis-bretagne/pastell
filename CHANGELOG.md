@@ -4,6 +4,10 @@
 
 - Il manquait des cas d'erreur pour la mise en état 'create-statut-facture-cpp-error' du flux `statut-facture-cpp` #1506
 
+## Évolutions
+
+- L'entropie minimum du mot de passe (PASSWORD_MIN_ENTROPY) est fixée à 80 par défaut #1499
+
 # [3.1.13] - 2022-04-19
 
 ## Corrections
