@@ -8,5 +8,5 @@ abstract class AuthenticationConnecteur extends Connecteur
 
     abstract public function getExternalSystemName(): string;
 
-    abstract public function getRedirectUrl(): string;
+    abstract public function getLogoutRedirectUrl(): string;
 }

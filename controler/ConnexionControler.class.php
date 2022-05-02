@@ -291,7 +291,7 @@ class ConnexionControler extends PastellControler
         /** @var AuthenticationConnecteur $authentificationConnecteur */
         $authentificationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur('Authentification');
         if ($authentificationConnecteur) {
-            $authentificationConnecteur->logout($authentificationConnecteur->getRedirectUrl());
+            $authentificationConnecteur->logout($authentificationConnecteur->getLogoutRedirectUrl());
         }
 
         $this->redirect("/Connexion/connexion");

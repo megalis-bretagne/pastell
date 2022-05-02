@@ -2,47 +2,48 @@
 
 use Jumbojett\OpenIDConnectClient;
 use Jumbojett\OpenIDConnectClientException;
+use Pastell\Service\OpenIDConnectClientFactory;
 
 class OidcAuthentication extends AuthenticationConnecteur
 {
-    private $providerUrl;
-    private $clientId;
-    private $clientSecret;
-    private $loginAttribute;
-    private $givenNameAttribute;
-    private $familyNameAttribute;
-    private $emailAttribute;
-    private $userCreation;
+    private string $loginAttribute;
+    private string $givenNameAttribute;
+    private string $familyNameAttribute;
+    private string $emailAttribute;
+    private bool $userCreation;
 
-    /** @var OpenIDConnectClient */
-    private $oidc;
+    private OpenIDConnectClient $oidc;
+    private OpenIDConnectClientFactory $openIDConnectClientFactory;
 
-    /**
-     * @var string
-     */
-    private $redirectUrl;
+    private string $logoutRedirectUrl;
 
     public function __construct(
         private readonly UtilisateurSQL $utilisateurSQL,
         private readonly RoleUtilisateur $roleUtilisateur,
     ) {
+        $this->setOpenIDConnectClientFactory(new OpenIDConnectClientFactory());
+    }
+
+    public function setOpenIDConnectClientFactory(OpenIDConnectClientFactory $openIDConnectClientFactory): void
+    {
+        $this->openIDConnectClientFactory = $openIDConnectClientFactory;
     }
 
     public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire)
     {
-        $this->providerUrl = $donneesFormulaire->get('provider_url');
-        $this->clientId = $donneesFormulaire->get('client_id');
-        $this->clientSecret = $donneesFormulaire->get('client_secret');
+        $providerUrl = $donneesFormulaire->get('provider_url');
+        $clientId = $donneesFormulaire->get('client_id');
+        $clientSecret = $donneesFormulaire->get('client_secret');
         $this->loginAttribute = $donneesFormulaire->get('login_attribute');
         $this->givenNameAttribute = $donneesFormulaire->get('given_name_attribute');
         $this->familyNameAttribute = $donneesFormulaire->get('family_name_attribute');
         $this->emailAttribute = $donneesFormulaire->get('email_attribute');
-        $this->redirectUrl = $donneesFormulaire->get('redirect_url', '');
+        $this->logoutRedirectUrl = $donneesFormulaire->get('redirect_url', '');
         $this->userCreation = $donneesFormulaire->get('user_creation');
-        $this->oidc = new OpenIDConnectClient(
-            $this->providerUrl,
-            $this->clientId,
-            $this->clientSecret
+        $this->oidc = $this->openIDConnectClientFactory->getInstance(
+            $providerUrl,
+            $clientId,
+            $clientSecret
         );
 
         if ($donneesFormulaire->get('http_proxy')) {
@@ -54,6 +55,7 @@ class OidcAuthentication extends AuthenticationConnecteur
      * @param $redirectUrl
      * @return mixed
      * @throws UnrecoverableException
+     * @throws Exception
      */
     public function authenticate($redirectUrl = false)
     {
@@ -68,6 +70,7 @@ class OidcAuthentication extends AuthenticationConnecteur
         if (empty($userInfo[$this->loginAttribute])) {
             throw new UnrecoverableException("Le champs login n'a pas été trouvé dans la réponse OpenID Connect");
         }
+
         if ($this->userCreation) {
             $this->createUserIfNeeded($userInfo);
         }
@@ -124,8 +127,8 @@ class OidcAuthentication extends AuthenticationConnecteur
         return 'OIDC';
     }
 
-    public function getRedirectUrl(): string
+    public function getLogoutRedirectUrl(): string
     {
-        return $this->redirectUrl;
+        return $this->logoutRedirectUrl;
     }
 }
