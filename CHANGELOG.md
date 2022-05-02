@@ -6,7 +6,7 @@
 
 ## Évolutions
 
-- L'entropie de mot de passe minimum au niveau de la plateforme PASSWORD_MIN_ENTROPY est fixé à 80 par défaut #1499
+- L'entropie minimum du mot de passe (PASSWORD_MIN_ENTROPY) est fixée à 80 par défaut #1499
 
 # [3.1.13] - 2022-04-19
 
