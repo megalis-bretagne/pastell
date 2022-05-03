@@ -2,7 +2,7 @@
 
 use Jumbojett\OpenIDConnectClient;
 use Jumbojett\OpenIDConnectClientException;
-use Pastell\Service\OpenIDConnectClientFactory;
+use Pastell\Security\Authentication\OpenIDConnectClientFactory;
 
 class OidcAuthentication extends AuthenticationConnecteur
 {
@@ -81,7 +81,7 @@ class OidcAuthentication extends AuthenticationConnecteur
      * @throws OpenIDConnectClientException
      * @throws JsonException
      */
-    public function getConnectedUserInfo($redirectUrl = false)
+    public function getConnectedUserInfo($redirectUrl = false): array
     {
         if ($redirectUrl) {
             $this->oidc->setRedirectURL($redirectUrl);

@@ -1,7 +1,7 @@
 <?php
 
 use Jumbojett\OpenIDConnectClient;
-use Pastell\Service\OpenIDConnectClientFactory;
+use Pastell\Security\Authentication\OpenIDConnectClientFactory;
 
 class OidcAuthenticationTest extends PastellTestCase
 {
