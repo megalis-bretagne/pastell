@@ -10,7 +10,6 @@ class PastellDaemon
         private ActionExecutorFactory $actionExecutorFactory,
         private DocumentSQL $document,
         private NotificationMail $notificationMail,
-        private string $daemon_log_file,
         private Logger $logger,
     ) {
     }
@@ -85,7 +84,7 @@ class PastellDaemon
         $this->jobQueueSQL->lock($id_job);
 
         $script = realpath(__DIR__ . "/../batch/pastell-job-worker.php");
-        $command = "nohup " . PHP_PATH . " $script $id_job >>  {$this->daemon_log_file} 2>&1 &";
+        $command = "nohup " . PHP_PATH . " $script $id_job";
         $this->logger->addInfo("Daemon starts worker for job #$id_job : " . json_encode($job));
         exec($command);
     }

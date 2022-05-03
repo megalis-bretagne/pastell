@@ -5,6 +5,7 @@
 /build/
 /vendor
 **/tests/_output/*
+**/tests/output/*
 **/tests/_data/scenarios/
 .env
 /temp/

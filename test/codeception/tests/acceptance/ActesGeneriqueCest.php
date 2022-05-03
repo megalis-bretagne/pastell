@@ -6,9 +6,7 @@ class ActesGeneriqueCest
     {
         $I->wantTo("faire une boucle Actes générique complète");
         $I->amLoggedAsAdmin();
-        $I->disableDaemon();
         $I->amOnPage("/");
-        //$I->click("Bourg-en-Bresse");
         $I->amOnPage("/Document/index?type=&id_e=1");
         $I->click("Actes (générique)");
         $I->see("Liste des dossiers Actes (générique) pour Bourg-en-Bresse");

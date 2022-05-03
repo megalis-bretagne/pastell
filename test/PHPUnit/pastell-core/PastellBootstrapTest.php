@@ -31,7 +31,7 @@ class PastellBootstrapTest extends PastellTestCase
         $this->pastellBootstrap->installHorodateur();
         $this->assertEquals(
             "Horodateur interne installé et configuré avec un nouveau certificat autosigné",
-            $this->getLogRecords()[3]['message']
+            $this->getLogRecords()[2]['message']
         );
     }
 

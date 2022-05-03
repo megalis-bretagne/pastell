@@ -9,7 +9,6 @@ use PastellLogger;
 class Updater
 {
     private static $classes = [
-        '3.0.1' => Updater\Major3\Minor0\Patch1::class,
         '3.0.2' => Updater\Major3\Minor0\Patch2::class,
     ];
 

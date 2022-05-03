@@ -117,18 +117,6 @@ if (!defined("PHP_PATH")) {
     define("PHP_PATH", '/usr/bin/php');
 }
 
-if (!defined("PID_FILE")) {
-    define("PID_FILE", WORKSPACE_PATH . "/pastell-daemon.pid");
-}
-
-if (!defined("DAEMON_LOG_FILE")) {
-    define("DAEMON_LOG_FILE", WORKSPACE_PATH . "/pastell-daemon.log");
-}
-
-if (!defined("DAEMON_USER")) {
-    define("DAEMON_USER", "www-data");
-}
-
 if (!defined("TESTING_ENVIRONNEMENT")) {
     define("TESTING_ENVIRONNEMENT", false);
 }

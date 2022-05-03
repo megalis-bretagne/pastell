@@ -76,7 +76,6 @@ class DaemonControler extends PastellControler
         $this->setViewParameter('nb_worker_actif', $this->getWorkerSQL()->getNbActif());
         $this->setViewParameter('job_stat_info', $this->getJobQueueSQL()->getStatInfo());
         $this->setViewParameter('daemon_pid', $this->getDaemonManager()->getDaemonPID());
-        $this->setViewParameter('pid_file', PID_FILE);
         $this->setViewParameter('sub_title', "Liste de tous les travaux");
         $this->setViewParameter('return_url', urlencode("Daemon/index"));
         $this->setViewParameter('job_list', $this->getWorkerSQL()->getJobListWithWorker());

@@ -47,9 +47,6 @@ abstract class PastellTestCase extends TestCase
             $this->getObjectInstancier()->getInstance('site_base')
         );
 
-        $daemonManager = new DaemonManager("/bin/date", "/tmp/test", "/tmp/test", 0);
-        $this->objectInstancier->setInstance(DaemonManager::class, $daemonManager);
-
         $this->objectInstancier->setInstance('pastell_path', PASTELL_PATH);
         $this->objectInstancier->setInstance(SQLQuery::class, self::getSQLQuery());
         $this->objectInstancier->setInstance('template_path', TEMPLATE_PATH);
@@ -88,14 +85,6 @@ abstract class PastellTestCase extends TestCase
         $this->getJournal()->setId(1);
 
         $this->objectInstancier->setInstance('opensslPath', OPENSSL_PATH);
-
-        $daemon_command = PHP_PATH . " " . realpath(__DIR__ . "/batch/pastell-job-master.php");
-
-        $this->objectInstancier->setInstance(
-            DaemonManager::class,
-            new DaemonManager($daemon_command, PID_FILE, DAEMON_LOG_FILE, DAEMON_USER)
-        );
-        $this->objectInstancier->setInstance('daemon_user', 'www-data');
         $this->objectInstancier->setInstance('journal_max_age_in_months', 2);
         $this->objectInstancier->setInstance('admin_email', "mettre_un_email");
         $this->objectInstancier->setInstance('database_file', __DIR__ . "/../../installation/pastell.bin");

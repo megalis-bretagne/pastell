@@ -55,7 +55,7 @@
 - L'envoi au iparapheur du flux Commande générique est standardisé avec les autres flux
 - Suppression de la plupart des scripts dans batch/ installation/ et script/. Ceux qui restent ne devrait plus être utilisé car ils doivent être remplacés par un script console
 - La méthode SEDAConnecteur::getBordereau() prend la signature de SEDAConnecteur::getBordereauNG() qui est supprimée
-
+- Suppression de DAEMON_USER, DAEMON_LOG_FILE, PID_FILE
 
 # [3.1.13] - 2022-04-19
 

@@ -33,8 +33,6 @@ $objectInstancier->setInstance('bd_dsn', BD_DSN);
 $objectInstancier->setInstance('bd_user', BD_USER);
 $objectInstancier->setInstance('bd_password', BD_PASS);
 
-$objectInstancier->setInstance('daemon_log_file', DAEMON_LOG_FILE);
-
 $objectInstancier->setInstance('redis_server', REDIS_SERVER);
 $objectInstancier->setInstance('redis_port', REDIS_PORT);
 
@@ -85,15 +83,7 @@ define("DATABASE_FILE", PASTELL_PATH . "/installation/pastell.bin");
 
 $objectInstancier->getInstance(Extensions::class)->autoloadExtensions();
 
-$daemon_command = PHP_PATH . " " . realpath(__DIR__ . "/batch/pastell-job-master.php");
 
-$objectInstancier->setInstance(
-    DaemonManager::class,
-    new DaemonManager($daemon_command, PID_FILE, DAEMON_LOG_FILE, DAEMON_USER)
-);
-
-
-$objectInstancier->setInstance('daemon_user', DAEMON_USER);
 $objectInstancier->setInstance('journal_max_age_in_months', JOURNAL_MAX_AGE_IN_MONTHS);
 $objectInstancier->setInstance('admin_email', ADMIN_EMAIL);
 $objectInstancier->setInstance('database_file', __DIR__ . "/installation/pastell.bin");
