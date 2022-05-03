@@ -22,8 +22,7 @@ class FixYaml extends BaseCommand
                 'file',
                 InputArgument::REQUIRED,
                 'the file to fix'
-            )
-            ->addOption('dry-run', null, InputOption::VALUE_NONE, 'Dry run - will not update anything');
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

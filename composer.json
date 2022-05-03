@@ -53,6 +53,7 @@
     "symfony/http-client": "^6.0",
     "symfony/lock": "^6.0",
     "symfony/rate-limiter": "^6.0",
+    "symfony/yaml": "^6.0",
     "twig/twig": "^3.3"
   },
   "require-dev": {
