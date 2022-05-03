@@ -8,14 +8,16 @@ class OidcTestAuthentication extends ActionExecutor
      */
     public function go()
     {
+        /** @var OidcAuthentication $oidc */
         $oidc = $this->getMyConnecteur();
-        $login = $oidc->authenticate(SITE_BASE . "/Connexion/externalAuthentication?id_ce={$this->id_ce}");
-
-        if (!$login) {
+        $userInfo = $oidc->getConnectedUserInfo(
+            SITE_BASE . "/Connexion/externalOIDCInfo?id_ce={$this->id_ce}"
+        );
+        if (!$userInfo) {
             $this->setLastMessage('Aucune session en cours');
             return false;
         }
-        $this->setLastMessage("Authentifié avec le login : $login");
+        $this->setLastMessage('Authentifié avec les informations suivantes : ' . implode("<br/>", $userInfo));
         return true;
     }
 }

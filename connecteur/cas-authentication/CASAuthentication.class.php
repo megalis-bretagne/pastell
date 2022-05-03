@@ -63,7 +63,7 @@ class CASAuthentication extends AuthenticationConnecteur
         return 'CAS';
     }
 
-    public function getRedirectUrl(): string
+    public function getLogoutRedirectUrl(): string
     {
         return '';
     }

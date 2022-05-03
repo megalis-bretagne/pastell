@@ -49,10 +49,33 @@ class ConnexionControler extends PastellControler
         $id_ce = $recuperateur->getInt('id_ce');
         /** @var AuthenticationConnecteur $authenticationConnecteur */
         $authenticationConnecteur = $this->getConnecteurFactory()->getConnecteurById($id_ce);
-        $login = $authenticationConnecteur->authenticate(SITE_BASE . "/Connexion/externalAuthentication?id_ce=$id_ce");
-        $this->setLastMessage("Authentification avec le login : $login");
+        $info = $authenticationConnecteur->authenticate(SITE_BASE . "/Connexion/externalAuthentication?id_ce=$id_ce");
+        $this->setLastMessage("Authentification avec le login : $info");
         $this->redirect("/Connecteur/edition?id_ce=$id_ce");
     }
+
+    /**
+     * @throws LastErrorException
+     * @throws LastMessageException
+     * @throws JsonException
+     */
+    public function externalOIDCInfoAction()
+    {
+        $recuperateur = $this->getGetInfo();
+        $id_ce = $recuperateur->getInt('id_ce');
+        /** @var OidcAuthentication $authenticationConnecteur */
+        $authenticationConnecteur = $this->getConnecteurFactory()->getConnecteurById($id_ce);
+        $info = $authenticationConnecteur->getConnectedUserInfo(
+            SITE_BASE . "/Connexion/externalOIDCInfo?id_ce=$id_ce"
+        );
+        $this->setLastMessage(
+            "Propriété de l'utilisateur connecté : <pre>" .
+            json_encode($info, JSON_THROW_ON_ERROR + JSON_PRETTY_PRINT) .
+            '</pre>'
+        );
+        $this->redirect("/Connecteur/edition?id_ce=$id_ce");
+    }
+
 
     /**
      * @param AuthenticationConnecteur|null $authenticationConnecteur
@@ -268,7 +291,7 @@ class ConnexionControler extends PastellControler
         /** @var AuthenticationConnecteur $authentificationConnecteur */
         $authentificationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur('Authentification');
         if ($authentificationConnecteur) {
-            $authentificationConnecteur->logout($authentificationConnecteur->getRedirectUrl());
+            $authentificationConnecteur->logout($authentificationConnecteur->getLogoutRedirectUrl());
         }
 
         $this->redirect("/Connexion/connexion");
