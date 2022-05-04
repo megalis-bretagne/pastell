@@ -1,100 +1,85 @@
-libelle: Envoi à la trésorerie (via un Tdt)
-
+libelle: 'Envoi à la trésorerie (via un Tdt)'
 connecteur_type:
     - TdT
-
 configuration_etape_formulaire:
     fichier_pes:
-        name: Fichier PES ALLER
+        name: 'Fichier PES ALLER'
         requis: true
         type: file
-
     ajout_champs_affiche:
-        name: Ajouter les champs du PES ALLER dans la recherche et la liste des fichiers
+        name: 'Ajouter les champs du PES ALLER dans la recherche et la liste des fichiers'
         type: checkbox
-
 page-condition:
-    Information PES Aller:
+    'Information PES Aller':
         pes_information_pes_aller: true
-    Retour Tdt:
+    'Retour Tdt':
         pes_has_reponse: true
-
 formulaire:
-    Information PES Aller:
+    'Information PES Aller':
         pes_information_pes_aller:
             no-show: true
         id_coll:
-            name: Établissement émetteur
+            name: 'Établissement émetteur'
             index: true
             read-only: true
         dte_str:
-            name: Date de production du fichier
+            name: 'Date de production du fichier'
             index: true
             type: date
             read-only: true
         cod_bud:
-            name: Code Budget
+            name: 'Code Budget'
             index: true
             read-only: true
         exercice:
-            name: Exercice comptable
+            name: 'Exercice comptable'
             index: true
             read-only: true
         id_bordereau:
-            name: Identifiant bordereau
+            name: 'Identifiant bordereau'
             index: true
             read-only: true
         id_pj:
-            name: Identifiant PJ
+            name: 'Identifiant PJ'
             index: true
             read-only: true
         id_pce:
-            name: Numéro de mandat ou de titre
+            name: 'Numéro de mandat ou de titre'
             index: true
             read-only: true
         id_nature:
-            name: Nature comptable
+            name: 'Nature comptable'
             index: true
             read-only: true
         id_fonction:
-            name: Opération comptable
+            name: 'Opération comptable'
             index: true
             read-only: true
-
-
-    Retour Tdt:
+    'Retour Tdt':
         pes_has_reponse:
             no-show: true
-
         pes_tedetis_transaction_id:
-            name: Identifiant de la transaction sur le Tdt
-
+            name: 'Identifiant de la transaction sur le Tdt'
         pes_acquit:
-            name: PES Acquit
+            name: 'PES Acquit'
             type: file
             visionneuse: PESRetourVisionneuse
-
         pes_etat_ack:
-            name: Etat acquittement Helios
+            name: 'Etat acquittement Helios'
             type: select
             value:
-                0: Non acquitté
-                1: Acquittement OK
-                2: Acquittement KO
+                - 'Non acquitté'
+                - 'Acquittement OK'
+                - 'Acquittement KO'
             index: true
-
-
-
 action:
-
     helios-pre-extraction:
-        name: Préparation de l'extraction des informations
+        name: 'Préparation de l''extraction des informations'
         rule:
             role_id_e: no-role
         action-automatique: helios-extraction
-
     helios-extraction:
-        name: Extraction des informations du PES ALLER
+        name: 'Extraction des informations du PES ALLER'
         rule:
             last-action:
                 - helios-pre-extraction
@@ -114,18 +99,16 @@ action:
             id_fonction: id_fonction
             pes_etat_ack: pes_etat_ack
         action-automatique: pre-send-tdt
-
     pre-send-tdt:
-        name: Préparation de l'envoi au TdT
+        name: 'Préparation de l''envoi au TdT'
         rule:
             last-action:
                 - helios-extraction
         action-class: Defaut
         action-automatique: send-tdt
-
     send-tdt:
-        name-action: Transmettre au TdT
-        name: Transmis au TdT
+        name-action: 'Transmettre au TdT'
+        name: 'Transmis au TdT'
         rule:
             last-action:
                 - pre-send-tdt
@@ -137,14 +120,13 @@ action:
             pes_tedetis_transaction_id: pes_tedetis_transaction_id
             pes_has_reponse: pes_has_reponse
         action-automatique: verif-tdt
-
     verif-tdt:
-        name-action: Vérifier le statut de la transaction
-        name: Statut vérifié par le TdT
+        name-action: 'Vérifier le statut de la transaction'
+        name: 'Statut vérifié par le TdT'
         rule:
             last-action:
-                send-tdt
-                tdt-error
+                - send-tdt
+                - tdt-error
         action-class: StandardAction
         connecteur-type: TdT
         connecteur-type-action: TdTRecupHelios
@@ -153,16 +135,14 @@ action:
             pes_tedetis_transaction_id: pes_tedetis_transaction_id
             pes_has_reponse: pes_has_reponse
             info-tdt: info-tdt
-            pes_acquit : pes_acquit
+            pes_acquit: pes_acquit
             pes_etat_ack: pes_etat_ack
-
     info-tdt:
-        name: Un fichier de réponse PES est disponible
+        name: 'Un fichier de réponse PES est disponible'
         rule:
             role_id_e: no-role
         action-automatique: orientation
-
     tdt-error:
-        name: Erreur sur le TdT
+        name: 'Erreur sur le TdT'
         rule:
             role_id_e: no-role

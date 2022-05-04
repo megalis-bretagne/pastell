@@ -1,81 +1,60 @@
-nom: Modification en masse
-
-description: |
-  Permet de déclencher une action sur des dossiers du même type et dans le même état.
-
-
+nom: 'Modification en masse'
+description: 'Permet de déclencher une action sur des dossiers du même type et dans le même état.'
 type: Purge
-
 formulaire:
     Information:
         actif:
-            name: Connecteur actif
+            name: 'Connecteur actif'
             type: checkbox
-
         document_type_libelle:
-            name: Type de dossier
+            name: 'Type de dossier'
             type: externalData
             choice-action: type_document
-            link_name: Sélectionner le type de dossier
-
+            link_name: 'Sélectionner le type de dossier'
         document_type:
             no-show: true
-
         document_etat_libelle:
-            name: Etat source du dossier
+            name: 'Etat source du dossier'
             type: externalData
             choice-action: document_etat
-            link_name: Sélectionner l'état source du dossier
-
+            link_name: 'Sélectionner l''état source du dossier'
         document_etat:
             no-show: true
-
         passer_par_l_etat:
-            name: Type de sélection
+            name: 'Type de sélection'
             type: select
             value:
-                IN_STATE: Dossiers qui sont dans l'état source
-                GO_TROUGH_STATE: Dossiers qui sont passés par l'état source
-            commentaire: Par défaut, les dossiers qui sont dans l'état source
-
+                IN_STATE: 'Dossiers qui sont dans l''état source'
+                GO_TROUGH_STATE: 'Dossiers qui sont passés par l''état source'
+            commentaire: 'Par défaut, les dossiers qui sont dans l''état source'
         verrou:
             name: Verrou
-            commentaire: |
-                Permet d'ajouter un verrou au lancement des jobs qui seront générés par l'action de purge
-
+            commentaire: 'Permet d''ajouter un verrou au lancement des jobs qui seront générés par l''action de purge'
         document_etat_cible_libelle:
-            name: Action sur le dossier
+            name: 'Action sur le dossier'
             type: externalData
             choice-action: document_etat_cible
-            link_name: Sélectionner l'action à programmer sur le dossier
-            commentaire: "<b style='color:red;font-size:120%'>Supprimer par défaut</b>"
-
+            link_name: 'Sélectionner l''action à programmer sur le dossier'
+            commentaire: '<b style=''color:red;font-size:120%''>Supprimer par défaut</b>'
         document_etat_cible:
             no-show: true
-
         nb_days:
-            name: Nombre de jours minimum passés dans l'état source
-
+            name: 'Nombre de jours minimum passés dans l''état source'
         modification:
-            name: Modifier les éléments du dossier
+            name: 'Modifier les éléments du dossier'
             type: textarea
-            commentaire: "Une modification par ligne sous la forme : <br/>nom_de_l_element: nouvelle_valeur_de_l_element<br/>La modification est appliquée avant le changement d'état"
-
-
+            commentaire: 'Une modification par ligne sous la forme : <br/>nom_de_l_element: nouvelle_valeur_de_l_element<br/>La modification est appliquée avant le changement d''état'
 action:
     test:
-        name: Lister les dossiers à traiter
+        name: 'Lister les dossiers à traiter'
         action-class: PurgeListDocument
-
     purge:
-        name: Traitement (immédiat)
+        name: 'Traitement (immédiat)'
         action-class: PurgePurger
         action-automatique: purge
-
     purge-async:
-        name: Traitement (par le gestionnaire de tâche)
+        name: 'Traitement (par le gestionnaire de tâche)'
         action-class: PurgePurgerAsync
-
     type_document:
         rule:
             role_id_e: no-role
@@ -83,15 +62,13 @@ action:
         connecteur-type: utilities
         connecteur-type-action: GetModuleList
         connecteur-type-mapping:
-            page_title: Choix du type de dossier
+            page_title: 'Choix du type de dossier'
             module_type: document_type
             module_type_label: document_type_libelle
-
     document_etat:
         rule:
             role_id_e: no-role
         action-class: PurgeDocumentEtat
-
     document_etat_cible:
         rule:
             role_id_e: no-role

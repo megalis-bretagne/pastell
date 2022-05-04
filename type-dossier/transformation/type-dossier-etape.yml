@@ -1,30 +1,24 @@
 libelle: Transformation
-
 connecteur_type:
-  - transformation
-
-
+    - transformation
 action:
-
-  preparation-transformation:
-    name: Préparation à la transformation
-    rule:
-      role_id_e: no-role
-    action-automatique: transformation
-
-  transformation:
-    name-action: Transformer le document
-    name: Transformation du document
-    rule:
-      last-action:
-        preparation-transformation
-        transformation-error
-    action-class: StandardAction
-    action-automatique: orientation
-    connecteur-type: transformation
-    connecteur-type-action: TransformationTransform
-
-  transformation-error:
-    name: Erreur lors de la transformation du dossier
-    rule:
-      role_id_e: no-role
+    preparation-transformation:
+        name: 'Préparation à la transformation'
+        rule:
+            role_id_e: no-role
+        action-automatique: transformation
+    transformation:
+        name-action: 'Transformer le document'
+        name: 'Transformation du document'
+        rule:
+            last-action:
+                - preparation-transformation
+                - transformation-error
+        action-class: StandardAction
+        action-automatique: orientation
+        connecteur-type: transformation
+        connecteur-type-action: TransformationTransform
+    transformation-error:
+        name: 'Erreur lors de la transformation du dossier'
+        rule:
+            role_id_e: no-role

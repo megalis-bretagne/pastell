@@ -1,75 +1,54 @@
-nom: Fast Parapheur
-
+nom: 'Fast Parapheur'
 type: signature
-
-description: |
-  Connecteur Fast parapheur
-
+description: 'Connecteur Fast parapheur'
 formulaire:
-  page:
-    wsdl:
-      name: URL du service Fast Parapheur
-      commentaire : https://demo-parapheur.dfast.fr pour la plateforme de recettes
-
-    numero_abonnement:
-      name: Numéro d'abonnement (SIREN)
-
-    certificat_connexion:
-      name: Certificat de connexion
-      commentaire: Fichier au format PKCS#12 contenant un certificat de connexion au format X.509 et sa clé privée
-      type: file
-      content-type: application/octet-stream
-      onchange: update-certificate
-
-    certificat_password:
-      name: Mot de passe du certificat
-      commentaire : Mot de passe protégeant le fichier PKCS#12
-      type: password
-      onchange: update-certificate
-
-    certificat_connexion_cert_pem:
-      type: file
-      no-show: true
-
-    certificat_connexion_key_pem:
-      type: file
-      no-show: true
-
-    certificat_connexion_key_cert_pem:
-      type: file
-      no-show: true
-
-    circuits:
-      name: Liste des circuits existants
-      commentaire: |
-        Les circuits doivent être séparés par des ';'
-        Exemple pour les circuits BUREAUTIQUE et PES : "PES;BUREAUTIQUE"
-
-    parapheur_nb_jour_max:
-      name: Nombre de jours maximum dans le parapheur
-      commentaire: |
-        Nombre de jours avant de déclencher une erreur s'il n'y a pas de réponse du parapheur
-        (Peut ne pas être implémenté par les différents flux).
-      default: 30
-
-    parapheur_do_not_delete_on_rejection:
-      name: Ne pas supprimer lors du rejet
-      commentaire: |
-        Ne pas supprimer le dossier sur le parapheur lors d'un rejet de visa ou de signature
-      type: checkbox
-
+    page:
+        wsdl:
+            name: 'URL du service Fast Parapheur'
+            commentaire: 'https://demo-parapheur.dfast.fr pour la plateforme de recettes'
+        numero_abonnement:
+            name: 'Numéro d''abonnement (SIREN)'
+        certificat_connexion:
+            name: 'Certificat de connexion'
+            commentaire: 'Fichier au format PKCS'
+            type: file
+            content-type: application/octet-stream
+            onchange: update-certificate
+        certificat_password:
+            name: 'Mot de passe du certificat'
+            commentaire: 'Mot de passe protégeant le fichier PKCS'
+            type: password
+            onchange: update-certificate
+        certificat_connexion_cert_pem:
+            type: file
+            no-show: true
+        certificat_connexion_key_pem:
+            type: file
+            no-show: true
+        certificat_connexion_key_cert_pem:
+            type: file
+            no-show: true
+        circuits:
+            name: 'Liste des circuits existants'
+            commentaire: "Les circuits doivent être séparés par des ';'\nExemple pour les circuits BUREAUTIQUE et PES : \"PES;BUREAUTIQUE\""
+        parapheur_nb_jour_max:
+            name: 'Nombre de jours maximum dans le parapheur'
+            commentaire: "Nombre de jours avant de déclencher une erreur s'il n'y a pas de réponse du parapheur\n(Peut ne pas être implémenté par les différents flux)."
+            default: 30
+        parapheur_do_not_delete_on_rejection:
+            name: 'Ne pas supprimer lors du rejet'
+            commentaire: 'Ne pas supprimer le dossier sur le parapheur lors d''un rejet de visa ou de signature'
+            type: checkbox
 action:
-  update-certificate:
-    name: Mettre à jour les certificats
-    rule:
-      role_id_e: no-role
-    action-class: StandardAction
-    connecteur-type: utilities
-    connecteur-type-action: UpdateCertificate
-
-
-  test-connection:
-    name: Tester la connexion
-    action-class: FastParapheurTestConnection
-    rule:
-      droit_id_u: 'entite:edition'
+    update-certificate:
+        name: 'Mettre à jour les certificats'
+        rule:
+            role_id_e: no-role
+        action-class: StandardAction
+        connecteur-type: utilities
+        connecteur-type-action: UpdateCertificate
+    test-connection:
+        name: 'Tester la connexion'
+        action-class: FastParapheurTestConnection
+        rule:
+            droit_id_u: 'entite:edition'

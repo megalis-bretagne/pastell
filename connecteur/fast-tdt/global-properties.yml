@@ -1,41 +1,35 @@
-nom: Fast Tdt
+nom: 'Fast Tdt'
 type: TdT
-
-description: |
-  Permet de faire des actions sur l'ensemble des connecteurs Fast Tdt installés sur Pastell.
-
+description: 'Permet de faire des actions sur l''ensemble des connecteurs Fast Tdt installés sur Pastell.'
 formulaire:
-  page:
-    changement_certificat:
-      no-show: true
-      type: externalData
-      link_name: Sélectionner un certificat
-      choice-action: update-list-certificate
-
+    page:
+        changement_certificat:
+            no-show: true
+            type: externalData
+            link_name: 'Sélectionner un certificat'
+            choice-action: update-list-certificate
 action:
-  recup-classification:
-    name: Récupérer la classification pour toutes les collectivités
-    action-class: FastTdtRecupClassificationGlobal
-    rule:
-      droit_id_u: 'entite:edition'
-    action-automatique: recup-classification
-
-  redirect-to-update-list-certificate:
-    name: Mettre à jour les certificats
-    rule:
-      droit_id_u: 'entite:edition'
-    action-class: StandardAction
-    connecteur-type: utilities
-    connecteur-type-action: RedirectToGlobalUpdateCertificate
-
-  update-list-certificate:
-    name: Mettre à jour les certificats
-    rule:
-      role_id_e: no-role
-    action-class: StandardChoiceAction
-    connecteur-type: utilities
-    connecteur-type-action: GlobalUpdateCertificate
-    connecteur-type-mapping:
-      page_title: Mise à jour certificat Fast TdT
-      certificate: certificat_connexion
-      certificate_password: certificat_password
+    recup-classification:
+        name: 'Récupérer la classification pour toutes les collectivités'
+        action-class: FastTdtRecupClassificationGlobal
+        rule:
+            droit_id_u: 'entite:edition'
+        action-automatique: recup-classification
+    redirect-to-update-list-certificate:
+        name: 'Mettre à jour les certificats'
+        rule:
+            droit_id_u: 'entite:edition'
+        action-class: StandardAction
+        connecteur-type: utilities
+        connecteur-type-action: RedirectToGlobalUpdateCertificate
+    update-list-certificate:
+        name: 'Mettre à jour les certificats'
+        rule:
+            role_id_e: no-role
+        action-class: StandardChoiceAction
+        connecteur-type: utilities
+        connecteur-type-action: GlobalUpdateCertificate
+        connecteur-type-mapping:
+            page_title: 'Mise à jour certificat Fast TdT'
+            certificate: certificat_connexion
+            certificate_password: certificat_password

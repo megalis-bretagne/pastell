@@ -1,46 +1,40 @@
-libelle: Dépôt (GED, FTP, ...)
-
+libelle: 'Dépôt (GED, FTP, ...)'
 connecteur_type:
-  - GED
-
+    - GED
 formulaire:
-  Retour GED:
-    has_ged_document_id:
-      no-show: true
-    ged_document_id_file:
-      name: Identifiants des documents sur la GED
-      type: file
-      visionneuse: GedIdDocumentsVisionneuse
-      read-only: true
-      requis: true
-      visionneuse-no-link: true
-
+    'Retour GED':
+        has_ged_document_id:
+            no-show: true
+        ged_document_id_file:
+            name: 'Identifiants des documents sur la GED'
+            type: file
+            visionneuse: GedIdDocumentsVisionneuse
+            read-only: true
+            requis: true
+            visionneuse-no-link: true
 page-condition:
-  Retour GED:
-    has_ged_document_id: true
-
+    'Retour GED':
+        has_ged_document_id: true
 action:
-  preparation-send-ged:
-    name: Préparation de l'envoi à la GED
-    rule:
-      role_id_e: no-role
-    action-automatique: send-ged
-
-  send-ged:
-    name-action: Verser à la GED
-    name: Versé à la GED
-    rule:
-      last-action:
-        preparation-send-ged
-        error-ged
-    action-automatique: orientation
-    action-class: StandardAction
-    connecteur-type: GED
-    connecteur-type-action: GEDEnvoyer
-    connecteur-type-mapping:
-      fatal-error: error-ged
-
-  error-ged:
-    name: Erreur irrécupérable lors du dépôt
-    rule:
-      role_id_e: no-role
+    preparation-send-ged:
+        name: 'Préparation de l''envoi à la GED'
+        rule:
+            role_id_e: no-role
+        action-automatique: send-ged
+    send-ged:
+        name-action: 'Verser à la GED'
+        name: 'Versé à la GED'
+        rule:
+            last-action:
+                - preparation-send-ged
+                - error-ged
+        action-automatique: orientation
+        action-class: StandardAction
+        connecteur-type: GED
+        connecteur-type-action: GEDEnvoyer
+        connecteur-type-mapping:
+            fatal-error: error-ged
+    error-ged:
+        name: 'Erreur irrécupérable lors du dépôt'
+        rule:
+            role_id_e: no-role

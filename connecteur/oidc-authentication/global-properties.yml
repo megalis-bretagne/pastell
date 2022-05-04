@@ -1,65 +1,42 @@
-nom: Authentification OpenID Connect
+nom: 'Authentification OpenID Connect'
 type: Authentification
-
-description: |
-  OpenID Connect authentication
-
-
+description: 'OpenID Connect authentication'
 formulaire:
-  page0:
-    provider_url:
-      name: Provider url
-      commentaire: |
-        URL avant la partie ".well-known/openid-configuration" <br />
-        Si le fichier de configuration JSON est disponible sur une URL similaire à :
-        https://url/.well-known/openid-configuration <br />
-        Il faut renseigner dans le champ : https://url/
-      requis: true
-
-    http_proxy:
-      name: Proxy HTTP
-      commentaire: |
-        Permet de définir la variable CURLOPT_PROXY <br />
-        Sous la forme : "ip:port" ou "http://login:password@ip:port"
-
-    client_id:
-      name: Client Id
-      requis: true
-
-    client_secret:
-      name: Client secret
-      requis: true
-
-    login_attribute:
-      name: Nom de l'attribut utilisé pour le login
-      commentaire: |
-        Cet attribut doit être disponible pour tous les utilisateurs lors de l'appel sur l'endpoint 'userinfo' <br />
-        Exemple: given_name, email, name, preferred_username, ...
-
-    given_name_attribute:
-      name: Nom de l'attribut utilisé pour le prénom
-      commentaire:
-
-    family_name_attribute:
-      name: Nom de l'attribut utilisé pour le nom de famille
-      commentaire:
-
-    email_attribute:
-      name: Nom de l'attribut utilisé pour l'email
-      commentaire:
-
-    redirect_url:
-      name: URL de redirection après déconnexion
-
-    user_creation:
-      name: Créer automatiquement les utilisateurs reconnus sur Pastell
-      type: checkbox
-
+    page0:
+        provider_url:
+            name: 'Provider url'
+            commentaire: "URL avant la partie \".well-known/openid-configuration\" <br />\nSi le fichier de configuration JSON est disponible sur une URL similaire à :\nhttps://url/.well-known/openid-configuration <br />\nIl faut renseigner dans le champ : https://url/"
+            requis: true
+        http_proxy:
+            name: 'Proxy HTTP'
+            commentaire: "Permet de définir la variable CURLOPT_PROXY <br />\nSous la forme : \"ip:port\" ou \"http://login:password@ip:port\""
+        client_id:
+            name: 'Client Id'
+            requis: true
+        client_secret:
+            name: 'Client secret'
+            requis: true
+        login_attribute:
+            name: 'Nom de l''attribut utilisé pour le login'
+            commentaire: "Cet attribut doit être disponible pour tous les utilisateurs lors de l'appel sur l'endpoint 'userinfo' <br />\nExemple: given_name, email, name, preferred_username, ..."
+        given_name_attribute:
+            name: 'Nom de l''attribut utilisé pour le prénom'
+            commentaire: ''
+        family_name_attribute:
+            name: 'Nom de l''attribut utilisé pour le nom de famille'
+            commentaire: ''
+        email_attribute:
+            name: 'Nom de l''attribut utilisé pour l''email'
+            commentaire: ''
+        redirect_url:
+            name: 'URL de redirection après déconnexion'
+        user_creation:
+            name: 'Créer automatiquement les utilisateurs reconnus sur Pastell'
+            type: checkbox
 action:
-  test-authentication:
-    name: Tester la connexion OIDC
-    action-class: OidcTestAuthentication
-
-  test-logout:
-    name: Tester la déconnexion
-    action-class: OidcTestLogout
+    test-authentication:
+        name: 'Tester la connexion OIDC'
+        action-class: OidcTestAuthentication
+    test-logout:
+        name: 'Tester la déconnexion'
+        action-class: OidcTestLogout

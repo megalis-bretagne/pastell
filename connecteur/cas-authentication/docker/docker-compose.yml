@@ -1,13 +1,12 @@
 version: '3.5'
-
 services:
-  cas:
-    build:
-      context: .
-      args:
-        cas_version: 6.3
-    volumes:
-      - ./etc/cas:/etc/cas
-    ports:
-      - 9091:8080
-      - 9092:8443
+    cas:
+        build:
+            context: .
+            args:
+                cas_version: 6.3
+        volumes:
+            - './etc/cas:/etc/cas'
+        ports:
+            - '9091:8080'
+            - '9092:8443'

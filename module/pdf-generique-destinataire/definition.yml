@@ -1,23 +1,18 @@
-nom: Mail sécurisé (destinataire)
-
-description: Type de dossier complémentaire du type de dossier mailsec permettant aux destinataires des mails sécurisés de pouvoir les lire
-
-
+nom: 'Mail sécurisé (destinataire)'
+description: 'Type de dossier complémentaire du type de dossier mailsec permettant aux destinataires des mails sécurisés de pouvoir les lire'
 formulaire:
-    Message :
+    Message:
         to:
             name: Destinataire
         libelle:
             name: Libellé
             requis: true
             title: true
-
         document:
-            name: Document PDF
+            name: 'Document PDF'
             requis: true
             type: file
-
         annexe:
-            name: Annexe(s) du document
+            name: 'Annexe(s) du document'
             type: file
             multiple: true

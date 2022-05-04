@@ -1,37 +1,29 @@
-nom: Mail sécurisé (destinataire)
-
-description: Type de dossier complémentaire du type de dossier mailsec permettant aux destinataires des mails sécurisés de pouvoir les lire
-
-type: Types de dossier marché
-
+nom: 'Mail sécurisé (destinataire)'
+description: 'Type de dossier complémentaire du type de dossier mailsec permettant aux destinataires des mails sécurisés de pouvoir les lire'
+type: 'Types de dossier marché'
 restriction_pack:
     - pack_marche
-
 formulaire:
-    Message :
+    Message:
         to:
             name: Destinataire
         libelle:
             name: Libellé
             requis: true
             title: true
-
         document:
-            name: Document PDF
+            name: 'Document PDF'
             requis: true
             type: file
-
         annexe:
-            name: Annexe(s) du dossier
+            name: 'Annexe(s) du dossier'
             type: file
             multiple: true
-
         primo_signature_detachee:
-            name: Primo-signature détachée
+            name: 'Primo-signature détachée'
             type: file
             multiple: true
-
         co_signature_detachee:
-            name: Co-signature détachée
+            name: 'Co-signature détachée'
             read-only: true
             type: file

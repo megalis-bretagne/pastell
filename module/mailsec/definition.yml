@@ -1,165 +1,143 @@
-nom: Mail sécurisé
-
-description: Mail sécurisé permettant l'envoi de message avec attachement qui ne peut être lu que sur la plateforme. Il est possible de protéger les fichiers via un mot de passe.
-
+nom: 'Mail sécurisé'
+description: 'Mail sécurisé permettant l''envoi de message avec attachement qui ne peut être lu que sur la plateforme. Il est possible de protéger les fichiers via un mot de passe.'
 connecteur:
-	mailsec
-
+    - mailsec
 formulaire:
-	Message :
-		to:
-			name: Destinataire(s)
-			commentaire: Plusieurs emails possibles séparés par une virgule
-			requis: true
-			type: mail-list
-			autocomplete: MailSec/getContactAjax
-		cc:
-			name: Copie à
-			commentaire: Plusieurs emails possibles séparés par une virgule
-			type: mail-list
-			autocomplete: MailSec/getContactAjax
-		bcc:
-			name: Copie cachée à
-			commentaire: Plusieurs emails possibles séparés par une virgule
-			type: mail-list
-			autocomplete: MailSec/getContactAjax
-
-		password :
-			name: Mot de passe
-			type: password
-			may_be_null: true
-
-		password2 :
-			name: Mot de passe (confirmation)
-			type: password
-			may_be_null: true
-			is_equal: password
-			is_equal_error: Les mots de passe ne correspondent pas
-
-		objet: 
-			name: Objet
-			requis: true
-			title: true
-
-		message: 
-			name: Message
-			type: textarea
-
-		document_attache:
-			name: Documents attachés
-			type: file
-			multiple: true
-
-		key:
-			no-show: true
-
-		sent_mail_number:
-			name: Destinataires
-			default: '0'
-			index: true
-			no-show: true
-
-		sent_mail_read:
-			name: Mails lus
-			default: '0'
-			index: true
-			no-show: true
-
+    Message:
+        to:
+            name: Destinataire(s)
+            commentaire: 'Plusieurs emails possibles séparés par une virgule'
+            requis: true
+            type: mail-list
+            autocomplete: MailSec/getContactAjax
+        cc:
+            name: 'Copie à'
+            commentaire: 'Plusieurs emails possibles séparés par une virgule'
+            type: mail-list
+            autocomplete: MailSec/getContactAjax
+        bcc:
+            name: 'Copie cachée à'
+            commentaire: 'Plusieurs emails possibles séparés par une virgule'
+            type: mail-list
+            autocomplete: MailSec/getContactAjax
+        password:
+            name: 'Mot de passe'
+            type: password
+            may_be_null: true
+        password2:
+            name: 'Mot de passe (confirmation)'
+            type: password
+            may_be_null: true
+            is_equal: password
+            is_equal_error: 'Les mots de passe ne correspondent pas'
+        objet:
+            name: Objet
+            requis: true
+            title: true
+        message:
+            name: Message
+            type: textarea
+        document_attache:
+            name: 'Documents attachés'
+            type: file
+            multiple: true
+        key:
+            no-show: true
+        sent_mail_number:
+            name: Destinataires
+            default: '0'
+            index: true
+            no-show: true
+        sent_mail_read:
+            name: 'Mails lus'
+            default: '0'
+            index: true
+            no-show: true
 champs-affiches:
-	- titre
-	- dernier_etat
-	- date_dernier_etat
-	- sent_mail_number
-	- sent_mail_read
-
+    - titre
+    - dernier_etat
+    - date_dernier_etat
+    - sent_mail_number
+    - sent_mail_read
 action:
-	creation:
-		name-action: Créer
-		name: Créé
-		rule:
-			no-last-action:
-			droit_id_u: 'mailsec:edition'
-
-	modification:
-		name-action: Modifier
-		name: En cours de rédaction
-		rule:
-			last-action: 
-				creation
-				modification
-			role_id_e: editeur
-			droit_id_u: 'mailsec:edition'
-
-	supression:
-		name-action: Supprimer
-		name: Supprimé
-		rule:
-			last-action: 
-				creation
-				modification
-				reception
-				non-recu
-				fatal-error
-			role_id_e: editeur
-			droit_id_u: 'mailsec:edition'
-		action-class: Supprimer
-		warning: ok
-
-	envoi:
-		name-action: Envoyer
-		name: Envoyé
-		rule:
-			last-action: 
-				creation
-				modification
-			role_id_e: editeur
-			droit_id_u: 'mailsec:edition'
-			document_is_valide: true
-			
-		action-class: StandardAction
-		connecteur-type: mailsec
-		connecteur-type-action: MailsecEnvoyer
-
-	renvoi:
-		name-action: Envoyer à nouveau
-		name: Renvoyé
-		rule:
-			last-action:
-				envoi
-				reception-partielle
-				reception
-			role_id_e: editeur
-			droit_id_u: 'mailsec:edition'
-			document_is_valide: true
-		action-class: StandardAction
-		connecteur-type: mailsec
-		connecteur-type-action: MailsecRenvoyer
-
-	reception-partielle:
-		name: Reçu partiellement
-		rule:
-			role_id_e: no-role
-
-	reception:
-		name: Reçu
-		rule:
-			role_id_e: no-role
-
-	non-recu:
-		name: Non reçu
-		name-action: Définir comme non reçu
-		warning: "ok"
-		rule:
-			last-action:
-				envoi
-				renvoi
-				reception-partielle
-		action-class: Defaut
-
-	compute_read_mail:
-		name: Calcul des mails lus
-		rule:
-			role_id_e: no-role
-		action-class: StandardAction
-		connecteur-type: mailsec
-		connecteur-type-action: MailsecComputeReadMail
+    creation:
+        name-action: Créer
+        name: Créé
+        rule:
+            no-last-action: ''
+            droit_id_u: 'mailsec:edition'
+    modification:
+        name-action: Modifier
+        name: 'En cours de rédaction'
+        rule:
+            last-action:
+                - creation
+                - modification
+            role_id_e: editeur
+            droit_id_u: 'mailsec:edition'
+    supression:
+        name-action: Supprimer
+        name: Supprimé
+        rule:
+            last-action:
+                - creation
+                - modification
+                - reception
+                - non-recu
+                - fatal-error
+            role_id_e: editeur
+            droit_id_u: 'mailsec:edition'
+        action-class: Supprimer
+        warning: ok
+    envoi:
+        name-action: Envoyer
+        name: Envoyé
+        rule:
+            last-action:
+                - creation
+                - modification
+            role_id_e: editeur
+            droit_id_u: 'mailsec:edition'
+            document_is_valide: true
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecEnvoyer
+    renvoi:
+        name-action: 'Envoyer à nouveau'
+        name: Renvoyé
+        rule:
+            last-action:
+                - envoi
+                - reception-partielle
+                - reception
+            role_id_e: editeur
+            droit_id_u: 'mailsec:edition'
+            document_is_valide: true
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecRenvoyer
+    reception-partielle:
+        name: 'Reçu partiellement'
+        rule:
+            role_id_e: no-role
+    reception:
+        name: Reçu
+        rule:
+            role_id_e: no-role
+    non-recu:
+        name: 'Non reçu'
+        name-action: 'Définir comme non reçu'
+        warning: ok
+        rule:
+            last-action:
+                - envoi
+                - renvoi
+                - reception-partielle
+        action-class: Defaut
+    compute_read_mail:
+        name: 'Calcul des mails lus'
+        rule:
+            role_id_e: no-role
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecComputeReadMail

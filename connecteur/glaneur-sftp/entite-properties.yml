@@ -1,27 +1,19 @@
-nom: Glaneur SFTP
-description: |
-    Permet de glaner des fichiers via le protocole SFTP
+nom: 'Glaneur SFTP'
+description: 'Permet de glaner des fichiers via le protocole SFTP'
 type: Glaneur
-
 heritage: glaneur-connecteur-common
-
-
 formulaire:
     onglet:
         glaneur_sftp_host:
             name: Hôte
-
         glaneur_sftp_port:
             name: Port
-            commentaire: 22 par défaut
-
+            commentaire: '22 par défaut'
         glaneur_sftp_login:
             name: Login
-
         glaneur_sftp_password:
-            name: Mot de passe
+            name: 'Mot de passe'
             type: password
-
         glaneur_sftp_fingerprint:
-            name: Empreinte (fingerprint) du serveur
-            commentaire: L'empreinte du serveur sera affichée lors d'un premier essai sur « Lister les répertoires »
+            name: 'Empreinte (fingerprint) du serveur'
+            commentaire: 'L''empreinte du serveur sera affichée lors d''un premier essai sur « Lister les répertoires »'

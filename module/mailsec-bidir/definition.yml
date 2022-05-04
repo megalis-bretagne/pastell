@@ -1,39 +1,35 @@
-nom: Mail sécurisé avec réponse
-
-description: |
-    Type de dossier permettant d'envoyer des mail sécurisés et de récupérer des réponses du destinataire
-
+nom: 'Mail sécurisé avec réponse'
+description: 'Type de dossier permettant d''envoyer des mail sécurisés et de récupérer des réponses du destinataire'
 connecteur:
-    mailsec
-
+    - mailsec
 formulaire:
     Convocation:
         to:
             name: Destinataire(s)
-            commentaire: Plusieurs emails possibles séparés par une virgule
+            commentaire: 'Plusieurs emails possibles séparés par une virgule'
             requis: true
             type: mail-list
             autocomplete: MailSec/getContactAjax
         cc:
-            name: Copie à
-            commentaire: Plusieurs emails possibles séparés par une virgule
+            name: 'Copie à'
+            commentaire: 'Plusieurs emails possibles séparés par une virgule'
             type: mail-list
             autocomplete: MailSec/getContactAjax
         bcc:
-            name: Copie cachée à
-            commentaire: Plusieurs emails possibles séparés par une virgule
+            name: 'Copie cachée à'
+            commentaire: 'Plusieurs emails possibles séparés par une virgule'
             type: mail-list
             autocomplete: MailSec/getContactAjax
-        password :
-            name: Mot de passe
+        password:
+            name: 'Mot de passe'
             type: password
             may_be_null: true
-        password2 :
-            name: Mot de passe (confirmation)
+        password2:
+            name: 'Mot de passe (confirmation)'
             type: password
             may_be_null: true
             is_equal: password
-            is_equal_error: Les mots de passe ne correspondent pas
+            is_equal_error: 'Les mots de passe ne correspondent pas'
         objet:
             name: Objet
             requis: true
@@ -42,30 +38,26 @@ formulaire:
             name: Message
             type: textarea
         document_attache:
-            name: Document attaché
+            name: 'Document attaché'
             type: file
             multiple: true
         key:
             no-show: true
-
         sent_mail_number:
             name: Destinataires
             default: '0'
             index: true
             no-show: true
-
         sent_mail_read:
-            name: Mails lus
+            name: 'Mails lus'
             default: '0'
             index: true
             no-show: true
-
         sent_mail_answered:
-            name: Mails répondus
+            name: 'Mails répondus'
             default: '0'
             index: true
             no-show: true
-
 champs-affiches:
     - titre
     - dernier_etat
@@ -73,99 +65,89 @@ champs-affiches:
     - sent_mail_number
     - sent_mail_read
     - sent_mail_answered
-
 action:
     creation:
         name-action: Créer
         name: Créé
         rule:
-            no-last-action:
+            no-last-action: ''
             droit_id_u: 'mailsec-bidir:edition'
-
     modification:
         name-action: Modifier
-        name: En cours de rédaction
+        name: 'En cours de rédaction'
         rule:
             last-action:
-                creation
-                modification
+                - creation
+                - modification
             role_id_e: editeur
             droit_id_u: 'mailsec-bidir:edition'
-
     supression:
         name-action: Supprimer
         name: Supprimé
         rule:
             last-action:
-                creation
-                modification
-                reception
-                non-recu
-                fatal-error
+                - creation
+                - modification
+                - reception
+                - non-recu
+                - fatal-error
             role_id_e: editeur
             droit_id_u: 'mailsec-bidir:edition'
         action-class: Supprimer
-        warning: "Êtes-vous sûr ?"
-
+        warning: 'Êtes-vous sûr ?'
     envoi-mail:
-        name: Mail envoyé
-        name-action: Envoyer l'email
+        name: 'Mail envoyé'
+        name-action: 'Envoyer l''email'
         rule:
             last-action:
-                modification
+                - modification
             role_id_e: editeur
             droit_id_u: 'mailsec-bidir:edition'
             document_is_valide: true
         action-class: StandardAction
         connecteur-type: mailsec
         connecteur-type-action: MailsecEnvoyer
-
     reception:
-        name: Mail reçu
+        name: 'Mail reçu'
         rule:
             role_id_e: no-role
-
     reception-partielle:
-        name: Reçu partiellement
+        name: 'Reçu partiellement'
         rule:
             role_id_e: no-role
-
     renvoi:
-        name-action: Envoyer à nouveau
+        name-action: 'Envoyer à nouveau'
         name: Renvoyé
         rule:
             last-action:
-                envoi-mail
-                reception-partielle
-                reception
+                - envoi-mail
+                - reception-partielle
+                - reception
             role_id_e: editeur
             droit_id_u: 'mailsec-bidir:edition'
             document_is_valide: true
         action-class: StandardAction
         connecteur-type: mailsec
         connecteur-type-action: MailsecRenvoyer
-
     non-recu:
-        name: Non reçu
-        name-action: Définir comme non reçu
-        warning: "ok"
+        name: 'Non reçu'
+        name-action: 'Définir comme non reçu'
+        warning: ok
         rule:
             last-action:
-                envoi-mail
-                renvoi
-                reception-partielle
+                - envoi-mail
+                - renvoi
+                - reception-partielle
         action-class: Defaut
-
     compute_read_mail:
-        name: Calcul des mails lus
+        name: 'Calcul des mails lus'
         rule:
             role_id_e: no-role
         action-class: StandardAction
         connecteur-type: mailsec
         connecteur-type-action: MailsecComputeReadMail
-
     compute_answered_mail:
-        name: Calcul des mails répondus
+        name: 'Calcul des mails répondus'
         rule:
             role_id_e: no-role
         action-class: StandardAction

@@ -1,53 +1,40 @@
-nom: Bouchon de signature
+nom: 'Bouchon de signature'
 type: signature
-
-description: |
-	Il s'agit d'un bouchon utilisé pour le développement ou les démonstrations pendant lesquels l'utilisation d'un vrai iParapheur ne se révelerait pas commode.
-
+description: 'Il s''agit d''un bouchon utilisé pour le développement ou les démonstrations pendant lesquels l''utilisation d''un vrai iParapheur ne se révelerait pas commode.'
 formulaire:
-	page0:
-		iparapheur_type: 
-			name: "Type Parapheur"
-			type: select
-			value:
-				Actes: Actes
-				PES: PES
-				Document: Document
-				Custom: Custom
-
-		iparapheur_sous_type:
-			name: Liste des sous types du type Custom
-			commentaire: |
-				Les sous types doivent être séparés par des ';'
-				Exemple pour les sous types BUREAUTIQUE et PES : "PES;BUREAUTIQUE"
-
-		iparapheur_envoi_status:
-			name: Réponse lors de l'envoi au parapheur
-			type: select
-			value: 
-				ok: Accepter le document
-				error: Déclencher une erreur
-
-		iparapheur_retour:
-			name: Retour du iParapheur
-			type: select
-			value:
-				Archive: OK
-				Rejet: Rejet
-				Erreur: Erreur
-				Fatal: Déclencher une erreur fatale PHP
-
-		iparapheur_temps_reponse:
-			name: Temps de réponse (en seconde) pour la fonction de récupération
-
-		field_signature:
-			name: Identifiant du champ contenant la signature
-			default: signature
-
-		field_bordereau:
-			name: Identifiant du champ contenant le bordereau
-			default: document_signe
-
-		is_fast:
-			no-show: true
-
+    page0:
+        iparapheur_type:
+            name: 'Type Parapheur'
+            type: select
+            value:
+                Actes: Actes
+                PES: PES
+                Document: Document
+                Custom: Custom
+        iparapheur_sous_type:
+            name: 'Liste des sous types du type Custom'
+            commentaire: "Les sous types doivent être séparés par des ';'\nExemple pour les sous types BUREAUTIQUE et PES : \"PES;BUREAUTIQUE\""
+        iparapheur_envoi_status:
+            name: 'Réponse lors de l''envoi au parapheur'
+            type: select
+            value:
+                ok: 'Accepter le document'
+                error: 'Déclencher une erreur'
+        iparapheur_retour:
+            name: 'Retour du iParapheur'
+            type: select
+            value:
+                Archive: OK
+                Rejet: Rejet
+                Erreur: Erreur
+                Fatal: 'Déclencher une erreur fatale PHP'
+        iparapheur_temps_reponse:
+            name: 'Temps de réponse (en seconde) pour la fonction de récupération'
+        field_signature:
+            name: 'Identifiant du champ contenant la signature'
+            default: signature
+        field_bordereau:
+            name: 'Identifiant du champ contenant le bordereau'
+            default: document_signe
+        is_fast:
+            no-show: true

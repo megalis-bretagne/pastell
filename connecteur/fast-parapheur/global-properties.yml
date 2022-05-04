@@ -1,34 +1,29 @@
-nom: Fast Parapheur
+nom: 'Fast Parapheur'
 type: signature
-
-description: |
-  Permet de faire des actions sur l'ensemble des connecteurs Fast parapheur installés sur Pastell.
-
+description: 'Permet de faire des actions sur l''ensemble des connecteurs Fast parapheur installés sur Pastell.'
 formulaire:
-  page:
-    changement_certificat:
-      no-show: true
-      type: externalData
-      link_name: Sélectionner un certificat
-      choice-action: update-list-certificate
-
+    page:
+        changement_certificat:
+            no-show: true
+            type: externalData
+            link_name: 'Sélectionner un certificat'
+            choice-action: update-list-certificate
 action:
-  redirect-to-update-list-certificate:
-    name: Mettre à jour les certificats
-    rule:
-      droit_id_u: 'entite:edition'
-    action-class: StandardAction
-    connecteur-type: utilities
-    connecteur-type-action: RedirectToGlobalUpdateCertificate
-
-  update-list-certificate:
-    name: Mettre à jour les certificats
-    rule:
-      role_id_e: no-role
-    action-class: StandardChoiceAction
-    connecteur-type: utilities
-    connecteur-type-action: GlobalUpdateCertificate
-    connecteur-type-mapping:
-      page_title: Mise à jour certificat Fast Parapheur
-      certificate: certificat_connexion
-      certificate_password: certificat_password
+    redirect-to-update-list-certificate:
+        name: 'Mettre à jour les certificats'
+        rule:
+            droit_id_u: 'entite:edition'
+        action-class: StandardAction
+        connecteur-type: utilities
+        connecteur-type-action: RedirectToGlobalUpdateCertificate
+    update-list-certificate:
+        name: 'Mettre à jour les certificats'
+        rule:
+            role_id_e: no-role
+        action-class: StandardChoiceAction
+        connecteur-type: utilities
+        connecteur-type-action: GlobalUpdateCertificate
+        connecteur-type-mapping:
+            page_title: 'Mise à jour certificat Fast Parapheur'
+            certificate: certificat_connexion
+            certificate_password: certificat_password

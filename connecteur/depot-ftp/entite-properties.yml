@@ -1,38 +1,24 @@
-nom: Dépôt FTP
+nom: 'Dépôt FTP'
 type: GED
-
 heritage: ged-connecteur-common
-
-description: |
-    Connecteur de dépôt sur un répertoire FTP (ou FTPS)
-
+description: 'Connecteur de dépôt sur un répertoire FTP (ou FTPS)'
 formulaire:
     page0:
         depot_ftp_host:
             name: Hôte
-
         depot_ftp_port:
             name: Port
-            commentaire: 21 par défaut
-
+            commentaire: '21 par défaut'
         depot_ftp_ssl:
-            name:  Utiliser SSL (FTPS)
+            name: 'Utiliser SSL (FTPS)'
             type: checkbox
-
         depot_ftp_login:
             name: Login
-
         depot_ftp_password:
-            name: Mot de passe
+            name: 'Mot de passe'
             type: password
-
         depot_ftp_passive_mode:
-            name: Mode passif
+            name: 'Mode passif'
             type: checkbox
-
         depot_ftp_directory:
-            name: Répertoire de dépôt
-
-
-
-
+            name: 'Répertoire de dépôt'

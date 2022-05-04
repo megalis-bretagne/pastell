@@ -1,66 +1,48 @@
 nom: Test
 type: test
-
-description: |
-	Il s'agit d'un connecteur d'entité de test qui ne fait rien
-
+description: 'Il s''agit d''un connecteur d''entité de test qui ne fait rien'
 restriction_pack:
-	pack_test
-
+    - pack_test
 formulaire:
-	page0:
-		champs1:
-		champs2:
-		champs3:
-			commentaire: Un changement sur champs3 entraine un changement sur champs4
-			onchange: change_4
-		champs4:
-
-		champs5:
-			type: file
-			visionneuse: RawVisionneuse
-
-		champs6:
-		    type: file
-		    multiple: true
-
-		external_data:
-			type: externalData
-			link_name: choix
-			choice-action: PastellCoreConnecteurTestExternalData
-
-
+    page0:
+        champs1: ''
+        champs2: ''
+        champs3:
+            commentaire: 'Un changement sur champs3 entraine un changement sur champs4'
+            onchange: change_4
+        champs4: ''
+        champs5:
+            type: file
+            visionneuse: RawVisionneuse
+        champs6:
+            type: file
+            multiple: true
+        external_data:
+            type: externalData
+            link_name: choix
+            choice-action: PastellCoreConnecteurTestExternalData
 action:
-	ok:
-		name: Répondre "OK !"
-		action-class: PastellCoreTestOK
-
-	fail:
-		name: Fail
-		action-class: PastellCoreTestFail
-
-	not_possible:
-		rule:
-			role_id_e: no-role
-
-	change_4:
-		no-workflow: true
-		action-class: PastellCoreChange4
-
-	PastellCoreConnecteurTestExternalData:
-		no-workflow: true
-		action-class: PastellCoreConnecteurTestExternalData
-
-	une_action_auto:
-		action-class: PastellCoreTestOK
-		action-automatique: une_action_auto
-
-
-	une_action_long_auto:
-		action-class: PastellCoreActionLongue
-		action-automatique: une_action_long_auto
-
-	une_action_auto_fail:
-		action-class: PastellCoreTestFatalError
-		action-automatique: une_action_auto_fail
-
+    ok:
+        name: 'Répondre "OK !"'
+        action-class: PastellCoreTestOK
+    fail:
+        name: Fail
+        action-class: PastellCoreTestFail
+    not_possible:
+        rule:
+            role_id_e: no-role
+    change_4:
+        no-workflow: true
+        action-class: PastellCoreChange4
+    PastellCoreConnecteurTestExternalData:
+        no-workflow: true
+        action-class: PastellCoreConnecteurTestExternalData
+    une_action_auto:
+        action-class: PastellCoreTestOK
+        action-automatique: une_action_auto
+    une_action_long_auto:
+        action-class: PastellCoreActionLongue
+        action-automatique: une_action_long_auto
+    une_action_auto_fail:
+        action-class: PastellCoreTestFatalError
+        action-automatique: une_action_auto_fail

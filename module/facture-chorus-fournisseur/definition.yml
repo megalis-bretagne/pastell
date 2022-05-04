@@ -1,41 +1,34 @@
-nom: Facture Chorus fournisseur
-type: Types de dossier Facture Chorus Pro
-description: Permet de créer et d'envoyer des factures vers le portail Chorus Pro
-
+nom: 'Facture Chorus fournisseur'
+type: 'Types de dossier Facture Chorus Pro'
+description: 'Permet de créer et d''envoyer des factures vers le portail Chorus Pro'
 restriction_pack:
     - pack_chorus_pro
-
 connecteur:
-    PortailFacture
-    ParamChorusFournisseur
-    Bordereau SEDA
-    SAE
-
+    - PortailFacture
+    - ParamChorusFournisseur
+    - 'Bordereau SEDA'
+    - SAE
 formulaire:
     Facture:
-
         depot_type:
-            name: Type de dépot
+            name: 'Type de dépot'
             type: select
             value:
-                DEPOT_PDF_API: Dépot d'une facture PDF
-                SAISIE_API: Saisie manuelle
-                UPLOAD_API: Dépot d'une facture structuré XML
-
+                DEPOT_PDF_API: 'Dépot d''une facture PDF'
+                SAISIE_API: 'Saisie manuelle'
+                UPLOAD_API: 'Dépot d''une facture structuré XML'
         fichier_facture_pdf:
-            name: Fichier facture pdf/xml
+            name: 'Fichier facture pdf/xml'
             type: file
             requis: true
             onchange: fichier_facture_pdf_change
-
         fichier_original:
-            name: Fichier facture original pdf/xml
+            name: 'Fichier facture original pdf/xml'
             type: file
             read-only: true
-
         syntaxe_flux_in:
-            name: Syntaxe flux XML
-            commentaire: Seulement pour le dépot d'une facture structuré XML, IN_DP_E1_UBL_INVOICE par défaut
+            name: 'Syntaxe flux XML'
+            commentaire: 'Seulement pour le dépot d''une facture structuré XML, IN_DP_E1_UBL_INVOICE par défaut'
             type: select
             value:
                 IN_DP_E1_UBL_INVOICE: IN_DP_E1_UBL_INVOICE
@@ -46,272 +39,235 @@ formulaire:
                 IN_DP_E2_PES_FACTURE_MIN: IN_DP_E2_PES_FACTURE_MIN
                 IN_DP_E2_CPP_FACTURE_MIN: IN_DP_E2_CPP_FACTURE_MIN
                 IN_DP_E2_CII_FACTURX: IN_DP_E2_CII_FACTURX
-
     Cheminement:
         envoi_sae:
-            name: Transmission au SAE
+            name: 'Transmission au SAE'
             type: checkbox
-
-    Information facture:
+    'Information facture':
         has_information:
             no-show: true
-
         numero_facture:
-            name: Numéro de la facture
-            commentaire: tel que mis par le fournisseur
+            name: 'Numéro de la facture'
+            commentaire: 'tel que mis par le fournisseur'
             requis: true
             title: true
-
         date_facture:
-            name: Date de la facture
+            name: 'Date de la facture'
             requis: true
             type: date
-
         code_destinataire:
-            name: Identifiant du destinataire
-            commentaire: SIRET du destinataire
+            name: 'Identifiant du destinataire'
+            commentaire: 'SIRET du destinataire'
             requis: true
-
         code_service_executant:
-            name: Identifiant du service destinataire
-
+            name: 'Identifiant du service destinataire'
         code_fournisseur:
-            name: Code fournisseur
-            commentaire: "SIRET, TVA intracomm, ..."
-
+            name: 'Code fournisseur'
+            commentaire: 'SIRET, TVA intracomm, ...'
         id_cpp_fournisseur:
-            name: Identifiant CPP du fournisseur
-            commentaire: numéro CPP attribué à la structure fournisseur
+            name: 'Identifiant CPP du fournisseur'
+            commentaire: 'numéro CPP attribué à la structure fournisseur'
             requis: true
-
         id_cpp_service_fournisseur:
-            name: Identifiant CPP du service du fournisseur
-
+            name: 'Identifiant CPP du service du fournisseur'
         cadre_facturation:
-            name: Cadre de facturation
+            name: 'Cadre de facturation'
             type: select
             value:
                 A1_FACTURE_FOURNISSEUR: A1_FACTURE_FOURNISSEUR
                 A2_FACTURE_FOURNISSEUR_DEJA_PAYEE: A2_FACTURE_FOURNISSEUR_DEJA_PAYEE
                 A9_FACTURE_SOUSTRAITANT: A9_FACTURE_SOUSTRAITANT
                 A12_FACTURE_COTRAITANT: A12_FACTURE_COTRAITANT
-
         code_devise_facture:
-            name:  Devise de la facture
-            commentaire: "Sur 3 lettres, exemple: EUR"
+            name: 'Devise de la facture'
+            commentaire: 'Sur 3 lettres, exemple: EUR'
             requis: true
-
         type_facture:
-            name: Type de la facture
-            commentaire: "FACTURE ou AVOIR"
+            name: 'Type de la facture'
+            commentaire: 'FACTURE ou AVOIR'
             requis: true
-
         type_tva:
-            name: Type de tva
-            commentaire: "TVA_SUR_DEBIT, TVA_SUR_ENCAISSEMENT"
+            name: 'Type de tva'
+            commentaire: 'TVA_SUR_DEBIT, TVA_SUR_ENCAISSEMENT'
             requis: true
-
         numero_bon_commande:
-            name: Numéro du bon de commande
-            commentaire: Engagement juridique
-
-
+            name: 'Numéro du bon de commande'
+            commentaire: 'Engagement juridique'
         montant_ht_total:
-            name: Montant total hors-taxe
+            name: 'Montant total hors-taxe'
             requis: true
-
         montant_tva:
-            name: Montant de la tva
+            name: 'Montant de la tva'
             requis: true
-
-
         montant_ttc_avant_remise_global_ttc:
-            name: Montant TTC avant remise globale ttc
+            name: 'Montant TTC avant remise globale ttc'
             requis: true
-
         montant_a_payer:
-            name: Montant à payer
+            name: 'Montant à payer'
             requis: true
-
-
         piece_jointe_id:
-            name: Identifiant technique de la facture PDF
+            name: 'Identifiant technique de la facture PDF'
             requis: true
             read-only: true
         code_retour:
-            name: Code retour envoie PDF
+            name: 'Code retour envoie PDF'
             read-only: true
         libelle:
-            name: Libellé envoie PDF
+            name: 'Libellé envoie PDF'
             read-only: true
-
-    Données Chorus Pro:
+    'Données Chorus Pro':
         has_donnees_chorus_pro:
             no-show: true
         identifiant_facture_cpp:
-            name: Identifiant CPP de la facture
+            name: 'Identifiant CPP de la facture'
         statut_facture:
-            name: Statut de la facture
+            name: 'Statut de la facture'
         date_depot:
-            name: Date de dépôt de la facture
+            name: 'Date de dépôt de la facture'
         histo_statut_cpp:
-            name: Historique des statuts Chorus Pro
-            commentaire: Fichier json contenant l'historique des statuts Chorus Pro
+            name: 'Historique des statuts Chorus Pro'
+            commentaire: 'Fichier json contenant l''historique des statuts Chorus Pro'
             type: file
             read-only: true
             visionneuse: HistoStatusCPPVisionneuse
-
-    Données Chorus Pro (XML):
+    'Données Chorus Pro (XML)':
         has_donnees_chorus_pro_xml:
             no-show: true
         numero_flux_depot:
-            name: Numéro de dépot du flux
+            name: 'Numéro de dépot du flux'
         syntaxe_flux:
-            name: Syntaxe du flux
+            name: 'Syntaxe du flux'
         identifiant_facture_cpp:
-            name: Identifiant CPP de la facture
+            name: 'Identifiant CPP de la facture'
         statut_facture:
-            name: Statut de la facture
+            name: 'Statut de la facture'
         date_depot:
-            name: Date de dépôt de la facture
+            name: 'Date de dépôt de la facture'
         histo_statut_cpp:
-            name: Historique des statuts Chorus Pro
-            commentaire: Fichier json contenant l'historique des statuts Chorus Pro
+            name: 'Historique des statuts Chorus Pro'
+            commentaire: 'Fichier json contenant l''historique des statuts Chorus Pro'
             type: file
             read-only: true
             visionneuse: HistoStatusCPPVisionneuse
-
-    Fichiers Chorus Pro:
+    'Fichiers Chorus Pro':
         has_fichier_chorus:
             no-show: true
         fichier_facture:
-            name: Fichier CPPFacturePivot
+            name: 'Fichier CPPFacturePivot'
             read-only: true
-            commentaire: Fichier XML contenant un seul bloc CPPFacturePivotUnitaire
+            commentaire: 'Fichier XML contenant un seul bloc CPPFacturePivotUnitaire'
             type: file
         facture_pj_01:
-            name: Facture originale
+            name: 'Facture originale'
             type: file
             read-only: true
         fichier_facture_pdf:
-            name: Fichier facture pdf
+            name: 'Fichier facture pdf'
             type: file
             read-only: true
         facture_pj_02:
-            name: Pièces jointes complémentaires
-            commentaire: Format PDF
+            name: 'Pièces jointes complémentaires'
+            commentaire: 'Format PDF'
             type: file
             multiple: true
             read-only: true
-
-    Saisie manuelle:
-
+    'Saisie manuelle':
         id_fournisseur_facture:
-            name: Identiant fournisseur de la facture
+            name: 'Identiant fournisseur de la facture'
             requis: true
-
         date_facture:
-            name: Date de la facture
+            name: 'Date de la facture'
             requis: true
             type: date
-
         code_destinataire:
-            name: Code destinataire
-            commentaire: SIRET de la structure publique
+            name: 'Code destinataire'
+            commentaire: 'SIRET de la structure publique'
             requis: true
-
         ligne_de_poste:
-            name: Ligne de poste
+            name: 'Ligne de poste'
             type: externalData
             choice-action: ligne-de-poste
-            link_name: Modifier les lignes de poste
-
+            link_name: 'Modifier les lignes de poste'
         fichier_ligne_de_poste:
-            name: Ligne de poste (fichier)
-            commentaire: Ce fichier est éditable avec l'utilitaire ligne de poste au dessus
+            name: 'Ligne de poste (fichier)'
+            commentaire: 'Ce fichier est éditable avec l''utilitaire ligne de poste au dessus'
             type: file
-
-    Donnée dépot:
+    'Donnée dépot':
         has_donnees_depot:
             no-show: true
         code_interface_flux:
-            name: Code interface flux
+            name: 'Code interface flux'
         etat_courant_flux:
-            name: Etat courant du flux
+            name: 'Etat courant du flux'
         date_heure_etat_courant_flux:
-            name: Date et heure du passage à l'état courant
+            name: 'Date et heure du passage à l''état courant'
         nom_fichier_flux:
-            name: Nom fichier du flux
+            name: 'Nom fichier du flux'
         fichier_cr:
-            name: Fichier compte rendu
+            name: 'Fichier compte rendu'
             type: file
-
     SAE:
         sae_config:
-            name: Configuration du versement SAE
+            name: 'Configuration du versement SAE'
             commentaire: 'Fichier JSON : {"cle1":"valeur1","cle2":"valeur2",...}. Il est généré d''après le fichier CPPFacturePivot'
             type: file
             read-only: true
         sae_transfert_id:
-            name: Identifiant de transfert
+            name: 'Identifiant de transfert'
             index: true
         sae_bordereau:
-            name: Bordereau SEDA
+            name: 'Bordereau SEDA'
             type: file
         sae_archive:
             name: Archive
             type: file
         ar_sae:
-            name: Accusé de réception SAE
+            name: 'Accusé de réception SAE'
             type: file
         sae_ack_comment:
-            name: Commentaire de l'accusé de réception
+            name: 'Commentaire de l''accusé de réception'
         reply_sae:
-            name: Réponse du SAE
+            name: 'Réponse du SAE'
             type: file
         sae_archival_identifier:
-            name: Identifiant de l'archive sur le SAE
+            name: 'Identifiant de l''archive sur le SAE'
         sae_atr_comment:
-            name: Commentaire de la réponse du SAE
+            name: 'Commentaire de la réponse du SAE'
         url_archive:
-            name: URL sur le système d'archive
+            name: 'URL sur le système d''archive'
             type: url
-
 page-condition:
-    Saisie manuelle:
+    'Saisie manuelle':
         depot_type: SAISIE_API
-    Information facture:
+    'Information facture':
         has_information: true
-    Données Chorus Pro:
+    'Données Chorus Pro':
         has_donnees_chorus_pro: true
-    Données Chorus Pro (XML):
+    'Données Chorus Pro (XML)':
         has_donnees_chorus_pro_xml: true
-    Fichiers Chorus Pro:
+    'Fichiers Chorus Pro':
         has_fichier_chorus: true
-    Donnée dépot:
+    'Donnée dépot':
         has_donnees_depot: true
     SAE:
         sae_transfert_id: true
-
 action:
     creation:
         name-action: Créer
         name: Créé
         rule:
-            no-last-action:
+            no-last-action: ''
             droit_id_u: 'facture-chorus-fournisseur:edition'
-
     modification:
         name-action: Modifier
-        name: En cours de rédaction
+        name: 'En cours de rédaction'
         rule:
             role_id_e: editeur
             droit_id_u: 'facture-chorus-fournisseur:edition'
             last-action:
-                creation
-                modification
-                deposer-pdf
-
+                - creation
+                - modification
+                - deposer-pdf
     supression:
         name-action: Supprimer
         name: Supprimé
@@ -319,230 +275,204 @@ action:
             role_id_e: editeur
             droit_id_u: 'facture-chorus-fournisseur:edition'
             last-action:
-                creation
-                modification
-                deposer-pdf
-                send-chorus
-                termine
-                flux-rejete
-                erreur-envoie-sae
-                rejet-sae
-                accepter-sae
-                fatal-error
+                - creation
+                - modification
+                - deposer-pdf
+                - send-chorus
+                - termine
+                - flux-rejete
+                - erreur-envoie-sae
+                - rejet-sae
+                - accepter-sae
+                - fatal-error
         action-class: Supprimer
-        warning: "Êtes-vous sûr ?"
-
+        warning: 'Êtes-vous sûr ?'
     termine:
         rule:
             last-action:
-                recup-facture-cpp-id
-                send-chorus
-                erreur-envoie-sae
-                rejet-sae
-                accepter-sae
+                - recup-facture-cpp-id
+                - send-chorus
+                - erreur-envoie-sae
+                - rejet-sae
+                - accepter-sae
         name: Terminé
-        name-action: Ne plus synchroniser
+        name-action: 'Ne plus synchroniser'
         action-class: Defaut
-
     deposer-pdf:
-        name-action: Déposer le fichier PDF sur Chorus Pro
-        name: Dépot du fichier PDF sur Chorus Pro
+        name-action: 'Déposer le fichier PDF sur Chorus Pro'
+        name: 'Dépot du fichier PDF sur Chorus Pro'
         rule:
             role_id_e: editeur
             droit_id_u: 'facture-chorus-fournisseur:edition'
             last-action:
-                creation
-                modification
+                - creation
+                - modification
             content:
                 depot_type: DEPOT_PDF_API
                 has_information: false
         editable-content:
-            numero_facture
-            date_facture
-            code_destinataire
-            code_service_executant
-            code_fournisseur
-            id_cpp_fournisseur
-            id_cpp_service_fournisseur
-            cadre_facturation
-            code_devise_facture
-            type_facture
-            type_tva
-            numero_bon_commande
-            montant_ht_total
-            montant_tva
-            montant_ttc_avant_remise_global_ttc
-            montant_a_payer
+            - numero_facture
+            - date_facture
+            - code_destinataire
+            - code_service_executant
+            - code_fournisseur
+            - id_cpp_fournisseur
+            - id_cpp_service_fournisseur
+            - cadre_facturation
+            - code_devise_facture
+            - type_facture
+            - type_tva
+            - numero_bon_commande
+            - montant_ht_total
+            - montant_tva
+            - montant_ttc_avant_remise_global_ttc
+            - montant_a_payer
         action-class: CPPDeposerPDF
-
     pre-deposer-xml:
-        name: Pré Dépot de la facture XML
-        name-action: Demander de Soumettre le fichier XML sur Chorus Pro
+        name: 'Pré Dépot de la facture XML'
+        name-action: 'Demander de Soumettre le fichier XML sur Chorus Pro'
         rule:
             role_id_e: editeur
             droit_id_u: 'facture-chorus-fournisseur:edition'
             last-action:
-                creation
-                modification
+                - creation
+                - modification
             content:
                 depot_type: UPLOAD_API
                 has_information: false
         action-class: Defaut
         action-automatique: deposer-xml
-
     deposer-xml:
-        name: Dépot de la facture XML
-        name-action: Soumettre le fichier XML sur Chorus Pro
+        name: 'Dépot de la facture XML'
+        name-action: 'Soumettre le fichier XML sur Chorus Pro'
         rule:
             role_id_e: editeur
             droit_id_u: 'facture-chorus-fournisseur:edition'
             last-action:
-                creation
-                modification
-                pre-deposer-xml
+                - creation
+                - modification
+                - pre-deposer-xml
             content:
                 depot_type: UPLOAD_API
                 has_information: false
         action-class: CPPDeposerXML
         action-automatique: recup-facture-cpp-id
-
     send-chorus:
-        name-action: Soumettre la facture
-        name: Envoyé à Chorus Pro
+        name-action: 'Soumettre la facture'
+        name: 'Envoyé à Chorus Pro'
         rule:
             role_id_e: editeur
             droit_id_u: 'facture-chorus-fournisseur:edition'
             last-action:
-                creation
-                modification
-                deposer-pdf
+                - creation
+                - modification
+                - deposer-pdf
             document_is_valide: true
             content:
                 depot_type: DEPOT_PDF_API
                 has_information: true
         action-class: ChorusProSendFacture
         action-automatique: verif-statut-chorus
-
-
     verif-statut-chorus:
-        name-action: Vérifier le statut sur Chorus Pro
-        name: Statut vérifié sur Chorus Pro
+        name-action: 'Vérifier le statut sur Chorus Pro'
+        name: 'Statut vérifié sur Chorus Pro'
         rule:
             role_id_e: editeur
             droit_id_u: 'facture-chorus-fournisseur:edition'
             last-action:
-                send-chorus
-                recup-facture-cpp-id
-                termine
+                - send-chorus
+                - recup-facture-cpp-id
+                - termine
         action-class: ChorusProFournisseurSyncrhoniser
         connecteur-type: PortailFacture
-
     recup-facture-cpp-id:
-        name-action: Récupérer l'identifiant CPP de la facture
-        name: Identifiant de la facture récupéré
+        name-action: 'Récupérer l''identifiant CPP de la facture'
+        name: 'Identifiant de la facture récupéré'
         rule:
             last-action:
-                deposer-xml
+                - deposer-xml
         action-class: ChorusProFournisseurRecupCPPFactureId
         action-automatique: verif-statut-chorus
         connecteur-type: PortailFacture
-
     flux-rejete:
-        name: Rejet du flux par Chorus Pro
+        name: 'Rejet du flux par Chorus Pro'
         rule:
             role_id_e: no-role
-
-
-
     ligne-de-poste:
-        name: Ligne de poste
+        name: 'Ligne de poste'
         no-workflow: true
         rule:
             role_id_e: no-role
         action-class: StandardLigneDePoste
-
     fichier_facture_pdf_change:
         no-workflow: true
         rule:
             role_id_e: no-role
         action-class: CppFournisseurFichierFactureOnChange
-
     preparation-send-sae:
-        name: Préparation de l'envoi au SAE
+        name: 'Préparation de l''envoi au SAE'
         rule:
             role_id_e: no-role
         action-automatique: send-archive
-
     send-archive:
-        name-action: Verser au SAE
-        name: Versé au SAE
+        name-action: 'Verser au SAE'
+        name: 'Versé au SAE'
         rule:
             content:
                 has_fichier_chorus: true
                 envoi_sae: true
             or_1:
-              and_1:
-                no-action:
-                  send-archive
-              and_2:
-                last-action:
-                  erreur-envoie-sae
+                and_1:
+                    no-action:
+                        - send-archive
+                and_2:
+                    last-action:
+                        - erreur-envoie-sae
         connecteur-type: SAE
         action-class: FactureCPPSAEEnvoyer
         action-automatique: verif-sae
-
     erreur-envoie-sae:
-        name: Erreur lors de l'envoi au SAE
+        name: 'Erreur lors de l''envoi au SAE'
         rule:
             role_id_e: no-role
-
     verif-sae:
-        name-action: Récupérer l'AR du document sur le SAE
-        name: Récupération de l'AR sur le SAE
+        name-action: 'Récupérer l''AR du document sur le SAE'
+        name: 'Récupération de l''AR sur le SAE'
         rule:
             last-action:
-                send-archive
-                verif-sae-erreur
+                - send-archive
+                - verif-sae-erreur
         action-class: StandardAction
         connecteur-type: SAE
         connecteur-type-action: SAEVerifier
-
     verif-sae-erreur:
-        name: Erreur lors de la récupération de l'AR
+        name: 'Erreur lors de la récupération de l''AR'
         rule:
             role_id_e: no-role
-
     ar-recu-sae:
-        name: AR SAE reçu
+        name: 'AR SAE reçu'
         rule:
             role_id_e: no-role
         action-automatique: validation-sae
-
     validation-sae:
-        name-action: Vérifier l'acceptation par le SAE
-        name: Vérification de l'acceptation par le SAE
+        name-action: 'Vérifier l''acceptation par le SAE'
+        name: 'Vérification de l''acceptation par le SAE'
         rule:
             last-action:
-                ar-recu-sae
-                validation-sae-erreur
+                - ar-recu-sae
+                - validation-sae-erreur
         action-class: StandardAction
         connecteur-type: SAE
         connecteur-type-action: SAEValider
-
     validation-sae-erreur:
-        name: Erreur lors de la vérification de la validité du transfert
+        name: 'Erreur lors de la vérification de la validité du transfert'
         rule:
             role_id_e: no-role
-
     accepter-sae:
-        name: Archive acceptée par le SAE
+        name: 'Archive acceptée par le SAE'
         rule:
             role_id_e: no-role
-
     rejet-sae:
-        name: Archive rejetée par le SAE
+        name: 'Archive rejetée par le SAE'
         rule:
             role_id_e: no-role
-
-
-

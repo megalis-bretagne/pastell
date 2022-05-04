@@ -1,20 +1,20 @@
-nom: Mail sécurisé (destinataire)
-
-description: Type de dossier complémentaire du type de dossier mailsec permettant aux destinataires des mails sécurisés de pouvoir les lire
-
-
+nom: 'Mail sécurisé (destinataire)'
+description: 'Type de dossier complémentaire du type de dossier mailsec permettant aux destinataires des mails sécurisés de pouvoir les lire'
 formulaire:
-	Message :
-		to: {name: Destinataire(s), requis: true}
-		cc:  {name: Copie à}
-		objet: 
-			name: Objet
-			requis: true
-			title: true
-		message: 
-			name: Message
-			type: textarea
-		document_attache: 
-			name: Documents attachés
-			type: file
-			multiple: true
+    Message:
+        to:
+            name: Destinataire(s)
+            requis: true
+        cc:
+            name: 'Copie à'
+        objet:
+            name: Objet
+            requis: true
+            title: true
+        message:
+            name: Message
+            type: textarea
+        document_attache:
+            name: 'Documents attachés'
+            type: file
+            multiple: true

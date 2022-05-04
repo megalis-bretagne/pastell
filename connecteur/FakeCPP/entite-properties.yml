@@ -1,22 +1,13 @@
 nom: FakeCPP
-
 type: PortailFacture
-
-description: |
-    Connecteur bouchon CPP
-
+description: 'Connecteur bouchon CPP'
 restriction_pack:
     - pack_chorus_pro
-
 formulaire:
-    page0:
-
+    page0: ''
 action:
     import-facture:
-        name: Récupérer les factures cpp
+        name: 'Récupérer les factures cpp'
         action-class: FakeCPPImporterFacture
         rule:
             droit_id_u: 'entite:edition'
-
-
-

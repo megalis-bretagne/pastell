@@ -1,20 +1,12 @@
-nom: Générateur SEDA
-
-description: |
-  Permet de générer des bordereaux SEDA via l'outil générateur SEDA
-  Le connecteur global permet de spécifier l'URL du générateur ainsi que de tester la version de celui-ci
-
-type: Generateur SEDA
-
+nom: 'Générateur SEDA'
+description: "Permet de générer des bordereaux SEDA via l'outil générateur SEDA\nLe connecteur global permet de spécifier l'URL du générateur ainsi que de tester la version de celui-ci"
+type: 'Generateur SEDA'
 formulaire:
-  onglet:
-
-    seda_generator_url:
-      name: URL du générateur de SEDA
-      commentaire: "http://localhost:8021 (http://seda-generator si installation complète en docker)"
-
+    onglet:
+        seda_generator_url:
+            name: 'URL du générateur de SEDA'
+            commentaire: 'http://localhost:8021 (http://seda-generator si installation complète en docker)'
 action:
-
-  test-connexion:
-    name: Tester la connexion
-    action-class: SedaGeneriqueTestConnexion
+    test-connexion:
+        name: 'Tester la connexion'
+        action-class: SedaGeneriqueTestConnexion

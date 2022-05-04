@@ -1,25 +1,20 @@
-nom: Bouchon de génération SEDA
-type: Bordereau SEDA
-
-description: |
-	Connecteur SEDA pour les tests
-
+nom: 'Bouchon de génération SEDA'
+type: 'Bordereau SEDA'
+description: 'Connecteur SEDA pour les tests'
 formulaire:
-	page:
-		seda_bordereau_generation_response:
-			name: Réponse lors de la génération du bordereau
-			type: select
-			value:
-				ok: OK
-				error: Erreur
-			default: ok
-
-		seda_archive_generation_response:
-			name: Réponse lors de la génération de l'archive
-			type: select
-			value:
-				ok: OK
-				error: Erreur
-			default: ok
-
-action:
+    page:
+        seda_bordereau_generation_response:
+            name: 'Réponse lors de la génération du bordereau'
+            type: select
+            value:
+                ok: OK
+                error: Erreur
+            default: ok
+        seda_archive_generation_response:
+            name: 'Réponse lors de la génération de l''archive'
+            type: select
+            value:
+                ok: OK
+                error: Erreur
+            default: ok
+action: ''

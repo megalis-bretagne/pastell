@@ -1,40 +1,33 @@
-nom: Bouchon de système d'archivage électronique
+nom: 'Bouchon de système d''archivage électronique'
 type: SAE
-description: |
-	Il s'agit d'un bouchon utilisé pour le développement ou les démonstrations pendant lesquels l'utilisation d'un vrai SAE ne se révelerait pas commode.
-
+description: 'Il s''agit d''un bouchon utilisé pour le développement ou les démonstrations pendant lesquels l''utilisation d''un vrai SAE ne se révelerait pas commode.'
 formulaire:
-	page0:
-		result_send:
-			name: Résultat de l'envoi
-			type: select
-			value:
-				1: ok
-				2: simuler un échec
-				3: afficher le bordereau
-
-		result_ack:
-			name: Résultat de l'aquittement
-			type: select
-			value:
-				1: Acquitter
-				2: Erreur 500
-
-		result_verif:
-			name: Résultat de l'acceptance
-			type: select
-			value:
-				1: Accepter
-				2: Refuser
-				3: Erreur
-
-		last_bordereau:
-			name: Dernier bordereau envoyé
-			type: file
-			read-only: true
-
-		last_file:
-			name: Dernier fichier zip envoyé
-			type: file
-			read-only: true
-
+    page0:
+        result_send:
+            name: 'Résultat de l''envoi'
+            type: select
+            value:
+                1: ok
+                2: 'simuler un échec'
+                3: 'afficher le bordereau'
+        result_ack:
+            name: 'Résultat de l''aquittement'
+            type: select
+            value:
+                1: Acquitter
+                2: 'Erreur 500'
+        result_verif:
+            name: 'Résultat de l''acceptance'
+            type: select
+            value:
+                1: Accepter
+                2: Refuser
+                3: Erreur
+        last_bordereau:
+            name: 'Dernier bordereau envoyé'
+            type: file
+            read-only: true
+        last_file:
+            name: 'Dernier fichier zip envoyé'
+            type: file
+            read-only: true

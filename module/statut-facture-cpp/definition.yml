@@ -1,109 +1,96 @@
-nom: Statut Facture Chorus Pro
-type: Types de dossier Facture Chorus Pro
-
-description: |
-  Permet de changer le statut d'une facture sur Chorus Pro
-
+nom: 'Statut Facture Chorus Pro'
+type: 'Types de dossier Facture Chorus Pro'
+description: 'Permet de changer le statut d''une facture sur Chorus Pro'
 restriction_pack:
-  - pack_chorus_pro
-
+    - pack_chorus_pro
 connecteur:
-  PortailFacture
-
+    - PortailFacture
 formulaire:
-  page:
-    Objet:
-      requis: true
-      title: true
-      commentaire: Si non-renseigné, nom du fichier statut facture
-    fichier_statut_facture:
-      requis: true
-      name: Fichier Statut Facture
-      commentaire: Fichier XML contenant un seul bloc CPPStatut
-      type: file
-    fournisseur:
-      name: Identifiant du fournisseur
-    identifiant_cpp_fournisseur:
-      name: Identifiant CPP du fournisseur
-      commentaire: numéro CPP attribué à la structure fournisseur
-    fournisseur_raison_sociale:
-      name: Raison sociale du fournisseur
-    destinataire:
-      name: Identifiant du destinataire
-    numero_facture:
-      name: Identifiant de la facture chez le producteur
-    identifiant_facture_cpp:
-      name: Identifiant CPP de la facture
-    identifiant_statut_cible:
-      name: Identifiant Statut Cible
-    statut_cible:
-      name: Statut Cible
-    commentaire:
-      name: Commentaire
-
+    page:
+        Objet:
+            requis: true
+            title: true
+            commentaire: 'Si non-renseigné, nom du fichier statut facture'
+        fichier_statut_facture:
+            requis: true
+            name: 'Fichier Statut Facture'
+            commentaire: 'Fichier XML contenant un seul bloc CPPStatut'
+            type: file
+        fournisseur:
+            name: 'Identifiant du fournisseur'
+        identifiant_cpp_fournisseur:
+            name: 'Identifiant CPP du fournisseur'
+            commentaire: 'numéro CPP attribué à la structure fournisseur'
+        fournisseur_raison_sociale:
+            name: 'Raison sociale du fournisseur'
+        destinataire:
+            name: 'Identifiant du destinataire'
+        numero_facture:
+            name: 'Identifiant de la facture chez le producteur'
+        identifiant_facture_cpp:
+            name: 'Identifiant CPP de la facture'
+        identifiant_statut_cible:
+            name: 'Identifiant Statut Cible'
+        statut_cible:
+            name: 'Statut Cible'
+        commentaire:
+            name: Commentaire
 action:
-  creation:
-    name-action: Créer
-    name: Créé
-    rule:
-        no-last-action:
-        droit_id_u: 'statut-facture-cpp:edition'
-
-  modification:
-    name-action: Modifier
-    name: En cours de rédaction
-    rule:
-      role_id_e: editeur
-      droit_id_u: 'statut-facture-cpp:edition'
-      last-action:
-        creation
-        modification
-
-  importation:
-    name: Importation du document
-    action-automatique: create-statut-facture-cpp
-    rule:
-      role_id_e: no-role
-
-  create-statut-facture-cpp:
-    name-action: Créer le statut de la facture cpp
-    name: Statut créé
-    rule:
-      role_id_e: editeur
-      droit_id_u: 'statut-facture-cpp:edition'
-      last-action:
-        modification
-        importation
-    action-class: StatutFactureCppCreate
-    action-automatique: send-statut-facture-cpp
-
-  create-statut-facture-cpp-error:
-    name: Erreur lors de la création du statut de la facture
-    rule:
-      role_id_e: no-role
-
-  send-statut-facture-cpp:
-    name-action: Envoyer le changement de statut
-    name: Changement du statut effectué
-    rule:
-      role_id_e: editeur
-      droit_id_u: 'statut-facture-cpp:edition'
-      last-action:
-        create-statut-facture-cpp
-    action-class: StatutFactureCppSend
-    action-automatique: termine
-
-  termine:
-    name-action: Terminer
-    name: Terminée
-    action-class: Defaut
-    rule:
-      role_id_e: no-role
-
-  supression:
-    name-action: Supprimer
-    name: Supprimé
-    rule:
-      droit_id_u: 'statut-facture-cpp:edition'
-    action-class: Supprimer
-    warning: "Êtes-vous sûr ?"
+    creation:
+        name-action: Créer
+        name: Créé
+        rule:
+            no-last-action: ''
+            droit_id_u: 'statut-facture-cpp:edition'
+    modification:
+        name-action: Modifier
+        name: 'En cours de rédaction'
+        rule:
+            role_id_e: editeur
+            droit_id_u: 'statut-facture-cpp:edition'
+            last-action:
+                - creation
+                - modification
+    importation:
+        name: 'Importation du document'
+        action-automatique: create-statut-facture-cpp
+        rule:
+            role_id_e: no-role
+    create-statut-facture-cpp:
+        name-action: 'Créer le statut de la facture cpp'
+        name: 'Statut créé'
+        rule:
+            role_id_e: editeur
+            droit_id_u: 'statut-facture-cpp:edition'
+            last-action:
+                - modification
+                - importation
+        action-class: StatutFactureCppCreate
+        action-automatique: send-statut-facture-cpp
+    create-statut-facture-cpp-error:
+        name: 'Erreur lors de la création du statut de la facture'
+        rule:
+            role_id_e: no-role
+    send-statut-facture-cpp:
+        name-action: 'Envoyer le changement de statut'
+        name: 'Changement du statut effectué'
+        rule:
+            role_id_e: editeur
+            droit_id_u: 'statut-facture-cpp:edition'
+            last-action:
+                - create-statut-facture-cpp
+        action-class: StatutFactureCppSend
+        action-automatique: termine
+    termine:
+        name-action: Terminer
+        name: Terminée
+        action-class: Defaut
+        rule:
+            role_id_e: no-role
+    supression:
+        name-action: Supprimer
+        name: Supprimé
+        rule:
+            droit_id_u: 'statut-facture-cpp:edition'
+        action-class: Supprimer
+        warning: 'Êtes-vous sûr ?'

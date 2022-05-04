@@ -1,28 +1,24 @@
-nom: Transformation générique
+nom: 'Transformation générique'
 type: transformation
 formulaire:
-  page0:
-
-    definition:
-      name:  "Définition de l'extraction"
-      read-only: true
-      type: file
-      visionneuse: TransformationGeneriqueVisionneuse
-
-    fill-data:
-      name: "Définition de l'extraction"
-      edit-only: true
-      type: externalData
-      link_name: Décrire les transformations
-      choice-action: fill-data
-
+    page0:
+        definition:
+            name: 'Définition de l''extraction'
+            read-only: true
+            type: file
+            visionneuse: TransformationGeneriqueVisionneuse
+        fill-data:
+            name: 'Définition de l''extraction'
+            edit-only: true
+            type: externalData
+            link_name: 'Décrire les transformations'
+            choice-action: fill-data
 action:
-  test_extraction:
-    name: Tester la transformation
-    action-class: TransformationGeneriqueTestExtraction
-
-  fill-data:
-    name: Configurer les transformations
-    rule:
-      role_id_e: no-role
-    action-class: TransformationGeneriqueFillData
+    test_extraction:
+        name: 'Tester la transformation'
+        action-class: TransformationGeneriqueTestExtraction
+    fill-data:
+        name: 'Configurer les transformations'
+        rule:
+            role_id_e: no-role
+        action-class: TransformationGeneriqueFillData

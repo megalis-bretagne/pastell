@@ -1,38 +1,27 @@
-nom: Bouchon de tiers de télétransmission
-
+nom: 'Bouchon de tiers de télétransmission'
 type: TdT
-
-description: |
-	Il s'agit d'un bouchon utilisé pour le développement ou les démonstrations pendant lesquels l'utilisation d'un vrai
-	TdT ne se révelerait pas commode.
-	
-	Ce bouchon permet de spécifier un fichier de nomemclature à récupérer sur un vrai S²low 
-
-
+description: "Il s'agit d'un bouchon utilisé pour le développement ou les démonstrations pendant lesquels l'utilisation d'un vrai\nTdT ne se révelerait pas commode.\n\nCe bouchon permet de spécifier un fichier de nomemclature à récupérer sur un vrai S²low"
 formulaire:
-	page0:
-		classification_file:
-			name: "Fichier de classification"
-			type: file
-		nomemclature_file: 
-			name: "Fichier de nomenclature CDG"
-			type: externalData
-			link_name: Sélectionner un fichier de nomemclature CDG
-			choice-action: nomemclature-liste
-		tdt_check_status:
-			name: Réponse lors de la vérification du statut (actes) sur le tdt
-			type: select
-			value:
-				1: Posté
-				3: Transmis
-				4: Acquittement reçu
-				6: Refusé
-
+    page0:
+        classification_file:
+            name: 'Fichier de classification'
+            type: file
+        nomemclature_file:
+            name: 'Fichier de nomenclature CDG'
+            type: externalData
+            link_name: 'Sélectionner un fichier de nomemclature CDG'
+            choice-action: nomemclature-liste
+        tdt_check_status:
+            name: 'Réponse lors de la vérification du statut (actes) sur le tdt'
+            type: select
+            value:
+                1: Posté
+                3: Transmis
+                4: 'Acquittement reçu'
+                6: Refusé
 action:
-	
-	nomemclature-liste :
-		name: Liste des fichiers de nomemclature
-		action-class: FakeNomemclatureListe
-		rule:
-			role_id_e: no-role
-
+    nomemclature-liste:
+        name: 'Liste des fichiers de nomemclature'
+        action-class: FakeNomemclatureListe
+        rule:
+            role_id_e: no-role

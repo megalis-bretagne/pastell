@@ -1,147 +1,114 @@
-nom: Commande (générique)
-
-description: |
-    Type de dossier permettant l'enregistrement d'une commande au format PDF, puis le passage à la signature,
-    puis l'envoi de la facture par mail sécurisé et enfin l'envoi à la GED (facultatif)
-
+nom: 'Commande (générique)'
+description: "Type de dossier permettant l'enregistrement d'une commande au format PDF, puis le passage à la signature,\npuis l'envoi de la facture par mail sécurisé et enfin l'envoi à la GED (facultatif)"
 connecteur:
-    signature
-    mailsec
-    GED
-
+    - signature
+    - mailsec
+    - GED
 formulaire:
     Commande:
         libelle:
             name: Libellé
             requis: true
             title: true
-
         commande:
-            name: Bon de commande
+            name: 'Bon de commande'
             requis: true
             content-type: application/pdf
             type: file
-
         autre_document_attache:
-            name: Autre document attaché
+            name: 'Autre document attaché'
             type: file
             multiple: true
-
         id_fournisseur:
-            name: Identifiant fournisseur
-
+            name: 'Identifiant fournisseur'
         nom_fournisseur:
-            name: Nom du fournisseur
+            name: 'Nom du fournisseur'
             requis: true
-
         adresse_fournisseur:
-            name: Adresse du fournisseur
-
+            name: 'Adresse du fournisseur'
         mail_fournisseur:
-            name: Adresse e-mail du fournisseur
+            name: 'Adresse e-mail du fournisseur'
             requis: true
-
         date_emission:
-            name: Date d'émission
+            name: 'Date d''émission'
             type: date
-
         lieu_livraison:
-            name: Lieu de livraison
-
+            name: 'Lieu de livraison'
         prix_total_ht:
-            name: Prix total HT
-
+            name: 'Prix total HT'
         tva:
             name: TVA
             type: checkbox
-
         taux_tva:
-            name: Taux de TVA (%)
-
+            name: 'Taux de TVA (%)'
         total_ttc:
-            name: Prix total TTC
-
+            name: 'Prix total TTC'
     Budget:
         siret:
-            name: Numéro SIRET (entité)
-
+            name: 'Numéro SIRET (entité)'
         budget:
             name: Budget
-
         imputation_budgetaire:
-            name: Imputation budgétaire
-
+            name: 'Imputation budgétaire'
         service_gestionnaire:
-            name: Service gestionnaire
-
+            name: 'Service gestionnaire'
         num_bon_commande:
-            name: Numéro du bon de commande
-
+            name: 'Numéro du bon de commande'
         num_engagement:
-            name: Numéro d'engagement
-
+            name: 'Numéro d''engagement'
         num_marche:
-            name: Numéro de marché
-
+            name: 'Numéro de marché'
     Cheminement:
         envoi_signature:
-            name: Transmission à la signature
+            name: 'Transmission à la signature'
             type: checkbox
             onchange: envoi-change
-
         envoi_mailsec:
-            name: Transmission au fournisseur par mail sécurisé
+            name: 'Transmission au fournisseur par mail sécurisé'
             type: checkbox
-
         envoi_ged:
-            name: Transmission à la GED
+            name: 'Transmission à la GED'
             type: checkbox
-
         envoi_auto:
-            name: Envoyer automatiquement les dossiers d'étape en étape
+            name: 'Envoyer automatiquement les dossiers d''étape en étape'
             type: checkbox
-
     Parapheur:
         iparapheur_type:
-            name: Type i-Parapheur
+            name: 'Type i-Parapheur'
             read-only: true
-
         iparapheur_sous_type:
-            name: Sous-type i-Parapheur
+            name: 'Sous-type i-Parapheur'
             requis: true
             read-only: true
             type: externalData
             choice-action: iparapheur-sous-type
-            link_name: "Sélectionner un sous-type"
-
-    Retour Parapheur:
+            link_name: 'Sélectionner un sous-type'
+    'Retour Parapheur':
         iparapheur_dossier_id:
-            name: Identifiant du dossier sur le parapheur
+            name: 'Identifiant du dossier sur le parapheur'
         has_historique:
             no-show: true
         iparapheur_historique:
-            name: Historique iparapheur
+            name: 'Historique iparapheur'
             type: file
         parapheur_last_message:
-            name: Dernier message reçu du parapheur
+            name: 'Dernier message reçu du parapheur'
         has_signature:
             no-show: true
         signature:
-            name: Signature zip
+            name: 'Signature zip'
             type: file
         bordereau:
-            name: Bordereau de signature
+            name: 'Bordereau de signature'
             type: file
         document_orignal:
-            name: Bon de commande original (avant signature)
+            name: 'Bon de commande original (avant signature)'
             type: file
         iparapheur_annexe_sortie:
-            name: Annexe(s) de sortie du parapheur
+            name: 'Annexe(s) de sortie du parapheur'
             type: file
             multiple: true
-
-
-    Mail fournisseur:
+    'Mail fournisseur':
         has_message:
             no-show: true
         to:
@@ -151,311 +118,278 @@ formulaire:
         Message:
             type: textarea
         document_attache:
-            name: Documents attachés
+            name: 'Documents attachés'
             type: file
             multiple: true
         key:
             no-show: true
-
-    Retour GED:
+    'Retour GED':
         has_ged_document_id:
             no-show: true
         ged_document_id_file:
-            name: Identifiants des documents sur la GED
+            name: 'Identifiants des documents sur la GED'
             type: file
             visionneuse: GedIdDocumentsVisionneuse
             read-only: true
             requis: true
             visionneuse-no-link: true
-
 page-condition:
-
     Parapheur:
         envoi_signature: true
-
-    Retour Parapheur:
+    'Retour Parapheur':
         has_historique: true
-
-    Mail fournisseur:
+    'Mail fournisseur':
         has_message: true
-
-    Retour GED:
+    'Retour GED':
         has_ged_document_id: true
-
 action:
     creation:
         name-action: Créer
         name: Créé
         rule:
-            no-last-action:
-
+            no-last-action: ''
     modification:
         name-action: Modifier
-        name: En cours de rédaction
+        name: 'En cours de rédaction'
         rule:
             last-action:
-                creation
-                modification
-                recu-iparapheur
-                recu-iparapheur-etat
-                envoi-mail
-                reception
-                reception-etat
-                renvoi
-                send-ged
-                termine
-
+                - creation
+                - modification
+                - recu-iparapheur
+                - recu-iparapheur-etat
+                - envoi-mail
+                - reception
+                - reception-etat
+                - renvoi
+                - send-ged
+                - termine
     supression:
         name-action: Supprimer
         name: Supprimé
         rule:
             last-action:
-                creation
-                modification
-                recu-iparapheur
-                recu-iparapheur-etat
-                rejet-iparapheur
-                envoi-mail
-                reception-etat
-                send-ged
-                termine
-                fatal-error
+                - creation
+                - modification
+                - recu-iparapheur
+                - recu-iparapheur-etat
+                - rejet-iparapheur
+                - envoi-mail
+                - reception-etat
+                - send-ged
+                - termine
+                - fatal-error
         action-class: Supprimer
-        warning: "Êtes-vous sûr ?"
-
+        warning: 'Êtes-vous sûr ?'
     orientation:
         name: Orientation
         rule:
             role_id_e: no-role
         action-class: FournisseurCommandeOrientation
-
     termine:
-        name: Traitement terminé
+        name: 'Traitement terminé'
         rule:
             role_id_e: no-role
         editable-content:
-            envoi_ged
-
+            - envoi_ged
     prepare-iparapheur:
-        name-action: "Préparation de l'envoi au parapheur"
-        name: Préparation de l'envoi au iParapheur
+        name-action: 'Préparation de l''envoi au parapheur'
+        name: 'Préparation de l''envoi au iParapheur'
         rule:
             role_id_e: no-role
         action-automatique: send-iparapheur
-
     send-iparapheur:
-            name-action: Transmettre au parapheur
-            name: Transmis au parapheur
-            rule:
-                last-action:
-                    - creation
-                    - modification
-                document_is_valide: true
-                content:
-                    envoi_signature: true
-                no-action:
-                    - send-iparapheur
-            action-class: StandardAction
-            action-automatique: verif-iparapheur
-            connecteur-type: signature
-            connecteur-type-action: SignatureEnvoie
-            connecteur-type-mapping:
-                objet: libelle
-                document: commande
-
-    verif-iparapheur:
-        name-action: Vérifier le statut de signature
-        name: Vérification de la signature
+        name-action: 'Transmettre au parapheur'
+        name: 'Transmis au parapheur'
         rule:
             last-action:
-                erreur-verif-iparapheur
-                send-iparapheur
+                - creation
+                - modification
+            document_is_valide: true
+            content:
+                envoi_signature: true
+            no-action:
+                - send-iparapheur
+        action-class: StandardAction
+        action-automatique: verif-iparapheur
+        connecteur-type: signature
+        connecteur-type-action: SignatureEnvoie
+        connecteur-type-mapping:
+            objet: libelle
+            document: commande
+    verif-iparapheur:
+        name-action: 'Vérifier le statut de signature'
+        name: 'Vérification de la signature'
+        rule:
+            last-action:
+                - erreur-verif-iparapheur
+                - send-iparapheur
         action-class: FournisseurCommandeReceptionParapheur
         connecteur-type: signature
-
     erreur-verif-iparapheur:
-        name: Erreur lors de la vérification du statut de signature
+        name: 'Erreur lors de la vérification du statut de signature'
         rule:
             role_id_e: no-role
-
     recu-iparapheur:
-        name: Signature récupérée
+        name: 'Signature récupérée'
         rule:
             role_id_e: no-role
         editable-content:
-            envoi_mailsec
-            envoi_ged
+            - envoi_mailsec
+            - envoi_ged
         action-automatique: orientation
-
     recu-iparapheur-etat:
-        name: État signature récupérée
+        name: 'État signature récupérée'
         rule:
             role_id_e: no-role
         editable-content:
-            envoi_mailsec
-            envoi_ged
-
+            - envoi_mailsec
+            - envoi_ged
     rejet-iparapheur:
-        name: Signature refusée
+        name: 'Signature refusée'
         rule:
             role_id_e: no-role
-
     prepare-envoi-mail:
-        name: Préparation de l'envoi du mail au fournisseur
+        name: 'Préparation de l''envoi du mail au fournisseur'
         rule:
             role_id_e: no-role
         action-automatique: envoi-mail
-
     envoi-mail:
-        name: Mail envoyé au fournisseur
-        name-action: Envoyer un mail au fournisseur
+        name: 'Mail envoyé au fournisseur'
+        name-action: 'Envoyer un mail au fournisseur'
         rule:
             content:
                 envoi_mailsec: true
             no-action:
-                envoi-mail
+                - envoi-mail
             document_is_valide: true
             or_1:
                 and_1:
                     content:
                         envoi_signature: false
                     last-action:
-                        modification
-                        prepare-envoi-mail
+                        - modification
+                        - prepare-envoi-mail
                 and_2:
                     last-action:
-                        recu-iparapheur
-                        recu-iparapheur-etat
+                        - recu-iparapheur
+                        - recu-iparapheur-etat
                 and_3:
                     has-action:
-                        recu-iparapheur
+                        - recu-iparapheur
                     no-action:
-                        send-ged
+                        - send-ged
         editable-content:
-            envoi_ged
+            - envoi_ged
         action-class: FournisseurCommandeEnvoiMail
         action-automatique: mailsec-attente
-
     prepare-renvoi:
-        name: Préparation de la relance du mail
+        name: 'Préparation de la relance du mail'
         rule:
             role_id_e: no-role
         action-automatique: renvoi
-
     erreur:
         name: Erreur
         rule:
             role_id_e: no-role
-
     mailsec-attente:
-        name: Vérification de réception
-        name-action: Vérification de réception
+        name: 'Vérification de réception'
+        name-action: 'Vérification de réception'
         rule:
             last-action:
-                envoi-mail
-                renvoi
+                - envoi-mail
+                - renvoi
         action-class: FournisseurCommandeAttente
         action-automatique: mailsec-attente
-
     non-recu:
-        name: Non reçu
-        name-action: Définir comme non reçu
-        warning: "ok"
+        name: 'Non reçu'
+        name-action: 'Définir comme non reçu'
+        warning: ok
         rule:
             last-action:
-                renvoi
-                envoi-mail
+                - renvoi
+                - envoi-mail
         action-class: Defaut
         action-automatique: orientation
-
     reception:
-        name: Mail reçu par le fournisseur
+        name: 'Mail reçu par le fournisseur'
         rule:
             role_id_e: no-role
         editable-content:
-            envoi_ged
+            - envoi_ged
         action-automatique: orientation
-
     reception-etat:
-        name: État Mail traité
+        name: 'État Mail traité'
         rule:
             role_id_e: no-role
         editable-content:
-            envoi_ged
-
+            - envoi_ged
     renvoi:
-        name-action: Envoyer à nouveau au fournisseur
+        name-action: 'Envoyer à nouveau au fournisseur'
         name: Renvoyé
         rule:
             last-action:
-                envoi-mail
+                - envoi-mail
             role_id_e: editeur
             document_is_valide: true
         editable-content:
-            envoi_ged
+            - envoi_ged
         action-class: FournisseurCommandeRenvoyerMail
         action-automatique: mailsec-attente
-
     prepare-ged:
-        name: Préparation de l'envoi à la GED
+        name: 'Préparation de l''envoi à la GED'
         rule:
             role_id_e: no-role
         action-automatique: send-ged
-
     send-ged:
-        name-action: Verser à la GED
-        name: Versé à la GED
+        name-action: 'Verser à la GED'
+        name: 'Versé à la GED'
         rule:
             content:
                 envoi_ged: true
             no-action:
-                send-ged
+                - send-ged
             document_is_valide: true
             or_1:
                 and_1:
                     last-action:
-                        envoi-mail
-                        renvoi
-                        reception
-                        reception-etat
-                        prepare-ged
+                        - envoi-mail
+                        - renvoi
+                        - reception
+                        - reception-etat
+                        - prepare-ged
                 and_2:
                     last-action:
-                        modification
+                        - modification
                     content:
                         envoi_mailsec: false
                         envoi_signature: false
                 and_3:
                     has-action:
-                        recu-iparapheur
+                        - recu-iparapheur
                     content:
                         envoi_mailsec: false
                 and_4:
                     has-action:
-                        reception
-                        error-ged
+                        - reception
+                        - error-ged
         action-class: StandardAction
         connecteur-type: GED
         connecteur-type-action: GEDEnvoyer
         connecteur-type-mapping:
             fatal-error: error-ged
-
     error-ged:
-        name: Erreur irrécupérable lors du dépôt
+        name: 'Erreur irrécupérable lors du dépôt'
         rule:
             role_id_e: no-role
-
     iparapheur-sous-type:
-        name: Liste des sous-type iParapheur
+        name: 'Liste des sous-type iParapheur'
         no-workflow: true
         rule:
             role_id_e: no-role
         action-class: IparapheurSousType
-
     envoi-change:
-        name: Modification des envois
+        name: 'Modification des envois'
         no-workflow: true
         rule:
             role_id_e: no-role
         action-class: FournisseurCommandeEnvoieChange
-

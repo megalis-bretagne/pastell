@@ -1,195 +1,168 @@
-nom: Pièces de marché par étape
-type: Types de dossier marché
-
-description: Permet d'alimenter le type de dossier Pièces de marché avec l'ensemble des pièces d'une même étape.
-
+nom: 'Pièces de marché par étape'
+type: 'Types de dossier marché'
+description: 'Permet d''alimenter le type de dossier Pièces de marché avec l''ensemble des pièces d''une même étape.'
 restriction_pack:
     - pack_marche
-
 formulaire:
     Document:
         libelle:
-            name: Libellé du marché
+            name: 'Libellé du marché'
             requis: true
             title: true
-
         type_consultation:
-            name: Type de consultation
+            name: 'Type de consultation'
             type: select
             value:
-                MAPA: MAPA - Marchés A Procédures Adaptées
-                AOO: AOO - Appel d'Offres Ouvert
-                AOR: AOR - Appel d'Offres Restreint
-                DC: DC - Dialogue Compétitif
-                MS: MS - Marché Subséquent
-                PC: PC - Procédure Concurrentielle
-                MSMC: MSMC - Marché Sans Mise en Concurrence
-
+                MAPA: 'MAPA - Marchés A Procédures Adaptées'
+                AOO: 'AOO - Appel d''Offres Ouvert'
+                AOR: 'AOR - Appel d''Offres Restreint'
+                DC: 'DC - Dialogue Compétitif'
+                MS: 'MS - Marché Subséquent'
+                PC: 'PC - Procédure Concurrentielle'
+                MSMC: 'MSMC - Marché Sans Mise en Concurrence'
         numero_consultation:
-            name: Numéro de consultation
+            name: 'Numéro de consultation'
             requis: true
             index: true
-
         type_marche:
-            name: Type de marché
+            name: 'Type de marché'
             type: select
             requis: true
             index: true
             value:
-                T: T - Travaux
-                F: F - Fournitures
-                S: S - Services
-                TIC: TIC - Techniques de l'information et de la communication
-                MO: MO - Maîtrise d’œuvre
-                PI: PI - Prestation intellectuelle
-
+                T: 'T - Travaux'
+                F: 'F - Fournitures'
+                S: 'S - Services'
+                TIC: 'TIC - Techniques de l''information et de la communication'
+                MO: 'MO - Maîtrise d’œuvre'
+                PI: 'PI - Prestation intellectuelle'
         recurrent:
             name: Récurrent
             type: checkbox
-
         numero_marche:
-            name: Numéro de marché
+            name: 'Numéro de marché'
             index: true
-
         etape:
             name: Étape
             requis: true
             index: true
             type: select
             value:
-                EB: EB - Estimation des besoins
-                DCE: DCE - DCE
-                EO: EO - Examen des Offres
-                ONR: ONR - Offre Non Retenue
-                OR: OR - Offre Retenue
-
+                EB: 'EB - Estimation des besoins'
+                DCE: 'DCE - DCE'
+                EO: 'EO - Examen des Offres'
+                ONR: 'ONR - Offre Non Retenue'
+                OR: 'OR - Offre Retenue'
         soumissionnaire:
-            name: Soumissionnaire principal ou mandataire
+            name: 'Soumissionnaire principal ou mandataire'
             index: true
-
         montant:
-            name: Montant (estimatif ou notifié)
-            commentaire: La nature du montant dépend de l'étape et du type de pièce
-
+            name: 'Montant (estimatif ou notifié)'
+            commentaire: 'La nature du montant dépend de l''étape et du type de pièce'
         date_document:
-            name: Date des documents
+            name: 'Date des documents'
             type: date
             requis: true
-
         zip_etape:
-            name: Fichier ZIP des pièces
+            name: 'Fichier ZIP des pièces'
             type: file
-            commentaire: "Fichier ZIP de l'ensemble des pièces de l'étape"
+            commentaire: 'Fichier ZIP de l''ensemble des pièces de l''étape'
             progress_bar: true
             onchange: extraction
-
         piece:
-            name: Pièce(s) de l'étape
+            name: 'Pièce(s) de l''étape'
             type: file
             multiple: true
-            commentaire: "Ensemble des pièces de l'étape"
+            commentaire: 'Ensemble des pièces de l''étape'
             progress_bar: true
-
         type_piece:
-            name: Typologie des pièces
+            name: 'Typologie des pièces'
             type: externalData
-            link_name: liste des types de pièces
+            link_name: 'liste des types de pièces'
             choice-action: type-piece
-
         type_pj:
             no-show: true
-
-
 champs-affiches:
-    titre
-    numero_marche
-    etape
-    soumissionnaire
-    dernier_etat
-    date_dernier_etat
-
+    - titre
+    - numero_marche
+    - etape
+    - soumissionnaire
+    - dernier_etat
+    - date_dernier_etat
 action:
     creation:
         name-action: Créer
         name: Créé
         rule:
-            no-last-action:
-
+            no-last-action: ''
     modification:
         name-action: Modifier
-        name: En cours de rédaction
+        name: 'En cours de rédaction'
         rule:
             last-action:
-                creation
-                modification
-                extraction
-                extraction-error
-                importation
-                importation-sans-extraction
-                importation-erreur
-
+                - creation
+                - modification
+                - extraction
+                - extraction-error
+                - importation
+                - importation-sans-extraction
+                - importation-erreur
     suppression:
         name-action: Supprimer
         name: Supprimé
         rule:
             last-action:
-                creation
-                modification
-                extraction
-                extraction-error
-                creer-piece-marche
-                creer-envoyer-piece-marche
-                importation
-                importation-sans-extraction
-                importation-erreur
-                termine
-                fatal-error
+                - creation
+                - modification
+                - extraction
+                - extraction-error
+                - creer-piece-marche
+                - creer-envoyer-piece-marche
+                - importation
+                - importation-sans-extraction
+                - importation-erreur
+                - termine
+                - fatal-error
         action-class: Supprimer
-        warning: "Êtes-vous sûr ?"
-
+        warning: 'Êtes-vous sûr ?'
     importation:
-        name: Importation du dossier
+        name: 'Importation du dossier'
         action-automatique: importation-ok
         rule:
             role_id_e: no-role
-
     importation-ok:
-        name: Import terminé
+        name: 'Import terminé'
         action-class: DefautNotify
         rule:
             role_id_e: no-role
         action-automatique: extraction-prepare
-
     importation-sans-extraction:
-        name: Importation (sans extraction)
+        name: 'Importation (sans extraction)'
         rule:
             role_id_e: no-role
-
     importation-erreur:
-        name: Importation avec erreur
+        name: 'Importation avec erreur'
         rule:
             role_id_e: no-role
-
     extraction-prepare:
-        name-action: Programmer l'extraction de l'archive
-        name: Programmation de l'extraction de l'archive
+        name-action: 'Programmer l''extraction de l''archive'
+        name: 'Programmation de l''extraction de l''archive'
         rule:
             role_id_e: no-role
         action-class: Defaut
         action-automatique: extraction
-
     extraction:
-        name: Archive extraite
-        name-action: Extraction de l'archive
+        name: 'Archive extraite'
+        name-action: 'Extraction de l''archive'
         rule:
             last-action:
-                extraction-prepare
-                extraction
-                creation
-                modification
-                importation
-                importation-sans-extraction
-                importation-erreur
+                - extraction-prepare
+                - extraction
+                - creation
+                - modification
+                - importation
+                - importation-sans-extraction
+                - importation-erreur
         editable-content:
             - libelle
             - type_consultation
@@ -205,9 +178,8 @@ action:
             - piece
             - type_piece
         action-class: PieceMarcheParEtapeExtraire
-
     extraction-error:
-        name: Erreur lors de l'extraction de l'archive
+        name: 'Erreur lors de l''extraction de l''archive'
         rule:
             role_id_e: no-role
         editable-content:
@@ -224,43 +196,37 @@ action:
             - zip_etape
             - piece
             - type_piece
-
     erreur:
         name: Erreur
         rule:
             role_id_e: no-role
-
     creer-piece-marche:
-        name-action: Créer les Pièces
-        name: Pièces de marché créées
+        name-action: 'Créer les Pièces'
+        name: 'Pièces de marché créées'
         rule:
             last-action:
-                creation
-                modification
-                extraction
+                - creation
+                - modification
+                - extraction
             document_is_valide: true
         action-class: PieceMarcheParEtapeCreerPieces
-
     creer-envoyer-piece-marche:
-        name-action: Créer et envoyer les Pièces
-        name: Pièces de marché créées et envoyées
+        name-action: 'Créer et envoyer les Pièces'
+        name: 'Pièces de marché créées et envoyées'
         rule:
             last-action:
-                creation
-                modification
-                extraction
+                - creation
+                - modification
+                - extraction
             document_is_valide: true
         action-class: PieceMarcheParEtapeCreerEnvoyerPieces
-
     termine:
-        name: Traitement terminé
+        name: 'Traitement terminé'
         rule:
             role_id_e: no-role
-
     type-piece:
-        name: Typologie des pièces
+        name: 'Typologie des pièces'
         no-workflow: true
         rule:
             role_id_e: no-role
         action-class: PieceMarcheParEtapeTypePiece
-

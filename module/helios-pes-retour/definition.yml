@@ -1,118 +1,102 @@
-nom: Helios PES Retour
-
-
-description: |
-	Type de dossier Hélios PES Retour permettant de traiter les réponses d'hélios.
-	Permet de les envoyer à une GED.
-
+nom: 'Helios PES Retour'
+description: "Type de dossier Hélios PES Retour permettant de traiter les réponses d'hélios.\nPermet de les envoyer à une GED."
 connecteur:
-	TdT
-	GED
-
+    - TdT
+    - GED
 affiche_one: true
-
 formulaire:
-	PES:
-		Objet:
-			requis: true
-			title: true
-		fichier_pes:
-			name: Fichier PES Retour
-			type: file
-			requis: true
-			commentaire: "format XML"
-		id_retour: 
-			no-show: true
-		date_tdt:
-			name: Date de réception Tdt
-			type: date
-		envoi_ged:
-			name: Transmission à la GED
-			type: checkbox
-
-	Retour GED:
-		has_ged_document_id:
-			no-show: true
-		ged_document_id_file:
-			name: Identifiants des documents sur la GED
-			type: file
-			visionneuse: GedIdDocumentsVisionneuse
-			read-only: true
-			requis: true
-			visionneuse-no-link: true
-
+    PES:
+        Objet:
+            requis: true
+            title: true
+        fichier_pes:
+            name: 'Fichier PES Retour'
+            type: file
+            requis: true
+            commentaire: 'format XML'
+        id_retour:
+            no-show: true
+        date_tdt:
+            name: 'Date de réception Tdt'
+            type: date
+        envoi_ged:
+            name: 'Transmission à la GED'
+            type: checkbox
+    'Retour GED':
+        has_ged_document_id:
+            no-show: true
+        ged_document_id_file:
+            name: 'Identifiants des documents sur la GED'
+            type: file
+            visionneuse: GedIdDocumentsVisionneuse
+            read-only: true
+            requis: true
+            visionneuse-no-link: true
 page-condition:
-	Retour GED:
-		has_ged_document_id: true
-
+    'Retour GED':
+        has_ged_document_id: true
 action:
-	creation:
-		name-action: Créer
-		name: Créé
-		rule:
-			no-last-action:
-			droit_id_u: 'helios-pes-retour:edition'
-			type_id_e: 
-				service
-				collectivite
-
-	modification:
-		name-action: Modifier
-		name: En cours de rédaction
-		rule:
-			last-action: 
-				creation
-				modification
-				get-pes
-				send-ged
-			droit_id_u: 'helios-pes-retour:edition'
-
-	supression:
-		name-action: Supprimer
-		name: Supprimé
-		rule:
-			last-action: 
-				creation
-				modification
-				get-pes
-				send-ged
-			droit_id_u: 'helios-pes-retour:edition'
-		action-class: Supprimer
-		warning: "Êtes-vous sûr ?"
-
-	get-pes:
-		name-action: Importer à nouveau
-		name: Importé à nouveau
-		rule:
-			last-action: 
-				creation
-				modification
-				get-pes
-		action-class: HeliosRecupPESRetour
-
-	tdt-error:
-		name: Erreur sur le TdT
-		rule:
-			role_id_e: no-role
-
-	send-ged:
-		name-action: Verser à la GED
-		name: Versé à la GED
-		rule:
-			content:
-				envoi_ged: true
-			last-action: 
-				creation
-				modification
-				error-ged
-			document_is_valide: true
-		action-class: StandardAction
-		connecteur-type: GED
-		connecteur-type-action: GEDEnvoyer
-		connecteur-type-mapping:
-			fatal-error: error-ged
-
-	error-ged:
-		name: Erreur irrécupérable lors du dépôt
-		rule:
-			role_id_e: no-role
+    creation:
+        name-action: Créer
+        name: Créé
+        rule:
+            no-last-action: ''
+            droit_id_u: 'helios-pes-retour:edition'
+            type_id_e:
+                - service
+                - collectivite
+    modification:
+        name-action: Modifier
+        name: 'En cours de rédaction'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - get-pes
+                - send-ged
+            droit_id_u: 'helios-pes-retour:edition'
+    supression:
+        name-action: Supprimer
+        name: Supprimé
+        rule:
+            last-action:
+                - creation
+                - modification
+                - get-pes
+                - send-ged
+            droit_id_u: 'helios-pes-retour:edition'
+        action-class: Supprimer
+        warning: 'Êtes-vous sûr ?'
+    get-pes:
+        name-action: 'Importer à nouveau'
+        name: 'Importé à nouveau'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - get-pes
+        action-class: HeliosRecupPESRetour
+    tdt-error:
+        name: 'Erreur sur le TdT'
+        rule:
+            role_id_e: no-role
+    send-ged:
+        name-action: 'Verser à la GED'
+        name: 'Versé à la GED'
+        rule:
+            content:
+                envoi_ged: true
+            last-action:
+                - creation
+                - modification
+                - error-ged
+            document_is_valide: true
+        action-class: StandardAction
+        connecteur-type: GED
+        connecteur-type-action: GEDEnvoyer
+        connecteur-type-mapping:
+            fatal-error: error-ged
+    error-ged:
+        name: 'Erreur irrécupérable lors du dépôt'
+        rule:
+            role_id_e: no-role

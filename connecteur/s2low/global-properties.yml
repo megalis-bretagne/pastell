@@ -1,60 +1,50 @@
 nom: S²low
 type: TdT
-
-description: |
-    Permet de faire des actions sur l'ensemble des connecteurs S²low installés sur Pastell.
-
+description: 'Permet de faire des actions sur l''ensemble des connecteurs S²low installés sur Pastell.'
 formulaire:
     page0:
         changement_certificat:
             no-show: true
             type: externalData
-            link_name: Sélectionner un certificat
+            link_name: 'Sélectionner un certificat'
             choice-action: mise-a-jour-certif-s2low
-
-
 action:
     demande-classification:
-        name: Envoyer une demande de classification pour toutes les collectivités
+        name: 'Envoyer une demande de classification pour toutes les collectivités'
         tab: TdT
         action-class: DemandeClassificationAll
         rule:
             droit_id_u: 'entite:edition'
-
     recup-classification:
-        name: Récupérer la classification pour toutes les collectivités
+        name: 'Récupérer la classification pour toutes les collectivités'
         tab: TdT
         action-class: RecupClassificationAll
         rule:
             droit_id_u: 'entite:edition'
-
     recup-pes-retour:
-        name: Récupérer les PES retour pour toutes les collectivités
+        name: 'Récupérer les PES retour pour toutes les collectivités'
         tab: TdT
         action-class: RecupPESRetourAll
         rule:
             droit_id_u: 'entite:edition'
         action-automatique: recup-pes-retour
-
     recup-reponse-prefecture:
-        name: Récupérer les réponses de la préfecture pour toutes les collectivités
+        name: 'Récupérer les réponses de la préfecture pour toutes les collectivités'
         tab: TdT
         action-class: RecupReponsePrefectureAll
         rule:
             droit_id_u: 'entite:edition'
         action-automatique: recup-reponse-prefecture
-
     redirect-to-mise-a-jour-certif-s2low:
-        name: Mettre à jour les certificats
+        name: 'Mettre à jour les certificats'
         tab: TdT
         rule:
             droit_id_u: 'entite:edition'
         action-class: StandardAction
         connecteur-type: utilities
         connecteur-type-action: RedirectToGlobalUpdateCertificate
-
     mise-a-jour-certif-s2low:
-        name: Mettre à jour les certificats
+        name: 'Mettre à jour les certificats'
         tab: TdT
         rule:
             role_id_e: no-role
@@ -62,8 +52,6 @@ action:
         connecteur-type: utilities
         connecteur-type-action: GlobalUpdateCertificate
         connecteur-type-mapping:
-            page_title: Mise à jour certificat S2low
+            page_title: 'Mise à jour certificat S2low'
             certificate: user_certificat
             certificate_password: user_certificat_password
-
-
