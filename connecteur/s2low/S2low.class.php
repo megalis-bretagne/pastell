@@ -694,9 +694,6 @@ class S2low extends TdtConnecteur
         // création sur l'entité de l'acte d'origine si acte_unique_id est trouvé
         // et que le connecteur s2low est associé au flux de l'acte d'origine
 
-        $connecteur_info = $this->getConnecteurInfo();
-        $id_e = $connecteur_info['id_e'];
-
         /** @var DocumentTypeFactory $documentTypeFactory */
         $documentTypeFactory = $this->objectInstancier->getInstance(DocumentTypeFactory::class);
         if (! $documentTypeFactory->isTypePresent(self::FLUX_REPONSE_PREFECTURE)) {
@@ -708,18 +705,8 @@ class S2low extends TdtConnecteur
         $acteDocumentId = $this->objectInstancier
             ->getInstance(DocumentIndexSQL::class)
             ->getByFieldValue('acte_unique_id', $reponse['unique_id']);
-        if ($acteDocumentId) {
-            $acteEntite = $this->objectInstancier->getInstance(DocumentEntite::class)->getEntite($acteDocumentId);
-            $id_e_acte = $acteEntite[0]['id_e'];
-            $id_ce_acte = $this->objectInstancier->getInstance(FluxEntiteSQL::class)->getConnecteurId(
-                $id_e_acte,
-                $acteEntite[0]['last_type'],
-                $connecteur_info['type']
-            );
-            if ($connecteur_info['id_ce'] == $id_ce_acte) {
-                $id_e = $id_e_acte;
-            }
-        }
+
+        $id_e = $this->getEntiteForReponsePrefecture($acteDocumentId);
 
         $documentCreationService = $this->objectInstancier->getInstance(DocumentCreationService::class);
         $new_id_d = $documentCreationService->createDocumentWithoutAuthorizationChecking(
@@ -742,7 +729,8 @@ class S2low extends TdtConnecteur
 
         if ($acteDocumentId) {
             $acteDocument = $this->objectInstancier->getInstance(DonneesFormulaireFactory::class)->get($acteDocumentId);
-            $url = sprintf("/Document/detail?id_d=%s&id_e=%s", $acteDocumentId, $id_e);
+            $acteEntite = $this->objectInstancier->getInstance(DocumentEntite::class)->getEntite($acteDocumentId);
+            $url = sprintf("/Document/detail?id_d=%s&id_e=%s", $acteDocumentId, $acteEntite[0]['id_e']);
             $donneesFormulaire->setData('url_acte', SITE_BASE . $url);
 
             $linksToDocuments = [];
@@ -820,6 +808,30 @@ class S2low extends TdtConnecteur
 
         $this->exec(self::URL_ACTES_REPONSE_PREFECTURE_MARK_AS_READ . "?transaction_id=" . $reponse['id']);
         return true;
+    }
+
+    /**
+     * @param string $acteDocumentId
+     * @return mixed
+     */
+    private function getEntiteForReponsePrefecture(string $acteDocumentId)
+    {
+        $connecteur_info = $this->getConnecteurInfo();
+        $id_e = $connecteur_info['id_e'];
+
+        if ($acteDocumentId) {
+            $acteEntite = $this->objectInstancier->getInstance(DocumentEntite::class)->getEntite($acteDocumentId);
+            $id_e_acte = $acteEntite[0]['id_e'];
+            $id_ce_acte = $this->objectInstancier->getInstance(FluxEntiteSQL::class)->getConnecteurId(
+                $id_e_acte,
+                $acteEntite[0]['last_type'],
+                $connecteur_info['type']
+            );
+            if ($connecteur_info['id_ce'] == $id_ce_acte) {
+                $id_e = $id_e_acte;
+            }
+        }
+        return $id_e;
     }
 
     /**
