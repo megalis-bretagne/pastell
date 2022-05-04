@@ -36,18 +36,27 @@ class DocumentTypeValidationTest extends PHPUnit\Framework\TestCase
         $this->assertEquals("Fichier definition.yml absent", $this->documentTypeValidation->getLastError()[0]);
     }
 
-    public function testConnecteurType()
+    public function testConnecteurType(): void
     {
         $this->documentTypeValidation->setConnecteurTypeList(["signature"]);
-        $this->documentTypeValidation->setConnecteurTypeActionClassList(["SignatureEnvoie"]);
-        $this->assertTrue($this->documentTypeValidation->validate(__DIR__ . "/fixtures/definition-with-connecteur-type.yml"));
+        $this->assertTrue(
+            $this->documentTypeValidation->validate(__DIR__ . "/fixtures/definition-for-action-test.yml")
+        );
     }
 
-    public function testConnecteurTypeAbsent()
+    public function testConnecteurTypeAbsent(): void
     {
-        $this->assertFalse($this->documentTypeValidation->validate(__DIR__ . "/fixtures/definition-with-connecteur-type.yml"));
-        $this->assertEquals("action:<b>test</b>:connecteur-type:<b>signature</b> n'est pas un connecteur du système", $this->documentTypeValidation->getLastError()[1]);
-        $this->assertEquals("action:<b>test</b>:connecteur-type-action:<b>SignatureEnvoie</b> n'est pas une classe d'action du système", $this->documentTypeValidation->getLastError()[2]);
+        $this->assertFalse(
+            $this->documentTypeValidation->validate(__DIR__ . "/fixtures/definition-with-connecteur-type.yml")
+        );
+        $this->assertEquals(
+            "action:<b>test</b>:connecteur-type:<b>signature</b> n'est pas un connecteur du système",
+            $this->documentTypeValidation->getLastError()[1]
+        );
+        $this->assertEquals(
+            "action:<b>test</b>:connecteur-type-action:<b>FakeSignatureEnvoie</b> n'est pas une classe d'action du système",
+            $this->documentTypeValidation->getLastError()[2]
+        );
     }
 
     public function testConnecteurTypeMappingFailed()

@@ -86,4 +86,10 @@ abstract class SEDAConnecteur extends Connecteur
             );
         }
     }
+
+    public function getTransferId(string $bordereau): string
+    {
+        $xml = simplexml_load_string($bordereau);
+        return $xml->TransferIdentifier ?? $xml->MessageIdentifier;
+    }
 }

@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Step\SAE\Enum\SAEActionsEnum;
+
 class TypeDossierSAETest extends PastellTestCase
 {
     public const SAE_ONLY = 'sae-only';
@@ -66,7 +68,8 @@ class TypeDossierSAETest extends PastellTestCase
         );
         $this->assertLastMessage("sélection automatique  de l'action suivante");
 
-        $result = $this->triggerActionOnDocument($info['id_d'], "send-archive");
+        $this->triggerActionOnDocument($info['id_d'], SAEActionsEnum::GENERATE_ARCHIVE->value);
+        $result = $this->triggerActionOnDocument($info['id_d'], SAEActionsEnum::SEND_ARCHIVE->value);
         if (! $result) {
             $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($info['id_d']);
             echo $donneesFormulaire->getFileContent('sae_bordereau');
