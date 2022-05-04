@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Helpers\UsernameDisplayer;
+
 class JournalControler extends PastellControler
 {
     public function _beforeAction()
@@ -148,9 +150,12 @@ class JournalControler extends PastellControler
             $documentInfo = $this->getDocumentSQL()->getInfo($this->getViewParameterOrObject('id_d'));
             $page_title .= " - " . $documentInfo['titre'];
         }
-        if ($this->getViewParameterOrObject('id_u')) {
-            $infoUtilisateur = $this->getUtilisateur()->getInfo($this->getViewParameterOrObject('id_u'));
-            $page_title .= " - " . $infoUtilisateur['prenom'] . " " . $infoUtilisateur['nom'];
+
+        if ($this->getViewParameterByKey('id_u')) {
+            $usernameDisplayer = $this->getObjectInstancier()->getInstance(UsernameDisplayer::class);
+            $id_u = $this->getViewParameterByKey('id_u');
+            $infoUtilisateur = $this->getUtilisateur()->getInfo($id_u);
+            $page_title .= " - " . $usernameDisplayer->getUsername($infoUtilisateur);
         }
 
         $this->setViewParameter('limit', 20);

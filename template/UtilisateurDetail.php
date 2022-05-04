@@ -10,6 +10,7 @@
  * @var array $arbre
  * @var array $notification_list
  * @var array $all_module
+ * @var int $id_u
  */
 
 use Pastell\Utilities\Certificate;
@@ -85,14 +86,16 @@ use Pastell\Utilities\Certificate;
 
 
     <?php if ($utilisateur_edition) : ?>
+        <a
+                class='btn btn-danger'
+                href="<?php $this->url("Utilisateur/suppression?id_u=$id_u") ?>"
+        ><i class='fa fa-trash'></i>&nbsp;Supprimer</a>
         <a class='btn btn-primary' href="Utilisateur/edition?id_u=<?php echo $id_u?>">
             <i class="fa fa-pencil"></i>&nbsp;Modifier
         </a>
     <?php endif;?>
-
-
+    
 </div>
-
 
 <div class="box">
 <h2>Rôle de l'utilisateur</h2>

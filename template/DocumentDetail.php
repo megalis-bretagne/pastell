@@ -21,6 +21,10 @@
  * @var array $all_action
  */
 
+use Pastell\Helpers\UsernameDisplayer;
+
+$usernameDisplayer = new UsernameDisplayer();
+
 ?>
 <a class='btn btn-link' href='Document/list?type=<?php echo $info['type']?>&id_e=<?php echo $id_e?>&last_id=<?php echo $id_d ?>'>
 <i class="fa fa-arrow-left"></i>&nbsp;Liste des "<?php hecho($documentType->getName()); ?>" de <?php hecho($infoEntite['denomination']); ?></a>
@@ -206,12 +210,7 @@ if ($infoDocumentEmail) :
                     <td><?php hecho($theAction->getActionName($action['action'])); ?></td>
                     <td><?php echo time_iso_to_fr($action['date'])?></td>
                     <td>
-                        <?php if ($action['id_u'] == 0) : ?>
-                            Action automatique
-                        <?php endif;?>
-                        <?php if ($action['id_e'] == $id_e) :?>
-                            <a href='Utilisateur/detail?id_u=<?php echo $action['id_u']?>'><?php hecho($action['prenom']); ?> <?php hecho($action['nom']); ?></a>
-                        <?php endif;?>
+                       <?php echo($usernameDisplayer->getUsername($action)) ?>
                     </td>
                     <td>
                         <?php if ($action['id_j']) : ?>

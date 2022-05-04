@@ -68,4 +68,41 @@ class UtilisateurControlerTest extends ControlerTestCase
         $this->getUtilisateurControler()->modifPasswordAction();
         $this->expectOutputRegex('#<h1>Modification de votre mot de passe</h1#');
     }
+
+    public function testsuppressionAction(): void
+    {
+        $this->setGetInfo(['id_u' => 2]);
+        $this->getUtilisateurControler()->suppressionAction();
+        $this->expectOutputRegex("#<title>Utilisateur Eric Pommateau - Suppression de l'utilisateur  - Pastell</title>#");
+    }
+
+    public function testDoSuppressionAction(): void
+    {
+        $utilisateurSQL = $this->getObjectInstancier()->getInstance(UtilisateurSQL::class);
+        self::assertTrue($utilisateurSQL->exists(2));
+        $this->setPostInfo(['id_u' => 2]);
+        try {
+            $this->getUtilisateurControler()->doSuppressionAction();
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+        self::assertFalse($utilisateurSQL->exists(2));
+        $this->expectOutputRegex("#L'utilisateur 2 a été supprimé#");
+    }
+
+    public function testDoSuppressionActionWhenSuicide(): void
+    {
+        $utilisateurSQL = $this->getObjectInstancier()->getInstance(UtilisateurSQL::class);
+        self::assertTrue($utilisateurSQL->exists(2));
+        $this->setPostInfo(['id_u' => 1]);
+        try {
+            $this->getUtilisateurControler()->doSuppressionAction();
+        } catch (Exception $e) {
+            self::assertStringContainsString(
+                "Impossible de vous supprimer vous-même",
+                $e->getMessage()
+            );
+        }
+        self::assertTrue($utilisateurSQL->exists(2));
+    }
 }

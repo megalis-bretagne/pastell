@@ -5,6 +5,11 @@
  * @var array $infoEntite
  * @var string $recherche
  */
+
+use Pastell\Helpers\UsernameDisplayer;
+
+$usernameDisplayer = new UsernameDisplayer();
+
 ?>
 <?php if ($id_d) : ?>
 <a class='btn btn-link' href='Journal/index?id_e=<?php echo $id_e?>'><i class="fa fa-arrow-left"></i>&nbsp;Journal de <?php hecho($infoEntite['denomination']); ?></a>
@@ -56,7 +61,7 @@
         <td><?php echo $this->Journal->getTypeAsString($ligne['type']) ?></td>
         <td><a href='Entite/detail?id_e=<?php echo $ligne['id_e'] ?>'><?php hecho($ligne['denomination'] ?? $ligne['id_e'])?></a></td>
         <td><?php hecho($ligne['siren']) ?></td>
-        <td><a href='Utilisateur/detail?id_u=<?php echo  $ligne['id_u']?>'><?php hecho($ligne['prenom'] . " " . $ligne['nom'])?></a></td>
+        <td><?php echo $usernameDisplayer->getUsername($ligne); ?></td>
         <td>
             <?php if ($ligne['id_d']) : ?>
             <a href='<?php $this->url("Document/detail?id_d={$ligne['id_d']}&id_e={$ligne['id_e']}"); ?>'>
