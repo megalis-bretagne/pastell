@@ -6,6 +6,7 @@ class SAEEnvoyer extends ConnecteurTypeActionExecutor
     public const ACTION_NAME_ERROR = 'erreur-envoie-sae';
 
     /**
+     * @deprecated Use Pastell\Step\SAE\Action\SAEGenerateArchiveAction and Pastell\Step\SAE\Action\SAESendArchiveAction
      * @return bool
      * @throws Exception
      */

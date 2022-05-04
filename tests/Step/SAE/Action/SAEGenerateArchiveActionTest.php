@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pastell\Tests\Step\SAE\Action;
 
 use NotFoundException;
@@ -72,6 +74,10 @@ final class SAEGenerateArchiveActionTest extends PastellTestCase
         $this->assertLastDocumentAction(SAEActionsEnum::GENERATE_ARCHIVE->value, $documentId);
     }
 
+    /**
+     * @throws TypeDossierException
+     * @throws NotFoundException
+     */
     public function testGenerateArchiveWithInvalidJsonConfig(): void
     {
         $this->typeDossierLoader->createTypeDossierDefinitionFile(self::SAE_ONLY);
@@ -122,6 +128,36 @@ final class SAEGenerateArchiveActionTest extends PastellTestCase
         $this->assertFalse($result);
 
         $this->assertLastMessage('FakeSEDA: Erreur provoquée par le simulateur');
+        $this->assertLastDocumentAction(SAEActionsEnum::GENERATE_ARCHIVE_ERROR->value, $documentId);
+    }
+
+    /**
+     * @throws TypeDossierException
+     * @throws NotFoundException
+     */
+    public function testGenerateArchiveErrorOnBordereau(): void
+    {
+        $this->typeDossierLoader->createTypeDossierDefinitionFile(self::SAE_ONLY);
+
+        $sedaConnector = $this->createConnector('FakeSEDA', 'Bordereau SEDA');
+        $this->associateFluxWithConnector($sedaConnector['id_ce'], self::SAE_ONLY, 'Bordereau SEDA');
+        $this->configureConnector($sedaConnector['id_ce'], [
+            'seda_bordereau_generation_response' => 'error',
+        ]);
+
+        $saeConnector = $this->createConnector('fakeSAE', 'SAE');
+        $this->associateFluxWithConnector($saeConnector['id_ce'], self::SAE_ONLY, 'SAE');
+
+        $documentId = $this->getDocument();
+        $this->assertTrue(
+            $this->triggerActionOnDocument($documentId, 'orientation')
+        );
+        $this->assertLastMessage("sélection automatique  de l'action suivante");
+
+        $result = $this->triggerActionOnDocument($documentId, SAEActionsEnum::GENERATE_ARCHIVE->value);
+        $this->assertFalse($result);
+
+        $this->assertLastMessage('FakeSEDA: Invalid bordereau : <br/><br/>FakeSEDA: Error 1<br/>');
         $this->assertLastDocumentAction(SAEActionsEnum::GENERATE_ARCHIVE_ERROR->value, $documentId);
     }
 }

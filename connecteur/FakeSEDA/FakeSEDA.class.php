@@ -16,11 +16,19 @@ class FakeSEDA extends SEDAConnecteur
 
     public function validateBordereau(string $bordereau): bool
     {
+        if ($this->donneesFormulaire->get('seda_bordereau_generation_response') === 'error') {
+            throw new \RuntimeException('FakeSEDA: Invalid bordereau');
+        }
         return true;
     }
 
     public function getLastValidationError()
     {
+        if ($this->donneesFormulaire->get('seda_bordereau_generation_response') === 'error') {
+            $error1 = new LibXMLError();
+            $error1->message = 'FakeSEDA: Error 1';
+            return [$error1];
+        }
         return [];
     }
 

@@ -6,6 +6,14 @@ description: |
 
 formulaire:
 	page:
+		seda_bordereau_generation_response:
+			name: Réponse lors de la génération du bordereau
+			type: select
+			value:
+				ok: OK
+				error: Erreur
+			default: ok
+
 		seda_archive_generation_response:
 			name: Réponse lors de la génération de l'archive
 			type: select

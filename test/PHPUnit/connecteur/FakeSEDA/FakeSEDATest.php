@@ -9,6 +9,7 @@ class FakeSEDATest extends PastellTestCase
     {
         $fakeSEDA = new FakeSEDA();
         $donnesFormulaire = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
+        $fakeSEDA->setConnecteurConfig($donnesFormulaire);
         $fluxData = new FluxDataSedaDefault($donnesFormulaire);
 
         $this->assertStringEqualsFile(
@@ -18,8 +19,6 @@ class FakeSEDATest extends PastellTestCase
 
         $this->assertTrue($fakeSEDA->validateBordereau(""));
         $this->assertEmpty($fakeSEDA->getLastValidationError());
-
-        $fakeSEDA->setConnecteurConfig($donnesFormulaire);
 
         $tmpFolder = new TmpFolder();
         $tmp_folder = $tmpFolder->create();
