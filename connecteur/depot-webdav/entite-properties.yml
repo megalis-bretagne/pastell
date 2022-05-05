@@ -1,20 +1,13 @@
-nom: Dépôt WebDAV
+nom: 'Dépôt WebDAV'
 type: GED
-
 heritage: ged-connecteur-common
-
-description: |
-	Connecteur de dépôt sur un serveur WebDAV.
-
+description: 'Connecteur de dépôt sur un serveur WebDAV.'
 formulaire:
-	page0:
-		depot_webdav_url:
-		    name: "URL WebDAV"
-
-		depot_webdav_login:
-		    name: "Login"
-
-		depot_webdav_password:
-		    name: "Mot de passe"
-		    type: password
-
+    page0:
+        depot_webdav_url:
+            name: 'URL WebDAV'
+        depot_webdav_login:
+            name: Login
+        depot_webdav_password:
+            name: 'Mot de passe'
+            type: password

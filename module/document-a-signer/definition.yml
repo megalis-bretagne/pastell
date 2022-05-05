@@ -1,197 +1,169 @@
-nom: Document à faire signer
-
+nom: 'Document à faire signer'
 threshold_size: '150000000'
 threshold_fields:
     - document
     - autre_document_attache
-
-description: Type de dossier permettant l'envoi et la récupération de document à un parapheur électronique et éventuellement le dépôt en GED. Un connecteur de parametrage peut être associé afin de définir le cheminement et l'automatisme.
-
+description: 'Type de dossier permettant l''envoi et la récupération de document à un parapheur électronique et éventuellement le dépôt en GED. Un connecteur de parametrage peut être associé afin de définir le cheminement et l''automatisme.'
 connecteur:
-    signature
-    GED
-
+    - signature
+    - GED
 affiche_one: true
-
 formulaire:
     Document:
         iparapheur_type:
-            name: Type i-Parapheur
+            name: 'Type i-Parapheur'
             read-only: true
-
         iparapheur_sous_type:
-            name: Sous-type i-Parapheur
+            name: 'Sous-type i-Parapheur'
             requis: true
             index: true
             read-only: true
             type: externalData
             choice-action: iparapheur-sous-type
-            link_name: "Sélectionner un sous-type"
-
+            link_name: 'Sélectionner un sous-type'
         libelle:
             name: Libellé
             requis: true
             title: true
-
         has_date_limite:
-            name: Utiliser une date limite
+            name: 'Utiliser une date limite'
             type: checkbox
-
         date_limite:
-            name: Date limite
+            name: 'Date limite'
             type: date
-
         document:
             name: Document
             requis: true
             type: file
-
         autre_document_attache:
-            name: Autre document attaché
+            name: 'Autre document attaché'
             type: file
             multiple: true
-            commentaire: "Attention ! La taille totale des documents (principal + attaché) ne peut pas dépasser 150 Mo."
-
+            commentaire: 'Attention ! La taille totale des documents (principal + attaché) ne peut pas dépasser 150 Mo.'
         envoi_ged:
-            name: Transmission à la GED
+            name: 'Transmission à la GED'
             type: checkbox
-
         envoi_auto:
-            name: Envoyer automatiquement les dossiers d'étape en étape
+            name: 'Envoyer automatiquement les dossiers d''étape en étape'
             type: checkbox
-
-    Retour Parapheur:
+    'Retour Parapheur':
         iparapheur_dossier_id:
-            name: Identifiant du dossier sur le parapheur
-
+            name: 'Identifiant du dossier sur le parapheur'
         has_historique:
             no-show: true
         iparapheur_historique:
-            name: Historique iparapheur
+            name: 'Historique iparapheur'
             type: file
         parapheur_last_message:
-            name: Dernier message reçu du parapheur
+            name: 'Dernier message reçu du parapheur'
         has_signature:
             no-show: true
         signature:
-            name: Signature zip
+            name: 'Signature zip'
             type: file
         bordereau:
-            name: Bordereau de signature
+            name: 'Bordereau de signature'
             type: file
         document_orignal:
-            name: Document original (avant signature)
+            name: 'Document original (avant signature)'
             type: file
         multi_document_original:
-            name: Multi-document(s) original
+            name: 'Multi-document(s) original'
             type: file
             multiple: true
         iparapheur_annexe_sortie:
-            name: Annexe(s) de sortie du parapheur
+            name: 'Annexe(s) de sortie du parapheur'
             type: file
             multiple: true
-
-    Retour GED:
+    'Retour GED':
         has_ged_document_id:
             no-show: true
         ged_document_id_file:
-            name: Identifiants des documents sur la GED
+            name: 'Identifiants des documents sur la GED'
             type: file
             visionneuse: GedIdDocumentsVisionneuse
             read-only: true
             requis: true
             visionneuse-no-link: true
-
 champs-affiches:
-    titre
-    iparapheur_sous_type
-    dernier_etat
-    date_dernier_etat
-
+    - titre
+    - iparapheur_sous_type
+    - dernier_etat
+    - date_dernier_etat
 page-condition:
-
-    Retour Parapheur:
+    'Retour Parapheur':
         has_historique: true
-
-    Retour GED:
+    'Retour GED':
         has_ged_document_id: true
-
-action:		
+action:
     creation:
         name-action: Créer
         name: Créé
         rule:
-            no-last-action:
+            no-last-action: ''
             type_id_e:
-                service
-                collectivite
-
+                - service
+                - collectivite
     modification:
         name-action: Modifier
-        name: En cours de rédaction
+        name: 'En cours de rédaction'
         rule:
             last-action:
-                creation
-                modification
-                importation
-                recu-iparapheur
-                recu-iparapheur-etat
-                termine
-
+                - creation
+                - modification
+                - importation
+                - recu-iparapheur
+                - recu-iparapheur-etat
+                - termine
     supression:
         name-action: Supprimer
         name: Supprimé
         rule:
             last-action:
-                creation
-                modification
-                importation
-                recu-iparapheur
-                recu-iparapheur-etat
-                rejet-iparapheur
-                send-ged
-                send-ged-etat
-                termine
-                fatal-error
-                error-ged
+                - creation
+                - modification
+                - importation
+                - recu-iparapheur
+                - recu-iparapheur-etat
+                - rejet-iparapheur
+                - send-ged
+                - send-ged-etat
+                - termine
+                - fatal-error
+                - error-ged
         action-class: Supprimer
-        warning: "Êtes-vous sûr ?"
-
+        warning: 'Êtes-vous sûr ?'
     importation:
-        name: Importation du document
+        name: 'Importation du document'
         rule:
             role_id_e: no-role
-
     orientation:
         name: Orientation
         rule:
             role_id_e: no-role
         action-class: OrientationFluxAutoDoc
-
     termine:
-        name: Traitement terminé
+        name: 'Traitement terminé'
         rule:
             role_id_e: no-role
         editable-content:
-            envoi_ged
-
+            - envoi_ged
     prepare-iparapheur:
-        name-action: "Préparation de l'envoi au parapheur"
-        name: Préparation de l'envoi au iParapheur
+        name-action: 'Préparation de l''envoi au parapheur'
+        name: 'Préparation de l''envoi au iParapheur'
         rule:
             role_id_e: no-role
         action-automatique: send-iparapheur
-
     send-iparapheur:
-        name-action: Transmettre au parapheur
-        name: Transmis au parapheur
+        name-action: 'Transmettre au parapheur'
+        name: 'Transmis au parapheur'
         rule:
             last-action:
-                creation
-                modification
-                importation
+                - creation
+                - modification
+                - importation
             no-action:
-                recu-iparapheur
+                - recu-iparapheur
             document_is_valide: true
         action-class: StandardAction
         action-automatique: verif-iparapheur
@@ -201,85 +173,73 @@ action:
             iparapheur_has_date_limite: has_date_limite
             iparapheur_date_limite: date_limite
             objet: libelle
-
     verif-iparapheur:
-        name-action: Vérifier le statut de signature
-        name: Vérification de la signature
+        name-action: 'Vérifier le statut de signature'
+        name: 'Vérification de la signature'
         rule:
             last-action:
-                erreur-verif-iparapheur
-                send-iparapheur
+                - erreur-verif-iparapheur
+                - send-iparapheur
         action-class: StandardAction
         connecteur-type: signature
         connecteur-type-action: SignatureRecuperation
         connecteur-type-mapping:
             document_original: document_orignal
             multi_document_original: multi_document_original
-
     erreur-verif-iparapheur:
-        name: Erreur lors de la vérification du statut de signature
+        name: 'Erreur lors de la vérification du statut de signature'
         rule:
             role_id_e: no-role
-
     recu-iparapheur:
-        name: Signature récupérée
+        name: 'Signature récupérée'
         rule:
             role_id_e: no-role
         editable-content:
-            envoi_ged
+            - envoi_ged
         action-automatique: orientation
-
     recu-iparapheur-etat:
-        name: État signature récupérée
+        name: 'État signature récupérée'
         rule:
             role_id_e: no-role
         editable-content:
-            envoi_ged
+            - envoi_ged
         modification-no-change-etat: true
-
     rejet-iparapheur:
-        name: Signature refusée
+        name: 'Signature refusée'
         rule:
             role_id_e: no-role
-
     prepare-ged:
-        name: Préparation de l'envoi à la GED
+        name: "Préparation de l'envoi à\_la GED"
         rule:
             role_id_e: no-role
         action-automatique: send-ged
-
     send-ged:
-        name-action: Verser à la GED
-        name: Versé à la GED
+        name-action: 'Verser à la GED'
+        name: 'Versé à la GED'
         rule:
             content:
                 envoi_ged: true
             last-action:
-                recu-iparapheur
-                recu-iparapheur-etat
-                error-ged
-
+                - recu-iparapheur
+                - recu-iparapheur-etat
+                - error-ged
         action-automatique: orientation
         action-class: StandardAction
         connecteur-type: GED
         connecteur-type-action: GEDEnvoyer
         connecteur-type-mapping:
             fatal-error: error-ged
-
     error-ged:
-        name: Erreur irrécupérable lors du dépôt
+        name: 'Erreur irrécupérable lors du dépôt'
         rule:
             role_id_e: no-role
-
     send-ged-etat:
-        name: État versé à la GED
+        name: 'État versé à la GED'
         rule:
             role_id_e: no-role
-
     iparapheur-sous-type:
-        name: Liste des sous-type iParapheur
+        name: 'Liste des sous-type iParapheur'
         no-workflow: true
         rule:
             role_id_e: no-role
         action-class: IparapheurSousType
-

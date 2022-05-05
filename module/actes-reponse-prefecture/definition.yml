@@ -1,92 +1,77 @@
-nom: Actes réponse préfecture
-
-description: |
-	Flux Actes réponse préfecture permettant de récupérer les réponses de la préfecture.
-
+nom: 'Actes réponse préfecture'
+description: 'Flux Actes réponse préfecture permettant de récupérer les réponses de la préfecture.'
 connecteur:
-	TdT
-
+    - TdT
 formulaire:
-    Réponse de la préfecture:
+    'Réponse de la préfecture':
         acte_nature:
-            name: Nature de l'acte
+            name: 'Nature de l''acte'
             read-only: true
             type: select
             requis: true
             value:
-                3: Actes individuels
-                2: Actes réglementaires
+                3: 'Actes individuels'
+                2: 'Actes réglementaires'
                 6: Autres
-                4: "Contrats, conventions et avenants"
+                4: 'Contrats, conventions et avenants'
                 1: Délibérations
-                5: Documents budgétaires et financiers
-
+                5: 'Documents budgétaires et financiers'
         numero_de_lacte:
-            name: Numéro de l'acte
+            name: 'Numéro de l''acte'
             read-only: true
             index: true
             title: true
-
         type_reponse:
-            name: Type de réponse
+            name: 'Type de réponse'
             read-only: true
             index: true
             type: select
             value:
-                2: Courrier simple
-                3: Demande de pièces complémentaires
-                4: Lettre d'observation
-                5: Déféré au tribunal administratif
-
+                2: 'Courrier simple'
+                3: 'Demande de pièces complémentaires'
+                4: 'Lettre d''observation'
+                5: 'Déféré au tribunal administratif'
         related_transaction_id:
-            name: Identifiant de la transaction acte
+            name: 'Identifiant de la transaction acte'
             read-only: true
-
         transaction_id:
-            name: Identifiant de la transaction réponse
+            name: 'Identifiant de la transaction réponse'
             read-only: true
-
         last_status_id:
-            name: Identifiant du statut
+            name: 'Identifiant du statut'
             read-only: true
-
         url_acte:
-            name: URL de l'acte
+            name: 'URL de l''acte'
             type: url
-
         reponse_prefecture:
-            name: Réponse de la préfecture (original)
+            name: 'Réponse de la préfecture (original)'
             type: file
             read-only: true
-
         reponse_prefecture_unzip:
-            name: Fichiers décompressés
+            name: 'Fichiers décompressés'
             type: file
             multiple: true
-
         date:
-            name: Date de réception
+            name: 'Date de réception'
             type: date
-
         repondre:
             type: checkbox
             no-show: true
-
-    Courrier Simple:
+    'Courrier Simple':
         reponse:
-            name: Réponse à un courrier simple
-            commentaire: "format PDF"
+            name: 'Réponse à un courrier simple'
+            commentaire: 'format PDF'
             requis: true
             type: file
         type_piece_courrier_simple:
-            name: Typologie des pièces
+            name: 'Typologie des pièces'
             type: externalData
-            link_name: liste des types de pièces
+            link_name: 'liste des types de pièces'
             choice-action: cs-reponse-type-piece
             edit-only: true
             requis: true
         type_piece_fichier:
-            name: Typologie des pièces
+            name: 'Typologie des pièces'
             type: file
             visionneuse: TypologieActesVisionneuse
             read-only: true
@@ -102,35 +87,32 @@ formulaire:
             type: file
             no-show: true
         response_transaction_id:
-            name: Identifiant de la transaction réponse
+            name: 'Identifiant de la transaction réponse'
             read-only: true
-
-    Demande de pièces complementaires:
+    'Demande de pièces complementaires':
         reponse:
-            name: Première pièce complémentaire
-            commentaire: "format PDF"
+            name: 'Première pièce complémentaire'
+            commentaire: 'format PDF'
             requis: true
             type: file
         reponse_pj_demande_piece_complementaire:
-            name: Autres pièces complémentaire
-            commentaire: |
-                  format PDF <br />
-                  Attention ! dans le cas d'un refus de réponse, les annexes ne seront pas envoyées.
+            name: 'Autres pièces complémentaire'
+            commentaire: "format PDF <br />\nAttention ! dans le cas d'un refus de réponse, les annexes ne seront pas envoyées."
             type: file
             multiple: true
             onchange: pc-reponse_pj_demande_piece_complementaire-change
         refus_reponse:
-            name: Cocher cette case s'il s'agit d'un refus de réponse
+            name: 'Cocher cette case s''il s''agit d''un refus de réponse'
             type: checkbox
         type_piece_demande_piece_complementaire:
-            name: Typologie des pièces
+            name: 'Typologie des pièces'
             type: externalData
-            link_name: liste des types de pièces
+            link_name: 'liste des types de pièces'
             choice-action: pc-reponse-type-piece
             edit-only: true
             requis: true
         type_piece_fichier:
-            name: Typologie des pièces
+            name: 'Typologie des pièces'
             type: file
             visionneuse: TypologieActesVisionneuse
             read-only: true
@@ -143,27 +125,26 @@ formulaire:
             no-show: true
             onchange: pc-type-acte-change-by-api
         response_transaction_id:
-            name: Identifiant de la transaction réponse
+            name: 'Identifiant de la transaction réponse'
             read-only: true
-
-    Lettre d'observation:
+    'Lettre d''observation':
         reponse:
-            name: Réponse à la lettre d'observation
-            commentaire: "format PDF"
+            name: 'Réponse à la lettre d''observation'
+            commentaire: 'format PDF'
             requis: true
             type: file
         refus_reponse:
-            name: Cocher cette case s'il s'agit d'un refus de réponse
+            name: 'Cocher cette case s''il s''agit d''un refus de réponse'
             type: checkbox
         type_piece_lettre_observation:
-            name: Typologie des pièces
+            name: 'Typologie des pièces'
             type: externalData
-            link_name: liste des types de pièces
+            link_name: 'liste des types de pièces'
             choice-action: lo-reponse-type-piece
             edit-only: true
             requis: true
         type_piece_fichier:
-            name: Typologie des pièces
+            name: 'Typologie des pièces'
             type: file
             visionneuse: TypologieActesVisionneuse
             read-only: true
@@ -179,117 +160,101 @@ formulaire:
             type: file
             no-show: true
         response_transaction_id:
-            name: Identifiant de la transaction réponse
+            name: 'Identifiant de la transaction réponse'
             read-only: true
-
-    Acquittement de réception:
-      has_acquittement:
-        name: Acquittement de la réponse reçu
-        type: checkbox
-      acquittement_file:
-        name: Accusé de réception
-        type: file
-
+    'Acquittement de réception':
+        has_acquittement:
+            name: 'Acquittement de la réponse reçu'
+            type: checkbox
+        acquittement_file:
+            name: 'Accusé de réception'
+            type: file
 champs-affiches:
-    titre
-    type_reponse
-    entite
-    dernier_etat
-    date_dernier_etat
-
+    - titre
+    - type_reponse
+    - entite
+    - dernier_etat
+    - date_dernier_etat
 page-condition:
-
-    Courrier Simple:
-      type_reponse: '2'
-      repondre: true
-
-    Demande de pièces complementaires:
-      type_reponse: '3'
-      repondre: true
-
-    Lettre d'observation:
-      type_reponse: '4'
-      repondre: true
-
-    Acquittement de réception:
+    'Courrier Simple':
+        type_reponse: '2'
+        repondre: true
+    'Demande de pièces complementaires':
+        type_reponse: '3'
+        repondre: true
+    'Lettre d''observation':
+        type_reponse: '4'
+        repondre: true
+    'Acquittement de réception':
         has_acquittement: true
-
 action:
-
     creation:
         name-action: Créer
         name: Créé
         rule:
             role_id_e: no-role
-
     modification:
         name-action: Modifier
-        name: En cours de rédaction
+        name: 'En cours de rédaction'
         rule:
             last-action:
-                creation
-                modification
-                attente-reponse-prefecture
-                erreur-verif-tdt
+                - creation
+                - modification
+                - attente-reponse-prefecture
+                - erreur-verif-tdt
             role_id_e: editeur
             droit_id_u: 'actes-reponse-prefecture:edition'
-
     supression:
         name-action: Supprimer
         name: Supprimé
         rule:
             last-action:
-                creation
-                modification
-                termine
-                fatal-error
-                tdt-error
-                attente-reponse-prefecture
-                verif-reponse-tdt
+                - creation
+                - modification
+                - termine
+                - fatal-error
+                - tdt-error
+                - attente-reponse-prefecture
+                - verif-reponse-tdt
             role_id_e: editeur
             droit_id_u: 'actes-reponse-prefecture:edition'
         action-class: Supprimer
-        warning: "Êtes-vous sûr ?"
-
+        warning: 'Êtes-vous sûr ?'
     erreur-verif-tdt:
-        name: Erreur lors de la vérification du statut de l'acte
+        name: 'Erreur lors de la vérification du statut de l''acte'
         rule:
             role_id_e: no-role
-
     tdt-error:
-        name: Erreur sur le TdT
+        name: 'Erreur sur le TdT'
         rule:
             role_id_e: no-role
-
     attente-reponse-prefecture:
-        name: Réponse à la préfecture attendue
+        name: 'Réponse à la préfecture attendue'
         rule:
             role_id_e: no-role
         editable-content:
-            reponse
-            type_piece_courrier_simple
-            refus_reponse
-            type_piece_lettre_observation
-            reponse_pj_demande_piece_complementaire
-            type_piece_demande_piece_complementaire
-
+            - reponse
+            - type_piece_courrier_simple
+            - refus_reponse
+            - type_piece_lettre_observation
+            - reponse_pj_demande_piece_complementaire
+            - type_piece_demande_piece_complementaire
     repondre:
         name: Répondre
         rule:
             last-action:
-                attente-reponse-prefecture
+                - attente-reponse-prefecture
             content:
                 repondre: false
         action-class: ActeReponsePrefectureRepondre
-
     verif-reponse-tdt:
-        name-action: Vérifier l'acquittement
-        name: Acquittement de la réponse reçu
+        name-action: 'Vérifier l''acquittement'
+        name: 'Acquittement de la réponse reçu'
         rule:
             last-action:
-                send-reponse-prefecture
-                tdt-error
-                erreur-verif-tdt
+                - send-reponse-prefecture
+                - tdt-error
+                - erreur-verif-tdt
             role_id_e: editeur
             droit_id_u: 'actes-reponse-prefecture:edition'
         action-class: StandardAction
@@ -299,17 +264,16 @@ action:
             acte_transaction_id: related_transaction_id
             reponse_transaction_id: transaction_id
             type_reponse: type_reponse
-
     send-reponse-prefecture:
-        name: Envoi de la réponse à la préfecture
-        name-action: Envoyer la réponse à la préfecture
+        name: 'Envoi de la réponse à la préfecture'
+        name-action: 'Envoyer la réponse à la préfecture'
         rule:
             last-action:
                 - attente-reponse-prefecture
                 - erreur-verif-tdt
                 - modification
             has-action:
-                attente-reponse-prefecture
+                - attente-reponse-prefecture
             content:
                 repondre: true
             droit_id_u: 'actes-reponse-prefecture:edition'
@@ -318,9 +282,8 @@ action:
         connecteur-type: TdT
         connecteur-type-action: TdtSendReponsePref
         action-automatique: verif-reponse-tdt
-
     lo-reponse-type-piece:
-        name: Typologie des pièces
+        name: 'Typologie des pièces'
         no-workflow: true
         rule:
             role_id_e: no-role
@@ -333,7 +296,6 @@ action:
             type_acte: type_acte_lettre_observation
             type_pj: type_pj_lettre_observation
             type_piece: type_piece_lettre_observation
-
     lo-type-acte-change-by-api:
         no-workflow: true
         rule:
@@ -345,10 +307,8 @@ action:
             type_acte: type_acte_lettre_observation
             type_pj: type_pj_lettre_observation
             type_piece: type_piece_lettre_observation
-
-
     cs-reponse-type-piece:
-        name: Typologie des pièces
+        name: 'Typologie des pièces'
         no-workflow: true
         rule:
             role_id_e: no-role
@@ -361,7 +321,6 @@ action:
             type_acte: type_acte_courrier_simple
             type_pj: type_pj_courrier_simple
             type_piece: type_piece_courrier_simple
-
     cs-type-acte-change-by-api:
         no-workflow: true
         rule:
@@ -373,9 +332,8 @@ action:
             type_acte: type_acte_courrier_simple
             type_pj: type_pj_courrier_simple
             type_piece: type_piece_courrier_simple
-
     pc-reponse-type-piece:
-        name: Typologie des pièces
+        name: 'Typologie des pièces'
         no-workflow: true
         rule:
             role_id_e: no-role
@@ -388,7 +346,6 @@ action:
             type_acte: type_acte_demande_piece_complementaire
             type_pj: type_pj_demande_piece_complementaire
             type_piece: type_piece_demande_piece_complementaire
-
     pc-type-acte-change-by-api:
         no-workflow: true
         rule:
@@ -400,7 +357,6 @@ action:
             type_acte: type_acte_demande_piece_complementaire
             type_pj: type_pj_demande_piece_complementaire
             type_piece: type_piece_demande_piece_complementaire
-
     pc-reponse_pj_demande_piece_complementaire-change:
         no-workflow: true
         rule:
@@ -412,9 +368,7 @@ action:
             autre_document_attache: reponse_pj_demande_piece_complementaire
             type_pj: type_pj_demande_piece_complementaire
             type_piece: type_piece_demande_piece_complementaire
-
     termine:
-        name: Traitement terminé
+        name: 'Traitement terminé'
         rule:
             role_id_e: no-role
-

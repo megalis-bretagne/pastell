@@ -1,388 +1,343 @@
-nom: Pièces de marché
-type: Types de dossier marché
-
-description: Types de dossier permettant le cheminement d'un dossier de type pièce de marché
-
+nom: 'Pièces de marché'
+type: 'Types de dossier marché'
+description: 'Types de dossier permettant le cheminement d''un dossier de type pièce de marché'
 restriction_pack:
     - pack_marche
-
 connecteur:
-    ParametragePieceMarche
-    signature
-    mailsec
-    pdf-relance
-    GED
-    Bordereau SEDA
-    SAE
-
+    - ParametragePieceMarche
+    - signature
+    - mailsec
+    - pdf-relance
+    - GED
+    - 'Bordereau SEDA'
+    - SAE
 formulaire:
     Document:
         libelle:
-            name: Libellé du marché
+            name: 'Libellé du marché'
             requis: true
             title: true
-
         type_consultation:
-            name: Type de consultation
+            name: 'Type de consultation'
             type: select
             value:
-                MAPA: MAPA - Marchés A Procédures Adaptées
-                AOO: AOO - Appel d'Offres Ouvert
-                AOR: AOR - Appel d'Offres Restreint
-                DC: DC - Dialogue Compétitif
-                MS: MS - Marché Subséquent
-                PC: PC - Procédure Concurrentielle
-                MSMC: MSMC - Marché Sans Mise en Concurrence
-
+                MAPA: 'MAPA - Marchés A Procédures Adaptées'
+                AOO: 'AOO - Appel d''Offres Ouvert'
+                AOR: 'AOR - Appel d''Offres Restreint'
+                DC: 'DC - Dialogue Compétitif'
+                MS: 'MS - Marché Subséquent'
+                PC: 'PC - Procédure Concurrentielle'
+                MSMC: 'MSMC - Marché Sans Mise en Concurrence'
         numero_consultation:
-            name: Numéro de consultation
+            name: 'Numéro de consultation'
             requis: true
             index: true
-
         type_marche:
-            name: Type de marché
+            name: 'Type de marché'
             type: select
             requis: true
             index: true
             value:
-                T: T - Travaux
-                F: F - Fournitures
-                S: S - Services
-                TIC: TIC - Techniques de l'information et de la communication
-                MO: MO - Maîtrise d’œuvre
-                PI: PI - Prestation intellectuelle
-
+                T: 'T - Travaux'
+                F: 'F - Fournitures'
+                S: 'S - Services'
+                TIC: 'TIC - Techniques de l''information et de la communication'
+                MO: 'MO - Maîtrise d’œuvre'
+                PI: 'PI - Prestation intellectuelle'
         recurrent:
             name: Récurrent
             type: checkbox
-
         numero_marche:
-            name: Numéro de marché
+            name: 'Numéro de marché'
             index: true
-
         etape:
             name: Étape
             requis: true
             index: true
             type: select
             value:
-                EB: EB - Estimation des besoins
-                DCE: DCE - DCE
-                EO: EO - Examen des Offres
-                ONR: ONR - Offre Non Retenue
-                OR: OR - Offre Retenue
-
+                EB: 'EB - Estimation des besoins'
+                DCE: 'DCE - DCE'
+                EO: 'EO - Examen des Offres'
+                ONR: 'ONR - Offre Non Retenue'
+                OR: 'OR - Offre Retenue'
         type_piece_marche:
-            name: Type de pièce
+            name: 'Type de pièce'
             type: select
             requis: true
             index: true
             value:
-                ARN: Accusé de Réception de Notification (ARN)
-                AE: Acte d'Engagement (AE)
-                AS: Acte de sous-traitance (AS)
-                AN: Annexes (AN)
-                AL: Annonces Légales (AL)
-                AU: Autres (AU)
-                APD: Avant Projet Détaillé (APD)
-                APS: Avant Projet Sommaire (APS)
-                AV: Avenant (AV)
-                AC: Avis d'appel à la Concurrence (AC)
-                BC: Bon de commande (BC)
-                BPU: Bordereau des Prix Unitaires (BPU)
-                CCAP: Cahier des Clauses Administratives Particulières (CCAP)
-                CCTP: Cahier des Clauses Techniques Particulières (CCTP)
-                CA: Courrier d'Attribution (CA)
-                CM: Courrier marché générique (CM)
-                CN: Courrier de notification (CN)
-                DS: Déclaration sans suite (DS)
-                DPGF: Décomposition du Prix Global et Forfaitaire (DPGF)
-                DG: Décompte général et définitif (DG)
-                DQE: Détail Quantitatif Estimatif (DQE)
-                DR: Dossier de Réponse (DR)
-                EC: Échange en cours de Consultation (EC)
-                EA: Etat d'acompte (EA)
-                E: Étude (E)
-                LR: Lettre de Rejet (LR)
-                LC: Liste des Candidatures (LC)
-                MP: Mise au point (MP)
-                OS: Ordre de service (OS)
-                P: Programme (P)
-                AO: Rapport d'Analyse des Offres (A0)
-                CAO: Rapport de Commission d'Appel d'Offres (CAO)
-                COP: Rapport de Commission d'Ouverture des Plis (COP)
-                RP: Rapport de Présentation (RP)
-                RDP: Récépissé de dépôt de pli (RDP)
-                RC: Règlement de la Consultation (RC)
-
+                ARN: 'Accusé de Réception de Notification (ARN)'
+                AE: 'Acte d''Engagement (AE)'
+                AS: 'Acte de sous-traitance (AS)'
+                AN: 'Annexes (AN)'
+                AL: 'Annonces Légales (AL)'
+                AU: 'Autres (AU)'
+                APD: 'Avant Projet Détaillé (APD)'
+                APS: 'Avant Projet Sommaire (APS)'
+                AV: 'Avenant (AV)'
+                AC: 'Avis d''appel à la Concurrence (AC)'
+                BC: 'Bon de commande (BC)'
+                BPU: 'Bordereau des Prix Unitaires (BPU)'
+                CCAP: 'Cahier des Clauses Administratives Particulières (CCAP)'
+                CCTP: 'Cahier des Clauses Techniques Particulières (CCTP)'
+                CA: 'Courrier d''Attribution (CA)'
+                CM: 'Courrier marché générique (CM)'
+                CN: 'Courrier de notification (CN)'
+                DS: 'Déclaration sans suite (DS)'
+                DPGF: 'Décomposition du Prix Global et Forfaitaire (DPGF)'
+                DG: 'Décompte général et définitif (DG)'
+                DQE: 'Détail Quantitatif Estimatif (DQE)'
+                DR: 'Dossier de Réponse (DR)'
+                EC: 'Échange en cours de Consultation (EC)'
+                EA: 'Etat d''acompte (EA)'
+                E: 'Étude (E)'
+                LR: 'Lettre de Rejet (LR)'
+                LC: 'Liste des Candidatures (LC)'
+                MP: 'Mise au point (MP)'
+                OS: 'Ordre de service (OS)'
+                P: 'Programme (P)'
+                AO: 'Rapport d''Analyse des Offres (A0)'
+                CAO: 'Rapport de Commission d''Appel d''Offres (CAO)'
+                COP: 'Rapport de Commission d''Ouverture des Plis (COP)'
+                RP: 'Rapport de Présentation (RP)'
+                RDP: 'Récépissé de dépôt de pli (RDP)'
+                RC: 'Règlement de la Consultation (RC)'
         libelle_piece:
             no-show: true
-
         soumissionnaire:
-            name: Soumissionnaire principal ou mandataire
+            name: 'Soumissionnaire principal ou mandataire'
             index: true
-
         montant:
-            name: Montant (estimatif ou notifié)
-            commentaire: La nature du montant dépend de l'étape et du type de pièce
-            preg_match: "#^(?:\d+(?:[.,]?\d+)?)?$#"
-            preg_match_error: "Nombre décimal sans espace"
-
+            name: 'Montant (estimatif ou notifié)'
+            commentaire: 'La nature du montant dépend de l''étape et du type de pièce'
+            preg_match: '#^(?:\d+(?:[.,]?\d+)?)?$#'
+            preg_match_error: 'Nombre décimal sans espace'
         date_document:
-            name: Date du dossier
+            name: 'Date du dossier'
             type: date
             requis: true
-
         document:
             name: Document
-            commentaire: Fichier PDF, DOC, ODT, ...
+            commentaire: 'Fichier PDF, DOC, ODT, ...'
             requis: true
             type: file
             progress_bar: true
-
         primo_signature_detachee:
-            name: Primo-signature détachée
+            name: 'Primo-signature détachée'
             type: file
             multiple: true
-            commentaire: "format XML ou pkcs7"
-
+            commentaire: 'format XML ou pkcs7'
         co_signature_detachee:
-            name: Co-signature détachée
+            name: 'Co-signature détachée'
             read-only: true
             type: file
-
         annexe:
-            name: Annexe(s) du dossier
+            name: 'Annexe(s) du dossier'
             type: file
             multiple: true
             progress_bar: true
-
     Cheminement:
         envoi_signature:
-            name: Envoi à la signature
+            name: 'Envoi à la signature'
             type: checkbox
             onchange: cheminement-change
-
         envoi_mailsec:
-            name: Envoi par mail sécurisé
+            name: 'Envoi par mail sécurisé'
             type: checkbox
             onchange: cheminement-change
-
         envoi_ged:
-            name: Transmission à la GED
+            name: 'Transmission à la GED'
             type: checkbox
             onchange: cheminement-change
-
         envoi_sae:
-            name: Transmission au SAE
+            name: 'Transmission au SAE'
             type: checkbox
             onchange: cheminement-change
-
     i-Parapheur:
         iparapheur_type:
-            name: Type iParapheur
+            name: 'Type iParapheur'
             read-only: true
-
         iparapheur_sous_type:
-            name: Sous Type iParapheur
+            name: 'Sous Type iParapheur'
             requis: true
             index: true
             read-only: true
             type: externalData
             choice-action: iparapheur-sous-type
-            link_name: "liste des sous-types"
-
+            link_name: 'liste des sous-types'
         has_date_limite:
-            name: Utiliser une date limite
+            name: 'Utiliser une date limite'
             type: checkbox
-
         date_limite:
-            name: Date limite
+            name: 'Date limite'
             type: date
-
         metadonnee_iparapheur:
-            name: Métadonnée i-Parapheur
-            commentaire: "Métadonnée supplémentaire envoyée au i-Parapheur"
-
+            name: 'Métadonnée i-Parapheur'
+            commentaire: 'Métadonnée supplémentaire envoyée au i-Parapheur'
         json_metadata:
-            name: Métadonnées complémentaires i-Parapheur
+            name: 'Métadonnées complémentaires i-Parapheur'
             commentaire: 'Au format JSON {"cle1":"valeur1","cle2":"valeur2",...}. Le fichier permet d''envoyer des métadonnées spécifiques au i-Parapheur. Principalement pour l''utilisation via l''API. Le fichier est écrasé par la configuration spécifique du connecteur'
             type: file
-
-
-    Retour Parapheur:
+    'Retour Parapheur':
         has_historique:
             no-show: true
         iparapheur_dossier_id:
-            name: Identifiant du dossier sur le parapheur
+            name: 'Identifiant du dossier sur le parapheur'
         iparapheur_historique:
-            name: Historique iparapheur
+            name: 'Historique iparapheur'
             type: file
         parapheur_last_message:
-            name: Dernier message reçu du parapheur
+            name: 'Dernier message reçu du parapheur'
         has_signature:
             no-show: true
         bordereau:
-            name: Bordereau de signature
+            name: 'Bordereau de signature'
             type: file
         document_original:
-            name: Document original
+            name: 'Document original'
             type: file
         multi_document_original:
-            name: Multi-document(s) original
+            name: 'Multi-document(s) original'
             type: file
             multiple: true
         iparapheur_annexe_sortie:
-            name: Annexe(s) de sortie du parapheur
+            name: 'Annexe(s) de sortie du parapheur'
             type: file
             multiple: true
-
-    Mail sécurisé:
+    'Mail sécurisé':
         to:
-            name: Adresse email du destinataire
+            name: 'Adresse email du destinataire'
             requis: true
-
         is_recupere:
-            name: mail récupéré
+            name: 'mail récupéré'
             no-show: true
             type: text
-
     Journal:
         journal_show:
             no-show: true
         journal:
-            name: Faisceau de preuves
+            name: 'Faisceau de preuves'
             type: file
         date_journal_debut:
-            name: Date du premier évènement journalisé
+            name: 'Date du premier évènement journalisé'
         date_cloture_journal:
-            name: Date de clôture du journal
+            name: 'Date de clôture du journal'
         date_cloture_journal_iso8601:
-            name: Date de clôture du journal (iso 8601)
-
-    Retour GED:
+            name: 'Date de clôture du journal (iso 8601)'
+    'Retour GED':
         has_ged_document_id:
             no-show: true
         ged_document_id_file:
-            name: Identifiants des documents sur la GED
+            name: 'Identifiants des documents sur la GED'
             type: file
             visionneuse: GedIdDocumentsVisionneuse
             read-only: true
             requis: true
             visionneuse-no-link: true
-
     SAE:
         sae_show:
             no-show: true
         sae_transfert_id:
-            name: Identifiant de transfert
+            name: 'Identifiant de transfert'
             index: true
         sae_bordereau:
-            name: Bordereau SEDA
+            name: 'Bordereau SEDA'
             type: file
         sae_archive:
             name: Archive
             type: file
-        ar_sae: {type: file, name: Accusé de réception SAE}
-        reply_sae: {type: file, name: Réponse du SAE}
-        url_archive: {name: URL sur le système d'archive, type: url}
-
+        ar_sae:
+            type: file
+            name: 'Accusé de réception SAE'
+        reply_sae:
+            type: file
+            name: 'Réponse du SAE'
+        url_archive:
+            name: 'URL sur le système d''archive'
+            type: url
 champs-affiches:
-    titre
-    numero_marche
-    etape
-    type_piece_marche
-    soumissionnaire
-    dernier_etat
-    date_dernier_etat
-
+    - titre
+    - numero_marche
+    - etape
+    - type_piece_marche
+    - soumissionnaire
+    - dernier_etat
+    - date_dernier_etat
 page-condition:
-
     i-Parapheur:
         envoi_signature: true
-
-    Mail sécurisé:
+    'Mail sécurisé':
         envoi_mailsec: true
-
-    Retour Parapheur:
+    'Retour Parapheur':
         has_historique: true
-
     Journal:
         journal_show: true
-
-    Retour GED:
+    'Retour GED':
         has_ged_document_id: true
-
     SAE:
         sae_show: true
-
 action:
     creation:
         name-action: Créer
         name: Créé
         rule:
-            no-last-action:
-
+            no-last-action: ''
     modification:
         name-action: Modifier
-        name: En cours de rédaction
+        name: 'En cours de rédaction'
         rule:
             last-action:
-                creation
-                modification
-                affectation
-                affectation-orientation
-                importation-erreur
-                erreur-orientation
-                recu-iparapheur
-
+                - creation
+                - modification
+                - affectation
+                - affectation-orientation
+                - importation-erreur
+                - erreur-orientation
+                - recu-iparapheur
     suppression:
         name-action: Supprimer
         name: Supprimé
         rule:
             last-action:
-                creation
-                modification
-                affectation
-                affectation-orientation
-                importation-erreur
-                erreur-orientation
-                recu-iparapheur
-                rejet-iparapheur
-                send-ged
-                error-ged
-                termine
-                fatal-error
+                - creation
+                - modification
+                - affectation
+                - affectation-orientation
+                - importation-erreur
+                - erreur-orientation
+                - recu-iparapheur
+                - rejet-iparapheur
+                - send-ged
+                - error-ged
+                - termine
+                - fatal-error
         action-class: Supprimer
-        warning: "Êtes-vous sûr ?"
-
+        warning: 'Êtes-vous sûr ?'
     importation:
         name: Importation
         rule:
             role_id_e: no-role
         action-automatique: affectation-orientation
-
     importation-sans-envoi:
-        name: Importation (sans envoi)
+        name: 'Importation (sans envoi)'
         rule:
             role_id_e: no-role
         action-automatique: affectation
-
     importation-erreur:
-        name: Importation avec erreur
+        name: 'Importation avec erreur'
         rule:
             role_id_e: no-role
-
     affectation:
         name: Affectation
-        name-action: Affecter les valeurs par défaut
+        name-action: 'Affecter les valeurs par défaut'
         rule:
-           last-action:
-                 creation
-                 modification
-                 affectation
-                 importation-sans-envoi
-                 importation-erreur
+            last-action:
+                - creation
+                - modification
+                - affectation
+                - importation-sans-envoi
+                - importation-erreur
         editable-content:
             - libelle
             - type_consultation
@@ -409,49 +364,44 @@ action:
             - json_metadata
             - to
         action-class: PieceMarcheAffectation
-
     affectation-orientation:
-        name: Affectation et envoi
-        name-action: Affecter les valeurs par défaut et envoyer
-        rule:
-           last-action:
-                 importation
-        action-class: PieceMarcheAffectation
-        action-automatique: orientation
-
-    orientation:
-        name-action: Envoyer le dossier
+        name: 'Affectation et envoi'
+        name-action: 'Affecter les valeurs par défaut et envoyer'
         rule:
             last-action:
-                 creation
-                 modification
-                 affectation
-                 affectation-orientation
-                 recu-iparapheur
-                 renvoi
-                 reception
-                 non-recu
-                 send-ged
+                - importation
+        action-class: PieceMarcheAffectation
+        action-automatique: orientation
+    orientation:
+        name-action: 'Envoyer le dossier'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - affectation
+                - affectation-orientation
+                - recu-iparapheur
+                - renvoi
+                - reception
+                - non-recu
+                - send-ged
             document_is_valide: true
         action-class: PieceMarcheOrientation
-
     erreur-orientation:
-        name: Erreur lors de l'envoi du dossier
+        name: 'Erreur lors de l''envoi du dossier'
         rule:
             role_id_e: no-role
-
     preparation-send-iparapheur:
-        name: Préparation de l'envoi au parapheur
+        name: 'Préparation de l''envoi au parapheur'
         rule:
             role_id_e: no-role
         action-automatique: send-iparapheur
-
     send-iparapheur:
-        name-action: Transmettre au parapheur
-        name: Transmis au parapheur
+        name-action: 'Transmettre au parapheur'
+        name: 'Transmis au parapheur'
         rule:
             last-action:
-               preparation-send-iparapheur
+                - preparation-send-iparapheur
         action-class: StandardAction
         connecteur-type: signature
         connecteur-type-action: SignatureEnvoie
@@ -461,143 +411,126 @@ action:
             iparapheur_date_limite: date_limite
             autre_document_attache: annexe
         action-automatique: verif-iparapheur
-
     verif-iparapheur:
-        name-action: Vérifier le statut de signature
-        name: Vérification de la signature
+        name-action: 'Vérifier le statut de signature'
+        name: 'Vérification de la signature'
         rule:
             last-action:
-                erreur-verif-iparapheur
-                send-iparapheur
+                - erreur-verif-iparapheur
+                - send-iparapheur
         action-class: StandardAction
         connecteur-type: signature
         connecteur-type-action: SignatureRecuperation
         connecteur-type-mapping:
             signature: co_signature_detachee
             autre_document_attache: annexe
-
     erreur-verif-iparapheur:
-        name: Erreur lors de la vérification du statut de signature
+        name: 'Erreur lors de la vérification du statut de signature'
         rule:
             role_id_e: no-role
-
     recu-iparapheur:
-        name: Signature récuperée
+        name: 'Signature récuperée'
         rule:
             role_id_e: no-role
         editable-content:
-            envoi_ged
+            - envoi_ged
         action-automatique: orientation
-
     rejet-iparapheur:
-        name: Signature refusée
+        name: 'Signature refusée'
         rule:
             role_id_e: no-role
-
     preparation-send-mailsec:
-        name: Préparation de l'envoi par mail sécurisé
+        name: 'Préparation de l''envoi par mail sécurisé'
         rule:
             role_id_e: no-role
         action-automatique: send-mailsec
-
     send-mailsec:
-        name-action: Envoyer le mail sécurisé
-        name: Envoi d'un mail sécurisé
+        name-action: 'Envoyer le mail sécurisé'
+        name: 'Envoi d''un mail sécurisé'
         rule:
             last-action:
-                preparation-send-mailsec
+                - preparation-send-mailsec
         action-class: StandardAction
         connecteur-type: mailsec
         connecteur-type-action: MailsecEnvoyer
         action-automatique: mailsec-relance
-
     mailsec-relance:
         name: Relancé
-        name-action: Relancer si nécessaire
+        name-action: 'Relancer si nécessaire'
         rule:
-           last-action:
-              send-mailsec
-              renvoi
+            last-action:
+                - send-mailsec
+                - renvoi
         action-class: PDFGeneriqueRelance
         action-automatique: mailsec-relance
-
     prepare-renvoi:
-        name: Préparation de la relance du mail
+        name: 'Préparation de la relance du mail'
         rule:
             role_id_e: no-role
         action-automatique: renvoi
-
     renvoi:
-        name-action: Envoyer à nouveau
+        name-action: 'Envoyer à nouveau'
         name: Renvoyé
         rule:
             last-action:
-                mailsec-relance
-                send-mailsec
+                - mailsec-relance
+                - send-mailsec
             role_id_e: editeur
             document_is_valide: true
         action-class: PDFGeneriqueRenvoyer
         connecteur-type: mailsec
         action-automatique: mailsec-relance
-
     reception:
         name: Reçu
         rule:
             role_id_e: no-role
         action-automatique: orientation
-
     erreur:
         name: Erreur
         rule:
             role_id_e: no-role
-
     non-recu:
-        name: Non reçu
-        name-action: Définir comme non reçu
-        warning: "ok"
+        name: 'Non reçu'
+        name-action: 'Définir comme non reçu'
+        warning: ok
         rule:
             last-action:
-                renvoi
-                send-mailsec
+                - renvoi
+                - send-mailsec
         action-class: Defaut
         action-automatique: orientation
-
     preparation-send-ged:
-        name: Préparation de l'envoi à la GED
+        name: 'Préparation de l''envoi à la GED'
         rule:
             role_id_e: no-role
         action-automatique: send-ged
-
     send-ged:
-        name-action: Verser à la GED
-        name: Versé à la GED
+        name-action: 'Verser à la GED'
+        name: 'Versé à la GED'
         rule:
             content:
                 envoi_ged: true
             last-action:
-                preparation-send-ged
-                error-ged
+                - preparation-send-ged
+                - error-ged
         action-class: StandardAction
         connecteur-type: GED
         connecteur-type-action: GEDEnvoyer
         connecteur-type-mapping:
             fatal-error: error-ged
         action-automatique: orientation
-
     error-ged:
-        name: Erreur irrécupérable lors du dépôt
+        name: 'Erreur irrécupérable lors du dépôt'
         rule:
             role_id_e: no-role
-
     preparation-send-sae:
-        name: Préparation de l'envoi au SAE
+        name: 'Préparation de l''envoi au SAE'
         rule:
             role_id_e: no-role
         action-automatique: send-archive
-
     send-archive:
-        name-action: Verser au SAE
-        name: Versé au SAE
+        name-action: 'Verser au SAE'
+        name: 'Versé au SAE'
         rule:
             content:
                 envoi_sae: true
@@ -618,86 +551,73 @@ action:
         connecteur-type-action: SAEEnvoyer
         connecteur-type-data-seda-class-name: FluxDataSedaPieceMarche
         action-automatique: verif-sae
-
     erreur-envoie-sae:
-        name: Erreur lors de l'envoi au SAE
+        name: 'Erreur lors de l''envoi au SAE'
         rule:
             role_id_e: no-role
-
     verif-sae:
-        name-action: Récupérer l'AR du dossier sur le SAE
-        name: Récuperation de l'AR sur le SAE
+        name-action: 'Récupérer l''AR du dossier sur le SAE'
+        name: 'Récuperation de l''AR sur le SAE'
         rule:
             last-action:
-                send-archive
-                verif-sae-erreur
+                - send-archive
+                - verif-sae-erreur
             droit_id_u: 'piece-marche:edition'
         action-class: StandardAction
         connecteur-type: SAE
         connecteur-type-action: SAEVerifier
-
-
     verif-sae-erreur:
-        name: Erreur lors de la récupération de l'AR
+        name: 'Erreur lors de la récupération de l''AR'
         rule:
             role_id_e: no-role
-
     ar-recu-sae:
-        name: AR SAE reçu
+        name: 'AR SAE reçu'
         rule:
             role_id_e: no-role
         action-automatique: validation-sae
-
     validation-sae:
-        name-action: Vérifier l'acceptation par le SAE
-        name: Vérification de l'acceptation par le SAE
+        name-action: 'Vérifier l''acceptation par le SAE'
+        name: 'Vérification de l''acceptation par le SAE'
         rule:
             last-action:
-                ar-recu-sae
-                validation-sae-erreur
+                - ar-recu-sae
+                - validation-sae-erreur
             droit_id_u: 'piece-marche:edition'
         action-class: StandardAction
         connecteur-type: SAE
         connecteur-type-action: SAEValider
-
     validation-sae-erreur:
-        name: Erreur lors de la vérification de la validité du transfert
+        name: 'Erreur lors de la vérification de la validité du transfert'
         rule:
             role_id_e: no-role
-
     accepter-sae:
-        name: Archive acceptée par le SAE
+        name: 'Archive acceptée par le SAE'
         rule:
             role_id_e: no-role
         action-automatique: orientation
-
     rejet-sae:
-        name: Archive rejetée par le SAE
+        name: 'Archive rejetée par le SAE'
         rule:
             role_id_e: no-role
-
     termine:
-        name: Traitement terminé
+        name: 'Traitement terminé'
         rule:
             role_id_e: no-role
         editable-content:
-            envoi_sae
-
+            - envoi_sae
     iparapheur-sous-type:
-        name: Liste des sous-type iParapheur
+        name: 'Liste des sous-type iParapheur'
         no-workflow: true
         rule:
             role_id_e: no-role
         action-class: IparapheurSousType
-
     cheminement-change:
         no-workflow: true
         rule:
             role_id_e: no-role
         action-class: PDFGeneriqueCheminementChange
-
     document-change:
-        name: Modification du document
+        name: 'Modification du document'
         no-workflow: true
         rule:
             role_id_e: no-role

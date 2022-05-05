@@ -1,24 +1,19 @@
 nom: i-Parapheur
 type: signature
-
-description: |
-    Connecteur pour le iParapheur de l'Adullact
-
+description: 'Connecteur pour le iParapheur de l''Adullact'
 formulaire:
     page0:
         iparapheur_wsdl:
-            name: "URL du WSDL"
-        iparapheur_user_certificat: 
-            name: "Certificat utilisateur (format P12)"
+            name: 'URL du WSDL'
+        iparapheur_user_certificat:
+            name: 'Certificat utilisateur (format P12)'
             type: file
             content-type: application/octet-stream
             onchange: update-certificate
-
         iparapheur_user_certificat_password:
-            name: "Mot de passe du certificat utilisateur"
+            name: 'Mot de passe du certificat utilisateur'
             type: password
             onchange: update-certificate
-
         iparapheur_user_key_pem:
             type: file
             no-show: true
@@ -29,81 +24,70 @@ formulaire:
             type: file
             no-show: true
         iparapheur_login:
-            name: "Login HTTP"
+            name: 'Login HTTP'
         iparapheur_password:
-            name: "Mot de passe HTTP"
+            name: 'Mot de passe HTTP'
             type: password
         iparapheur_type:
-            name: Type i-Parapheur
+            name: 'Type i-Parapheur'
             type: externalData
             choice-action: iparapheur-type
-            link_name: Sélectionner un type
+            link_name: 'Sélectionner un type'
             onchange: update-sous-type
         iparapheur_sous_type:
-            name: Sous-type iParapheur
+            name: 'Sous-type iParapheur'
             read-only: true
             type: file
         iparapheur_nb_jour_max:
-            name: Nombre de jours maximum dans le parapheur
-            commentaire: | 
-                Nombre de jours avant de déclencher une erreur s'il n'y a pas de réponse du parapheur
-                (Peut ne pas être implémenté par les différents flux).
+            name: 'Nombre de jours maximum dans le parapheur'
+            commentaire: "Nombre de jours avant de déclencher une erreur s'il n'y a pas de réponse du parapheur\n(Peut ne pas être implémenté par les différents flux)."
             default: 30
         iparapheur_visibilite:
-            name: Visibilité pour le iParapheur
+            name: 'Visibilité pour le iParapheur'
             type: select
             value:
                 CONFIDENTIEL: CONFIDENTIEL
                 SERVICE: GROUPE
                 PUBLIC: PUBLIC
-                
         visuel_pdf_default:
-            name: Visuel PDF par défaut
+            name: 'Visuel PDF par défaut'
             type: file
-            commentaire: Utilisé dans le cadre de l'envoi de flux PES
-            
+            commentaire: 'Utilisé dans le cadre de l''envoi de flux PES'
         XPathPourSignatureXML:
-            name: Position des signatures PES
-            commentaire: Permet de préciser au iParapheur l'emplacement des signatures pour les PES
+            name: 'Position des signatures PES'
+            commentaire: 'Permet de préciser au iParapheur l''emplacement des signatures pour les PES'
             type: select
             value:
-                1: Bordereau si possible ou PES_Aller sinon (defaut)
+                1: 'Bordereau si possible ou PES_Aller sinon (defaut)'
                 2: Bordereau
                 3: PES_Aller
-
         iparapheur_metadata:
-            name: Métadonnées à envoyer au i-Parapheur
-            commentaire: |
-              De la forme : nom_element_pastell_1:nom_metadonne_parapheur_1, nom_element_pastell_2:nom_metadonne_parapheur_2, ..
-              Attention, il faut que le flux le supporte !
-
+            name: 'Métadonnées à envoyer au i-Parapheur'
+            commentaire: "De la forme : nom_element_pastell_1:nom_metadonne_parapheur_1, nom_element_pastell_2:nom_metadonne_parapheur_2, ..\nAttention, il faut que le flux le supporte !"
         iparapheur_archivage_action:
-            name: Action à réaliser suite à la récupération du dossier
+            name: 'Action à réaliser suite à la récupération du dossier'
             type: select
             value:
-                EFFACER: Effacer le dossier du parapheur
-                ARCHIVER: Archiver le dossier sur le parapheur
-            commentaire: L'action par défaut est l'effacement
-
+                EFFACER: 'Effacer le dossier du parapheur'
+                ARCHIVER: 'Archiver le dossier sur le parapheur'
+            commentaire: 'L''action par défaut est l''effacement'
         iparapheur_multi_doc:
-            name: Appliquer le multi-document
+            name: 'Appliquer le multi-document'
             type: checkbox
-            commentaire: Si le sous-type i-Parapheur le permet (Signature multi-document), alors les fichiers multiples envoyés seront des multi-documents signés
-		
+            commentaire: 'Si le sous-type i-Parapheur le permet (Signature multi-document), alors les fichiers multiples envoyés seront des multi-documents signés'
 action:
     test-iparapheur:
-        name: Tester la connexion
+        name: 'Tester la connexion'
         action-class: IParapheurTest
         rule:
-            droit_id_u: 'entite:edition'	
+            droit_id_u: 'entite:edition'
     test-iparapheur-send:
-        name: Créer un document test
+        name: 'Créer un document test'
         action-class: IParapheurTestSend
         rule:
             droit_id_u: 'entite:edition'
-			
     update-certificate:
-        name: Mettre à jour les certificats
+        name: 'Mettre à jour les certificats'
         rule:
             role_id_e: no-role
         action-class: StandardAction
@@ -115,19 +99,16 @@ action:
             certificat_connexion_cert_pem: iparapheur_user_certificat_pem
             certificat_connexion_key_pem: iparapheur_user_key_only_pem
             certificat_connexion_key_cert_pem: iparapheur_user_key_pem
-
     update-sous-type:
-        name: Mettre à jour les sous-types
+        name: 'Mettre à jour les sous-types'
         action-class: UpdateSousType
         rule:
             droit_id_u: 'entite:edition'
-
     iparapheur-type:
-        name: Liste des types iParapheur
-        rule: 
+        name: 'Liste des types iParapheur'
+        rule:
             role_id_e: no-role
         action-class: IparapheurType
-
     iparapheur-empty-cache:
-        name: Vider le cache WSDL
+        name: 'Vider le cache WSDL'
         action-class: IParapheurEmptyWSDLCache

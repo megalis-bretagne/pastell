@@ -1,14 +1,11 @@
-nom: Convocation (destinataire)
-
-description: Type de dossier complémentaire du type de dossier mailsec-bidir
-
-
+nom: 'Convocation (destinataire)'
+description: 'Type de dossier complémentaire du type de dossier mailsec-bidir'
 formulaire:
-    Message :
+    Message:
         to:
             name: Destinataire(s)
         cc:
-            name: Copie à
+            name: 'Copie à'
         objet:
             name: Objet
             title: true
@@ -16,7 +13,6 @@ formulaire:
             name: Message
             type: textarea
         document_attache:
-            name: Document attaché
+            name: 'Document attaché'
             type: file
             multiple: true
-

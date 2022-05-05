@@ -1,245 +1,188 @@
-libelle: "Visa/Signature"
-
+libelle: Visa/Signature
 connecteur_type:
     - signature
-
 configuration_etape_formulaire:
-
-# TODO
-#    choix-type-parapheur:
-#        name: Choix de la typologie parapheur
-#        type: select
-#        requis: true
-#        value:
-#            connecteur: Typologie fixé dans le connecteur
-#            mixte: Type fixé dans le connecteur, sous type choisi dans le dossier
-#            dossier: Typologie choisie dans le dossier
-
     libelle_parapheur:
-        name: Nom du dossier sur le parapheur
+        name: 'Nom du dossier sur le parapheur'
         requis: true
         type: text_select
-
     document_a_signer:
-        name: Document à envoyer au parapheur
+        name: 'Document à envoyer au parapheur'
         requis: true
         type: file
-
     annexe:
-        name: Autre document(s) à envoyer au parapheur
+        name: 'Autre document(s) à envoyer au parapheur'
         type: multi_file
-
-# TODO
-#    co-signature:
-#        name: Fichier(s) de co-signature
-#        type: multi_file
-
     has_date_limite:
-        name: Permettre l'utilisation d'une date limite
+        name: 'Permettre l''utilisation d''une date limite'
         type: checkbox
-
     has_metadata_in_json:
-        name: Permettre l'envoi d'un fichier de méta-données en JSON
+        name: 'Permettre l''envoi d''un fichier de méta-données en JSON'
         type: checkbox
-
     continue_after_refusal:
-        name: Continuer le cheminement après un refus de signature
+        name: 'Continuer le cheminement après un refus de signature'
         type: checkbox
-
 formulaire:
-  i-Parapheur:
-    envoi_iparapheur:
-      no-show: true
-
-    iparapheur_type:
-      name: Type iParapheur
-      read-only: true
-
-    iparapheur_sous_type:
-      name: Sous-type i-Parapheur
-      requis: true
-      index: true
-      read-only: true
-      type: externalData
-      choice-action: iparapheur-sous-type
-      link_name: "Sélectionner un sous-type"
-
-    json_metadata:
-      name: Métadonnées parapheur (JSON)
-      commentaire: 'Au format JSON {"cle1":"valeur1","cle2":"valeur2",...}'
-      type: file
-
-    has_date_limite:
-      name: Utiliser une date limite
-      type: checkbox
-
-    date_limite:
-      name: Date limite
-      type: date
-
-  Parapheur FAST:
-    envoi_fast:
-      no-show: true
-
-    fast_parapheur_circuit:
-      name: Circuit sur le parapheur
-      type: externalData
-      choice-action: iparapheur-sous-type
-      link_name: "Liste des circuits"
-
-    fast_parapheur_circuit_configuration:
-      name: Configuration du circuit à la volée (au format JSON)
-      commentaire: Si ce fichier est déposé, il remplace le circuit choisi dans le champ "Circuit sur le parapheur"
-      type: file
-
-    fast_parapheur_email_destinataire:
-      name: Email du destinataire
-      commentaire: |
-        Email de la personne à qui l’on souhaite envoyer le document après sa signature<br />
-        Uniquement avec le mode "circuit à la volée"
-
-    fast_parapheur_email_cc:
-      name: Email des destinataires en copie carbone
-      commentaire: |
-        Permet de rajouter des destinataires mais en copie carbone<br />
-        Uniquement avec le mode "circuit à la volée"
-
-    fast_parapheur_agents:
-      name: Emails des agents
-      commentaire: |
-        Les emails des utilisateurs à rajouter en tant qu’agent. Séparé par des virgules<br />
-        Uniquement avec le mode "circuit à la volée"
-
-  Signature:
-      iparapheur_dossier_id:
-        name: "#ID dossier parapheur"
-
-      iparapheur_historique:
-        name: Historique iparapheur
-        type: file
-      parapheur_last_message:
-        name: Dernier message reçu du parapheur
-      has_signature:
-        no-show: true
-      signature:
-        name: Signature détachée
-        type: file
-      bordereau_signature:
-        name: Bordereau de signature
-        type: file
-      document_original:
-        name: Document original
-        type: file
-      multi_document_original:
-        name: Multi-document(s) original
-        type: file
-        multiple: true
-      iparapheur_annexe_sortie:
-        name: Annexe(s) de sortie du parapheur
-        type: file
-        multiple: true
-
-
+    i-Parapheur:
+        envoi_iparapheur:
+            no-show: true
+        iparapheur_type:
+            name: 'Type iParapheur'
+            read-only: true
+        iparapheur_sous_type:
+            name: 'Sous-type i-Parapheur'
+            requis: true
+            index: true
+            read-only: true
+            type: externalData
+            choice-action: iparapheur-sous-type
+            link_name: 'Sélectionner un sous-type'
+        json_metadata:
+            name: 'Métadonnées parapheur (JSON)'
+            commentaire: 'Au format JSON {"cle1":"valeur1","cle2":"valeur2",...}'
+            type: file
+        has_date_limite:
+            name: 'Utiliser une date limite'
+            type: checkbox
+        date_limite:
+            name: 'Date limite'
+            type: date
+    'Parapheur FAST':
+        envoi_fast:
+            no-show: true
+        fast_parapheur_circuit:
+            name: 'Circuit sur le parapheur'
+            type: externalData
+            choice-action: iparapheur-sous-type
+            link_name: 'Liste des circuits'
+        fast_parapheur_circuit_configuration:
+            name: 'Configuration du circuit à la volée (au format JSON)'
+            commentaire: 'Si ce fichier est déposé, il remplace le circuit choisi dans le champ "Circuit sur le parapheur"'
+            type: file
+        fast_parapheur_email_destinataire:
+            name: 'Email du destinataire'
+            commentaire: "Email de la personne à qui l’on souhaite envoyer le document après sa signature<br />\nUniquement avec le mode \"circuit à la volée\""
+        fast_parapheur_email_cc:
+            name: 'Email des destinataires en copie carbone'
+            commentaire: "Permet de rajouter des destinataires mais en copie carbone<br />\nUniquement avec le mode \"circuit à la volée\""
+        fast_parapheur_agents:
+            name: 'Emails des agents'
+            commentaire: "Les emails des utilisateurs à rajouter en tant qu’agent. Séparé par des virgules<br />\nUniquement avec le mode \"circuit à la volée\""
+    Signature:
+        iparapheur_dossier_id:
+            name: '#ID dossier parapheur'
+        iparapheur_historique:
+            name: 'Historique iparapheur'
+            type: file
+        parapheur_last_message:
+            name: 'Dernier message reçu du parapheur'
+        has_signature:
+            no-show: true
+        signature:
+            name: 'Signature détachée'
+            type: file
+        bordereau_signature:
+            name: 'Bordereau de signature'
+            type: file
+        document_original:
+            name: 'Document original'
+            type: file
+        multi_document_original:
+            name: 'Multi-document(s) original'
+            type: file
+            multiple: true
+        iparapheur_annexe_sortie:
+            name: 'Annexe(s) de sortie du parapheur'
+            type: file
+            multiple: true
 page-condition:
-
-  i-Parapheur:
-    envoi_iparapheur: true
-
-  Parapheur FAST:
-    envoi_fast: true
-
-  Signature:
-      has_signature: true
-
+    i-Parapheur:
+        envoi_iparapheur: true
+    'Parapheur FAST':
+        envoi_fast: true
+    Signature:
+        has_signature: true
 action:
-
-  preparation-send-iparapheur:
-    name: Préparation de l'envoi au parapheur
-    rule:
-      role_id_e: no-role
-    action-automatique: send-iparapheur
-
-  send-iparapheur:
-    name-action: Transmettre au parapheur
-    name: Transmis au parapheur
-    rule:
-      last-action:
-        - preparation-send-iparapheur
-        - send-signature-error
-    action-class: StandardAction
-    connecteur-type: signature
-    connecteur-type-action: SignatureEnvoie
-    connecteur-type-mapping:
-      iparapheur_type: iparapheur_type
-      iparapheur_sous_type: iparapheur_sous_type
-      iparapheur_dossier_id: iparapheur_dossier_id
-      json_metadata: json_metadata
-      fast_parapheur_circuit: fast_parapheur_circuit
-      fast_parapheur_circuit_configuration: fast_parapheur_circuit_configuration
-      fast_parapheur_email_destinataire: fast_parapheur_email_destinataire
-      fast_parapheur_email_cc: fast_parapheur_email_cc
-      fast_parapheur_agents: fast_parapheur_agents
-      send-signature-error: send-signature-error
-    action-automatique: verif-iparapheur
-
-  send-signature-error:
-    name: Erreur lors de l'envoi du dossier à la signature
-    editable-content:
-      - fast_parapheur_circuit
-      - fast_parapheur_circuit_configuration
-      - fast_parapheur_email_destinataire
-      - fast_parapheur_email_cc
-      - fast_parapheur_agents
-    rule:
-      role_id_e: no-role
-
-  verif-iparapheur:
-    name-action: Vérifier le statut de signature
-    name: Vérification de la signature
-    rule:
-      last-action:
-        erreur-verif-iparapheur
-        send-iparapheur
-    action-class: StandardAction
-    connecteur-type: signature
-    connecteur-type-action: SignatureRecuperation
-    connecteur-type-mapping:
-      iparapheur_historique: iparapheur_historique
-      parapheur_last_message: parapheur_last_message
-      has_signature: has_signature
-      signature: signature
-      document_original: document_original
-      multi_document_original: multi_document_original
-      bordereau: bordereau_signature
-      iparapheur_annexe_sortie: iparapheur_annexe_sortie
-      iparapheur_dossier_id: iparapheur_dossier_id
-      recu-iparapheur: recu-iparapheur
-      rejet-iparapheur: rejet-iparapheur
-      erreur-verif-iparapheur: erreur-verif-iparapheur
-
-  erreur-verif-iparapheur:
-    name: Erreur lors de la vérification du statut de signature
-    rule:
-      role_id_e: no-role
-
-  recu-iparapheur:
-    name: Signature récuperée
-    rule:
-      role_id_e: no-role
-    action-automatique: orientation
-
-  rejet-iparapheur:
-    name: Signature refusée
-    rule:
-      role_id_e: no-role
-
-  iparapheur-sous-type:
-      name: Liste des sous-type iParapheur
-      no-workflow: true
-      rule:
-        role_id_e: no-role
-      action-class: IparapheurSousType
-    connecteur-type-mapping:
-      iparapheur_type: iparapheur_type
-      iparapheur_sous_type: iparapheur_sous_type
-      fast_parapheur_circuit: fast_parapheur_circuit
+    preparation-send-iparapheur:
+        name: 'Préparation de l''envoi au parapheur'
+        rule:
+            role_id_e: no-role
+        action-automatique: send-iparapheur
+    send-iparapheur:
+        name-action: 'Transmettre au parapheur'
+        name: 'Transmis au parapheur'
+        rule:
+            last-action:
+                - preparation-send-iparapheur
+                - send-signature-error
+        action-class: StandardAction
+        connecteur-type: signature
+        connecteur-type-action: SignatureEnvoie
+        connecteur-type-mapping:
+            iparapheur_type: iparapheur_type
+            iparapheur_sous_type: iparapheur_sous_type
+            iparapheur_dossier_id: iparapheur_dossier_id
+            json_metadata: json_metadata
+            fast_parapheur_circuit: fast_parapheur_circuit
+            fast_parapheur_circuit_configuration: fast_parapheur_circuit_configuration
+            fast_parapheur_email_destinataire: fast_parapheur_email_destinataire
+            fast_parapheur_email_cc: fast_parapheur_email_cc
+            fast_parapheur_agents: fast_parapheur_agents
+            send-signature-error: send-signature-error
+        action-automatique: verif-iparapheur
+    send-signature-error:
+        name: 'Erreur lors de l''envoi du dossier à la signature'
+        editable-content:
+            - fast_parapheur_circuit
+            - fast_parapheur_circuit_configuration
+            - fast_parapheur_email_destinataire
+            - fast_parapheur_email_cc
+            - fast_parapheur_agents
+        rule:
+            role_id_e: no-role
+    verif-iparapheur:
+        name-action: 'Vérifier le statut de signature'
+        name: 'Vérification de la signature'
+        rule:
+            last-action:
+                - erreur-verif-iparapheur
+                - send-iparapheur
+        action-class: StandardAction
+        connecteur-type: signature
+        connecteur-type-action: SignatureRecuperation
+        connecteur-type-mapping:
+            iparapheur_historique: iparapheur_historique
+            parapheur_last_message: parapheur_last_message
+            has_signature: has_signature
+            signature: signature
+            document_original: document_original
+            multi_document_original: multi_document_original
+            bordereau: bordereau_signature
+            iparapheur_annexe_sortie: iparapheur_annexe_sortie
+            iparapheur_dossier_id: iparapheur_dossier_id
+            recu-iparapheur: recu-iparapheur
+            rejet-iparapheur: rejet-iparapheur
+            erreur-verif-iparapheur: erreur-verif-iparapheur
+    erreur-verif-iparapheur:
+        name: 'Erreur lors de la vérification du statut de signature'
+        rule:
+            role_id_e: no-role
+    recu-iparapheur:
+        name: 'Signature récuperée'
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+    rejet-iparapheur:
+        name: 'Signature refusée'
+        rule:
+            role_id_e: no-role
+    iparapheur-sous-type:
+        name: 'Liste des sous-type iParapheur'
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: IparapheurSousType
+        connecteur-type-mapping:
+            iparapheur_type: iparapheur_type
+            iparapheur_sous_type: iparapheur_sous_type
+            fast_parapheur_circuit: fast_parapheur_circuit

@@ -1,16 +1,8 @@
-nom: Dépôt local
+nom: 'Dépôt local'
 type: GED
-
 heritage: ged-connecteur-common
-
-description: |
-    Connecteur de dépôt sur un répertoire local
-
+description: 'Connecteur de dépôt sur un répertoire local'
 formulaire:
     page0:
         depot_local_directory:
-            name: Répertoire de sortie
-
-
-
-
+            name: 'Répertoire de sortie'

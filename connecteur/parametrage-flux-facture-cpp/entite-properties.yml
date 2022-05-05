@@ -1,63 +1,44 @@
 nom: ParametrageTypeDossierFactureCPP
-
 type: ParametrageFlux
-
-description: |
-    Connecteur pour paramétrer le type de dossier Facture Chorus Pro.
-    Lors de la création le choix du cheminement est renseigné par defaut et les actions peuvent être lancées automatiquement.
-    Suppression automatique des factures après x jours.
-    Formatage du nom du répértoire pour le dépot en GED
-
+description: "Connecteur pour paramétrer le type de dossier Facture Chorus Pro.\nLors de la création le choix du cheminement est renseigné par defaut et les actions peuvent être lancées automatiquement.\nSuppression automatique des factures après x jours.\nFormatage du nom du répértoire pour le dépot en GED"
 restriction_pack:
     - pack_chorus_pro
-
 formulaire:
     page0:
         envoi_visa:
-            name: Transmission pour validation iParapheur
+            name: 'Transmission pour validation iParapheur'
             type: checkbox
-
         iparapheur_type:
-            name: Type iParapheur
-            commentaire: Obligatoire dans le cas de l'envoi pour validation iParapheur
-
+            name: 'Type iParapheur'
+            commentaire: 'Obligatoire dans le cas de l''envoi pour validation iParapheur'
         iparapheur_sous_type:
-            name: Sous Type iParapheur
-            commentaire: Obligatoire dans le cas de l'envoi pour validation iParapheur
-
+            name: 'Sous Type iParapheur'
+            commentaire: 'Obligatoire dans le cas de l''envoi pour validation iParapheur'
         envoi_ged:
-            name: Transmission en entrepôt
+            name: 'Transmission en entrepôt'
             type: checkbox
-
         check_mise_a_dispo_gf:
-            name: Mise à disposition de la Gestion Financière
-            commentaire: Passage en état "Mise à disposition GF" pour indiquer à la GF qu'elle peut récupérer la facture pour traitement
+            name: 'Mise à disposition de la Gestion Financière'
+            commentaire: 'Passage en état "Mise à disposition GF" pour indiquer à la GF qu''elle peut récupérer la facture pour traitement'
             type: checkbox
-
         envoi_sae:
-            name: Transmission au SAE
+            name: 'Transmission au SAE'
             type: checkbox
-
         envoi_auto:
-            name: Envoyer automatiquement les documents d'étape en étape
+            name: 'Envoyer automatiquement les documents d''étape en étape'
             type: checkbox
-
         nb_jours_avant_supp:
-            name: Durée de maintien des dossiers dans Pastell
-            commentaire: Suppression automatique des dossiers Facture Chorus Pro (en statut "finaux") après 90 jours si non renseigné.
+            name: 'Durée de maintien des dossiers dans Pastell'
+            commentaire: 'Suppression automatique des dossiers Facture Chorus Pro (en statut "finaux") après 90 jours si non renseigné.'
             default: 90
         ged_liste_statuts:
-            name: Liste des statuts possibles pour le dépot en GED
-            commentaire: "MISE_A_DISPOSITION;COMPLETEE;SERVICE_FAIT;MANDATEE par défaut"
-            default: "MISE_A_DISPOSITION;COMPLETEE;SERVICE_FAIT;MANDATEE"
+            name: 'Liste des statuts possibles pour le dépot en GED'
+            commentaire: 'MISE_A_DISPOSITION;COMPLETEE;SERVICE_FAIT;MANDATEE par défaut'
+            default: MISE_A_DISPOSITION;COMPLETEE;SERVICE_FAIT;MANDATEE
 action:
-
     supprimer-factures:
-        name: Déclencher la suppression automatique des dossiers Facture Chorus Pro
+        name: 'Déclencher la suppression automatique des dossiers Facture Chorus Pro'
         action-class: ParametrageFluxFactureCPPSupprimer
         rule:
             droit_id_u: 'entite:edition'
         action-automatique: supprimer-factures
-
-
-

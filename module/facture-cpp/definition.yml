@@ -1,27 +1,17 @@
-nom: Facture Chorus Pro
-type: Types de dossier Facture Chorus Pro
-
-description: |
-    Le type de dossier Facture Chorus Pro générique fonctionne de la manière suivante :
-    - création par l'import via un connecteur CPP ou création d'après facture papier via le type de dossier Facture Formulaire Pivot
-    - préparation du document, envoi sur des connecteurs annexes (exemple : GED, parapheur)
-    - mise à disposition de la GF
-    - changement de statut par la GF
-    - fin de vie du document, envoi sur des connecteurs annexes (exemple : SAE)
-
+nom: 'Facture Chorus Pro'
+type: 'Types de dossier Facture Chorus Pro'
+description: "Le type de dossier Facture Chorus Pro générique fonctionne de la manière suivante :\n- création par l'import via un connecteur CPP ou création d'après facture papier via le type de dossier Facture Formulaire Pivot\n- préparation du document, envoi sur des connecteurs annexes (exemple : GED, parapheur)\n- mise à disposition de la GF\n- changement de statut par la GF\n- fin de vie du document, envoi sur des connecteurs annexes (exemple : SAE)"
 restriction_pack:
     - pack_chorus_pro
-
 connecteur:
-    ParametrageFlux
-    PortailFacture
-    signature
-    GED
-    Bordereau SEDA
-    SAE
-
+    - ParametrageFlux
+    - PortailFacture
+    - signature
+    - GED
+    - 'Bordereau SEDA'
+    - SAE
 formulaire:
-    Statut Chorus Pro:
+    'Statut Chorus Pro':
         is_cpp:
             no-show: true
         utilisateur_technique:
@@ -34,17 +24,17 @@ formulaire:
             type: date
             index: true
         id_facture_cpp:
-            name: Identifiant CPP de la facture
+            name: 'Identifiant CPP de la facture'
             read-only: true
             index: true
         histo_statut_cpp:
-            name: Historique des statuts Chorus Pro
-            commentaire: Fichier json contenant l'historique des statuts Chorus Pro
+            name: 'Historique des statuts Chorus Pro'
+            commentaire: 'Fichier json contenant l''historique des statuts Chorus Pro'
             type: file
             read-only: true
             visionneuse: HistoStatusCPPVisionneuse
         date_passage_statut:
-            name: Date de passage dans le statut courant
+            name: 'Date de passage dans le statut courant'
             read-only: true
             type: date
         statut_cpp:
@@ -52,372 +42,332 @@ formulaire:
             read-only: true
             index: true
         statut_cible_liste:
-            name: Statut cible
+            name: 'Statut cible'
             type: externalData
             choice-action: liste-statuts-cpp
-            link_name: liste des statuts
+            link_name: 'liste des statuts'
         motif_maj:
-            name: Motif du statut cible
-            commentaire: "Tronqué à 255 caractères lors de la demande de modification de statut sur Chorus Pro"
+            name: 'Motif du statut cible'
+            commentaire: 'Tronqué à 255 caractères lors de la demande de modification de statut sur Chorus Pro'
         numero_mandat:
-            name: Numéro de mandat
-            commentaire: Numéro de mandat envoyé lors de la demande en statut cible MANDATEE
-
-    Données factures:
+            name: 'Numéro de mandat'
+            commentaire: 'Numéro de mandat envoyé lors de la demande en statut cible MANDATEE'
+    'Données factures':
         destinataire:
-            name: Identifiant CPP du destinataire
+            name: 'Identifiant CPP du destinataire'
             read-only: true
-
         siret:
-            name: Siret du destinataire
+            name: 'Siret du destinataire'
             index: true
             read-only: true
-
         service_destinataire:
-            name: Identifiant CPP du service destinataire
+            name: 'Identifiant CPP du service destinataire'
             read-only: true
-
         service_destinataire_code:
-            name: Code du service destinataire
-
+            name: 'Code du service destinataire'
         facture_numero_engagement:
-            name: Numéro d'engagement
-
+            name: 'Numéro d''engagement'
         facture_numero_marche:
-            name: Numéro de marché
-
+            name: 'Numéro de marché'
         date_mise_a_dispo:
-            name: Date de mise à disposition
+            name: 'Date de mise à disposition'
             read-only: true
-            commentaire: Cette date est la date de départ du délai global de paiement
+            commentaire: 'Cette date est la date de départ du délai global de paiement'
             type: date
-
         date_fin_suspension:
-            name: Date de mise à disposition après suspension
+            name: 'Date de mise à disposition après suspension'
             read-only: true
-            commentaire: Cette date est la date de reprise du délai global de paiement
+            commentaire: 'Cette date est la date de reprise du délai global de paiement'
             type: date
-
         fournisseur_raison_sociale:
-            name: Raison sociale du fournisseur
+            name: 'Raison sociale du fournisseur'
             read-only: true
             index: true
-
         fournisseur:
-            name: Identifiant du fournisseur
+            name: 'Identifiant du fournisseur'
             read-only: true
             index: true
-
         type_identifiant:
-            name: Type identifiant du fournisseur
+            name: 'Type identifiant du fournisseur'
             read-only: true
             type: select
             value:
-                1: 1- Tiers avec SIRET
-                2: 2- Structure Européenne hors France
-                3: 3- Structure hors UE
-                4: 4- RIDET
-                5: 5- Numéro TAHITI
-                6: 6- Tiers en cours d'immatriculation
-                7: 7- Particulier
-
+                1: '1- Tiers avec SIRET'
+                2: '2- Structure Européenne hors France'
+                3: '3- Structure hors UE'
+                4: '4- RIDET'
+                5: '5- Numéro TAHITI'
+                6: '6- Tiers en cours d''immatriculation'
+                7: '7- Particulier'
         type_facture:
-            name: Type de facture
+            name: 'Type de facture'
             read-only: true
             type: select
             value:
-                380: 380- Facture
-                381: 381- Avoir
-
+                380: '380- Facture'
+                381: '381- Avoir'
         facture_cadre:
-            name: Cadre de facturation
+            name: 'Cadre de facturation'
             read-only: true
             index: true
             type: select
             value:
-                A1: A1- Dépôt par un fournisseur d'une facture
-                A2: A2- Dépôt par un fournisseur d'une facture déjà payée
-                A3: A3- Dépôt par un fournisseur d'un mémoire de frais de justice
-                A4: A4- Dépôt par un fournisseur d'un projet de décompte mensuel
-                A5: A5- Dépôt par un fournisseur d'un état d'acompte
-                A6: A6- Dépôt par un fournisseur d'un état d'acompte validé
-                A7: A7- Dépôt par un fournisseur d'un projet de décompte final
-                A8: A8- Dépôt par un fournisseur d'un décompte général et définitif
-                A9: A9- Dépôt par un sous-traitant d'une facture
-                A10: A10- Dépôt par un sous-traitant d'un projet de décompte mensuel
-                A12: A12- Dépôt par un cotraitant d'une facture
-                A13: A13- Dépôt par un cotraitant d'un projet de décompte mensuel
-                A14: A14- Dépôt par un cotraitant d'un projet de décompte final
-                A15: A15- Dépôt par une MOE d'un état d'acompte
-                A16: A16- Dépôt par une MOE d'un état d'acompte validé
-                A17: A17- Dépôt par une MOE d'un projet de décompte général
-                A18: A18- Dépôt par une MOE d'un décompte général
-                A19: A19- Dépôt par une MOE d'un état d'acompte validé
-                A20: A20- Dépôt par une MOE d'un décompte général
-                A21: A21- Dépôt par un bénéficiaire d'une demande de remboursement de la TIC
-                A22: A22- Projet de décompte général déposé par le fournisseur ou le mandataire
-                A23: A23- Décompte général et définitif tacite déposé par le fournisseur ou le mandataire
-                A24: A24- Dépôt d'un décompte gérénral et définitif par la maitrise d oeuvrage
-                A25: A25- Décompte général et définitif déposé par la maitrise d ouvrage dans le cadre de la facturation d un marché de travaux
-
+                A1: 'A1- Dépôt par un fournisseur d''une facture'
+                A2: 'A2- Dépôt par un fournisseur d''une facture déjà payée'
+                A3: 'A3- Dépôt par un fournisseur d''un mémoire de frais de justice'
+                A4: 'A4- Dépôt par un fournisseur d''un projet de décompte mensuel'
+                A5: 'A5- Dépôt par un fournisseur d''un état d''acompte'
+                A6: 'A6- Dépôt par un fournisseur d''un état d''acompte validé'
+                A7: 'A7- Dépôt par un fournisseur d''un projet de décompte final'
+                A8: 'A8- Dépôt par un fournisseur d''un décompte général et définitif'
+                A9: 'A9- Dépôt par un sous-traitant d''une facture'
+                A10: 'A10- Dépôt par un sous-traitant d''un projet de décompte mensuel'
+                A12: 'A12- Dépôt par un cotraitant d''une facture'
+                A13: 'A13- Dépôt par un cotraitant d''un projet de décompte mensuel'
+                A14: 'A14- Dépôt par un cotraitant d''un projet de décompte final'
+                A15: 'A15- Dépôt par une MOE d''un état d''acompte'
+                A16: 'A16- Dépôt par une MOE d''un état d''acompte validé'
+                A17: 'A17- Dépôt par une MOE d''un projet de décompte général'
+                A18: 'A18- Dépôt par une MOE d''un décompte général'
+                A19: 'A19- Dépôt par une MOE d''un état d''acompte validé'
+                A20: 'A20- Dépôt par une MOE d''un décompte général'
+                A21: 'A21- Dépôt par un bénéficiaire d''une demande de remboursement de la TIC'
+                A22: 'A22- Projet de décompte général déposé par le fournisseur ou le mandataire'
+                A23: 'A23- Décompte général et définitif tacite déposé par le fournisseur ou le mandataire'
+                A24: 'A24- Dépôt d''un décompte gérénral et définitif par la maitrise d oeuvrage'
+                A25: 'A25- Décompte général et définitif déposé par la maitrise d ouvrage dans le cadre de la facturation d un marché de travaux'
         no_facture:
-            name: Numéro de la facture fournisseur
+            name: 'Numéro de la facture fournisseur'
             read-only: true
             index: true
-            commentaire: Unique par fournisseur
+            commentaire: 'Unique par fournisseur'
             title: true
-
         date_facture:
-            name: Date de la facture
+            name: 'Date de la facture'
             read-only: true
             type: date
             index: true
-
         date_depot:
-            name: Date de dépôt de la facture sur cpp
+            name: 'Date de dépôt de la facture sur cpp'
             read-only: true
             type: date
             index: true
-
         montant_ttc:
-            name: Montant TTC de la facture
+            name: 'Montant TTC de la facture'
             read-only: true
             index: true
-
     Fichiers:
         fichier_facture:
-            name: Fichier CPPFacturePivot
+            name: 'Fichier CPPFacturePivot'
             read-only: true
-            commentaire: Fichier XML contenant un seul bloc CPPFacturePivotUnitaire
+            commentaire: 'Fichier XML contenant un seul bloc CPPFacturePivotUnitaire'
             type: file
-
         facture_pj_01:
-            name: Facture originale
+            name: 'Facture originale'
             type: file
             read-only: true
-
         fichier_facture_pdf:
-            name: Fichier facture pdf
+            name: 'Fichier facture pdf'
             type: file
             read-only: true
-
         facture_pj_02:
-            name: Pièces jointes complémentaires
-            commentaire: Format PDF
+            name: 'Pièces jointes complémentaires'
+            commentaire: 'Format PDF'
             type: file
             multiple: true
             read-only: true
-
     Cheminement:
         type_integration:
-            name: Type d'intégration
+            name: 'Type d''intégration'
             read-only: true
             type: select
             index: true
             value:
-                CPP: Importation Chorus Pro
-                CPP_TRAVAUX: Importation Chorus Pro Facture de Travaux (MOE/MOA)
-                CSV: Importation Chorus Pro par CSV
-                PIVOT: Formulaire PIVOT
-                GLANEUR: Glaneur PIVOT
+                CPP: 'Importation Chorus Pro'
+                CPP_TRAVAUX: 'Importation Chorus Pro Facture de Travaux (MOE/MOA)'
+                CSV: 'Importation Chorus Pro par CSV'
+                PIVOT: 'Formulaire PIVOT'
+                GLANEUR: 'Glaneur PIVOT'
         envoi_visa:
-            name: Transmission pour validation iParapheur
+            name: 'Transmission pour validation iParapheur'
             type: checkbox
             onchange: envoi-visa-change
-
         envoi_ged:
-            name: Transmission en entrepôt
+            name: 'Transmission en entrepôt'
             type: checkbox
-
         check_mise_a_dispo_gf:
-            name: Mise à disposition de la Gestion Financière
-            commentaire: Passage en état "Mise à disposition GF" pour indiquer à la GF qu'elle peut récupérer la facture pour traitement
+            name: 'Mise à disposition de la Gestion Financière'
+            commentaire: 'Passage en état "Mise à disposition GF" pour indiquer à la GF qu''elle peut récupérer la facture pour traitement'
             type: checkbox
-
         envoi_sae:
-            name: Transmission au SAE
+            name: 'Transmission au SAE'
             type: checkbox
-
         has_mise_a_dispo_gf:
             no-show: true
         has_send_ged:
             no-show: true
-
         envoi_auto:
-            name: Envoyer automatiquement les documents d'étape en étape
+            name: 'Envoyer automatiquement les documents d''étape en étape'
             type: checkbox
-
         recup_par_gf:
-            name: La GF a indiqué avoir récupéré la facture
+            name: 'La GF a indiqué avoir récupéré la facture'
             type: checkbox
             index: true
             onchange: recup-par-gf-change
-
-    Circuit parapheur:
+    'Circuit parapheur':
         iparapheur_type:
-            name: Type iParapheur
+            name: 'Type iParapheur'
             read-only: true
-
         iparapheur_sous_type:
-            name: Sous Type iParapheur
+            name: 'Sous Type iParapheur'
             requis: true
             read-only: true
             type: externalData
             choice-action: iparapheur-sous-type
-            link_name: liste des sous types
-
+            link_name: 'liste des sous types'
         json_metadata:
-            name: Métadonnées parapheur (JSON)
+            name: 'Métadonnées parapheur (JSON)'
             commentaire: 'Au format JSON {"cle1":"valeur1","cle2":"valeur2",...}. Renseigné par défaut lors de l''envoi au parapheur avec CodeService, NumEngagement, NumMarche, Siret, MontantTtc'
             type: file
-
-    Retour Parapheur:
+    'Retour Parapheur':
         has_historique:
             no-show: true
         iparapheur_dossier_id:
-            name: Identifiant du dossier sur le parapheur
+            name: 'Identifiant du dossier sur le parapheur'
         iparapheur_historique:
-            name: Historique iparapheur
+            name: 'Historique iparapheur'
             type: file
         parapheur_last_message:
-            name: Dernier message reçu du parapheur
+            name: 'Dernier message reçu du parapheur'
         has_visa:
             no-show: true
         bordereau:
-            name: Bordereau de signature
+            name: 'Bordereau de signature'
             type: file
         document_original:
-            name: Document original
+            name: 'Document original'
             type: file
         multi_document_original:
-            name: Multi-document(s) original
+            name: 'Multi-document(s) original'
             type: file
             multiple: true
         iparapheur_annexe_sortie:
-            name: Annexe(s) de sortie du parapheur
+            name: 'Annexe(s) de sortie du parapheur'
             type: file
             multiple: true
-
-    Retour GED:
+    'Retour GED':
         has_ged_document_id:
             no-show: true
         ged_document_id_file:
-            name: Identifiants des documents sur la GED
+            name: 'Identifiants des documents sur la GED'
             type: file
             visionneuse: GedIdDocumentsVisionneuse
             read-only: true
             requis: true
             visionneuse-no-link: true
-
     SAE:
         sae_config:
-            name: Configuration du versement SAE
-            commentaire: "fichier JSON {cle1:valeur1,cle2:valeur2,...}. Il est généré d'après le fichier CPPFacturePivot"
+            name: 'Configuration du versement SAE'
+            commentaire: 'fichier JSON {cle1:valeur1,cle2:valeur2,...}. Il est généré d''après le fichier CPPFacturePivot'
             type: file
             read-only: true
         sae_transfert_id:
-            name: Identifiant de transfert
+            name: 'Identifiant de transfert'
             index: true
         sae_bordereau:
-            name: Bordereau SEDA
+            name: 'Bordereau SEDA'
             type: file
         sae_archive:
             name: Archive
             type: file
         ar_sae:
-            name: Accusé de réception SAE
+            name: 'Accusé de réception SAE'
             type: file
         sae_ack_comment:
-            name: Commentaire de l'accusé de réception
+            name: 'Commentaire de l''accusé de réception'
         reply_sae:
-            name: Réponse du SAE
+            name: 'Réponse du SAE'
             type: file
         sae_archival_identifier:
-            name: Identifiant de l'archive sur le SAE
+            name: 'Identifiant de l''archive sur le SAE'
         sae_atr_comment:
-            name: Commentaire de la réponse du SAE
+            name: 'Commentaire de la réponse du SAE'
         url_archive:
-            name: URL sur le système d'archive
+            name: 'URL sur le système d''archive'
             type: url
-
 champs-affiches:
-    titre
-    fournisseur_raison_sociale
-    facture_cadre
-    date_facture
-    montant_ttc
-    statut_cpp
-    type_integration
-    dernier_etat
-    date_dernier_etat
-
+    - titre
+    - fournisseur_raison_sociale
+    - facture_cadre
+    - date_facture
+    - montant_ttc
+    - statut_cpp
+    - type_integration
+    - dernier_etat
+    - date_dernier_etat
 page-condition:
-    Circuit parapheur:
+    'Circuit parapheur':
         envoi_visa: true
-    Retour Parapheur:
+    'Retour Parapheur':
         has_historique: true
-    Retour GED:
+    'Retour GED':
         has_ged_document_id: true
     SAE:
         sae_transfert_id: true
-
 action:
     creation:
         name-action: Créer
         name: Créé
         rule:
-            no-last-action:
+            no-last-action: ''
             droit_id_u: 'facture-cpp:edition'
-
     modification:
         name-action: Modifier
-        name: En cours de rédaction
+        name: 'En cours de rédaction'
         rule:
             role_id_e: editeur
             droit_id_u: 'facture-cpp:edition'
             last-action:
-                creation
-                modification
-                importation-glaneur-pivot
-                integration-glaneur-pivot
-                prepare-mise-a-dispo-gf
-                mise-a-dispo-gf
-                cpp-modif-statut
-                cpp-modif-statut-ok
-                cpp-modif-statut-erreur
-                recu-iparapheur
-                rejet-iparapheur
-                send-iparapheur-annule
-                send-ged
-                send-ged-annule
-                termine
-
+                - creation
+                - modification
+                - importation-glaneur-pivot
+                - integration-glaneur-pivot
+                - prepare-mise-a-dispo-gf
+                - mise-a-dispo-gf
+                - cpp-modif-statut
+                - cpp-modif-statut-ok
+                - cpp-modif-statut-erreur
+                - recu-iparapheur
+                - rejet-iparapheur
+                - send-iparapheur-annule
+                - send-ged
+                - send-ged-annule
+                - termine
     prepare-mise-a-dispo-gf:
-        name: Préparation de la mise à disposition de la GF
+        name: 'Préparation de la mise à disposition de la GF'
         rule:
             role_id_e: no-role
         action-automatique: mise-a-dispo-gf
-
     mise-a-dispo-gf:
-        name-action: Signaler la mise à disposition GF
-        name: Mise à disposition GF
+        name-action: 'Signaler la mise à disposition GF'
+        name: 'Mise à disposition GF'
         rule:
             last-action:
-                modification
-                prepare-mise-a-dispo-gf
-                synchroniser-statut
-                cpp-modif-statut
-                cpp-modif-statut-ok
-                cpp-modif-statut-erreur
-                recu-iparapheur
-                rejet-iparapheur
-                send-ged
-                erreur-envoie-sae
-                rejet-sae
-                accepter-sae
-                termine
+                - modification
+                - prepare-mise-a-dispo-gf
+                - synchroniser-statut
+                - cpp-modif-statut
+                - cpp-modif-statut-ok
+                - cpp-modif-statut-erreur
+                - recu-iparapheur
+                - rejet-iparapheur
+                - send-ged
+                - erreur-envoie-sae
+                - rejet-sae
+                - accepter-sae
+                - termine
             no-action:
-                mise-a-dispo-gf
+                - mise-a-dispo-gf
             content:
                 has_mise_a_dispo_gf: false
             droit_id_u: 'facture-cpp:edition'
@@ -437,16 +387,14 @@ action:
             - recup_par_gf
         action-class: FactureCPPDispoGF
         action-automatique: orientation
-
     recup-par-gf-change:
-        name: Modification de "La GF a indiqué avoir récuperé la facture"
+        name: 'Modification de "La GF a indiqué avoir récuperé la facture"'
         rule:
             role_id_e: no-role
         action-class: FactureCPPRecupGFChange
-
     synchroniser-statut:
-        name-action: Synchroniser le statut
-        name: Statut synchronisé
+        name-action: 'Synchroniser le statut'
+        name: 'Statut synchronisé'
         rule:
             content:
                 is_cpp: true
@@ -462,25 +410,24 @@ action:
             - recup_par_gf
         connecteur-type: PortailFacture
         action-class: CppSynchroniserStatut
-
     cpp-modif-statut-demande:
-        name-action: Statut CPP - Demander la modification en statut cible
-        name: Statut CPP - Modification demandée
+        name-action: 'Statut CPP - Demander la modification en statut cible'
+        name: 'Statut CPP - Modification demandée'
         rule:
             last-action:
-                modification
-                mise-a-dispo-gf
-                synchroniser-statut
-                cpp-modif-statut
-                cpp-modif-statut-ok
-                cpp-modif-statut-erreur
-                recu-iparapheur
-                rejet-iparapheur
-                send-ged
-                erreur-envoie-sae
-                rejet-sae
-                accepter-sae
-                termine
+                - modification
+                - mise-a-dispo-gf
+                - synchroniser-statut
+                - cpp-modif-statut
+                - cpp-modif-statut-ok
+                - cpp-modif-statut-erreur
+                - recu-iparapheur
+                - rejet-iparapheur
+                - send-ged
+                - erreur-envoie-sae
+                - rejet-sae
+                - accepter-sae
+                - termine
             content:
                 statut_cible_liste: true
                 is_annule: false
@@ -488,13 +435,12 @@ action:
             document_is_valide: true
         action-class: CppModifStatutDemande
         action-automatique: cpp-modif-statut
-
     cpp-modif-statut:
-        name-action: Statut CPP - Modifier en statut cible
-        name: Statut CPP modifié
+        name-action: 'Statut CPP - Modifier en statut cible'
+        name: 'Statut CPP modifié'
         rule:
             last-action:
-                cpp-modif-statut-demande
+                - cpp-modif-statut-demande
             content:
                 statut_cible_liste: true
             droit_id_u: 'facture-cpp:edition'
@@ -516,9 +462,8 @@ action:
             - recup_par_gf
         connecteur-type: PortailFacture
         action-class: CppModifStatut
-
     cpp-modif-statut-ok:
-        name: Statut CPP - Modification terminée avec succés
+        name: 'Statut CPP - Modification terminée avec succés'
         rule:
             role_id_e: no-role
         editable-content:
@@ -537,10 +482,8 @@ action:
             - envoi_auto
             - recup_par_gf
         action-automatique: orientation
-
-
     cpp-modif-statut-erreur:
-        name: Statut CPP - Erreur lors de la modification en statut cible
+        name: 'Statut CPP - Erreur lors de la modification en statut cible'
         rule:
             role_id_e: no-role
         editable-content:
@@ -558,9 +501,8 @@ action:
             - envoi_sae
             - envoi_auto
             - recup_par_gf
-
     importation:
-        name: Importation du document
+        name: 'Importation du document'
         rule:
             role_id_e: no-role
         editable-content:
@@ -578,43 +520,39 @@ action:
             - envoi_sae
             - envoi_auto
             - recup_par_gf
-
     orientation:
         name: Orientation
         rule:
             role_id_e: no-role
         action-class: FactureCPPOrientation
-
     prepare-iparapheur:
-        name: Préparation de l'envoi au iparapheur
+        name: 'Préparation de l''envoi au iparapheur'
         rule:
             role_id_e: no-role
         action-automatique: send-iparapheur
-
     send-iparapheur:
-        name-action: Transmettre pour visa "SERVICE FAIT"
-        name: Transmis pour visa
+        name-action: 'Transmettre pour visa "SERVICE FAIT"'
+        name: 'Transmis pour visa'
         rule:
             last-action:
-                creation
-                modification
-                mise-a-dispo-gf
-                synchroniser-statut
-                cpp-modif-statut
-                cpp-modif-statut-ok
-                cpp-modif-statut-erreur
-                prepare-iparapheur
+                - creation
+                - modification
+                - mise-a-dispo-gf
+                - synchroniser-statut
+                - cpp-modif-statut
+                - cpp-modif-statut-ok
+                - cpp-modif-statut-erreur
+                - prepare-iparapheur
             no-action:
-                send-iparapheur
+                - send-iparapheur
             document_is_valide: true
             content:
                 envoi_visa: true
         connecteur-type: signature
         action-class: FactureCPPIparapheurEnvoie
         action-automatique: verif-iparapheur
-
     send-iparapheur-annule:
-        name: Transmis pour visa annulé
+        name: 'Transmis pour visa annulé'
         rule:
             role_id_e: no-role
         editable-content:
@@ -629,19 +567,17 @@ action:
             - envoi_sae
             - recup_par_gf
         action-automatique: orientation
-
     verif-iparapheur:
-        name-action: Vérifier le visa
-        name: Vérification du visa
+        name-action: 'Vérifier le visa'
+        name: 'Vérification du visa'
         rule:
             last-action:
-                erreur-verif-iparapheur
-                send-iparapheur
+                - erreur-verif-iparapheur
+                - send-iparapheur
         connecteur-type: signature
         action-class: FactureCPPIparapheurRecup
-
     erreur-verif-iparapheur:
-        name: Erreur lors de la vérification du visa
+        name: 'Erreur lors de la vérification du visa'
         rule:
             role_id_e: no-role
         editable-content:
@@ -655,9 +591,8 @@ action:
             - check_mise_a_dispo_gf
             - envoi_sae
             - recup_par_gf
-
     recu-iparapheur:
-        name: Visa récupéré
+        name: 'Visa récupéré'
         rule:
             role_id_e: no-role
         editable-content:
@@ -672,9 +607,8 @@ action:
             - envoi_sae
             - recup_par_gf
         action-automatique: cpp-modif-statut-demande
-
     rejet-iparapheur:
-        name: Visa refusé
+        name: 'Visa refusé'
         rule:
             role_id_e: no-role
         editable-content:
@@ -689,30 +623,26 @@ action:
             - envoi_sae
             - recup_par_gf
         action-automatique: cpp-modif-statut-demande
-
     envoi-visa-change:
-        name: Modification envoi-visa
+        name: 'Modification envoi-visa'
         no-workflow: true
         rule:
             role_id_e: no-role
         action-class: FactureCPPEnvoiVisaChange
-
     iparapheur-sous-type:
-        name: Liste des sous-type iParapheur
+        name: 'Liste des sous-type iParapheur'
         no-workflow: true
         rule:
             role_id_e: no-role
         action-class: FactureCPPIparapheurSousType
-
     prepare-ged:
-        name: Préparation de l'envoi à l'entrepôt
+        name: "Préparation de l'envoi à\_l'entrepôt"
         rule:
             role_id_e: no-role
         action-automatique: send-ged
-
     send-ged:
-        name-action: Verser à l'entrepôt
-        name: Versé à l'entrepôt
+        name-action: 'Verser à l''entrepôt'
+        name: 'Versé à l''entrepôt'
         rule:
             content:
                 envoi_ged: true
@@ -720,25 +650,25 @@ action:
             or_1:
                 and_1:
                     last-action:
-                        creation
-                        modification
-                        mise-a-dispo-gf
-                        prepare-ged
-                        send-ged-annule
+                        - creation
+                        - modification
+                        - mise-a-dispo-gf
+                        - prepare-ged
+                        - send-ged-annule
                     no-action:
-                        send-ged
+                        - send-ged
                     document_is_valide: true
                     content:
                         envoi_visa: false
                 and_2:
                     has-action:
-                        recu-iparapheur
-                        rejet-iparapheur
+                        - recu-iparapheur
+                        - rejet-iparapheur
                     no-action:
-                        send-ged
+                        - send-ged
                 and_3:
                     last-action:
-                        error-ged
+                        - error-ged
         editable-content:
             - statut_cible_liste
             - motif_maj
@@ -752,9 +682,8 @@ action:
         connecteur-type: GED
         action-class: FactureCPPEnvoiGED
         action-automatique: orientation
-
     send-ged-annule:
-        name: Versé à l'entrepôt annulé
+        name: 'Versé à l''entrepôt annulé'
         rule:
             role_id_e: no-role
         editable-content:
@@ -767,125 +696,111 @@ action:
             - check_mise_a_dispo_gf
             - envoi_sae
             - recup_par_gf
-
     error-ged:
-        name: Erreur irrécupérable lors du dépôt
+        name: 'Erreur irrécupérable lors du dépôt'
         rule:
             role_id_e: no-role
-
     preparation-send-sae:
-        name: Préparation de l'envoi au SAE
+        name: 'Préparation de l''envoi au SAE'
         rule:
             role_id_e: no-role
         action-automatique: send-archive
-
     send-archive:
-        name-action: Verser au SAE
-        name: Versé au SAE
+        name-action: 'Verser au SAE'
+        name: 'Versé au SAE'
         rule:
             content:
                 envoi_sae: true
             or_1:
                 and_1:
                     last-action:
-                        creation
-                        modification
-                        preparation-send-sae
+                        - creation
+                        - modification
+                        - preparation-send-sae
                     no-action:
-                        send-archive
+                        - send-archive
                     document_is_valide: true
                     content:
                         envoi_visa: false
                         envoi_ged: false
                 and_2:
                     has-action:
-                        recu-iparapheur
-                        rejet-iparapheur
+                        - recu-iparapheur
+                        - rejet-iparapheur
                     no-action:
-                        send-archive
+                        - send-archive
                     content:
                         envoi_ged: false
                 and_3:
                     has-action:
-                        send-ged
+                        - send-ged
                     no-action:
-                        send-archive
+                        - send-archive
                 and_4:
                     last-action:
-                        erreur-envoie-sae
+                        - erreur-envoie-sae
         connecteur-type: SAE
         action-class: FactureCPPSAEEnvoyer
         action-automatique: verif-sae
-
     erreur-envoie-sae:
-        name: Erreur lors de l'envoi au SAE
+        name: 'Erreur lors de l''envoi au SAE'
         rule:
             role_id_e: no-role
-
     verif-sae:
-        name-action: Récupérer l'AR du document sur le SAE
-        name: Récupération de l'AR sur le SAE
+        name-action: 'Récupérer l''AR du document sur le SAE'
+        name: 'Récupération de l''AR sur le SAE'
         rule:
             last-action:
-                send-archive
-                verif-sae-erreur
+                - send-archive
+                - verif-sae-erreur
         action-class: StandardAction
         connecteur-type: SAE
         connecteur-type-action: SAEVerifier
-
     verif-sae-erreur:
-        name: Erreur lors de la récupération de l'AR
+        name: 'Erreur lors de la récupération de l''AR'
         rule:
             role_id_e: no-role
-
     ar-recu-sae:
-        name: AR SAE reçu
+        name: 'AR SAE reçu'
         rule:
             role_id_e: no-role
         action-automatique: validation-sae
-
     validation-sae:
-        name-action: Vérifier l'acceptation par le SAE
-        name: Vérification de l'acceptation par le SAE
+        name-action: 'Vérifier l''acceptation par le SAE'
+        name: 'Vérification de l''acceptation par le SAE'
         rule:
             last-action:
-                ar-recu-sae
-                validation-sae-erreur
+                - ar-recu-sae
+                - validation-sae-erreur
         action-class: StandardAction
         connecteur-type: SAE
         connecteur-type-action: SAEValider
-
     validation-sae-erreur:
-        name: Erreur lors de la vérification de la validité du transfert
+        name: 'Erreur lors de la vérification de la validité du transfert'
         rule:
             role_id_e: no-role
-
     accepter-sae:
-        name: Archive acceptée par le SAE
+        name: 'Archive acceptée par le SAE'
         rule:
             role_id_e: no-role
-
     rejet-sae:
-        name: Archive rejetée par le SAE
+        name: 'Archive rejetée par le SAE'
         rule:
             role_id_e: no-role
-
     liste-statuts-cpp:
-        name: Liste des statuts CPP
+        name: 'Liste des statuts CPP'
         no-workflow: true
         rule:
             role_id_e: no-role
         action-class: ListeStatutsCPP
-
     create-facture:
-        name: Création de facture
+        name: 'Création de facture'
         no-workflow: true
         rule:
             role_id_e: no-role
         action-class: CppCreation
-
     importation-glaneur-pivot:
-        name: Importation du fichier PIVOT via le Glaneur
+        name: 'Importation du fichier PIVOT via le Glaneur'
         no-workflow: true
         rule:
             role_id_e: no-role
@@ -904,12 +819,11 @@ action:
             - envoi_auto
             - recup_par_gf
         action-automatique: integration-glaneur-pivot
-
     integration-glaneur-pivot:
-        name: Intégration du dossier via le fichier PIVOT
+        name: 'Intégration du dossier via le fichier PIVOT'
         rule:
             last-action:
-                importation-glaneur-pivot
+                - importation-glaneur-pivot
         editable-content:
             - statut_cible_liste
             - motif_maj
@@ -926,14 +840,12 @@ action:
             - recup_par_gf
         action-class: CppIntegrationParGlaneurPivot
         action-automatique: orientation
-
     integration-glaneur-pivot-error:
-        name: Erreur lors de l'intégration du fichier PIVOT via le Glaneur
+        name: 'Erreur lors de l''intégration du fichier PIVOT via le Glaneur'
         rule:
             role_id_e: no-role
-
     termine:
-        name: Traitement terminé
+        name: 'Traitement terminé'
         rule:
             role_id_e: no-role
         editable-content:
@@ -944,8 +856,6 @@ action:
             - facture_numero_engagement
             - facture_numero_marche
             - recup_par_gf
-
-# Opération d'administration : droit : "entite:edition" pour éviter que les AM utilisent cette action.
     supression:
         name-action: Supprimer
         name: Supprimé
@@ -953,24 +863,24 @@ action:
             or_1:
                 and_1:
                     last-action:
-                        creation
-                        modification
-                        synchroniser-statut
-                        mise-a-dispo-gf
-                        cpp-modif-statut
-                        cpp-modif-statut-ok
-                        cpp-modif-statut-erreur
-                        recu-iparapheur
-                        rejet-iparapheur
-                        send-ged
-                        error-ged
-                        erreur-envoie-sae
-                        rejet-sae
-                        accepter-sae
-                        fatal-error
-                        termine
+                        - creation
+                        - modification
+                        - synchroniser-statut
+                        - mise-a-dispo-gf
+                        - cpp-modif-statut
+                        - cpp-modif-statut-ok
+                        - cpp-modif-statut-erreur
+                        - recu-iparapheur
+                        - rejet-iparapheur
+                        - send-ged
+                        - error-ged
+                        - erreur-envoie-sae
+                        - rejet-sae
+                        - accepter-sae
+                        - fatal-error
+                        - termine
                     droit_id_u: 'entite:edition'
                 and_2:
                     droit_id_u: 'role:edition'
         action-class: Supprimer
-        warning: "Êtes-vous sûr ?"
+        warning: 'Êtes-vous sûr ?'

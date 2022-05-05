@@ -1,11 +1,6 @@
-nom: Bouchon de dépôt
+nom: 'Bouchon de dépôt'
 type: GED
-
-description: |
-	Connecteur GED pour les tests
-
+description: 'Connecteur GED pour les tests'
 formulaire:
-	page0:
-
-
-action:
+    page0: ''
+action: ''

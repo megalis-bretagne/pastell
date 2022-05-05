@@ -1,20 +1,13 @@
-nom: Mail sécurisé  (réponse)
-
-description: Type de dossier complémentaire
-
-
+nom: 'Mail sécurisé  (réponse)'
+description: 'Type de dossier complémentaire'
 formulaire:
-
     Réponse:
         reponse:
             name: Réponse
             type: textarea
             requis: true
-
         document_attache:
             name: Document(s)
             type: file
             multiple: true
             progress_bar: true
-
-

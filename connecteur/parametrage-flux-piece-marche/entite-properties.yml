@@ -1,26 +1,18 @@
 nom: ParametrageTypeDossierPieceMarche
-
 type: ParametragePieceMarche
-
-description: |
-    Connecteur pour parametrer le cheminement (signature, ged...) par défaut du type de dossier Pièces de marché suivant le type de pièce.
-
+description: 'Connecteur pour parametrer le cheminement (signature, ged...) par défaut du type de dossier Pièces de marché suivant le type de pièce.'
 restriction_pack:
     - pack_marche
-
 formulaire:
     page0:
         piece_marche_json:
-            name: Fichier json des propiétés par défaut
+            name: 'Fichier json des propiétés par défaut'
             type: file
-            commentaire: Permet de définir les propriétés par défaut suivant le type de pièce
-
+            commentaire: 'Permet de définir les propriétés par défaut suivant le type de pièce'
 action:
     recup-piece-marche-json:
-        name: Renseigner avec le fichier par défaut de Pastell
+        name: 'Renseigner avec le fichier par défaut de Pastell'
         action-class: PieceMarcheRecupJson
-
     valide-piece-marche-json:
-        name: Valider le format du fichier
+        name: 'Valider le format du fichier'
         action-class: PieceMarcheValideJson
-

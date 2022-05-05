@@ -1,39 +1,26 @@
 nom: CPP
-
 type: PortailFacture
-
-description: |
-    Connecteur global pour le portail facture cpp.
-    Permet aussi de "Vérifier la connectivité des connecteurs Chorus Pro" et Chorus par CSV suivant les login/mot de passe des utilisateurs. Un mail est envoyé à l'administrateur Pastell en cas d'erreur.
-
+description: "Connecteur global pour le portail facture cpp.\nPermet aussi de \"Vérifier la connectivité des connecteurs Chorus Pro\" et Chorus par CSV suivant les login/mot de passe des utilisateurs. Un mail est envoyé à l'administrateur Pastell en cas d'erreur."
 restriction_pack:
     - pack_chorus_pro
-
 formulaire:
     page0:
         url_piste_get_token:
-            name: "URL du service PISTE token"
-            commentaire : "https://sandbox-oauth.aife.economie.gouv.fr/api/oauth/token, https://oauth.aife.economie.gouv.fr/api/oauth/token"
-
+            name: 'URL du service PISTE token'
+            commentaire: 'https://sandbox-oauth.aife.economie.gouv.fr/api/oauth/token, https://oauth.aife.economie.gouv.fr/api/oauth/token'
         client_id:
-            name: Identifiant Oauth Client ID
-
+            name: 'Identifiant Oauth Client ID'
         client_secret:
-            name: Identifiant Oauth Client Secret
+            name: 'Identifiant Oauth Client Secret'
             type: password
-
         url_piste_api:
-            name: "URL du service PISTE api"
-            commentaire : "https://sandbox-api.aife.economie.gouv.fr/, https://api.aife.economie.gouv.fr/"
-
+            name: 'URL du service PISTE api'
+            commentaire: 'https://sandbox-api.aife.economie.gouv.fr/, https://api.aife.economie.gouv.fr/'
         proxy:
             name: Proxy
-            commentaire: "Utilisation d'un proxy. Exemple : 10.0.0.1:8080"
-
+            commentaire: 'Utilisation d''un proxy. Exemple : 10.0.0.1:8080'
 action:
-
     verification_connectivite:
-        name: Vérifier la connectivité des connecteurs Chorus Pro
+        name: 'Vérifier la connectivité des connecteurs Chorus Pro'
         action-class: CPPVerifConnectivite
         action-automatique: verification_connectivite
-

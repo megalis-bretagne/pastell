@@ -1,268 +1,220 @@
-nom: Dossier de marché (archivage)
-description: Versement de toute les pièces d'un marché dans un SAE
-type: Types de dossier marché
-
+nom: 'Dossier de marché (archivage)'
+description: 'Versement de toute les pièces d''un marché dans un SAE'
+type: 'Types de dossier marché'
 restriction_pack:
     - pack_marche
-
 connecteur:
-    Bordereau SEDA
-    SAE
-
+    - 'Bordereau SEDA'
+    - SAE
 formulaire:
-    Données d'entrées:
-
+    'Données d''entrées':
         libelle:
-            name: Libellé du marché
+            name: 'Libellé du marché'
             requis: true
             title: true
-
         type_consultation:
-            name: Type de consultation
+            name: 'Type de consultation'
             type: select
             requis: true
             value:
-                MAPA: MAPA - Marchés A Procédures Adaptées
-                AOO: AOO - Appel d'Offres Ouvert
-                AOR: AOR - Appel d'Offres Restreint
-                DC: DC - Dialogue Compétitif
-                MS: MS - Marché Subséquent
-                PC: PC - Procédure Concurrentielle
-                MSMC: MSMC - Marché Sans Mise en Concurrence
-
+                MAPA: 'MAPA - Marchés A Procédures Adaptées'
+                AOO: 'AOO - Appel d''Offres Ouvert'
+                AOR: 'AOR - Appel d''Offres Restreint'
+                DC: 'DC - Dialogue Compétitif'
+                MS: 'MS - Marché Subséquent'
+                PC: 'PC - Procédure Concurrentielle'
+                MSMC: 'MSMC - Marché Sans Mise en Concurrence'
         numero_consultation:
-            name: Numéro de consultation
+            name: 'Numéro de consultation'
             index: true
             requis: true
-
         type_marche:
-            name: Type de marché
+            name: 'Type de marché'
             type: select
             requis: true
             index: true
             value:
-                T: T - Travaux
-                F: F - Fournitures
-                S: S - Services
-                TIC: TIC - Techniques de l'information et de la communication
-                MO: MO - Maîtrise d’œuvre
-                PI: PI - Prestation intellectuelle
-
+                T: 'T - Travaux'
+                F: 'F - Fournitures'
+                S: 'S - Services'
+                TIC: 'TIC - Techniques de l''information et de la communication'
+                MO: 'MO - Maîtrise d’œuvre'
+                PI: 'PI - Prestation intellectuelle'
         recurrent:
             name: Récurrent
             type: checkbox
-
         numero_marche:
-            name: Numéro de marché
+            name: 'Numéro de marché'
             index: true
-
         contenu_versement:
-            name: Contenu du versement
+            name: 'Contenu du versement'
             index: true
-            commentaire: Permet de préciser le contenu versé en cas de versement partiel d’un marché
-
-
+            commentaire: 'Permet de préciser le contenu versé en cas de versement partiel d’un marché'
         date_debut:
-            name: Date de début du dossier archivé
+            name: 'Date de début du dossier archivé'
             type: date
             requis: true
-            commentaire: Il peut s’agir de la date de conduite des études préalables, de publication, de notification ou de PV de CAO
-
+            commentaire: 'Il peut s’agir de la date de conduite des études préalables, de publication, de notification ou de PV de CAO'
         date_fin:
-            name: Date de fin du dossier archivé
+            name: 'Date de fin du dossier archivé'
             type: date
             requis: true
-            commentaire: Il peut s’agir de la date de notification, de PV de CAO ou de fin d’exécution du marché.
-
+            commentaire: 'Il peut s’agir de la date de notification, de PV de CAO ou de fin d’exécution du marché.'
         date_notification:
-            name: Date de notification
+            name: 'Date de notification'
             type: date
-
         code_cpv:
-            name: Code CPV
-            preg_match: "#^$|^[0-9]{8}-[0-9]$#"
-            preg_match_error: "Le code CPV doit être de la forme : 12345678-9"
-
+            name: 'Code CPV'
+            preg_match: '#^$|^[0-9]{8}-[0-9]$#'
+            preg_match_error: 'Le code CPV doit être de la forme : 12345678-9'
         infructueux:
             name: Infructeux
             type: checkbox
-
         sans_suite:
-            name: Sans suite
+            name: 'Sans suite'
             type: checkbox
-
         attributaire:
             name: Attributaire(s)
             type: textarea
-            commentaire: |
-                Faire un retour à la ligne entre chaque attributaire
-
+            commentaire: 'Faire un retour à la ligne entre chaque attributaire'
         mot_cle:
             name: Mot-clé(s)
             type: textarea
-            commentaire: |
-                Faire un retour à la ligne entre chaque mot-clés "libre". Ils pourront être ajoutés au bordereau SEDA de versement.
-
+            commentaire: 'Faire un retour à la ligne entre chaque mot-clés "libre". Ils pourront être ajoutés au bordereau SEDA de versement.'
         fichier_zip:
-            name: Fichier ZIP
+            name: 'Fichier ZIP'
             requis: true
             type: file
-            commentaire: |
-                Au delà de 20 niveaux de sous-dossiers la génération du bordereau génère une erreur
+            commentaire: 'Au delà de 20 niveaux de sous-dossiers la génération du bordereau génère une erreur'
             progress_bar: true
             content-type: application/zip
-
-    Configuration SAE:
+    'Configuration SAE':
         sae_config:
-            name: Configuration du versement SAE
+            name: 'Configuration du versement SAE'
             commentaire: 'Fichier JSON : {"cle1":"valeur1","cle2":"valeur2",...}.'
             type: file
-
     SAE:
         sae_transfert_id:
-            name: Identifiant du transfert
+            name: 'Identifiant du transfert'
             index: true
         sae_bordereau:
-            name: Bordereau SEDA
+            name: 'Bordereau SEDA'
             type: file
         sae_archive:
             name: Archive
             type: file
         ar_sae:
             type: file
-            name: Accusé de réception SAE
+            name: 'Accusé de réception SAE'
         reply_sae:
             type: file
-            name: Réponse du SAE
+            name: 'Réponse du SAE'
         url_archive:
-            name: URL sur le système d'archive
+            name: 'URL sur le système d''archive'
             type: url
-
-
 page-condition:
-
     SAE:
         sae_transfert_id: true
-
 champs-affiches:
-    titre
-    contenu_versement
-    numero_marche
-    numero_consultation
-    dernier_etat
-    date_dernier_etat
-
-
+    - titre
+    - contenu_versement
+    - numero_marche
+    - numero_consultation
+    - dernier_etat
+    - date_dernier_etat
 action:
-
     creation:
         name-action: Créer
         name: Créé
-
         rule:
-            no-last-action:
-
+            no-last-action: ''
     modification:
         name-action: Modifier
-        name: En cours de rédaction
-
+        name: 'En cours de rédaction'
         rule:
             last-action:
-                creation
-                modification
-
+                - creation
+                - modification
     supression:
         name-action: Supprimer
         name: Supprimé
         rule:
             last-action:
-                creation
-                modification
-                accepter-sae
+                - creation
+                - modification
+                - accepter-sae
         action-class: Supprimer
-        warning: "Êtes-vous sûr ?"
-
+        warning: 'Êtes-vous sûr ?'
     importation:
-        name: Importation du dossier
+        name: 'Importation du dossier'
         action-automatique: send-archive
         rule:
             role_id_e: no-role
-
     importation-ok:
-        name: Import terminé
+        name: 'Import terminé'
         action-class: DefautNotify
         rule:
             role_id_e: no-role
         action-automatique: send-archive
-
     send-archive:
-        name-action: Verser au SAE
-        name: Versé au SAE
+        name-action: 'Verser au SAE'
+        name: 'Versé au SAE'
         rule:
             last-action:
-                modification
-                creation
-                importation-ok
+                - modification
+                - creation
+                - importation-ok
         action-class: StandardAction
         connecteur-type: SAE
         connecteur-type-action: SAEEnvoyer
         connecteur-type-data-seda-class-name: FluxDataSedaDossierMarche
         action-automatique: verif-sae
-
     erreur-envoie-sae:
-        name: Erreur lors de l'envoi au SAE
+        name: 'Erreur lors de l''envoi au SAE'
         rule:
             role_id_e: no-role
-
     verif-sae:
-        name-action: Récupérer l'AR du dossier sur le SAE
-        name: Récuperation de l'AR sur le SAE
+        name-action: 'Récupérer l''AR du dossier sur le SAE'
+        name: 'Récuperation de l''AR sur le SAE'
         rule:
             last-action:
-                send-archive
-                verif-sae-erreur
+                - send-archive
+                - verif-sae-erreur
         action-class: StandardAction
         connecteur-type: SAE
         connecteur-type-action: SAEVerifier
-
     verif-sae-erreur:
-        name: Erreur lors de la récupération de l'AR
+        name: 'Erreur lors de la récupération de l''AR'
         rule:
             role_id_e: no-role
-
     ar-recu-sae:
-        name: AR SAE reçu
+        name: 'AR SAE reçu'
         rule:
             role_id_e: no-role
         action-automatique: validation-sae
-
     validation-sae:
-        name-action: Vérifier l'acceptation par le SAE
-        name: Vérification de l'acceptation par le SAE
+        name-action: 'Vérifier l''acceptation par le SAE'
+        name: 'Vérification de l''acceptation par le SAE'
         rule:
             last-action:
-                ar-recu-sae
-                validation-sae-erreur
+                - ar-recu-sae
+                - validation-sae-erreur
         action-class: StandardAction
         connecteur-type: SAE
         connecteur-type-action: SAEValider
-
     validation-sae-erreur:
-        name: Erreur lors de la vérification de la validité du transfert
+        name: 'Erreur lors de la vérification de la validité du transfert'
         rule:
             role_id_e: no-role
-
     accepter-sae:
-        name: Archive acceptée par le SAE
+        name: 'Archive acceptée par le SAE'
         rule:
             role_id_e: no-role
-
     rejet-sae:
-        name: Archive rejetée par le SAE
+        name: 'Archive rejetée par le SAE'
         rule:
             role_id_e: no-role
-
     termine:
-        name: Traitement terminé
+        name: 'Traitement terminé'
         rule:
             role_id_e: no-role

@@ -1,24 +1,15 @@
 nom: ParamChorusFournisseur
-
 type: ParamChorusFournisseur
-
-description: |
-    Connecteur pour paramétrer le type de dossier facture chorus fournisseur
-
+description: 'Connecteur pour paramétrer le type de dossier facture chorus fournisseur'
 restriction_pack:
     - pack_chorus_pro
-
 formulaire:
     page0:
         recup_status_facture:
-            name: Récupération des status des factures
-            commentaire: Permet de récuperer le statuts des factures une fois l'identifiant de facture récupéré
+            name: 'Récupération des status des factures'
+            commentaire: 'Permet de récuperer le statuts des factures une fois l''identifiant de facture récupéré'
             type: checkbox
-
         nb_jour_max_synchro:
-            name: Nombre de jours maximum de synchronisation
-            commentaire: |
-                Nombre de jours avant de stopper la synchronisation s'il n'y a pas de changement de statut (30 par défaut)
+            name: 'Nombre de jours maximum de synchronisation'
+            commentaire: 'Nombre de jours avant de stopper la synchronisation s''il n''y a pas de changement de statut (30 par défaut)'
             default: 30
-
-

@@ -1,48 +1,35 @@
-nom: Dépôt Pastell
+nom: 'Dépôt Pastell'
 type: GED
-
-description: |
-  Connecteur de dépôt sur un serveur Pastell
-
+description: 'Connecteur de dépôt sur un serveur Pastell'
 formulaire:
-  page0:
-    pastell_url:
-      name: "URL de l'API V2 de Pastell"
-      commentaire: "Exemple : https://pastell.libriciel.fr/"
-
-    pastell_login:
-      name: "Identifiant"
-      commentaire: Identifiant de l'utilisateur technique sur le Pastell distant
-
-    pastell_password:
-      name: "Mot de passe"
-      type: password
-      commentaire: "Mot de passe de l'utilisateur technique sur le Pastell distant"
-
-    pastell_id_e:
-      name: "Identifiant de l'entité"
-      commentaire: "id_e de l'entité sur laquelle créer des dossiers sur le Pastell distant"
-
-    pastell_type_dossier:
-      name: Type de dossier
-      commentaire: Type de dossier a créer sur le Pastell distant
-
-    pastell_metadata:
-      name: Tableau de correspondance des éléments
-      type: textarea
-      commentaire: "Un couple d'identiant par ligne de la forme : 'id_element_pastell_cible: %id_element_pastell_source%' ou bien 'id_element_pastell_cible: constante' "
-
-    pastell_action:
-      name: Action
-      commentaire: |
-        Action à réaliser sur le Pastell cible.<br />
-        Utiliser l'action "NO_ACTION" si vous ne souhaitez pas exéctuer d'action sur le pastell distant
-
+    page0:
+        pastell_url:
+            name: 'URL de l''API V2 de Pastell'
+            commentaire: 'Exemple : https://pastell.libriciel.fr/'
+        pastell_login:
+            name: Identifiant
+            commentaire: 'Identifiant de l''utilisateur technique sur le Pastell distant'
+        pastell_password:
+            name: 'Mot de passe'
+            type: password
+            commentaire: 'Mot de passe de l''utilisateur technique sur le Pastell distant'
+        pastell_id_e:
+            name: 'Identifiant de l''entité'
+            commentaire: 'id_e de l''entité sur laquelle créer des dossiers sur le Pastell distant'
+        pastell_type_dossier:
+            name: 'Type de dossier'
+            commentaire: 'Type de dossier a créer sur le Pastell distant'
+        pastell_metadata:
+            name: 'Tableau de correspondance des éléments'
+            type: textarea
+            commentaire: 'Un couple d''identiant par ligne de la forme : ''id_element_pastell_cible: %id_element_pastell_source%'' ou bien ''id_element_pastell_cible: constante'' '
+        pastell_action:
+            name: Action
+            commentaire: "Action à réaliser sur le Pastell cible.<br />\nUtiliser l'action \"NO_ACTION\" si vous ne souhaitez pas exéctuer d'action sur le pastell distant"
 action:
-  test_connexion:
-    name: Tester la connexion
-    action-class: DepotPastellTestConnexion
-
-  test_creation:
-    name: Créer un document de test
-    action-class: DepotPastellTestCreation
+    test_connexion:
+        name: 'Tester la connexion'
+        action-class: DepotPastellTestConnexion
+    test_creation:
+        name: 'Créer un document de test'
+        action-class: DepotPastellTestCreation

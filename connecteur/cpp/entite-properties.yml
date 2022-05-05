@@ -1,138 +1,107 @@
 nom: CPP
-
 type: PortailFacture
-
-description: |
-    Connecteur pour le portail facture cpp.
-    L'identifiant IdUtilisateurCPP associe de manière unique des factures CPP à une entité Pastell. C'est pourquoi l'héritage de connecteur cpp entre entité est proscrit.
-
+description: "Connecteur pour le portail facture cpp.\nL'identifiant IdUtilisateurCPP associe de manière unique des factures CPP à une entité Pastell. C'est pourquoi l'héritage de connecteur cpp entre entité est proscrit."
 restriction_pack:
     - pack_chorus_pro
-
 formulaire:
     page0:
         url_piste_get_token:
-            name: "URL du service PISTE token"
-            commentaire : "https://sandbox-oauth.aife.economie.gouv.fr/api/oauth/token, https://oauth.aife.economie.gouv.fr/api/oauth/token. Si non renseigné, utilise la propriété globale"
-
+            name: 'URL du service PISTE token'
+            commentaire: 'https://sandbox-oauth.aife.economie.gouv.fr/api/oauth/token, https://oauth.aife.economie.gouv.fr/api/oauth/token. Si non renseigné, utilise la propriété globale'
         client_id:
-            name: Identifiant Oauth Client ID
-            commentaire: Si non renseigné, utilise la propriété globale
-
+            name: 'Identifiant Oauth Client ID'
+            commentaire: 'Si non renseigné, utilise la propriété globale'
         client_secret:
-            name: Identifiant Oauth Client Secret
+            name: 'Identifiant Oauth Client Secret'
             type: password
-            commentaire: Si non renseigné, utilise la propriété globale
-
+            commentaire: 'Si non renseigné, utilise la propriété globale'
         url_piste_api:
-            name: "URL du service PISTE api"
-            commentaire : "https://sandbox-api.aife.economie.gouv.fr/, https://api.aife.economie.gouv.fr/. Si non renseigné, utilise la propriété globale"
-
+            name: 'URL du service PISTE api'
+            commentaire: 'https://sandbox-api.aife.economie.gouv.fr/, https://api.aife.economie.gouv.fr/. Si non renseigné, utilise la propriété globale'
         proxy:
             name: Proxy
-            commentaire: "Utilisation d'un proxy. Exemple : 10.0.0.1:8080 (Si non renseigné, utilise la propriété globale)"
-
+            commentaire: 'Utilisation d''un proxy. Exemple : 10.0.0.1:8080 (Si non renseigné, utilise la propriété globale)'
         user_login:
-            name: "Login de l'utilisateur"
-
+            name: 'Login de l''utilisateur'
         user_password:
             type: password
-            name: "Mot de passe de l'utilisateur"
-
+            name: 'Mot de passe de l''utilisateur'
         user_role:
-            name: Rôle de l'utilisateur facture de travaux
-            commentaire: "À renseigner pour la récupération des factures de l'espace Chorus factures de travaux"
+            name: 'Rôle de l''utilisateur facture de travaux'
+            commentaire: 'À renseigner pour la récupération des factures de l''espace Chorus factures de travaux'
             type: select
             value:
                 MOE: MOE
                 MOA: MOA
-
         identifiant_structure:
-            name: Identifiant de la structure
-            commentaire: "Numéro SIRET de la structure, si aucun, le connecteur récupère toutes les factures"
+            name: 'Identifiant de la structure'
+            commentaire: 'Numéro SIRET de la structure, si aucun, le connecteur récupère toutes les factures'
             onchange: update-structure
-
         identifiant_structure_cpp:
-            name: Identifiant CPP de la structure
+            name: 'Identifiant CPP de la structure'
             read-only: true
-
         service_destinataire_libelle:
             name: Service
-            commentaire: Service utilisé pour la récupération des factures
+            commentaire: 'Service utilisé pour la récupération des factures'
             type: externalData
             choice-action: choix-service
-            link_name: Choisir un service
-
+            link_name: 'Choisir un service'
         service_destinataire:
-            name: Identifiant CPP du service destinataire
+            name: 'Identifiant CPP du service destinataire'
             read-only: true
-
         depose_depuis_nb_jours:
-            name: Factures ayant changé de statut depuis les X derniers jours
-            commentaire: Récupération depuis les 30 derniers jours si non renseigné
+            name: 'Factures ayant changé de statut depuis les X derniers jours'
+            commentaire: 'Récupération depuis les 30 derniers jours si non renseigné'
             default: 30
-
         depose_avant_nb_jours:
-            name: Factures ayant changé de statut avant les X derniers jours
-            commentaire: Récupération jusqu'à aujourd'hui si non renseigné
+            name: 'Factures ayant changé de statut avant les X derniers jours'
+            commentaire: 'Récupération jusqu''à aujourd''hui si non renseigné'
             default: 0
-
         no_change_statut_chorus:
-            name: Ne pas remonter sur Chorus Pro la modification de statut
-            commentaire: Champs temporaire pour indiquer que la modification de statut ne doit pas être remonté à Chorus (Remarque, La synchronisation continuera de remonter le statut Chorus sur Pastell).
+            name: 'Ne pas remonter sur Chorus Pro la modification de statut'
+            commentaire: 'Champs temporaire pour indiquer que la modification de statut ne doit pas être remonté à Chorus (Remarque, La synchronisation continuera de remonter le statut Chorus sur Pastell).'
             type: checkbox
         no_recup_facture:
-            name: Ne pas récuperer les factures sur Chorus Pro
-            commentaire: Doit-être mis à oui dans le cas ou le connecteur est utilisé pour le mode envoi.
+            name: 'Ne pas récuperer les factures sur Chorus Pro'
+            commentaire: 'Doit-être mis à oui dans le cas ou le connecteur est utilisé pour le mode envoi.'
             type: checkbox
-
 action:
     test-cpp:
-        name: Tester la connectivité
+        name: 'Tester la connectivité'
         action-class: CPPTestConnexion
         rule:
             droit_id_u: 'entite:edition'
-
     liste-structure:
-        name: Lister les structures
+        name: 'Lister les structures'
         action-class: CPPListeStructure
         rule:
             droit_id_u: 'entite:edition'
-
     update-structure:
-        name: Mettre à jour l'identifiant CPP de la structure
+        name: 'Mettre à jour l''identifiant CPP de la structure'
         action-class: CPPUpdateStructure
-
     list-facture:
-        name: Lister les factures reçues disponibles
+        name: 'Lister les factures reçues disponibles'
         action-class: CPPListeFacture
         rule:
             droit_id_u: 'entite:edition'
-
     list-facture-travaux:
-        name: Lister les factures de travaux MOA, MOE
+        name: 'Lister les factures de travaux MOA, MOE'
         action-class: CPPListeFactureTravaux
         rule:
             droit_id_u: 'entite:edition'
-
     import-facture:
-        name: Récupérer et synchroniser les factures
+        name: 'Récupérer et synchroniser les factures'
         action-class: CPPImporterFacture
         rule:
             droit_id_u: 'entite:edition'
         action-automatique: import-facture
-
     import-facture-asynchrone:
-        name: Récupérer et synchroniser les factures en asynchrone
+        name: 'Récupérer et synchroniser les factures en asynchrone'
         action-class: CPPImporterFactureAsynchrone
         rule:
             droit_id_u: 'entite:edition'
-
     choix-service:
-        name: Choix du service
+        name: 'Choix du service'
         rule:
             role_id_e: no-role
         action-class: CPPChoixService
-
-
-

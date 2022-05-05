@@ -1,14 +1,12 @@
-nom: PES viewer
+nom: 'PES viewer'
 type: visionneuse_pes
 formulaire:
-  page0:
-    test_pes:
-      name: Fichier PES (pour le test)
-      type: file
-      visionneuse: PESViewerVisionneuse
-
+    page0:
+        test_pes:
+            name: 'Fichier PES (pour le test)'
+            type: file
+            visionneuse: PESViewerVisionneuse
 action:
-  test-generation:
-    name: Tester la visionneuse
-    action-class: PESViewerTestAction
-
+    test-generation:
+        name: 'Tester la visionneuse'
+        action-class: PESViewerTestAction

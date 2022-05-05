@@ -1,44 +1,37 @@
-nom: Mail non-remis
+nom: 'Mail non-remis'
 type: UndeliveredMail
-
-description: Connecteur permettant de gérer les retours mails en erreur de la plateforme
-
+description: 'Connecteur permettant de gérer les retours mails en erreur de la plateforme'
 formulaire:
-	page0:
-		return_path:
-			name: Adresse retour des mails de la plateforme
-			commentaire: return-path
-		imap_server:
-			name: Nom du serveur IMAP
-			commentaire: hostname de la machine
-		imap_port:
-			name: Port du serveur IMAP 
-			commentaire: 993 par défaut
-		imap_option:
-			name: Option de connexion IMAP
-			commentaire: "exemple : imap/ssl/novalidate-cert (par défaut) Voir http://php.net/manual/fr/function.imap-open.php"
-		imap_login:
-			name: Login du compte IMAP
-			commentaire: return_path par défaut
-		imap_password:
-			name: Mot de passe du compte IMAP
-			type: password
-		imap_mailbox:
-			name: Boîte aux lettres
-			commentaire: INBOX par défaut
-
+    page0:
+        return_path:
+            name: 'Adresse retour des mails de la plateforme'
+            commentaire: return-path
+        imap_server:
+            name: 'Nom du serveur IMAP'
+            commentaire: 'hostname de la machine'
+        imap_port:
+            name: 'Port du serveur IMAP'
+            commentaire: '993 par défaut'
+        imap_option:
+            name: 'Option de connexion IMAP'
+            commentaire: 'exemple : imap/ssl/novalidate-cert (par défaut) Voir http://php.net/manual/fr/function.imap-open.php'
+        imap_login:
+            name: 'Login du compte IMAP'
+            commentaire: 'return_path par défaut'
+        imap_password:
+            name: 'Mot de passe du compte IMAP'
+            type: password
+        imap_mailbox:
+            name: 'Boîte aux lettres'
+            commentaire: 'INBOX par défaut'
 action:
-	
-	test-connexion:
-		name: Tester la connexion
-		action-class: UndeliveredMailTestConnexion
-	
-	list-mail:
-		name: Lister les mails
-		action-class: UndeliveredMailListMail
-	
-	process-mailbox:
-		name: Traiter les mails
-		action-class: UndeliverdMailProcessMailbox
-		action-automatique: process-mailbox
-		
+    test-connexion:
+        name: 'Tester la connexion'
+        action-class: UndeliveredMailTestConnexion
+    list-mail:
+        name: 'Lister les mails'
+        action-class: UndeliveredMailListMail
+    process-mailbox:
+        name: 'Traiter les mails'
+        action-class: UndeliverdMailProcessMailbox
+        action-automatique: process-mailbox

@@ -1,99 +1,72 @@
-nom: Fast Tdt
-
+nom: 'Fast Tdt'
 type: TdT
-
-description: |
-  Connecteur Fast Tdt
-
+description: 'Connecteur Fast Tdt'
 formulaire:
-  page:
-    url:
-      name: URL du service Fast TdT
-      commentaire: |
-        Pour la plateforme de recette : <br />
-        Actes  => https://recette.efast.fr/ascl <br />
-        Helios => https://demo-parapheur.dfast.fr/parapheur-soap/soap/v1/Documents?wsdl
-      requis: true
-
-    departement:
-      name: Département
-      commentaire: Obligatoire pour les actes !
-
-    prefixe_editeur:
-      name: Préfixe éditeur
-      commentaire: Obligatoire pour les actes !
-
-    numero_abonnement:
-      name: Numéro d'abonnement (SIREN)
-      requis: true
-
-    dn_user:
-      name: DN de l'utilisateur
-      commentaire: |
-        <mark>Obligatoire pour les actes !</mark><br />
-        Les informations du « DN » qui correspondent à l'utilisateur qui réalise les télétransmissions. Exemple : <br>
-        E = john.doe@example.org, CN = AGENT TEST, OU = 0002 999100057, OU = CACertificat, O = LIBRICIEL, L = PARIS, C = FR
-
-    certificat_connexion:
-      name: Certificat de connexion
-      commentaire: Fichier au format PKCS#12 contenant un certificat de connexion au format X.509 et sa clé privée
-      type: file
-      content-type: application/octet-stream
-      onchange: update-certificate
-      requis: true
-
-    certificat_password:
-      name: Mot de passe du certificat
-      commentaire: Mot de passe protégeant le fichier PKCS#12
-      type: password
-      onchange: update-certificate
-      requis: true
-
-    certificat_connexion_cert_pem:
-      type: file
-      no-show: true
-
-    certificat_connexion_key_pem:
-      type: file
-      no-show: true
-
-    certificat_connexion_key_cert_pem:
-      type: file
-      no-show: true
-
-    classification_file:
-      name: Fichier de classification
-      type: file
-      read-only: true
-
-    classification_date:
-      name: Date de la classification
-      type: date
-      read-only: true
-
-    circuit:
-      name: Circuit
-      commentaire: |
-        Obligatoire pour les PES ! <br />
-        Circuit sur lequel sera envoyé les PES signés pour être télétransmis par FAST
-
+    page:
+        url:
+            name: 'URL du service Fast TdT'
+            commentaire: "Pour la plateforme de recette : <br />\nActes  => https://recette.efast.fr/ascl <br />\nHelios => https://demo-parapheur.dfast.fr/parapheur-soap/soap/v1/Documents?wsdl"
+            requis: true
+        departement:
+            name: Département
+            commentaire: 'Obligatoire pour les actes !'
+        prefixe_editeur:
+            name: 'Préfixe éditeur'
+            commentaire: 'Obligatoire pour les actes !'
+        numero_abonnement:
+            name: 'Numéro d''abonnement (SIREN)'
+            requis: true
+        dn_user:
+            name: 'DN de l''utilisateur'
+            commentaire: "<mark>Obligatoire pour les actes !</mark><br />\nLes informations du « DN » qui correspondent à l'utilisateur qui réalise les télétransmissions. Exemple : <br>\nE = john.doe@example.org, CN = AGENT TEST, OU = 0002 999100057, OU = CACertificat, O = LIBRICIEL, L = PARIS, C = FR"
+        certificat_connexion:
+            name: 'Certificat de connexion'
+            commentaire: 'Fichier au format PKCS'
+            type: file
+            content-type: application/octet-stream
+            onchange: update-certificate
+            requis: true
+        certificat_password:
+            name: 'Mot de passe du certificat'
+            commentaire: 'Mot de passe protégeant le fichier PKCS'
+            type: password
+            onchange: update-certificate
+            requis: true
+        certificat_connexion_cert_pem:
+            type: file
+            no-show: true
+        certificat_connexion_key_pem:
+            type: file
+            no-show: true
+        certificat_connexion_key_cert_pem:
+            type: file
+            no-show: true
+        classification_file:
+            name: 'Fichier de classification'
+            type: file
+            read-only: true
+        classification_date:
+            name: 'Date de la classification'
+            type: date
+            read-only: true
+        circuit:
+            name: Circuit
+            commentaire: "Obligatoire pour les PES ! <br />\nCircuit sur lequel sera envoyé les PES signés pour être télétransmis par FAST"
 action:
-  update-certificate:
-    name: Mettre à jour les certificats
-    rule:
-      role_id_e: no-role
-    action-class: StandardAction
-    connecteur-type: utilities
-    connecteur-type-action: UpdateCertificate
-
-  test-connection:
-    name: Tester la connexion
-    action-class: FastTdtTestConnection
-    rule:
-      droit_id_u: 'entite:edition'
-
-  recup-classification:
-    name: Récupérer la classification
-    action-class: FastTdtRecupClassification
-    rule:
-      droit_id_u: 'entite:edition'
+    update-certificate:
+        name: 'Mettre à jour les certificats'
+        rule:
+            role_id_e: no-role
+        action-class: StandardAction
+        connecteur-type: utilities
+        connecteur-type-action: UpdateCertificate
+    test-connection:
+        name: 'Tester la connexion'
+        action-class: FastTdtTestConnection
+        rule:
+            droit_id_u: 'entite:edition'
+    recup-classification:
+        name: 'Récupérer la classification'
+        action-class: FastTdtRecupClassification
+        rule:
+            droit_id_u: 'entite:edition'

@@ -1,45 +1,38 @@
 nom: i-Parapheur
 type: signature
-
-description: |
-	Partie global du iParapheur permettant de mettre à jour l'ensemble des types/sous-type de tous les connecteurs iParapheur présents sur Pastell.
-
+description: 'Partie global du iParapheur permettant de mettre à jour l''ensemble des types/sous-type de tous les connecteurs iParapheur présents sur Pastell.'
 formulaire:
-	page0:
-		changement-certificat:
-			no-show: true
-			type: externalData
-			link_name: Sélectionner un certificat
-			choice-action: mise-a-jour-certif-i-parapheur
-
-
+    page0:
+        changement-certificat:
+            no-show: true
+            type: externalData
+            link_name: 'Sélectionner un certificat'
+            choice-action: mise-a-jour-certif-i-parapheur
 action:
-	update-all-iparapheur:
-		name: Mettre à jour tous les sous-types
-		action-class: UpdateAllIparapheur
-		rule:
-			droit_id_u: 'entite:edition'
-
-	redirect-to-mise-a-jour-certif-iparapheur:
-		name: Mettre à jour les certificats
-		tab: signature
-		rule:
-			droit_id_u: 'entite:edition'
-		action-class: StandardAction
-		connecteur-type: utilities
-		connecteur-type-action: RedirectToGlobalUpdateCertificate
-		connecteur-type-mapping:
-			changement_certificat: changement-certificat
-
-	mise-a-jour-certif-i-parapheur:
-		name: Mettre à jour les certificats
-		tab: signature
-		rule:
-			role_id_e: no-role
-		action-class: StandardChoiceAction
-		connecteur-type: utilities
-		connecteur-type-action: GlobalUpdateCertificate
-		connecteur-type-mapping:
-			page_title: Mise à jour certificat iParapheur
-			certificate: iparapheur_user_certificat
-			certificate_password: iparapheur_user_certificat_password
+    update-all-iparapheur:
+        name: 'Mettre à jour tous les sous-types'
+        action-class: UpdateAllIparapheur
+        rule:
+            droit_id_u: 'entite:edition'
+    redirect-to-mise-a-jour-certif-iparapheur:
+        name: 'Mettre à jour les certificats'
+        tab: signature
+        rule:
+            droit_id_u: 'entite:edition'
+        action-class: StandardAction
+        connecteur-type: utilities
+        connecteur-type-action: RedirectToGlobalUpdateCertificate
+        connecteur-type-mapping:
+            changement_certificat: changement-certificat
+    mise-a-jour-certif-i-parapheur:
+        name: 'Mettre à jour les certificats'
+        tab: signature
+        rule:
+            role_id_e: no-role
+        action-class: StandardChoiceAction
+        connecteur-type: utilities
+        connecteur-type-action: GlobalUpdateCertificate
+        connecteur-type-mapping:
+            page_title: 'Mise à jour certificat iParapheur'
+            certificate: iparapheur_user_certificat
+            certificate_password: iparapheur_user_certificat_password

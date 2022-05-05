@@ -1,213 +1,163 @@
 nom: Test
-
-description: Type de dossier de test, ne pas utiliser.
-
+description: 'Type de dossier de test, ne pas utiliser.'
 restriction_pack:
     - pack_test
-
 connecteur:
-    SAE
-    test
-    test
-
+    - SAE
+    - test
+    - test
 formulaire:
     onglet:
         password:
-            name: Mot de passe
+            name: 'Mot de passe'
             type: password
-
         test1:
             type: url
             link_name: toto
             index: true
-
         test2:
             default: foo
             requis: true
-
         date_indexed:
             type: date
             index: true
-
         date_in_the_past:
             type: date
-            default: "-30days"
-
+            default: '-30days'
         date_empty:
             type: date
-            default: "empty"
-
+            default: empty
         nom:
             index: true
-
         prenom:
             index: true
-
         ma_checkbox:
             type: checkbox
-            default: "true"
-
+            default: 'true'
         toto:
-            preg_match: "#^[0-9]*$#"
-            preg_match_error: Toto contient autre chose que des chiffres
-            commentaire: "cm:author"
+            preg_match: '#^[0-9]*$#'
+            preg_match_error: 'Toto contient autre chose que des chiffres'
+            commentaire: 'cm:author'
             title: true
-
         fichier:
             type: file
             multiple: true
-
         fichier_simple:
             type: file
             visionneuse: RawVisionneuse
-
         test_external_data:
             type: externalData
             link_name: choix
             choice-action: test-external-data
-
         test_on_change:
-            commentaire: change le champs test2 en même temps
+            commentaire: 'change le champs test2 en même temps'
             onchange: test-on-change
-
         test_default:
-            default: Ceci est un texte mis par défaut
-
+            default: 'Ceci est un texte mis par défaut'
         test_readonly:
             read-only: true
-
         test_textarea:
             type: textarea
             read-only: true
-
         test_textarea_read_write:
             type: textarea
-
         test_edit_only:
             edit-only: true
-
     onglet2:
         test_default_onglet_2:
-            default: Ceci est un autre texte de défaut
-
+            default: 'Ceci est un autre texte de défaut'
 action:
     creation:
         name-action: Créer
         name: Créé
         rule:
-            no-last-action:
-
+            no-last-action: ''
     modification:
         name-action: Modifier
-        name: En cours de rédaction
+        name: 'En cours de rédaction'
         rule:
             last-action:
-                creation
-                modification
-                editable
-                useless
-
+                - creation
+                - modification
+                - editable
+                - useless
     no-way:
         action-class: Defaut
-
     teletransmission:
         rule:
-            droit_id_u: test:teletransmettre
-
+            droit_id_u: 'test:teletransmettre'
     ok:
         action-class: PastellCoreFluxTestOK
-
     fail:
         action-class: PastellCoreFluxTestFail
-
     not-possible:
         rule:
             role_id_e: no-role
-
     editable:
         action-class: Defaut
         editable-content:
-            fichier_simple
-
+            - fichier_simple
     useless:
         action-class: Defaut
-
     test:
         rule:
-            droit_id_u: test:teletransmettre
+            droit_id_u: 'test:teletransmettre'
             content:
                 test1: toto
             or_1:
                 last-action:
-                    creation
-                    modification
+                    - creation
+                    - modification
                 content:
                     test1: true
             or_2:
                 and_1:
                     last-action:
-                        creation
-                        modification
+                        - creation
+                        - modification
                     content:
                         test2: true
                 and_2:
                     last-action:
-                        creation
-
+                        - creation
         action-class: Test
-
     test-external-data:
         no-workflow: true
         action-class: PastellCoreTestExternalData
-
-
     test-on-change:
         no-workflow: true
         action-class: PastellCoreTestOnChange
-
     action-auto:
         action-class: Defaut
         action-automatique: action-auto-end
-
     action-auto-end:
         action-class: Defaut
         connecteur-type: test
-
     chained-action-1:
         action-class: Defaut
         action-automatique: chained-action-2
-
     chained-action-2:
         action-class: Defaut
         action-automatique: chained-action-3
-
     chained-action-3:
         action-class: Defaut
-
     to-never-ending-action:
         action-class: Defaut
         action-automatique: never-ending-action
         connecteur-type: test
-
     never-ending-action:
         action-class: Test
         action-automatique: never-ending-action
         connecteur-type: test
-
     supression:
         action-class: Supprimer
-
     suppression:
         action-class: Supprimer
-
-
     test-trigger-connecteur-1:
-        name: Connecteur Test 1
+        name: 'Connecteur Test 1'
         action-class: PastellCoreTriggerConnecteurTest
-        num-same-connecteur: "0"
-
-
+        num-same-connecteur: '0'
     test-trigger-connecteur-2:
-        name: Connecteur Test 2
+        name: 'Connecteur Test 2'
         action-class: PastellCoreTriggerConnecteurTest
-        num-same-connecteur: "1"
+        num-same-connecteur: '1'

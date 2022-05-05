@@ -1,58 +1,41 @@
-nom: Suppression en masse
-
-description: |
-  Permet de déclencher la suppresion des documents d'un ou plusieurs type sur toutes les entités, quelque soit l'état du document
-
-
+nom: 'Suppression en masse'
+description: 'Permet de déclencher la suppresion des documents d''un ou plusieurs type sur toutes les entités, quelque soit l''état du document'
 type: Purge
-
-
 formulaire:
-  Information:
-    actif:
-      name: Connecteur actif
-      type: checkbox
-
-    document_type_libelle:
-      name: Type de dossier
-      commentaire: Si aucun selectionné, s'applique sur TOUS les types de document
-      type: externalData
-      choice-action: type_document
-      link_name: Sélectionner le type de dossier
-
-    document_type:
-      no-show: true
-
-    nb_days:
-      name: Nombre de jours minimum passés dans le dernier état du document
-      commentaire: 365 par défaut
-      default: 365
-
-
+    Information:
+        actif:
+            name: 'Connecteur actif'
+            type: checkbox
+        document_type_libelle:
+            name: 'Type de dossier'
+            commentaire: 'Si aucun selectionné, s''applique sur TOUS les types de document'
+            type: externalData
+            choice-action: type_document
+            link_name: 'Sélectionner le type de dossier'
+        document_type:
+            no-show: true
+        nb_days:
+            name: 'Nombre de jours minimum passés dans le dernier état du document'
+            commentaire: '365 par défaut'
+            default: 365
 action:
-  test:
-    name: Lister les dossiers à supprimer
-    action-class: PurgeGlobaleListDocument
-
-  purge:
-    name: Traitement (immédiat)
-    action-class: PurgeGlobalePurger
-    action-automatique: purge
-
-  purge-async:
-    name: Traitement (par le gestionnaire de tâche)
-    action-class: PurgeGlobalePurgerAsync
-
-  type_document:
-    rule:
-      role_id_e: no-role
-    action-class: StandardChoiceAction
-    connecteur-type: utilities
-    connecteur-type-action: GetModuleList
-    connecteur-type-mapping:
-      page_title: Choix du type de dossier
-      module_type: document_type
-      module_type_label: document_type_libelle
-
-
-
+    test:
+        name: 'Lister les dossiers à supprimer'
+        action-class: PurgeGlobaleListDocument
+    purge:
+        name: 'Traitement (immédiat)'
+        action-class: PurgeGlobalePurger
+        action-automatique: purge
+    purge-async:
+        name: 'Traitement (par le gestionnaire de tâche)'
+        action-class: PurgeGlobalePurgerAsync
+    type_document:
+        rule:
+            role_id_e: no-role
+        action-class: StandardChoiceAction
+        connecteur-type: utilities
+        connecteur-type-action: GetModuleList
+        connecteur-type-mapping:
+            page_title: 'Choix du type de dossier'
+            module_type: document_type
+            module_type_label: document_type_libelle

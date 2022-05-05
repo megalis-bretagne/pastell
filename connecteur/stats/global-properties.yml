@@ -1,84 +1,62 @@
 nom: Statistiques
 type: stats
-
-description: Connecteur permettant de récupérer des statistiques d'utilisation des flux
-
+description: 'Connecteur permettant de récupérer des statistiques d''utilisation des flux'
 formulaire:
-  page:
-
-    entity_label:
-      name: Entité
-      type: externalData
-      commentaire: Ce champ est obligatoire
-      choice-action: entity_list
-      link_name: Sélectionner l'entité
-
-    entity_id:
-      no-show: true
-
-    include_children:
-      name: Inclure les entités filles
-      type: checkbox
-
-    module_type_label:
-      name: Type de dossier
-      type: externalData
-      commentaire: Ce champ est obligatoire
-      choice-action: module_list
-      link_name: Sélectionner le type de dossier
-
-    module_type:
-      no-show: true
-
-    start_date:
-      name: Date de début
-      type: date
-      commentaire: |
-        Sélection des dossiers ayant été créés entre la date de début et la date de fin<br />
-        Les dates ont comme heure minuit (0h00)<br />
-        Exemple pour avoir les dossiers créés le 1 janvier :<br />
-        Date de début : 01 janvier<br />
-        Date de fin : 02 janvier
-
-    end_date:
-      name: Date de fin
-      type: date
-
-    csv_file:
-      name: Fichier CSV
-      type: file
-
-    csv_generation_date:
-      name: Date de la dernière génération du fichier CSV
-      type: date
-      read-only: true
-
+    page:
+        entity_label:
+            name: Entité
+            type: externalData
+            commentaire: 'Ce champ est obligatoire'
+            choice-action: entity_list
+            link_name: 'Sélectionner l''entité'
+        entity_id:
+            no-show: true
+        include_children:
+            name: 'Inclure les entités filles'
+            type: checkbox
+        module_type_label:
+            name: 'Type de dossier'
+            type: externalData
+            commentaire: 'Ce champ est obligatoire'
+            choice-action: module_list
+            link_name: 'Sélectionner le type de dossier'
+        module_type:
+            no-show: true
+        start_date:
+            name: 'Date de début'
+            type: date
+            commentaire: "Sélection des dossiers ayant été créés entre la date de début et la date de fin<br />\nLes dates ont comme heure minuit (0h00)<br />\nExemple pour avoir les dossiers créés le 1 janvier :<br />\nDate de début : 01 janvier<br />\nDate de fin : 02 janvier"
+        end_date:
+            name: 'Date de fin'
+            type: date
+        csv_file:
+            name: 'Fichier CSV'
+            type: file
+        csv_generation_date:
+            name: 'Date de la dernière génération du fichier CSV'
+            type: date
+            read-only: true
 action:
-
-  get_stats:
-    name: Récupérer les statistiques (synchrone)
-    action-class: StatsGet
-    action-automatique: get_stats
-
-  get_stats_async:
-    name: Récupérer les statistiques (asynchrone)
-    action-class: StatsGetAsync
-
-  module_list:
-    rule:
-      role_id_e: no-role
-    action-class: StandardChoiceAction
-    connecteur-type: utilities
-    connecteur-type-action: GetModuleList
-    connecteur-type-mapping:
-      page_title: Choix du type de dossier
-
-  entity_list:
-    rule:
-      role_id_e: no-role
-    action-class: StandardChoiceAction
-    connecteur-type: utilities
-    connecteur-type-action: GetEntityList
-    connecteur-type-mapping:
-      page_title: Choix de l'entité
-
+    get_stats:
+        name: 'Récupérer les statistiques (synchrone)'
+        action-class: StatsGet
+        action-automatique: get_stats
+    get_stats_async:
+        name: 'Récupérer les statistiques (asynchrone)'
+        action-class: StatsGetAsync
+    module_list:
+        rule:
+            role_id_e: no-role
+        action-class: StandardChoiceAction
+        connecteur-type: utilities
+        connecteur-type-action: GetModuleList
+        connecteur-type-mapping:
+            page_title: 'Choix du type de dossier'
+    entity_list:
+        rule:
+            role_id_e: no-role
+        action-class: StandardChoiceAction
+        connecteur-type: utilities
+        connecteur-type-action: GetEntityList
+        connecteur-type-mapping:
+            page_title: 'Choix de l''entité'

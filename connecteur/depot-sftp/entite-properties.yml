@@ -1,35 +1,23 @@
-nom: Dépôt SFTP
+nom: 'Dépôt SFTP'
 type: GED
-
 heritage: ged-connecteur-common
-
-description: |
-    Connecteur de dépôt sur un répertoire SFTP
-
+description: 'Connecteur de dépôt sur un répertoire SFTP'
 formulaire:
     page0:
         depot_sftp_host:
             name: Hôte
-
         depot_sftp_port:
             name: Port
-            commentaire: 22 par défaut
-
+            commentaire: '22 par défaut'
         depot_sftp_login:
             name: Login
-
         depot_sftp_password:
-            name: Mot de passe
+            name: 'Mot de passe'
             type: password
-
         depot_sftp_fingerprint:
-            name: Empreinte (fingerprint) du serveur
-
+            name: 'Empreinte (fingerprint) du serveur'
         depot_sftp_directory:
-            name: Répertoire de dépôt
-
+            name: 'Répertoire de dépôt'
         depot_sftp_rename_suffix:
-            name: Suffixe de dépôt
-            commentaire: "Les fichiers sont déposés avec ce suffixe, puis renommer ensuite (ex: .part)"
-
-
+            name: 'Suffixe de dépôt'
+            commentaire: 'Les fichiers sont déposés avec ce suffixe, puis renommer ensuite (ex: .part)'
