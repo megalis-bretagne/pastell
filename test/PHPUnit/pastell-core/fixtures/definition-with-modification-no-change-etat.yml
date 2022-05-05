@@ -1,47 +1,36 @@
-nom: Flux de test
-
-description: Ceci est un flux de test
-
-
+nom: 'Flux de test'
+description: 'Ceci est un flux de test'
 formulaire:
-	Message:
-		test:
-
+    Message:
+        test: ''
 action:
-
     creation:
-    		name-action: Créer
-    		name: Créé
-    		rule:
-    			no-last-action:
-
-
-	modification:
+        name-action: Créer
+        name: Créé
+        rule:
+            no-last-action: ''
+    modification:
         name-action: Modifier
-        name: En cours de rédaction
+        name: 'En cours de rédaction'
         rule:
             last-action:
-                creation
-                modification
-                modification-pas-de-changement
-                modification-changement
-
-	action-test:
-		name-action: juste un test
-		name: juste un test
-
-	modification-pas-de-changement:
-		name-action: Modifier sans changer d'état
-		name: Modifié
-		modification-no-change-etat: true
-		editable-content :
-			test
-		action-class: Defaut
-
-
-	modification-changement:
-		name-action: Modifier sans changer d'état
-		name: Modifié
-		editable-content :
-			test
-		action-class: Defaut
+                - creation
+                - modification
+                - modification-pas-de-changement
+                - modification-changement
+    action-test:
+        name-action: 'juste un test'
+        name: 'juste un test'
+    modification-pas-de-changement:
+        name-action: 'Modifier sans changer d''état'
+        name: Modifié
+        modification-no-change-etat: true
+        editable-content:
+            - test
+        action-class: Defaut
+    modification-changement:
+        name-action: 'Modifier sans changer d''état'
+        name: Modifié
+        editable-content:
+            - test
+        action-class: Defaut

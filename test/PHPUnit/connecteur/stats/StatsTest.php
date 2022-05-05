@@ -34,8 +34,8 @@ class StatsTest extends PastellTestCase
         );
         $expectedCsvContent = <<<EOT
 id_e,Entité,Nombre,Taille,État,"État label"
-1,Bourg-en-Bresse,1,217B,creation,Créé
-2,CCAS,1,248B,creation,Créé
+1,Bourg-en-Bresse,1,225B,creation,Créé
+2,CCAS,1,260B,creation,Créé
 
 EOT;
         $this->assertSame($expectedCsvContent, $test->getFileContent('csv_file'));

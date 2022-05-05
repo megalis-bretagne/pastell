@@ -31,9 +31,9 @@ class DocumentSizeTest extends PastellTestCase
 
         $donneesFormulaire->addFileFromData('fichier', 'file.txt', '1234');
 
-        $this->assertSame(247, $this->documentSize->getSize($document['id_d']));
+        $this->assertSame(259, $this->documentSize->getSize($document['id_d']));
         $donneesFormulaire->addFileFromData('fichier_simple', 'file.txt', '1234');
-        $this->assertSame(284, $this->documentSize->getSize($document['id_d']));
+        $this->assertSame(300, $this->documentSize->getSize($document['id_d']));
     }
 
     public function humanReadableSizeProvider(): iterable

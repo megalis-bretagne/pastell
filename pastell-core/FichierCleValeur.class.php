@@ -49,11 +49,17 @@ class FichierCleValeur
 
     private function unescape($string)
     {
-        $word = stripslashes($string);
+        $word = stripslashes($string ?? '');
         if (!$word) {
             return "";
         }
-        if ($word[0] == '"' && mb_substr($word, -1) == '"') {
+        /**
+         * Pour le cas spécifique du >, SfYml ajoute un espace en plus...
+         */
+        if ($word[0] === '"' && $word[-2] === '"' && $word[-1] === "\n") {
+            $word = rtrim($word, "\n");
+        }
+        if ($word[0] === '"' && mb_substr($word, -1) === '"') {
             $word = mb_substr($word, 1);
             $word = mb_substr($word, 0, -1);
         }

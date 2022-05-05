@@ -115,7 +115,7 @@ class PieceMarcheParEtapeTypePieceTest extends PastellMarcheTestCase
 
         $this->postPiecesLot();
         $info = $this->getInternalAPI()->patch("/entite/1/document/$this->id_d/externalData/type_piece", ['type_pj' => ['BPU','CCAP']]);
-        $this->assertEquals('2018BPU.pdf : Bordereau des Prix Unitaires (BPU) ;
+        $this->assertEquals('2018BPU.pdf : Bordereau des Prix Unitaires (BPU) ; 
 2018CCAP.pdf : Cahier des Clauses Administratives Particulières (CCAP)', $info['data']['type_piece']);
     }
 }

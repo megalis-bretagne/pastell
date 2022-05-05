@@ -1,249 +1,242 @@
----
 nom: sae-only
-type: Flux Généraux
-description: ""
+type: 'Flux Généraux'
+description: ''
 connecteur:
-  - Bordereau SEDA
-  - SAE
+    - 'Bordereau SEDA'
+    - SAE
 formulaire:
-  onglet1:
-    titre:
-      name: Titre
-      type: text
-      requis: true
-      multiple: false
-      commentaire: ""
-      title: true
-      index: true
-    fichier:
-      name: Fichier
-      type: file
-      requis: true
-      multiple: false
-      commentaire: ""
-    annexe:
-      name: Annexe(s)
-      type: file
-      requis: false
-      multiple: true
-      commentaire: ""
-    date:
-      name: Date
-      type: date
-      requis: true
-      multiple: false
-      commentaire: ""
-      index: true
-    select:
-      name: select
-      type: select
-      requis: false
-      multiple: false
-      commentaire: ""
-      value:
-        A: choix A à
-        B: choix B é
-  Cheminement:
-    envoi_sae:
-      name: "Système d'archivage électronique"
-      type: checkbox
-      onchange: cheminement-change
-      default: checked
-      read-only: true
-  Configuration SAE:
-    sae_config:
-      name: Configuration du versement SAE
-      commentaire: |
-        Fichier JSON {cle1:valeur1,cle2:valeur2,...}.
-        Les méta-données de ce fichier prévalent sur les méta-données Pastell
-      type: file
-  SAE:
-    sae_show:
-      no-show: true
-    journal:
-      name: Faisceau de preuves
-      type: file
-    date_journal_debut:
-      name: Date du premier évènement journalisé
-    date_cloture_journal:
-      name: Date de clôture du journal
-    date_cloture_journal_iso8601:
-      name: Date de clôture du journal (iso 8601)
-    sae_transfert_id:
-      name: Identifiant de transfert
-      index: true
-    sae_bordereau:
-      name: Bordereau SEDA
-      type: file
-    sae_archive:
-      name: Archive
-      type: file
-    ar_sae:
-      type: file
-      name: Accusé de réception SAE
-    sae_ack_comment:
-      name: "Commentaire de l'accusé de réception"
-    reply_sae:
-      type: file
-      name: Réponse du SAE
-    sae_archival_identifier:
-      name: "Identifiant de l'archive sur le SAE"
-    sae_atr_comment:
-      name: Commentaire de la réponse du SAE
-    url_archive:
-      name: "URL de l'archive"
-      type: url
+    onglet1:
+        titre:
+            name: Titre
+            type: text
+            requis: true
+            multiple: false
+            commentaire: ''
+            title: true
+            index: true
+        fichier:
+            name: Fichier
+            type: file
+            requis: true
+            multiple: false
+            commentaire: ''
+        annexe:
+            name: Annexe(s)
+            type: file
+            requis: false
+            multiple: true
+            commentaire: ''
+        date:
+            name: Date
+            type: date
+            requis: true
+            multiple: false
+            commentaire: ''
+            index: true
+        select:
+            name: select
+            type: select
+            requis: false
+            multiple: false
+            commentaire: ''
+            value:
+                A: 'choix A à'
+                B: 'choix B é'
+    Cheminement:
+        envoi_sae:
+            name: 'Système d''archivage électronique'
+            type: checkbox
+            onchange: cheminement-change
+            default: checked
+            read-only: true
+    'Configuration SAE':
+        sae_config:
+            name: 'Configuration du versement SAE'
+            commentaire: "Fichier JSON {cle1:valeur1,cle2:valeur2,...}.\nLes méta-données de ce fichier prévalent sur les méta-données Pastell"
+            type: file
+    SAE:
+        sae_show:
+            no-show: true
+        journal:
+            name: 'Faisceau de preuves'
+            type: file
+        date_journal_debut:
+            name: 'Date du premier évènement journalisé'
+        date_cloture_journal:
+            name: 'Date de clôture du journal'
+        date_cloture_journal_iso8601:
+            name: 'Date de clôture du journal (iso 8601)'
+        sae_transfert_id:
+            name: 'Identifiant de transfert'
+            index: true
+        sae_bordereau:
+            name: 'Bordereau SEDA'
+            type: file
+        sae_archive:
+            name: Archive
+            type: file
+        ar_sae:
+            type: file
+            name: 'Accusé de réception SAE'
+        sae_ack_comment:
+            name: 'Commentaire de l''accusé de réception'
+        reply_sae:
+            type: file
+            name: 'Réponse du SAE'
+        sae_archival_identifier:
+            name: 'Identifiant de l''archive sur le SAE'
+        sae_atr_comment:
+            name: 'Commentaire de la réponse du SAE'
+        url_archive:
+            name: 'URL de l''archive'
+            type: url
 champs-affiches:
-  - titre
-  - dernier_etat
-  - date_dernier_etat
-  - titre
-  - date
+    - titre
+    - dernier_etat
+    - date_dernier_etat
+    - titre
+    - date
 champs-recherche-avancee:
-  - type
-  - id_e
-  - lastetat
-  - last_state_begin
-  - etatTransit
-  - state_begin
-  - search
-  - titre
+    - type
+    - id_e
+    - lastetat
+    - last_state_begin
+    - etatTransit
+    - state_begin
+    - search
+    - titre
 page-condition:
-  Configuration SAE:
-    envoi_sae: true
-  SAE:
-    sae_show: true
+    'Configuration SAE':
+        envoi_sae: true
+    SAE:
+        sae_show: true
 action:
-  creation:
-    name-action: Créer
-    name: Créé
-    rule:
-      no-last-action: ""
-  modification:
-    name-action: Modifier
-    name: En cours de rédaction
-    rule:
-      last-action:
-        - creation
-        - modification
-        - importation
-  supression:
-    name-action: Supprimer
-    name: Supprimé
-    rule:
-      last-action:
-        - creation
-        - modification
-        - importation
-        - termine
-        - fatal-error
-        - rejet-sae
-    action-class: Supprimer
-    warning: Êtes-vous sûr ?
-  importation:
-    name: Importation du document
-    rule:
-      role_id_e: no-role
-    action-automatique: orientation
-  orientation:
-    name: Envoi du document
-    name-action: Envoyer le document
-    rule:
-      last-action:
-        - creation
-        - modification
-        - importation
-        - accepter-sae
-      document_is_valide: true
-    action-class: OrientationTypeDossierPersonnalise
-  termine:
-    name: Traitement terminé
-    rule:
-      role_id_e: no-role
-  cheminement-change:
-    no-workflow: true
-    rule:
-      role_id_e: no-role,
-    action-class: CheminementChangeTypeDossierPersonnalise
-  preparation-send-sae:
-    name: "Préparation de l'envoi au SAE"
-    rule:
-      role_id_e: no-role
-    action-automatique: generate-archive
-  generate-archive:
-    name-action: "Générer l'archive"
-    name: Archive générée
-    rule:
-      last-action:
-        - preparation-send-sae
-        - generate-archive-error
-    action-class: StandardAction
-    connecteur-type: SAE
-    connecteur-type-action: >
-      Pastell\Step\SAE\Action\SAEGenerateArchiveAction
-    action-automatique: send-archive
-  generate-archive-error:
-    name: "Erreur lors de la génération de l'archive"
-    rule:
-      role_id_e: no-role
-  send-archive:
-    name-action: Verser au SAE
-    name: Versé au SAE
-    rule:
-      last-action:
-        - generate-archive
-        - rejet-sae
-        - erreur-envoie-sae
-    action-class: StandardAction
-    connecteur-type: SAE
-    connecteur-type-action: >
-      Pastell\Step\SAE\Action\SAESendArchiveAction
-    action-automatique: verif-sae
-  erreur-envoie-sae:
-    name: "Erreur lors de l'envoi au SAE"
-    rule:
-      role_id_e: no-role
-  verif-sae:
-    name-action: "Récupérer l'AR du document sur le SAE"
-    name: "Récuperation de l'AR sur le SAE"
-    rule:
-      last-action:
-        - send-archive
-        - verif-sae-erreur
-    action-class: StandardAction
-    connecteur-type: SAE
-    connecteur-type-action: SAEVerifier
-  verif-sae-erreur:
-    name: "Erreur lors de la récupération de l'AR"
-    rule:
-      role_id_e: no-role
-  ar-recu-sae:
-    name: AR SAE reçu
-    rule:
-      role_id_e: no-role
-    action-automatique: validation-sae
-  validation-sae:
-    name-action: "Vérifier l'acceptation par le SAE"
-    name: "Vérification de l'acceptation par le SAE"
-    rule:
-      last-action:
-        - ar-recu-sae
-        - validation-sae-erreur
-    action-class: StandardAction
-    connecteur-type: SAE
-    connecteur-type-action: SAEValider
-  validation-sae-erreur:
-    name: >
-      Erreur lors de la vérification de la
-      validité du transfert
-    rule:
-      role_id_e: no-role
-  accepter-sae:
-    name: Archive acceptée par le SAE
-    rule:
-      role_id_e: no-role
-    action-automatique: orientation
-  rejet-sae:
-    name: Archive rejetée par le SAE
-    rule:
-      role_id_e: no-role
+    creation:
+        name-action: Créer
+        name: Créé
+        rule:
+            no-last-action: ''
+    modification:
+        name-action: Modifier
+        name: 'En cours de rédaction'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+    supression:
+        name-action: Supprimer
+        name: Supprimé
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - termine
+                - fatal-error
+                - rejet-sae
+        action-class: Supprimer
+        warning: 'Êtes-vous sûr ?'
+    importation:
+        name: 'Importation du document'
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+    orientation:
+        name: 'Envoi du document'
+        name-action: 'Envoyer le document'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - accepter-sae
+            document_is_valide: true
+        action-class: OrientationTypeDossierPersonnalise
+    termine:
+        name: 'Traitement terminé'
+        rule:
+            role_id_e: no-role
+    cheminement-change:
+        no-workflow: true
+        rule:
+            role_id_e: 'no-role,'
+        action-class: CheminementChangeTypeDossierPersonnalise
+    preparation-send-sae:
+        name: 'Préparation de l''envoi au SAE'
+        rule:
+            role_id_e: no-role
+        action-automatique: generate-archive
+    generate-archive:
+        name-action: 'Générer l''archive'
+        name: 'Archive générée'
+        rule:
+            last-action:
+                - preparation-send-sae
+                - generate-archive-error
+        action-class: StandardAction
+        connecteur-type: SAE
+        connecteur-type-action: Pastell\Step\SAE\Action\SAEGenerateArchiveAction
+        action-automatique: send-archive
+    generate-archive-error:
+        name: 'Erreur lors de la génération de l''archive'
+        rule:
+            role_id_e: no-role
+    send-archive:
+        name-action: 'Verser au SAE'
+        name: 'Versé au SAE'
+        rule:
+            last-action:
+                - generate-archive
+                - rejet-sae
+                - erreur-envoie-sae
+        action-class: StandardAction
+        connecteur-type: SAE
+        connecteur-type-action: Pastell\Step\SAE\Action\SAESendArchiveAction
+        action-automatique: verif-sae
+    erreur-envoie-sae:
+        name: 'Erreur lors de l''envoi au SAE'
+        rule:
+            role_id_e: no-role
+    verif-sae:
+        name-action: 'Récupérer l''AR du document sur le SAE'
+        name: 'Récuperation de l''AR sur le SAE'
+        rule:
+            last-action:
+                - send-archive
+                - verif-sae-erreur
+        action-class: StandardAction
+        connecteur-type: SAE
+        connecteur-type-action: SAEVerifier
+    verif-sae-erreur:
+        name: 'Erreur lors de la récupération de l''AR'
+        rule:
+            role_id_e: no-role
+    ar-recu-sae:
+        name: 'AR SAE reçu'
+        rule:
+            role_id_e: no-role
+        action-automatique: validation-sae
+    validation-sae:
+        name-action: 'Vérifier l''acceptation par le SAE'
+        name: 'Vérification de l''acceptation par le SAE'
+        rule:
+            last-action:
+                - ar-recu-sae
+                - validation-sae-erreur
+        action-class: StandardAction
+        connecteur-type: SAE
+        connecteur-type-action: SAEValider
+    validation-sae-erreur:
+        name: 'Erreur lors de la vérification de la validité du transfert'
+        rule:
+            role_id_e: no-role
+    accepter-sae:
+        name: 'Archive acceptée par le SAE'
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+    rejet-sae:
+        name: 'Archive rejetée par le SAE'
+        rule:
+            role_id_e: no-role

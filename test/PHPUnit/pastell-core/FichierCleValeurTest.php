@@ -176,4 +176,17 @@ class FichierCleValeurTest extends PastellTestCase
         $fichierCleValeur = new FichierCleValeur($this->filePath, new YMLLoader(new MemoryCacheNone()));
         $this->assertEmpty($fichierCleValeur->get("test1"));
     }
+
+    public function testSpecificCaseWithSpyc()
+    {
+        $fichierCleValeur = new FichierCleValeur(
+            __DIR__ . '/fixtures/legacy-workspace-file.yml',
+            new YMLLoader(new MemoryCacheNone())
+        );
+
+        $this->assertEquals(
+            'https://secure-iparapheur-toto.foo.fr/ws-iparapheur?wsdl',
+            $fichierCleValeur->get('iparapheur_wsdl')
+        );
+    }
 }

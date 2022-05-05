@@ -1,12 +1,7 @@
-nom: Flux de test
-
-description: Ceci est un flux de test
-
+nom: 'Flux de test'
+description: 'Ceci est un flux de test'
 restriction_pack:
-	pack_marche
-
+    - pack_marche
 formulaire:
-	Message:
-		test:
-
-
+    Message:
+        test: ''

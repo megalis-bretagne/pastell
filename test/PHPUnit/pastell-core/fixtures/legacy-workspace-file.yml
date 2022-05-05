@@ -1,0 +1,25 @@
+---
+iparapheur_activate: \"on\"
+iparapheur_wsdl: >
+  \"https://secure-iparapheur-toto.foo.fr/ws-iparapheur?wsdl\"
+iparapheur_user_certificat_password: \"demou\"
+iparapheur_login: \"wwwww\"
+iparapheur_password: \"aaaaaaa\"
+iparapheur_nb_jour_max: \"30\"
+iparapheur_visibilite: \"CONFIDENTIEL\"
+xpathpoursignaturexml: \"\"
+iparapheur_user_key_pem:
+  - \"iparapheur_user_key_pem\"
+iparapheur_user_certificat_pem:
+  - \"iparapheur_user_certificat_pem\"
+iparapheur_user_key_only_pem:
+  - \"iparapheur_user_key_only_pem\"
+iparapheur_type: \"PADES\"
+iparapheur_sous_type:
+  - \"iparapheur_sous_type.txt\"
+visuel_pdf_default:
+  - \"iParapheur_impression_dossier.pdf\"
+iparapheur_metadata: \"\"
+iparapheur_archivage_action: \"\"
+iparapheur_user_certificat:
+  - \"demou.p12\"

@@ -1,45 +1,34 @@
-nom: Flux de test
-
-description: Ceci est un flux de test
-
-
+nom: 'Flux de test'
+description: 'Ceci est un flux de test'
 connecteur:
-	signature
-
+    - signature
 formulaire:
-	Message:
-		test:
-
+    Message:
+        test: ''
 action:
-
-	test:
-		name-action: Modifier
-		name: En cours de rédaction
-		connecteur-type: signature
-		connecteur-type-action: SignatureEnvoie
-		connecteur-type-mapping:
-		    document: test
-
-	no-connecteur-type:
-		name: Cet actin n'a pas de clé connecteur-type
-
-	no-connecteur-type-action:
-		name-action: Modifier
-		name: En cours de rédaction
-		connecteur-type: signature
-		connecteur-type-mapping:
-		    document: test
-
-	no-action-class:
-		name: L'action class de cette action n'est pas défini
-		connecteur-type: signature
-		connecteur-type-action: noExists
-		connecteur-type-mapping:
-			document: test
-
-	no-mapping:
-		name-action: Modifier
-		name: En cours de rédaction
-		connecteur-type: signature
-		connecteur-type-action: SignatureEnvoie
-
+    test:
+        name-action: Modifier
+        name: 'En cours de rédaction'
+        connecteur-type: signature
+        connecteur-type-action: SignatureEnvoie
+        connecteur-type-mapping:
+            document: test
+    no-connecteur-type:
+        name: 'Cet actin n''a pas de clé connecteur-type'
+    no-connecteur-type-action:
+        name-action: Modifier
+        name: 'En cours de rédaction'
+        connecteur-type: signature
+        connecteur-type-mapping:
+            document: test
+    no-action-class:
+        name: 'L''action class de cette action n''est pas défini'
+        connecteur-type: signature
+        connecteur-type-action: noExists
+        connecteur-type-mapping:
+            document: test
+    no-mapping:
+        name-action: Modifier
+        name: 'En cours de rédaction'
+        connecteur-type: signature
+        connecteur-type-action: SignatureEnvoie

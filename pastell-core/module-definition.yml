@@ -1,395 +1,340 @@
 definition.yml:
-	info: Le fichier definition.yml contient la définition d'un module Pastell
-	possible_key:
-		nom:
-			info: Identifiant du module tel qu'il sera présenté aux utilisateurs.
-			type: string
-		
-		type:
-			info: Type de module. Utiliser pour classer les modules les uns par rapport aux autres.
-			default: Types de dossier génériques
-			type: string 
-			
-		description:
-			info: Permet de décrire le module
-			type: string
-
-		restriction_pack:
-			info: Liste des restrictions d'utilisation pack (pack_chorus_pro, pack_marche...)
-			default: aucune restriction
-			type: list
-
-		connecteur:
-			info: Liste des types de connecteur utilisés par le module
-			default: aucun connecteur
-			type: list
-
-		formulaire:
-			info: Définition du formulaire permettant la création et l'évolution du dossier
-			default: pas de formulaire
-			type: associative_array
-			
-		page-condition: 
-			info: Détermine les règles permettant de savoir si une page doit être affiché ou non
-			default: pas de condition
-			type: associative_array
-		
-		action:
-			info: Définition de l'ensemble des actions qui peuvent être déclenché sur le dossier
-			default: pas d'action
-			type: associative_array
-	
-		affiche_one:
-			info: Permet d'afficher l'ensemble des onglets sur une seule page (en mode affichage, les onglets sont conservés en mode édition)
-			default: false
-			type: boolean
-		
-		champs-affiches:
-			info: Liste des champs à afficher dans la liste des dossiers
-			type: list
-		
-		champs-recherche-avancee:
-			info: Liste des champs à afficher dans la recherche avancée
-			type: list
-
-		threshold_size:
-			info: Taille limite acceptée de tous les fichiers du dossier cumulés en octet. (optionnel, sans limite par défaut)
-			type: string
-
-		threshold_fields:
-			info: Liste des champs de type file utilisés dans le calcul à la limite définie par la clé threshold_size (optionnel, tous les champs `file` par défaut)
-			type: list
-
-		studio_definition:
-			info: Permet de préciser le contenu orginal du flux studio qui a permis la création de ce type de dossier (en JSON)
-			type: string
-
+    info: 'Le fichier definition.yml contient la définition d''un module Pastell'
+    possible_key:
+        nom:
+            info: 'Identifiant du module tel qu''il sera présenté aux utilisateurs.'
+            type: string
+        type:
+            info: 'Type de module. Utiliser pour classer les modules les uns par rapport aux autres.'
+            default: 'Types de dossier génériques'
+            type: string
+        description:
+            info: 'Permet de décrire le module'
+            type: string
+        restriction_pack:
+            info: 'Liste des restrictions d''utilisation pack (pack_chorus_pro, pack_marche...)'
+            default: 'aucune restriction'
+            type: list
+        connecteur:
+            info: 'Liste des types de connecteur utilisés par le module'
+            default: 'aucun connecteur'
+            type: list
+        formulaire:
+            info: 'Définition du formulaire permettant la création et l''évolution du dossier'
+            default: 'pas de formulaire'
+            type: associative_array
+        page-condition:
+            info: 'Détermine les règles permettant de savoir si une page doit être affiché ou non'
+            default: 'pas de condition'
+            type: associative_array
+        action:
+            info: 'Définition de l''ensemble des actions qui peuvent être déclenché sur le dossier'
+            default: 'pas d''action'
+            type: associative_array
+        affiche_one:
+            info: 'Permet d''afficher l''ensemble des onglets sur une seule page (en mode affichage, les onglets sont conservés en mode édition)'
+            default: false
+            type: boolean
+        champs-affiches:
+            info: 'Liste des champs à afficher dans la liste des dossiers'
+            type: list
+        champs-recherche-avancee:
+            info: 'Liste des champs à afficher dans la recherche avancée'
+            type: list
+        threshold_size:
+            info: 'Taille limite acceptée de tous les fichiers du dossier cumulés en octet. (optionnel, sans limite par défaut)'
+            type: string
+        threshold_fields:
+            info: 'Liste des champs de type file utilisés dans le calcul à la limite définie par la clé threshold_size (optionnel, tous les champs `file` par défaut)'
+            type: list
+        studio_definition:
+            info: 'Permet de préciser le contenu orginal du flux studio qui a permis la création de ce type de dossier (en JSON)'
+            type: string
 restriction_pack:
-	possible_key:
-			*:
-				key_name: restriction_pack
-				type: string
-
+    possible_key:
+        '*':
+            key_name: restriction_pack
+            type: string
 connecteur:
-	possible_key:
-		*:
-			key_name: connecteur
-			type: string
-
+    possible_key:
+        '*':
+            key_name: connecteur
+            type: string
 formulaire:
-	possible_key:
-		*:
-			key_name: onglet
-			type: associative_array
-			info: le formulaire est composé d'un ensemble d'onglets
-
+    possible_key:
+        '*':
+            key_name: onglet
+            type: associative_array
+            info: 'le formulaire est composé d''un ensemble d''onglets'
 onglet:
-	possible_key:
-		*:
-			key_name: element_formulaire
-			type: associative_array
-			info: un onglet est composé d'élement de formulaire
-	
+    possible_key:
+        '*':
+            key_name: element_formulaire
+            type: associative_array
+            info: 'un onglet est composé d''élement de formulaire'
 element_formulaire:
-	possible_key:
-		name:
-			type: string
-		title: 
-			info: Information enregistré dans la base de donnée pour identifier le document
-			type: boolean
-		read-only:
-			info: Le champ ne sera pas affiché en mode édition, mais seulement en mode affichage
-			type: boolean
-		edit-only:
-			info: Le champ ne sera pas affiché en mode affichage, mais seulement en mode édition
-			type: boolean
-		type:
-			type: choice
-			choice:
-				file
-				text
-				textarea
-				externalData
-				select
-				url
-				mail-list
-				password
-				checkbox
-				date
-		no-show:
-			info: Le champs ne sera pas affiché (ni en mode affichage, ni en mode d'édition)
-			type: boolean
-		commentaire:
-			info: Le commentaire est affiché comme aide en mode édition
-			type: string
-		link_name:
-			info: Uniquement pour le type externalData, afin de mettre un texte sur le lien
-			type: string
-		choice-action:
-			info: Pointeur vers une action 
-			type: string
-		requis:
-			type: boolean
-		multiple:
-			info: uniquement pour le type file
-			type: boolean
-			default: false
-		value:
-			info: uniquement pour le type select
-			type: list_or_associative_array
-		autocomplete:
-			info:
-			type: string
-		may_be_null:
-			type: boolean
-		is_equal :
-		 	type: string 
-		is_equal_error:
-			type: string 
-		onchange:
-			type: string 
-		default:
-			info: |
-				Valeur initiale prise par le champs lors de la création du document.
-				Pour une date, peut prendre en compte les chaînes de caractères compatibles avec la fonction PHP strtotime()
-				(Exemple: -30days), peut prendre la valeur "empty" pour spécifier de ne pas renseigner la date (sinon now par défaut)
-			type: string
-		show-role:
-			info: N'affiche cette information que pour certain role
-			type: list 
-		preg_match:
-		 	type: string
-		preg_match_error:
-		  	type: string
-		read-only-content:		
-			type: associative_array 
-		depend:
-			info: champs multiple dépendant d'un champ de type file (multiple)
-			type: string
-		index:
-			info: Indique si le champs est indexé par la base de données
-			type: boolean
-			default: false
-		content-type:
-			info: |
-				Permet de spécifier une liste de content-type séparé par une virgule.
-				Ne fonctionne que pour le type fichier.
-				Indique que le ou les fichiers doivent avoir un content-type présent dans la liste (sinon, le document n'est pas valide).
-				La liste des content-type est maintenue par l'IANA : https://www.iana.org/assignments/media-types/media-types.xhtml
-			type: string
-		visionneuse:
-			info: Permet de spécifier une classe utilisé pour visualiser le ou les fichiers
-			type: string
-		visionneuse-no-link:
-			info: |
-				Le lien pour télécharger le fichier n'est pas affiché
-				Ne fait rien si la propriété visionneuse n'est pas utilisée.
-			type: boolean
-		max_file_size:
-			info: Taille maximale du fichier en octet (optionnel,sans limite par défaut)
-			type: string
-		max_multipe_file_size:
-			info: Taille maximale des fichiers du champ multiple (optionnel,sans limite par défaut, cumulable avec max_file_size)
-			type: string
-		progress_bar:
-		    info: NE PLUS UTILISER - déprécié PA 3.0. Sur les champs de type fichier, permet d'ajouter une barre de progression (systématique a partir de la version 2.1.0)
-		    type: boolean
-			
-			
+    possible_key:
+        name:
+            type: string
+        title:
+            info: 'Information enregistré dans la base de donnée pour identifier le document'
+            type: boolean
+        read-only:
+            info: 'Le champ ne sera pas affiché en mode édition, mais seulement en mode affichage'
+            type: boolean
+        edit-only:
+            info: 'Le champ ne sera pas affiché en mode affichage, mais seulement en mode édition'
+            type: boolean
+        type:
+            type: choice
+            choice:
+                - file
+                - text
+                - textarea
+                - externalData
+                - select
+                - url
+                - mail-list
+                - password
+                - checkbox
+                - date
+        no-show:
+            info: 'Le champs ne sera pas affiché (ni en mode affichage, ni en mode d''édition)'
+            type: boolean
+        commentaire:
+            info: 'Le commentaire est affiché comme aide en mode édition'
+            type: string
+        link_name:
+            info: 'Uniquement pour le type externalData, afin de mettre un texte sur le lien'
+            type: string
+        choice-action:
+            info: 'Pointeur vers une action'
+            type: string
+        requis:
+            type: boolean
+        multiple:
+            info: 'uniquement pour le type file'
+            type: boolean
+            default: false
+        value:
+            info: 'uniquement pour le type select'
+            type: list_or_associative_array
+        autocomplete:
+            info: ''
+            type: string
+        may_be_null:
+            type: boolean
+        is_equal:
+            type: string
+        is_equal_error:
+            type: string
+        onchange:
+            type: string
+        default:
+            info: "Valeur initiale prise par le champs lors de la création du document.\nPour une date, peut prendre en compte les chaînes de caractères compatibles avec la fonction PHP strtotime()\n(Exemple: -30days), peut prendre la valeur \"empty\" pour spécifier de ne pas renseigner la date (sinon now par défaut)"
+            type: string
+        show-role:
+            info: 'N''affiche cette information que pour certain role'
+            type: list
+        preg_match:
+            type: string
+        preg_match_error:
+            type: string
+        read-only-content:
+            type: associative_array
+        depend:
+            info: 'champs multiple dépendant d''un champ de type file (multiple)'
+            type: string
+        index:
+            info: 'Indique si le champs est indexé par la base de données'
+            type: boolean
+            default: false
+        content-type:
+            info: "Permet de spécifier une liste de content-type séparé par une virgule.\nNe fonctionne que pour le type fichier.\nIndique que le ou les fichiers doivent avoir un content-type présent dans la liste (sinon, le document n'est pas valide).\nLa liste des content-type est maintenue par l'IANA : https://www.iana.org/assignments/media-types/media-types.xhtml"
+            type: string
+        visionneuse:
+            info: 'Permet de spécifier une classe utilisé pour visualiser le ou les fichiers'
+            type: string
+        visionneuse-no-link:
+            info: "Le lien pour télécharger le fichier n'est pas affiché\nNe fait rien si la propriété visionneuse n'est pas utilisée."
+            type: boolean
+        max_file_size:
+            info: 'Taille maximale du fichier en octet (optionnel,sans limite par défaut)'
+            type: string
+        max_multipe_file_size:
+            info: 'Taille maximale des fichiers du champ multiple (optionnel,sans limite par défaut, cumulable avec max_file_size)'
+            type: string
+        progress_bar:
+            info: 'NE PLUS UTILISER - déprécié PA 3.0. Sur les champs de type fichier, permet d''ajouter une barre de progression (systématique a partir de la version 2.1.0)'
+            type: boolean
 action:
-	possible_key:
-		*:
-			key_name: action_unitaire
-			type: associative_array
-
+    possible_key:
+        '*':
+            key_name: action_unitaire
+            type: associative_array
 action_unitaire:
-	possible_key:
-		name-action:	
-			info: Nom de l'action qui apparait sur les boutons de déclenchement des action (Envoyer)
-			type: string
-		name:
-			info: Nom de l'action telle qu'elle apparait une fois réalisé (Envoyé) 
-			type: string
-		rule: 
-			type: associative_array
-		action-class: 
-			type: string 
-		warning:
-			info: Si présent, une page intermédiaire avec confirmation du choix apparaît
-			type: string
-		editable-content: 
-			info: Indentifiant des champs modifiable
-			type: list
-		type_id_e:
-			type: list
-		action-selection:
-			info: l'action nécessite de choisir dans une liste d'entité spécifique. Ici, le type de l'entité spécifique
-			type: string
-		no-workflow:
-			type: boolean
-		accuse_de_reception_action:
-			info: l'action nécessite un accusé de réception avant d'être réalisé. 
-			type: string
-		action-automatique:
-			type: string
-		pas-dans-un-lot:
-			type: boolean
-			info: cette action ne peut pas être réalisée dans le cadre du traitement par lot 
-		connecteur-type:
-			info: Pour l'action standard indique dans quel type de connecteur l'action doit-être executée
-			type: string
-		connecteur-type-action:
-			info: Permet de spécifier le nom de la classe à executé dans le cadre de l'action standard
-			type: string
-		connecteur-type-mapping:
-			info: |
-				Permet de spécifier le mapping entre les noms des élements du document
-				et les noms des élements attendu par l'action du connecteur type
-			type: associative_array
-		connecteur-type-data-seda-class-name:
-			info: Permet de spécifier le nom de la classe appelé pour la génération du bordereau SEDA
-			type: string
-		modification-no-change-etat:
-			info: Si true, alors après une modification du document, si celui-ci est dans cet état, alors il ne changera pas d'état
-			type: boolean
-			default: false
-		num-same-connecteur:
-			info: Si le flux utilise plusieurs connecteurs du même type, numéro d'ordre du connecteur à utiliser pour l'action considérée (débute à 0)
-			type: string
-			default: "0"
-
-		
+    possible_key:
+        name-action:
+            info: 'Nom de l''action qui apparait sur les boutons de déclenchement des action (Envoyer)'
+            type: string
+        name:
+            info: 'Nom de l''action telle qu''elle apparait une fois réalisé (Envoyé)'
+            type: string
+        rule:
+            type: associative_array
+        action-class:
+            type: string
+        warning:
+            info: 'Si présent, une page intermédiaire avec confirmation du choix apparaît'
+            type: string
+        editable-content:
+            info: 'Indentifiant des champs modifiable'
+            type: list
+        type_id_e:
+            type: list
+        action-selection:
+            info: 'l''action nécessite de choisir dans une liste d''entité spécifique. Ici, le type de l''entité spécifique'
+            type: string
+        no-workflow:
+            type: boolean
+        accuse_de_reception_action:
+            info: 'l''action nécessite un accusé de réception avant d''être réalisé.'
+            type: string
+        action-automatique:
+            type: string
+        pas-dans-un-lot:
+            type: boolean
+            info: 'cette action ne peut pas être réalisée dans le cadre du traitement par lot'
+        connecteur-type:
+            info: 'Pour l''action standard indique dans quel type de connecteur l''action doit-être executée'
+            type: string
+        connecteur-type-action:
+            info: 'Permet de spécifier le nom de la classe à executé dans le cadre de l''action standard'
+            type: string
+        connecteur-type-mapping:
+            info: "Permet de spécifier le mapping entre les noms des élements du document\net les noms des élements attendu par l'action du connecteur type"
+            type: associative_array
+        connecteur-type-data-seda-class-name:
+            info: 'Permet de spécifier le nom de la classe appelé pour la génération du bordereau SEDA'
+            type: string
+        modification-no-change-etat:
+            info: 'Si true, alors après une modification du document, si celui-ci est dans cet état, alors il ne changera pas d''état'
+            type: boolean
+            default: false
+        num-same-connecteur:
+            info: 'Si le flux utilise plusieurs connecteurs du même type, numéro d''ordre du connecteur à utiliser pour l''action considérée (débute à 0)'
+            type: string
+            default: '0'
 rule:
-	possible_key:
-		role_id_e:
-			type: string  
-		last-action:
-			type: list  
-		droit_id_u:
-			type: string 
-		content:		
-			type: associative_array 
-		no-last-action:
-			info: si présent, il s'agit d'une action initiale
-			type: string
-		type_id_e: 
-			type: list 
-		document_is_valide:
-		 	type: boolean
-		no-action:
-		  	type: list
-		  	info: faux si le document est passé par toutes les actions listées
-		has-action:
-			type: list
-			info: vrai si le document est passé par une des actions
-		or_X:
-			type: associative_array
-			key_name: rule
-		and_X:
-			type: associative_array
-			key_name: rule
-		no_X:
-			type: associative_array
-			key_name: rule
-		  			  
-	
+    possible_key:
+        role_id_e:
+            type: string
+        last-action:
+            type: list
+        droit_id_u:
+            type: string
+        content:
+            type: associative_array
+        no-last-action:
+            info: 'si présent, il s''agit d''une action initiale'
+            type: string
+        type_id_e:
+            type: list
+        document_is_valide:
+            type: boolean
+        no-action:
+            type: list
+            info: 'faux si le document est passé par toutes les actions listées'
+        has-action:
+            type: list
+            info: 'vrai si le document est passé par une des actions'
+        or_X:
+            type: associative_array
+            key_name: rule
+        and_X:
+            type: associative_array
+            key_name: rule
+        no_X:
+            type: associative_array
+            key_name: rule
 last-action:
-	possible_key:
-		*: 
-			key_name: last-action
-			type: string				
-
+    possible_key:
+        '*':
+            key_name: last-action
+            type: string
 content:
-	possible_key:
-		*: 
-			key_name: content
-			type: string_or_boolean		
-	
+    possible_key:
+        '*':
+            key_name: content
+            type: string_or_boolean
 editable-content:
-	possible_key:
-		*: 
-			key_name: editable-content
-			type: string
-
+    possible_key:
+        '*':
+            key_name: editable-content
+            type: string
 depend:
-	possible_key:
-		*:
-			key_name: depend
-			type: string
-			
+    possible_key:
+        '*':
+            key_name: depend
+            type: string
 value:
-	possible_key:
-		*:
-			key_name: value
-			type: string
+    possible_key:
+        '*':
+            key_name: value
+            type: string
 no-action:
-	possible_key:
-		*:
-			key_name: no-action
-			type: string
-
+    possible_key:
+        '*':
+            key_name: no-action
+            type: string
 has-action:
-	possible_key:
-		*: 
-			key_name: has-action
-			type: string
-			
+    possible_key:
+        '*':
+            key_name: has-action
+            type: string
 page-condition:
-	possible_key:
-		*: 
-			key_name: page-condition-element
-			type: associative_array			
-			
+    possible_key:
+        '*':
+            key_name: page-condition-element
+            type: associative_array
 page-condition-element:
-	possible_key:
-		*: 
-			key_name: page-condition-element
-			type: string_or_boolean	
-
+    possible_key:
+        '*':
+            key_name: page-condition-element
+            type: string_or_boolean
 type_id_e:
-	possible_key:
-		*: 
-			key_name: type_id_e
-			type: string		
-
+    possible_key:
+        '*':
+            key_name: type_id_e
+            type: string
 show-role:
-	possible_key:
-		*:
-			key_name: show-role
-			type: string		
-
-
+    possible_key:
+        '*':
+            key_name: show-role
+            type: string
 read-only-content:
-	possible_key:
-		*: 
-			key_name: read-only-content
-			type: string_or_boolean
-			info: |
-			    (ne pas utiliser) permet de rendre un champs éditable n'importe quand si une valeur est vérifié.
-			     Exemple: "has_reponse_lettre_courrier_simple: true".
-			     Dans la plupart des cas, editable-content sur un état suffit.
-
+    possible_key:
+        '*':
+            key_name: read-only-content
+            type: string_or_boolean
+            info: "(ne pas utiliser) permet de rendre un champs éditable n'importe quand si une valeur est vérifié.\n Exemple: \"has_reponse_lettre_courrier_simple: true\".\n Dans la plupart des cas, editable-content sur un état suffit."
 champs-affiches:
-	possible_key:
-		*:
-			key_name: champs
-			type: string
-			
+    possible_key:
+        '*':
+            key_name: champs
+            type: string
 champs-recherche-avancee:
-	possible_key:
-		*:
-			key_name: champs
-			type: string
-
-
+    possible_key:
+        '*':
+            key_name: champs
+            type: string
 connecteur-type-mapping:
-	possible_key:
-		*:
-			key_name: champs
-			type: string
-
+    possible_key:
+        '*':
+            key_name: champs
+            type: string
 threshold_fields:
-	possible_key:
-		*:
-			key_name: field
-			type: string
+    possible_key:
+        '*':
+            key_name: field
+            type: string

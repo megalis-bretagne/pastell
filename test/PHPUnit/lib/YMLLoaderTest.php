@@ -45,7 +45,7 @@ class YMLLoaderTest extends PHPUnit\Framework\TestCase
         $filename = "/tmp/" . uniqid("yml_loader_test_");
         $this->ymlLoader->saveArray($filename, ["foo" => "bar"]);
         $result = file_get_contents($filename);
-        $this->assertEquals("---\nfoo: bar\n", $result);
+        $this->assertEquals("foo: bar\n", $result);
         unlink($filename);
     }
 

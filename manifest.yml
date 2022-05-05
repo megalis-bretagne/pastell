@@ -1,17 +1,7 @@
-#TODO fichier à supprimer car les infos se trouve dans le fichier composer
-
-nom: Pastell coeur
-
-description: |
-	Pastell est un bus logiciel permettant de créer des documents (flux) 
-	et de les faire cheminer entre différents systèmes externe par le biais de connecteur
-
-version: %VERSION%
-
-last_changed_date: |
-	%BUILD_DATE%
- 
-revision: %CI_BUILD_ID%
-
+nom: 'Pastell coeur'
+description: "Pastell est un bus logiciel permettant de créer des documents (flux)\net de les faire cheminer entre différents systèmes externe par le biais de connecteur"
+version: '%VERSION%'
+last_changed_date: '%BUILD_DATE%'
+revision: '%CI_BUILD_ID%'
 extensions_versions_accepted:
-	- 4.0.0
+    - 4.0.0

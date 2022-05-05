@@ -1,23 +1,15 @@
-nom: Flux de test
-
-
-description: Ceci est un flux de test
-
-
+nom: 'Flux de test'
+description: 'Ceci est un flux de test'
 connecteur:
-	signature
-
+    - signature
 formulaire:
-	Message:
-		test:
-
+    Message:
+        test: ''
 action:
-
-	test:
-		name-action: Modifier
-		name: En cours de rédaction
-		connecteur-type: signature
-		connecteur-type-action: SignatureEnvoie
-		connecteur-type-mapping:
-		    document: toto
-
+    test:
+        name-action: Modifier
+        name: 'En cours de rédaction'
+        connecteur-type: signature
+        connecteur-type-action: SignatureEnvoie
+        connecteur-type-mapping:
+            document: toto

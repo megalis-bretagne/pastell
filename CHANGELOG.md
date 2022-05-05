@@ -8,6 +8,8 @@
 - La constante PASSWORD_MIN_ENTROPY passe par défaut à 80 suivant les recommandations de l'ANSSI
 - Studio: La génération du bordereau et de l'archive est indépendant de l'envoi au SAE grâce à un nouvel état
 intermédiaire : "Archive générée" #1357
+- La bibliothèque de lecture YAML Spyc est remplacé par la bibliothèque Symfony YAML plus performante. 
+Le script console dev:fix-yaml permet de modifier ce qui était permis (de manière incorrect) par Spyc #1515
 
 ## Suppressions
 
