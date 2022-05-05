@@ -809,18 +809,28 @@ class S2low extends TdtConnecteur
     public function getDocumentPrefecture($reponse = array())
     {
         // création document flux actes réponse préfecture non lu
-
-        $connecteur_info = $this->getConnecteurInfo();
-        $id_e = $connecteur_info['id_e'];
+        // création sur l'entité de l'acte d'origine si acte_unique_id est trouvé
+        // et que le connecteur s2low est associé au flux de l'acte d'origine
 
         /** @var DocumentTypeFactory $documentTypeFactory */
         $documentTypeFactory = $this->objectInstancier->getInstance(DocumentTypeFactory::class);
         if (! $documentTypeFactory->isTypePresent(self::FLUX_REPONSE_PREFECTURE)) {
-            throw new Exception("Le type " . self::FLUX_REPONSE_PREFECTURE . " n'existe pas sur cette plateforme Pastell");
+            throw new Exception(
+                "Le type " . self::FLUX_REPONSE_PREFECTURE . " n'existe pas sur cette plateforme Pastell"
+            );
         }
 
+        $acteDocumentId = $this->objectInstancier
+            ->getInstance(DocumentIndexSQL::class)
+            ->getByFieldValue('acte_unique_id', $reponse['unique_id']);
+
+        $id_e = $this->getEntiteForReponsePrefecture($acteDocumentId);
+
         $documentCreationService = $this->objectInstancier->getInstance(DocumentCreationService::class);
-        $new_id_d = $documentCreationService->createDocumentWithoutAuthorizationChecking($id_e, self::FLUX_REPONSE_PREFECTURE);
+        $new_id_d = $documentCreationService->createDocumentWithoutAuthorizationChecking(
+            $id_e,
+            self::FLUX_REPONSE_PREFECTURE
+        );
 
         /** @var DonneesFormulaire $donneesFormulaire */
         $donneesFormulaire = $this->objectInstancier->getInstance(DonneesFormulaireFactory::class)->get($new_id_d);
@@ -835,9 +845,6 @@ class S2low extends TdtConnecteur
         $donneesFormulaire->setData('transaction_id', $reponse['id']);
         $donneesFormulaire->setData('last_status_id', $reponse['last_status_id']);
 
-        $acteDocumentId = $this->objectInstancier
-            ->getInstance(DocumentIndexSQL::class)
-            ->getByFieldValue('acte_unique_id', $reponse['unique_id']);
         if ($acteDocumentId) {
             $acteDocument = $this->objectInstancier->getInstance(DonneesFormulaireFactory::class)->get($acteDocumentId);
             $acteEntite = $this->objectInstancier->getInstance(DocumentEntite::class)->getEntite($acteDocumentId);
@@ -883,7 +890,12 @@ class S2low extends TdtConnecteur
         foreach ($file_list as $file_result) {
             $file_result_path = $result_folder . "/" . $file_result;
             if (is_file($file_result_path)) {
-                $donneesFormulaire->addFileFromCopy('reponse_prefecture_unzip', $file_result, $file_result_path, $num_file++);
+                $donneesFormulaire->addFileFromCopy(
+                    'reponse_prefecture_unzip',
+                    $file_result,
+                    $file_result_path,
+                    $num_file++
+                );
             }
         }
         $tmpFolder->delete($tmp_folder);
@@ -895,13 +907,49 @@ class S2low extends TdtConnecteur
         $actionCreatorSQL = $this->objectInstancier->getInstance(ActionCreatorSQL::class);
 
         if ($reponse['type'] == TdtConnecteur::DEFERE_TRIBUNAL_ADMINISTRATIF) {
-            $actionCreatorSQL->addAction($id_e, 0, 'termine', 'Ce type de réponse de la préfecture ne prévoit pas de retour', $new_id_d);
+            $actionCreatorSQL->addAction(
+                $id_e,
+                0,
+                'termine',
+                'Ce type de réponse de la préfecture ne prévoit pas de retour',
+                $new_id_d
+            );
         } else {
-            $actionCreatorSQL->addAction($id_e, 0, 'attente-reponse-prefecture', "Attente d'une réponse", $new_id_d);
+            $actionCreatorSQL->addAction(
+                $id_e,
+                0,
+                'attente-reponse-prefecture',
+                "Attente d'une réponse",
+                $new_id_d
+            );
         }
 
         $this->exec(self::URL_ACTES_REPONSE_PREFECTURE_MARK_AS_READ . "?transaction_id=" . $reponse['id']);
         return true;
+    }
+
+    /**
+     * @param string $acteDocumentId
+     * @return mixed
+     */
+    private function getEntiteForReponsePrefecture(string $acteDocumentId)
+    {
+        $connecteur_info = $this->getConnecteurInfo();
+        $id_e = $connecteur_info['id_e'];
+
+        if ($acteDocumentId) {
+            $acteEntite = $this->objectInstancier->getInstance(DocumentEntite::class)->getEntite($acteDocumentId);
+            $id_e_acte = $acteEntite[0]['id_e'];
+            $id_ce_acte = $this->objectInstancier->getInstance(FluxEntiteSQL::class)->getConnecteurId(
+                $id_e_acte,
+                $acteEntite[0]['last_type'],
+                $connecteur_info['type']
+            );
+            if ($connecteur_info['id_ce'] == $id_ce_acte) {
+                $id_e = $id_e_acte;
+            }
+        }
+        return $id_e;
     }
 
     /**
