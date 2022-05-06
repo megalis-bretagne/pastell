@@ -1,6 +1,7 @@
 <?php
 
 use Pastell\Service\PasswordEntropy;
+use Pastell\Service\Utilisateur\UtilisateurDeletionService;
 use Pastell\Utilities\Certificate;
 
 class UtilisateurControler extends PastellControler
@@ -716,5 +717,54 @@ class UtilisateurControler extends PastellControler
         $this->getUtilisateur()->removeCertificat($id_u);
 
         $this->redirect("/Utilisateur/edition?id_u=$id_u");
+    }
+
+    /**
+     * @throws LastMessageException
+     * @throws LastErrorException
+     * @throws NotFoundException
+     */
+    public function suppressionAction(): void
+    {
+        $id_u = $this->getPostOrGetInfo()->getInt('id_u');
+        $this->checkSelfSuppression($id_u);
+        $userInfo = $this->getUtilisateur()->getInfo($id_u);
+        $this->verifDroit($userInfo['id_e'], 'utilisateur:edition');
+        $this->setViewParameter('id_u', $id_u);
+        $this->setViewParameter('info', $userInfo);
+        $this->setViewParameter(
+            'page_title',
+            sprintf("Utilisateur %s %s - Suppression de l'utilisateur ", $userInfo['prenom'], $userInfo['nom'])
+        );
+        $this->setViewParameter('template_milieu', 'UtilisateurSuppression');
+        $this->renderDefault();
+    }
+
+    /**
+     * @throws LastMessageException
+     * @throws LastErrorException
+     */
+    public function doSuppressionAction(): void
+    {
+        $id_u = $this->getPostInfo()->getInt('id_u');
+        $this->checkSelfSuppression($id_u);
+        $userInfo = $this->getUtilisateur()->getInfo($id_u);
+        $this->verifDroit($userInfo['id_e'], 'utilisateur:edition');
+        $this->getObjectInstancier()->getInstance(UtilisateurDeletionService::class)->delete($id_u);
+        $this->setLastMessage("L'utilisateur $id_u a été supprimé");
+        $this->redirect("/Entite/utilisateur?id_e={$userInfo['id_e']}");
+    }
+
+    /**
+     * @throws LastMessageException
+     * @throws LastErrorException
+     */
+    private function checkSelfSuppression(int $id_u): void
+    {
+        if ($id_u !== (int) $this->getId_u()) {
+            return;
+        }
+        $this->setLastError('Impossible de vous supprimer vous-même');
+        $this->redirect("/Utilisateur/detail?id_u=$id_u");
     }
 }
