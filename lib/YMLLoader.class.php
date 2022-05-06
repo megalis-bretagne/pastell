@@ -1,9 +1,10 @@
 <?php
 
+use Symfony\Component\Yaml\Yaml;
+
 /**
  * Classe permettant de charger le contenu d'un fichier YAML pour le changé en tableau PHP.
- * Utilise également un système de cache pour ne pas appeller trop souvent la bibliothèque Spyc
- * qui est très couteuse en temps
+ * Utilise également un système de cache
  *
  * @author Eric Pommateau
  */
@@ -46,7 +47,11 @@ class YMLLoader
 
         //MISS
         $handle = $this->lockFile($filename);
-        $result = Spyc::YAMLLoad($filename);
+        $result = Yaml::parseFile($filename);
+        //For compatibility
+        if ($result === null) {
+            $result = [];
+        }
         $this->memoryCache->store(self::CACHE_PREFIX . $filename, $result, $ttl);
         $this->memoryCache->store(self::CACHE_PREFIX_MTIME . $filename, $mtime, $ttl);
         $this->unlockFile($handle);
@@ -62,7 +67,7 @@ class YMLLoader
     public function saveArray($filename, array $array)
     {
         $handle = $this->lockFile($filename);
-        $yml_content = Spyc::YAMLDump($array);
+        $yml_content = Yaml::dump($array, 10);
         if (file_put_contents($filename, $yml_content) === false) {
             throw new Exception("Impossible d'écrire dans le fichier {$filename}");
         }

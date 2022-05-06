@@ -1,233 +1,227 @@
----
-nom: "Archivage des dossiers d'autorisation d'urbanisme"
-type: Pack urbanisme
-description: "Permet d'envoyer un dossier d'autorisation d'urbanisme dans un système d'archivage électronique"
+nom: 'Archivage des dossiers d''autorisation d''urbanisme'
+type: 'Pack urbanisme'
+description: 'Permet d''envoyer un dossier d''autorisation d''urbanisme dans un système d''archivage électronique'
 connecteur:
-  - Bordereau SEDA
-  - SAE
+    - 'Bordereau SEDA'
+    - SAE
 formulaire:
-  Information:
-    titre:
-      name: Titre
-      type: text
-      requis: true
-      multiple: false
-      commentaire: ""
-      title: true
-    id_dossier_externe:
-      name: "Identifiant du dossier sur l'application métier"
-      type: text
-      requis: false
-      multiple: false
-      commentaire: ""
-      index: true
-    dossier:
-      name: Dossier
-      type: file
-      requis: true
-      multiple: false
-      commentaire: Au format ZIP uniquement
-    metadonnees:
-      name: Fichier contenant les métadonnées
-      type: file
-      requis: false
-      multiple: false
-      commentaire: ""
-  Cheminement:
-    envoi_sae:
-      name: "Système d'archivage électronique"
-      type: checkbox
-      onchange: cheminement-change
-      default: checked
-      read-only: true
-  SAE:
-    sae_show:
-      no-show: true
-    journal:
-      name: Faisceau de preuves
-      type: file
-    date_journal_debut:
-      name: Date du premier évènement journalisé
-    date_cloture_journal:
-      name: Date de clôture du journal
-    date_cloture_journal_iso8601:
-      name: Date de clôture du journal (iso 8601)
-    sae_transfert_id:
-      name: Identifiant de transfert
-      index: true
-    sae_bordereau:
-      name: Bordereau SEDA
-      type: file
-    sae_archive:
-      name: Archive
-      type: file
-    ar_sae:
-      type: file
-      name: Accusé de réception SAE
-    sae_ack_comment:
-      name: "Commentaire de l'accusé de réception"
-    reply_sae:
-      type: file
-      name: Réponse du SAE
-    sae_archival_identifier:
-      name: "Identifiant de l'archive sur le SAE"
-    sae_atr_comment:
-      name: Commentaire de la réponse du SAE
-    url_archive:
-      name: "URL de l'archive"
-      type: url
+    Information:
+        titre:
+            name: Titre
+            type: text
+            requis: true
+            multiple: false
+            commentaire: ''
+            title: true
+        id_dossier_externe:
+            name: 'Identifiant du dossier sur l''application métier'
+            type: text
+            requis: false
+            multiple: false
+            commentaire: ''
+            index: true
+        dossier:
+            name: Dossier
+            type: file
+            requis: true
+            multiple: false
+            commentaire: 'Au format ZIP uniquement'
+        metadonnees:
+            name: 'Fichier contenant les métadonnées'
+            type: file
+            requis: false
+            multiple: false
+            commentaire: ''
+    Cheminement:
+        envoi_sae:
+            name: 'Système d''archivage électronique'
+            type: checkbox
+            onchange: cheminement-change
+            default: checked
+            read-only: true
+    SAE:
+        sae_show:
+            no-show: true
+        journal:
+            name: 'Faisceau de preuves'
+            type: file
+        date_journal_debut:
+            name: 'Date du premier évènement journalisé'
+        date_cloture_journal:
+            name: 'Date de clôture du journal'
+        date_cloture_journal_iso8601:
+            name: 'Date de clôture du journal (iso 8601)'
+        sae_transfert_id:
+            name: 'Identifiant de transfert'
+            index: true
+        sae_bordereau:
+            name: 'Bordereau SEDA'
+            type: file
+        sae_archive:
+            name: Archive
+            type: file
+        ar_sae:
+            type: file
+            name: 'Accusé de réception SAE'
+        sae_ack_comment:
+            name: 'Commentaire de l''accusé de réception'
+        reply_sae:
+            type: file
+            name: 'Réponse du SAE'
+        sae_archival_identifier:
+            name: 'Identifiant de l''archive sur le SAE'
+        sae_atr_comment:
+            name: 'Commentaire de la réponse du SAE'
+        url_archive:
+            name: 'URL de l''archive'
+            type: url
 champs-affiches:
-  - titre
-  - dernier_etat
-  - date_dernier_etat
-  - id_dossier_externe
+    - titre
+    - dernier_etat
+    - date_dernier_etat
+    - id_dossier_externe
 champs-recherche-avancee:
-  - type
-  - id_e
-  - lastetat
-  - last_state_begin
-  - etatTransit
-  - state_begin
-  - search
-  - id_dossier_externe
+    - type
+    - id_e
+    - lastetat
+    - last_state_begin
+    - etatTransit
+    - state_begin
+    - search
+    - id_dossier_externe
 page-condition:
-  SAE:
-    sae_show: true
+    SAE:
+        sae_show: true
 action:
-  creation:
-    name-action: Créer
-    name: Créé
-    rule:
-      no-last-action: ""
-  modification:
-    name-action: Modifier
-    name: En cours de rédaction
-    rule:
-      last-action:
-        - creation
-        - modification
-        - importation
-  supression:
-    name-action: Supprimer
-    name: Supprimé
-    rule:
-      last-action:
-        - creation
-        - modification
-        - importation
-        - termine
-        - fatal-error
-        - rejet-sae
-    action-class: Supprimer
-    warning: Êtes-vous sûr ?
-  importation:
-    name: Importation du document
-    rule:
-      role_id_e: no-role
-    action-automatique: orientation
-  orientation:
-    name: Envoi du document
-    name-action: Envoyer le document
-    rule:
-      last-action:
-        - creation
-        - modification
-        - importation
-        - accepter-sae
-      document_is_valide: true
-    action-class: OrientationTypeDossierPersonnalise
-  termine:
-    name: Traitement terminé
-    rule:
-      role_id_e: no-role
-  cheminement-change:
-    no-workflow: true
-    rule:
-      role_id_e: no-role,
-    action-class: CheminementChangeTypeDossierPersonnalise
-  preparation-send-sae:
-    name: "Préparation de l'envoi au SAE"
-    rule:
-      role_id_e: no-role
-    action-automatique: generate-archive
-  generate-archive:
-    name-action: "Générer l'archive"
-    name: Archive générée
-    rule:
-      last-action:
-        - preparation-send-sae
-        - generate-archive-error
-    action-class: StandardAction
-    connecteur-type: SAE
-    connecteur-type-action: >
-      Pastell\Step\SAE\Action\SAEGenerateArchiveAction
-    action-automatique: send-archive
-  generate-archive-error:
-    name: "Erreur lors de la génération de l'archive"
-    rule:
-      role_id_e: no-role
-  send-archive:
-    name-action: Verser au SAE
-    name: Versé au SAE
-    rule:
-      last-action:
-        - generate-archive
-        - rejet-sae
-        - erreur-envoie-sae
-    action-class: StandardAction
-    connecteur-type: SAE
-    connecteur-type-action: >
-      Pastell\Step\SAE\Action\SAESendArchiveAction
-    action-automatique: verif-sae
-  erreur-envoie-sae:
-    name: "Erreur lors de l'envoi au SAE"
-    rule:
-      role_id_e: no-role
-  verif-sae:
-    name-action: "Récupérer l'AR du document sur le SAE"
-    name: "Récuperation de l'AR sur le SAE"
-    rule:
-      last-action:
-        - send-archive
-        - verif-sae-erreur
-    action-class: StandardAction
-    connecteur-type: SAE
-    connecteur-type-action: SAEVerifier
-  verif-sae-erreur:
-    name: "Erreur lors de la récupération de l'AR"
-    rule:
-      role_id_e: no-role
-  ar-recu-sae:
-    name: AR SAE reçu
-    rule:
-      role_id_e: no-role
-    action-automatique: validation-sae
-  validation-sae:
-    name-action: "Vérifier l'acceptation par le SAE"
-    name: "Vérification de l'acceptation par le SAE"
-    rule:
-      last-action:
-        - ar-recu-sae
-        - validation-sae-erreur
-    action-class: StandardAction
-    connecteur-type: SAE
-    connecteur-type-action: SAEValider
-  validation-sae-erreur:
-    name: >
-      Erreur lors de la vérification de la
-      validité du transfert
-    rule:
-      role_id_e: no-role
-  accepter-sae:
-    name: Archive acceptée par le SAE
-    rule:
-      role_id_e: no-role
-    action-automatique: orientation
-  rejet-sae:
-    name: Archive rejetée par le SAE
-    rule:
-      role_id_e: no-role
+    creation:
+        name-action: Créer
+        name: Créé
+        rule:
+            no-last-action: ''
+    modification:
+        name-action: Modifier
+        name: 'En cours de rédaction'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+    supression:
+        name-action: Supprimer
+        name: Supprimé
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - termine
+                - fatal-error
+                - rejet-sae
+        action-class: Supprimer
+        warning: 'Êtes-vous sûr ?'
+    importation:
+        name: 'Importation du document'
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+    orientation:
+        name: 'Envoi du document'
+        name-action: 'Envoyer le document'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - accepter-sae
+            document_is_valide: true
+        action-class: OrientationTypeDossierPersonnalise
+    termine:
+        name: 'Traitement terminé'
+        rule:
+            role_id_e: no-role
+    cheminement-change:
+        no-workflow: true
+        rule:
+            role_id_e: 'no-role,'
+        action-class: CheminementChangeTypeDossierPersonnalise
+    preparation-send-sae:
+        name: 'Préparation de l''envoi au SAE'
+        rule:
+            role_id_e: no-role
+        action-automatique: generate-archive
+    generate-archive:
+        name-action: 'Générer l''archive'
+        name: 'Archive générée'
+        rule:
+            last-action:
+                - preparation-send-sae
+                - generate-archive-error
+        action-class: StandardAction
+        connecteur-type: SAE
+        connecteur-type-action: Pastell\Step\SAE\Action\SAEGenerateArchiveAction
+        action-automatique: send-archive
+    generate-archive-error:
+        name: 'Erreur lors de la génération de l''archive'
+        rule:
+            role_id_e: no-role
+    send-archive:
+        name-action: 'Verser au SAE'
+        name: 'Versé au SAE'
+        rule:
+            last-action:
+                - generate-archive
+                - rejet-sae
+                - erreur-envoie-sae
+        action-class: StandardAction
+        connecteur-type: SAE
+        connecteur-type-action: Pastell\Step\SAE\Action\SAESendArchiveAction
+        action-automatique: verif-sae
+    erreur-envoie-sae:
+        name: 'Erreur lors de l''envoi au SAE'
+        rule:
+            role_id_e: no-role
+    verif-sae:
+        name-action: 'Récupérer l''AR du document sur le SAE'
+        name: 'Récuperation de l''AR sur le SAE'
+        rule:
+            last-action:
+                - send-archive
+                - verif-sae-erreur
+        action-class: StandardAction
+        connecteur-type: SAE
+        connecteur-type-action: SAEVerifier
+    verif-sae-erreur:
+        name: 'Erreur lors de la récupération de l''AR'
+        rule:
+            role_id_e: no-role
+    ar-recu-sae:
+        name: 'AR SAE reçu'
+        rule:
+            role_id_e: no-role
+        action-automatique: validation-sae
+    validation-sae:
+        name-action: 'Vérifier l''acceptation par le SAE'
+        name: 'Vérification de l''acceptation par le SAE'
+        rule:
+            last-action:
+                - ar-recu-sae
+                - validation-sae-erreur
+        action-class: StandardAction
+        connecteur-type: SAE
+        connecteur-type-action: SAEValider
+    validation-sae-erreur:
+        name: 'Erreur lors de la vérification de la validité du transfert'
+        rule:
+            role_id_e: no-role
+    accepter-sae:
+        name: 'Archive acceptée par le SAE'
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+    rejet-sae:
+        name: 'Archive rejetée par le SAE'
+        rule:
+            role_id_e: no-role
 restriction_pack:
-  - pack_urbanisme
-studio_definition: >
-  ewogICJpZF90eXBlX2Rvc3NpZXIiOiAiZG9zc2llci1hdXRvcmlzYXRpb24tdXJiYS1kcmFmdCIsCiAgInBhc3RlbGwtdmVyc2lvbiI6ICIzLjEuNSIsCiAgInRpbWVzdGFtcCI6IDE2MzM1MDE1MjQsCiAgInJhd19kYXRhIjogewogICAgImlkX3R5cGVfZG9zc2llciI6ICJkb3NzaWVyLWF1dG9yaXNhdGlvbi11cmJhLWRyYWZ0IiwKICAgICJub20iOiAiQXJjaGl2YWdlIGRlcyBkb3NzaWVycyBkJ2F1dG9yaXNhdGlvbiBkJ3VyYmFuaXNtZSAoRHJhZnQpIiwKICAgICJ0eXBlIjogIlBhY2sgdXJiYW5pc21lIiwKICAgICJkZXNjcmlwdGlvbiI6ICJQZXJtZXQgZCdlbnZveWVyIHVuIGRvc3NpZXIgZCdhdXRvcmlzYXRpb24gZCd1cmJhbmlzbWUgZGFucyB1biBzeXN0XHUwMGU4bWUgZCdhcmNoaXZhZ2UgXHUwMGU5bGVjdHJvbmlxdWUiLAogICAgIm5vbV9vbmdsZXQiOiAiSW5mb3JtYXRpb24iLAogICAgImZvcm11bGFpcmVFbGVtZW50IjogWwogICAgICB7CiAgICAgICAgImVsZW1lbnRfaWQiOiAidGl0cmUiLAogICAgICAgICJuYW1lIjogIlRpdHJlIiwKICAgICAgICAidHlwZSI6ICJ0ZXh0IiwKICAgICAgICAiY29tbWVudGFpcmUiOiAiIiwKICAgICAgICAicmVxdWlzIjogIm9uIiwKICAgICAgICAiY2hhbXBzX2FmZmljaGVzIjogIiIsCiAgICAgICAgImNoYW1wc19yZWNoZXJjaGVfYXZhbmNlZSI6ICIiLAogICAgICAgICJ0aXRyZSI6ICJvbiIsCiAgICAgICAgInNlbGVjdF92YWx1ZSI6ICIiLAogICAgICAgICJwcmVnX21hdGNoIjogIiIsCiAgICAgICAgInByZWdfbWF0Y2hfZXJyb3IiOiAiIgogICAgICB9LAogICAgICB7CiAgICAgICAgImVsZW1lbnRfaWQiOiAiaWRfZG9zc2llcl9leHRlcm5lIiwKICAgICAgICAibmFtZSI6ICJJZGVudGlmaWFudCBkdSBkb3NzaWVyIHN1ciBsJ2FwcGxpY2F0aW9uIG1cdTAwZTl0aWVyIiwKICAgICAgICAidHlwZSI6ICJ0ZXh0IiwKICAgICAgICAiY29tbWVudGFpcmUiOiAiIiwKICAgICAgICAicmVxdWlzIjogIiIsCiAgICAgICAgImNoYW1wc19hZmZpY2hlcyI6ICJvbiIsCiAgICAgICAgImNoYW1wc19yZWNoZXJjaGVfYXZhbmNlZSI6ICJvbiIsCiAgICAgICAgInRpdHJlIjogIiIsCiAgICAgICAgInNlbGVjdF92YWx1ZSI6ICIiLAogICAgICAgICJwcmVnX21hdGNoIjogIiIsCiAgICAgICAgInByZWdfbWF0Y2hfZXJyb3IiOiAiIgogICAgICB9LAogICAgICB7CiAgICAgICAgImVsZW1lbnRfaWQiOiAiZG9zc2llciIsCiAgICAgICAgIm5hbWUiOiAiRG9zc2llciIsCiAgICAgICAgInR5cGUiOiAiZmlsZSIsCiAgICAgICAgImNvbW1lbnRhaXJlIjogIkF1IGZvcm1hdCBaSVAgdW5pcXVlbWVudCIsCiAgICAgICAgInJlcXVpcyI6ICJvbiIsCiAgICAgICAgImNoYW1wc19hZmZpY2hlcyI6ICIiLAogICAgICAgICJjaGFtcHNfcmVjaGVyY2hlX2F2YW5jZWUiOiAiIiwKICAgICAgICAidGl0cmUiOiAiIiwKICAgICAgICAic2VsZWN0X3ZhbHVlIjogIiIsCiAgICAgICAgInByZWdfbWF0Y2giOiAiIiwKICAgICAgICAicHJlZ19tYXRjaF9lcnJvciI6ICIiCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAiZWxlbWVudF9pZCI6ICJtZXRhZG9ubmVlcyIsCiAgICAgICAgIm5hbWUiOiAiRmljaGllciBjb250ZW5hbnQgbGVzIG1cdTAwZTl0YWRvbm5cdTAwZTllcyIsCiAgICAgICAgInR5cGUiOiAiZmlsZSIsCiAgICAgICAgImNvbW1lbnRhaXJlIjogIiIsCiAgICAgICAgInJlcXVpcyI6ICIiLAogICAgICAgICJjaGFtcHNfYWZmaWNoZXMiOiAiIiwKICAgICAgICAiY2hhbXBzX3JlY2hlcmNoZV9hdmFuY2VlIjogIiIsCiAgICAgICAgInRpdHJlIjogIiIsCiAgICAgICAgInNlbGVjdF92YWx1ZSI6ICIiLAogICAgICAgICJwcmVnX21hdGNoIjogIiIsCiAgICAgICAgInByZWdfbWF0Y2hfZXJyb3IiOiAiIgogICAgICB9CiAgICBdLAogICAgImV0YXBlIjogWwogICAgICB7CiAgICAgICAgIm51bV9ldGFwZSI6IDAsCiAgICAgICAgInR5cGUiOiAic2FlIiwKICAgICAgICAibGFiZWwiOiBudWxsLAogICAgICAgICJkZWZhdWx0Q2hlY2tlZCI6IGZhbHNlLAogICAgICAgICJyZXF1aXMiOiAib24iLAogICAgICAgICJhdXRvbWF0aXF1ZSI6ICJvbiIsCiAgICAgICAgInNwZWNpZmljX3R5cGVfaW5mbyI6IHsKICAgICAgICAgICJzYWVfaGFzX21ldGFkYXRhX2luX2pzb24iOiAiIgogICAgICAgIH0sCiAgICAgICAgIm51bV9ldGFwZV9zYW1lX3R5cGUiOiAwLAogICAgICAgICJldGFwZV93aXRoX3NhbWVfdHlwZV9leGlzdHMiOiBmYWxzZQogICAgICB9CiAgICBdCiAgfQp9Cg==
+    - pack_urbanisme
+studio_definition: ewogICJpZF90eXBlX2Rvc3NpZXIiOiAiZG9zc2llci1hdXRvcmlzYXRpb24tdXJiYS1kcmFmdCIsCiAgInBhc3RlbGwtdmVyc2lvbiI6ICIzLjEuNSIsCiAgInRpbWVzdGFtcCI6IDE2MzM1MDE1MjQsCiAgInJhd19kYXRhIjogewogICAgImlkX3R5cGVfZG9zc2llciI6ICJkb3NzaWVyLWF1dG9yaXNhdGlvbi11cmJhLWRyYWZ0IiwKICAgICJub20iOiAiQXJjaGl2YWdlIGRlcyBkb3NzaWVycyBkJ2F1dG9yaXNhdGlvbiBkJ3VyYmFuaXNtZSAoRHJhZnQpIiwKICAgICJ0eXBlIjogIlBhY2sgdXJiYW5pc21lIiwKICAgICJkZXNjcmlwdGlvbiI6ICJQZXJtZXQgZCdlbnZveWVyIHVuIGRvc3NpZXIgZCdhdXRvcmlzYXRpb24gZCd1cmJhbmlzbWUgZGFucyB1biBzeXN0XHUwMGU4bWUgZCdhcmNoaXZhZ2UgXHUwMGU5bGVjdHJvbmlxdWUiLAogICAgIm5vbV9vbmdsZXQiOiAiSW5mb3JtYXRpb24iLAogICAgImZvcm11bGFpcmVFbGVtZW50IjogWwogICAgICB7CiAgICAgICAgImVsZW1lbnRfaWQiOiAidGl0cmUiLAogICAgICAgICJuYW1lIjogIlRpdHJlIiwKICAgICAgICAidHlwZSI6ICJ0ZXh0IiwKICAgICAgICAiY29tbWVudGFpcmUiOiAiIiwKICAgICAgICAicmVxdWlzIjogIm9uIiwKICAgICAgICAiY2hhbXBzX2FmZmljaGVzIjogIiIsCiAgICAgICAgImNoYW1wc19yZWNoZXJjaGVfYXZhbmNlZSI6ICIiLAogICAgICAgICJ0aXRyZSI6ICJvbiIsCiAgICAgICAgInNlbGVjdF92YWx1ZSI6ICIiLAogICAgICAgICJwcmVnX21hdGNoIjogIiIsCiAgICAgICAgInByZWdfbWF0Y2hfZXJyb3IiOiAiIgogICAgICB9LAogICAgICB7CiAgICAgICAgImVsZW1lbnRfaWQiOiAiaWRfZG9zc2llcl9leHRlcm5lIiwKICAgICAgICAibmFtZSI6ICJJZGVudGlmaWFudCBkdSBkb3NzaWVyIHN1ciBsJ2FwcGxpY2F0aW9uIG1cdTAwZTl0aWVyIiwKICAgICAgICAidHlwZSI6ICJ0ZXh0IiwKICAgICAgICAiY29tbWVudGFpcmUiOiAiIiwKICAgICAgICAicmVxdWlzIjogIiIsCiAgICAgICAgImNoYW1wc19hZmZpY2hlcyI6ICJvbiIsCiAgICAgICAgImNoYW1wc19yZWNoZXJjaGVfYXZhbmNlZSI6ICJvbiIsCiAgICAgICAgInRpdHJlIjogIiIsCiAgICAgICAgInNlbGVjdF92YWx1ZSI6ICIiLAogICAgICAgICJwcmVnX21hdGNoIjogIiIsCiAgICAgICAgInByZWdfbWF0Y2hfZXJyb3IiOiAiIgogICAgICB9LAogICAgICB7CiAgICAgICAgImVsZW1lbnRfaWQiOiAiZG9zc2llciIsCiAgICAgICAgIm5hbWUiOiAiRG9zc2llciIsCiAgICAgICAgInR5cGUiOiAiZmlsZSIsCiAgICAgICAgImNvbW1lbnRhaXJlIjogIkF1IGZvcm1hdCBaSVAgdW5pcXVlbWVudCIsCiAgICAgICAgInJlcXVpcyI6ICJvbiIsCiAgICAgICAgImNoYW1wc19hZmZpY2hlcyI6ICIiLAogICAgICAgICJjaGFtcHNfcmVjaGVyY2hlX2F2YW5jZWUiOiAiIiwKICAgICAgICAidGl0cmUiOiAiIiwKICAgICAgICAic2VsZWN0X3ZhbHVlIjogIiIsCiAgICAgICAgInByZWdfbWF0Y2giOiAiIiwKICAgICAgICAicHJlZ19tYXRjaF9lcnJvciI6ICIiCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAiZWxlbWVudF9pZCI6ICJtZXRhZG9ubmVlcyIsCiAgICAgICAgIm5hbWUiOiAiRmljaGllciBjb250ZW5hbnQgbGVzIG1cdTAwZTl0YWRvbm5cdTAwZTllcyIsCiAgICAgICAgInR5cGUiOiAiZmlsZSIsCiAgICAgICAgImNvbW1lbnRhaXJlIjogIiIsCiAgICAgICAgInJlcXVpcyI6ICIiLAogICAgICAgICJjaGFtcHNfYWZmaWNoZXMiOiAiIiwKICAgICAgICAiY2hhbXBzX3JlY2hlcmNoZV9hdmFuY2VlIjogIiIsCiAgICAgICAgInRpdHJlIjogIiIsCiAgICAgICAgInNlbGVjdF92YWx1ZSI6ICIiLAogICAgICAgICJwcmVnX21hdGNoIjogIiIsCiAgICAgICAgInByZWdfbWF0Y2hfZXJyb3IiOiAiIgogICAgICB9CiAgICBdLAogICAgImV0YXBlIjogWwogICAgICB7CiAgICAgICAgIm51bV9ldGFwZSI6IDAsCiAgICAgICAgInR5cGUiOiAic2FlIiwKICAgICAgICAibGFiZWwiOiBudWxsLAogICAgICAgICJkZWZhdWx0Q2hlY2tlZCI6IGZhbHNlLAogICAgICAgICJyZXF1aXMiOiAib24iLAogICAgICAgICJhdXRvbWF0aXF1ZSI6ICJvbiIsCiAgICAgICAgInNwZWNpZmljX3R5cGVfaW5mbyI6IHsKICAgICAgICAgICJzYWVfaGFzX21ldGFkYXRhX2luX2pzb24iOiAiIgogICAgICAgIH0sCiAgICAgICAgIm51bV9ldGFwZV9zYW1lX3R5cGUiOiAwLAogICAgICAgICJldGFwZV93aXRoX3NhbWVfdHlwZV9leGlzdHMiOiBmYWxzZQogICAgICB9CiAgICBdCiAgfQp9Cg==

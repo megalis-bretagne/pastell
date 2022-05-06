@@ -1,376 +1,359 @@
----
 nom: redefined-field
-type: Types de dossier personnalisés
-description: ""
+type: 'Types de dossier personnalisés'
+description: ''
 connecteur:
-  - TdT
+    - TdT
 formulaire:
-  onglet1:
-    objet:
-      name: Objet
-      type: text
-      requis: true
-      multiple: false
-      commentaire: ""
-      title: true
-      index: true
-    actes:
-      name: Actes
-      type: file
-      requis: true
-      multiple: false
-      commentaire: ""
-    annexes:
-      name: Annexe(s)
-      type: file
-      requis: false
-      multiple: true
-      commentaire: ""
-    acte_nature:
-      name: "Nature de l'acte"
-      type: select
-      requis: true
-      multiple: false
-      commentaire: ""
-      value:
-        2: ' Actes réglementaires'
-  Cheminement:
-    envoi_tdt_actes:
-      name: Envoi à la préfecture (via un Tdt)
-      type: checkbox
-      onchange: cheminement-change
-      default: checked
-      read-only: true
-  Acte:
-    numero_de_lacte:
-      name: "Numéro de l'acte"
-      requis: true
-      commentaire: >
-        15 caractères maximum (chiffres,
-        lettres en majuscule ou _)
-      preg_match: '#^[0-9A-Z_]{1,15}$#'
-      preg_match_error: >
-        15 caractères maximum (chiffres,
-        lettres en majuscule ou _)
-      index: true
-    date_de_lacte:
-      name: "Date de l'acte"
-      type: date
-      requis: true
-      commentaire: Date de la décision
-    document_papier:
-      name: >
-        Envoi de documents papiers
-        complémentaires
-      type: checkbox
-    classification:
-      name: >
-        Classification en matière et
-        sous-matière
-      type: externalData
-      requis: true
-      link_name: >
-        Sélectionner dans la classification en
-        matière et sous-matière
-      choice-action: classification
-    type_piece:
-      name: Typologie des pièces
-      type: externalData
-      link_name: Sélectionner des types de pièces
-      choice-action: type-piece
-      edit-only: true
-      requis: true
-    type_piece_fichier:
-      name: Typologie des pièces
-      type: file
-      visionneuse: TypologieActesVisionneuse
-      read-only: true
-      requis: true
-      visionneuse-no-link: true
-    type_acte:
-      no-show: true
-      onchange: typology-change-by-api
-    type_pj:
-      no-show: true
-      onchange: typology-change-by-api
-  Retour Tdt:
-    has_bordereau:
-      no-show: true
-      read-only: true
-    tedetis_transaction_id:
-      name: Identifiant de la transaction sur le Tdt
-    bordereau:
-      name: "Bordereau d'acquittement"
-      type: file
-    aractes:
-      name: Accusé de réception technique
-      type: file
-      commentaire: >
-        Accusé de réception (XML) envoyé par
-        la préfecture
-    acte_tamponne:
-      name: Acte tamponné par le TdT
-      type: file
-    annexes_tamponnees:
-      name: Annexe(s) tamponnée(s) par le TdT
-      type: file
-      multiple: true
-    date_ar:
-      name: "Date de l'accusé de réception"
-      type: date
-  Annulation:
-    has_annulation:
-      no-show: true
-    date_ar_annulation:
-      name: "Date de l'accusé de réception d'annulation"
-      type: date
-    tedetis_annulation_id:
-      name: "Identifiant de la transaction d'annulation"
+    onglet1:
+        objet:
+            name: Objet
+            type: text
+            requis: true
+            multiple: false
+            commentaire: ''
+            title: true
+            index: true
+        actes:
+            name: Actes
+            type: file
+            requis: true
+            multiple: false
+            commentaire: ''
+        annexes:
+            name: Annexe(s)
+            type: file
+            requis: false
+            multiple: true
+            commentaire: ''
+        acte_nature:
+            name: 'Nature de l''acte'
+            type: select
+            requis: true
+            multiple: false
+            commentaire: ''
+            value:
+                2: ' Actes réglementaires'
+    Cheminement:
+        envoi_tdt_actes:
+            name: 'Envoi à la préfecture (via un Tdt)'
+            type: checkbox
+            onchange: cheminement-change
+            default: checked
+            read-only: true
+    Acte:
+        numero_de_lacte:
+            name: 'Numéro de l''acte'
+            requis: true
+            commentaire: '15 caractères maximum (chiffres, lettres en majuscule ou _)'
+            preg_match: '#^[0-9A-Z_]{1,15}$#'
+            preg_match_error: '15 caractères maximum (chiffres, lettres en majuscule ou _)'
+            index: true
+        date_de_lacte:
+            name: 'Date de l''acte'
+            type: date
+            requis: true
+            commentaire: 'Date de la décision'
+        document_papier:
+            name: 'Envoi de documents papiers complémentaires'
+            type: checkbox
+        classification:
+            name: 'Classification en matière et sous-matière'
+            type: externalData
+            requis: true
+            link_name: 'Sélectionner dans la classification en matière et sous-matière'
+            choice-action: classification
+        type_piece:
+            name: 'Typologie des pièces'
+            type: externalData
+            link_name: 'Sélectionner des types de pièces'
+            choice-action: type-piece
+            edit-only: true
+            requis: true
+        type_piece_fichier:
+            name: 'Typologie des pièces'
+            type: file
+            visionneuse: TypologieActesVisionneuse
+            read-only: true
+            requis: true
+            visionneuse-no-link: true
+        type_acte:
+            no-show: true
+            onchange: typology-change-by-api
+        type_pj:
+            no-show: true
+            onchange: typology-change-by-api
+    'Retour Tdt':
+        has_bordereau:
+            no-show: true
+            read-only: true
+        tedetis_transaction_id:
+            name: 'Identifiant de la transaction sur le Tdt'
+        bordereau:
+            name: 'Bordereau d''acquittement'
+            type: file
+        aractes:
+            name: 'Accusé de réception technique'
+            type: file
+            commentaire: 'Accusé de réception (XML) envoyé par la préfecture'
+        acte_tamponne:
+            name: 'Acte tamponné par le TdT'
+            type: file
+        annexes_tamponnees:
+            name: 'Annexe(s) tamponnée(s) par le TdT'
+            type: file
+            multiple: true
+        date_ar:
+            name: 'Date de l''accusé de réception'
+            type: date
+    Annulation:
+        has_annulation:
+            no-show: true
+        date_ar_annulation:
+            name: 'Date de l''accusé de réception d''annulation'
+            type: date
+        tedetis_annulation_id:
+            name: 'Identifiant de la transaction d''annulation'
 champs-affiches:
-  - titre
-  - dernier_etat
-  - date_dernier_etat
-  - objet
+    - titre
+    - dernier_etat
+    - date_dernier_etat
+    - objet
 champs-recherche-avancee:
-  - type
-  - id_e
-  - lastetat
-  - last_state_begin
-  - etatTransit
-  - state_begin
-  - search
-  - objet
+    - type
+    - id_e
+    - lastetat
+    - last_state_begin
+    - etatTransit
+    - state_begin
+    - search
+    - objet
 page-condition:
-  Acte:
-    envoi_tdt_actes: true
-  Retour Tdt:
-    has_bordereau: true
-  Annulation:
-    has_annulation: true
+    Acte:
+        envoi_tdt_actes: true
+    'Retour Tdt':
+        has_bordereau: true
+    Annulation:
+        has_annulation: true
 action:
-  creation:
-    name-action: Créer
-    name: Créé
-    rule:
-      no-last-action: ""
-  modification:
-    name-action: Modifier
-    name: En cours de rédaction
-    rule:
-      last-action:
-        - creation
-        - modification
-        - importation
-  supression:
-    name-action: Supprimer
-    name: Supprimé
-    rule:
-      last-action:
-        - creation
-        - modification
-        - importation
-        - termine
-        - fatal-error
-        - annuler-tdt
-    action-class: Supprimer
-    warning: Êtes-vous sûr ?
-  importation:
-    name: Importation du document
-    rule:
-      role_id_e: no-role
-    action-automatique: orientation
-  orientation:
-    name: Envoi du document
-    name-action: Envoyer le document
-    rule:
-      last-action:
-        - creation
-        - modification
-        - importation
-        - acquiter-tdt
-      document_is_valide: true
-    action-class: OrientationTypeDossierPersonnalise
-  termine:
-    name: Traitement terminé
-    rule:
-      role_id_e: no-role
-  cheminement-change:
-    no-workflow: true
-    rule:
-      role_id_e: no-role,
-    action-class: CheminementChangeTypeDossierPersonnalise
-  pre-send-tdt:
-    name: "Préparation de l'envoi au Tdt"
-    rule:
-      role_id_e: no-role
-    action-automatique: send-tdt
-  send-tdt:
-    name-action: Transmettre au TdT
-    name: Transmis au TdT
-    rule:
-      last-action:
-        - pre-send-tdt
-        - send-tdt-erreur
-    action-class: StandardAction
-    connecteur-type: TdT
-    connecteur-type-action: TdTEnvoiActe
-    connecteur-type-mapping:
-      acte_nature: acte_nature
-      numero_de_lacte: numero_de_lacte
-      date_de_lacte: date_de_lacte
-      document_papier: document_papier
-      classification: classification
-      type_acte: type_acte
-      type_pj: type_pj
-      send-tdt-erreur: send-tdt-erreur
-      document-transmis-tdt: document-transmis-tdt
-      tedetis_transaction_id: tedetis_transaction_id
-      arrete: actes
-    action-automatique: verif-tdt
-  send-tdt-erreur:
-    name: "Erreur lors de l'envoi des données au TdT"
-    rule:
-      role_id_e: no-role
-  document-transmis-tdt:
-    name-action: Transmettre les documents au TdT
-    name: 'En attente du certificat RGS**'
-    rule:
-      role_id_e: no-role
-  teletransmission-tdt:
-    name-action: Ordonner la télétransmission au TdT
-    name: >
-      Tentative de télétransmission sur le
-      TDT
-    rule:
-      last-action:
-        - teletransmission-tdt
-        - document-transmis-tdt
-    action-class: TdtTeletransmettre
-    connecteur-type-mapping:
-      tedetis_transaction_id: tedetis_transaction_id
-      return-teletransmission-tdt: return-teletransmission-tdt
-  return-teletransmission-tdt:
-    name: >
-      Ordre de télétransmission envoyé sur
-      le TDT
-    rule:
-      last-action:
-        - teletransmission-tdt
-    action-class: TdtRetourTeletransmettre
-    connecteur-type-mapping:
-      tedetis_transaction_id: tedetis_transaction_id
-    action-automatique: verif-tdt
-  verif-tdt:
-    name-action: Vérifier le statut de la transaction
-    name: Statut vérifié par le TdT
-    rule:
-      last-action:
-        - send-tdt
-        - tdt-error
-        - erreur-verif-tdt
-        - document-transmis-tdt
-        - teletransmission-tdt
-        - return-teletransmission-tdt
-    action-class: StandardAction
-    connecteur-type: TdT
-    connecteur-type-action: TdTRecupActe
-    connecteur-type-mapping:
-      tedetis_transaction_id: tedetis_transaction_id
-      erreur-verif-tdt: erreur-verif-tdt
-      acquiter-tdt: acquiter-tdt
-      numero_de_lacte: numero_de_lacte
-      has_bordereau: has_bordereau
-      bordereau: bordereau
-      aractes: aractes
-      acte_tamponne: acte_tamponne
-      annexes_tamponnees: annexes_tamponnees
-      date_ar: date_ar
-      arrete: actes
-  erreur-verif-tdt:
-    name: "Erreur lors de la vérification du statut de l'acte"
-    rule:
-      role_id_e: no-role
-  tdt-error:
-    name: Erreur sur le TdT
-    rule:
-      role_id_e: no-role
-  acquiter-tdt:
-    name: Acquitté par la préfecture
-    rule:
-      role_id_e: no-role
-    action-automatique: orientation
-  annulation-tdt:
-    name-action: Annuler la transaction
-    name: "Demande d'annulation envoyée"
-    rule:
-      has-action:
-        - acquiter-tdt
-      no-action:
-        - annulation-tdt
-    action-class: StandardAction
-    connecteur-type: TdT
-    connecteur-type-action: TdTAnnulation
-    connecteur-type-mapping:
-      tedetis_transaction_id: tedetis_transaction_id
-      tedetis_annulation_id: tedetis_annulation_id
-      has_annulation: has_annulation
-      annulation-tdt: annulation-tdt
-    action-automatique: verif-annulation-tdt
-    warning: "Attention cette action n'est pas réversible"
-  verif-annulation-tdt:
-    name-action: "Vérifier le statut de la transaction d'annulation"
-    name: Statut vérifié par le TdT
-    rule:
-      last-action:
-        - annulation-tdt
-    action-class: StandardAction
-    connecteur-type: TdT
-    connecteur-type-action: TdTRecupAnnulation
-    connecteur-type-mapping:
-      tedetis_transaction_id: tedetis_transaction_id
-      tdt-error: tdt-error
-      annuler-tdt: annuler-tdt
-      date_ar_annulation: date_ar_annulation
-  annuler-tdt:
-    name: Transaction annulée
-    rule:
-      role_id_e: no-role
-  type-piece:
-    name: Typologie des pièces
-    no-workflow: true
-    rule:
-      role_id_e: no-role
-    action-class: StandardChoiceAction
-    connecteur-type: TdT
-    connecteur-type-action: TdtChoiceTypologieActes
-    connecteur-type-mapping:
-      acte_nature: acte_nature
-      classification: classification
-      arrete: actes
-  classification:
-    name: Classification ACTES
-    no-workflow: true
-    rule:
-      role_id_e: no-role
-    action-class: Classification
-  autre_document_attache-change:
-    no-workflow: true
-    rule:
-      role_id_e: no-role
-    action-class: StandardAction
-    connecteur-type: TdT
-    connecteur-type-action: TdtAnnexeTypologieAnnexeChange
-  typology-change-by-api:
-    no-workflow: true
-    rule:
-      role_id_e: no-role
-    action-class: StandardAction
-    connecteur-type: TdT
-    connecteur-type-action: TdtTypologieChangeByApi
-    connecteur-type-mapping:
-      type_acte: type_acte
-      type_pj: type_pj
-      type_piece: type_piece
-      type_piece_fichier: type_piece_fichier
-      acte_nature: acte_nature
-      arrete: actes
+    creation:
+        name-action: Créer
+        name: Créé
+        rule:
+            no-last-action: ''
+    modification:
+        name-action: Modifier
+        name: 'En cours de rédaction'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+    supression:
+        name-action: Supprimer
+        name: Supprimé
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - termine
+                - fatal-error
+                - annuler-tdt
+        action-class: Supprimer
+        warning: 'Êtes-vous sûr ?'
+    importation:
+        name: 'Importation du document'
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+    orientation:
+        name: 'Envoi du document'
+        name-action: 'Envoyer le document'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - acquiter-tdt
+            document_is_valide: true
+        action-class: OrientationTypeDossierPersonnalise
+    termine:
+        name: 'Traitement terminé'
+        rule:
+            role_id_e: no-role
+    cheminement-change:
+        no-workflow: true
+        rule:
+            role_id_e: 'no-role,'
+        action-class: CheminementChangeTypeDossierPersonnalise
+    pre-send-tdt:
+        name: 'Préparation de l''envoi au Tdt'
+        rule:
+            role_id_e: no-role
+        action-automatique: send-tdt
+    send-tdt:
+        name-action: 'Transmettre au TdT'
+        name: 'Transmis au TdT'
+        rule:
+            last-action:
+                - pre-send-tdt
+                - send-tdt-erreur
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdTEnvoiActe
+        connecteur-type-mapping:
+            acte_nature: acte_nature
+            numero_de_lacte: numero_de_lacte
+            date_de_lacte: date_de_lacte
+            document_papier: document_papier
+            classification: classification
+            type_acte: type_acte
+            type_pj: type_pj
+            send-tdt-erreur: send-tdt-erreur
+            document-transmis-tdt: document-transmis-tdt
+            tedetis_transaction_id: tedetis_transaction_id
+            arrete: actes
+        action-automatique: verif-tdt
+    send-tdt-erreur:
+        name: 'Erreur lors de l''envoi des données au TdT'
+        rule:
+            role_id_e: no-role
+    document-transmis-tdt:
+        name-action: 'Transmettre les documents au TdT'
+        name: 'En attente du certificat RGS**'
+        rule:
+            role_id_e: no-role
+    teletransmission-tdt:
+        name-action: 'Ordonner la télétransmission au TdT'
+        name: 'Tentative de télétransmission sur le TDT'
+        rule:
+            last-action:
+                - teletransmission-tdt
+                - document-transmis-tdt
+        action-class: TdtTeletransmettre
+        connecteur-type-mapping:
+            tedetis_transaction_id: tedetis_transaction_id
+            return-teletransmission-tdt: return-teletransmission-tdt
+    return-teletransmission-tdt:
+        name: 'Ordre de télétransmission envoyé sur le TDT'
+        rule:
+            last-action:
+                - teletransmission-tdt
+        action-class: TdtRetourTeletransmettre
+        connecteur-type-mapping:
+            tedetis_transaction_id: tedetis_transaction_id
+        action-automatique: verif-tdt
+    verif-tdt:
+        name-action: 'Vérifier le statut de la transaction'
+        name: 'Statut vérifié par le TdT'
+        rule:
+            last-action:
+                - send-tdt
+                - tdt-error
+                - erreur-verif-tdt
+                - document-transmis-tdt
+                - teletransmission-tdt
+                - return-teletransmission-tdt
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdTRecupActe
+        connecteur-type-mapping:
+            tedetis_transaction_id: tedetis_transaction_id
+            erreur-verif-tdt: erreur-verif-tdt
+            acquiter-tdt: acquiter-tdt
+            numero_de_lacte: numero_de_lacte
+            has_bordereau: has_bordereau
+            bordereau: bordereau
+            aractes: aractes
+            acte_tamponne: acte_tamponne
+            annexes_tamponnees: annexes_tamponnees
+            date_ar: date_ar
+            arrete: actes
+    erreur-verif-tdt:
+        name: 'Erreur lors de la vérification du statut de l''acte'
+        rule:
+            role_id_e: no-role
+    tdt-error:
+        name: 'Erreur sur le TdT'
+        rule:
+            role_id_e: no-role
+    acquiter-tdt:
+        name: 'Acquitté par la préfecture'
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+    annulation-tdt:
+        name-action: 'Annuler la transaction'
+        name: 'Demande d''annulation envoyée'
+        rule:
+            has-action:
+                - acquiter-tdt
+            no-action:
+                - annulation-tdt
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdTAnnulation
+        connecteur-type-mapping:
+            tedetis_transaction_id: tedetis_transaction_id
+            tedetis_annulation_id: tedetis_annulation_id
+            has_annulation: has_annulation
+            annulation-tdt: annulation-tdt
+        action-automatique: verif-annulation-tdt
+        warning: 'Attention cette action n''est pas réversible'
+    verif-annulation-tdt:
+        name-action: 'Vérifier le statut de la transaction d''annulation'
+        name: 'Statut vérifié par le TdT'
+        rule:
+            last-action:
+                - annulation-tdt
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdTRecupAnnulation
+        connecteur-type-mapping:
+            tedetis_transaction_id: tedetis_transaction_id
+            tdt-error: tdt-error
+            annuler-tdt: annuler-tdt
+            date_ar_annulation: date_ar_annulation
+    annuler-tdt:
+        name: 'Transaction annulée'
+        rule:
+            role_id_e: no-role
+    type-piece:
+        name: 'Typologie des pièces'
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: StandardChoiceAction
+        connecteur-type: TdT
+        connecteur-type-action: TdtChoiceTypologieActes
+        connecteur-type-mapping:
+            acte_nature: acte_nature
+            classification: classification
+            arrete: actes
+    classification:
+        name: 'Classification ACTES'
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: Classification
+    autre_document_attache-change:
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdtAnnexeTypologieAnnexeChange
+    typology-change-by-api:
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdtTypologieChangeByApi
+        connecteur-type-mapping:
+            type_acte: type_acte
+            type_pj: type_pj
+            type_piece: type_piece
+            type_piece_fichier: type_piece_fichier
+            acte_nature: acte_nature
+            arrete: actes

@@ -1,242 +1,239 @@
----
 nom: tdt-helios-only
-type: Flux Généraux
-description: ""
+type: 'Flux Généraux'
+description: ''
 connecteur:
-  - TdT
+    - TdT
 formulaire:
-  onglet1:
-    objet:
-      name: Objet
-      type: text
-      requis: true
-      multiple: false
-      commentaire: ""
-      title: true
-    pes_aller:
-      name: PES ALLER
-      type: file
-      requis: true
-      multiple: false
-      commentaire: ""
-      visionneuse: PESViewerVisionneuse
-  Cheminement:
-    envoi_tdt_helios:
-      name: Envoi à la trésorerie (via un Tdt)
-      type: checkbox
-      onchange: cheminement-change
-      default: checked
-      read-only: true
-  Information PES Aller:
-    pes_information_pes_aller:
-      no-show: true
-    id_coll:
-      name: Établissement émetteur
-      index: true
-      read-only: true
-    dte_str:
-      name: Date de production du fichier
-      index: true
-      type: date
-      read-only: true
-    cod_bud:
-      name: Code Budget
-      index: true
-      read-only: true
-    exercice:
-      name: Exercice comptable
-      index: true
-      read-only: true
-    id_bordereau:
-      name: Identifiant bordereau
-      index: true
-      read-only: true
-    id_pj:
-      name: Identifiant PJ
-      index: true
-      read-only: true
-    id_pce:
-      name: Numéro de mandat ou de titre
-      index: true
-      read-only: true
-    id_nature:
-      name: Nature comptable
-      index: true
-      read-only: true
-    id_fonction:
-      name: Opération comptable
-      index: true
-      read-only: true
-  Retour Tdt:
-    pes_has_reponse:
-      no-show: true
-    pes_tedetis_transaction_id:
-      name: Identifiant de la transaction sur le Tdt
-    pes_acquit:
-      name: PES Acquit
-      type: file
-      visionneuse: PESRetourVisionneuse
-    pes_etat_ack:
-      name: Etat acquittement Helios
-      type: select
-      value:
-        - Non acquitté
-        - Acquittement OK
-        - Acquittement KO
-      index: true
+    onglet1:
+        objet:
+            name: Objet
+            type: text
+            requis: true
+            multiple: false
+            commentaire: ''
+            title: true
+        pes_aller:
+            name: 'PES ALLER'
+            type: file
+            requis: true
+            multiple: false
+            commentaire: ''
+            visionneuse: PESViewerVisionneuse
+    Cheminement:
+        envoi_tdt_helios:
+            name: 'Envoi à la trésorerie (via un Tdt)'
+            type: checkbox
+            onchange: cheminement-change
+            default: checked
+            read-only: true
+    'Information PES Aller':
+        pes_information_pes_aller:
+            no-show: true
+        id_coll:
+            name: 'Établissement émetteur'
+            index: true
+            read-only: true
+        dte_str:
+            name: 'Date de production du fichier'
+            index: true
+            type: date
+            read-only: true
+        cod_bud:
+            name: 'Code Budget'
+            index: true
+            read-only: true
+        exercice:
+            name: 'Exercice comptable'
+            index: true
+            read-only: true
+        id_bordereau:
+            name: 'Identifiant bordereau'
+            index: true
+            read-only: true
+        id_pj:
+            name: 'Identifiant PJ'
+            index: true
+            read-only: true
+        id_pce:
+            name: 'Numéro de mandat ou de titre'
+            index: true
+            read-only: true
+        id_nature:
+            name: 'Nature comptable'
+            index: true
+            read-only: true
+        id_fonction:
+            name: 'Opération comptable'
+            index: true
+            read-only: true
+    'Retour Tdt':
+        pes_has_reponse:
+            no-show: true
+        pes_tedetis_transaction_id:
+            name: 'Identifiant de la transaction sur le Tdt'
+        pes_acquit:
+            name: 'PES Acquit'
+            type: file
+            visionneuse: PESRetourVisionneuse
+        pes_etat_ack:
+            name: 'Etat acquittement Helios'
+            type: select
+            value:
+                - 'Non acquitté'
+                - 'Acquittement OK'
+                - 'Acquittement KO'
+            index: true
 champs-affiches:
-  - titre
-  - dernier_etat
-  - date_dernier_etat
-  - dte_str
-  - cod_bud
-  - pes_etat_ack
+    - titre
+    - dernier_etat
+    - date_dernier_etat
+    - dte_str
+    - cod_bud
+    - pes_etat_ack
 champs-recherche-avancee:
-  - type
-  - id_e
-  - lastetat
-  - last_state_begin
-  - etatTransit
-  - state_begin
-  - search
-  - id_coll
-  - dte_str
-  - cod_bud
-  - exercice
-  - id_bordereau
-  - id_pj
-  - pes_etat_ack
+    - type
+    - id_e
+    - lastetat
+    - last_state_begin
+    - etatTransit
+    - state_begin
+    - search
+    - id_coll
+    - dte_str
+    - cod_bud
+    - exercice
+    - id_bordereau
+    - id_pj
+    - pes_etat_ack
 page-condition:
-  Information PES Aller:
-    pes_information_pes_aller: true
-  Retour Tdt:
-    pes_has_reponse: true
+    'Information PES Aller':
+        pes_information_pes_aller: true
+    'Retour Tdt':
+        pes_has_reponse: true
 action:
-  creation:
-    name-action: Créer
-    name: Créé
-    rule:
-      no-last-action: ""
-  modification:
-    name-action: Modifier
-    name: En cours de rédaction
-    rule:
-      last-action:
-        - creation
-        - modification
-        - importation
-  supression:
-    name-action: Supprimer
-    name: Supprimé
-    rule:
-      last-action:
-        - creation
-        - modification
-        - importation
-        - termine
-        - fatal-error
-    action-class: Supprimer
-    warning: Êtes-vous sûr ?
-  importation:
-    name: Importation du document
-    rule:
-      role_id_e: no-role
-    action-automatique: orientation
-  orientation:
-    name: Envoi du document
-    name-action: Envoyer le document
-    rule:
-      last-action:
-        - creation
-        - modification
-        - importation
-        - info-tdt
-      document_is_valide: true
-    action-class: OrientationTypeDossierPersonnalise
-  termine:
-    name: Traitement terminé
-    rule:
-      role_id_e: no-role
-  cheminement-change:
-    no-workflow: true
-    rule:
-      role_id_e: no-role,
-    action-class: CheminementChangeTypeDossierPersonnalise
-  helios-pre-extraction:
-    name: "Préparation de l'extraction des informations"
-    rule:
-      role_id_e: no-role
-    action-automatique: helios-extraction
-  helios-extraction:
-    name: Extraction des informations du PES ALLER
-    rule:
-      last-action:
-        - helios-pre-extraction
-    action-class: StandardAction
-    connecteur-type: TdT
-    connecteur-type-action: TdTExtractionHelios
-    connecteur-type-mapping:
-      pes_information_pes_aller: pes_information_pes_aller
-      id_coll: id_coll
-      dte_str: dte_str
-      cod_bud: cod_bud
-      exercice: exercice
-      id_bordereau: id_bordereau
-      id_pj: id_pj
-      id_pce: id_pce
-      id_nature: id_nature
-      id_fonction: id_fonction
-      pes_etat_ack: pes_etat_ack
-      fichier_pes: pes_aller
-    action-automatique: pre-send-tdt
-  pre-send-tdt:
-    name: "Préparation de l'envoi au TdT"
-    rule:
-      last-action:
-        - helios-extraction
-    action-class: Defaut
-    action-automatique: send-tdt
-  send-tdt:
-    name-action: Transmettre au TdT
-    name: Transmis au TdT
-    rule:
-      last-action:
-        - pre-send-tdt
-    action-class: StandardAction
-    connecteur-type: TdT
-    connecteur-type-action: TdTEnvoiHelios
-    connecteur-type-mapping:
-      tdt-error: tdt-error
-      pes_tedetis_transaction_id: pes_tedetis_transaction_id
-      pes_has_reponse: pes_has_reponse
-      fichier_pes: pes_aller
-    action-automatique: verif-tdt
-  verif-tdt:
-    name-action: Vérifier le statut de la transaction
-    name: Statut vérifié par le TdT
-    rule:
-      last-action:
-        - send-tdt
-        - tdt-error
-    action-class: StandardAction
-    connecteur-type: TdT
-    connecteur-type-action: TdTRecupHelios
-    connecteur-type-mapping:
-      tdt-error: tdt-error
-      pes_tedetis_transaction_id: pes_tedetis_transaction_id
-      pes_has_reponse: pes_has_reponse
-      info-tdt: info-tdt
-      pes_acquit: pes_acquit
-      pes_etat_ack: pes_etat_ack
-      fichier_pes: pes_aller
-  info-tdt:
-    name: >
-      Un fichier de réponse PES est
-      disponible
-    rule:
-      role_id_e: no-role
-    action-automatique: orientation
-  tdt-error:
-    name: Erreur sur le TdT
-    rule:
-      role_id_e: no-role
+    creation:
+        name-action: Créer
+        name: Créé
+        rule:
+            no-last-action: ''
+    modification:
+        name-action: Modifier
+        name: 'En cours de rédaction'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+    supression:
+        name-action: Supprimer
+        name: Supprimé
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - termine
+                - fatal-error
+        action-class: Supprimer
+        warning: 'Êtes-vous sûr ?'
+    importation:
+        name: 'Importation du document'
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+    orientation:
+        name: 'Envoi du document'
+        name-action: 'Envoyer le document'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - info-tdt
+            document_is_valide: true
+        action-class: OrientationTypeDossierPersonnalise
+    termine:
+        name: 'Traitement terminé'
+        rule:
+            role_id_e: no-role
+    cheminement-change:
+        no-workflow: true
+        rule:
+            role_id_e: 'no-role,'
+        action-class: CheminementChangeTypeDossierPersonnalise
+    helios-pre-extraction:
+        name: 'Préparation de l''extraction des informations'
+        rule:
+            role_id_e: no-role
+        action-automatique: helios-extraction
+    helios-extraction:
+        name: 'Extraction des informations du PES ALLER'
+        rule:
+            last-action:
+                - helios-pre-extraction
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdTExtractionHelios
+        connecteur-type-mapping:
+            pes_information_pes_aller: pes_information_pes_aller
+            id_coll: id_coll
+            dte_str: dte_str
+            cod_bud: cod_bud
+            exercice: exercice
+            id_bordereau: id_bordereau
+            id_pj: id_pj
+            id_pce: id_pce
+            id_nature: id_nature
+            id_fonction: id_fonction
+            pes_etat_ack: pes_etat_ack
+            fichier_pes: pes_aller
+        action-automatique: pre-send-tdt
+    pre-send-tdt:
+        name: 'Préparation de l''envoi au TdT'
+        rule:
+            last-action:
+                - helios-extraction
+        action-class: Defaut
+        action-automatique: send-tdt
+    send-tdt:
+        name-action: 'Transmettre au TdT'
+        name: 'Transmis au TdT'
+        rule:
+            last-action:
+                - pre-send-tdt
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdTEnvoiHelios
+        connecteur-type-mapping:
+            tdt-error: tdt-error
+            pes_tedetis_transaction_id: pes_tedetis_transaction_id
+            pes_has_reponse: pes_has_reponse
+            fichier_pes: pes_aller
+        action-automatique: verif-tdt
+    verif-tdt:
+        name-action: 'Vérifier le statut de la transaction'
+        name: 'Statut vérifié par le TdT'
+        rule:
+            last-action:
+                - send-tdt
+                - tdt-error
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdTRecupHelios
+        connecteur-type-mapping:
+            tdt-error: tdt-error
+            pes_tedetis_transaction_id: pes_tedetis_transaction_id
+            pes_has_reponse: pes_has_reponse
+            info-tdt: info-tdt
+            pes_acquit: pes_acquit
+            pes_etat_ack: pes_etat_ack
+            fichier_pes: pes_aller
+    info-tdt:
+        name: 'Un fichier de réponse PES est disponible'
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+    tdt-error:
+        name: 'Erreur sur le TdT'
+        rule:
+            role_id_e: no-role

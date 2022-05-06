@@ -1,776 +1,740 @@
----
 nom: test-select
-type: Flux Généraux
-description: ""
+type: 'Flux Généraux'
+description: ''
 connecteur:
-  - signature
-  - GED
-  - mailsec
-  - pdf-relance
-  - TdT
+    - signature
+    - GED
+    - mailsec
+    - pdf-relance
+    - TdT
 formulaire:
-  Information:
-    titre:
-      name: Titre
-      type: select
-      requis: true
-      multiple: false
-      commentaire: ""
-      value:
-        key1: a
-        2: b
-        key2: c
-      title: true
-      index: true
-    document:
-      name: Fichier à signer
-      type: file
-      requis: true
-      multiple: false
-      commentaire: ""
-    annexe:
-      name: Annexe(s)
-      type: file
-      requis: false
-      multiple: true
-      commentaire: ""
-      onchange: autre_document_attache-change
-  Cheminement:
-    envoi_signature:
-      name: Visa/Signature
-      type: checkbox
-      onchange: cheminement-change
-      default: checked
-      read-only: true
-    envoi_depot:
-      name: Dépôt (GED, FTP, ...)
-      type: checkbox
-      onchange: cheminement-change
-      default: ""
-      read-only: false
-    envoi_mailsec:
-      name: Mail sécurisé
-      type: checkbox
-      onchange: cheminement-change
-      default: checked
-      read-only: true
-    envoi_tdt_actes:
-      name: Envoi à la préfecture (via un Tdt)
-      type: checkbox
-      onchange: cheminement-change
-      default: checked
-      read-only: true
-  i-Parapheur:
-    envoi_iparapheur:
-      no-show: true
-    iparapheur_type:
-      name: Type iParapheur
-      read-only: true
-    iparapheur_sous_type:
-      name: Sous-type i-Parapheur
-      requis: true
-      index: true
-      read-only: true
-      type: externalData
-      choice-action: iparapheur-sous-type
-      link_name: Sélectionner un sous-type
-  Parapheur FAST:
-    envoi_fast:
-      no-show: true
-    fast_parapheur_circuit:
-      name: Circuit sur le parapheur
-      type: externalData
-      choice-action: iparapheur-sous-type
-      link_name: Liste des circuits
-    fast_parapheur_circuit_configuration:
-      name: >
-        Configuration du circuit à la volée
-        (au format JSON)
-      commentaire: >
-        Si ce fichier est déposé, il remplace
-        le circuit choisi dans le champ "Circuit
-        sur le parapheur"
-      type: file
-    fast_parapheur_email_destinataire:
-      name: Email du destinataire
-      commentaire: |
-        Email de la personne à qui l’on souhaite envoyer le document après sa signature<br />
-        Uniquement avec le mode "circuit à la volée"
-    fast_parapheur_email_cc:
-      name: Email des destinataires en copie carbone
-      commentaire: |
-        Permet de rajouter des destinataires mais en copie carbone<br />
-        Uniquement avec le mode "circuit à la volée"
-    fast_parapheur_agents:
-      name: Emails des agents
-      commentaire: |
-        Les emails des utilisateurs à rajouter en tant qu’agent. Séparé par des virgules<br />
-        Uniquement avec le mode "circuit à la volée"
-  Signature:
-    iparapheur_dossier_id:
-      name: '#ID dossier parapheur'
-    iparapheur_historique:
-      name: Historique iparapheur
-      type: file
-    parapheur_last_message:
-      name: Dernier message reçu du parapheur
-    has_signature:
-      no-show: true
-    signature:
-      name: Signature détachée
-      type: file
-    bordereau_signature:
-      name: Bordereau de signature
-      type: file
-    document_original:
-      name: Document original
-      type: file
-    multi_document_original:
-      name: Multi-document(s) original
-      type: file
-      multiple: true
-    iparapheur_annexe_sortie:
-      name: Annexe(s) de sortie du parapheur
-      type: file
-      multiple: true
-  Retour GED:
-    has_ged_document_id:
-      no-show: true
-    ged_document_id_file:
-      name: Identifiants des documents sur la GED
-      type: file
-      visionneuse: GedIdDocumentsVisionneuse
-      read-only: true
-      requis: true
-      visionneuse-no-link: true
-  Mail sécurisé:
-    to:
-      name: Destinataire(s)
-      commentaire: >
-        Plusieurs emails possibles séparés par
-        une virgule
-      requis: true
-      type: mail-list
-      autocomplete: MailSec/getContactAjax
-    cc:
-      name: Copie à
-      commentaire: >
-        Plusieurs emails possibles séparés par
-        une virgule
-      type: mail-list
-      autocomplete: MailSec/getContactAjax
-    bcc:
-      name: Copie cachée à
-      commentaire: >
-        Plusieurs emails possibles séparés par
-        une virgule
-      type: mail-list
-      autocomplete: MailSec/getContactAjax
-    password:
-      name: Mot de passe
-      type: password
-      may_be_null: true
-    password2:
-      name: Mot de passe (confirmation)
-      type: password
-      may_be_null: true
-      is_equal: password
-      is_equal_error: Les mots de passe ne correspondent pas
-    key:
-      no-show: true
-    sent_mail_number:
-      name: Destinataires
-      default: "0"
-      no-show: true
-    sent_mail_read:
-      name: Mails lus
-      default: "0"
-      no-show: true
-    sent_mail_answered:
-      name: Mails répondus
-      default: "0"
-      no-show: true
-  Acte:
-    acte_nature:
-      name: "Nature de l'acte"
-      type: select
-      requis: true
-      value:
-        3: Actes individuels
-        2: Actes réglementaires
-        6: Autres
-        4: Contrats, conventions et avenants
-        1: Délibérations
-        5: Documents budgétaires et financiers
-      onchange: autre_document_attache-change
-    numero_de_lacte:
-      name: "Numéro de l'acte"
-      requis: true
-      commentaire: >
-        15 caractères maximum (chiffres,
-        lettres en majuscule ou _)
-      preg_match: '#^[0-9A-Z_]{1,15}$#'
-      preg_match_error: >
-        15 caractères maximum (chiffres,
-        lettres en majuscule ou _)
-      index: true
-    date_de_lacte:
-      name: "Date de l'acte"
-      type: date
-      requis: true
-      commentaire: Date de la décision
-    document_papier:
-      name: >
-        Envoi de documents papiers
-        complémentaires
-      type: checkbox
-    classification:
-      name: >
-        Classification en matière et
-        sous-matière
-      type: externalData
-      requis: true
-      link_name: >
-        Sélectionner dans la classification en
-        matière et sous-matière
-      choice-action: classification
-    type_piece:
-      name: Typologie des pièces
-      type: externalData
-      link_name: Sélectionner des types de pièces
-      choice-action: type-piece
-      edit-only: true
-      requis: true
-    type_piece_fichier:
-      name: Typologie des pièces
-      type: file
-      visionneuse: TypologieActesVisionneuse
-      read-only: true
-      requis: true
-      visionneuse-no-link: true
-    type_acte:
-      no-show: true
-      onchange: typology-change-by-api
-    type_pj:
-      no-show: true
-      onchange: typology-change-by-api
-  Retour Tdt:
-    has_bordereau:
-      no-show: true
-      read-only: true
-    tedetis_transaction_id:
-      name: Identifiant de la transaction sur le Tdt
-    bordereau:
-      name: "Bordereau d'acquittement"
-      type: file
-    aractes:
-      name: Accusé de réception technique
-      type: file
-      commentaire: >
-        Accusé de réception (XML) envoyé par
-        la préfecture
-    acte_tamponne:
-      name: Acte tamponné par le TdT
-      type: file
-    annexes_tamponnees:
-      name: Annexe(s) tamponnée(s) par le TdT
-      type: file
-      multiple: true
-    date_ar:
-      name: "Date de l'accusé de réception"
-      type: date
-  Annulation:
-    has_annulation:
-      no-show: true
-    date_ar_annulation:
-      name: "Date de l'accusé de réception d'annulation"
-      type: date
-    tedetis_annulation_id:
-      name: "Identifiant de la transaction d'annulation"
+    Information:
+        titre:
+            name: Titre
+            type: select
+            requis: true
+            multiple: false
+            commentaire: ''
+            value:
+                key1: a
+                2: b
+                key2: c
+            title: true
+            index: true
+        document:
+            name: 'Fichier à signer'
+            type: file
+            requis: true
+            multiple: false
+            commentaire: ''
+        annexe:
+            name: Annexe(s)
+            type: file
+            requis: false
+            multiple: true
+            commentaire: ''
+            onchange: autre_document_attache-change
+    Cheminement:
+        envoi_signature:
+            name: Visa/Signature
+            type: checkbox
+            onchange: cheminement-change
+            default: checked
+            read-only: true
+        envoi_depot:
+            name: 'Dépôt (GED, FTP, ...)'
+            type: checkbox
+            onchange: cheminement-change
+            default: ''
+            read-only: false
+        envoi_mailsec:
+            name: 'Mail sécurisé'
+            type: checkbox
+            onchange: cheminement-change
+            default: checked
+            read-only: true
+        envoi_tdt_actes:
+            name: 'Envoi à la préfecture (via un Tdt)'
+            type: checkbox
+            onchange: cheminement-change
+            default: checked
+            read-only: true
+    i-Parapheur:
+        envoi_iparapheur:
+            no-show: true
+        iparapheur_type:
+            name: 'Type iParapheur'
+            read-only: true
+        iparapheur_sous_type:
+            name: 'Sous-type i-Parapheur'
+            requis: true
+            index: true
+            read-only: true
+            type: externalData
+            choice-action: iparapheur-sous-type
+            link_name: 'Sélectionner un sous-type'
+    'Parapheur FAST':
+        envoi_fast:
+            no-show: true
+        fast_parapheur_circuit:
+            name: 'Circuit sur le parapheur'
+            type: externalData
+            choice-action: iparapheur-sous-type
+            link_name: 'Liste des circuits'
+        fast_parapheur_circuit_configuration:
+            name: 'Configuration du circuit à la volée (au format JSON)'
+            commentaire: 'Si ce fichier est déposé, il remplace le circuit choisi dans le champ "Circuit sur le parapheur"'
+            type: file
+        fast_parapheur_email_destinataire:
+            name: 'Email du destinataire'
+            commentaire: "Email de la personne à qui l’on souhaite envoyer le document après sa signature<br />\nUniquement avec le mode \"circuit à la volée\""
+        fast_parapheur_email_cc:
+            name: 'Email des destinataires en copie carbone'
+            commentaire: "Permet de rajouter des destinataires mais en copie carbone<br />\nUniquement avec le mode \"circuit à la volée\""
+        fast_parapheur_agents:
+            name: 'Emails des agents'
+            commentaire: "Les emails des utilisateurs à rajouter en tant qu’agent. Séparé par des virgules<br />\nUniquement avec le mode \"circuit à la volée\""
+    Signature:
+        iparapheur_dossier_id:
+            name: '#ID dossier parapheur'
+        iparapheur_historique:
+            name: 'Historique iparapheur'
+            type: file
+        parapheur_last_message:
+            name: 'Dernier message reçu du parapheur'
+        has_signature:
+            no-show: true
+        signature:
+            name: 'Signature détachée'
+            type: file
+        bordereau_signature:
+            name: 'Bordereau de signature'
+            type: file
+        document_original:
+            name: 'Document original'
+            type: file
+        multi_document_original:
+            name: 'Multi-document(s) original'
+            type: file
+            multiple: true
+        iparapheur_annexe_sortie:
+            name: 'Annexe(s) de sortie du parapheur'
+            type: file
+            multiple: true
+    'Retour GED':
+        has_ged_document_id:
+            no-show: true
+        ged_document_id_file:
+            name: 'Identifiants des documents sur la GED'
+            type: file
+            visionneuse: GedIdDocumentsVisionneuse
+            read-only: true
+            requis: true
+            visionneuse-no-link: true
+    'Mail sécurisé':
+        to:
+            name: Destinataire(s)
+            commentaire: 'Plusieurs emails possibles séparés par une virgule'
+            requis: true
+            type: mail-list
+            autocomplete: MailSec/getContactAjax
+        cc:
+            name: 'Copie à'
+            commentaire: 'Plusieurs emails possibles séparés par une virgule'
+            type: mail-list
+            autocomplete: MailSec/getContactAjax
+        bcc:
+            name: 'Copie cachée à'
+            commentaire: 'Plusieurs emails possibles séparés par une virgule'
+            type: mail-list
+            autocomplete: MailSec/getContactAjax
+        password:
+            name: 'Mot de passe'
+            type: password
+            may_be_null: true
+        password2:
+            name: 'Mot de passe (confirmation)'
+            type: password
+            may_be_null: true
+            is_equal: password
+            is_equal_error: 'Les mots de passe ne correspondent pas'
+        key:
+            no-show: true
+        sent_mail_number:
+            name: Destinataires
+            default: '0'
+            no-show: true
+        sent_mail_read:
+            name: 'Mails lus'
+            default: '0'
+            no-show: true
+        sent_mail_answered:
+            name: 'Mails répondus'
+            default: '0'
+            no-show: true
+    Acte:
+        acte_nature:
+            name: 'Nature de l''acte'
+            type: select
+            requis: true
+            value:
+                3: 'Actes individuels'
+                2: 'Actes réglementaires'
+                6: Autres
+                4: 'Contrats, conventions et avenants'
+                1: Délibérations
+                5: 'Documents budgétaires et financiers'
+            onchange: autre_document_attache-change
+        numero_de_lacte:
+            name: 'Numéro de l''acte'
+            requis: true
+            commentaire: '15 caractères maximum (chiffres, lettres en majuscule ou _)'
+            preg_match: '#^[0-9A-Z_]{1,15}$#'
+            preg_match_error: '15 caractères maximum (chiffres, lettres en majuscule ou _)'
+            index: true
+        date_de_lacte:
+            name: 'Date de l''acte'
+            type: date
+            requis: true
+            commentaire: 'Date de la décision'
+        document_papier:
+            name: 'Envoi de documents papiers complémentaires'
+            type: checkbox
+        classification:
+            name: 'Classification en matière et sous-matière'
+            type: externalData
+            requis: true
+            link_name: 'Sélectionner dans la classification en matière et sous-matière'
+            choice-action: classification
+        type_piece:
+            name: 'Typologie des pièces'
+            type: externalData
+            link_name: 'Sélectionner des types de pièces'
+            choice-action: type-piece
+            edit-only: true
+            requis: true
+        type_piece_fichier:
+            name: 'Typologie des pièces'
+            type: file
+            visionneuse: TypologieActesVisionneuse
+            read-only: true
+            requis: true
+            visionneuse-no-link: true
+        type_acte:
+            no-show: true
+            onchange: typology-change-by-api
+        type_pj:
+            no-show: true
+            onchange: typology-change-by-api
+    'Retour Tdt':
+        has_bordereau:
+            no-show: true
+            read-only: true
+        tedetis_transaction_id:
+            name: 'Identifiant de la transaction sur le Tdt'
+        bordereau:
+            name: 'Bordereau d''acquittement'
+            type: file
+        aractes:
+            name: 'Accusé de réception technique'
+            type: file
+            commentaire: 'Accusé de réception (XML) envoyé par la préfecture'
+        acte_tamponne:
+            name: 'Acte tamponné par le TdT'
+            type: file
+        annexes_tamponnees:
+            name: 'Annexe(s) tamponnée(s) par le TdT'
+            type: file
+            multiple: true
+        date_ar:
+            name: 'Date de l''accusé de réception'
+            type: date
+    Annulation:
+        has_annulation:
+            no-show: true
+        date_ar_annulation:
+            name: 'Date de l''accusé de réception d''annulation'
+            type: date
+        tedetis_annulation_id:
+            name: 'Identifiant de la transaction d''annulation'
 champs-affiches:
-  - titre
-  - dernier_etat
-  - date_dernier_etat
-  - titre
+    - titre
+    - dernier_etat
+    - date_dernier_etat
+    - titre
 champs-recherche-avancee:
-  - type
-  - id_e
-  - lastetat
-  - last_state_begin
-  - etatTransit
-  - state_begin
-  - search
-  - titre
+    - type
+    - id_e
+    - lastetat
+    - last_state_begin
+    - etatTransit
+    - state_begin
+    - search
+    - titre
 page-condition:
-  i-Parapheur:
-    envoi_iparapheur: true
-  Parapheur FAST:
-    envoi_fast: true
-  Signature:
-    has_signature: true
-  Retour GED:
-    has_ged_document_id: true
-  Mail sécurisé:
-    envoi_mailsec: true
-  Acte:
-    envoi_tdt_actes: true
-  Retour Tdt:
-    has_bordereau: true
-  Annulation:
-    has_annulation: true
+    i-Parapheur:
+        envoi_iparapheur: true
+    'Parapheur FAST':
+        envoi_fast: true
+    Signature:
+        has_signature: true
+    'Retour GED':
+        has_ged_document_id: true
+    'Mail sécurisé':
+        envoi_mailsec: true
+    Acte:
+        envoi_tdt_actes: true
+    'Retour Tdt':
+        has_bordereau: true
+    Annulation:
+        has_annulation: true
 action:
-  creation:
-    name-action: Créer
-    name: Créé
-    rule:
-      no-last-action: ""
-  modification:
-    name-action: Modifier
-    name: En cours de rédaction
-    rule:
-      last-action:
-        - creation
-        - modification
-        - importation
-        - send-signature-error
-  supression:
-    name-action: Supprimer
-    name: Supprimé
-    rule:
-      last-action:
-        - creation
-        - modification
-        - importation
-        - termine
-        - fatal-error
-        - rejet-iparapheur
-        - annuler-tdt
-    action-class: Supprimer
-    warning: Êtes-vous sûr ?
-  importation:
-    name: Importation du document
-    rule:
-      role_id_e: no-role
-    action-automatique: orientation
-  orientation:
-    name: Envoi du document
-    name-action: Envoyer le document
-    rule:
-      last-action:
-        - creation
-        - modification
-        - importation
-        - recu-iparapheur
-        - send-ged
-        - reception
-        - non-recu
-        - acquiter-tdt
-      document_is_valide: true
-    action-class: OrientationTypeDossierPersonnalise
-  termine:
-    name: Traitement terminé
-    rule:
-      role_id_e: no-role
-  cheminement-change:
-    no-workflow: true
-    rule:
-      role_id_e: no-role,
-    action-class: CheminementChangeTypeDossierPersonnalise
-  preparation-send-iparapheur:
-    name: "Préparation de l'envoi au parapheur"
-    rule:
-      role_id_e: no-role
-    action-automatique: send-iparapheur
-  send-iparapheur:
-    name-action: Transmettre au parapheur
-    name: Transmis au parapheur
-    rule:
-      last-action:
-        - preparation-send-iparapheur
-        - send-signature-error
-    action-class: StandardAction
-    connecteur-type: signature
-    connecteur-type-action: SignatureEnvoie
-    connecteur-type-mapping:
-      iparapheur_type: iparapheur_type
-      iparapheur_sous_type: iparapheur_sous_type
-      iparapheur_dossier_id: iparapheur_dossier_id
-      fast_parapheur_circuit: fast_parapheur_circuit
-      fast_parapheur_circuit_configuration: fast_parapheur_circuit_configuration
-      fast_parapheur_email_destinataire: fast_parapheur_email_destinataire
-      fast_parapheur_email_cc: fast_parapheur_email_cc
-      fast_parapheur_agents: fast_parapheur_agents
-      send-signature-error: send-signature-error
-      objet: titre
-      document: document
-    action-automatique: verif-iparapheur
-  send-signature-error:
-    name: "Erreur lors de l'envoi du dossier à la signature"
-    editable-content:
-      - fast_parapheur_circuit
-      - fast_parapheur_circuit_configuration
-      - fast_parapheur_email_destinataire
-      - fast_parapheur_email_cc
-      - fast_parapheur_agents
-    rule:
-      role_id_e: no-role
-  verif-iparapheur:
-    name-action: Vérifier le statut de signature
-    name: Vérification de la signature
-    rule:
-      last-action:
-        - erreur-verif-iparapheur
-        - send-iparapheur
-    action-class: StandardAction
-    connecteur-type: signature
-    connecteur-type-action: SignatureRecuperation
-    connecteur-type-mapping:
-      iparapheur_historique: iparapheur_historique
-      parapheur_last_message: parapheur_last_message
-      has_signature: has_signature
-      signature: signature
-      document_original: document_original
-      multi_document_original: multi_document_original
-      bordereau: bordereau_signature
-      iparapheur_annexe_sortie: iparapheur_annexe_sortie
-      iparapheur_dossier_id: iparapheur_dossier_id
-      recu-iparapheur: recu-iparapheur
-      rejet-iparapheur: rejet-iparapheur
-      erreur-verif-iparapheur: erreur-verif-iparapheur
-      objet: titre
-      document: document
-  erreur-verif-iparapheur:
-    name: >
-      Erreur lors de la vérification du
-      statut de signature
-    rule:
-      role_id_e: no-role
-  recu-iparapheur:
-    name: Signature récuperée
-    rule:
-      role_id_e: no-role
-    action-automatique: orientation
-  rejet-iparapheur:
-    name: Signature refusée
-    rule:
-      role_id_e: no-role
-  iparapheur-sous-type:
-    name: Liste des sous-type iParapheur
-    no-workflow: true
-    rule:
-      role_id_e: no-role
-    action-class: IparapheurSousType
-    connecteur-type-mapping:
-      iparapheur_type: iparapheur_type
-      iparapheur_sous_type: iparapheur_sous_type
-      fast_parapheur_circuit: fast_parapheur_circuit
-  preparation-send-ged:
-    name: "Préparation de l'envoi à la GED"
-    rule:
-      role_id_e: no-role
-    action-automatique: send-ged
-  send-ged:
-    name-action: Verser à la GED
-    name: Versé à la GED
-    rule:
-      last-action:
-        - preparation-send-ged
-        - error-ged
-    action-class: StandardAction
-    connecteur-type: GED
-    connecteur-type-action: GEDEnvoyer
-    connecteur-type-mapping:
-      fatal-error: error-ged
-  error-ged:
-    name: Erreur irrécupérable lors du dépôt
-    rule:
-      role_id_e: no-role
-  preparation-send-mailsec:
-    name: "Préparation de l'envoi par mail sécurisé"
-    rule:
-      role_id_e: no-role
-    action-automatique: send-mailsec
-  send-mailsec:
-    name-action: Envoyer le mail sécurisé
-    name: "Envoi d'un mail sécurisé"
-    rule:
-      last-action:
-        - preparation-send-mailsec
-    action-class: StandardAction
-    connecteur-type: mailsec
-    connecteur-type-action: MailsecEnvoyer
-    connecteur-type-mapping:
-      to: to
-      cc: cc
-      bcc: bcc
-      sent_mail_number: sent_mail_number
-    action-automatique: mailsec-relance
-  mailsec-relance:
-    name: Relancé
-    name-action: Relancer si nécessaire
-    rule:
-      last-action:
-        - send-mailsec
-        - renvoi
-        - reception-partielle
-    action-class: StandardAction
-    connecteur-type: mailsec
-    connecteur-type-action: MailsecRelance
-    connecteur-type-mapping:
-      reception-partielle: reception-partielle
-      prepare-renvoi: prepare-renvoi
-      non-recu: preparation-non-recu
-      send-mailsec: send-mailsec
-    action-automatique: mailsec-relance
-  prepare-renvoi:
-    name: Préparation de la relance du mail
-    rule:
-      role_id_e: no-role
-    action-automatique: renvoi
-  renvoi:
-    name-action: Envoyer à nouveau
-    name: Renvoyé
-    rule:
-      last-action:
-        - mailsec-relance
-        - send-mailsec
-        - renvoi
-        - reception-partielle
-      role_id_e: editeur
-      document_is_valide: true
-    connecteur-type: mailsec
-    connecteur-type-action: MailsecRenvoyer
-    action-automatique: mailsec-relance
-    action-class: StandardAction
-  reception:
-    name: Reçu
-    rule:
-      role_id_e: no-role
-    action-automatique: orientation
-  reception-partielle:
-    name: Reçu partiellement
-    rule:
-      role_id_e: no-role
-    action-automatique: mailsec-relance
-  preparation-non-recu:
-    name: Préparation au passage comme non reçu
-    rule:
-      role_id_e: no-role
-    action-automatique: non-recu
-  non-recu:
-    name: Non reçu
-    name-action: Définir comme non reçu
-    warning: ok
-    rule:
-      last-action:
-        - preparation-non-recu
-        - renvoi
-        - send-mailsec
-        - reception-partielle
-    action-class: StandardAction
-    connecteur-type: mailsec
-    connecteur-type-action: MailsecNotReceived
-    action-automatique: orientation
-  reponse:
-    name: Une réponse a été enregistrée
-    rule:
-      no-action:
-        - creation
-  compute_read_mail:
-    name: Calcul des mails lus
-    rule:
-      role_id_e: no-role
-    action-class: StandardAction
-    connecteur-type: mailsec
-    connecteur-type-action: MailsecComputeReadMail
-    connecteur-type-mapping:
-      sent_mail_read: sent_mail_read
-  compute_answered_mail:
-    name: Calcul des mails répondus
-    rule:
-      role_id_e: no-role
-    action-class: StandardAction
-    connecteur-type: mailsec
-    connecteur-type-action: MailsecComputeAnsweredMail
-    connecteur-type-mapping:
-      sent_mail_answered: sent_mail_answered
-  pre-send-tdt:
-    name: "Préparation de l'envoi au Tdt"
-    rule:
-      role_id_e: no-role
-    action-automatique: send-tdt
-  send-tdt:
-    name-action: Transmettre au TdT
-    name: Transmis au TdT
-    rule:
-      last-action:
-        - pre-send-tdt
-        - send-tdt-erreur
-    action-class: StandardAction
-    connecteur-type: TdT
-    connecteur-type-action: TdTEnvoiActe
-    connecteur-type-mapping:
-      acte_nature: acte_nature
-      numero_de_lacte: numero_de_lacte
-      date_de_lacte: date_de_lacte
-      document_papier: document_papier
-      classification: classification
-      type_acte: type_acte
-      type_pj: type_pj
-      send-tdt-erreur: send-tdt-erreur
-      document-transmis-tdt: document-transmis-tdt
-      tedetis_transaction_id: tedetis_transaction_id
-      arrete: document
-      autre_document_attache: annexe
-      objet: titre
-    action-automatique: verif-tdt
-  send-tdt-erreur:
-    name: "Erreur lors de l'envoi des données au TdT"
-    rule:
-      role_id_e: no-role
-  document-transmis-tdt:
-    name-action: Transmettre les documents au TdT
-    name: 'En attente du certificat RGS**'
-    rule:
-      role_id_e: no-role
-  teletransmission-tdt:
-    name-action: Ordonner la télétransmission au TdT
-    name: >
-      Tentative de télétransmission sur le
-      TDT
-    rule:
-      last-action:
-        - teletransmission-tdt
-        - document-transmis-tdt
-    action-class: TdtTeletransmettre
-    connecteur-type-mapping:
-      tedetis_transaction_id: tedetis_transaction_id
-      return-teletransmission-tdt: return-teletransmission-tdt
-  return-teletransmission-tdt:
-    name: >
-      Ordre de télétransmission envoyé sur
-      le TDT
-    rule:
-      last-action:
-        - teletransmission-tdt
-    action-class: TdtRetourTeletransmettre
-    connecteur-type-mapping:
-      tedetis_transaction_id: tedetis_transaction_id
-    action-automatique: verif-tdt
-  verif-tdt:
-    name-action: Vérifier le statut de la transaction
-    name: Statut vérifié par le TdT
-    rule:
-      last-action:
-        - send-tdt
-        - tdt-error
-        - erreur-verif-tdt
-        - document-transmis-tdt
-        - teletransmission-tdt
-        - return-teletransmission-tdt
-    action-class: StandardAction
-    connecteur-type: TdT
-    connecteur-type-action: TdTRecupActe
-    connecteur-type-mapping:
-      tedetis_transaction_id: tedetis_transaction_id
-      erreur-verif-tdt: erreur-verif-tdt
-      acquiter-tdt: acquiter-tdt
-      numero_de_lacte: numero_de_lacte
-      has_bordereau: has_bordereau
-      bordereau: bordereau
-      aractes: aractes
-      acte_tamponne: acte_tamponne
-      annexes_tamponnees: annexes_tamponnees
-      date_ar: date_ar
-      arrete: document
-      autre_document_attache: annexe
-      objet: titre
-  erreur-verif-tdt:
-    name: "Erreur lors de la vérification du statut de l'acte"
-    rule:
-      role_id_e: no-role
-  tdt-error:
-    name: Erreur sur le TdT
-    rule:
-      role_id_e: no-role
-  acquiter-tdt:
-    name: Acquitté par la préfecture
-    rule:
-      role_id_e: no-role
-  annulation-tdt:
-    name-action: Annuler la transaction
-    name: "Demande d'annulation envoyée"
-    rule:
-      has-action:
-        - acquiter-tdt
-      no-action:
-        - annulation-tdt
-    action-class: StandardAction
-    connecteur-type: TdT
-    connecteur-type-action: TdTAnnulation
-    connecteur-type-mapping:
-      tedetis_transaction_id: tedetis_transaction_id
-      tedetis_annulation_id: tedetis_annulation_id
-      has_annulation: has_annulation
-      annulation-tdt: annulation-tdt
-    action-automatique: verif-annulation-tdt
-    warning: "Attention cette action n'est pas réversible"
-  verif-annulation-tdt:
-    name-action: "Vérifier le statut de la transaction d'annulation"
-    name: Statut vérifié par le TdT
-    rule:
-      last-action:
-        - annulation-tdt
-    action-class: StandardAction
-    connecteur-type: TdT
-    connecteur-type-action: TdTRecupAnnulation
-    connecteur-type-mapping:
-      tedetis_transaction_id: tedetis_transaction_id
-      tdt-error: tdt-error
-      annuler-tdt: annuler-tdt
-      date_ar_annulation: date_ar_annulation
-  annuler-tdt:
-    name: Transaction annulée
-    rule:
-      role_id_e: no-role
-  type-piece:
-    name: Typologie des pièces
-    no-workflow: true
-    rule:
-      role_id_e: no-role
-    action-class: StandardChoiceAction
-    connecteur-type: TdT
-    connecteur-type-action: TdtChoiceTypologieActes
-    connecteur-type-mapping:
-      acte_nature: acte_nature
-      classification: classification
-      arrete: document
-      autre_document_attache: annexe
-  classification:
-    name: Classification ACTES
-    no-workflow: true
-    rule:
-      role_id_e: no-role
-    action-class: Classification
-  autre_document_attache-change:
-    no-workflow: true
-    rule:
-      role_id_e: no-role
-    action-class: StandardAction
-    connecteur-type: TdT
-    connecteur-type-action: TdtAnnexeTypologieAnnexeChange
-  typology-change-by-api:
-    no-workflow: true
-    rule:
-      role_id_e: no-role
-    action-class: StandardAction
-    connecteur-type: TdT
-    connecteur-type-action: TdtTypologieChangeByApi
-    connecteur-type-mapping:
-      type_acte: type_acte
-      type_pj: type_pj
-      type_piece: type_piece
-      type_piece_fichier: type_piece_fichier
-      acte_nature: acte_nature
-      arrete: document
-      autre_document_attache: annexe
+    creation:
+        name-action: Créer
+        name: Créé
+        rule:
+            no-last-action: ''
+    modification:
+        name-action: Modifier
+        name: 'En cours de rédaction'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - send-signature-error
+    supression:
+        name-action: Supprimer
+        name: Supprimé
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - termine
+                - fatal-error
+                - rejet-iparapheur
+                - annuler-tdt
+        action-class: Supprimer
+        warning: 'Êtes-vous sûr ?'
+    importation:
+        name: 'Importation du document'
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+    orientation:
+        name: 'Envoi du document'
+        name-action: 'Envoyer le document'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - recu-iparapheur
+                - send-ged
+                - reception
+                - non-recu
+                - acquiter-tdt
+            document_is_valide: true
+        action-class: OrientationTypeDossierPersonnalise
+    termine:
+        name: 'Traitement terminé'
+        rule:
+            role_id_e: no-role
+    cheminement-change:
+        no-workflow: true
+        rule:
+            role_id_e: 'no-role,'
+        action-class: CheminementChangeTypeDossierPersonnalise
+    preparation-send-iparapheur:
+        name: 'Préparation de l''envoi au parapheur'
+        rule:
+            role_id_e: no-role
+        action-automatique: send-iparapheur
+    send-iparapheur:
+        name-action: 'Transmettre au parapheur'
+        name: 'Transmis au parapheur'
+        rule:
+            last-action:
+                - preparation-send-iparapheur
+                - send-signature-error
+        action-class: StandardAction
+        connecteur-type: signature
+        connecteur-type-action: SignatureEnvoie
+        connecteur-type-mapping:
+            iparapheur_type: iparapheur_type
+            iparapheur_sous_type: iparapheur_sous_type
+            iparapheur_dossier_id: iparapheur_dossier_id
+            fast_parapheur_circuit: fast_parapheur_circuit
+            fast_parapheur_circuit_configuration: fast_parapheur_circuit_configuration
+            fast_parapheur_email_destinataire: fast_parapheur_email_destinataire
+            fast_parapheur_email_cc: fast_parapheur_email_cc
+            fast_parapheur_agents: fast_parapheur_agents
+            send-signature-error: send-signature-error
+            objet: titre
+            document: document
+        action-automatique: verif-iparapheur
+    send-signature-error:
+        name: 'Erreur lors de l''envoi du dossier à la signature'
+        editable-content:
+            - fast_parapheur_circuit
+            - fast_parapheur_circuit_configuration
+            - fast_parapheur_email_destinataire
+            - fast_parapheur_email_cc
+            - fast_parapheur_agents
+        rule:
+            role_id_e: no-role
+    verif-iparapheur:
+        name-action: 'Vérifier le statut de signature'
+        name: 'Vérification de la signature'
+        rule:
+            last-action:
+                - erreur-verif-iparapheur
+                - send-iparapheur
+        action-class: StandardAction
+        connecteur-type: signature
+        connecteur-type-action: SignatureRecuperation
+        connecteur-type-mapping:
+            iparapheur_historique: iparapheur_historique
+            parapheur_last_message: parapheur_last_message
+            has_signature: has_signature
+            signature: signature
+            document_original: document_original
+            multi_document_original: multi_document_original
+            bordereau: bordereau_signature
+            iparapheur_annexe_sortie: iparapheur_annexe_sortie
+            iparapheur_dossier_id: iparapheur_dossier_id
+            recu-iparapheur: recu-iparapheur
+            rejet-iparapheur: rejet-iparapheur
+            erreur-verif-iparapheur: erreur-verif-iparapheur
+            objet: titre
+            document: document
+    erreur-verif-iparapheur:
+        name: 'Erreur lors de la vérification du statut de signature'
+        rule:
+            role_id_e: no-role
+    recu-iparapheur:
+        name: 'Signature récuperée'
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+    rejet-iparapheur:
+        name: 'Signature refusée'
+        rule:
+            role_id_e: no-role
+    iparapheur-sous-type:
+        name: 'Liste des sous-type iParapheur'
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: IparapheurSousType
+        connecteur-type-mapping:
+            iparapheur_type: iparapheur_type
+            iparapheur_sous_type: iparapheur_sous_type
+            fast_parapheur_circuit: fast_parapheur_circuit
+    preparation-send-ged:
+        name: 'Préparation de l''envoi à la GED'
+        rule:
+            role_id_e: no-role
+        action-automatique: send-ged
+    send-ged:
+        name-action: 'Verser à la GED'
+        name: 'Versé à la GED'
+        rule:
+            last-action:
+                - preparation-send-ged
+                - error-ged
+        action-class: StandardAction
+        connecteur-type: GED
+        connecteur-type-action: GEDEnvoyer
+        connecteur-type-mapping:
+            fatal-error: error-ged
+    error-ged:
+        name: 'Erreur irrécupérable lors du dépôt'
+        rule:
+            role_id_e: no-role
+    preparation-send-mailsec:
+        name: 'Préparation de l''envoi par mail sécurisé'
+        rule:
+            role_id_e: no-role
+        action-automatique: send-mailsec
+    send-mailsec:
+        name-action: 'Envoyer le mail sécurisé'
+        name: 'Envoi d''un mail sécurisé'
+        rule:
+            last-action:
+                - preparation-send-mailsec
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecEnvoyer
+        connecteur-type-mapping:
+            to: to
+            cc: cc
+            bcc: bcc
+            sent_mail_number: sent_mail_number
+        action-automatique: mailsec-relance
+    mailsec-relance:
+        name: Relancé
+        name-action: 'Relancer si nécessaire'
+        rule:
+            last-action:
+                - send-mailsec
+                - renvoi
+                - reception-partielle
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecRelance
+        connecteur-type-mapping:
+            reception-partielle: reception-partielle
+            prepare-renvoi: prepare-renvoi
+            non-recu: preparation-non-recu
+            send-mailsec: send-mailsec
+        action-automatique: mailsec-relance
+    prepare-renvoi:
+        name: 'Préparation de la relance du mail'
+        rule:
+            role_id_e: no-role
+        action-automatique: renvoi
+    renvoi:
+        name-action: 'Envoyer à nouveau'
+        name: Renvoyé
+        rule:
+            last-action:
+                - mailsec-relance
+                - send-mailsec
+                - renvoi
+                - reception-partielle
+            role_id_e: editeur
+            document_is_valide: true
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecRenvoyer
+        action-automatique: mailsec-relance
+        action-class: StandardAction
+    reception:
+        name: Reçu
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+    reception-partielle:
+        name: 'Reçu partiellement'
+        rule:
+            role_id_e: no-role
+        action-automatique: mailsec-relance
+    preparation-non-recu:
+        name: 'Préparation au passage comme non reçu'
+        rule:
+            role_id_e: no-role
+        action-automatique: non-recu
+    non-recu:
+        name: 'Non reçu'
+        name-action: 'Définir comme non reçu'
+        warning: ok
+        rule:
+            last-action:
+                - preparation-non-recu
+                - renvoi
+                - send-mailsec
+                - reception-partielle
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecNotReceived
+        action-automatique: orientation
+    reponse:
+        name: 'Une réponse a été enregistrée'
+        rule:
+            no-action:
+                - creation
+    compute_read_mail:
+        name: 'Calcul des mails lus'
+        rule:
+            role_id_e: no-role
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecComputeReadMail
+        connecteur-type-mapping:
+            sent_mail_read: sent_mail_read
+    compute_answered_mail:
+        name: 'Calcul des mails répondus'
+        rule:
+            role_id_e: no-role
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecComputeAnsweredMail
+        connecteur-type-mapping:
+            sent_mail_answered: sent_mail_answered
+    pre-send-tdt:
+        name: 'Préparation de l''envoi au Tdt'
+        rule:
+            role_id_e: no-role
+        action-automatique: send-tdt
+    send-tdt:
+        name-action: 'Transmettre au TdT'
+        name: 'Transmis au TdT'
+        rule:
+            last-action:
+                - pre-send-tdt
+                - send-tdt-erreur
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdTEnvoiActe
+        connecteur-type-mapping:
+            acte_nature: acte_nature
+            numero_de_lacte: numero_de_lacte
+            date_de_lacte: date_de_lacte
+            document_papier: document_papier
+            classification: classification
+            type_acte: type_acte
+            type_pj: type_pj
+            send-tdt-erreur: send-tdt-erreur
+            document-transmis-tdt: document-transmis-tdt
+            tedetis_transaction_id: tedetis_transaction_id
+            arrete: document
+            autre_document_attache: annexe
+            objet: titre
+        action-automatique: verif-tdt
+    send-tdt-erreur:
+        name: 'Erreur lors de l''envoi des données au TdT'
+        rule:
+            role_id_e: no-role
+    document-transmis-tdt:
+        name-action: 'Transmettre les documents au TdT'
+        name: 'En attente du certificat RGS**'
+        rule:
+            role_id_e: no-role
+    teletransmission-tdt:
+        name-action: 'Ordonner la télétransmission au TdT'
+        name: 'Tentative de télétransmission sur le TDT'
+        rule:
+            last-action:
+                - teletransmission-tdt
+                - document-transmis-tdt
+        action-class: TdtTeletransmettre
+        connecteur-type-mapping:
+            tedetis_transaction_id: tedetis_transaction_id
+            return-teletransmission-tdt: return-teletransmission-tdt
+    return-teletransmission-tdt:
+        name: 'Ordre de télétransmission envoyé sur le TDT'
+        rule:
+            last-action:
+                - teletransmission-tdt
+        action-class: TdtRetourTeletransmettre
+        connecteur-type-mapping:
+            tedetis_transaction_id: tedetis_transaction_id
+        action-automatique: verif-tdt
+    verif-tdt:
+        name-action: 'Vérifier le statut de la transaction'
+        name: 'Statut vérifié par le TdT'
+        rule:
+            last-action:
+                - send-tdt
+                - tdt-error
+                - erreur-verif-tdt
+                - document-transmis-tdt
+                - teletransmission-tdt
+                - return-teletransmission-tdt
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdTRecupActe
+        connecteur-type-mapping:
+            tedetis_transaction_id: tedetis_transaction_id
+            erreur-verif-tdt: erreur-verif-tdt
+            acquiter-tdt: acquiter-tdt
+            numero_de_lacte: numero_de_lacte
+            has_bordereau: has_bordereau
+            bordereau: bordereau
+            aractes: aractes
+            acte_tamponne: acte_tamponne
+            annexes_tamponnees: annexes_tamponnees
+            date_ar: date_ar
+            arrete: document
+            autre_document_attache: annexe
+            objet: titre
+    erreur-verif-tdt:
+        name: 'Erreur lors de la vérification du statut de l''acte'
+        rule:
+            role_id_e: no-role
+    tdt-error:
+        name: 'Erreur sur le TdT'
+        rule:
+            role_id_e: no-role
+    acquiter-tdt:
+        name: 'Acquitté par la préfecture'
+        rule:
+            role_id_e: no-role
+    annulation-tdt:
+        name-action: 'Annuler la transaction'
+        name: 'Demande d''annulation envoyée'
+        rule:
+            has-action:
+                - acquiter-tdt
+            no-action:
+                - annulation-tdt
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdTAnnulation
+        connecteur-type-mapping:
+            tedetis_transaction_id: tedetis_transaction_id
+            tedetis_annulation_id: tedetis_annulation_id
+            has_annulation: has_annulation
+            annulation-tdt: annulation-tdt
+        action-automatique: verif-annulation-tdt
+        warning: 'Attention cette action n''est pas réversible'
+    verif-annulation-tdt:
+        name-action: 'Vérifier le statut de la transaction d''annulation'
+        name: 'Statut vérifié par le TdT'
+        rule:
+            last-action:
+                - annulation-tdt
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdTRecupAnnulation
+        connecteur-type-mapping:
+            tedetis_transaction_id: tedetis_transaction_id
+            tdt-error: tdt-error
+            annuler-tdt: annuler-tdt
+            date_ar_annulation: date_ar_annulation
+    annuler-tdt:
+        name: 'Transaction annulée'
+        rule:
+            role_id_e: no-role
+    type-piece:
+        name: 'Typologie des pièces'
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: StandardChoiceAction
+        connecteur-type: TdT
+        connecteur-type-action: TdtChoiceTypologieActes
+        connecteur-type-mapping:
+            acte_nature: acte_nature
+            classification: classification
+            arrete: document
+            autre_document_attache: annexe
+    classification:
+        name: 'Classification ACTES'
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: Classification
+    autre_document_attache-change:
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdtAnnexeTypologieAnnexeChange
+    typology-change-by-api:
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdtTypologieChangeByApi
+        connecteur-type-mapping:
+            type_acte: type_acte
+            type_pj: type_pj
+            type_piece: type_piece
+            type_piece_fichier: type_piece_fichier
+            acte_nature: acte_nature
+            arrete: document
+            autre_document_attache: annexe

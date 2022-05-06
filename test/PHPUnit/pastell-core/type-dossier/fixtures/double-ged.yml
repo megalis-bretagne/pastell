@@ -1,167 +1,166 @@
----
 nom: double-ged
-type: Flux Généraux
-description: ""
+type: 'Flux Généraux'
+description: ''
 connecteur:
-  - GED
-  - GED
+    - GED
+    - GED
 formulaire:
-  onglet1:
-    fichier:
-      name: The fichier
-      type: file
-      requis: true
-      multiple: false
-      commentaire: ""
-  Cheminement:
-    envoi_depot_1:
-      name: 'Dépôt (GED, FTP, ...) #1'
-      type: checkbox
-      onchange: cheminement-change
-      default: checked
-      read-only: true
-    envoi_depot_2:
-      name: 'Dépôt (GED, FTP, ...) #2'
-      type: checkbox
-      onchange: cheminement-change
-      default: checked
-      read-only: true
-  "Retour GED #1":
-    has_ged_document_id_1:
-      no-show: true
-    ged_document_id_file_1:
-      name: Identifiants des documents sur la GED
-      type: file
-      visionneuse: GedIdDocumentsVisionneuse
-      read-only: true
-      requis: true
-      visionneuse-no-link: true
-  "Retour GED #2":
-    has_ged_document_id_2:
-      no-show: true
-    ged_document_id_file_2:
-      name: Identifiants des documents sur la GED
-      type: file
-      visionneuse: GedIdDocumentsVisionneuse
-      read-only: true
-      requis: true
-      visionneuse-no-link: true
+    onglet1:
+        fichier:
+            name: 'The fichier'
+            type: file
+            requis: true
+            multiple: false
+            commentaire: ''
+    Cheminement:
+        envoi_depot_1:
+            name: 'Dépôt (GED, FTP, ...) #1'
+            type: checkbox
+            onchange: cheminement-change
+            default: checked
+            read-only: true
+        envoi_depot_2:
+            name: 'Dépôt (GED, FTP, ...) #2'
+            type: checkbox
+            onchange: cheminement-change
+            default: checked
+            read-only: true
+    'Retour GED #1':
+        has_ged_document_id_1:
+            no-show: true
+        ged_document_id_file_1:
+            name: 'Identifiants des documents sur la GED'
+            type: file
+            visionneuse: GedIdDocumentsVisionneuse
+            read-only: true
+            requis: true
+            visionneuse-no-link: true
+    'Retour GED #2':
+        has_ged_document_id_2:
+            no-show: true
+        ged_document_id_file_2:
+            name: 'Identifiants des documents sur la GED'
+            type: file
+            visionneuse: GedIdDocumentsVisionneuse
+            read-only: true
+            requis: true
+            visionneuse-no-link: true
 champs-affiches:
-  - titre
-  - dernier_etat
-  - date_dernier_etat
+    - titre
+    - dernier_etat
+    - date_dernier_etat
 champs-recherche-avancee:
-  - type
-  - id_e
-  - lastetat
-  - last_state_begin
-  - etatTransit
-  - state_begin
-  - search
+    - type
+    - id_e
+    - lastetat
+    - last_state_begin
+    - etatTransit
+    - state_begin
+    - search
 page-condition:
-  "Retour GED #1":
-    has_ged_document_id_1: true
-  "Retour GED #2":
-    has_ged_document_id_2: true
+    'Retour GED #1':
+        has_ged_document_id_1: true
+    'Retour GED #2':
+        has_ged_document_id_2: true
 action:
-  creation:
-    name-action: Créer
-    name: Créé
-    rule:
-      no-last-action: ""
-  modification:
-    name-action: Modifier
-    name: En cours de rédaction
-    rule:
-      last-action:
-        - creation
-        - modification
-        - importation
-  supression:
-    name-action: Supprimer
-    name: Supprimé
-    rule:
-      last-action:
-        - creation
-        - modification
-        - importation
-        - termine
-        - fatal-error
-    action-class: Supprimer
-    warning: Êtes-vous sûr ?
-  importation:
-    name: Importation du document
-    rule:
-      role_id_e: no-role
-    action-automatique: orientation
-  orientation:
-    name: Envoi du document
-    name-action: Envoyer le document
-    rule:
-      last-action:
-        - creation
-        - modification
-        - importation
-        - send-ged_1
-        - send-ged_2
-      document_is_valide: true
-    action-class: OrientationTypeDossierPersonnalise
-  termine:
-    name: Traitement terminé
-    rule:
-      role_id_e: no-role
-  cheminement-change:
-    no-workflow: true
-    rule:
-      role_id_e: no-role,
-    action-class: CheminementChangeTypeDossierPersonnalise
-  preparation-send-ged_1:
-    name: "Préparation de l'envoi à la GED #1"
-    rule:
-      role_id_e: no-role
-    action-automatique: send-ged_1
-    num-same-connecteur: "0"
-  send-ged_1:
-    name-action: 'Verser à la GED #1'
-    name: 'Versé à la GED #1'
-    rule:
-      last-action:
-        - preparation-send-ged_1
-        - error-ged_1
-    action-automatique: orientation
-    action-class: StandardAction
-    connecteur-type: GED
-    connecteur-type-action: GEDEnvoyer
-    connecteur-type-mapping:
-      fatal-error: error-ged_1
-    num-same-connecteur: "0"
-  error-ged_1:
-    name: 'Erreur irrécupérable lors du dépôt #1'
-    rule:
-      role_id_e: no-role
-    num-same-connecteur: "0"
-  preparation-send-ged_2:
-    name: "Préparation de l'envoi à la GED #2"
-    rule:
-      role_id_e: no-role
-    action-automatique: send-ged_2
-    num-same-connecteur: "1"
-  send-ged_2:
-    name-action: 'Verser à la GED #2'
-    name: 'Versé à la GED #2'
-    rule:
-      last-action:
-        - preparation-send-ged_2
-        - error-ged_2
-    action-automatique: orientation
-    action-class: StandardAction
-    connecteur-type: GED
-    connecteur-type-action: GEDEnvoyer
-    connecteur-type-mapping:
-      fatal-error: error-ged_2
-    num-same-connecteur: "1"
-  error-ged_2:
-    name: 'Erreur irrécupérable lors du dépôt #2'
-    rule:
-      role_id_e: no-role
-    num-same-connecteur: "1"
+    creation:
+        name-action: Créer
+        name: Créé
+        rule:
+            no-last-action: ''
+    modification:
+        name-action: Modifier
+        name: 'En cours de rédaction'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+    supression:
+        name-action: Supprimer
+        name: Supprimé
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - termine
+                - fatal-error
+        action-class: Supprimer
+        warning: 'Êtes-vous sûr ?'
+    importation:
+        name: 'Importation du document'
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+    orientation:
+        name: 'Envoi du document'
+        name-action: 'Envoyer le document'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - send-ged_1
+                - send-ged_2
+            document_is_valide: true
+        action-class: OrientationTypeDossierPersonnalise
+    termine:
+        name: 'Traitement terminé'
+        rule:
+            role_id_e: no-role
+    cheminement-change:
+        no-workflow: true
+        rule:
+            role_id_e: 'no-role,'
+        action-class: CheminementChangeTypeDossierPersonnalise
+    preparation-send-ged_1:
+        name: 'Préparation de l''envoi à la GED #1'
+        rule:
+            role_id_e: no-role
+        action-automatique: send-ged_1
+        num-same-connecteur: '0'
+    send-ged_1:
+        name-action: 'Verser à la GED #1'
+        name: 'Versé à la GED #1'
+        rule:
+            last-action:
+                - preparation-send-ged_1
+                - error-ged_1
+        action-automatique: orientation
+        action-class: StandardAction
+        connecteur-type: GED
+        connecteur-type-action: GEDEnvoyer
+        connecteur-type-mapping:
+            fatal-error: error-ged_1
+        num-same-connecteur: '0'
+    error-ged_1:
+        name: 'Erreur irrécupérable lors du dépôt #1'
+        rule:
+            role_id_e: no-role
+        num-same-connecteur: '0'
+    preparation-send-ged_2:
+        name: 'Préparation de l''envoi à la GED #2'
+        rule:
+            role_id_e: no-role
+        action-automatique: send-ged_2
+        num-same-connecteur: '1'
+    send-ged_2:
+        name-action: 'Verser à la GED #2'
+        name: 'Versé à la GED #2'
+        rule:
+            last-action:
+                - preparation-send-ged_2
+                - error-ged_2
+        action-automatique: orientation
+        action-class: StandardAction
+        connecteur-type: GED
+        connecteur-type-action: GEDEnvoyer
+        connecteur-type-mapping:
+            fatal-error: error-ged_2
+        num-same-connecteur: '1'
+    error-ged_2:
+        name: 'Erreur irrécupérable lors du dépôt #2'
+        rule:
+            role_id_e: no-role
+        num-same-connecteur: '1'

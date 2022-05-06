@@ -1,12 +1,7 @@
-nom: Flux de test
-
-description: Ceci est un flux de test
-
-
+nom: 'Flux de test'
+description: 'Ceci est un flux de test'
 formulaire:
     onglet:
         mon_fichier:
             type: file
-
-action:
-
+action: ''

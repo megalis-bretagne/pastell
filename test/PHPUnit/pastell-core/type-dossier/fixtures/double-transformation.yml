@@ -1,131 +1,130 @@
----
 nom: double-transformation
-type: Types de dossier personnalisés
-description: ""
+type: 'Types de dossier personnalisés'
+description: ''
 connecteur:
-  - transformation
-  - transformation
+    - transformation
+    - transformation
 formulaire:
-  Cheminement:
-    envoi_transformation_1:
-      name: 'Transformation #1'
-      type: checkbox
-      onchange: cheminement-change
-      default: ""
-      read-only: false
-    envoi_transformation_2:
-      name: 'Transformation #2'
-      type: checkbox
-      onchange: cheminement-change
-      default: ""
-      read-only: false
+    Cheminement:
+        envoi_transformation_1:
+            name: 'Transformation #1'
+            type: checkbox
+            onchange: cheminement-change
+            default: ''
+            read-only: false
+        envoi_transformation_2:
+            name: 'Transformation #2'
+            type: checkbox
+            onchange: cheminement-change
+            default: ''
+            read-only: false
 champs-affiches:
-  - titre
-  - dernier_etat
-  - date_dernier_etat
+    - titre
+    - dernier_etat
+    - date_dernier_etat
 champs-recherche-avancee:
-  - type
-  - id_e
-  - lastetat
-  - last_state_begin
-  - etatTransit
-  - state_begin
-  - search
+    - type
+    - id_e
+    - lastetat
+    - last_state_begin
+    - etatTransit
+    - state_begin
+    - search
 action:
-  creation:
-    name-action: Créer
-    name: Créé
-    rule:
-      no-last-action: ""
-  modification:
-    name-action: Modifier
-    name: En cours de rédaction
-    rule:
-      last-action:
-        - creation
-        - modification
-        - importation
-  supression:
-    name-action: Supprimer
-    name: Supprimé
-    rule:
-      last-action:
-        - creation
-        - modification
-        - importation
-        - termine
-        - fatal-error
-        - transformation-error_1
-        - transformation-error_2
-    action-class: Supprimer
-    warning: Êtes-vous sûr ?
-  importation:
-    name: Importation du document
-    rule:
-      role_id_e: no-role
-    action-automatique: orientation
-  orientation:
-    name: Envoi du document
-    name-action: Envoyer le document
-    rule:
-      last-action:
-        - creation
-        - modification
-        - importation
-        - transformation_1
-        - transformation_2
-      document_is_valide: true
-    action-class: OrientationTypeDossierPersonnalise
-  termine:
-    name: Traitement terminé
-    rule:
-      role_id_e: no-role
-  cheminement-change:
-    no-workflow: true
-    rule:
-      role_id_e: no-role,
-    action-class: CheminementChangeTypeDossierPersonnalise
-  preparation-transformation_1:
-    name: 'Préparation à la transformation #1'
-    rule:
-      role_id_e: no-role
-    action-automatique: transformation_1
-    num-same-connecteur: "0"
-  transformation_1:
-    name-action: 'Transformer le document #1'
-    name: 'Transformation du document #1'
-    rule:
-      last-action:
-        - preparation-transformation_1
-        - transformation-error_1
-    action-class: StandardAction
-    connecteur-type: transformation
-    connecteur-type-action: TransformationTransform
-    num-same-connecteur: "0"
-  transformation-error_1:
-    name: 'Erreur lors de la transformation du dossier #1'
-    rule:
-      role_id_e: no-role
-    num-same-connecteur: "0"
-  preparation-transformation_2:
-    name: 'Préparation à la transformation #2'
-    rule:
-      role_id_e: no-role
-    action-automatique: transformation_2
-    num-same-connecteur: "1"
-  transformation_2:
-    name-action: 'Transformer le document #2'
-    name: 'Transformation du document #2'
-    rule:
-      last-action:
-        - preparation-transformation_2
-        - transformation-error_2
-    action-class: StandardAction
-    connecteur-type: transformation
-    connecteur-type-action: TransformationTransform
-    num-same-connecteur: "1"
-  transformation-error_2:
-    name: 'Erreur lors de la transformation du dossier #2'
-    rule:
-      role_id_e: no-role
-    num-same-connecteur: "1"
+    creation:
+        name-action: Créer
+        name: Créé
+        rule:
+            no-last-action: ''
+    modification:
+        name-action: Modifier
+        name: 'En cours de rédaction'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+    supression:
+        name-action: Supprimer
+        name: Supprimé
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - termine
+                - fatal-error
+                - transformation-error_1
+                - transformation-error_2
+        action-class: Supprimer
+        warning: 'Êtes-vous sûr ?'
+    importation:
+        name: 'Importation du document'
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+    orientation:
+        name: 'Envoi du document'
+        name-action: 'Envoyer le document'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - transformation_1
+                - transformation_2
+            document_is_valide: true
+        action-class: OrientationTypeDossierPersonnalise
+    termine:
+        name: 'Traitement terminé'
+        rule:
+            role_id_e: no-role
+    cheminement-change:
+        no-workflow: true
+        rule:
+            role_id_e: 'no-role,'
+        action-class: CheminementChangeTypeDossierPersonnalise
+    preparation-transformation_1:
+        name: 'Préparation à la transformation #1'
+        rule:
+            role_id_e: no-role
+        action-automatique: transformation_1
+        num-same-connecteur: '0'
+    transformation_1:
+        name-action: 'Transformer le document #1'
+        name: 'Transformation du document #1'
+        rule:
+            last-action:
+                - preparation-transformation_1
+                - transformation-error_1
+        action-class: StandardAction
+        connecteur-type: transformation
+        connecteur-type-action: TransformationTransform
+        num-same-connecteur: '0'
+    transformation-error_1:
+        name: 'Erreur lors de la transformation du dossier #1'
+        rule:
+            role_id_e: no-role
+        num-same-connecteur: '0'
+    preparation-transformation_2:
+        name: 'Préparation à la transformation #2'
+        rule:
+            role_id_e: no-role
+        action-automatique: transformation_2
+        num-same-connecteur: '1'
+    transformation_2:
+        name-action: 'Transformer le document #2'
+        name: 'Transformation du document #2'
+        rule:
+            last-action:
+                - preparation-transformation_2
+                - transformation-error_2
+        action-class: StandardAction
+        connecteur-type: transformation
+        connecteur-type-action: TransformationTransform
+        num-same-connecteur: '1'
+    transformation-error_2:
+        name: 'Erreur lors de la transformation du dossier #2'
+        rule:
+            role_id_e: no-role
+        num-same-connecteur: '1'

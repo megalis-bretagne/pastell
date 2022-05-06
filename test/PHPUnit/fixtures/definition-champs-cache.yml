@@ -1,38 +1,28 @@
-nom: Test fichier
-
-
-
-description: flux de test, ne pas utiliser.
-
-
+nom: 'Test fichier'
+description: 'flux de test, ne pas utiliser.'
 formulaire:
-	onglet_visible:
-		nom:
-		prenom:
-		fichier_visible:
-			type: file
-		
-	onglet_cache:
-		chaine:
-		fichier_hidden:
-			type: file
-			
-
+    onglet_visible:
+        nom: ''
+        prenom: ''
+        fichier_visible:
+            type: file
+    onglet_cache:
+        chaine: ''
+        fichier_hidden:
+            type: file
 page-condition:
-	onglet_cache: 
-		nom: 42			
-	
+    onglet_cache:
+        nom: 42
 action:
-	creation:
-		name-action: Créer
-		name: Créé
-		rule:
-			no-last-action:
-
-	modification:
-		name-action: Modifier
-		name: En cours de rédaction
-		rule:
-			last-action: 
-				creation
-				modification
+    creation:
+        name-action: Créer
+        name: Créé
+        rule:
+            no-last-action: ''
+    modification:
+        name-action: Modifier
+        name: 'En cours de rédaction'
+        rule:
+            last-action:
+                - creation
+                - modification

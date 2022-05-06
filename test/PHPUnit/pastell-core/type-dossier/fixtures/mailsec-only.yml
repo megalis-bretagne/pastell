@@ -1,252 +1,245 @@
----
 nom: mailsec-only
-type: Flux Généraux
-description: ""
+type: 'Flux Généraux'
+description: ''
 connecteur:
-  - mailsec
-  - pdf-relance
+    - mailsec
+    - pdf-relance
 formulaire:
-  onglet1:
-    titre:
-      name: Titre
-      type: text
-      requis: true
-      multiple: false
-      commentaire: ""
-      title: true
-    document:
-      name: Document
-      type: file
-      requis: true
-      multiple: false
-      commentaire: ""
-  Cheminement:
-    envoi_mailsec:
-      name: Mail sécurisé
-      type: checkbox
-      onchange: cheminement-change
-      default: checked
-      read-only: true
-  Mail sécurisé:
-    to:
-      name: Destinataire(s)
-      commentaire: >
-        Plusieurs emails possibles séparés par
-        une virgule
-      requis: true
-      type: mail-list
-      autocomplete: MailSec/getContactAjax
-    cc:
-      name: Copie à
-      commentaire: >
-        Plusieurs emails possibles séparés par
-        une virgule
-      type: mail-list
-      autocomplete: MailSec/getContactAjax
-    bcc:
-      name: Copie cachée à
-      commentaire: >
-        Plusieurs emails possibles séparés par
-        une virgule
-      type: mail-list
-      autocomplete: MailSec/getContactAjax
-    password:
-      name: Mot de passe
-      type: password
-      may_be_null: true
-    password2:
-      name: Mot de passe (confirmation)
-      type: password
-      may_be_null: true
-      is_equal: password
-      is_equal_error: Les mots de passe ne correspondent pas
-    key:
-      no-show: true
-    sent_mail_number:
-      name: Destinataires
-      default: "0"
-      no-show: true
-    sent_mail_read:
-      name: Mails lus
-      default: "0"
-      no-show: true
-    sent_mail_answered:
-      name: Mails répondus
-      default: "0"
-      no-show: true
+    onglet1:
+        titre:
+            name: Titre
+            type: text
+            requis: true
+            multiple: false
+            commentaire: ''
+            title: true
+        document:
+            name: Document
+            type: file
+            requis: true
+            multiple: false
+            commentaire: ''
+    Cheminement:
+        envoi_mailsec:
+            name: 'Mail sécurisé'
+            type: checkbox
+            onchange: cheminement-change
+            default: checked
+            read-only: true
+    'Mail sécurisé':
+        to:
+            name: Destinataire(s)
+            commentaire: 'Plusieurs emails possibles séparés par une virgule'
+            requis: true
+            type: mail-list
+            autocomplete: MailSec/getContactAjax
+        cc:
+            name: 'Copie à'
+            commentaire: 'Plusieurs emails possibles séparés par une virgule'
+            type: mail-list
+            autocomplete: MailSec/getContactAjax
+        bcc:
+            name: 'Copie cachée à'
+            commentaire: 'Plusieurs emails possibles séparés par une virgule'
+            type: mail-list
+            autocomplete: MailSec/getContactAjax
+        password:
+            name: 'Mot de passe'
+            type: password
+            may_be_null: true
+        password2:
+            name: 'Mot de passe (confirmation)'
+            type: password
+            may_be_null: true
+            is_equal: password
+            is_equal_error: 'Les mots de passe ne correspondent pas'
+        key:
+            no-show: true
+        sent_mail_number:
+            name: Destinataires
+            default: '0'
+            no-show: true
+        sent_mail_read:
+            name: 'Mails lus'
+            default: '0'
+            no-show: true
+        sent_mail_answered:
+            name: 'Mails répondus'
+            default: '0'
+            no-show: true
 champs-affiches:
-  - titre
-  - dernier_etat
-  - date_dernier_etat
+    - titre
+    - dernier_etat
+    - date_dernier_etat
 champs-recherche-avancee:
-  - type
-  - id_e
-  - lastetat
-  - last_state_begin
-  - etatTransit
-  - state_begin
-  - search
+    - type
+    - id_e
+    - lastetat
+    - last_state_begin
+    - etatTransit
+    - state_begin
+    - search
 page-condition:
-  Mail sécurisé:
-    envoi_mailsec: true
+    'Mail sécurisé':
+        envoi_mailsec: true
 action:
-  creation:
-    name-action: Créer
-    name: Créé
-    rule:
-      no-last-action: ""
-  modification:
-    name-action: Modifier
-    name: En cours de rédaction
-    rule:
-      last-action:
-        - creation
-        - modification
-        - importation
-  supression:
-    name-action: Supprimer
-    name: Supprimé
-    rule:
-      last-action:
-        - creation
-        - modification
-        - importation
-        - termine
-        - fatal-error
-    action-class: Supprimer
-    warning: Êtes-vous sûr ?
-  importation:
-    name: Importation du document
-    rule:
-      role_id_e: no-role
-    action-automatique: orientation
-  orientation:
-    name: Envoi du document
-    name-action: Envoyer le document
-    rule:
-      last-action:
-        - creation
-        - modification
-        - importation
-        - reception
-        - non-recu
-      document_is_valide: true
-    action-class: OrientationTypeDossierPersonnalise
-  termine:
-    name: Traitement terminé
-    rule:
-      role_id_e: no-role
-  cheminement-change:
-    no-workflow: true
-    rule:
-      role_id_e: no-role,
-    action-class: CheminementChangeTypeDossierPersonnalise
-  preparation-send-mailsec:
-    name: "Préparation de l'envoi par mail sécurisé"
-    rule:
-      role_id_e: no-role
-    action-automatique: send-mailsec
-  send-mailsec:
-    name-action: Envoyer le mail sécurisé
-    name: "Envoi d'un mail sécurisé"
-    rule:
-      last-action:
-        - preparation-send-mailsec
-    action-class: StandardAction
-    connecteur-type: mailsec
-    connecteur-type-action: MailsecEnvoyer
-    connecteur-type-mapping:
-      to: to
-      cc: cc
-      bcc: bcc
-      sent_mail_number: sent_mail_number
-    action-automatique: mailsec-relance
-  mailsec-relance:
-    name: Relancé
-    name-action: Relancer si nécessaire
-    rule:
-      last-action:
-        - send-mailsec
-        - renvoi
-        - reception-partielle
-    action-class: StandardAction
-    connecteur-type: mailsec
-    connecteur-type-action: MailsecRelance
-    connecteur-type-mapping:
-      reception-partielle: reception-partielle
-      prepare-renvoi: prepare-renvoi
-      non-recu: preparation-non-recu
-      send-mailsec: send-mailsec
-    action-automatique: mailsec-relance
-  prepare-renvoi:
-    name: Préparation de la relance du mail
-    rule:
-      role_id_e: no-role
-    action-automatique: renvoi
-  renvoi:
-    name-action: Envoyer à nouveau
-    name: Renvoyé
-    rule:
-      last-action:
-        - mailsec-relance
-        - send-mailsec
-        - renvoi
-        - reception-partielle
-      role_id_e: editeur
-      document_is_valide: true
-    connecteur-type: mailsec
-    connecteur-type-action: MailsecRenvoyer
-    action-automatique: mailsec-relance
-    action-class: StandardAction
-  reception:
-    name: Reçu
-    rule:
-      role_id_e: no-role
-    action-automatique: orientation
-  reception-partielle:
-    name: Reçu partiellement
-    rule:
-      role_id_e: no-role
-    action-automatique: mailsec-relance
-  preparation-non-recu:
-    name: Préparation au passage comme non reçu
-    rule:
-      role_id_e: no-role
-    action-automatique: non-recu
-  non-recu:
-    name: Non reçu
-    name-action: Définir comme non reçu
-    warning: ok
-    rule:
-      last-action:
-        - preparation-non-recu
-        - renvoi
-        - send-mailsec
-        - reception-partielle
-    action-class: StandardAction
-    connecteur-type: mailsec
-    connecteur-type-action: MailsecNotReceived
-    action-automatique: orientation
-  reponse:
-    name: Une réponse a été enregistrée
-    rule:
-      no-action:
-        - creation
-  compute_read_mail:
-    name: Calcul des mails lus
-    rule:
-      role_id_e: no-role
-    action-class: StandardAction
-    connecteur-type: mailsec
-    connecteur-type-action: MailsecComputeReadMail
-    connecteur-type-mapping:
-      sent_mail_read: sent_mail_read
-  compute_answered_mail:
-    name: Calcul des mails répondus
-    rule:
-      role_id_e: no-role
-    action-class: StandardAction
-    connecteur-type: mailsec
-    connecteur-type-action: MailsecComputeAnsweredMail
-    connecteur-type-mapping:
-      sent_mail_answered: sent_mail_answered
+    creation:
+        name-action: Créer
+        name: Créé
+        rule:
+            no-last-action: ''
+    modification:
+        name-action: Modifier
+        name: 'En cours de rédaction'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+    supression:
+        name-action: Supprimer
+        name: Supprimé
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - termine
+                - fatal-error
+        action-class: Supprimer
+        warning: 'Êtes-vous sûr ?'
+    importation:
+        name: 'Importation du document'
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+    orientation:
+        name: 'Envoi du document'
+        name-action: 'Envoyer le document'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - reception
+                - non-recu
+            document_is_valide: true
+        action-class: OrientationTypeDossierPersonnalise
+    termine:
+        name: 'Traitement terminé'
+        rule:
+            role_id_e: no-role
+    cheminement-change:
+        no-workflow: true
+        rule:
+            role_id_e: 'no-role,'
+        action-class: CheminementChangeTypeDossierPersonnalise
+    preparation-send-mailsec:
+        name: 'Préparation de l''envoi par mail sécurisé'
+        rule:
+            role_id_e: no-role
+        action-automatique: send-mailsec
+    send-mailsec:
+        name-action: 'Envoyer le mail sécurisé'
+        name: 'Envoi d''un mail sécurisé'
+        rule:
+            last-action:
+                - preparation-send-mailsec
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecEnvoyer
+        connecteur-type-mapping:
+            to: to
+            cc: cc
+            bcc: bcc
+            sent_mail_number: sent_mail_number
+        action-automatique: mailsec-relance
+    mailsec-relance:
+        name: Relancé
+        name-action: 'Relancer si nécessaire'
+        rule:
+            last-action:
+                - send-mailsec
+                - renvoi
+                - reception-partielle
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecRelance
+        connecteur-type-mapping:
+            reception-partielle: reception-partielle
+            prepare-renvoi: prepare-renvoi
+            non-recu: preparation-non-recu
+            send-mailsec: send-mailsec
+        action-automatique: mailsec-relance
+    prepare-renvoi:
+        name: 'Préparation de la relance du mail'
+        rule:
+            role_id_e: no-role
+        action-automatique: renvoi
+    renvoi:
+        name-action: 'Envoyer à nouveau'
+        name: Renvoyé
+        rule:
+            last-action:
+                - mailsec-relance
+                - send-mailsec
+                - renvoi
+                - reception-partielle
+            role_id_e: editeur
+            document_is_valide: true
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecRenvoyer
+        action-automatique: mailsec-relance
+        action-class: StandardAction
+    reception:
+        name: Reçu
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+    reception-partielle:
+        name: 'Reçu partiellement'
+        rule:
+            role_id_e: no-role
+        action-automatique: mailsec-relance
+    preparation-non-recu:
+        name: 'Préparation au passage comme non reçu'
+        rule:
+            role_id_e: no-role
+        action-automatique: non-recu
+    non-recu:
+        name: 'Non reçu'
+        name-action: 'Définir comme non reçu'
+        warning: ok
+        rule:
+            last-action:
+                - preparation-non-recu
+                - renvoi
+                - send-mailsec
+                - reception-partielle
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecNotReceived
+        action-automatique: orientation
+    reponse:
+        name: 'Une réponse a été enregistrée'
+        rule:
+            no-action:
+                - creation
+    compute_read_mail:
+        name: 'Calcul des mails lus'
+        rule:
+            role_id_e: no-role
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecComputeReadMail
+        connecteur-type-mapping:
+            sent_mail_read: sent_mail_read
+    compute_answered_mail:
+        name: 'Calcul des mails répondus'
+        rule:
+            role_id_e: no-role
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecComputeAnsweredMail
+        connecteur-type-mapping:
+            sent_mail_answered: sent_mail_answered

@@ -4,6 +4,8 @@
  * Cette classe devra à terme remplacer la classe GEDConnecteur actuelle
  */
 
+use Symfony\Component\Yaml\Yaml;
+
 abstract class DepotConnecteur extends GEDConnecteur
 {
     /* Les arguments directory_name sont relatifs à l'emplacement défini dans le connecteur  */
@@ -278,7 +280,7 @@ abstract class DepotConnecteur extends GEDConnecteur
             }
         }
         if ($depot_metadonnees == self::DEPOT_METADONNEES_YAML_FILE) {
-            $data = Spyc::YAMLDump($raw_data);
+            $data = Yaml::dump($raw_data);
             $extension_filename = '.txt';
         }
         if ($depot_metadonnees == self::DEPOT_METADONNEES_JSON_FILE) {

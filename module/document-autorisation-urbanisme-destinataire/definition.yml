@@ -1,92 +1,89 @@
----
-nom: >
-  document-autorisation-urbanisme-destinataire
-type: Pack urbanisme
-description: ""
-connecteur: [ ]
+nom: document-autorisation-urbanisme-destinataire
+type: 'Pack urbanisme'
+description: ''
+connecteur: {  }
 formulaire:
-  onglet1:
-    titre:
-      name: Titre
-      type: text
-      requis: false
-      multiple: false
-      commentaire: ""
-    document:
-      name: Document
-      type: file
-      requis: false
-      multiple: false
-      commentaire: ""
-    annexe:
-      name: Annexe(s)
-      type: file
-      requis: false
-      multiple: true
-      commentaire: ""
+    onglet1:
+        titre:
+            name: Titre
+            type: text
+            requis: false
+            multiple: false
+            commentaire: ''
+        document:
+            name: Document
+            type: file
+            requis: false
+            multiple: false
+            commentaire: ''
+        annexe:
+            name: Annexe(s)
+            type: file
+            requis: false
+            multiple: true
+            commentaire: ''
 champs-affiches:
-  - titre
-  - dernier_etat
-  - date_dernier_etat
+    - titre
+    - dernier_etat
+    - date_dernier_etat
 champs-recherche-avancee:
-  - type
-  - id_e
-  - lastetat
-  - last_state_begin
-  - etatTransit
-  - state_begin
-  - search
+    - type
+    - id_e
+    - lastetat
+    - last_state_begin
+    - etatTransit
+    - state_begin
+    - search
 action:
-  creation:
-    name-action: Créer
-    name: Créé
-    rule:
-      no-last-action: ""
-  modification:
-    name-action: Modifier
-    name: En cours de rédaction
-    rule:
-      last-action:
-        - creation
-        - modification
-        - importation
-  supression:
-    name-action: Supprimer
-    name: Supprimé
-    rule:
-      last-action:
-        - creation
-        - modification
-        - importation
-        - termine
-        - fatal-error
-    action-class: Supprimer
-    warning: Êtes-vous sûr ?
-  importation:
-    name: Importation du document
-    rule:
-      role_id_e: no-role
-    action-automatique: orientation
-  orientation:
-    name: Envoi du document
-    name-action: Envoyer le document
-    rule:
-      last-action:
-        - creation
-        - modification
-        - importation
-      document_is_valide: true
-    action-class: OrientationTypeDossierPersonnalise
-  termine:
-    name: Traitement terminé
-    rule:
-      role_id_e: no-role
-  cheminement-change:
-    no-workflow: true
-    rule:
-      role_id_e: no-role,
-    action-class: CheminementChangeTypeDossierPersonnalise
+    creation:
+        name-action: Créer
+        name: Créé
+        rule:
+            no-last-action: ''
+    modification:
+        name-action: Modifier
+        name: 'En cours de rédaction'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+    supression:
+        name-action: Supprimer
+        name: Supprimé
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - termine
+                - fatal-error
+        action-class: Supprimer
+        warning: 'Êtes-vous sûr ?'
+    importation:
+        name: 'Importation du document'
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+    orientation:
+        name: 'Envoi du document'
+        name-action: 'Envoyer le document'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+            document_is_valide: true
+        action-class: OrientationTypeDossierPersonnalise
+    termine:
+        name: 'Traitement terminé'
+        rule:
+            role_id_e: no-role
+    cheminement-change:
+        no-workflow: true
+        rule:
+            role_id_e: 'no-role,'
+        action-class: CheminementChangeTypeDossierPersonnalise
 restriction_pack:
-  - pack_urbanisme
-studio_definition: >
-  ewogICJpZF90eXBlX2Rvc3NpZXIiOiAiZG9jdW1lbnQtYXV0b3Jpc2F0aW9uLXVyYmEtZGVzdGluYXRhaXJlLWRyYWZ0IiwKICAicGFzdGVsbC12ZXJzaW9uIjogIjMuMS41IiwKICAidGltZXN0YW1wIjogMTYzMzUwMTUzNSwKICAicmF3X2RhdGEiOiB7CiAgICAiaWRfdHlwZV9kb3NzaWVyIjogImRvY3VtZW50LWF1dG9yaXNhdGlvbi11cmJhLWRlc3RpbmF0YWlyZS1kcmFmdCIsCiAgICAibm9tIjogImRvY3VtZW50LWF1dG9yaXNhdGlvbi11cmJhbmlzbWUtZGVzdGluYXRhaXJlLWRyYWZ0IiwKICAgICJ0eXBlIjogIlBhY2sgdXJiYW5pc21lIiwKICAgICJkZXNjcmlwdGlvbiI6ICIiLAogICAgIm5vbV9vbmdsZXQiOiAib25nbGV0MSIsCiAgICAiZm9ybXVsYWlyZUVsZW1lbnQiOiBbCiAgICAgIHsKICAgICAgICAiZWxlbWVudF9pZCI6ICJ0aXRyZSIsCiAgICAgICAgIm5hbWUiOiAiVGl0cmUiLAogICAgICAgICJ0eXBlIjogInRleHQiLAogICAgICAgICJjb21tZW50YWlyZSI6ICIiLAogICAgICAgICJyZXF1aXMiOiAiIiwKICAgICAgICAiY2hhbXBzX2FmZmljaGVzIjogIiIsCiAgICAgICAgImNoYW1wc19yZWNoZXJjaGVfYXZhbmNlZSI6ICIiLAogICAgICAgICJ0aXRyZSI6ICIiLAogICAgICAgICJzZWxlY3RfdmFsdWUiOiAiIiwKICAgICAgICAicHJlZ19tYXRjaCI6ICIiLAogICAgICAgICJwcmVnX21hdGNoX2Vycm9yIjogIiIKICAgICAgfSwKICAgICAgewogICAgICAgICJlbGVtZW50X2lkIjogImRvY3VtZW50IiwKICAgICAgICAibmFtZSI6ICJEb2N1bWVudCIsCiAgICAgICAgInR5cGUiOiAiZmlsZSIsCiAgICAgICAgImNvbW1lbnRhaXJlIjogIiIsCiAgICAgICAgInJlcXVpcyI6ICIiLAogICAgICAgICJjaGFtcHNfYWZmaWNoZXMiOiAiIiwKICAgICAgICAiY2hhbXBzX3JlY2hlcmNoZV9hdmFuY2VlIjogIiIsCiAgICAgICAgInRpdHJlIjogIiIsCiAgICAgICAgInNlbGVjdF92YWx1ZSI6ICIiLAogICAgICAgICJwcmVnX21hdGNoIjogIiIsCiAgICAgICAgInByZWdfbWF0Y2hfZXJyb3IiOiAiIgogICAgICB9LAogICAgICB7CiAgICAgICAgImVsZW1lbnRfaWQiOiAiYW5uZXhlIiwKICAgICAgICAibmFtZSI6ICJBbm5leGUocykiLAogICAgICAgICJ0eXBlIjogIm11bHRpX2ZpbGUiLAogICAgICAgICJjb21tZW50YWlyZSI6ICIiLAogICAgICAgICJyZXF1aXMiOiAiIiwKICAgICAgICAiY2hhbXBzX2FmZmljaGVzIjogIiIsCiAgICAgICAgImNoYW1wc19yZWNoZXJjaGVfYXZhbmNlZSI6ICIiLAogICAgICAgICJ0aXRyZSI6ICIiLAogICAgICAgICJzZWxlY3RfdmFsdWUiOiAiIiwKICAgICAgICAicHJlZ19tYXRjaCI6ICIiLAogICAgICAgICJwcmVnX21hdGNoX2Vycm9yIjogIiIKICAgICAgfQogICAgXSwKICAgICJldGFwZSI6IFtdCiAgfQp9Cg==
+    - pack_urbanisme
+studio_definition: ewogICJpZF90eXBlX2Rvc3NpZXIiOiAiZG9jdW1lbnQtYXV0b3Jpc2F0aW9uLXVyYmEtZGVzdGluYXRhaXJlLWRyYWZ0IiwKICAicGFzdGVsbC12ZXJzaW9uIjogIjMuMS41IiwKICAidGltZXN0YW1wIjogMTYzMzUwMTUzNSwKICAicmF3X2RhdGEiOiB7CiAgICAiaWRfdHlwZV9kb3NzaWVyIjogImRvY3VtZW50LWF1dG9yaXNhdGlvbi11cmJhLWRlc3RpbmF0YWlyZS1kcmFmdCIsCiAgICAibm9tIjogImRvY3VtZW50LWF1dG9yaXNhdGlvbi11cmJhbmlzbWUtZGVzdGluYXRhaXJlLWRyYWZ0IiwKICAgICJ0eXBlIjogIlBhY2sgdXJiYW5pc21lIiwKICAgICJkZXNjcmlwdGlvbiI6ICIiLAogICAgIm5vbV9vbmdsZXQiOiAib25nbGV0MSIsCiAgICAiZm9ybXVsYWlyZUVsZW1lbnQiOiBbCiAgICAgIHsKICAgICAgICAiZWxlbWVudF9pZCI6ICJ0aXRyZSIsCiAgICAgICAgIm5hbWUiOiAiVGl0cmUiLAogICAgICAgICJ0eXBlIjogInRleHQiLAogICAgICAgICJjb21tZW50YWlyZSI6ICIiLAogICAgICAgICJyZXF1aXMiOiAiIiwKICAgICAgICAiY2hhbXBzX2FmZmljaGVzIjogIiIsCiAgICAgICAgImNoYW1wc19yZWNoZXJjaGVfYXZhbmNlZSI6ICIiLAogICAgICAgICJ0aXRyZSI6ICIiLAogICAgICAgICJzZWxlY3RfdmFsdWUiOiAiIiwKICAgICAgICAicHJlZ19tYXRjaCI6ICIiLAogICAgICAgICJwcmVnX21hdGNoX2Vycm9yIjogIiIKICAgICAgfSwKICAgICAgewogICAgICAgICJlbGVtZW50X2lkIjogImRvY3VtZW50IiwKICAgICAgICAibmFtZSI6ICJEb2N1bWVudCIsCiAgICAgICAgInR5cGUiOiAiZmlsZSIsCiAgICAgICAgImNvbW1lbnRhaXJlIjogIiIsCiAgICAgICAgInJlcXVpcyI6ICIiLAogICAgICAgICJjaGFtcHNfYWZmaWNoZXMiOiAiIiwKICAgICAgICAiY2hhbXBzX3JlY2hlcmNoZV9hdmFuY2VlIjogIiIsCiAgICAgICAgInRpdHJlIjogIiIsCiAgICAgICAgInNlbGVjdF92YWx1ZSI6ICIiLAogICAgICAgICJwcmVnX21hdGNoIjogIiIsCiAgICAgICAgInByZWdfbWF0Y2hfZXJyb3IiOiAiIgogICAgICB9LAogICAgICB7CiAgICAgICAgImVsZW1lbnRfaWQiOiAiYW5uZXhlIiwKICAgICAgICAibmFtZSI6ICJBbm5leGUocykiLAogICAgICAgICJ0eXBlIjogIm11bHRpX2ZpbGUiLAogICAgICAgICJjb21tZW50YWlyZSI6ICIiLAogICAgICAgICJyZXF1aXMiOiAiIiwKICAgICAgICAiY2hhbXBzX2FmZmljaGVzIjogIiIsCiAgICAgICAgImNoYW1wc19yZWNoZXJjaGVfYXZhbmNlZSI6ICIiLAogICAgICAgICJ0aXRyZSI6ICIiLAogICAgICAgICJzZWxlY3RfdmFsdWUiOiAiIiwKICAgICAgICAicHJlZ19tYXRjaCI6ICIiLAogICAgICAgICJwcmVnX21hdGNoX2Vycm9yIjogIiIKICAgICAgfQogICAgXSwKICAgICJldGFwZSI6IFtdCiAgfQp9Cg==

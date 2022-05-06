@@ -1,26 +1,15 @@
 nom: Glaneur
 id: glaneur
-
-description: Ensemble de connecteur permettant d'aller chercher des fichiers et de créer des documents Pastell suivant une logique défini par le connecteur
-
+description: 'Ensemble de connecteur permettant d''aller chercher des fichiers et de créer des documents Pastell suivant une logique défini par le connecteur'
 version: 4
-
 extensions_versions_accepted:
-	- 3
-	- 2
-
+    - 3
+    - 2
 pastell-version: 1.4
-
 extension_needed:
-	pastell-megalis:
-		version: 1
-
-	pastell-mnesys:
-		version: 2
-
-
-last_changed_date: |
-	$LastChangedDate: 2013-11-17 12:10:07 +0100 (dim., 17 nov. 2013) $
-
-revision: |
-	$Rev: 9 $ 
+    pastell-megalis:
+        version: 1
+    pastell-mnesys:
+        version: 2
+last_changed_date: '$LastChangedDate: 2013-11-17 12:10:07 +0100 (dim., 17 nov. 2013) $'
+revision: '$Rev: 9 $'

@@ -1,7 +1,6 @@
----
 fichier:
-  - foo.txt
+    - foo.txt
 fichier_simple:
-  - bar.txt
-toto: Titre de mon document
+    - bar.txt
+toto: 'Titre de mon document'
 prenom: Eric

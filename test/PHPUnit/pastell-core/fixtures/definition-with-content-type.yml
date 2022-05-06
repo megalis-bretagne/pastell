@@ -1,49 +1,39 @@
 nom: Test
-type: Flux de test
-
-description: flux de test, ne pas utiliser.
-
+type: 'Flux de test'
+description: 'flux de test, ne pas utiliser.'
 formulaire:
-  onglet:
-    fichier_text:
-      type: file
-      content-type: text/plain
-
-    fichier_pdf:
-      type: file
-      content-type: application/pdf
-
-    fichier_pdf_or_txt:
-      type: file
-      content-type: application/pdf, text/plain
-
-    fichier_multiple_text:
-      type: file
-      content-type: text/plain
-      multiple: true
-
-    fichier_multiple_text_or_pdf:
-      type: file
-      content-type: text/plain, application/pdf
-      multiple: true
-
-    pas_un_fichier:
-      type: text
-      content-type: application/pdf
-
-
+    onglet:
+        fichier_text:
+            type: file
+            content-type: text/plain
+        fichier_pdf:
+            type: file
+            content-type: application/pdf
+        fichier_pdf_or_txt:
+            type: file
+            content-type: 'application/pdf, text/plain'
+        fichier_multiple_text:
+            type: file
+            content-type: text/plain
+            multiple: true
+        fichier_multiple_text_or_pdf:
+            type: file
+            content-type: 'text/plain, application/pdf'
+            multiple: true
+        pas_un_fichier:
+            type: text
+            content-type: application/pdf
 action:
-  creation:
-    name-action: Créer
-    name: Créé
-    rule:
-      no-last-action:
-
-  modification:
-    name-action: Modifier
-    name: En cours de rédaction
-    rule:
-      last-action:
-        creation
-        modification
-      droit_id_u: test:edition
+    creation:
+        name-action: Créer
+        name: Créé
+        rule:
+            no-last-action: ''
+    modification:
+        name-action: Modifier
+        name: 'En cours de rédaction'
+        rule:
+            last-action:
+                - creation
+                - modification
+            droit_id_u: 'test:edition'

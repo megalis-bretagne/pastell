@@ -1,46 +1,38 @@
-nom: Test fichier
-
-description: flux de test, ne pas utiliser.
-
+nom: 'Test fichier'
+description: 'flux de test, ne pas utiliser.'
 threshold_size: 100
 threshold_fields:
-  - file_10_octets
-  - multiple_file_50_octets
-  - multiple_file_10_octets_per_file
-
+    - file_10_octets
+    - multiple_file_50_octets
+    - multiple_file_10_octets_per_file
 formulaire:
-  onglet:
-    file_10_octets:
-      name: Fichier de 10 octets maximum
-      type: file
-      max_file_size: 10
-
-    multiple_file_50_octets:
-      name: Fichiers multiples dont la somme du poids est limité à 50 octets
-      type: file
-      multiple: true
-      max_multiple_file_size: 50
-
-    multiple_file_10_octets_per_file:
-      type: file
-      multiple: true
-      max_file_size: 10
-
-    multiple_file:
-      type: file
-      multiple: true
-
+    onglet:
+        file_10_octets:
+            name: 'Fichier de 10 octets maximum'
+            type: file
+            max_file_size: 10
+        multiple_file_50_octets:
+            name: 'Fichiers multiples dont la somme du poids est limité à 50 octets'
+            type: file
+            multiple: true
+            max_multiple_file_size: 50
+        multiple_file_10_octets_per_file:
+            type: file
+            multiple: true
+            max_file_size: 10
+        multiple_file:
+            type: file
+            multiple: true
 action:
-  creation:
-    name-action: Créer
-    name: Créé
-    rule:
-      no-last-action:
-
-  modification:
-    name-action: Modifier
-    name: En cours de rédaction
-    rule:
-      last-action:
-        creation
-        modification
+    creation:
+        name-action: Créer
+        name: Créé
+        rule:
+            no-last-action: ''
+    modification:
+        name-action: Modifier
+        name: 'En cours de rédaction'
+        rule:
+            last-action:
+                - creation
+                - modification

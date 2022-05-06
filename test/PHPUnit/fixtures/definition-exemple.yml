@@ -1,93 +1,77 @@
 nom: Test
-type: Flux de test
-
-description: flux de test, ne pas utiliser.
-
+type: 'Flux de test'
+description: 'flux de test, ne pas utiliser.'
 restriction_pack:
-	pack_marche
-
+    - pack_marche
 connecteur:
-	SAE
-
+    - SAE
 formulaire:
-	onglet:
-		password:
-			name: Mot de passe
-			type: password
-		test1:
-			type: url
-			link_name: toto
-			
-		test2:
-		
-		nom:
-			index: true
-		
-		prenom:
-			index: true
-		
-		ma_checkbox:
-			type: checkbox
-			default: true
-	onglet2:
-		test3:
-		test4:
-
+    onglet:
+        password:
+            name: 'Mot de passe'
+            type: password
+        test1:
+            type: url
+            link_name: toto
+        test2: ''
+        nom:
+            index: true
+        prenom:
+            index: true
+        ma_checkbox:
+            type: checkbox
+            default: true
+    onglet2:
+        test3: ''
+        test4: ''
 page-condition:
-	onglet2:
-		test3: true
-
+    onglet2:
+        test3: true
 champs-affiches:
-	nom
-	prenom
-	dernier_etat
-	date_dernier_etat
-	test4
-	
-champs-recherche-avancee:	
-	nom
-	prenom
-	dernier_etat
-	date_dernier_etat
-	test4
-	
+    - nom
+    - prenom
+    - dernier_etat
+    - date_dernier_etat
+    - test4
+champs-recherche-avancee:
+    - nom
+    - prenom
+    - dernier_etat
+    - date_dernier_etat
+    - test4
 action:
-	creation:
-		name-action: Créer
-		name: Créé
-		rule:
-			no-last-action:
-
-	modification:
-		name-action: Modifier
-		name: En cours de rédaction
-		rule:
-			last-action: 
-				creation
-				modification
-			droit_id_u: test:edition
-			
-			
-	test:
-		rule:
-			droit_id_u: test:teletransmettre
-			content:
-				test1: toto
-			or_1:
-				last-action:
-					creation
-					modification
-				content:
-					test1: true
-			or_2:
-				and_1:
-					last-action:
-						creation
-						modification
-					content:
-						test2: true
-				and_2:
-					last-action:
-						creation
-				
-		action-class: Test
+    creation:
+        name-action: Créer
+        name: Créé
+        rule:
+            no-last-action: ''
+    modification:
+        name-action: Modifier
+        name: 'En cours de rédaction'
+        rule:
+            last-action:
+                - creation
+                - modification
+            droit_id_u: 'test:edition'
+    test:
+        rule:
+            droit_id_u: 'test:teletransmettre'
+            content:
+                test1: toto
+            or_1:
+                last-action:
+                    - creation
+                    - modification
+                content:
+                    test1: true
+            or_2:
+                and_1:
+                    last-action:
+                        - creation
+                        - modification
+                    content:
+                        test2: true
+                and_2:
+                    last-action:
+                        - creation
+        action-class: Test

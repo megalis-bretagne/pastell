@@ -1,30 +1,26 @@
-libelle: HAL 9000
-
+libelle: 'HAL 9000'
 connecteur_type:
-  - GED
-
+    - GED
 action:
-  preparation-send-ged:
-    name: Préparation de l'envoi à la GED
-    rule:
-      role_id_e: no-role
-    action-automatique: send-ged
-
-  send-ged:
-    name-action: Verser à la GED
-    name: Versé à la GED
-    rule:
-      last-action:
-        preparation-send-ged
-        error-ged
-    action-automatique: orientation
-    action-class: StandardAction
-    connecteur-type: GED
-    connecteur-type-action: GEDEnvoyer
-    connecteur-type-mapping:
-      fatal-error: error-ged
-
-  error-ged:
-    name: Erreur irrécupérable lors du dépôt
-    rule:
-      role_id_e: no-role
+    preparation-send-ged:
+        name: 'Préparation de l''envoi à la GED'
+        rule:
+            role_id_e: no-role
+        action-automatique: send-ged
+    send-ged:
+        name-action: 'Verser à la GED'
+        name: 'Versé à la GED'
+        rule:
+            last-action:
+                - preparation-send-ged
+                - error-ged
+        action-automatique: orientation
+        action-class: StandardAction
+        connecteur-type: GED
+        connecteur-type-action: GEDEnvoyer
+        connecteur-type-mapping:
+            fatal-error: error-ged
+    error-ged:
+        name: 'Erreur irrécupérable lors du dépôt'
+        rule:
+            role_id_e: no-role

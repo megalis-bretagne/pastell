@@ -1,8 +1,7 @@
 nom: toto
 type: test
-
 action:
-  test:
-    action-class: ExtensionTestActionTest
-  test-not-loaded:
-    action-class: ExtensionTestActionTestNotLoaded
+    test:
+        action-class: ExtensionTestActionTest
+    test-not-loaded:
+        action-class: ExtensionTestActionTestNotLoaded

@@ -1,129 +1,128 @@
----
 nom: ged-only
-type: Flux Généraux
-description: ""
+type: 'Flux Généraux'
+description: ''
 connecteur:
-  - GED
+    - GED
 formulaire:
-  onglet1:
-    metadata1:
-      name: Métadonnée 1
-      type: text
-      requis: true
-      multiple: false
-      commentaire: ""
-      title: true
-      index: true
-    fichier1:
-      name: Fichier 1
-      type: file
-      requis: true
-      multiple: false
-      commentaire: ""
-  Cheminement:
-    envoi_depot:
-      name: Dépôt (GED, FTP, ...)
-      type: checkbox
-      onchange: cheminement-change
-      default: checked
-      read-only: true
-  Retour GED:
-    has_ged_document_id:
-      no-show: true
-    ged_document_id_file:
-      name: Identifiants des documents sur la GED
-      type: file
-      visionneuse: GedIdDocumentsVisionneuse
-      read-only: true
-      requis: true
-      visionneuse-no-link: true
+    onglet1:
+        metadata1:
+            name: 'Métadonnée 1'
+            type: text
+            requis: true
+            multiple: false
+            commentaire: ''
+            title: true
+            index: true
+        fichier1:
+            name: 'Fichier 1'
+            type: file
+            requis: true
+            multiple: false
+            commentaire: ''
+    Cheminement:
+        envoi_depot:
+            name: 'Dépôt (GED, FTP, ...)'
+            type: checkbox
+            onchange: cheminement-change
+            default: checked
+            read-only: true
+    'Retour GED':
+        has_ged_document_id:
+            no-show: true
+        ged_document_id_file:
+            name: 'Identifiants des documents sur la GED'
+            type: file
+            visionneuse: GedIdDocumentsVisionneuse
+            read-only: true
+            requis: true
+            visionneuse-no-link: true
 champs-affiches:
-  - titre
-  - dernier_etat
-  - date_dernier_etat
-  - metadata1
+    - titre
+    - dernier_etat
+    - date_dernier_etat
+    - metadata1
 champs-recherche-avancee:
-  - type
-  - id_e
-  - lastetat
-  - last_state_begin
-  - etatTransit
-  - state_begin
-  - search
-  - metadata1
+    - type
+    - id_e
+    - lastetat
+    - last_state_begin
+    - etatTransit
+    - state_begin
+    - search
+    - metadata1
 page-condition:
-  Retour GED:
-    has_ged_document_id: true
+    'Retour GED':
+        has_ged_document_id: true
 action:
-  creation:
-    name-action: Créer
-    name: Créé
-    rule:
-      no-last-action: ""
-  modification:
-    name-action: Modifier
-    name: En cours de rédaction
-    rule:
-      last-action:
-        - creation
-        - modification
-        - importation
-  supression:
-    name-action: Supprimer
-    name: Supprimé
-    rule:
-      last-action:
-        - creation
-        - modification
-        - importation
-        - termine
-        - fatal-error
-    action-class: Supprimer
-    warning: Êtes-vous sûr ?
-  importation:
-    name: Importation du document
-    rule:
-      role_id_e: no-role
-    action-automatique: orientation
-  orientation:
-    name: Envoi du document
-    name-action: Envoyer le document
-    rule:
-      last-action:
-        - creation
-        - modification
-        - importation
-        - send-ged
-      document_is_valide: true
-    action-class: OrientationTypeDossierPersonnalise
-  termine:
-    name: Traitement terminé
-    rule:
-      role_id_e: no-role
-  cheminement-change:
-    no-workflow: true
-    rule:
-      role_id_e: no-role,
-    action-class: CheminementChangeTypeDossierPersonnalise
-  preparation-send-ged:
-    name: "Préparation de l'envoi à la GED"
-    rule:
-      role_id_e: no-role
-    action-automatique: send-ged
-  send-ged:
-    name-action: Verser à la GED
-    name: Versé à la GED
-    rule:
-      last-action:
-        - preparation-send-ged
-        - error-ged
-    action-automatique: orientation
-    action-class: StandardAction
-    connecteur-type: GED
-    connecteur-type-action: GEDEnvoyer
-    connecteur-type-mapping:
-      fatal-error: error-ged
-  error-ged:
-    name: Erreur irrécupérable lors du dépôt
-    rule:
-      role_id_e: no-role
+    creation:
+        name-action: Créer
+        name: Créé
+        rule:
+            no-last-action: ''
+    modification:
+        name-action: Modifier
+        name: 'En cours de rédaction'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+    supression:
+        name-action: Supprimer
+        name: Supprimé
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - termine
+                - fatal-error
+        action-class: Supprimer
+        warning: 'Êtes-vous sûr ?'
+    importation:
+        name: 'Importation du document'
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+    orientation:
+        name: 'Envoi du document'
+        name-action: 'Envoyer le document'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - send-ged
+            document_is_valide: true
+        action-class: OrientationTypeDossierPersonnalise
+    termine:
+        name: 'Traitement terminé'
+        rule:
+            role_id_e: no-role
+    cheminement-change:
+        no-workflow: true
+        rule:
+            role_id_e: 'no-role,'
+        action-class: CheminementChangeTypeDossierPersonnalise
+    preparation-send-ged:
+        name: 'Préparation de l''envoi à la GED'
+        rule:
+            role_id_e: no-role
+        action-automatique: send-ged
+    send-ged:
+        name-action: 'Verser à la GED'
+        name: 'Versé à la GED'
+        rule:
+            last-action:
+                - preparation-send-ged
+                - error-ged
+        action-automatique: orientation
+        action-class: StandardAction
+        connecteur-type: GED
+        connecteur-type-action: GEDEnvoyer
+        connecteur-type-mapping:
+            fatal-error: error-ged
+    error-ged:
+        name: 'Erreur irrécupérable lors du dépôt'
+        rule:
+            role_id_e: no-role

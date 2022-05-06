@@ -1,677 +1,651 @@
----
-nom: Cas nominal
-type: Flux Généraux
-description: >
-  Flux présentant le cas nominal de
-  fonctionnement du studio
+nom: 'Cas nominal'
+type: 'Flux Généraux'
+description: 'Flux présentant le cas nominal de fonctionnement du studio'
 connecteur:
-  - signature
-  - GED
-  - mailsec
-  - pdf-relance
-  - GED
-  - Bordereau SEDA
-  - SAE
+    - signature
+    - GED
+    - mailsec
+    - pdf-relance
+    - GED
+    - 'Bordereau SEDA'
+    - SAE
 formulaire:
-  Information:
-    objet:
-      name: Objet
-      type: text
-      requis: true
-      multiple: false
-      commentaire: ""
-      title: true
-    prenom_agent:
-      name: "Prénom de l'agent"
-      type: text
-      requis: true
-      multiple: false
-      commentaire: ""
-      index: true
-    nom_agent:
-      name: "Nom de l'agent"
-      type: text
-      requis: true
-      multiple: false
-      commentaire: "Mettre ici le nom de l'agent"
-      index: true
-    arrete:
-      name: Arrêté
-      type: file
-      requis: true
-      multiple: false
-      commentaire: Fichier PDF uniquement
-      content-type: text/plain
-    annexe:
-      name: Annexe(s)
-      type: file
-      requis: false
-      multiple: true
-      commentaire: ""
-  Cheminement:
-    envoi_signature:
-      name: Visa/Signature
-      type: checkbox
-      onchange: cheminement-change
-      default: checked
-      read-only: true
-    envoi_depot_1:
-      name: 'Dépôt (GED, FTP, ...) #1'
-      type: checkbox
-      onchange: cheminement-change
-      default: checked
-      read-only: true
-    envoi_mailsec:
-      name: Mail sécurisé
-      type: checkbox
-      onchange: cheminement-change
-      default: ""
-      read-only: false
-    envoi_depot_2:
-      name: 'Dépôt (GED, FTP, ...) #2'
-      type: checkbox
-      onchange: cheminement-change
-      default: checked
-      read-only: true
-    envoi_sae:
-      name: "Système d'archivage électronique"
-      type: checkbox
-      onchange: cheminement-change
-      default: checked
-      read-only: true
-  i-Parapheur:
-    envoi_iparapheur:
-      no-show: true
-    iparapheur_type:
-      name: Type iParapheur
-      read-only: true
-    iparapheur_sous_type:
-      name: Sous-type i-Parapheur
-      requis: true
-      index: true
-      read-only: true
-      type: externalData
-      choice-action: iparapheur-sous-type
-      link_name: Sélectionner un sous-type
-  Parapheur FAST:
-    envoi_fast:
-      no-show: true
-    fast_parapheur_circuit:
-      name: Circuit sur le parapheur
-      type: externalData
-      choice-action: iparapheur-sous-type
-      link_name: Liste des circuits
-    fast_parapheur_circuit_configuration:
-      name: >
-        Configuration du circuit à la volée
-        (au format JSON)
-      commentaire: >
-        Si ce fichier est déposé, il remplace
-        le circuit choisi dans le champ "Circuit
-        sur le parapheur"
-      type: file
-    fast_parapheur_email_destinataire:
-      name: Email du destinataire
-      commentaire: |
-        Email de la personne à qui l’on souhaite envoyer le document après sa signature<br />
-        Uniquement avec le mode "circuit à la volée"
-    fast_parapheur_email_cc:
-      name: Email des destinataires en copie carbone
-      commentaire: |
-        Permet de rajouter des destinataires mais en copie carbone<br />
-        Uniquement avec le mode "circuit à la volée"
-    fast_parapheur_agents:
-      name: Emails des agents
-      commentaire: |
-        Les emails des utilisateurs à rajouter en tant qu’agent. Séparé par des virgules<br />
-        Uniquement avec le mode "circuit à la volée"
-  Signature:
-    iparapheur_dossier_id:
-      name: '#ID dossier parapheur'
-    iparapheur_historique:
-      name: Historique iparapheur
-      type: file
-    parapheur_last_message:
-      name: Dernier message reçu du parapheur
-    has_signature:
-      no-show: true
-    signature:
-      name: Signature détachée
-      type: file
-    bordereau_signature:
-      name: Bordereau de signature
-      type: file
-    document_original:
-      name: Document original
-      type: file
-    multi_document_original:
-      name: Multi-document(s) original
-      type: file
-      multiple: true
-    iparapheur_annexe_sortie:
-      name: Annexe(s) de sortie du parapheur
-      type: file
-      multiple: true
-  "Retour GED #1":
-    has_ged_document_id_1:
-      no-show: true
-    ged_document_id_file_1:
-      name: Identifiants des documents sur la GED
-      type: file
-      visionneuse: GedIdDocumentsVisionneuse
-      read-only: true
-      requis: true
-      visionneuse-no-link: true
-  Mail sécurisé:
-    to:
-      name: Destinataire(s)
-      commentaire: >
-        Plusieurs emails possibles séparés par
-        une virgule
-      requis: true
-      type: mail-list
-      autocomplete: MailSec/getContactAjax
-    cc:
-      name: Copie à
-      commentaire: >
-        Plusieurs emails possibles séparés par
-        une virgule
-      type: mail-list
-      autocomplete: MailSec/getContactAjax
-    bcc:
-      name: Copie cachée à
-      commentaire: >
-        Plusieurs emails possibles séparés par
-        une virgule
-      type: mail-list
-      autocomplete: MailSec/getContactAjax
-    password:
-      name: Mot de passe
-      type: password
-      may_be_null: true
-    password2:
-      name: Mot de passe (confirmation)
-      type: password
-      may_be_null: true
-      is_equal: password
-      is_equal_error: Les mots de passe ne correspondent pas
-    key:
-      no-show: true
-    sent_mail_number:
-      name: Destinataires
-      default: "0"
-      no-show: true
-    sent_mail_read:
-      name: Mails lus
-      default: "0"
-      no-show: true
-    sent_mail_answered:
-      name: Mails répondus
-      default: "0"
-      no-show: true
-  "Retour GED #2":
-    has_ged_document_id_2:
-      no-show: true
-    ged_document_id_file_2:
-      name: Identifiants des documents sur la GED
-      type: file
-      visionneuse: GedIdDocumentsVisionneuse
-      read-only: true
-      requis: true
-      visionneuse-no-link: true
-  SAE:
-    sae_show:
-      no-show: true
-    journal:
-      name: Faisceau de preuves
-      type: file
-    date_journal_debut:
-      name: Date du premier évènement journalisé
-    date_cloture_journal:
-      name: Date de clôture du journal
-    date_cloture_journal_iso8601:
-      name: Date de clôture du journal (iso 8601)
-    sae_transfert_id:
-      name: Identifiant de transfert
-      index: true
-    sae_bordereau:
-      name: Bordereau SEDA
-      type: file
-    sae_archive:
-      name: Archive
-      type: file
-    ar_sae:
-      type: file
-      name: Accusé de réception SAE
-    sae_ack_comment:
-      name: "Commentaire de l'accusé de réception"
-    reply_sae:
-      type: file
-      name: Réponse du SAE
-    sae_archival_identifier:
-      name: "Identifiant de l'archive sur le SAE"
-    sae_atr_comment:
-      name: Commentaire de la réponse du SAE
-    url_archive:
-      name: "URL de l'archive"
-      type: url
+    Information:
+        objet:
+            name: Objet
+            type: text
+            requis: true
+            multiple: false
+            commentaire: ''
+            title: true
+        prenom_agent:
+            name: 'Prénom de l''agent'
+            type: text
+            requis: true
+            multiple: false
+            commentaire: ''
+            index: true
+        nom_agent:
+            name: 'Nom de l''agent'
+            type: text
+            requis: true
+            multiple: false
+            commentaire: 'Mettre ici le nom de l''agent'
+            index: true
+        arrete:
+            name: Arrêté
+            type: file
+            requis: true
+            multiple: false
+            commentaire: 'Fichier PDF uniquement'
+            content-type: text/plain
+        annexe:
+            name: Annexe(s)
+            type: file
+            requis: false
+            multiple: true
+            commentaire: ''
+    Cheminement:
+        envoi_signature:
+            name: Visa/Signature
+            type: checkbox
+            onchange: cheminement-change
+            default: checked
+            read-only: true
+        envoi_depot_1:
+            name: 'Dépôt (GED, FTP, ...) #1'
+            type: checkbox
+            onchange: cheminement-change
+            default: checked
+            read-only: true
+        envoi_mailsec:
+            name: 'Mail sécurisé'
+            type: checkbox
+            onchange: cheminement-change
+            default: ''
+            read-only: false
+        envoi_depot_2:
+            name: 'Dépôt (GED, FTP, ...) #2'
+            type: checkbox
+            onchange: cheminement-change
+            default: checked
+            read-only: true
+        envoi_sae:
+            name: 'Système d''archivage électronique'
+            type: checkbox
+            onchange: cheminement-change
+            default: checked
+            read-only: true
+    i-Parapheur:
+        envoi_iparapheur:
+            no-show: true
+        iparapheur_type:
+            name: 'Type iParapheur'
+            read-only: true
+        iparapheur_sous_type:
+            name: 'Sous-type i-Parapheur'
+            requis: true
+            index: true
+            read-only: true
+            type: externalData
+            choice-action: iparapheur-sous-type
+            link_name: 'Sélectionner un sous-type'
+    'Parapheur FAST':
+        envoi_fast:
+            no-show: true
+        fast_parapheur_circuit:
+            name: 'Circuit sur le parapheur'
+            type: externalData
+            choice-action: iparapheur-sous-type
+            link_name: 'Liste des circuits'
+        fast_parapheur_circuit_configuration:
+            name: 'Configuration du circuit à la volée (au format JSON)'
+            commentaire: 'Si ce fichier est déposé, il remplace le circuit choisi dans le champ "Circuit sur le parapheur"'
+            type: file
+        fast_parapheur_email_destinataire:
+            name: 'Email du destinataire'
+            commentaire: "Email de la personne à qui l’on souhaite envoyer le document après sa signature<br />\nUniquement avec le mode \"circuit à la volée\""
+        fast_parapheur_email_cc:
+            name: 'Email des destinataires en copie carbone'
+            commentaire: "Permet de rajouter des destinataires mais en copie carbone<br />\nUniquement avec le mode \"circuit à la volée\""
+        fast_parapheur_agents:
+            name: 'Emails des agents'
+            commentaire: "Les emails des utilisateurs à rajouter en tant qu’agent. Séparé par des virgules<br />\nUniquement avec le mode \"circuit à la volée\""
+    Signature:
+        iparapheur_dossier_id:
+            name: '#ID dossier parapheur'
+        iparapheur_historique:
+            name: 'Historique iparapheur'
+            type: file
+        parapheur_last_message:
+            name: 'Dernier message reçu du parapheur'
+        has_signature:
+            no-show: true
+        signature:
+            name: 'Signature détachée'
+            type: file
+        bordereau_signature:
+            name: 'Bordereau de signature'
+            type: file
+        document_original:
+            name: 'Document original'
+            type: file
+        multi_document_original:
+            name: 'Multi-document(s) original'
+            type: file
+            multiple: true
+        iparapheur_annexe_sortie:
+            name: 'Annexe(s) de sortie du parapheur'
+            type: file
+            multiple: true
+    'Retour GED #1':
+        has_ged_document_id_1:
+            no-show: true
+        ged_document_id_file_1:
+            name: 'Identifiants des documents sur la GED'
+            type: file
+            visionneuse: GedIdDocumentsVisionneuse
+            read-only: true
+            requis: true
+            visionneuse-no-link: true
+    'Mail sécurisé':
+        to:
+            name: Destinataire(s)
+            commentaire: 'Plusieurs emails possibles séparés par une virgule'
+            requis: true
+            type: mail-list
+            autocomplete: MailSec/getContactAjax
+        cc:
+            name: 'Copie à'
+            commentaire: 'Plusieurs emails possibles séparés par une virgule'
+            type: mail-list
+            autocomplete: MailSec/getContactAjax
+        bcc:
+            name: 'Copie cachée à'
+            commentaire: 'Plusieurs emails possibles séparés par une virgule'
+            type: mail-list
+            autocomplete: MailSec/getContactAjax
+        password:
+            name: 'Mot de passe'
+            type: password
+            may_be_null: true
+        password2:
+            name: 'Mot de passe (confirmation)'
+            type: password
+            may_be_null: true
+            is_equal: password
+            is_equal_error: 'Les mots de passe ne correspondent pas'
+        key:
+            no-show: true
+        sent_mail_number:
+            name: Destinataires
+            default: '0'
+            no-show: true
+        sent_mail_read:
+            name: 'Mails lus'
+            default: '0'
+            no-show: true
+        sent_mail_answered:
+            name: 'Mails répondus'
+            default: '0'
+            no-show: true
+    'Retour GED #2':
+        has_ged_document_id_2:
+            no-show: true
+        ged_document_id_file_2:
+            name: 'Identifiants des documents sur la GED'
+            type: file
+            visionneuse: GedIdDocumentsVisionneuse
+            read-only: true
+            requis: true
+            visionneuse-no-link: true
+    SAE:
+        sae_show:
+            no-show: true
+        journal:
+            name: 'Faisceau de preuves'
+            type: file
+        date_journal_debut:
+            name: 'Date du premier évènement journalisé'
+        date_cloture_journal:
+            name: 'Date de clôture du journal'
+        date_cloture_journal_iso8601:
+            name: 'Date de clôture du journal (iso 8601)'
+        sae_transfert_id:
+            name: 'Identifiant de transfert'
+            index: true
+        sae_bordereau:
+            name: 'Bordereau SEDA'
+            type: file
+        sae_archive:
+            name: Archive
+            type: file
+        ar_sae:
+            type: file
+            name: 'Accusé de réception SAE'
+        sae_ack_comment:
+            name: 'Commentaire de l''accusé de réception'
+        reply_sae:
+            type: file
+            name: 'Réponse du SAE'
+        sae_archival_identifier:
+            name: 'Identifiant de l''archive sur le SAE'
+        sae_atr_comment:
+            name: 'Commentaire de la réponse du SAE'
+        url_archive:
+            name: 'URL de l''archive'
+            type: url
 champs-affiches:
-  - titre
-  - dernier_etat
-  - date_dernier_etat
-  - prenom_agent
-  - nom_agent
+    - titre
+    - dernier_etat
+    - date_dernier_etat
+    - prenom_agent
+    - nom_agent
 champs-recherche-avancee:
-  - type
-  - id_e
-  - lastetat
-  - last_state_begin
-  - etatTransit
-  - state_begin
-  - search
-  - prenom_agent
-  - nom_agent
+    - type
+    - id_e
+    - lastetat
+    - last_state_begin
+    - etatTransit
+    - state_begin
+    - search
+    - prenom_agent
+    - nom_agent
 page-condition:
-  i-Parapheur:
-    envoi_iparapheur: true
-  Parapheur FAST:
-    envoi_fast: true
-  Signature:
-    has_signature: true
-  "Retour GED #1":
-    has_ged_document_id_1: true
-  Mail sécurisé:
-    envoi_mailsec: true
-  "Retour GED #2":
-    has_ged_document_id_2: true
-  SAE:
-    sae_show: true
+    i-Parapheur:
+        envoi_iparapheur: true
+    'Parapheur FAST':
+        envoi_fast: true
+    Signature:
+        has_signature: true
+    'Retour GED #1':
+        has_ged_document_id_1: true
+    'Mail sécurisé':
+        envoi_mailsec: true
+    'Retour GED #2':
+        has_ged_document_id_2: true
+    SAE:
+        sae_show: true
 action:
-  creation:
-    name-action: Créer
-    name: Créé
-    rule:
-      no-last-action: ""
-  modification:
-    name-action: Modifier
-    name: En cours de rédaction
-    rule:
-      last-action:
-        - creation
-        - modification
-        - importation
-        - send-signature-error
-  supression:
-    name-action: Supprimer
-    name: Supprimé
-    rule:
-      last-action:
-        - creation
-        - modification
-        - importation
-        - termine
-        - fatal-error
-        - rejet-iparapheur
-        - rejet-sae
-    action-class: Supprimer
-    warning: Êtes-vous sûr ?
-  importation:
-    name: Importation du document
-    rule:
-      role_id_e: no-role
-    action-automatique: orientation
-  orientation:
-    name: Envoi du document
-    name-action: Envoyer le document
-    rule:
-      last-action:
-        - creation
-        - modification
-        - importation
-        - recu-iparapheur
-        - send-ged_1
-        - reception
-        - non-recu
-        - send-ged_2
-        - accepter-sae
-      document_is_valide: true
-    action-class: OrientationTypeDossierPersonnalise
-  termine:
-    name: Traitement terminé
-    rule:
-      role_id_e: no-role
-  cheminement-change:
-    no-workflow: true
-    rule:
-      role_id_e: no-role,
-    action-class: CheminementChangeTypeDossierPersonnalise
-  preparation-send-iparapheur:
-    name: "Préparation de l'envoi au parapheur"
-    rule:
-      role_id_e: no-role
-    action-automatique: send-iparapheur
-  send-iparapheur:
-    name-action: Transmettre au parapheur
-    name: Transmis au parapheur
-    rule:
-      last-action:
-        - preparation-send-iparapheur
-        - send-signature-error
-    action-class: StandardAction
-    connecteur-type: signature
-    connecteur-type-action: SignatureEnvoie
-    connecteur-type-mapping:
-      iparapheur_type: iparapheur_type
-      iparapheur_sous_type: iparapheur_sous_type
-      iparapheur_dossier_id: iparapheur_dossier_id
-      fast_parapheur_circuit: fast_parapheur_circuit
-      fast_parapheur_circuit_configuration: fast_parapheur_circuit_configuration
-      fast_parapheur_email_destinataire: fast_parapheur_email_destinataire
-      fast_parapheur_email_cc: fast_parapheur_email_cc
-      fast_parapheur_agents: fast_parapheur_agents
-      send-signature-error: send-signature-error
-      objet: objet
-      document: arrete
-      autre_document_attache: annexe
-    action-automatique: verif-iparapheur
-  send-signature-error:
-    name: "Erreur lors de l'envoi du dossier à la signature"
-    editable-content:
-      - fast_parapheur_circuit
-      - fast_parapheur_circuit_configuration
-      - fast_parapheur_email_destinataire
-      - fast_parapheur_email_cc
-      - fast_parapheur_agents
-    rule:
-      role_id_e: no-role
-  verif-iparapheur:
-    name-action: Vérifier le statut de signature
-    name: Vérification de la signature
-    rule:
-      last-action:
-        - erreur-verif-iparapheur
-        - send-iparapheur
-    action-class: StandardAction
-    connecteur-type: signature
-    connecteur-type-action: SignatureRecuperation
-    connecteur-type-mapping:
-      iparapheur_historique: iparapheur_historique
-      parapheur_last_message: parapheur_last_message
-      has_signature: has_signature
-      signature: signature
-      document_original: document_original
-      multi_document_original: multi_document_original
-      bordereau: bordereau_signature
-      iparapheur_annexe_sortie: iparapheur_annexe_sortie
-      iparapheur_dossier_id: iparapheur_dossier_id
-      recu-iparapheur: recu-iparapheur
-      rejet-iparapheur: rejet-iparapheur
-      erreur-verif-iparapheur: erreur-verif-iparapheur
-      objet: objet
-      document: arrete
-      autre_document_attache: annexe
-  erreur-verif-iparapheur:
-    name: >
-      Erreur lors de la vérification du
-      statut de signature
-    rule:
-      role_id_e: no-role
-  recu-iparapheur:
-    name: Signature récuperée
-    rule:
-      role_id_e: no-role
-    action-automatique: orientation
-  rejet-iparapheur:
-    name: Signature refusée
-    rule:
-      role_id_e: no-role
-  iparapheur-sous-type:
-    name: Liste des sous-type iParapheur
-    no-workflow: true
-    rule:
-      role_id_e: no-role
-    action-class: IparapheurSousType
-    connecteur-type-mapping:
-      iparapheur_type: iparapheur_type
-      iparapheur_sous_type: iparapheur_sous_type
-      fast_parapheur_circuit: fast_parapheur_circuit
-  preparation-send-ged_1:
-    name: "Préparation de l'envoi à la GED #1"
-    rule:
-      role_id_e: no-role
-    action-automatique: send-ged_1
-    num-same-connecteur: "0"
-  send-ged_1:
-    name-action: 'Verser à la GED #1'
-    name: 'Versé à la GED #1'
-    rule:
-      last-action:
-        - preparation-send-ged_1
-        - error-ged_1
-    action-automatique: orientation
-    action-class: StandardAction
-    connecteur-type: GED
-    connecteur-type-action: GEDEnvoyer
-    connecteur-type-mapping:
-      fatal-error: error-ged_1
-    num-same-connecteur: "0"
-  error-ged_1:
-    name: 'Erreur irrécupérable lors du dépôt #1'
-    rule:
-      role_id_e: no-role
-    num-same-connecteur: "0"
-  preparation-send-mailsec:
-    name: "Préparation de l'envoi par mail sécurisé"
-    rule:
-      role_id_e: no-role
-    action-automatique: send-mailsec
-  send-mailsec:
-    name-action: Envoyer le mail sécurisé
-    name: "Envoi d'un mail sécurisé"
-    rule:
-      last-action:
-        - preparation-send-mailsec
-    action-class: StandardAction
-    connecteur-type: mailsec
-    connecteur-type-action: MailsecEnvoyer
-    connecteur-type-mapping:
-      to: to
-      cc: cc
-      bcc: bcc
-      sent_mail_number: sent_mail_number
-    action-automatique: mailsec-relance
-  mailsec-relance:
-    name: Relancé
-    name-action: Relancer si nécessaire
-    rule:
-      last-action:
-        - send-mailsec
-        - renvoi
-        - reception-partielle
-    action-class: StandardAction
-    connecteur-type: mailsec
-    connecteur-type-action: MailsecRelance
-    connecteur-type-mapping:
-      reception-partielle: reception-partielle
-      prepare-renvoi: prepare-renvoi
-      non-recu: preparation-non-recu
-      send-mailsec: send-mailsec
-    action-automatique: mailsec-relance
-  prepare-renvoi:
-    name: Préparation de la relance du mail
-    rule:
-      role_id_e: no-role
-    action-automatique: renvoi
-  renvoi:
-    name-action: Envoyer à nouveau
-    name: Renvoyé
-    rule:
-      last-action:
-        - mailsec-relance
-        - send-mailsec
-        - renvoi
-        - reception-partielle
-      role_id_e: editeur
-      document_is_valide: true
-    connecteur-type: mailsec
-    connecteur-type-action: MailsecRenvoyer
-    action-automatique: mailsec-relance
-    action-class: StandardAction
-  reception:
-    name: Reçu
-    rule:
-      role_id_e: no-role
-    action-automatique: orientation
-  reception-partielle:
-    name: Reçu partiellement
-    rule:
-      role_id_e: no-role
-    action-automatique: mailsec-relance
-  preparation-non-recu:
-    name: Préparation au passage comme non reçu
-    rule:
-      role_id_e: no-role
-    action-automatique: non-recu
-  non-recu:
-    name: Non reçu
-    name-action: Définir comme non reçu
-    warning: ok
-    rule:
-      last-action:
-        - preparation-non-recu
-        - renvoi
-        - send-mailsec
-        - reception-partielle
-    action-class: StandardAction
-    connecteur-type: mailsec
-    connecteur-type-action: MailsecNotReceived
-    action-automatique: orientation
-  reponse:
-    name: Une réponse a été enregistrée
-    rule:
-      no-action:
-        - creation
-  compute_read_mail:
-    name: Calcul des mails lus
-    rule:
-      role_id_e: no-role
-    action-class: StandardAction
-    connecteur-type: mailsec
-    connecteur-type-action: MailsecComputeReadMail
-    connecteur-type-mapping:
-      sent_mail_read: sent_mail_read
-  compute_answered_mail:
-    name: Calcul des mails répondus
-    rule:
-      role_id_e: no-role
-    action-class: StandardAction
-    connecteur-type: mailsec
-    connecteur-type-action: MailsecComputeAnsweredMail
-    connecteur-type-mapping:
-      sent_mail_answered: sent_mail_answered
-  preparation-send-ged_2:
-    name: "Préparation de l'envoi à la GED #2"
-    rule:
-      role_id_e: no-role
-    action-automatique: send-ged_2
-    num-same-connecteur: "1"
-  send-ged_2:
-    name-action: 'Verser à la GED #2'
-    name: 'Versé à la GED #2'
-    rule:
-      last-action:
-        - preparation-send-ged_2
-        - error-ged_2
-    action-automatique: orientation
-    action-class: StandardAction
-    connecteur-type: GED
-    connecteur-type-action: GEDEnvoyer
-    connecteur-type-mapping:
-      fatal-error: error-ged_2
-    num-same-connecteur: "1"
-  error-ged_2:
-    name: 'Erreur irrécupérable lors du dépôt #2'
-    rule:
-      role_id_e: no-role
-    num-same-connecteur: "1"
-  preparation-send-sae:
-    name: "Préparation de l'envoi au SAE"
-    rule:
-      role_id_e: no-role
-    action-automatique: generate-archive
-  generate-archive:
-    name-action: "Générer l'archive"
-    name: Archive générée
-    rule:
-      last-action:
-        - preparation-send-sae
-        - generate-archive-error
-    action-class: StandardAction
-    connecteur-type: SAE
-    connecteur-type-action: >
-      Pastell\Step\SAE\Action\SAEGenerateArchiveAction
-    action-automatique: send-archive
-  generate-archive-error:
-    name: "Erreur lors de la génération de l'archive"
-    rule:
-      role_id_e: no-role
-  send-archive:
-    name-action: Verser au SAE
-    name: Versé au SAE
-    rule:
-      last-action:
-        - generate-archive
-        - rejet-sae
-        - erreur-envoie-sae
-    action-class: StandardAction
-    connecteur-type: SAE
-    connecteur-type-action: >
-      Pastell\Step\SAE\Action\SAESendArchiveAction
-    action-automatique: verif-sae
-  erreur-envoie-sae:
-    name: "Erreur lors de l'envoi au SAE"
-    rule:
-      role_id_e: no-role
-  verif-sae:
-    name-action: "Récupérer l'AR du document sur le SAE"
-    name: "Récuperation de l'AR sur le SAE"
-    rule:
-      last-action:
-        - send-archive
-        - verif-sae-erreur
-    action-class: StandardAction
-    connecteur-type: SAE
-    connecteur-type-action: SAEVerifier
-  verif-sae-erreur:
-    name: "Erreur lors de la récupération de l'AR"
-    rule:
-      role_id_e: no-role
-  ar-recu-sae:
-    name: AR SAE reçu
-    rule:
-      role_id_e: no-role
-    action-automatique: validation-sae
-  validation-sae:
-    name-action: "Vérifier l'acceptation par le SAE"
-    name: "Vérification de l'acceptation par le SAE"
-    rule:
-      last-action:
-        - ar-recu-sae
-        - validation-sae-erreur
-    action-class: StandardAction
-    connecteur-type: SAE
-    connecteur-type-action: SAEValider
-  validation-sae-erreur:
-    name: >
-      Erreur lors de la vérification de la
-      validité du transfert
-    rule:
-      role_id_e: no-role
-  accepter-sae:
-    name: Archive acceptée par le SAE
-    rule:
-      role_id_e: no-role
-  rejet-sae:
-    name: Archive rejetée par le SAE
-    rule:
-      role_id_e: no-role
+    creation:
+        name-action: Créer
+        name: Créé
+        rule:
+            no-last-action: ''
+    modification:
+        name-action: Modifier
+        name: 'En cours de rédaction'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - send-signature-error
+    supression:
+        name-action: Supprimer
+        name: Supprimé
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - termine
+                - fatal-error
+                - rejet-iparapheur
+                - rejet-sae
+        action-class: Supprimer
+        warning: 'Êtes-vous sûr ?'
+    importation:
+        name: 'Importation du document'
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+    orientation:
+        name: 'Envoi du document'
+        name-action: 'Envoyer le document'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - recu-iparapheur
+                - send-ged_1
+                - reception
+                - non-recu
+                - send-ged_2
+                - accepter-sae
+            document_is_valide: true
+        action-class: OrientationTypeDossierPersonnalise
+    termine:
+        name: 'Traitement terminé'
+        rule:
+            role_id_e: no-role
+    cheminement-change:
+        no-workflow: true
+        rule:
+            role_id_e: 'no-role,'
+        action-class: CheminementChangeTypeDossierPersonnalise
+    preparation-send-iparapheur:
+        name: 'Préparation de l''envoi au parapheur'
+        rule:
+            role_id_e: no-role
+        action-automatique: send-iparapheur
+    send-iparapheur:
+        name-action: 'Transmettre au parapheur'
+        name: 'Transmis au parapheur'
+        rule:
+            last-action:
+                - preparation-send-iparapheur
+                - send-signature-error
+        action-class: StandardAction
+        connecteur-type: signature
+        connecteur-type-action: SignatureEnvoie
+        connecteur-type-mapping:
+            iparapheur_type: iparapheur_type
+            iparapheur_sous_type: iparapheur_sous_type
+            iparapheur_dossier_id: iparapheur_dossier_id
+            fast_parapheur_circuit: fast_parapheur_circuit
+            fast_parapheur_circuit_configuration: fast_parapheur_circuit_configuration
+            fast_parapheur_email_destinataire: fast_parapheur_email_destinataire
+            fast_parapheur_email_cc: fast_parapheur_email_cc
+            fast_parapheur_agents: fast_parapheur_agents
+            send-signature-error: send-signature-error
+            objet: objet
+            document: arrete
+            autre_document_attache: annexe
+        action-automatique: verif-iparapheur
+    send-signature-error:
+        name: 'Erreur lors de l''envoi du dossier à la signature'
+        editable-content:
+            - fast_parapheur_circuit
+            - fast_parapheur_circuit_configuration
+            - fast_parapheur_email_destinataire
+            - fast_parapheur_email_cc
+            - fast_parapheur_agents
+        rule:
+            role_id_e: no-role
+    verif-iparapheur:
+        name-action: 'Vérifier le statut de signature'
+        name: 'Vérification de la signature'
+        rule:
+            last-action:
+                - erreur-verif-iparapheur
+                - send-iparapheur
+        action-class: StandardAction
+        connecteur-type: signature
+        connecteur-type-action: SignatureRecuperation
+        connecteur-type-mapping:
+            iparapheur_historique: iparapheur_historique
+            parapheur_last_message: parapheur_last_message
+            has_signature: has_signature
+            signature: signature
+            document_original: document_original
+            multi_document_original: multi_document_original
+            bordereau: bordereau_signature
+            iparapheur_annexe_sortie: iparapheur_annexe_sortie
+            iparapheur_dossier_id: iparapheur_dossier_id
+            recu-iparapheur: recu-iparapheur
+            rejet-iparapheur: rejet-iparapheur
+            erreur-verif-iparapheur: erreur-verif-iparapheur
+            objet: objet
+            document: arrete
+            autre_document_attache: annexe
+    erreur-verif-iparapheur:
+        name: 'Erreur lors de la vérification du statut de signature'
+        rule:
+            role_id_e: no-role
+    recu-iparapheur:
+        name: 'Signature récuperée'
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+    rejet-iparapheur:
+        name: 'Signature refusée'
+        rule:
+            role_id_e: no-role
+    iparapheur-sous-type:
+        name: 'Liste des sous-type iParapheur'
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: IparapheurSousType
+        connecteur-type-mapping:
+            iparapheur_type: iparapheur_type
+            iparapheur_sous_type: iparapheur_sous_type
+            fast_parapheur_circuit: fast_parapheur_circuit
+    preparation-send-ged_1:
+        name: 'Préparation de l''envoi à la GED #1'
+        rule:
+            role_id_e: no-role
+        action-automatique: send-ged_1
+        num-same-connecteur: '0'
+    send-ged_1:
+        name-action: 'Verser à la GED #1'
+        name: 'Versé à la GED #1'
+        rule:
+            last-action:
+                - preparation-send-ged_1
+                - error-ged_1
+        action-automatique: orientation
+        action-class: StandardAction
+        connecteur-type: GED
+        connecteur-type-action: GEDEnvoyer
+        connecteur-type-mapping:
+            fatal-error: error-ged_1
+        num-same-connecteur: '0'
+    error-ged_1:
+        name: 'Erreur irrécupérable lors du dépôt #1'
+        rule:
+            role_id_e: no-role
+        num-same-connecteur: '0'
+    preparation-send-mailsec:
+        name: 'Préparation de l''envoi par mail sécurisé'
+        rule:
+            role_id_e: no-role
+        action-automatique: send-mailsec
+    send-mailsec:
+        name-action: 'Envoyer le mail sécurisé'
+        name: 'Envoi d''un mail sécurisé'
+        rule:
+            last-action:
+                - preparation-send-mailsec
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecEnvoyer
+        connecteur-type-mapping:
+            to: to
+            cc: cc
+            bcc: bcc
+            sent_mail_number: sent_mail_number
+        action-automatique: mailsec-relance
+    mailsec-relance:
+        name: Relancé
+        name-action: 'Relancer si nécessaire'
+        rule:
+            last-action:
+                - send-mailsec
+                - renvoi
+                - reception-partielle
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecRelance
+        connecteur-type-mapping:
+            reception-partielle: reception-partielle
+            prepare-renvoi: prepare-renvoi
+            non-recu: preparation-non-recu
+            send-mailsec: send-mailsec
+        action-automatique: mailsec-relance
+    prepare-renvoi:
+        name: 'Préparation de la relance du mail'
+        rule:
+            role_id_e: no-role
+        action-automatique: renvoi
+    renvoi:
+        name-action: 'Envoyer à nouveau'
+        name: Renvoyé
+        rule:
+            last-action:
+                - mailsec-relance
+                - send-mailsec
+                - renvoi
+                - reception-partielle
+            role_id_e: editeur
+            document_is_valide: true
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecRenvoyer
+        action-automatique: mailsec-relance
+        action-class: StandardAction
+    reception:
+        name: Reçu
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+    reception-partielle:
+        name: 'Reçu partiellement'
+        rule:
+            role_id_e: no-role
+        action-automatique: mailsec-relance
+    preparation-non-recu:
+        name: 'Préparation au passage comme non reçu'
+        rule:
+            role_id_e: no-role
+        action-automatique: non-recu
+    non-recu:
+        name: 'Non reçu'
+        name-action: 'Définir comme non reçu'
+        warning: ok
+        rule:
+            last-action:
+                - preparation-non-recu
+                - renvoi
+                - send-mailsec
+                - reception-partielle
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecNotReceived
+        action-automatique: orientation
+    reponse:
+        name: 'Une réponse a été enregistrée'
+        rule:
+            no-action:
+                - creation
+    compute_read_mail:
+        name: 'Calcul des mails lus'
+        rule:
+            role_id_e: no-role
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecComputeReadMail
+        connecteur-type-mapping:
+            sent_mail_read: sent_mail_read
+    compute_answered_mail:
+        name: 'Calcul des mails répondus'
+        rule:
+            role_id_e: no-role
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecComputeAnsweredMail
+        connecteur-type-mapping:
+            sent_mail_answered: sent_mail_answered
+    preparation-send-ged_2:
+        name: 'Préparation de l''envoi à la GED #2'
+        rule:
+            role_id_e: no-role
+        action-automatique: send-ged_2
+        num-same-connecteur: '1'
+    send-ged_2:
+        name-action: 'Verser à la GED #2'
+        name: 'Versé à la GED #2'
+        rule:
+            last-action:
+                - preparation-send-ged_2
+                - error-ged_2
+        action-automatique: orientation
+        action-class: StandardAction
+        connecteur-type: GED
+        connecteur-type-action: GEDEnvoyer
+        connecteur-type-mapping:
+            fatal-error: error-ged_2
+        num-same-connecteur: '1'
+    error-ged_2:
+        name: 'Erreur irrécupérable lors du dépôt #2'
+        rule:
+            role_id_e: no-role
+        num-same-connecteur: '1'
+    preparation-send-sae:
+        name: 'Préparation de l''envoi au SAE'
+        rule:
+            role_id_e: no-role
+        action-automatique: generate-archive
+    generate-archive:
+        name-action: 'Générer l''archive'
+        name: 'Archive générée'
+        rule:
+            last-action:
+                - preparation-send-sae
+                - generate-archive-error
+        action-class: StandardAction
+        connecteur-type: SAE
+        connecteur-type-action: Pastell\Step\SAE\Action\SAEGenerateArchiveAction
+        action-automatique: send-archive
+    generate-archive-error:
+        name: 'Erreur lors de la génération de l''archive'
+        rule:
+            role_id_e: no-role
+    send-archive:
+        name-action: 'Verser au SAE'
+        name: 'Versé au SAE'
+        rule:
+            last-action:
+                - generate-archive
+                - rejet-sae
+                - erreur-envoie-sae
+        action-class: StandardAction
+        connecteur-type: SAE
+        connecteur-type-action: Pastell\Step\SAE\Action\SAESendArchiveAction
+        action-automatique: verif-sae
+    erreur-envoie-sae:
+        name: 'Erreur lors de l''envoi au SAE'
+        rule:
+            role_id_e: no-role
+    verif-sae:
+        name-action: 'Récupérer l''AR du document sur le SAE'
+        name: 'Récuperation de l''AR sur le SAE'
+        rule:
+            last-action:
+                - send-archive
+                - verif-sae-erreur
+        action-class: StandardAction
+        connecteur-type: SAE
+        connecteur-type-action: SAEVerifier
+    verif-sae-erreur:
+        name: 'Erreur lors de la récupération de l''AR'
+        rule:
+            role_id_e: no-role
+    ar-recu-sae:
+        name: 'AR SAE reçu'
+        rule:
+            role_id_e: no-role
+        action-automatique: validation-sae
+    validation-sae:
+        name-action: 'Vérifier l''acceptation par le SAE'
+        name: 'Vérification de l''acceptation par le SAE'
+        rule:
+            last-action:
+                - ar-recu-sae
+                - validation-sae-erreur
+        action-class: StandardAction
+        connecteur-type: SAE
+        connecteur-type-action: SAEValider
+    validation-sae-erreur:
+        name: 'Erreur lors de la vérification de la validité du transfert'
+        rule:
+            role_id_e: no-role
+    accepter-sae:
+        name: 'Archive acceptée par le SAE'
+        rule:
+            role_id_e: no-role
+    rejet-sae:
+        name: 'Archive rejetée par le SAE'
+        rule:
+            role_id_e: no-role
