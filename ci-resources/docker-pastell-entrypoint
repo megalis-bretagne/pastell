@@ -6,6 +6,7 @@ set -e
 # Génération fichier ssmtp.conf
 if [ "$SMTP_SERVER" ] ; then
   /bin/bash /var/www/pastell/ci-resources/generate-msmtp.conf.sh > /data/config/msmtprc
+  chmod 600 /data/config/msmtprc
 fi
 
 # Utilisation de l'authentification cliente si nécessaire
