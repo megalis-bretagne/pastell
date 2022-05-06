@@ -102,7 +102,6 @@ class JournalControler extends PastellControler
 
     public function indexAction()
     {
-
         $recuperateur = new Recuperateur($_GET);
         $id_e = $recuperateur->getInt('id_e', 0);
         $this->setViewParameter('offset', $recuperateur->getInt('offset', 0));

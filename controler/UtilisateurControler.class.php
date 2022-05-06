@@ -759,7 +759,7 @@ class UtilisateurControler extends PastellControler
      * @throws LastMessageException
      * @throws LastErrorException
      */
-    private function checkSelfSuppression($id_u): void
+    private function checkSelfSuppression(int $id_u): void
     {
         if ($id_u !== (int) $this->getId_u()) {
             return;

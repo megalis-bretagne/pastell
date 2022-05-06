@@ -1,6 +1,11 @@
 <?php
 
 /** @var Gabarit $this */
+
+use Pastell\Helpers\UsernameDisplayer;
+
+$usernameDisplay = new UsernameDisplayer();
+
 ?>
 <a class='btn btn-link' href='Journal/index?id_e=<?php echo $id_e?>&id_d=<?php echo $id_d?>&type=<?php echo $type?>&offset=<?php echo $offset ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour au journal </a>
 
@@ -27,7 +32,8 @@
         </tr>
 <tr>
         <th>Utilisateur</th>
-        <td><a href='Utilisateur/detail?id_u=<?php echo  $info['id_u']?>'><?php hecho($info['prenom'] . " " . $info['nom'])?></a>
+        <td>
+            <?php echo $usernameDisplay->getUsername($info); ?>
         </td>
 </tr>
 <?php if ($info['id_d']) :?>
