@@ -59,7 +59,7 @@ class OrientationTypeDossierPersonnalise extends ActionExecutor
             return false;
         }
 
-        $message = "sélection automatique  de l'action suivante";
+        $message = "sélection automatique de l'action suivante";
         $this->notify($next_action, $this->type, $message);
         $this->changeAction($next_action, $message);
         return true;
