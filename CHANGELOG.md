@@ -70,6 +70,10 @@
 
 # [3.1.15]
 
+## Corrections
+
+- Correction du workflow du flux `facture-cpp` en mode automatique #1502
+
 ## Ajouts
 
 * Ajout de la taille totale dans le connecteur de statistiques #1534
