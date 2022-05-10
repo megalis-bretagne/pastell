@@ -61,7 +61,7 @@ class TypeDossierMailsecEtapeTest extends PastellTestCase
         $this->assertTrue(
             $this->triggerActionOnDocument($id_d, "orientation")
         );
-        $this->assertLastMessage("sélection automatique  de l'action suivante");
+        $this->assertLastMessage("sélection automatique de l'action suivante");
 
         $this->assertTrue(
             $this->triggerActionOnDocument($id_d, "send-mailsec")
@@ -95,7 +95,7 @@ class TypeDossierMailsecEtapeTest extends PastellTestCase
         $this->assertTrue(
             $this->triggerActionOnDocument($id_d, "orientation")
         );
-        $this->assertLastMessage("sélection automatique  de l'action suivante");
+        $this->assertLastMessage("sélection automatique de l'action suivante");
         $this->assertLastDocumentAction('termine', $id_d);
     }
 
@@ -112,7 +112,7 @@ class TypeDossierMailsecEtapeTest extends PastellTestCase
         $this->assertTrue(
             $this->triggerActionOnDocument($id_d, "orientation")
         );
-        $this->assertLastMessage("sélection automatique  de l'action suivante");
+        $this->assertLastMessage("sélection automatique de l'action suivante");
 
         $this->assertTrue(
             $this->triggerActionOnDocument($id_d, "send-mailsec")
