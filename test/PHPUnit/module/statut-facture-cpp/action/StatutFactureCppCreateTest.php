@@ -16,7 +16,9 @@ class StatutFactureCppCreateTest extends ExtensionCppTestCase
         $cppWrapper = $this->getMockBuilder(CPPWrapper::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $cppWrapper->expects($this->any())->method('getIdentifiantStructureCPPByIdentifiantStructure')->willReturn(false);
+        $cppWrapper->expects($this->any())
+            ->method('getIdentifiantStructureCPPByIdentifiantStructure')
+            ->willReturn(false);
 
         $cppWrapperFactory = $this->getMockBuilder(CPPWrapperFactory::class)
             ->disableOriginalConstructor()
@@ -38,7 +40,10 @@ class StatutFactureCppCreateTest extends ExtensionCppTestCase
         $actionResult = $this->triggerActionOnDocument($document['id_d'], self::ACTION_CREATE_STATUT_FACTURE_CPP);
 
         $this->assertFalse($actionResult);
-        $this->assertLastMessage("L'identifiant de structure 00000000169959 n'a pas été trouvé. L'identifiant CPP est invalide");
+        $this->assertLastMessage(
+            "L'identifiant de structure 00000000169959 n'a pas été trouvé. L'identifiant CPP est invalide"
+        );
+        $this->assertLastDocumentAction('create-statut-facture-cpp-error', $document['id_d']);
     }
 
     /**
@@ -52,8 +57,12 @@ class StatutFactureCppCreateTest extends ExtensionCppTestCase
         $cppWrapper = $this->getMockBuilder(CPPWrapper::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $cppWrapper->expects($this->any())->method('getIdentifiantStructureCPPByIdentifiantStructure')->willReturn(1234);
-        $cppWrapper->expects($this->any())->method('getCppInvoiceId')->willThrowException(new Exception("Impossible de trouver la facture 10000"));
+        $cppWrapper->expects($this->any())
+            ->method('getIdentifiantStructureCPPByIdentifiantStructure')
+            ->willReturn(1234);
+        $cppWrapper->expects($this->any())
+            ->method('getCppInvoiceId')
+            ->willThrowException(new Exception("Impossible de trouver la facture 10000"));
 
         $cppWrapperFactory = $this->getMockBuilder(CPPWrapperFactory::class)
             ->disableOriginalConstructor()
@@ -76,6 +85,7 @@ class StatutFactureCppCreateTest extends ExtensionCppTestCase
 
         $this->assertFalse($actionResult);
         $this->assertLastMessage("Impossible de trouver la facture 10000");
+        $this->assertLastDocumentAction('create-statut-facture-cpp-error', $document['id_d']);
     }
 
     /**
@@ -89,7 +99,9 @@ class StatutFactureCppCreateTest extends ExtensionCppTestCase
         $cppWrapper = $this->getMockBuilder(CPPWrapper::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $cppWrapper->expects($this->any())->method('getIdentifiantStructureCPPByIdentifiantStructure')->willReturn(1234);
+        $cppWrapper->expects($this->any())
+            ->method('getIdentifiantStructureCPPByIdentifiantStructure')
+            ->willReturn(1234);
         $cppWrapper->expects($this->any())->method('getCppInvoiceId')->willReturn(10000);
 
         $cppWrapperFactory = $this->getMockBuilder(CPPWrapperFactory::class)
@@ -126,7 +138,9 @@ class StatutFactureCppCreateTest extends ExtensionCppTestCase
         $cppWrapper = $this->getMockBuilder(CPPWrapper::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $cppWrapper->expects($this->any())->method('getIdentifiantStructureCPPByIdentifiantStructure')->willReturn(1234);
+        $cppWrapper->expects($this->any())
+            ->method('getIdentifiantStructureCPPByIdentifiantStructure')
+            ->willReturn(1234);
         $cppWrapper->expects($this->any())->method('getCppInvoiceId')->willReturn(10000);
 
         $cppWrapperFactory = $this->getMockBuilder(CPPWrapperFactory::class)
@@ -151,6 +165,7 @@ class StatutFactureCppCreateTest extends ExtensionCppTestCase
 
         $this->assertFalse($actionResult);
         $this->assertLastMessage("L'identifiant 17 est inconnu");
+        $this->assertLastDocumentAction('create-statut-facture-cpp-error', $document['id_d']);
     }
 
     /**
@@ -164,8 +179,12 @@ class StatutFactureCppCreateTest extends ExtensionCppTestCase
         $cppWrapper = $this->getMockBuilder(CPPWrapper::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $cppWrapper->expects($this->any())->method('getIdentifiantStructureCPPByIdentifiantStructure')->willReturn(1234);
-        $cppWrapper->expects($this->any())->method('getCppInvoiceId')->willThrowException(new Exception("Plusieurs factures ont été trouvé avec le numéro 10000"));
+        $cppWrapper->expects($this->any())
+            ->method('getIdentifiantStructureCPPByIdentifiantStructure')
+            ->willReturn(1234);
+        $cppWrapper->expects($this->any())
+            ->method('getCppInvoiceId')
+            ->willThrowException(new Exception("Plusieurs factures ont été trouvé avec le numéro 10000"));
 
         $cppWrapperFactory = $this->getMockBuilder(CPPWrapperFactory::class)
             ->disableOriginalConstructor()
@@ -188,6 +207,7 @@ class StatutFactureCppCreateTest extends ExtensionCppTestCase
 
         $this->assertFalse($actionResult);
         $this->assertLastMessage("Plusieurs factures ont été trouvé avec le numéro 10000");
+        $this->assertLastDocumentAction('create-statut-facture-cpp-error', $document['id_d']);
     }
 
     /**
@@ -213,7 +233,10 @@ class StatutFactureCppCreateTest extends ExtensionCppTestCase
         $actionResult = $this->triggerActionOnDocument($document['id_d'], self::ACTION_CREATE_STATUT_FACTURE_CPP);
 
         $this->assertFalse($actionResult);
-        $this->assertLastMessage("Le fichier CPPStatutPivot est incorrect:  [Erreur #1824] Element 'Horodatage': '2018-15-18T16:51:55.000+01:00' is not a valid value of the atomic type 'xs:dateTime'.\n\n");
+        $this->assertLastMessage(
+            "Le fichier CPPStatutPivot est incorrect:  [Erreur #1824] Element 'Horodatage': '2018-15-18T16:51:55.000+01:00' is not a valid value of the atomic type 'xs:dateTime'.\n\n"
+        );
+        $this->assertLastDocumentAction('create-statut-facture-cpp-error', $document['id_d']);
     }
 
     /**
@@ -238,6 +261,9 @@ class StatutFactureCppCreateTest extends ExtensionCppTestCase
         $actionResult = $this->triggerActionOnDocument($document['id_d'], self::ACTION_CREATE_STATUT_FACTURE_CPP);
 
         $this->assertFalse($actionResult);
-        $this->assertLastMessage("Le fichier CPPStatutPivot est incorrect : Il ne présente pas l'élément CPPFactureStatuts");
+        $this->assertLastMessage(
+            "Le fichier CPPStatutPivot est incorrect : Il ne présente pas l'élément CPPFactureStatuts"
+        );
+        $this->assertLastDocumentAction('create-statut-facture-cpp-error', $document['id_d']);
     }
 }

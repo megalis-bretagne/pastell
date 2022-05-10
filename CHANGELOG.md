@@ -7,9 +7,9 @@
 - Le champ SIREN n'est plus obligatoire sur la définition d'une entité #1009
 - La constante PASSWORD_MIN_ENTROPY passe par défaut à 80 suivant les recommandations de l'ANSSI
 - Studio: La génération du bordereau et de l'archive est indépendant de l'envoi au SAE grâce à un nouvel état
-intermédiaire : "Archive générée" #1357
-- La bibliothèque de lecture YAML Spyc est remplacé par la bibliothèque Symfony YAML plus performante. 
-Le script console dev:fix-yaml permet de modifier ce qui était permis (de manière incorrect) par Spyc #1515
+  intermédiaire : "Archive générée" #1357
+- La bibliothèque de lecture YAML Spyc est remplacé par la bibliothèque Symfony YAML plus performante.
+  Le script console dev:fix-yaml permet de modifier ce qui était permis (de manière incorrect) par Spyc #1515
 
 ## Suppressions
 
@@ -36,7 +36,7 @@ Le script console dev:fix-yaml permet de modifier ce qui était permis (de mani�
   TedetisAnnulation, TedetisRecupAnnulation, TedetisSendReponsePref, TedetisVerifReponsePref,
   FournisseurCommandeEnvoiGED, FournisseurCommandeEnvoiSAE, GEDEnvoiDocumentASigner, IParapheurEnvoieDocumentASigner,
   IParapheurRecupDocumentASigner, HeliosEnvoieSAEChange, HeliosGEDEnvoi, HeliosGeneriqueSAEValidation,
-  HeliosGeneriqueSAEVerif, IparapheurEnvoieHelios 
+  HeliosGeneriqueSAEVerif, IparapheurEnvoieHelios
 - Suppression de la propriété Controler::lastError
 - La récupération des acquittements du flux pes-marché est standardisé avec les autres flux (modification du nom du fichier de l'acquittement)
 - Suppression de la constante MODE_MUTUALISE. Lors de l'envoi d'un mail sécurisé, mailsec_from prend la valeur de PLATEFORME_MAIL.
@@ -45,7 +45,7 @@ Le script console dev:fix-yaml permet de modifier ce qui était permis (de mani�
 - Suppression de la fonction Controler::exitToIndex
 - Suppression des méthodes magiques ChoiceActionExecutor::__set, Gabarit::__set
 - Suppression des scripts permettant une installation hors d'un environnement Docker.
-  En particulier les scripts de création de connecteurs initiaux et de fréquences sont gérés par la séquence 
+  En particulier les scripts de création de connecteurs initiaux et de fréquences sont gérés par la séquence
   d'initialisation du conteneur.
 - Suppression du modèle `Document`, remplacé par `DocumentSQL`
 - Suppression du modèle `Utilisateur`, remplacé par `UtilisateurSQL`
@@ -60,6 +60,20 @@ Le script console dev:fix-yaml permet de modifier ce qui était permis (de mani�
 - Suppression de la plupart des scripts dans batch/ installation/ et script/. Ceux qui restent ne devrait plus être utilisé car ils doivent être remplacés par un script console
 - La méthode SEDAConnecteur::getBordereau() prend la signature de SEDAConnecteur::getBordereauNG() qui est supprimée
 - Suppression de DAEMON_USER, DAEMON_LOG_FILE, PID_FILE
+
+# [3.1.14] - 2022-05-16
+
+## Corrections
+
+- Il manquait des cas d'erreur pour la mise en état 'create-statut-facture-cpp-error' du flux `statut-facture-cpp` #1506
+
+## Évolutions
+
+- L'entropie minimum du mot de passe (PASSWORD_MIN_ENTROPY) est fixée à 80 par défaut #1499
+- Connecteur S2low, Récupérer les réponses de la préfecture: 
+  Si un document acte avec `acte_unique_id` correspondant à la réponse de la préfécture `unique_id` est présent sur Pastell
+  et que le connecteur s2low est associé au flux de cet acte d'origine 
+  alors le document `actes-reponse-prefecture` est créé sur la même entité que cet acte (Sinon, c'est sur l'entité du connecteur S2low) #1513
 
 # [3.1.13] - 2022-04-19
 

@@ -499,7 +499,7 @@ class EntiteControler extends PastellControler
         }
 
 
-        $this->setLastMessage("$nb_agent agents ont été créées");
+        $this->setLastMessage("$nb_agent agents ont été créés");
         $this->redirect("/Entite/import?page=1&id_e=$id_e");
     }
 
