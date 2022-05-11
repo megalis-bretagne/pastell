@@ -10,7 +10,7 @@ class BaseAPIControllerFactory
     private $objectInstancier;
 
     private $request;
-    
+
     private $server;
 
     private $fileUploader;
