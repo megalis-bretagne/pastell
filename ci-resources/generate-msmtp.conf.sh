@@ -12,7 +12,7 @@ password ${SMTP_PASSWORD:-}
 
 logfile /data/log/msmtp.log
 
-tls on
+tls ${SMTP_USE_TLS:-on}
 tls_starttls off
 tls_certcheck off
 
