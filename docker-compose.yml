@@ -32,7 +32,11 @@ services:
             REDIS_PORT: ${REDIS_PORT:-6379}
             SMTP_SERVER: ${SMTP_SERVER:-}
             SMTP_PORT: ${SMTP_PORT:-25}
-            PLATEFORME_MAIL: ${PLATEFORME_MAIL:-noreply@pastell}
+            SMTP_AUTH_METHOD: ${SMTP_AUTH_METHOD:-off}
+            SMTP_USER: ${SMTP_USER:-}
+            SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+            SMTP_USE_TLS: ${SMTP_USE_TLS:-on}
+            PLATEFORME_MAIL: ${PLATEFORME_MAIL:-noreply@paste.ll}
             WEBSEC_BASE: ${WEBSEC_BASE:-https://localhost:8443}
             AUTHENTICATION_WITH_CLIENT_CERTIFICATE: ${AUTHENTICATION_WITH_CLIENT_CERTIFICATE:-}
             PASTELL_ADMIN_LOGIN: ${PASTELL_ADMIN_LOGIN:-admin}
