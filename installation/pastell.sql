@@ -342,6 +342,7 @@ CREATE TABLE `utilisateur` (
 	`certificat_verif_number` varchar(32) NOT NULL,
 	`id_e` int(11) NOT NULL,
 	`password_reset_requested_at` datetime NOT NULL,
+	`is_enabled` tinyint(1) NOT NULL DEFAULT '1',
 	PRIMARY KEY (`id_u`),
 	KEY `id_e` (`id_e`)
 )  ENGINE=MyISAM  ;

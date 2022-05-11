@@ -767,4 +767,62 @@ class UtilisateurControler extends PastellControler
         $this->setLastError('Impossible de vous supprimer vous-même');
         $this->redirect("/Utilisateur/detail?id_u=$id_u");
     }
+
+    /**
+     * @throws LastMessageException
+     * @throws LastErrorException
+     */
+    public function enableAction(): void
+    {
+        $id_u = $this->getPostInfo()->get('id_u');
+        $userInfo = $this->getUtilisateur()->getInfo($id_u);
+        $this->verifDroit($userInfo['id_e'], 'utilisateur:edition');
+        $this->getObjectInstancier()->getInstance(UtilisateurSQL::class)->enable($id_u);
+        $message = "L'utilisateur {$userInfo['login']} a été activé";
+        $this->getJournal()->add(
+            Journal::MODIFICATION_UTILISATEUR,
+            $userInfo['id_e'],
+            Journal::NO_ID_D,
+            'activation',
+            $message
+        );
+        $this->setLastMessage($message);
+        $this->redirect("/Utilisateur/detail?id_u=$id_u");
+    }
+
+    /**
+     * @throws LastMessageException
+     * @throws LastErrorException
+     */
+    public function disableAction(): void
+    {
+        $id_u = $this->getPostInfo()->get('id_u');
+        $userInfo = $this->getUtilisateur()->getInfo($id_u);
+        $this->verifDroit($userInfo['id_e'], 'utilisateur:edition');
+        $this->checkSelfDisable($id_u);
+        $this->getObjectInstancier()->getInstance(UtilisateurSQL::class)->disable($id_u);
+        $message = "L'utilisateur {$userInfo['login']} a été désactivé";
+        $this->getJournal()->add(
+            Journal::MODIFICATION_UTILISATEUR,
+            $userInfo['id_e'],
+            Journal::NO_ID_D,
+            'désactivation',
+            $message
+        );
+        $this->setLastMessage($message);
+        $this->redirect("/Utilisateur/detail?id_u=$id_u");
+    }
+
+    /**
+     * @throws LastMessageException
+     * @throws LastErrorException
+     */
+    private function checkSelfDisable(int $id_u): void
+    {
+        if ($id_u !== (int) $this->getId_u()) {
+            return;
+        }
+        $this->setLastError('Impossible de vous désactiver vous-même');
+        $this->redirect("/Utilisateur/detail?id_u=$id_u");
+    }
 }

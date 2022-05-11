@@ -10,6 +10,8 @@ class BaseAPIControllerFactory
     private $objectInstancier;
 
     private $request;
+    
+    private $server;
 
     private $fileUploader;
 
@@ -17,12 +19,18 @@ class BaseAPIControllerFactory
     {
         $this->objectInstancier = $objectInstancier;
         $this->setRequest($_REQUEST);
+        $this->setServer($_SERVER);
         $this->setFileUploader(new FileUploader());
     }
 
     public function setRequest($request)
     {
         $this->request = $request;
+    }
+
+    public function setServer(array $server)
+    {
+        $this->server = $server;
     }
 
     public function setFileUploader(FileUploader $fileUploader)
@@ -68,6 +76,8 @@ class BaseAPIControllerFactory
     {
         /** @var ApiAuthentication $apiAuthentication */
         $apiAuthentication = $this->objectInstancier->getInstance(ApiAuthentication::class);
+        $apiAuthentication->setRequestInfo($this->request);
+        $apiAuthentication->setServerInfo($this->server);
         return $apiAuthentication->getUtilisateurId();
     }
 }

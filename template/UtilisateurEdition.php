@@ -3,9 +3,12 @@
 /**
  * @var Gabarit $this
  * @var array $infoUtilisateur
- * @var Certificat $certificat
+ * @var Certificate $certificat
  * @var array $arbre
  */
+
+use Pastell\Utilities\Certificate;
+
 ?>
 
 
@@ -66,7 +69,7 @@
     <th><label for='certificat'>Certificat (PEM)</label> </th>
     <td><input class="btn btn-outline-primary col-md-4" type='file' name='certificat' /><br/>
     <?php if ($certificat->isValid()) : ?>
-        <?php  echo $certificat->getFancy()?>&nbsp;-&nbsp;
+        <?php  echo $certificat->getName()?>&nbsp;-&nbsp;
         <a class='btn btn-mini btn-danger' href="Utilisateur/supprimerCertificat?id_u=<?php echo $id_u ?>" ?>Supprimer</a>
     <?php endif;?>
     </td>

@@ -1,5 +1,7 @@
 # [4.0.0]
 
+**Cette version nécessite une modification de la base de données**
+
 ## Évolutions
 
 - Les extensions doivent charger leurs fichiers PHP dans un fichier `autoload.php` à la racine de l'application ou via
@@ -10,6 +12,7 @@
   intermédiaire : "Archive générée" #1357
 - La bibliothèque de lecture YAML Spyc est remplacé par la bibliothèque Symfony YAML plus performante.
   Le script console dev:fix-yaml permet de modifier ce qui était permis (de manière incorrect) par Spyc #1515
+- Possibilité de supprimer ou de désactiver un utilisateur #112
 
 ## Suppressions
 

@@ -105,4 +105,53 @@ class UtilisateurControlerTest extends ControlerTestCase
         }
         self::assertTrue($utilisateurSQL->exists(2));
     }
+
+    public function testDisable(): void
+    {
+        $utilisateurSQL = $this->getObjectInstancier()->getInstance(UtilisateurSQL::class);
+        self::assertTrue($utilisateurSQL->isEnable(2));
+        $this->setPostInfo(['id_u' => 2]);
+        try {
+            $this->getUtilisateurControler()->disableAction();
+        } catch (Exception $e) {
+            /* Nothing to do*/
+        }
+        self::assertFalse($utilisateurSQL->isEnable(2));
+        self::assertMatchesRegularExpression(
+            "#L'utilisateur eric a été désactivé#",
+            $this->getLogRecords()[0]['message']
+        );
+    }
+
+    public function testEnable(): void
+    {
+        $utilisateurSQL = $this->getObjectInstancier()->getInstance(UtilisateurSQL::class);
+        $utilisateurSQL->disable(2);
+        self::assertFalse($utilisateurSQL->isEnable(2));
+        $this->setPostInfo(['id_u' => 2]);
+        try {
+            $this->getUtilisateurControler()->enableAction();
+        } catch (Exception $e) {
+            /* Nothing to do*/
+        }
+        self::assertTrue($utilisateurSQL->isEnable(2));
+        self::assertMatchesRegularExpression(
+            "#L'utilisateur eric a été activé#",
+            $this->getLogRecords()[0]['message']
+        );
+    }
+
+    public function testCantDisableMyself(): void
+    {
+        $utilisateurSQL = $this->getObjectInstancier()->getInstance(UtilisateurSQL::class);
+        self::assertTrue($utilisateurSQL->isEnable(1));
+        $this->setPostInfo(['id_u' => 1]);
+        try {
+            $this->getUtilisateurControler()->disableAction();
+        } catch (Exception $e) {
+            self::assertMatchesRegularExpression('#Impossible de vous désactiver vous-même#', $e->getMessage());
+            /* Nothing to do*/
+        }
+        self::assertTrue($utilisateurSQL->isEnable(1));
+    }
 }

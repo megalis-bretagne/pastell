@@ -5,23 +5,25 @@ use Symfony\Component\RateLimiter\Exception\RateLimitExceededException;
 
 class ApiAuthentication
 {
-    /** @var SQLQuery */
-    private $sqlQuery;
-
-    //TODO inverser la dépendance...
-    /** @var  ConnexionControler */
-    private $connexionControler;
-
-    private $loginAttemptLimit;
+    private array $server = [];
+    private array $request = [];
 
     public function __construct(
-        ConnexionControler $connexionControler,
-        SQLQuery $sqlQuery,
-        LoginAttemptLimit $loginAttemptLimit
+        private ConnexionControler $connexionControler,
+        private SQLQuery $sqlQuery,
+        private LoginAttemptLimit $loginAttemptLimit,
+        private UtilisateurSQL $utilisateurSQL,
     ) {
-        $this->connexionControler = $connexionControler;
-        $this->sqlQuery = $sqlQuery;
-        $this->loginAttemptLimit = $loginAttemptLimit;
+    }
+
+    public function setServerInfo(array $server): void
+    {
+        $this->server = $server;
+    }
+
+    public function setRequestInfo(array $request): void
+    {
+        $this->request = $request;
     }
 
     /**
@@ -46,7 +48,7 @@ class ApiAuthentication
      */
     private function getUtilisateurIdThrow()
     {
-        $recuperateur = new Recuperateur($_REQUEST);
+        $recuperateur = new Recuperateur($this->request);
         $auth = $recuperateur->get("auth");
 
         $id_u = false;
@@ -63,13 +65,13 @@ class ApiAuthentication
             $id_u = $certificatConnexion->autoConnect();
         }
 
-        if (! $id_u && ! empty($_SERVER['PHP_AUTH_USER'])) {
-            if (false === $this->loginAttemptLimit->isLoginAttemptAuthorized($_SERVER['PHP_AUTH_USER'])) {
-                throw new RateLimitExceededException($this->loginAttemptLimit->getRateLimit($_SERVER['PHP_AUTH_USER']));
+        if (! $id_u && ! empty($this->server['PHP_AUTH_USER'])) {
+            if (false === $this->loginAttemptLimit->isLoginAttemptAuthorized($this->server['PHP_AUTH_USER'])) {
+                throw new RateLimitExceededException($this->loginAttemptLimit->getRateLimit($this->server['PHP_AUTH_USER']));
             }
-            $id_u = $utilisateurListe->getUtilisateurByLogin($_SERVER['PHP_AUTH_USER']);
-            if ($utilisateur->verifPassword($id_u, $_SERVER['PHP_AUTH_PW'])) {
-                $this->loginAttemptLimit->resetLoginAttempt($_SERVER['PHP_AUTH_USER']);
+            $id_u = $utilisateurListe->getUtilisateurByLogin($this->server['PHP_AUTH_USER']);
+            if ($utilisateur->verifPassword($id_u, $this->server['PHP_AUTH_PW'])) {
+                $this->loginAttemptLimit->resetLoginAttempt($this->server['PHP_AUTH_USER']);
             } else {
                 $id_u = false;
             }
@@ -81,7 +83,9 @@ class ApiAuthentication
         if (! $id_u) {
             throw new Exception("Accès interdit");
         }
-
+        if (! $this->utilisateurSQL->isEnable($id_u)) {
+            throw new UnauthorizedException('Votre compte a été désactivé');
+        }
         return $id_u;
     }
 }

@@ -173,6 +173,11 @@ class ConnexionControler extends PastellControler
             "Connecté",
             "$nom s'est connecté via $external_system depuis l'adresse " . $_SERVER['REMOTE_ADDR']
         );
+        $this->setSessionInfo($login, $id_u);
+    }
+
+    private function setSessionInfo(string $login, int $id_u): void
+    {
         $this->getAuthentification()->connexion($login, $id_u);
     }
 
@@ -373,7 +378,7 @@ class ConnexionControler extends PastellControler
             "Connecté",
             "$nom s'est connecté depuis l'adresse " . $_SERVER['REMOTE_ADDR']
         );
-        $this->getAuthentification()->connexion($login, $id_u);
+        $this->setSessionInfo($login, $id_u);
         return $id_u;
     }
 
@@ -407,8 +412,7 @@ class ConnexionControler extends PastellControler
             "$nom s'est connecté automatiquement depuis l'adresse " . $_SERVER['REMOTE_ADDR']
         );
 
-
-        $this->getAuthentification()->connexion($utilisateurInfo['login'], $id_u);
+        $this->setSessionInfo($utilisateurInfo['login'], $id_u);
         $this->redirect();
     }
 
