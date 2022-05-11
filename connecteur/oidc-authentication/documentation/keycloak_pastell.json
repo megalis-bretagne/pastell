@@ -41,7 +41,7 @@
   "loginTheme": "keycloak",
   "smtpServer": {
     "host": "mail",
-    "from": "pastell@libriciel.coop",
+    "from": "test@libriciel.net",
     "starttls": "",
     "auth": "",
     "ssl": ""

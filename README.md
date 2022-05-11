@@ -47,7 +47,7 @@ Lors du démarrage, le conteneur :
 | REDIS_PORT | Port du serveur Redis                                                                  | 6379                                                 |
 | PASTELL_ADMIN_LOGIN | Login de l'administrateur                                                              | admin                                                |
 | PASTELL_ADMIN_PASSWORD | Mot de passe de l'administrateur                                                       | admin                                                |
-| PASTELL_ADMIN_EMAIL | Email de l'administrateur                                                              | noreply@libriciel.coop                               |
+| PASTELL_ADMIN_EMAIL | Email de l'administrateur                                                              | test@libriciel.net                               |
 | AUTHENTICATION_WITH_CLIENT_CERTIFICATE | Permettre la connexion par certificat (chaîne vide pour non, chaîne non-vide pour oui) | chaîne vide                                          |
 | PASTELL_EXTENSION_PATH | Chemin vers les extensions Pastell                                                     | `..` (répertoire qui contient le répertoire pastell) |
 | WORKSPACE_VOLUME | Chemin vers le workspace Pastell                                                       | création du volume nommé app_workspace               |
