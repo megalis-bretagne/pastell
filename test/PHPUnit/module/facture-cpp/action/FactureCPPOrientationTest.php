@@ -2,7 +2,6 @@
 
 class FactureCPPOrientationTest extends ExtensionCppTestCase
 {
-
     /**
      * @throws NotFoundException
      */
