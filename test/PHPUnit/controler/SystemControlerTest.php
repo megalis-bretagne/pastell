@@ -76,8 +76,7 @@ class SystemControlerTest extends ControlerTestCase
             $this->systemControler->mailTestAction();
             self::fail();
         } catch (LastMessageException $e) {
-            self::assertEquals(
-                'Redirection vers https://localhost:8443/System/index:' .
+            self::assertStringContainsString(
                 " Un email a été envoyé à l'adresse  : test@libriciel.net",
                 $e->getMessage()
             );
