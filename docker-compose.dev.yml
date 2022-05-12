@@ -64,6 +64,8 @@ services:
       - "${SFTP_PORT:-2222}:22"
     command: ${SFTP_USER:-ftp}:${SFTP_PASSWORD:-ftp}:33
 
+  # Add the following line to your .env for using maildev
+  # MAILER_DSN=smtp://maildev:25?verify_peer=0
   maildev:
     image: maildev/maildev
     ports:

@@ -248,3 +248,7 @@ if (!defined("PASSWORD_MIN_ENTROPY")) {
     // pour fixer l'entropie
     define("PASSWORD_MIN_ENTROPY", 80);
 }
+
+if (!defined("MAILER_DSN")) {
+    define("MAILER_DSN", "null://null");
+}

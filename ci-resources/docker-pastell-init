@@ -38,6 +38,9 @@ define("SENTRY_ENVIRONMENT", "${SENTRY_ENVIRONMENT:-dev}");
 
 define("PES_VIEWER_URL", "${PES_VIEWER_URL:-${PASTELL_SITE_BASE}}");
 
+define("MAILER_DSN", "${MAILER_DSN:-null://null}");
+
+
 define("LIST_PACK", [
   "pack_chorus_pro" => ${PACK_CHORUS_PRO:-true},
   "pack_marche" => ${PACK_MARCHE:-true},
