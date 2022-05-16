@@ -1,3 +1,9 @@
+# [3.1.15]
+
+## Ajouts
+
+* Ajout de la taille totale dans le connecteur de statistiques #1534
+
 # [3.1.14] - 2022-05-16
 
 ## Corrections
