@@ -1,5 +1,8 @@
 <?php
 
+use Pastell\Mailer\Mailer;
+use Pastell\Tests\MailerTransportTesting;
+
 class SystemControlerTest extends ControlerTestCase
 {
     /** @var  SystemControler */
@@ -56,5 +59,31 @@ class SystemControlerTest extends ControlerTestCase
         $this->expectException(LastMessageException::class);
         $this->expectExceptionMessage("Le cache Redis a été vidé");
         $this->systemControler->emptyCacheAction();
+    }
+
+    /**
+     * @throws LastErrorException
+     */
+    public function testSendMailTest(): void
+    {
+        $mailerTransportTesting = new MailerTransportTesting();
+        $mailer = new \Symfony\Component\Mailer\Mailer($mailerTransportTesting);
+        $pastellMailer = $this->getObjectInstancier()->getInstance(Mailer::class);
+        $pastellMailer->setMailer($mailer);
+
+        $this->setPostInfo(['email' => 'test@libriciel.net']);
+        try {
+            $this->systemControler->mailTestAction();
+            self::fail();
+        } catch (LastMessageException $e) {
+            self::assertStringContainsString(
+                " Un email a été envoyé à l'adresse  : test@libriciel.net",
+                $e->getMessage()
+            );
+        }
+        self::assertStringContainsString(
+            'Subject: [Pastell] Mail de test',
+            $mailerTransportTesting->getSentMessage()->getMessage()->toString()
+        );
     }
 }

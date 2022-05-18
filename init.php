@@ -97,6 +97,9 @@ $objectInstancier->setInstance('http_proxy_url', HTTP_PROXY_URL);
 $objectInstancier->setInstance('no_proxy', NO_PROXY);
 $objectInstancier->setInstance('pes_viewer_url', PES_VIEWER_URL);
 $objectInstancier->setInstance('password_min_entropy', PASSWORD_MIN_ENTROPY);
+$objectInstancier->setInstance('mailer_dsn', MAILER_DSN);
+$objectInstancier->setInstance('email_template_path', __DIR__ . '/templates/email/');
+$objectInstancier->setInstance('plateforme_mail', PLATEFORME_MAIL);
 
 $featureToggleService = $objectInstancier->getInstance(FeatureToggleService::class);
 

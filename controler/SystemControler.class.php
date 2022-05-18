@@ -1,11 +1,15 @@
 <?php
 
+use Pastell\Mailer\Mailer;
 use Pastell\Service\Connecteur\MissingConnecteurService;
 use Pastell\Service\Droit\DroitService;
 use Pastell\Service\FeatureToggle\DisplayFeatureToggleInTestPage;
 use Pastell\Service\FeatureToggleService;
 use Pastell\Service\Pack\PackService;
 use Pastell\System\HealthCheck;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mime\Address;
 
 class SystemControler extends PastellControler
 {
@@ -295,34 +299,32 @@ class SystemControler extends PastellControler
     /**
      * @throws LastErrorException
      * @throws LastMessageException
-     * @throws Exception
      */
-    public function mailTestAction()
+    public function mailTestAction(): void
     {
         $this->verifDroit(0, DroitService::getDroitLecture(DroitService::DROIT_SYSTEM));
 
-        $email = $this->getPostInfo()->get("email");
+        $email = $this->getPostInfo()->get('email');
         if (! $email) {
-            $this->setLastError("Merci de spécifier un email");
+            $this->setLastError('Merci de spécifier un email');
             $this->redirect(self::SYSTEM_INDEX_PAGE);
         }
 
-        $this->getZenMail()->setEmetteur("Pastell", PLATEFORME_MAIL);
-        $this->getInstance(ZenMail::class)->setReturnPath(PLATEFORME_MAIL);
-
-        $this->getZenMail()->setDestinataire($email);
-        $this->getZenMail()->setSujet("[Pastell] Mail de test");
-
-        $this->getZenMail()->resetAttachment();
-        $this->getZenMail()->addAttachment(
-            'test-pastell-i-parapheur.pdf',
-            __DIR__ . '/../connecteur/iParapheur/data-exemple/test-pastell-i-parapheur.pdf'
-        );
-
-        $this->getZenMail()->setContenu(PASTELL_PATH . "/mail/test.php", []);
-        $this->getZenMail()->send();
-
-        $this->setLastMessage("Un email a été envoyé à l'adresse  : " . get_hecho($email));
+        $templatedEmail = (new TemplatedEmail())
+            ->to(new Address($email))
+            ->subject('[Pastell] Mail de test')
+            ->htmlTemplate('test_system.html.twig')
+            ->context(['SITE_BASE' => SITE_BASE])
+            ->attachFromPath(
+                __DIR__ . '/../connecteur/iParapheur/data-exemple/test-pastell-i-parapheur.pdf'
+            );
+        try {
+            $pastellMailer = $this->getObjectInstancier()->getInstance(Mailer::class);
+            $pastellMailer->send($templatedEmail);
+            $this->setLastMessage(sprintf("Un email a été envoyé à l'adresse  : %s", get_hecho($email)));
+        } catch (TransportExceptionInterface $e) {
+            $this->setLastError(sprintf("Impossible d'envoyer le mail : %s", $e->getMessage()));
+        }
         $this->redirect(self::SYSTEM_INDEX_PAGE);
     }
 

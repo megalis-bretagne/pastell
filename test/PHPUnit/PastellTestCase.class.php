@@ -50,6 +50,8 @@ abstract class PastellTestCase extends TestCase
         $this->objectInstancier->setInstance('pastell_path', PASTELL_PATH);
         $this->objectInstancier->setInstance(SQLQuery::class, self::getSQLQuery());
         $this->objectInstancier->setInstance('template_path', TEMPLATE_PATH);
+        $this->objectInstancier->setInstance('email_template_path', __DIR__ . '/../../templates/email');
+        $this->objectInstancier->setInstance('plateforme_mail', 'test@libriciel.net');
 
         $this->objectInstancier->setInstance(MemoryCache::class, new StaticWrapper());
         $this->objectInstancier->{'RedisWrapper'} = $this->createMock(RedisWrapper::class);
@@ -88,6 +90,7 @@ abstract class PastellTestCase extends TestCase
         $this->objectInstancier->setInstance('journal_max_age_in_months', 2);
         $this->objectInstancier->setInstance('admin_email', "mettre_un_email");
         $this->objectInstancier->setInstance('database_file', __DIR__ . "/../../installation/pastell.bin");
+        $this->objectInstancier->setInstance('mailer_dsn', 'null://null');
         $this->setListPack(["pack_chorus_pro" => true, "pack_marche" => true, "pack_test" => true]);
         $zenMail = $this->objectInstancier->getInstance(ZenMail::class);
         $zenMail->disableMailSending();
