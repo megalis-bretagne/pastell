@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Pastell\Service;
+namespace Pastell\Mailer;
 
 use Symfony\Bridge\Twig\Mime\BodyRenderer;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -30,7 +30,7 @@ class Mailer
 
     private function getMailer(): \Symfony\Component\Mailer\Mailer
     {
-        if (empty($this->mailer)) {
+        if (! isset($this->mailer)) {
             $transport = Transport::fromDsn(
                 $this->mailer_dsn
             );
@@ -41,7 +41,7 @@ class Mailer
 
     private function render(TemplatedEmail $templatedEmail): void
     {
-        if (empty($this->twigBodyRenderer)) {
+        if (! isset($this->twigBodyRenderer)) {
             $loader = new FilesystemLoader($this->email_template_path);
             $twigEnv = new Environment($loader);
             $this->twigBodyRenderer = new BodyRenderer($twigEnv);

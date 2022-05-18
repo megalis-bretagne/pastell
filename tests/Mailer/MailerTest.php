@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Pastell\Tests\Service;
+namespace Pastell\Tests\Mailer;
 
-use Pastell\Service\Mailer;
+use Pastell\Mailer\Mailer;
 use Pastell\Tests\MailerTransportTesting;
 use PastellTestCase;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;

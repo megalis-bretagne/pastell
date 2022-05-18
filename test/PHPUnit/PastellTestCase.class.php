@@ -50,7 +50,7 @@ abstract class PastellTestCase extends TestCase
         $this->objectInstancier->setInstance('pastell_path', PASTELL_PATH);
         $this->objectInstancier->setInstance(SQLQuery::class, self::getSQLQuery());
         $this->objectInstancier->setInstance('template_path', TEMPLATE_PATH);
-        $this->objectInstancier->setInstance('email_template_path', __DIR__ . '/../../mail');
+        $this->objectInstancier->setInstance('email_template_path', __DIR__ . '/../../templates/email');
         $this->objectInstancier->setInstance('plateforme_mail', 'test@libriciel.net');
 
         $this->objectInstancier->setInstance(MemoryCache::class, new StaticWrapper());

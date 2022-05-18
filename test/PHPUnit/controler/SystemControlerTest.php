@@ -1,6 +1,6 @@
 <?php
 
-use Pastell\Service\Mailer;
+use Pastell\Mailer\Mailer;
 use Pastell\Tests\MailerTransportTesting;
 
 class SystemControlerTest extends ControlerTestCase

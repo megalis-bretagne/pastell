@@ -1,10 +1,10 @@
 <?php
 
+use Pastell\Mailer\Mailer;
 use Pastell\Service\Connecteur\MissingConnecteurService;
 use Pastell\Service\Droit\DroitService;
 use Pastell\Service\FeatureToggle\DisplayFeatureToggleInTestPage;
 use Pastell\Service\FeatureToggleService;
-use Pastell\Service\Mailer;
 use Pastell\Service\Pack\PackService;
 use Pastell\System\HealthCheck;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -313,7 +313,7 @@ class SystemControler extends PastellControler
         $templatedEmail = (new TemplatedEmail())
             ->to(new Address($email))
             ->subject('[Pastell] Mail de test')
-            ->htmlTemplate('test.twig')
+            ->htmlTemplate('test_system.html.twig')
             ->context(['SITE_BASE' => SITE_BASE])
             ->attachFromPath(
                 __DIR__ . '/../connecteur/iParapheur/data-exemple/test-pastell-i-parapheur.pdf'
