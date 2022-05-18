@@ -138,7 +138,10 @@ class SedaGeneriqueTest extends PastellTestCase
     {
         $this->setCurl(function (array $json_data) use ($folder) {
             $json_content = json_encode($json_data, JSON_THROW_ON_ERROR);
-//            file_put_contents($test_folder . '/expected_call.json',json_encode($json_data));
+//            file_put_contents(
+//                $folder . '/expected_call.json',
+//                json_encode($json_data, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT)
+//            );
             $this->assertJsonStringEqualsJsonFile(
                 $folder . '/expected_call.json',
                 $json_content

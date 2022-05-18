@@ -14,7 +14,7 @@ use function Pastell\areNullOrEmptyStrings;
 
 class SedaMessage implements \JsonSerializable
 {
-    private readonly SedaVersion $version;
+    private SedaVersion $version;
 
     public ?string $title;
     public ?string $comment;

@@ -1,89 +1,93 @@
 {
-  "version": "1.0",
-  "ArchivalAgency": {
-    "Identifier": "FRAD000",
-    "Name": "Service d'archive de Libriceil"
-  },
-  "TransferringAgency": {
-    "Identifier": "491 011 698",
-    "Name": "LIBRICIEL SCOP"
-  },
-  "OriginatingAgency": {
-    "Identifier": "491 011 698 0001",
-    "Name": "LIBRICIEL SCOP service RH"
-  },
-  "Comment": "",
-  "Title": "Actes soumis au contr\u00f4le de l\u00e9galit\u00e9 : Nomination du colonel Moutarde",
-  "ArchivalAgreement": "ACCORDS_ACTES",
-  "ArchivalProfile": "PROFILE_ACTES",
-  "Language": "fra",
-  "DescriptionLanguage": "fra",
-  "ArchiveUnits": {
-    "NOT_TESTABLE_5": {
-      "Id": "NOT_TESTABLE_6",
-      "Title": "Retour du Tdt",
-      "ContentDescription": {
-        "CustodialHistory": "Historique de la conservation"
-      },
-      "Files": {
-        "NOT_TESTABLE_7": {
-          "Filename": "aractes.xml",
-          "MessageDigest": "342b4ca6da58a3de2aeb0bd56483373f90e3906535f12f0c5bfa3d8f31af2812",
-          "Size": "866",
-          "MimeType": "application/xml",
-          "Title": "Accus\u00e9 de reception"
-        },
-        "NOT_TESTABLE_8": {
-          "Filename": "borderau.pdf",
-          "MessageDigest": "c974edcc822646513cf07a71028847461a1e4fcd11d3c8e55c2764756345a4d3",
-          "Size": "11",
-          "MimeType": "text/plain",
-          "Title": "Bordereau"
-        }
-      }
-    }
-  },
-  "StartDate": "2020-12-04",
-  "EndDate": "2020-12-04",
-  "AccessRule": {
-    "Rule": "AR038",
-    "StartDate": "2020-12-04"
-  },
-  "AppraisalRule": {
-    "Rule": "P10Y",
+    "version": "1.0",
+    "Title": "Actes soumis au contr\u00f4le de l\u00e9galit\u00e9 : Nomination du colonel Moutarde",
+    "ArchivalAgreement": "ACCORDS_ACTES",
+    "ArchivalProfile": "PROFILE_ACTES",
+    "Language": "fra",
+    "Description": "Actes",
+    "DescriptionLanguage": "fra",
     "StartDate": "2020-12-04",
-    "FinalAction": "detruire"
-  },
-  "Keywords": [
-    {
-      "KeywordContent": "D\u00e9lib\u00e9ration"
+    "EndDate": "2020-12-04",
+    "AccessRule": {
+        "Rule": "AR038",
+        "StartDate": "2020-12-04"
     },
-    {
-      "KeywordContent": "1.1 Titulaire de la fonction publique territoriale"
+    "AppraisalRule": {
+        "FinalAction": "detruire",
+        "Rule": "P10Y",
+        "StartDate": "2020-12-04"
+    },
+    "Keywords": [
+        {
+            "KeywordContent": "D\u00e9lib\u00e9ration"
+        },
+        {
+            "KeywordContent": "1.1 Titulaire de la fonction publique territoriale"
+        }
+    ],
+    "ArchiveUnits": [
+        {
+            "Id": "NOT_TESTABLE_4",
+            "Title": "Retour du Tdt",
+            "ContentDescription": {
+                "CustodialHistory": "Historique de la conservation"
+            },
+            "Files": [
+                {
+                    "Id": "NOT_TESTABLE_5",
+                    "Filename": "aractes.xml",
+                    "MessageDigest": "342b4ca6da58a3de2aeb0bd56483373f90e3906535f12f0c5bfa3d8f31af2812",
+                    "Size": "866",
+                    "MimeType": "application\/xml",
+                    "Title": "Accus\u00e9 de reception"
+                },
+                {
+                    "Id": "NOT_TESTABLE_6",
+                    "Filename": "borderau.pdf",
+                    "MessageDigest": "c974edcc822646513cf07a71028847461a1e4fcd11d3c8e55c2764756345a4d3",
+                    "Size": "11",
+                    "MimeType": "text\/plain",
+                    "Title": "Bordereau"
+                }
+            ]
+        }
+    ],
+    "Files": [
+        {
+            "Id": "NOT_TESTABLE_1",
+            "Filename": "actes.pdf",
+            "MessageDigest": "fbc1a9f858ea9e177916964bd88c3d37b91a1e84412765e29950777f265c4b75",
+            "Size": "7",
+            "MimeType": "text\/plain",
+            "Title": "Actes soumis au contr\u00f4le de l\u00e9galit\u00e9 : Nomination du colonel Moutarde"
+        },
+        {
+            "Id": "NOT_TESTABLE_2",
+            "Filename": "annexe1.pdf",
+            "MessageDigest": "dbd318c1c462aee872f41109a4dfd3048871a03dedd0fe0e757ced57dad6f2d7",
+            "Size": "11",
+            "MimeType": "text\/plain",
+            "Title": "Annexe de l'acte"
+        },
+        {
+            "Id": "NOT_TESTABLE_3",
+            "Filename": "annexe2.pdf",
+            "MessageDigest": "d12441fc641d202581cf7f6396cb1f1f36a033620b5d306d023c6f6fb21918f2",
+            "Size": "3",
+            "MimeType": "text\/plain",
+            "Title": "Annexe de l'acte"
+        }
+    ],
+    "OriginatingAgency": {
+        "Identifier": "491 011 698 0001",
+        "Name": "LIBRICIEL SCOP service RH"
+    },
+    "ArchivalAgency": {
+        "Identifier": "FRAD000",
+        "Name": "Service d'archive de Libriceil"
+    },
+    "TransferringAgency": {
+        "Identifier": "491 011 698",
+        "Name": "LIBRICIEL SCOP"
     }
-  ],
-  "Files": {
-    "NOT_TESTABLE_2": {
-      "Filename": "actes.pdf",
-      "MessageDigest": "fbc1a9f858ea9e177916964bd88c3d37b91a1e84412765e29950777f265c4b75",
-      "Size": "7",
-      "MimeType": "text/plain",
-      "Title": "Actes soumis au contr\u00f4le de l\u00e9galit\u00e9 : Nomination du colonel Moutarde"
-    },
-    "NOT_TESTABLE_3": {
-      "Filename": "annexe1.pdf",
-      "MessageDigest": "dbd318c1c462aee872f41109a4dfd3048871a03dedd0fe0e757ced57dad6f2d7",
-      "Size": "11",
-      "MimeType": "text/plain",
-      "Title": "Annexe de l'acte"
-    },
-    "NOT_TESTABLE_4": {
-      "Filename": "annexe2.pdf",
-      "MessageDigest": "d12441fc641d202581cf7f6396cb1f1f36a033620b5d306d023c6f6fb21918f2",
-      "Size": "3",
-      "MimeType": "text/plain",
-      "Title": "Annexe de l'acte"
-    }
-  },
-  "Description": "Actes"
 }

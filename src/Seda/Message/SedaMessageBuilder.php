@@ -9,8 +9,11 @@ use DonneesFormulaireException;
 use FileContentType;
 use FluxData;
 use GenerateurSedaFillFiles;
+use Pastell\Seda\Message\Part\ArchiveUnit;
+use Pastell\Seda\Message\Part\File;
+use Pastell\Seda\Message\Part\Keyword;
+use Pastell\Seda\SedaVersion;
 use Pastell\Service\SimpleTwigRenderer;
-use SedaGenerique;
 use SimpleXMLWrapperException;
 use TmpFolder;
 use UnrecoverableException;
@@ -24,10 +27,12 @@ class SedaMessageBuilder
 
     private DonneesFormulaire $donneesFormulaire;
     private FluxData $fluxData;
+    private SedaMessage $message;
 
     public function __construct(
         private readonly TmpFolder $tmpFolder,
     ) {
+        $this->message = new SedaMessage();
         $this->setIdGeneratorFunction(fn() => 'id_' . \uuid_create(\UUID_TYPE_RANDOM));
     }
 
@@ -72,71 +77,268 @@ class SedaMessageBuilder
         return $this;
     }
 
-    /**
-     * @throws UnrecoverableException
-     */
-    private function getInputDataElement(array $dataFileContent): array
+    public function getMessage(): SedaMessage
     {
-        $data = [];
-        foreach (SedaGenerique::getPastellToSeda() as $pastellId => $elementInfo) {
-            if (empty($dataFileContent[$pastellId])) {
-                continue;
-            }
-            $elementIdList = \explode('.', $elementInfo['seda']);
-            $theData = &$data;
-            foreach ($elementIdList as $i => $element_id) {
-                if ($i < \count($elementIdList) - 1) {
-                    if (!isset($theData[$element_id])) {
-                        $theData[$element_id] = [];
-                    }
-                    $theData = &$theData[$element_id];
-                } else {
-                    $theData[$element_id] = $this->getStringWithMetatadaReplacement(
-                        $dataFileContent[$pastellId]
-                    );
-                }
-            }
-        }
-        return $data;
+        return $this->message;
     }
 
     /**
      * @throws UnrecoverableException
      */
-    private function getInputDataKeywords(string $keywordsData): array
+    public function buildHeaders(array $dataFromBordereau): self
     {
-        $result = [];
-        $keywordsData = $this->getStringWithMetatadaReplacement($keywordsData);
-        $keywords = \explode("\n", $keywordsData);
+        foreach ($dataFromBordereau as $i => $data) {
+            $dataFromBordereau[$i] = $this->getStringWithMetatadaReplacement($data);
+        }
+
+        $this->message->setVersion(
+            SedaVersion::from($dataFromBordereau['version'] ?? SedaVersion::VERSION_2_1->value)
+        );
+        $this->message->comment = $dataFromBordereau['commentaire'] ?? null;
+        $this->message->title = $dataFromBordereau['titre'] ?? null;
+        $this->message->archivalAgreement = $dataFromBordereau['archival_agreement'] ?? null;
+        $this->message->archivalProfile = $dataFromBordereau['ArchivalProfile'] ?? null;
+        $this->message->language = $dataFromBordereau['Language'] ?? null;
+        $this->message->descriptionLanguage = $dataFromBordereau['DescriptionLanguage'] ?? null;
+        $this->message->description = $dataFromBordereau['archiveunits_title'] ?? null;
+        $this->message->serviceLevel = $dataFromBordereau['ServiceLevel'] ?? null;
+        $this->message->startDate = $dataFromBordereau['StartDate'] ?? null;
+        $this->message->endDate = $dataFromBordereau['EndDate'] ?? null;
+
+        if ($this->message->getVersion() === SedaVersion::VERSION_1_0) {
+            $appraisalRuleFinalAction = [
+                'Conserver' => 'conserver',
+                'Détruire' => 'detruire',
+            ];
+        } else {
+            $appraisalRuleFinalAction = [
+                'Conserver' => 'Keep',
+                'Détruire' => 'Destroy',
+            ];
+        }
+
+        $this->message
+            ->setArchivalAgency(
+                $dataFromBordereau['archival_agency_identifier'] ?? null,
+                $dataFromBordereau['archival_agency_name'] ?? null,
+            )
+            ->setTransferringAgency(
+                $dataFromBordereau['transferring_agency_identifier'] ?? null,
+                $dataFromBordereau['transferring_agency_name'] ?? null,
+            )
+            ->setOriginationAgency(
+                $dataFromBordereau['originating_agency_identifier'] ?? null,
+                $dataFromBordereau['originating_agency_name'] ?? null,
+            )
+            ->setAccessRule(
+                $dataFromBordereau['AccessRule_Rule'] ?? null,
+                $dataFromBordereau['AccessRule_StartDate'] ?? null,
+            )
+            ->setAppraisalRule(
+                $dataFromBordereau['AppraisalRule_Rule'] ?? null,
+                $appraisalRuleFinalAction[$dataFromBordereau['AppraisalRule_FinalAction'] ?? null] ?? null,
+                $dataFromBordereau['AppraisalRule_StartDate'] ?? null,
+            )
+        ;
+        return $this;
+    }
+
+    /**
+     * @throws UnrecoverableException
+     */
+    public function buildKeywords(string $keywordsData): self
+    {
+        $keywords_data = $this->getStringWithMetatadaReplacement($keywordsData);
+        $keywords = \explode("\n", $keywords_data);
         foreach ($keywords as $keywordLine) {
-            $sedaKeywords = [];
             $keywordLine = \trim($keywordLine);
             if (!$keywordLine) {
                 continue;
             }
             $keywordProperties = \str_getcsv($keywordLine);
-            $sedaKeywords['KeywordContent'] = $keywordProperties[0];
-            if (!empty($keywordProperties[1])) {
-                $sedaKeywords['KeywordReference'] = $keywordProperties[1];
-            }
-            if (!empty($keywordProperties[2])) {
-                $sedaKeywords['KeywordType'] = $keywordProperties[2];
-            }
-            $result[] = $sedaKeywords;
+            $this->message->addKeyword(
+                $keywordProperties[0],
+                $keywordProperties[1] ?? null,
+                $keywordProperties[2] ?? null,
+            );
         }
-        return $result;
+        return $this;
     }
 
     /**
+     * @throws UnrecoverableException
+     * @throws SimpleXMLWrapperException
+     * @throws DonneesFormulaireException
+     */
+    public function buildFiles(string $dataFromFiles): self
+    {
+        $sedaGeneriqueFilleFiles = new GenerateurSedaFillFiles($dataFromFiles);
+        $files = $this->getFiles($sedaGeneriqueFilleFiles);
+        foreach ($files as $file) {
+            $this->message->addFile($file);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @throws UnrecoverableException
      * @throws DonneesFormulaireException
      * @throws SimpleXMLWrapperException
+     */
+    public function buildArchiveUnit(string $dataFromFiles): self
+    {
+        $sedaGeneriqueFilleFiles = new GenerateurSedaFillFiles($dataFromFiles);
+
+        $archiveUnits = $this->getArchiveUnits($sedaGeneriqueFilleFiles);
+        foreach ($archiveUnits as $archiveUnit) {
+            $this->message->addArchiveUnit($archiveUnit);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return File[]
+     * @throws UnrecoverableException
+     * @throws DonneesFormulaireException
+     */
+    private function getFiles(GenerateurSedaFillFiles $sedaGeneriqueFilleFiles, string $parentId = ''): array
+    {
+        $files = [];
+        foreach ($sedaGeneriqueFilleFiles->getFiles($parentId) as $localFile) {
+            $field = $this->getStringWithMetatadaReplacement((string)$localFile['field_expression']);
+
+            if (!\is_array($this->getDonneesFormulaire()->get($field))) {
+                continue;
+            }
+            foreach ($this->getDonneesFormulaire()->get($field) as $filenum => $filename) {
+                $file = new File(($this->idGeneratorFunction)());
+                $file->filename = $filename;
+                $file->messageDigest = $this->getDonneesFormulaire()->getFileDigest($field, $filenum);
+                $file->size = (string)$this->getDonneesFormulaire()->getFileSize($field, $filenum);
+                if (empty($localFile['do_not_put_mime_type'])) {
+                    $file->mimeType = $this->getDonneesFormulaire()->getContentType($field, $filenum);
+                }
+                $description = (string)$localFile['description'];
+                $description = \str_replace('#FILE_NUM#', (string)$filenum, $description);
+                $file->title = $this->getStringWithMetatadaReplacement($description);
+                $this->getFluxData()->setFileList(
+                    $localFile['field_expression'],
+                    $filename,
+                    $this->getDonneesFormulaire()->getFilePath($field, $filenum)
+                );
+                $files[] = $file;
+            }
+        }
+
+        return $files;
+    }
+
+    /**
+     * @return ArchiveUnit[]
+     * @throws UnrecoverableException
+     * @throws DonneesFormulaireException
+     */
+    private function getArchiveUnits(
+        GenerateurSedaFillFiles $sedaGeneriqueFilleFiles,
+        string $parentId = ''
+    ): array {
+        $archiveUnits = [];
+        $archiveUnit = null;
+        if ($parentId !== '') {
+            $archiveUnit = new ArchiveUnit(($this->idGeneratorFunction)());
+            $specificInfo = $this->getSpecificInfo($sedaGeneriqueFilleFiles, $parentId);
+            $archiveUnit
+                ->setAppraisalRule(
+                    $specificInfo['ArchiveUnit_AppraisalRule_Rule'] ?? null,
+                    $specificInfo['ArchiveUnit_AppraisalRule_FinalAction'] ?? null,
+                    $specificInfo['ArchiveUnit_AppraisalRule_StartDate'] ?? null,
+                )
+                ->setAccessRestrictionRule(
+                    $specificInfo['AccessRestrictionRule_AccessRule'] ?? null,
+                    $specificInfo['AccessRestrictionRule_StartDate'] ?? null,
+                )
+                ->setContentDescription(
+                    $specificInfo['DescriptionLevel'] ?? null,
+                    $specificInfo['Language'] ?? null,
+                    $specificInfo['CustodialHistory'] ?? null,
+                    $specificInfo['Keywords'] ?? null,
+                )
+                ->setFiles($this->getFiles($sedaGeneriqueFilleFiles, $parentId));
+            $archiveUnit->title = $this->getStringWithMetatadaReplacement(
+                $sedaGeneriqueFilleFiles->getDescription($parentId)
+            );
+            $archiveUnits[] = $archiveUnit;
+        }
+
+        foreach ($sedaGeneriqueFilleFiles->getFiles($parentId) as $files) {
+            $field = $this->getStringWithMetatadaReplacement((string)$files['field_expression']);
+            if (\preg_match('/#ZIP#/', $field)) {
+                $archiveFromZip = $this->getArchiveUnitFromZip(
+                    (string)$files['description'],
+                    $field,
+                    0,
+                    $this->getSpecificInfoDefinition($sedaGeneriqueFilleFiles, $parentId),
+                    (!empty($files['do_not_put_mime_type'])),
+                    $archiveUnit
+                );
+                if ($archiveFromZip !== null && $archiveFromZip !== $archiveUnit) {
+                    $archiveUnits[] = $archiveFromZip;
+                }
+            }
+        }
+
+        $archiveUnitsFromRoot = [];
+        foreach ($sedaGeneriqueFilleFiles->getArchiveUnit($parentId) as $localArchiveUnit) {
+            if ((string)$localArchiveUnit['field_expression']) {
+                $field_expression_result = $this->getStringWithMetatadaReplacement(
+                    (string)$localArchiveUnit['field_expression']
+                );
+                if (!$field_expression_result) {
+                    continue;
+                }
+            }
+            $archiveUnitsFromCurrent = $this->getArchiveUnits(
+                $sedaGeneriqueFilleFiles,
+                (string)$localArchiveUnit['id']
+            );
+            if ($archiveUnit === null) {
+                $archiveUnitsFromRoot[] = $archiveUnitsFromCurrent;
+            } else {
+                foreach ($archiveUnitsFromCurrent as $toto) {
+                    $archiveUnit->addArchiveUnit($toto);
+                }
+            }
+        }
+        if ($archiveUnitsFromRoot !== []) {
+            $archiveUnits = \array_merge($archiveUnits, ...$archiveUnitsFromRoot);
+        }
+
+        return $archiveUnits;
+    }
+
+    /**
+     * @return Keyword[]
      * @throws UnrecoverableException
      */
-    private function getInputDataFiles(string $dataFromFiles): array
+    private function getInputDataKeywords(string $keywords_data): array
     {
-        $sedaGeneriqueFillFiles = new GenerateurSedaFillFiles($dataFromFiles);
         $result = [];
-        $result[] = $this->getArchiveUnitDefinition($sedaGeneriqueFillFiles);
+        $keywords_data = $this->getStringWithMetatadaReplacement($keywords_data);
+        $keywords = \explode("\n", $keywords_data);
+        foreach ($keywords as $keyword_line) {
+            $keyword_line = \trim($keyword_line);
+            if (!$keyword_line) {
+                continue;
+            }
+            $keyword_properties = \str_getcsv($keyword_line);
+            $keyword = new Keyword();
+            $keyword->keywordContent = $keyword_properties[0];
+            $keyword->keywordReference = $keyword_properties[1] ?? null;
+            $keyword->keywordType = $keyword_properties[2] ?? null;
+            $result[] = $keyword;
+        }
         return $result;
     }
 
@@ -147,67 +349,50 @@ class SedaMessageBuilder
     {
         $sedaArchiveUnits = [];
         if (!empty($specificInfo['Description'])) {
-            $sedaArchiveUnits['ContentDescription']['Description'] = $this->getStringWithMetatadaReplacement(
-                $specificInfo['Description']
-            );
+            $sedaArchiveUnits['Description'] = $this->getStringWithMetatadaReplacement($specificInfo['Description']);
         }
         if (!empty($specificInfo['DescriptionLevel'])) {
-            $sedaArchiveUnits['ContentDescription']['DescriptionLevel'] = $this->getStringWithMetatadaReplacement(
+            $sedaArchiveUnits['DescriptionLevel'] = $this->getStringWithMetatadaReplacement(
                 $specificInfo['DescriptionLevel']
             );
         }
         if (!empty($specificInfo['Language'])) {
-            $sedaArchiveUnits['ContentDescription']['Language'] = $this->getStringWithMetatadaReplacement(
+            $sedaArchiveUnits['Language'] = $this->getStringWithMetatadaReplacement(
                 $specificInfo['Language']
             );
         }
         if (!empty($specificInfo['CustodialHistory'])) {
-            $sedaArchiveUnits['ContentDescription']['CustodialHistory'] = $this->getStringWithMetatadaReplacement(
+            $sedaArchiveUnits['CustodialHistory'] = $this->getStringWithMetatadaReplacement(
                 $specificInfo['CustodialHistory']
             );
         }
         if (!empty($specificInfo['AccessRestrictionRule_AccessRule'])) {
-            $sedaArchiveUnits['AccessRestrictionRule']['AccessRule'] = $this->getStringWithMetatadaReplacement(
+            $sedaArchiveUnits['AccessRestrictionRule_AccessRule'] = $this->getStringWithMetatadaReplacement(
                 $specificInfo['AccessRestrictionRule_AccessRule']
             );
         }
         if (!empty($specificInfo['AccessRestrictionRule_StartDate'])) {
-            $sedaArchiveUnits['AccessRestrictionRule']['StartDate'] = $this->getStringWithMetatadaReplacement(
+            $sedaArchiveUnits['AccessRestrictionRule_StartDate'] = $this->getStringWithMetatadaReplacement(
                 $specificInfo['AccessRestrictionRule_StartDate']
             );
         }
-        if (
-            empty($sedaArchiveUnits['AccessRestrictionRule']['AccessRule']) &&
-            empty($sedaArchiveUnits['AccessRestrictionRule']['StartDate'])
-        ) {
-            unset($sedaArchiveUnits['AccessRestrictionRule']);
-        }
         if (!empty($specificInfo['ArchiveUnit_AppraisalRule_FinalAction'])) {
-            $sedaArchiveUnits['AppraisalRule']['FinalAction'] = $this->getStringWithMetatadaReplacement(
+            $sedaArchiveUnits['ArchiveUnit_AppraisalRule_FinalAction'] = $this->getStringWithMetatadaReplacement(
                 $specificInfo['ArchiveUnit_AppraisalRule_FinalAction']
             );
         }
         if (!empty($specificInfo['ArchiveUnit_AppraisalRule_Rule'])) {
-            $sedaArchiveUnits['AppraisalRule']['Rule'] = $this->getStringWithMetatadaReplacement(
+            $sedaArchiveUnits['ArchiveUnit_AppraisalRule_Rule'] = $this->getStringWithMetatadaReplacement(
                 $specificInfo['ArchiveUnit_AppraisalRule_Rule']
             );
         }
         if (!empty($specificInfo['ArchiveUnit_AppraisalRule_StartDate'])) {
-            $sedaArchiveUnits['AppraisalRule']['StartDate'] = $this->getStringWithMetatadaReplacement(
+            $sedaArchiveUnits['ArchiveUnit_AppraisalRule_StartDate'] = $this->getStringWithMetatadaReplacement(
                 $specificInfo['ArchiveUnit_AppraisalRule_StartDate']
             );
         }
-        if (
-            empty($sedaArchiveUnits['AppraisalRule']['FinalAction']) &&
-            empty($sedaArchiveUnits['AppraisalRule']['Rule']) &&
-            empty($sedaArchiveUnits['AppraisalRule']['StartDate'])
-        ) {
-            unset($sedaArchiveUnits['AppraisalRule']);
-        }
         if (!empty($specificInfo['Keywords'])) {
-            $sedaArchiveUnits['ContentDescription']['Keywords'] = $this->getInputDataKeywords(
-                $specificInfo['Keywords']
-            );
+            $sedaArchiveUnits['Keywords'] = $this->getInputDataKeywords($specificInfo['Keywords']);
         }
         return $sedaArchiveUnits;
     }
@@ -240,137 +425,11 @@ class SedaMessageBuilder
     }
 
     /**
-     * @throws DonneesFormulaireException
-     * @throws UnrecoverableException
-     */
-    private function getArchiveUnitDefinition(
-        GenerateurSedaFillFiles $sedaGeneriqueFillFiles,
-        string $parentId = '',
-    ): array {
-        $sedaArchiveUnits = [];
-        $sedaArchiveUnits['Id'] = ($this->idGeneratorFunction)();
-        if ($parentId) {
-            $sedaArchiveUnits['Title'] = $this->getStringWithMetatadaReplacement(
-                $sedaGeneriqueFillFiles->getDescription($parentId)
-            );
-        }
-
-        $sedaArchiveUnits = \array_merge(
-            $sedaArchiveUnits,
-            $this->getSpecificInfo($sedaGeneriqueFillFiles, $parentId)
-        );
-
-        foreach ($sedaGeneriqueFillFiles->getFiles($parentId) as $files) {
-            $field = $this->getStringWithMetatadaReplacement((string)$files['field_expression']);
-            if (\preg_match('/#ZIP#/', $field)) {
-                $archiveFromZip = $this->getArchiveUnitFromZip(
-                    (string)$files['description'],
-                    $field,
-                    0,
-                    $this->getSpecificInfoDefinition($sedaGeneriqueFillFiles, $parentId),
-                    (!empty($files['do_not_put_mime_type']))
-                );
-                $sedaArchiveUnits['ArchiveUnits'] = \array_merge(
-                    $sedaArchiveUnits['ArchiveUnits'] ?? [],
-                    $archiveFromZip['ArchiveUnits'] ?? []
-                );
-                $sedaArchiveUnits['Files'] = \array_merge(
-                    $sedaArchiveUnits['Files'] ?? [],
-                    $archiveFromZip['Files'] ?? []
-                );
-                continue;
-            }
-
-            if (!\is_array($this->getDonneesFormulaire()->get($field))) {
-                continue;
-            }
-            foreach ($this->getDonneesFormulaire()->get($field) as $filenum => $filename) {
-                $file_unit = [];
-                $file_unit['Filename'] = $filename;
-                $file_unit['MessageDigest'] = $this->getDonneesFormulaire()->getFileDigest($field, $filenum);
-                $file_unit['Size'] = (string)$this->getDonneesFormulaire()->getFileSize($field, $filenum);
-                if (empty($files['do_not_put_mime_type'])) {
-                    $file_unit['MimeType'] = $this->getDonneesFormulaire()->getContentType($field, $filenum);
-                }
-                $description = (string)$files['description'];
-                $description = \preg_replace('/#FILE_NUM#/', (string)$filenum, $description);
-                $file_unit['Title'] = $this->getStringWithMetatadaReplacement($description);
-                $sedaArchiveUnits['Files'][($this->idGeneratorFunction)()] = $file_unit;
-                $this->getFluxData()->setFileList(
-                    $files['field_expression'],
-                    $filename,
-                    $this->getDonneesFormulaire()->getFilePath($field, $filenum)
-                );
-            }
-        }
-        foreach ($sedaGeneriqueFillFiles->getArchiveUnit($parentId) as $archiveUnit) {
-            if ((string)$archiveUnit['field_expression']) {
-                $field_expression_result = $this->getStringWithMetatadaReplacement(
-                    (string)$archiveUnit['field_expression']
-                );
-                if (!$field_expression_result) {
-                    continue;
-                }
-            }
-
-            $sedaArchiveUnits['ArchiveUnits'][($this->idGeneratorFunction)()] = $this->getArchiveUnitDefinition(
-                $sedaGeneriqueFillFiles,
-                (string)$archiveUnit['id']
-            );
-        }
-        return $sedaArchiveUnits;
-    }
-
-    /**
-     * @throws UnrecoverableException
-     * @throws SimpleXMLWrapperException
-     * @throws DonneesFormulaireException
-     */
-    public function getInputData(string $dataFromBordereau, string $dataFromFiles): array
-    {
-        $dataFileContent = \json_decode($dataFromBordereau, true);
-        if (!$dataFileContent) {
-            $dataFileContent = [];
-        }
-        $data = $this->getInputDataElement($dataFileContent);
-        $data['Keywords'] = $this->getInputDataKeywords($dataFileContent['keywords'] ?? '');
-        $inputDataFiles = $this->getInputDataFiles($dataFromFiles);
-        $data['ArchiveUnits'] = $inputDataFiles[0]['ArchiveUnits'] ?? [];
-        $data['Files'] = $inputDataFiles[0]['Files'] ?? [];
-
-        if (!empty($dataFileContent['archiveunits_title'])) {
-            $data['Description'] = $this->getStringWithMetatadaReplacement($dataFileContent['archiveunits_title']);
-        }
-
-        $appraisailRuleFinalAction = [
-            '1.0' => [
-                'Conserver' => 'conserver',
-                'Détruire' => 'detruire',
-            ],
-            '2.1' => [
-                'Conserver' => 'Keep',
-                'Détruire' => 'Destroy',
-            ],
-        ];
-        if (!empty($data['AppraisalRule']['FinalAction'])) {
-            $data['AppraisalRule']['FinalAction'] = $appraisailRuleFinalAction[$data['version'] ?? '2.1'][$data['AppraisalRule']['FinalAction']];
-        }
-        if (empty($data['StartDate'])) {
-            unset($data['StartDate']);
-        }
-        if (empty($data['EndDate'])) {
-            unset($data['EndDate']);
-        }
-        return $data;
-    }
-
-    /**
      * @throws UnrecoverableException
      */
     private function getStringWithMetatadaReplacement(string $expression): string
     {
-        $simpleTwigRenderer = new SimpleTwigRenderer();
-        return $simpleTwigRenderer->render(
+        return (new SimpleTwigRenderer())->render(
             $expression,
             $this->getDonneesFormulaire()
         );
@@ -384,14 +443,15 @@ class SedaMessageBuilder
         string $description,
         string $field_expression,
         int $filenum = 0,
-        array $specific_info = [],
-        bool $do_not_put_mime_type = false
-    ): array {
-        $field = \preg_replace('/#ZIP#/', '', $field_expression);
+        array $specificInfo = [],
+        bool $doNotPutMimeType = false,
+        ?ArchiveUnit $archiveUnit = null,
+    ): ?ArchiveUnit {
+        $field = \str_replace('#ZIP#', '', $field_expression);
 
         $zipFilePath = $this->getDonneesFormulaire()->getFilePath($field, $filenum);
         if (!$zipFilePath) {
-            return [];
+            return null;
         }
 
         $this->zipDirectory = $this->tmpFolder->create();
@@ -408,8 +468,9 @@ class SedaMessageBuilder
             $this->zipDirectory,
             $field,
             $this->zipDirectory,
-            $specific_info,
-            $do_not_put_mime_type
+            $specificInfo,
+            $doNotPutMimeType,
+            $archiveUnit
         );
     }
 
@@ -420,57 +481,78 @@ class SedaMessageBuilder
         string $description,
         string $folder,
         string $field,
-        string $rootFolder,
+        string $rootDirectory,
         array $specificInfo,
-        bool $doNotPutMimeType = false
-    ): array {
+        bool $doNotPutMimeType = false,
+        ?ArchiveUnit $archiveUnit = null,
+    ): ArchiveUnit {
         $localDescription = $this->getLocalDescription(
             $description,
-            $this->getRelativePath($rootFolder, $folder),
+            $this->getRelativePath($rootDirectory, $folder),
             true
         );
 
-        $result['Id'] = ($this->idGeneratorFunction)();
-        $result['Title'] = $this->getStringWithMetatadaReplacement($localDescription);
+        if ($archiveUnit === null) {
+            $archiveUnit = new ArchiveUnit(($this->idGeneratorFunction)());
+            $archiveUnit->title = $this->getStringWithMetatadaReplacement($localDescription);
 
-        $result = \array_merge(
-            $result,
-            $this->getSedaInfoFromSpecificInfo(
+            $sedaInfoFromSpecificInfo = $this->getSedaInfoFromSpecificInfo(
                 $this->getSedaInfoFromSpecificInfoWithLocalDescription(
                     $specificInfo,
-                    $this->getRelativePath($rootFolder, $folder),
+                    $this->getRelativePath($rootDirectory, $folder),
                     true
                 )
-            )
-        );
+            );
 
-        $directoryContent = \array_diff(\scandir($folder), $this->excludeFileList());
+            $archiveUnit
+                ->setAppraisalRule(
+                    $sedaInfoFromSpecificInfo['ArchiveUnit_AppraisalRule_Rule'] ?? null,
+                    $sedaInfoFromSpecificInfo['ArchiveUnit_AppraisalRule_FinalAction'] ?? null,
+                    $sedaInfoFromSpecificInfo['ArchiveUnit_AppraisalRule_StartDate'] ?? null,
+                )
+                ->setAccessRestrictionRule(
+                    $sedaInfoFromSpecificInfo['AccessRestrictionRule_AccessRule'] ?? null,
+                    $sedaInfoFromSpecificInfo['AccessRestrictionRule_StartDate'] ?? null,
+                )
+                ->setContentDescription(
+                    $sedaInfoFromSpecificInfo['DescriptionLevel'] ?? null,
+                    $sedaInfoFromSpecificInfo['Language'] ?? null,
+                    $sedaInfoFromSpecificInfo['CustodialHistory'] ?? null,
+                    $sedaInfoFromSpecificInfo['Keywords'] ?? null,
+                );
+        }
 
-        foreach ($directoryContent as $file_or_folder) {
-            $filepath = $folder . '/' . $file_or_folder;
+        $dirContent = \array_diff(\scandir($folder), $this->excludeFileList());
+
+        $files = [];
+        foreach ($dirContent as $fileOrFolder) {
+            $filepath = $folder . '/' . $fileOrFolder;
             if (\is_dir($filepath)) {
-                $result['ArchiveUnits'][($this->idGeneratorFunction)()] = $this->getArchiveUnitFromFolder(
-                    $description,
-                    $filepath,
-                    $field,
-                    $rootFolder,
-                    $specificInfo,
-                    $doNotPutMimeType
+                $archiveUnit->addArchiveUnit(
+                    $this->getArchiveUnitFromFolder(
+                        $description,
+                        $filepath,
+                        $field,
+                        $rootDirectory,
+                        $specificInfo,
+                        $doNotPutMimeType
+                    )
                 );
             } elseif (\is_file($filepath)) {
-                $relativePath = $this->getRelativePath($rootFolder, $filepath);
-                $fileUnit = [];
-                $fileUnit['Filename'] = $relativePath;
-                $fileUnit['MessageDigest'] = \hash_file('sha256', $filepath);
-                $fileUnit['Size'] = \filesize($filepath);
+                $relativePath = $this->getRelativePath($rootDirectory, $filepath);
+                $file = new File(($this->idGeneratorFunction)());
+                $file->filename = $relativePath;
+                $file->messageDigest = \hash_file('sha256', $filepath);
+                $file->size = (string)\filesize($filepath);
+
                 $fileContentType = new FileContentType();
                 if (!$doNotPutMimeType) {
-                    $fileUnit['MimeType'] = $fileContentType->getContentType($filepath);
+                    $file->mimeType = $fileContentType->getContentType($filepath);
                 }
 
                 $localDescription = $this->getLocalDescription($description, $relativePath, false);
-                $fileUnit['Title'] = $this->getStringWithMetatadaReplacement($localDescription);
-                $result['Files'][($this->idGeneratorFunction)()] = $fileUnit;
+                $file->title = $this->getStringWithMetatadaReplacement($localDescription);
+                $files[] = $file;
                 $this->getFluxData()->setFileList(
                     $field,
                     $relativePath,
@@ -478,7 +560,8 @@ class SedaMessageBuilder
                 );
             }
         }
-        return $result;
+        $archiveUnit->setFiles($files);
+        return $archiveUnit;
     }
 
     private function getSedaInfoFromSpecificInfoWithLocalDescription(
@@ -501,10 +584,11 @@ class SedaMessageBuilder
 
     private function getLocalDescription(string $description, string $filepath, bool $isDirectory): string
     {
-        $localDescription = \preg_replace('/#FILEPATH#/', $filepath, $description);
-        $localDescription = \preg_replace('/#FILENAME#/', \basename($filepath), $localDescription);
-        $localDescription = \preg_replace('/#IS_DIR#/', $isDirectory ? 'true' : 'false', $localDescription);
-        return \preg_replace('/#IS_FILE#/', $isDirectory ? 'false' : 'true', $localDescription);
+        return \str_replace(
+            ['#FILEPATH#', '#FILENAME#', '#IS_DIR#', '#IS_FILE#'],
+            [$filepath, \basename($filepath), $isDirectory ? 'true' : 'false', $isDirectory ? 'false' : 'true'],
+            $description
+        );
     }
 
     private function excludeFileList(): array

@@ -208,7 +208,12 @@ class SedaGenerique extends SEDAConnecteur
         }
         $curlWrapper = $this->curlWrapperFactory->getInstance();
 
-        $dataFromBordereau = $this->connecteurConfig->getFileContent('data');
+        $dataFromBordereau = json_decode(
+            $this->connecteurConfig->getFileContent('data'),
+            true,
+            512,
+            JSON_THROW_ON_ERROR
+        );
         $dataFromFiles = $this->connecteurConfig->getFileContent('files');
 
         $message = $this->getMessage($fluxData, $dataFromBordereau, $dataFromFiles);
@@ -283,12 +288,25 @@ class SedaGenerique extends SEDAConnecteur
      * @throws UnrecoverableException
      * @throws DonneesFormulaireException
      * @throws SimpleXMLWrapperException
+     * @throws JsonException
      */
-    public function getMessage(FluxData $fluxData, string $dataFromBordereau, string $dataFromFiles): array
+    public function getMessage(FluxData $fluxData, array $dataFromBordereau, string $dataFromFiles): array
     {
-        return $this->sedaMessageBuilder
+        $message = $this->sedaMessageBuilder
             ->setDonneesFormulaire($this->getDocDonneesFormulaire())
             ->setFluxData($fluxData)
-            ->getInputData($dataFromBordereau, $dataFromFiles);
+            ->buildHeaders($dataFromBordereau)
+            ->buildKeywords($dataFromBordereau['keywords'] ?? '')
+            ->buildFiles($dataFromFiles)
+            ->buildArchiveUnit($dataFromFiles)
+            ->getMessage()
+        ;
+
+        return json_decode(
+            json_encode($message, JSON_THROW_ON_ERROR),
+            true,
+            512,
+            JSON_THROW_ON_ERROR
+        );
     }
 }
