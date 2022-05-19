@@ -66,7 +66,7 @@ class TypeDossierSAETest extends PastellTestCase
         $this->assertTrue(
             $this->triggerActionOnDocument($info['id_d'], "orientation")
         );
-        $this->assertLastMessage("sélection automatique  de l'action suivante");
+        $this->assertLastMessage("sélection automatique de l'action suivante");
 
         $result = $this->triggerActionOnDocument($info['id_d'], "send-archive");
         if (! $result) {
@@ -158,7 +158,7 @@ class TypeDossierSAETest extends PastellTestCase
         $this->assertTrue(
             $this->triggerActionOnDocument($document['id_d'], 'orientation')
         );
-        $this->assertLastMessage("sélection automatique  de l'action suivante");
+        $this->assertLastMessage("sélection automatique de l'action suivante");
 
         $this->assertFalse(
             $this->triggerActionOnDocument($document['id_d'], 'send-archive')

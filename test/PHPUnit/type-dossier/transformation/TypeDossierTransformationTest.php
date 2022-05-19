@@ -125,7 +125,7 @@ class TypeDossierTransformationTest extends PastellTestCase
         $this->assertTrue(
             $this->triggerActionOnDocument($info['id_d'], "orientation")
         );
-        $this->assertLastMessage("sélection automatique  de l'action suivante");
+        $this->assertLastMessage("sélection automatique de l'action suivante");
 
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($info['id_d']);
         $this->assertFalse($donneesFormulaire->get('envoi_signature'));
@@ -155,7 +155,7 @@ class TypeDossierTransformationTest extends PastellTestCase
         $this->assertTrue(
             $this->triggerActionOnDocument($info['id_d'], "orientation")
         );
-        $this->assertLastMessage("sélection automatique  de l'action suivante");
+        $this->assertLastMessage("sélection automatique de l'action suivante");
 
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($info['id_d']);
         $this->assertFalse($donneesFormulaire->get('envoi_signature'));
@@ -222,7 +222,7 @@ class TypeDossierTransformationTest extends PastellTestCase
         $this->assertTrue(
             $this->triggerActionOnDocument($info['id_d'], "orientation")
         );
-        $this->assertLastMessage("sélection automatique  de l'action suivante");
+        $this->assertLastMessage("sélection automatique de l'action suivante");
 
         $this->assertTrue(
             $this->triggerActionOnDocument($info['id_d'], "transformation")
@@ -275,7 +275,7 @@ class TypeDossierTransformationTest extends PastellTestCase
         $this->assertTrue(
             $this->triggerActionOnDocument($document['id_d'], 'orientation')
         );
-        $this->assertLastMessage("sélection automatique  de l'action suivante");
+        $this->assertLastMessage("sélection automatique de l'action suivante");
 
         $this->assertTrue(
             $this->triggerActionOnDocument($document['id_d'], 'transformation')
