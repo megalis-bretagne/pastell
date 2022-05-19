@@ -28,7 +28,7 @@ if (!defined("PASTELL_PATH")) {
 }
 
 if (!defined("ADMIN_EMAIL")) {
-    define("ADMIN_EMAIL", "mettre_un_email");
+    define("ADMIN_EMAIL", "test@libriciel.net");
 }
 
 //Emplacement du répertoire pour sauvegarder les fichiers temporaires
@@ -91,7 +91,7 @@ if (!defined("PRODUCTION")) {
 }
 
 if (!defined("PLATEFORME_MAIL")) {
-    define("PLATEFORME_MAIL", "ne-pas-repondre@libriciel.coop");
+    define("PLATEFORME_MAIL", "test@libriciel.net");
 }
 
 if (!defined("AIDE_URL")) {
