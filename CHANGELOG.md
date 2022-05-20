@@ -1,4 +1,5 @@
 # [3.1.15]
+***Cette version nécessite une modification de la base de données***
 
 ## Corrections
 
@@ -6,7 +7,8 @@
 
 ## Ajouts
 
-* Ajout de la taille totale dans le connecteur de statistiques #1534
+- Ajout de la date de réponse à un Mail sécurisé #1535
+- Ajout de la taille totale dans le connecteur de statistiques #1534
 
 # [3.1.14] - 2022-05-16
 
