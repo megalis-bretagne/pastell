@@ -134,6 +134,7 @@ CREATE TABLE `document_email_reponse` (
 	`id_d_reponse` varchar(32) NOT NULL,
 	`is_lu` tinyint(1) NOT NULL DEFAULT '0',
 	`has_reponse` tinyint(1) NOT NULL,
+	`date_reponse` datetime,
 	PRIMARY KEY (`id_reponse`)
 )  ENGINE=MyISAM  ;
 CREATE TABLE `document_entite` (

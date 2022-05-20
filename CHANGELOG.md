@@ -69,6 +69,7 @@
 - Suppression de SMTP_SERVER, SMTP_PORT, SMTP_USER, SMTP_PASSWORD, utilisé MAILER_DSN à la place. Voir https://symfony.com/doc/current/mailer.html#using-built-in-transports
 
 # [3.1.15]
+***Cette version nécessite une modification de la base de données***
 
 ## Corrections
 
@@ -76,7 +77,8 @@
 
 ## Ajouts
 
-* Ajout de la taille totale dans le connecteur de statistiques #1534
+- Ajout de la date de réponse à un Mail sécurisé #1535
+- Ajout de la taille totale dans le connecteur de statistiques #1534
 
 # [3.1.14] - 2022-05-16
 
