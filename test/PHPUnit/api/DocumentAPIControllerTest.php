@@ -361,6 +361,7 @@ class DocumentAPIControllerTest extends PastellTestCase
 
         $info['email_info'][0]['id_d'] = "NOT TESTABLE";
         $info['email_info'][0]['date_envoie'] = "NOT TESTABLE";
+        $info['email_reponse'][1]['date_reponse'] = "NOT TESTABLE";
 
         $this->assertEquals(
             array (
@@ -401,6 +402,7 @@ class DocumentAPIControllerTest extends PastellTestCase
                                 'id_d_reponse' => $id_d_reponse,
                                 'is_lu' => '0',
                                 'titre' => '',
+                                'date_reponse' => 'NOT TESTABLE',
                             ),
                     ),
                 'action_possible' =>
