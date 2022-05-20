@@ -83,7 +83,7 @@ class ApiAuthentication
         if (! $id_u) {
             throw new Exception("Accès interdit");
         }
-        if (! $this->utilisateurSQL->isEnable($id_u)) {
+        if (! $this->utilisateurSQL->isEnabled($id_u)) {
             throw new UnauthorizedException('Votre compte a été désactivé');
         }
         return $id_u;

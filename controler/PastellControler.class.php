@@ -18,7 +18,7 @@ class PastellControler extends Controler
             }
             $this->redirect("/Connexion/connexion?request_uri=" . urlencode($request_uri));
         }
-        if (! $this->getUtilisateur()->isEnable($this->getAuthentification()->getId())) {
+        if (! $this->getUtilisateur()->isEnabled($this->getAuthentification()->getId())) {
             $request_uri = $_SERVER['REQUEST_URI'];
             $this->setLastError('Votre compte a été désactivé');
             $this->redirect('/Connexion/connexion?request_uri=' . urlencode($request_uri));

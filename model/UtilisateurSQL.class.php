@@ -160,7 +160,7 @@ class UtilisateurSQL extends SQL
         $this->query($sql, false, $id_u);
     }
 
-    public function isEnable(int $id_u): bool
+    public function isEnabled(int $id_u): bool
     {
         $sql = 'SELECT is_enabled FROM utilisateur WHERE id_u = ?';
         return $this->queryOne($sql, $id_u);

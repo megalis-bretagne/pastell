@@ -11,7 +11,7 @@ class BaseAPIControllerFactory
 
     private $request;
 
-    private $server;
+    private array $server;
 
     private $fileUploader;
 
@@ -28,7 +28,7 @@ class BaseAPIControllerFactory
         $this->request = $request;
     }
 
-    public function setServer(array $server)
+    public function setServer(array $server): void
     {
         $this->server = $server;
     }
