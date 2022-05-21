@@ -5,6 +5,7 @@
  */
 
 use Monolog\Logger;
+use Pastell\Mailer\Mailer;
 
 function get_hecho(?string $message = '', int $quote_style = ENT_QUOTES): string
 {
@@ -192,28 +193,4 @@ function utf8_decode_array($array)
 function number_format_fr($number)
 {
     return number_format($number, 0, ",", " ");
-}
-
-function mail_wrapper($to, $subject, $message)
-{
-    $objectInstancier = ObjectInstancierFactory::getObjetInstancier();
-    $zenMail = $objectInstancier->getInstance(ZenMail::class);
-
-    $zenMail->setEmetteur("", PLATEFORME_MAIL);
-    $zenMail->setDestinataire($to);
-    $zenMail->setSujet($subject);
-    $zenMail->setContenuText($message);
-    try {
-        $zenMail->send();
-    } catch (Exception $e) {
-        /** Nothing to do */
-        $objectInstancier->getInstance(Logger::class)->error(sprintf(
-            "Impossible d'envoyer le mail %s vers %s : %s",
-            $subject,
-            $to,
-            $e->getMessage()
-        ));
-        return false;
-    }
-    return true;
 }

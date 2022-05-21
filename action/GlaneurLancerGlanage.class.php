@@ -1,5 +1,8 @@
 <?php
 
+use Pastell\Mailer\Mailer;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+
 class GlaneurLancerGlanage extends ActionExecutor
 {
     /**
@@ -18,18 +21,21 @@ class GlaneurLancerGlanage extends ActionExecutor
             $jobQueue = $this->objectInstancier->getInstance(JobQueueSQL::class);
 
             $id_job  = $jobQueue->getJobIdForConnecteur($this->id_ce, 'go');
-
-
             if ($id_job) {
                 $jobQueue->lock($id_job);
             }
             $message = $e->getMessage();
             $this->setLastMessage($message);
-            mail_wrapper(
-                ADMIN_EMAIL,
-                "[Pastell] Le traitement du glaneur passe à 'NON'",
-                "Le glaneur " . SITE_BASE . "Connecteur/edition?id_ce=" . $this->id_ce . " est en erreur." . "\n" . $message
-            );
+
+            $url = sprintf('%s/Connecteur/edition?id_ce=%d', SITE_BASE, $this->id_ce);
+
+            #TODO revoir la gestion des erreurs des connecteurs afin de ne pas envoyé de mail à ce moment-là
+            $templatedEmail = (new TemplatedEmail())
+                ->to(ADMIN_EMAIL)
+                ->subject("[Pastell] Le traitement d'un glaneur est passé à 'NON'")
+                ->htmlTemplate('glaneur_lancer_glanage.html.twig')
+                ->context(['url' => $url, 'message' => $message]);
+            $this->objectInstancier->getInstance(Mailer::class)->send($templatedEmail);
             return false;
         } catch (Exception $e) {
             $this->setLastMessage("Erreur lors de l'importation : " . $e->getMessage() . "<br />\n");
