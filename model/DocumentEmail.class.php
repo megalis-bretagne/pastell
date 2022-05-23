@@ -6,7 +6,7 @@ class DocumentEmail extends SQL
 {
     public const DESTINATAIRE = 'to';
     public const ID_DE = 'id_de';
-    
+
     public static function getChaineTypeDestinataire($code)
     {
         $type = ['to' => 'Destinataire', 'cc' => 'Copie à' , 'bcc' => 'Copie caché à' ];
@@ -17,8 +17,7 @@ class DocumentEmail extends SQL
         private readonly SQLQuery $sqlQuery,
         private readonly Mailer $mailer,
         private readonly Journal $journal,
-    )
-    {
+    ) {
         parent::__construct($sqlQuery);
     }
 
