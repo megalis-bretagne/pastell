@@ -203,6 +203,8 @@ class HttpApi
     {
         /** @var ApiAuthentication $apiAuthentication */
         $apiAuthentication = $this->objectInstancier->getInstance(ApiAuthentication::class);
+        $apiAuthentication->setRequestInfo($this->request);
+        $apiAuthentication->setServerInfo($this->server);
         return $apiAuthentication->getUtilisateurId();
     }
 

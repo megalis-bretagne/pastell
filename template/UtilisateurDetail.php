@@ -19,7 +19,9 @@ use Pastell\Utilities\Certificate;
 
 <a class='btn btn-link' href='Entite/utilisateur?id_e=<?php echo $info['id_e']?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des utilisateurs</a>
 
-
+<?php if (! $info['is_enabled']) : ?>
+    <div class="alert alert-danger">Cet utilisateur est désactivé</div>
+<?php endif;?>
 <div class="box">
 
 <h2>Détail de l'utilisateur <?php hecho($info['prenom'] . " " . $info['nom']); ?></h2>
@@ -49,6 +51,10 @@ use Pastell\Utilities\Certificate;
 <tr>
 <th>Date d'inscription</th>
 <td><?php echo time_iso_to_fr($info['date_inscription']) ?></td>
+</tr>
+<tr>
+    <th>Activé</th>
+    <td><?php echo $info['is_enabled'] ? 'Oui' : 'Non' ?></td>
 </tr>
 
 
@@ -86,13 +92,36 @@ use Pastell\Utilities\Certificate;
 
 
     <?php if ($utilisateur_edition) : ?>
-        <a
-                class='btn btn-danger'
-                href="<?php $this->url("Utilisateur/suppression?id_u=$id_u") ?>"
-        ><i class='fa fa-trash'></i>&nbsp;Supprimer</a>
-        <a class='btn btn-primary' href="Utilisateur/edition?id_u=<?php echo $id_u?>">
-            <i class="fa fa-pencil"></i>&nbsp;Modifier
-        </a>
+    <table> 
+        <tr>
+            <td>
+                <a class='btn btn-primary' href="Utilisateur/edition?id_u=<?php echo $id_u?>">
+                    <i class="fa fa-pencil"></i>&nbsp;Modifier
+                </a>&nbsp;
+            </td>
+            <td>
+                <form action='<?php
+                if ($info['is_enabled']) {
+                    $this->url('Utilisateur/disable');
+                } else {
+                    $this->url('Utilisateur/enable');
+                } ?>'method='post'>
+                    <?php $this->displayCSRFInput() ?>
+                    <input type='hidden' name='id_u' value='<?php echo $id_u ?>'/>
+                    <button type='submit' class='btn btn-warning'>
+                        <i class="fa <?php echo $info['is_enabled'] ? 'fa-toggle-on' : 'fa-toggle-off' ?>"></i>
+                        <?php echo $info['is_enabled'] ? 'Désactiver' : 'Activer' ?>
+                    </button>&nbsp;
+                </form>
+            </td>
+            <td>
+                <a 
+                        class='btn btn-danger'
+                        href="<?php $this->url("Utilisateur/suppression?id_u=$id_u") ?>"
+                ><i class='fa fa-trash'></i>&nbsp;Supprimer</a>
+            </td>
+        </tr>
+    </table>
     <?php endif;?>
     
 </div>

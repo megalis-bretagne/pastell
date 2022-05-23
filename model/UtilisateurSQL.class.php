@@ -147,4 +147,22 @@ class UtilisateurSQL extends SQL
         }
         throw new Exception("Aucun paramètre permettant la recherche de l'utilisateur n'a été renseigné");
     }
+
+    public function enable(int $id_u): void
+    {
+        $sql = 'UPDATE utilisateur SET is_enabled = ? WHERE id_u = ?';
+        $this->query($sql, true, $id_u);
+    }
+
+    public function disable(int $id_u): void
+    {
+        $sql = 'UPDATE utilisateur SET is_enabled = ? WHERE id_u = ?';
+        $this->query($sql, false, $id_u);
+    }
+
+    public function isEnabled(int $id_u): bool
+    {
+        $sql = 'SELECT is_enabled FROM utilisateur WHERE id_u = ?';
+        return $this->queryOne($sql, $id_u);
+    }
 }

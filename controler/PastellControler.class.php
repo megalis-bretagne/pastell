@@ -13,11 +13,15 @@ class PastellControler extends Controler
     {
         if (! $this->getAuthentification()->isConnected()) {
             $request_uri = $_SERVER['REQUEST_URI'];
-
             if ($this->getGetInfo()->get(FrontController::PAGE_REQUEST)) {
                 $this->setLastError("Veuillez saisir vos identifiants de connexion pour accéder à cette page.");
             }
             $this->redirect("/Connexion/connexion?request_uri=" . urlencode($request_uri));
+        }
+        if (! $this->getUtilisateur()->isEnabled($this->getAuthentification()->getId())) {
+            $request_uri = $_SERVER['REQUEST_URI'];
+            $this->setLastError('Votre compte a été désactivé');
+            $this->redirect('/Connexion/connexion?request_uri=' . urlencode($request_uri));
         }
     }
 
