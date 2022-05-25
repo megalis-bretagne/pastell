@@ -1,14 +1,21 @@
 <?php
 
-// TODO a mettre dans le HEALTHCHECK
+// TODO a mettre dans le HEALTHCHECK (arrêt du démon) et revoir la gestion des connecteurs suspendus
+
+use Pastell\Mailer\Mailer;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 
 require_once(__DIR__ . "/../init.php");
+
+$objectInstancier = ObjectInstancierFactory::getObjetInstancier();
+
+
 $modenagios = false;
 $message = "OK";
 $retour = 0;
 
 #print_r($argv);
-if ((isset($argv[1])) && ($argv[1] == 'nagios')) {
+if ((isset($argv[1])) && ($argv[1] === 'nagios')) {
         $modenagios = true;
 }
 
@@ -16,7 +23,7 @@ $next_try = date("Y-m-d H:i:s", strtotime("-1hour"));
 
 $sql = "SELECT MAX(last_try) FROM job_queue WHERE next_try<? AND nb_try > 0";
 
-$last_try = $sqlQuery->queryOne($sql, $next_try);
+$last_try = $objectInstancier->getInstance(SQLQuery::class)->queryOne($sql, $next_try);
 
 if (! $last_try) {
         //la job queue est vide
@@ -29,28 +36,37 @@ if (! $last_try) {
 
 $nb_second_since_last_try = time() - strtotime($last_try);
 
+$pastellMailer = $objectInstancier->getInstance(Mailer::class);
+
+
 if ($nb_second_since_last_try > 3600) {
-        mail_wrapper(
-            ADMIN_EMAIL,
-            "Le démon Pastell semble arreté",
-            "Le démon sur le site " . SITE_BASE . "/Daemon semble arreté depuis plus d'une heure"
-        );
-        $message = "Le démon Pastell semble arreté sur le site " . SITE_BASE . "/Daemon semble arreté depuis plus d'une heure";
-        $retour = 2;
+    $message = sprintf(
+        "Le démon sur le site %s/Daemon semble arrêté depuis plus d'une heure",
+        SITE_BASE
+    );
+    $templatedEmail = (new TemplatedEmail())
+        ->to(ADMIN_EMAIL)
+        ->subject('[PASTELL] Le démon semble arrêté')
+        ->text($message);
+    $pastellMailer->send($templatedEmail);
+    $retour = 2;
 }
 
 
-/** @var JobQueueSQL $jobQueueSQL */
 $jobQueueSQL = $objectInstancier->getInstance(JobQueueSQL::class);
 $nb_lock = $jobQueueSQL->getNbLockSinceOneHour();
 if ($nb_lock) {
-        mail_wrapper(
-            ADMIN_EMAIL,
-            "Des connecteurs Pastell sont suspendus",
-            "$nb_lock connecteur(s) Pastell semble suspendus sur le site " . SITE_BASE . " depuis plus d'une heure !"
-        );
-        $message = "Des connecteurs Pastell, " . SITE_BASE . ", sont suspendus depuis plus d'une heure !";
-        $retour = 2;
+    $message = sprintf(
+        "%s connecteur(s) Pastell semble suspendus sur le site %s depuis plus d'une heure !",
+        $nb_lock,
+        SITE_BASE
+    );
+    $templatedEmail = (new TemplatedEmail())
+        ->to(ADMIN_EMAIL)
+        ->subject('[PASTELL] Des connecteurs sont suspendus"')
+        ->text($message);
+    $pastellMailer->send($templatedEmail);
+    $retour = 2;
 }
 
 if ($modenagios) {

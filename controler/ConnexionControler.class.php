@@ -1,8 +1,10 @@
 <?php
 
+use Pastell\Mailer\Mailer;
 use Pastell\Service\TokenGenerator;
 use Pastell\Service\LoginAttemptLimit;
 use Pastell\Service\PasswordEntropy;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 
 class ConnexionControler extends PastellControler
 {
@@ -492,6 +494,7 @@ class ConnexionControler extends PastellControler
      * @throws LastErrorException
      * @throws LastMessageException
      * @throws Exception
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
     public function doOublieIdentifiantAction()
     {
@@ -513,14 +516,19 @@ class ConnexionControler extends PastellControler
         $info = $utilisateur->getInfo($id_u);
         $utilisateur->reinitPassword($id_u, $mailVerifPassword);
 
-        /** @var ZenMail $zenMail */
-        $zenMail = $this->getInstance(ZenMail::class);
-        $zenMail->setEmetteur("Pastell", PLATEFORME_MAIL);
-        $zenMail->setDestinataire($info['email']);
-        $zenMail->setSujet("[Pastell] Procédure de modification de mot de passe");
-        $infoMessage = ['mail_verif_password' => $mailVerifPassword];
-        $zenMail->setContenu(PASTELL_PATH . "/mail/changement-mdp.php", $infoMessage);
-        $zenMail->send();
+        $link = sprintf(
+            '%s/Connexion/changementMdp?mail_verif=%s',
+            SITE_BASE,
+            $mailVerifPassword
+        );
+        $templatedEmail = (new TemplatedEmail())
+            ->to($info['email'])
+            ->subject('[Pastell] Procédure de modification de mot de passe')
+            ->htmlTemplate('oublie-identifiant.html.twig')
+            ->context(['link' => $link]);
+        $this->getObjectInstancier()
+            ->getInstance(Mailer::class)
+            ->send($templatedEmail);
 
         $this->getJournal()->addActionAutomatique(
             Journal::MODIFICATION_UTILISATEUR,

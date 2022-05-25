@@ -1,15 +1,11 @@
 <?php
 
+use Pastell\Mailer\Mailer;
+
 class DocumentEmail extends SQL
 {
     public const DESTINATAIRE = 'to';
     public const ID_DE = 'id_de';
-
-    private $zenMail;
-
-    private $journal;
-
-    private $sqlQuery;
 
     public static function getChaineTypeDestinataire($code)
     {
@@ -17,12 +13,12 @@ class DocumentEmail extends SQL
         return $type[$code];
     }
 
-    public function __construct(SQLQuery $sqlQuery, ZenMail $zenMail, Journal $journal)
-    {
+    public function __construct(
+        private readonly SQLQuery $sqlQuery,
+        private readonly Mailer $mailer,
+        private readonly Journal $journal,
+    ) {
         parent::__construct($sqlQuery);
-        $this->sqlQuery = $sqlQuery;
-        $this->zenMail = $zenMail;
-        $this->journal = $journal;
     }
 
     public function add($id_d, $email, $type)
@@ -140,7 +136,12 @@ class DocumentEmail extends SQL
         $message .= "\n\nConsulter le détail du document : " . SITE_BASE . "Document/detail?id_d={$result['id_d']}&id_e=$id_e";
 
         $notification = new Notification($this->sqlQuery);
-        $notificationMail = new NotificationMail($notification, $this->zenMail, $journal, new NotificationDigestSQL($this->sqlQuery));
+        $notificationMail = new NotificationMail(
+            $notification,
+            $this->mailer,
+            $journal,
+            new NotificationDigestSQL($this->sqlQuery)
+        );
         $notificationMail->notify($id_e, $result['id_d'], $next_action, $infoDocument['type'], $message);
 
         return $this->getInfoFromKey($key);

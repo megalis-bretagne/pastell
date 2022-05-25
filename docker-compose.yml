@@ -54,6 +54,7 @@ services:
             SENTRY_DSN: ${SENTRY_DSN:-}
             SENTRY_ENVIRONMENT: ${SENTRY_ENVIRONMENT:-dev}
             MAILER_DSN: ${MAILER_DSN:-null://null}
+            ADMIN_EMAIL: ${ADMIN_EMAIL:-noreply@noreply.com}
         ports:
             - "${WEB_HTTP_PORT:-8000}:8080"
             - "${WEB_HTTPS_PORT:-8443}:4443"

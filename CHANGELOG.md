@@ -63,6 +63,7 @@
 - Suppression de la plupart des scripts dans batch/ installation/ et script/. Ceux qui restent ne devrait plus être utilisé car ils doivent être remplacés par un script console
 - La méthode SEDAConnecteur::getBordereau() prend la signature de SEDAConnecteur::getBordereauNG() qui est supprimée
 - Suppression de DAEMON_USER, DAEMON_LOG_FILE, PID_FILE
+- Suppression de la fonction util.php::mail_wrapper(), utilisé symfony/mailer à la place
 
 # [3.1.14] - 2022-05-16
 
