@@ -39,7 +39,13 @@ class NotificationMail
             ->to($mail)
             ->subject('[Pastell] Notification')
             ->htmlTemplate('notification.html.twig')
-            ->context(['message' => $message,'url' => $url,'action' => $action,'type' => $type]);
+            ->context([
+                'message' => $message,
+                'url' => $url,
+                'action' => $action,
+                'type' => $type,
+                'SITE_BASE' => SITE_BASE
+            ]);
         foreach ($attachment as $filename => $filepath) {
             $templatedEmail->attachFromPath($filepath, $filename);
         }

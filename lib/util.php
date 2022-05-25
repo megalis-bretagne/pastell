@@ -4,9 +4,6 @@
  * TODO: Move functions in Pastell namespace
  */
 
-use Monolog\Logger;
-use Pastell\Mailer\Mailer;
-
 function get_hecho(?string $message = '', int $quote_style = ENT_QUOTES): string
 {
     return htmlentities($message ?? '', $quote_style, "utf-8") ?? '';

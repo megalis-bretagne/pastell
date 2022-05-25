@@ -29,7 +29,7 @@ class GlaneurLancerGlanage extends ActionExecutor
 
             $url = sprintf('%s/Connecteur/edition?id_ce=%d', SITE_BASE, $this->id_ce);
 
-            #TODO revoir la gestion des erreurs des connecteurs afin de ne pas envoyé de mail à ce moment-là
+            #TODO revoir la gestion des erreurs des connecteurs afin de ne pas envoyer de mail à ce moment-là
             $templatedEmail = (new TemplatedEmail())
                 ->to(ADMIN_EMAIL)
                 ->subject("[Pastell] Le traitement d'un glaneur est passé à 'NON'")
