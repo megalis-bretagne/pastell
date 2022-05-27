@@ -211,7 +211,7 @@ class ActionExecutorFactory
         $actionClass->setDocumentId($infoDocument['type'], $id_d);
         $actionClass->setFromApi($from_api);
         $actionClass->setField($field);
-        $actionClass->setPage($page);
+        $actionClass->setPage($page ?: 0);
 
 
         if ($from_api) {
@@ -288,7 +288,7 @@ class ActionExecutorFactory
         return $result;
     }
 
-    public function goChoice($id_e, $id_u, $id_d, $action_name, $from_api, $field, $page = 0, $post_data = false)
+    public function goChoice($id_e, $id_u, $id_d, $action_name, $from_api, $field, int $page = 0, $post_data = false)
     {
         $infoDocument = $this->objectInstancier->getInstance(DocumentSQL::class)->getInfo($id_d);
         $documentType = $this->objectInstancier
@@ -302,7 +302,7 @@ class ActionExecutorFactory
         $actionClass->setDocumentId($infoDocument['type'], $id_d);
         $actionClass->setFromApi($from_api);
         $actionClass->setField($field);
-        $actionClass->setPage($page);
+        $actionClass->setPage($page ?: 0);
         if ($post_data) {
             $actionClass->setRecuperateur(new Recuperateur($post_data));
         }
