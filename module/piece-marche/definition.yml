@@ -515,10 +515,16 @@ action:
         name: Relancé
         name-action: Relancer si nécessaire
         rule:
-           last-action:
-              send-mailsec
-              renvoi
-        action-class: PDFGeneriqueRelance
+            last-action:
+                - send-mailsec
+                - renvoi
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecRelance
+        connecteur-type-mapping:
+            prepare-renvoi: prepare-renvoi
+            non-recu: preparation-non-recu
+            send-mailsec: send-mailsec
         action-automatique: mailsec-relance
 
     prepare-renvoi:
@@ -550,16 +556,25 @@ action:
         name: Erreur
         rule:
             role_id_e: no-role
-
+    
+    preparation-non-recu:
+        name: Préparation au passage comme non reçu
+        rule:
+            role_id_e: no-role
+        action-automatique: non-recu
+    
     non-recu:
         name: Non reçu
         name-action: Définir comme non reçu
-        warning: "ok"
+        warning: ok
         rule:
             last-action:
-                renvoi
-                send-mailsec
-        action-class: Defaut
+                - preparation-non-recu
+                - renvoi
+                - send-mailsec
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecNotReceived
         action-automatique: orientation
 
     preparation-send-ged:
