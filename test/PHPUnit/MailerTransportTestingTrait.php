@@ -22,4 +22,9 @@ trait MailerTransportTestingTrait
             $this->mailerTransportTesting->getSentMessage()->getMessage()->toString()
         );
     }
+
+    final public function getMailerTransport(): MailerTransportTesting
+    {
+        return $this->mailerTransportTesting;
+    }
 }

@@ -2,6 +2,8 @@
 
 class MailSecConnecteurTest extends PastellTestCase
 {
+    use MailerTransportTestingTrait;
+
     public const FLUX_ID =  'mailsec';
     private const EMAIL = 'foo@test.com';
     private const DESTINATAIRE = 'destinataire';
@@ -10,6 +12,17 @@ class MailSecConnecteurTest extends PastellTestCase
 
     /** @var DonneesFormulaire */
     private $connecteurConfig;
+
+    private $contentHTML;
+    private $embededImage;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->setMailerTransportForTesting();
+        $this->contentHTML = '';
+        $this->embededImage = [];
+    }
 
     /**
      * @return DocumentEmail
@@ -20,152 +33,50 @@ class MailSecConnecteurTest extends PastellTestCase
     }
 
     /**
-     * @return ZenMail
-     */
-    private function getZenMail(): ZenMail
-    {
-        return $this->getObjectInstancier()->getInstance(ZenMail::class);
-    }
-
-    /**
-     * @param ZenMail $zenMail
-     * @return MailSec
      * @throws DonneesFormulaireException
      * @throws Exception
      */
-    public function getMailSec(ZenMail $zenMail): MailSec
+    private function getMailSec(): MailSec
     {
-        $mailsec = new MailSec(
-            $zenMail,
-            $this->getDocumentEmail(),
-            $this->getJournal(),
-            $this->getObjectInstancier()->getInstance(EntiteSQL::class),
-            $this->getConnecteurFactory()
-        );
-
-        $result = $this->getInternalAPI()->post(
-            "/entite/1/connecteur",
-            ['libelle' => 'Connecteur mailsec de test','id_connecteur' => 'mailsec']
-        );
-
+        $result = $this->createConnector('mailsec', "Connecteur mailsec de test");
         $id_ce  = $result['id_ce'];
-
+        $this->configureConnector(
+            $id_ce,
+            ['mailsec_subject' => 'entite: %ENTITE% -- titre : %TITRE%']
+        );
         $this->connecteurConfig = $this->getConnecteurFactory()->getConnecteurConfig($id_ce);
-        $this->connecteurConfig->setData('mailsec_subject', 'entite: %ENTITE% -- titre : %TITRE%');
+        if ($this->contentHTML) {
+            $this->connecteurConfig->addFileFromCopy(
+                'content_html',
+                'content.html',
+                $this->contentHTML,
+            );
+        }
+        foreach ($this->embededImage as $filenum => $filename) {
+            $this->connecteurConfig->addFileFromCopy(
+                'embeded_image',
+                $filename,
+                __DIR__ . "/fixtures/image-exemple.png",
+                $filenum
+            );
+        }
 
-        $donneesFormulaire = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
-        $donneesFormulaire->setData('raison_sociale', 'Libriciel SCOP');
-        $donneesFormulaire->setData('numero_facture', 'FOO42');
+        $id_d = $this->createDocument('test')['id_d'];
+        $this->configureDocument(
+            $id_d,
+            ['raison_sociale' => 'Libriciel SCOP', 'numero_facture' => 'FOO42', 'toto' => 'mon titre']
+        );
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
 
         $donneesFormulaire->addFileFromCopy(
             'metadata',
             "metadata.json",
             __DIR__ . "/fixtures/mail-metadata.json"
         );
-
+        /** @var MailSec $mailsec */
+        $mailsec = $this->getConnecteurFactory()->getConnecteurById($id_ce);
         $mailsec->setDocDonneesFormulaire($donneesFormulaire);
-
-        $mailsec->setConnecteurConfig($this->connecteurConfig);
-
         return $mailsec;
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function testSendAllMail()
-    {
-        $zenMail = $this->getZenMail();
-        $this->getDocumentEmail()->add(1, self::EMAIL, "to");
-
-        $this->getMailSec($zenMail)->sendAllMail(1, 1);
-        $all_info = $zenMail->getAllInfo();
-        $this->assertCount(1, $all_info);
-        $this->assertEquals(self::EMAIL, $all_info[0][self::DESTINATAIRE]);
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function testSendOneMail()
-    {
-        $zenMail = $this->getZenMail();
-
-
-        $key = $this->getDocumentEmail()->add(1, self::EMAIL, "to");
-        $document_email_info = $this->getDocumentEmail()->getInfoFromKey($key);
-
-        $this->getMailSec($zenMail)->sendOneMail(1, 1, $document_email_info[DocumentEmail::ID_DE]);
-
-        $all_info = $zenMail->getAllInfo();
-        $this->assertCount(1, $all_info);
-        $this->assertEquals(self::EMAIL, $all_info[0][self::DESTINATAIRE]);
-
-        $this->assertEquals('=?UTF-8?Q?entite:=20=20--=20titre=20:=20?=', $all_info[0]['sujet']);
-
-        $info = $this->getDocumentEmail()->getInfoFromPK($document_email_info[DocumentEmail::ID_DE]);
-        $this->assertEquals(1, $info['nb_renvoi']);
-    }
-
-    /**
-     * @throws DonneesFormulaireException
-     * @throws Exception
-     */
-    public function testTest()
-    {
-        $zenMail = $this->getZenMail();
-        $this->getMailSec($zenMail)->test();
-        $all_info = $zenMail->getAllInfo();
-        $this->assertEquals('=?UTF-8?Q?entite:=20%ENTITE%=20--=20titre=20:=20%TITRE%?=', $all_info[0]['sujet']);
-    }
-
-    /**
-     * @throws DonneesFormulaireException
-     * @throws Exception
-     */
-    public function testEmetteur()
-    {
-        $zenMail = $this->getZenMail();
-        $mailsec = $this->getMailSec($zenMail);
-        $this->connecteurConfig->setData('mailsec_from_description', 'ma_collectivite');
-        $this->connecteurConfig->setData('mailsec_reply_to', 'mail_reply_to@example.org');
-        $mailsec->test();
-        $info_entete = $zenMail->getAllInfo()[0][self::ENTETE];
-
-        $this->assertEquals(
-            'From: =?utf-8?B?bWFfY29sbGVjdGl2aXRl?=<' . PLATEFORME_MAIL . '>
-Reply-To: mail_reply_to@example.org
-Content-Type: text/plain; charset="UTF-8"',
-            $info_entete
-        );
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function testSendHTML()
-    {
-        $zenMail = $this->getZenMail();
-        $mailsec = $this->getMailSec($zenMail);
-
-
-        $this->addContentHTML(__DIR__ . "/fixtures/mail-exemple.html");
-        $this->addEmbededImage('image1.png');
-        $this->addEmbededImage('image2.png', 1);
-
-        $key = $this->getDocumentEmail()->add(1, self::EMAIL, "to");
-
-        $document_email_info = $this->getDocumentEmail()->getInfoFromKey($key);
-
-        $mailsec->sendOneMail(1, 1, $document_email_info[DocumentEmail::ID_DE]);
-        $all_info = $zenMail->getAllInfo();
-        $this->assertMatchesRegularExpression("#Content-Type: text/html;#", $all_info[0][self::CONTENU]);
-        $this->assertMatchesRegularExpression("#Content-ID: <image0>#", $all_info[0][self::CONTENU]);
-        $this->assertMatchesRegularExpression("#Content-ID: <image1>#", $all_info[0][self::CONTENU]);
-        $this->assertMatchesRegularExpression("#Content-Disposition: inline, filename=\"image1.png#", $all_info[0][self::CONTENU]);
-        $this->assertMatchesRegularExpression("#Content-Disposition: inline, filename=\"image2.png#", $all_info[0][self::CONTENU]);
-        $this->assertMatchesRegularExpression("#FOO42#", $all_info[0][self::CONTENU]);
-        $this->assertMatchesRegularExpression("#Le montant de cette commande est de : 42 franc#", $all_info[0][self::CONTENU]);
     }
 
     /**
@@ -174,11 +85,7 @@ Content-Type: text/plain; charset="UTF-8"',
      */
     private function addContentHTML($filepath)
     {
-        $this->connecteurConfig->addFileFromCopy(
-            'content_html',
-            'content.html',
-            $filepath
-        );
+        $this->contentHTML = $filepath;
     }
 
     /**
@@ -188,12 +95,64 @@ Content-Type: text/plain; charset="UTF-8"',
      */
     private function addEmbededImage(string $filename = 'image.png', int $filenum = 0)
     {
-        $this->connecteurConfig->addFileFromCopy(
-            'embeded_image',
-            $filename,
-            __DIR__ . "/fixtures/image-exemple.png",
-            $filenum
-        );
+        $this->embededImage[$filenum] = $filename;
+    }
+
+    /**
+     * @throws DonneesFormulaireException
+     * @throws Exception
+     */
+    public function testTest()
+    {
+        $this->getMailSec()->test();
+        $this->assertMessageContainsString('Subject: entite: Bourg-en-Bresse -- titre : mon titre');
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testSendOneMail()
+    {
+        $key = $this->getDocumentEmail()->add(1, self::EMAIL, "to");
+        $document_email_info = $this->getDocumentEmail()->getInfoFromKey($key);
+
+        $this->getMailSec()->sendOneMail(1, 1, $document_email_info[DocumentEmail::ID_DE]);
+        $this->assertMailEqualsFile(__DIR__ . "/fixtures/mail-text-output.txt");
+    }
+
+    private function assertMailEqualsFile(string $filename): void
+    {
+        $mailAsString = $this->getMailerTransport()->getSentMessage()->toString();
+        $this->assertMailContentEqualsFile($filename, $mailAsString);
+    }
+    /**
+     * @throws Exception
+     */
+    public function testSendAllMail()
+    {
+        $this->getDocumentEmail()->add(1, self::EMAIL, "to");
+        $this->getMailSec()->sendAllMail(1, 1);
+        $this->assertMailEqualsFile(__DIR__ . "/fixtures/mail-text-output.txt");
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testSendHTML()
+    {
+        $this->addContentHTML(__DIR__ . "/fixtures/mail-exemple.html");
+        $this->addEmbededImage('image1.png');
+        $this->addEmbededImage('image2.png', 1);
+
+        $mailsec = $this->getMailSec();
+
+
+        $key = $this->getDocumentEmail()->add(1, self::EMAIL, "to");
+
+        $document_email_info = $this->getDocumentEmail()->getInfoFromKey($key);
+
+        $mailsec->sendOneMail(1, 1, $document_email_info[DocumentEmail::ID_DE]);
+        $this->assertMailEqualsFile(__DIR__ . "/fixtures/mail-html-output.txt");
     }
 
     /**
@@ -201,11 +160,10 @@ Content-Type: text/plain; charset="UTF-8"',
      */
     public function testSendHTMLFluxKeyNotFound()
     {
-        $zenMail = $this->getZenMail();
-        $mailsec = $this->getMailSec($zenMail);
-
         $this->addContentHTML(__DIR__ . "/fixtures/mail-exemple-key-not-found.html");
         $this->addEmbededImage();
+
+        $mailsec = $this->getMailSec();
 
         $key = $this->getDocumentEmail()->add(1, self::EMAIL, "to");
 
@@ -221,11 +179,10 @@ Content-Type: text/plain; charset="UTF-8"',
      */
     public function testSendHTMLFluxMetadataFileNotFound()
     {
-        $zenMail = $this->getZenMail();
-        $mailsec = $this->getMailSec($zenMail);
-
         $this->addContentHTML(__DIR__ . "/fixtures/mail-exemple-metadata-file-not-found.html");
         $this->addEmbededImage();
+
+        $mailsec = $this->getMailSec();
 
         $key = $this->getDocumentEmail()->add(1, self::EMAIL, "to");
 
@@ -241,12 +198,12 @@ Content-Type: text/plain; charset="UTF-8"',
      */
     public function testSendHTMLFluxKeyBadType()
     {
-        $zenMail = $this->getZenMail();
-        $mailsec = $this->getMailSec($zenMail);
-
         $this->addContentHTML(__DIR__ . "/fixtures/mail-exemple-key-bad-type.html");
 
         $this->addEmbededImage();
+
+        $mailsec = $this->getMailSec();
+
         $key = $this->getDocumentEmail()->add(1, "eric.pommateau@adullact-projet.com", "to");
 
         $document_email_info = $this->getDocumentEmail()->getInfoFromKey($key);
@@ -263,8 +220,7 @@ Content-Type: text/plain; charset="UTF-8"',
      */
     public function testSendLinkTest()
     {
-        $zenMail = $this->getZenMail();
-        $mailsec = $this->getMailSec($zenMail);
+        $mailsec = $this->getMailSec();
 
         $this->connecteurConfig->setData(
             'mailsec_content',
@@ -274,11 +230,8 @@ Content-Type: text/plain; charset="UTF-8"',
         $document_email_info = $this->getDocumentEmail()->getInfoFromKey($key);
 
         $mailsec->sendOneMail(1, 1, $document_email_info['id_de']);
-        $all_info = $zenMail->getAllInfo();
-        $this->assertMatchesRegularExpression(
-            "#^Un lien ici : .*index.php\?key=.*. C'était mon lien$#",
-            $all_info[0][self::CONTENU]
-        );
+
+        $this->assertMailEqualsFile(__DIR__ . "/fixtures/mail-link.txt");
     }
 
     /**
@@ -286,19 +239,71 @@ Content-Type: text/plain; charset="UTF-8"',
      */
     public function testSendAllMailWithMultiplePeople()
     {
-        $zenMail = $this->getZenMail();
-        $mailsec = $this->getMailSec($zenMail);
+        $this->addContentHTML(__DIR__ . "/fixtures/mail-exemple.html");
+        $mailsec = $this->getMailSec();
 
-        $this->addContentHTML(__DIR__ . "/fixtures/mail-exemple-only-link.html");
-
-        $key1 = $this->getDocumentEmail()->add(1, "jdoe@example.org", "to");
-        $key2 = $this->getDocumentEmail()->add(1, "john.doe@example.org", "to");
+        $this->getDocumentEmail()->add(1, "jdoe@example.org", "to");
+        $this->getDocumentEmail()->add(1, "john.doe@example.org", "to");
 
         $mailsec->sendAllMail(1, 1);
-        $all_info = $zenMail->getAllInfo();
 
-        $this->assertStringContainsString($key1, $all_info[0][self::CONTENU]);
-        $this->assertStringContainsString($key2, $all_info[1][self::CONTENU]);
-        $this->assertStringNotContainsString($key1, $all_info[1][self::CONTENU]);
+        $this->assertMailContentEqualsFile(
+            __DIR__ . "/fixtures/mail_jdoe.txt",
+            $this->getMailerTransport()->getAllSentMessages()[0]->toString(),
+        );
+        $this->assertMailContentEqualsFile(
+            __DIR__ . "/fixtures/mail_john.doe.txt",
+            $this->getMailerTransport()->getAllSentMessages()[1]->toString(),
+        );
+    }
+
+    private function assertMailContentEqualsFile(string $filename, string $mailAsString): void
+    {
+        $mailAsString = preg_replace(
+            "#X-PASTELL-DOCUMENT: .*#",
+            "X-PASTELL-DOCUMENT: NOTTESTABLE\r",
+            $mailAsString
+        );
+        $mailAsString = preg_replace(
+            "#Date: .*#",
+            "DATE: NOTTESTABLE\r",
+            $mailAsString
+        );
+        $mailAsString = preg_replace(
+            "#Message-ID: .*#",
+            "Message-ID: NOTTESTABLE\r",
+            $mailAsString
+        );
+        $mailAsString = preg_replace(
+            "#index\.php\?key=.*#",
+            "index.php?key=NOTTESTABLE",
+            $mailAsString
+        );
+        $mailAsString = preg_replace(
+            "#boundary=.*#",
+            "boundary=NOTTESTABLE\r",
+            $mailAsString
+        );
+        $mailAsString = preg_replace(
+            "#--[^ \n]+#",
+            "--NOTTESTABLE\r",
+            $mailAsString
+        );
+        $mailAsString = preg_replace(
+            "#cid:[0-9a-f]*#",
+            "cid:NOTTESTABLE",
+            $mailAsString
+        );
+        $mailAsString = preg_replace(
+            "#Content-ID: <[0-9a-f]*#",
+            "Content-ID: <NOTTESTABLE",
+            $mailAsString
+        );
+
+        //file_put_contents($filename, $mailAsString);
+        self::assertStringEqualsFile(
+            $filename,
+            $mailAsString
+        );
     }
 }

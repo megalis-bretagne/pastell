@@ -1,0 +1,22 @@
+From: PASTELL <pastell.dev@libriciel.net>
+To: eric.pommateau@adullact-projet.com
+Subject: entite: Bourg-en-Bresse -- titre : mon titre
+Reply-To: pastell.dev@libriciel.net
+X-PASTELL-DOCUMENT: NOTTESTABLE
+Message-ID: NOTTESTABLE
+MIME-Version: 1.0
+DATE: NOTTESTABLE
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+Bonjour,
+
+Le serveur s=C3=A9curis=C3=A9 Pastell de LIBRICIEL SCOP vous =
+informe qu'un message recommand=C3=A9 mail
+avec d'=C3=A9ventuelles pi=
+=C3=A8ces attach=C3=A9es vous a =C3=A9t=C3=A9 post=C3=A9.
+
+Pour en pren=
+dre connaissance veuillez cliquer sur le lien suivant.
+https://localhost:=
+8443index.php?key=NOTTESTABLE

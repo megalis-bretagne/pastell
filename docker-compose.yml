@@ -37,7 +37,7 @@ services:
             SMTP_PASSWORD: ${SMTP_PASSWORD:-}
             SMTP_USE_TLS: ${SMTP_USE_TLS:-on}
             PLATEFORME_MAIL: ${PLATEFORME_MAIL:-noreply@paste.ll}
-            WEBSEC_BASE: ${WEBSEC_BASE:-https://localhost:8443}
+            WEBSEC_BASE: ${WEBSEC_BASE:-https://localhost:8443/mailsec/}
             AUTHENTICATION_WITH_CLIENT_CERTIFICATE: ${AUTHENTICATION_WITH_CLIENT_CERTIFICATE:-}
             PASTELL_ADMIN_LOGIN: ${PASTELL_ADMIN_LOGIN:-admin}
             PASTELL_ADMIN_PASSWORD: ${PASTELL_ADMIN_PASSWORD:-admin}

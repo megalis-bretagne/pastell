@@ -1,5 +1,10 @@
 <?php
 
+use Pastell\Mailer\Mailer;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\Mime\Part\DataPart;
+
 class MailSec extends MailsecConnecteur
 {
     public const CONNECTEUR_ID = 'mailsec';
@@ -8,50 +13,15 @@ class MailSec extends MailsecConnecteur
     public const ENTITE_REPLACEMENT_REGEXP = "#%ENTITE%#";
     public const LINK_REPLACEMENT_REGEXP = "#%LINK%#";
 
-    /**
-     * @var ZenMail
-     */
-    private $zenMail;
-
-    /**
-     * @var DocumentEmail
-     */
-    private $documentEmail;
-
-    /**
-     * @var Journal
-     */
-    private $journal;
-
-    /**
-     * @var DonneesFormulaire
-     */
-    private $connecteurConfig;
-
-    private $sujet;
-    private $mailsec_content;
-    private $content_html;
-    private $embeded_image;
-
-    /**
-     * @var EntiteSQL
-     */
-    private $entiteSQL;
-
-    private $connecteurFactory;
+    private DonneesFormulaire $connecteurConfig;
 
     public function __construct(
-        ZenMail $zenMail,
-        DocumentEmail $documentEmail,
-        Journal $journal,
-        EntiteSQL $entiteSQL,
-        ConnecteurFactory $connecteurFactory
+        private readonly DocumentEmail $documentEmail,
+        private readonly Journal $journal,
+        private readonly EntiteSQL $entiteSQL,
+        private readonly Mailer $mailer,
+        private readonly string $websec_base,
     ) {
-        $this->zenMail = $zenMail;
-        $this->documentEmail = $documentEmail;
-        $this->journal = $journal;
-        $this->entiteSQL = $entiteSQL;
-        $this->connecteurFactory = $connecteurFactory;
     }
 
     public function setConnecteurConfig(DonneesFormulaire $connecteurConfig)
@@ -60,27 +30,20 @@ class MailSec extends MailsecConnecteur
     }
 
     /**
-     * @param $id_e
-     * @param $id_d
      * @throws Exception
      */
-    public function sendAllMail($id_e, $id_d)
+    public function sendAllMail(int $id_e, string $id_d): void
     {
         foreach ($this->documentEmail->getInfo($id_d) as $email_info) {
-            $this->configZenMail();
             $this->sendEmail($id_e, $id_d, $email_info);
         }
     }
 
     /**
-     * @param $id_e
-     * @param $id_d
-     * @param $id_de
      * @throws Exception
      */
-    public function sendOneMail($id_e, $id_d, $id_de)
+    public function sendOneMail(int $id_e, string $id_d, int $id_de): void
     {
-        $this->configZenMail();
         $email_info = $this->documentEmail->getInfoFromPK($id_de);
         $this->sendEmail($id_e, $id_d, $email_info);
     }
@@ -88,44 +51,39 @@ class MailSec extends MailsecConnecteur
     /**
      * @throws Exception
      */
-    private function configZenMail()
+    public function processMessageItem(string $message, string $link): string
     {
-        $this->setEmetteur();
-
-        /** @var UndeliveredMail $undeliveredMail */
-        $undeliveredMail = $this->connecteurFactory->getGlobalConnecteur('UndeliveredMail');
-
-        if ($undeliveredMail) {
-            $this->zenMail->setReturnPath($undeliveredMail->getReturnPath());
-        }
-
-        $this->sujet = $this->connecteurConfig->getWithDefault('mailsec_subject');
-        $this->mailsec_content = $this->connecteurConfig->getWithDefault('mailsec_content');
-        $this->content_html = $this->connecteurConfig->getFileContent("content_html");
-
-
         $docDonneesFormulaire = $this->getDocDonneesFormulaire();
         if ($docDonneesFormulaire) {
             $titre = $docDonneesFormulaire->getTitre();
-            $this->replaceElement(self::TITRE_REPLACEMENT_REGEXP, $titre);
-            $this->replaceFluxElement();
+            $message = $this->replace(self::TITRE_REPLACEMENT_REGEXP, $titre, $message);
+            $message = $this->replace(self::LINK_REPLACEMENT_REGEXP, $link, $message);
+            $message = $this->replaceFluxElement($message);
         }
-
         $connecteur_info = $this->getConnecteurInfo();
         $entite_info = $this->entiteSQL->getInfo($connecteur_info['id_e'] ?? 0);
 
-        $this->replaceElement(self::ENTITE_REPLACEMENT_REGEXP, $entite_info['denomination'] ?? '');
+        $message = $this->replace(self::ENTITE_REPLACEMENT_REGEXP, $entite_info['denomination'] ?? '', $message);
 
-        $this->zenMail->setSujet($this->sujet);
-        $this->embeded_image = [];
-        if ($this->connecteurConfig->get('embeded_image')) {
-            foreach ($this->connecteurConfig->get('embeded_image') as $i => $filename) {
-                $this->embeded_image[$filename] = $this->connecteurConfig->getFilePath("embeded_image", $i);
+        return $message;
+    }
+
+    private function replaceFluxElement(string $message): string
+    {
+        preg_match_all(
+            "#%FLUX:([^%]*)%#",
+            $message,
+            $matches
+        );
+        foreach ($matches[1] as $data) {
+            if (substr($data, 0, 1) === '@') {
+                $replacement = $this->replaceFluxElementFromFile($data);
+            } else {
+                $replacement = $this->getDocDonneesFormulaire()->get($data);
             }
-            foreach ($this->embeded_image as $filename => $file_path) {
-                $this->zenMail->addRelatedImage($filename, $file_path);
-            }
+            $message = $this->replace("#%FLUX:$data%#", $replacement, $message);
         }
+        return $message;
     }
 
     /**
@@ -148,8 +106,8 @@ class MailSec extends MailsecConnecteur
         }
 
         $v = $metadata;
-        for ($i = 1; $i < count($fields); $i++) {
-            if (!key_exists($fields[$i], $v)) {
+        for ($i = 1, $iMax = count($fields); $i < $iMax; $i++) {
+            if (!array_key_exists($fields[$i], $v)) {
                 throw new Exception("La clé ${fields[$i]} de $data n'existe pas, vérifier la syntaxe.");
             }
             $v = $v[$fields[$i]];
@@ -160,31 +118,9 @@ class MailSec extends MailsecConnecteur
         return $v;
     }
 
-    /**
-     * @throws Exception
-     */
-    private function replaceFluxElement()
+    private function replace(string $pattern, string $replacement, string $message): string
     {
-        preg_match_all(
-            "#%FLUX:([^%]*)%#",
-            $this->content_html . "\n" . $this->mailsec_content . "\n" . $this->sujet,
-            $matches
-        );
-        foreach ($matches[1] as $data) {
-            if (substr($data, 0, 1) === '@') {
-                $replacement = $this->replaceFluxElementFromFile($data);
-            } else {
-                $replacement = $this->getDocDonneesFormulaire()->get($data);
-            }
-            $this->replaceElement("#%FLUX:$data%#", $replacement);
-        }
-    }
-
-    private function replaceElement($pattern, $replacement)
-    {
-        $this->sujet = preg_replace($pattern, $replacement, $this->sujet);
-        $this->mailsec_content = preg_replace($pattern, $replacement, $this->mailsec_content);
-        $this->content_html = preg_replace($pattern, $replacement, $this->content_html);
+        return preg_replace($pattern, $replacement, $message);
     }
 
     /**
@@ -192,27 +128,7 @@ class MailSec extends MailsecConnecteur
      */
     private function sendEmail($id_e, $id_d, $email_info)
     {
-        $link = WEBSEC_BASE . "index.php?key={$email_info['key']}";
-
-        $this->zenMail->setDestinataire($email_info['email']);
-        $this->zenMail->resetExtraHeaders();
-        $this->zenMail->addExtraHeaders(UndeliveredMail::PASTELL_RETURN_INFO_HEADER . ": {$email_info['key']}");
-
-        if ($this->content_html) {
-            $this->replaceElement(self::LINK_REPLACEMENT_REGEXP, $link);
-            $this->zenMail->sendHTMLContent($this->content_html);
-        } else {
-            if (preg_match(self::LINK_REPLACEMENT_REGEXP, $this->mailsec_content)) {
-                $this->replaceElement(self::LINK_REPLACEMENT_REGEXP, $link);
-                $message = $this->mailsec_content;
-            } else {
-                $message = "{$this->mailsec_content}\n$link";
-            }
-
-            $this->zenMail->setContenuText($message);
-            $this->zenMail->send();
-        }
-
+        $this->send($email_info['email'], $email_info['key']);
         $this->documentEmail->updateRenvoi($email_info['id_de']);
         $this->journal->addActionAutomatique(
             Journal::MAIL_SECURISE,
@@ -223,13 +139,54 @@ class MailSec extends MailsecConnecteur
         );
     }
 
-    private function setEmetteur()
+    private function send(string $to, $mailPastellId = ''): void
     {
-        $this->zenMail->setEmetteur(
-            $this->connecteurConfig->getWithDefault('mailsec_from_description'),
-            PLATEFORME_MAIL,
-            $this->connecteurConfig->get('mailsec_reply_to')
-        );
+        $link = sprintf('%sindex.php?key=%s', $this->websec_base, $mailPastellId);
+        $sujet = $this->processMessageItem($this->connecteurConfig->getWithDefault('mailsec_subject'), $link);
+        $message = $this->processMessageItem($this->connecteurConfig->getWithDefault('mailsec_content'), $link);
+        $content_html = $this->processMessageItem($this->connecteurConfig->getFileContent("content_html"), $link);
+
+        $mailsec_from_description = $this->connecteurConfig->getWithDefault('mailsec_from_description');
+        $mailsec_reply_to = $this->connecteurConfig->get('mailsec_reply_to', PLATEFORME_MAIL);
+
+        $templatedEmail = (new TemplatedEmail())
+            ->from(new Address(PLATEFORME_MAIL, $mailsec_from_description))
+            ->to($to)
+            ->subject($sujet)
+            ->replyTo($mailsec_reply_to);
+
+        if ($mailPastellId) {
+            $templatedEmail
+                ->getHeaders()
+                ->addTextHeader(UndeliveredMail::PASTELL_RETURN_INFO_HEADER, $mailPastellId);
+        }
+
+        if ($content_html) {
+            if ($this->connecteurConfig->get('embeded_image')) {
+                foreach ($this->connecteurConfig->get('embeded_image') as $i => $filename) {
+                    $datePart = DataPart::fromPath(
+                        $this->connecteurConfig->getFilePath("embeded_image", $i),
+                        "image$i"
+                    );
+                    $contentId = $datePart->getContentId();
+                    $templatedEmail->attachPart($datePart);
+                    $content_html = preg_replace(
+                        "#cid:image$i#",
+                        "cid:$contentId",
+                        $content_html
+                    );
+                }
+            }
+            $templatedEmail->html($content_html)
+                ->context([]);
+        } else {
+            // Hugly hack
+            if (! str_contains($message, $link)) {
+                $message .= "\n$link";
+            }
+            $templatedEmail->text($message);
+        }
+        $this->mailer->send($templatedEmail);
     }
 
     /**
@@ -237,17 +194,8 @@ class MailSec extends MailsecConnecteur
      */
     public function test(): string
     {
-        $this->setEmetteur();
-        $sujet = $this->connecteurConfig->getWithDefault('mailsec_subject');
-        $this->zenMail->setSujet($sujet);
-        $message = $this->connecteurConfig->getWithDefault('mailsec_content');
-        $mailsec_reply_to = $this->connecteurConfig->get('mailsec_reply_to');
-
-        $destinataire = ($mailsec_reply_to && ($mailsec_reply_to !== '')) ?
-            $mailsec_reply_to : PLATEFORME_MAIL;
-        $this->zenMail->setDestinataire($destinataire);
-        $this->zenMail->setContenuText($message);
-        $this->zenMail->send();
-        return $destinataire;
+        $mailsec_reply_to = $this->connecteurConfig->get('mailsec_reply_to', PLATEFORME_MAIL);
+        $this->send($mailsec_reply_to);
+        return $mailsec_reply_to;
     }
 }

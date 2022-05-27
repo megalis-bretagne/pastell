@@ -9,11 +9,14 @@ use Symfony\Component\Mailer\Transport\AbstractTransport;
 
 class MailerTransportTesting extends AbstractTransport
 {
-    private SentMessage $message;
+    /**
+     * @var SentMessage[]
+     */
+    private array $message;
 
     protected function doSend(SentMessage $message): void
     {
-        $this->message = $message;
+        $this->message[] = $message;
     }
 
     public function __toString(): string
@@ -22,6 +25,11 @@ class MailerTransportTesting extends AbstractTransport
     }
 
     public function getSentMessage(): SentMessage
+    {
+        return $this->message[0];
+    }
+
+    public function getAllSentMessages(): array
     {
         return $this->message;
     }
