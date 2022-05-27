@@ -308,7 +308,9 @@ action:
             last-action:
                 - renvoi
                 - envoi-mail
-        action-class: Defaut
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecNotReceived
         action-automatique: orientation
     reception:
         name: 'Mail reçu par le fournisseur'
