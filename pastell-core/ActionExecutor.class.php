@@ -142,15 +142,7 @@ abstract class ActionExecutor
     {
         return $this->objectInstancier->getInstance(Journal::class);
     }
-
-    /**
-     * @return ZenMail
-     */
-    public function getZenMail()
-    {
-        return $this->objectInstancier->getInstance(ZenMail::class);
-    }
-
+    
     /**
      * @return DonneesFormulaireFactory
      */

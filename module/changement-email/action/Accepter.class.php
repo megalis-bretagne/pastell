@@ -1,5 +1,8 @@
 <?php
 
+use Pastell\Mailer\Mailer;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+
 class Accepter extends ActionExecutor
 {
     public function go()
@@ -12,13 +15,14 @@ class Accepter extends ActionExecutor
 
         $utilisateur_info = $this->objectInstancier->getInstance(UtilisateurSQL::class)->getInfo($id_u);
 
-        $zenMail = $this->getZenMail();
-        $zenMail->setEmetteur("Pastell", PLATEFORME_MAIL);
-        $zenMail->setDestinataire($utilisateur_info['email']);
-        $zenMail->setSujet("Votre changement de mail a été accepté");
-        $info = ["message" => $message];
-        $zenMail->setContenu(PASTELL_PATH . "/mail/changement-email-accepter.php", $info);
-        $zenMail->send();
+        $templatedEmail = (new TemplatedEmail())
+            ->to($utilisateur_info['email'])
+            ->subject('[Pastell] Votre changement de mail a été accepté')
+            ->htmlTemplate('changement-email-accepter.html.twig')
+            ->context(["message" => $message]);
+        $this->objectInstancier
+            ->getInstance(Mailer::class)
+            ->send($templatedEmail);
 
         $this->addActionOK("Changement d'email accepté");
         return true;

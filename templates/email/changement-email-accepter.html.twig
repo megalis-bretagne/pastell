@@ -1,0 +1,13 @@
+<p>Bonjour,</p>
+
+<p>Votre demande de changement d'email sur Pastell a été acceptée.</p>
+
+{% if message is not empty %}
+<p>Voici le message de l'administrateur ayant accepté votre demande :</p>
+<p>
+    {{ message }}
+</p>
+{% endif %}
+
+<p>-- </p>
+<p>Ce mail vous est envoyé automatiquement par Pastell.</p>

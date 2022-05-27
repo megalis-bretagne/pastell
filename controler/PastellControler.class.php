@@ -493,14 +493,6 @@ class PastellControler extends Controler
         return $this->getInstance(FluxDefinitionFiles::class);
     }
 
-    /**
-     * @return ZenMail
-     */
-    public function getZenMail(): ZenMail
-    {
-        return $this->getInstance(ZenMail::class);
-    }
-
     /** @return UtilisateurCreator */
     public function getUtilisateurCreator(): UtilisateurCreator
     {

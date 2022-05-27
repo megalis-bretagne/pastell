@@ -26,7 +26,6 @@ apt-get install -y --no-install-recommends \
     graphviz \
     language-pack-fr \
     logrotate \
-    msmtp \
     php \
     php-bcmath \
     php-curl \
