@@ -69,6 +69,8 @@ RUN composer dump-autoload --no-dev --optimize
 
 USER "${USERNAME}"
 
+HEALTHCHECK CMD curl --fail -k https://localhost:4443/ || exit 1
+
 ENTRYPOINT ["docker-pastell-entrypoint"]
 CMD ["/usr/bin/supervisord"]
 
