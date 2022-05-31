@@ -9,29 +9,6 @@ class MailSecDestinataireControlerTest extends ControlerTestCase
     private const ACTION_MAILSEC_ENVOI_MAIL = "envoi";
 
     /**
-     * @param string $flux_name
-     * @param string $action_envoi
-     * @return array
-     */
-    private function createMailSec(string $flux_name, string $action_envoi): array
-    {
-        $this->createConnecteurForTypeDossier($flux_name, MailSec::CONNECTEUR_ID);
-
-        $id_d = $this->createDocument($flux_name)['id_d'];
-        $this->configureDocument($id_d, [
-            'objet' => 'test de mail',
-            'to' => "test@libriciel.fr",
-            'message' => 'message de test'
-        ]);
-        $this->triggerActionOnDocument($id_d, $action_envoi);
-
-        $info = $this->getObjectInstancier()->getInstance(DocumentEmail::class)->getInfo($id_d);
-        $key = $info[0]['key'];
-
-        return ['id_d' => $id_d,'key' => $key];
-    }
-
-    /**
      * @throws Exception
      */
     public function testIndexAction()
