@@ -9,11 +9,6 @@ formulaire:
             link_name: 'Sélectionner un certificat'
             choice-action: mise-a-jour-certif-i-parapheur
 action:
-    update-all-iparapheur:
-        name: 'Mettre à jour tous les sous-types'
-        action-class: UpdateAllIparapheur
-        rule:
-            droit_id_u: 'entite:edition'
     redirect-to-mise-a-jour-certif-iparapheur:
         name: 'Mettre à jour les certificats'
         tab: signature

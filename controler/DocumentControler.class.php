@@ -1186,7 +1186,7 @@ class DocumentControler extends PastellControler
         $id_d = $recuperateur->get('id_d');
         $id_e = $recuperateur->get('id_e');
         $field = $recuperateur->get('field');
-        $page = $recuperateur->get('page');
+        $page = $recuperateur->getInt('page', 0);
 
         $document = $this->getDocumentSQL();
         $info = $document->getInfo($id_d);
