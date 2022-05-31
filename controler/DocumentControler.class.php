@@ -1241,14 +1241,26 @@ class DocumentControler extends PastellControler
         $field = $recuperateur->get('field');
         $num = $recuperateur->getInt('num');
 
-        $this->verifDroitLecture($id_e, $id_d);
+        // Si l'id_d est un document_email_reponse alors on vérifie les droits sur le document_email, issue #1486
+        $reponse_info =
+            $this->getObjectInstancier()
+                ->getInstance(DocumentEmailReponseSQL::class)
+                ->getInfoFromIdReponse($id_d);
+        $mail_info =
+            $this->getObjectInstancier()
+                ->getInstance(DocumentEmail::class)
+                ->getInfoFromPK($reponse_info['id_de']);
 
-        $document = $this->getDocument();
+        if ($mail_info['id_d']) {
+            $this->verifDroitLecture($id_e, $mail_info['id_d']);
+        } else {
+            $this->verifDroitLecture($id_e, $id_d);
+        }
+
+        $document = $this->getDocumentSQL();
         $info = $document->getInfo($id_d);
 
-
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d, $info['type']);
-
 
         $file_path = $donneesFormulaire->getFilePath($field, $num);
         $file_name_array = $donneesFormulaire->get($field);

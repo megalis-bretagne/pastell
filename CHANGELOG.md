@@ -4,6 +4,8 @@
 ## Corrections
 
 - Correction du workflow du flux `facture-cpp` en mode automatique #1502
+- Il n'y avait plus d'accès au fichier réponse d'un mail sécurisé sans les droits NOM_DU_FLUX-reponse,
+  c'est rétablit avec les droits NOM_DU_FLUX #1486
 
 ## Ajouts
 
