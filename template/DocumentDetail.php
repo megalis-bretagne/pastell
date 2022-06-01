@@ -159,8 +159,9 @@ if ($infoDocumentEmail) :
                 <?php if (isset($document_email_reponse_list[$infoEmail['id_de']])) :
                         $reponse_info = $document_email_reponse_list[$infoEmail['id_de']];
                     ?>
-                    <p class="badge badge-success"><?php echo time_iso_to_fr($reponse_info['date_reponse'])?></p>
-                
+                    <?php if ($reponse_info['has_date_reponse']) :?>
+                        <p class="badge badge-success"><?php echo time_iso_to_fr($reponse_info['date_reponse'])?></p>
+                    <?php endif; ?>
                     <a
                             href="<?php $this->url("/Document/detailMailReponse?id_e=$id_e&id_d=$id_d&id_d_reponse={$reponse_info['id_d_reponse']}"); ?>"
                             class="badge <?php echo $reponse_info['is_lu'] ?: "badge-info" ?>"

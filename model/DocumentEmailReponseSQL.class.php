@@ -30,13 +30,13 @@ class DocumentEmailReponseSQL extends SQL
 
     public function validateReponse($id_de)
     {
-        $sql = "UPDATE document_email_reponse SET has_reponse=true,date_reponse=now()  WHERE id_de=?";
+        $sql = "UPDATE document_email_reponse SET has_reponse=true,date_reponse=now(),has_date_reponse=true  WHERE id_de=?";
         $this->query($sql, $id_de);
     }
 
     public function getAllReponse($id_d)
     {
-        $sql = "SELECT document_email_reponse.id_de,document_email_reponse.id_d_reponse, is_lu, document_email_reponse.date_reponse, document.titre FROM document_email " .
+        $sql = "SELECT document_email_reponse.id_de,document_email_reponse.id_d_reponse, is_lu, document_email_reponse.date_reponse,document_email_reponse.has_date_reponse, document.titre FROM document_email " .
             " JOIN document_email_reponse ON document_email.id_de = document_email_reponse.id_de " .
             " JOIN document ON document_email_reponse.id_d_reponse=document.id_d " .
             " WHERE document_email.id_d=? AND document_email_reponse.has_reponse=true";
