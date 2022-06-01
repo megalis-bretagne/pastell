@@ -28,7 +28,8 @@ class DocumentEmailReponseSQLTest extends PastellTestCase
             'id_d_reponse' => '43',
             'is_lu' => '0',
             'has_reponse' => '0',
-            'date_reponse' => null,
+            'date_reponse' => '1970-01-01 00:00:00',
+            'has_date_reponse' => '0'
         ), $this->getDocumentEmailReponseSQL()->getInfo(42));
     }
 
@@ -41,7 +42,8 @@ class DocumentEmailReponseSQLTest extends PastellTestCase
             'id_d_reponse' => '43',
             'is_lu' => '0',
             'has_reponse' => '0',
-            'date_reponse' => null,
+            'date_reponse' => '1970-01-01 00:00:00',
+            'has_date_reponse' => '0'
         ), $this->getDocumentEmailReponseSQL()->getInfo(42));
         $this->getDocumentEmailReponseSQL()->validateReponse(42);
         $this->assertEquals(1, $this->getDocumentEmailReponseSQL()->getInfo(42)['has_reponse']);
@@ -56,7 +58,8 @@ class DocumentEmailReponseSQLTest extends PastellTestCase
             'id_d_reponse' => '43',
             'is_lu' => '0',
             'has_reponse' => '0',
-            'date_reponse' => null,
+            'date_reponse' => '1970-01-01 00:00:00',
+            'has_date_reponse' => '0'
         ), $this->getDocumentEmailReponseSQL()->getInfoFromIdReponse(43));
     }
 
@@ -70,7 +73,8 @@ class DocumentEmailReponseSQLTest extends PastellTestCase
             'id_d_reponse' => '43',
             'is_lu' => '0',
             'has_reponse' => '0',
-            'date_reponse' => null,
+            'date_reponse' => '1970-01-01 00:00:00',
+            'has_date_reponse' => '0'
         ), $this->getDocumentEmailReponseSQL()->getInfo(42));
         $this->getDocumentEmailReponseSQL()->setLu(43);
         $this->assertEquals(array (
@@ -79,7 +83,8 @@ class DocumentEmailReponseSQLTest extends PastellTestCase
             'id_d_reponse' => '43',
             'is_lu' => '1',
             'has_reponse' => '0',
-            'date_reponse' => null,
+            'date_reponse' => '1970-01-01 00:00:00',
+            'has_date_reponse' => '0'
         ), $this->getDocumentEmailReponseSQL()->getInfo(42));
     }
 

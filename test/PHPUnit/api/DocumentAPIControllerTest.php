@@ -403,6 +403,7 @@ class DocumentAPIControllerTest extends PastellTestCase
                                 'is_lu' => '0',
                                 'titre' => '',
                                 'date_reponse' => 'NOT TESTABLE',
+                                'has_date_reponse' => '1',
                             ),
                     ),
                 'action_possible' =>
