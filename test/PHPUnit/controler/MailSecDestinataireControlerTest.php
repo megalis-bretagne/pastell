@@ -2,6 +2,8 @@
 
 class MailSecDestinataireControlerTest extends ControlerTestCase
 {
+    use MailsecTestTrait;
+
     private const FLUX_MAILSEC_BIDIR = "mailsec-bidir";
     private const ACTION_MAILSEC_BIDIR_ENVOI_MAIL = "envoi-mail";
 
