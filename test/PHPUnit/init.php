@@ -28,6 +28,7 @@ require_once __DIR__ . '/PastellTestCase.class.php';
 require_once __DIR__ . "/SoapUtilitiesTestTrait.php";
 require_once __DIR__ . "/CurlUtilitiesTestTrait.php";
 require_once __DIR__ . "/TypeDossierLoaderTestTrait.php";
+require_once __DIR__ . "/MailsecTestTrait.php";
 
 require_once(__DIR__ . "/../../init-no-db.php");
 

@@ -2,6 +2,8 @@
 
 class DocumentControlerTest extends ControlerTestCase
 {
+    use MailsecTestTrait;
+
     /**
      * @throws Exception
      */
