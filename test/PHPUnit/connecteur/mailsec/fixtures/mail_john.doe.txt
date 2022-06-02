@@ -1,7 +1,7 @@
-From: PASTELL <pastell.dev@libriciel.net>
+From: PASTELL <test@libriciel.net>
 To: john.doe@example.org
 Subject: entite: Bourg-en-Bresse -- titre : mon titre
-Reply-To: pastell.dev@libriciel.net
+Reply-To: test@libriciel.net
 X-PASTELL-DOCUMENT: NOTTESTABLE
 Message-ID: NOTTESTABLE
 MIME-Version: 1.0

@@ -22,6 +22,7 @@ class MailSec extends MailsecConnecteur
         private readonly Mailer $mailer,
         private readonly string $websec_base,
         private readonly ConnecteurFactory $connecteurFactory,
+        private readonly string $plateforme_mail,
     ) {
     }
 
@@ -148,10 +149,10 @@ class MailSec extends MailsecConnecteur
         $content_html = $this->processMessageItem($this->connecteurConfig->getFileContent("content_html"), $link);
 
         $mailsec_from_description = $this->connecteurConfig->getWithDefault('mailsec_from_description');
-        $mailsec_reply_to = $this->connecteurConfig->get('mailsec_reply_to', PLATEFORME_MAIL);
+        $mailsec_reply_to = $this->connecteurConfig->get('mailsec_reply_to', $this->plateforme_mail);
 
         $templatedEmail = (new TemplatedEmail())
-            ->from(new Address(PLATEFORME_MAIL, $mailsec_from_description))
+            ->from(new Address($this->plateforme_mail, $mailsec_from_description))
             ->to($to)
             ->subject($sujet)
             ->replyTo($mailsec_reply_to);
@@ -200,7 +201,7 @@ class MailSec extends MailsecConnecteur
      */
     public function test(): string
     {
-        $mailsec_reply_to = $this->connecteurConfig->get('mailsec_reply_to', PLATEFORME_MAIL);
+        $mailsec_reply_to = $this->connecteurConfig->get('mailsec_reply_to', $this->plateforme_mail);
         $this->send($mailsec_reply_to);
         return $mailsec_reply_to;
     }
