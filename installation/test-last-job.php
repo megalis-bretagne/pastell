@@ -28,7 +28,7 @@ $last_try = $objectInstancier->getInstance(SQLQuery::class)->queryOne($sql, $nex
 if (! $last_try) {
         //la job queue est vide
     if ($modenagios) {
-        echo "OK la job queue est vide";
+        echo 'OK la job queue est vide';
     }
 
         exit(0);
@@ -63,7 +63,7 @@ if ($nb_lock) {
     );
     $templatedEmail = (new TemplatedEmail())
         ->to(ADMIN_EMAIL)
-        ->subject('[PASTELL] Des connecteurs sont suspendus"')
+        ->subject('[PASTELL] Des connecteurs sont suspendus')
         ->text($message);
     $pastellMailer->send($templatedEmail);
     $retour = 2;

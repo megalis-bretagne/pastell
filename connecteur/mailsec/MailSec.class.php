@@ -21,6 +21,7 @@ class MailSec extends MailsecConnecteur
         private readonly EntiteSQL $entiteSQL,
         private readonly Mailer $mailer,
         private readonly string $websec_base,
+        private readonly ConnecteurFactory $connecteurFactory,
     ) {
     }
 
@@ -76,7 +77,7 @@ class MailSec extends MailsecConnecteur
             $matches
         );
         foreach ($matches[1] as $data) {
-            if (substr($data, 0, 1) === '@') {
+            if (str_starts_with($data, '@')) {
                 $replacement = $this->replaceFluxElementFromFile($data);
             } else {
                 $replacement = $this->getDocDonneesFormulaire()->get($data);
@@ -159,6 +160,11 @@ class MailSec extends MailsecConnecteur
             $templatedEmail
                 ->getHeaders()
                 ->addTextHeader(UndeliveredMail::PASTELL_RETURN_INFO_HEADER, $mailPastellId);
+            /** @var UndeliveredMail? $undeliveredMail */
+            $undeliveredMail = $this->connecteurFactory->getGlobalConnecteur(UndeliveredMail::CONNECTOR_TYPE);
+            if ($undeliveredMail) {
+                $templatedEmail->returnPath($undeliveredMail->getReturnPath());
+            }
         }
 
         if ($content_html) {
@@ -181,7 +187,7 @@ class MailSec extends MailsecConnecteur
                 ->context([]);
         } else {
             // Hugly hack
-            if (! str_contains($message, $link)) {
+            if (! str_contains($message, $link) && $mailPastellId) {
                 $message .= "\n$link";
             }
             $templatedEmail->text($message);

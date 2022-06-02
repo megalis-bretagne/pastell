@@ -142,7 +142,7 @@ abstract class ActionExecutor
     {
         return $this->objectInstancier->getInstance(Journal::class);
     }
-    
+
     /**
      * @return DonneesFormulaireFactory
      */

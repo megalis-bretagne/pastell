@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\Connecteur\ConnecteurAssociationService;
+
 class MailSecConnecteurTest extends PastellTestCase
 {
     use MailerTransportTestingTrait;
@@ -10,18 +12,17 @@ class MailSecConnecteurTest extends PastellTestCase
     private const CONTENU = 'contenu';
     private const ENTETE = 'entete';
 
-    /** @var DonneesFormulaire */
-    private $connecteurConfig;
+    private DonneesFormulaire $connecteurConfig;
 
-    private $contentHTML;
-    private $embededImage;
+    private string $contentHTML;
+    private array $embeddedImage;
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->setMailerTransportForTesting();
         $this->contentHTML = '';
-        $this->embededImage = [];
+        $this->embeddedImage = [];
     }
 
     /**
@@ -52,7 +53,7 @@ class MailSecConnecteurTest extends PastellTestCase
                 $this->contentHTML,
             );
         }
-        foreach ($this->embededImage as $filenum => $filename) {
+        foreach ($this->embeddedImage as $filenum => $filename) {
             $this->connecteurConfig->addFileFromCopy(
                 'embeded_image',
                 $filename,
@@ -80,10 +81,9 @@ class MailSecConnecteurTest extends PastellTestCase
     }
 
     /**
-     * @param $filepath
      * @throws DonneesFormulaireException
      */
-    private function addContentHTML($filepath)
+    private function addContentHTML(string $filepath): void
     {
         $this->contentHTML = $filepath;
     }
@@ -93,9 +93,9 @@ class MailSecConnecteurTest extends PastellTestCase
      * @param int $filenum
      * @throws DonneesFormulaireException
      */
-    private function addEmbededImage(string $filename = 'image.png', int $filenum = 0)
+    private function addEmbededImage(string $filename = 'image.png', int $filenum = 0): void
     {
-        $this->embededImage[$filenum] = $filename;
+        $this->embeddedImage[$filenum] = $filename;
     }
 
     /**
@@ -255,6 +255,30 @@ class MailSecConnecteurTest extends PastellTestCase
             __DIR__ . "/fixtures/mail_john.doe.txt",
             $this->getMailerTransport()->getAllSentMessages()[1]->toString(),
         );
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testReturnPath()
+    {
+        $id_ce = $this->createConnector('undelivered-mail', "Undelivered mail", 0)['id_ce'];
+        $this->configureConnector($id_ce, ['return_path' => 'foo@libriciel.net'], 0);
+        /** @var ConnecteurAssociationService $connecteurAssociationService */
+        $connecteurAssociationService = $this->getObjectInstancier()->getInstance(
+            ConnecteurAssociationService::class
+        );
+        $connecteurAssociationService->addConnecteurAssociation(
+            0,
+            $id_ce,
+            UndeliveredMail::CONNECTOR_TYPE
+        );
+
+        $key = $this->getDocumentEmail()->add(1, self::EMAIL, "to");
+        $document_email_info = $this->getDocumentEmail()->getInfoFromKey($key);
+
+        $this->getMailSec()->sendOneMail(1, 1, $document_email_info[DocumentEmail::ID_DE]);
+        $this->assertMailEqualsFile(__DIR__ . "/fixtures/mail-text-output-return-path.txt");
     }
 
     private function assertMailContentEqualsFile(string $filename, string $mailAsString): void

@@ -12,11 +12,11 @@ class MailerTransportTesting extends AbstractTransport
     /**
      * @var SentMessage[]
      */
-    private array $message;
+    private array $messages;
 
-    protected function doSend(SentMessage $message): void
+    protected function doSend(SentMessage $messages): void
     {
-        $this->message[] = $message;
+        $this->messages[] = $messages;
     }
 
     public function __toString(): string
@@ -26,11 +26,11 @@ class MailerTransportTesting extends AbstractTransport
 
     public function getSentMessage(): SentMessage
     {
-        return $this->message[0];
+        return $this->messages[0];
     }
 
     public function getAllSentMessages(): array
     {
-        return $this->message;
+        return $this->messages;
     }
 }
