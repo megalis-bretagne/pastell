@@ -95,6 +95,9 @@
       "Pastell\\": "src/",
       "Utils\\Rector\\": "utils/rector/src"
     },
+    "files": [
+      "src/functions.php"
+    ],
     "classmap": [
       "action",
       "api",
