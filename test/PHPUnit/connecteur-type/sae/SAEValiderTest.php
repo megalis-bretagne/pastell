@@ -57,8 +57,8 @@ class SAEValiderTest extends PastellTestCase
         $this->assertLastDocumentAction('accepter-sae', $id_d);
 
         $donnesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
-        $this->assertEquals("", $donnesFormulaire->get('sae_archival_identifier'));
-        $this->assertEquals('FRAD000_ATR_14.xml', $donnesFormulaire->getFileName('reply_sae'));
+        $this->assertEquals("AE_2022_15", $donnesFormulaire->get('sae_archival_identifier'));
+        $this->assertEquals('FRLSADC_ATR_27.xml', $donnesFormulaire->getFileName('reply_sae'));
         $this->assertEquals(
             'Versement flux test pastell dev',
             $donnesFormulaire->get('sae_atr_comment')
