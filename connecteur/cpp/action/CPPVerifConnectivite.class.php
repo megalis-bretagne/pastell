@@ -1,5 +1,8 @@
 <?php
 
+use Pastell\Mailer\Mailer;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+
 class CPPVerifConnectivite extends ActionExecutor
 {
     /**
@@ -30,11 +33,13 @@ class CPPVerifConnectivite extends ActionExecutor
         }
 
         if ($nb_ko) {
-            $this->getZenMail()->setEmetteur("Pastell", PLATEFORME_MAIL);
-            $this->getZenMail()->setDestinataire(ADMIN_EMAIL);
-            $this->getZenMail()->setSujet("[Pastell] la connectivité Pastell - Chorus Pro est en erreur");
-            $this->getZenMail()->setContenuText($data);
-            $this->getZenMail()->send();
+            $templatedEmail = (new TemplatedEmail())
+                ->to(ADMIN_EMAIL)
+                ->subject('[Pastell] la connectivité Pastell - Chorus Pro est en erreur')
+                ->text($data);
+            $this->objectInstancier
+                ->getInstance(Mailer::class)
+                ->send($templatedEmail);
 
             $data .= "\n\n mail envoyé à " . ADMIN_EMAIL;
         }

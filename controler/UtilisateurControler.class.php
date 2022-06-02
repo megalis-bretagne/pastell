@@ -1,8 +1,10 @@
 <?php
 
+use Pastell\Mailer\Mailer;
 use Pastell\Service\PasswordEntropy;
 use Pastell\Service\Utilisateur\UtilisateurDeletionService;
 use Pastell\Utilities\Certificate;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 
 class UtilisateurControler extends PastellControler
 {
@@ -114,16 +116,17 @@ class UtilisateurControler extends PastellControler
 
         $utilisateur_info = $this->getUtilisateur()->getInfo($this->getId_u());
 
-
         $password = $this->getUtilisateurNewEmailSQL()->add($this->getId_u(), $email);
 
-        $zenMail = $this->getZenMail();
-        $zenMail->setEmetteur("Pastell", PLATEFORME_MAIL);
-        $zenMail->setDestinataire($email);
-        $zenMail->setSujet("Changement de mail sur Pastell");
-        $info = ["password" => $password];
-        $zenMail->setContenu(PASTELL_PATH . "/mail/changement-email.php", $info);
-        $zenMail->send();
+        $link = sprintf("%s/Utilisateur/modifEmailConfirm?password=%s", SITE_BASE, $password);
+        $templatedEmail = (new TemplatedEmail())
+            ->to($email)
+            ->subject('[Pastell] Changement de mail sur Pastell')
+            ->htmlTemplate('changement-email.html.twig')
+            ->context(["link" => $link]);
+        $this->getObjectInstancier()
+            ->getInstance(Mailer::class)
+            ->send($templatedEmail);
 
         $this->getJournal()->add(Journal::MODIFICATION_UTILISATEUR, $utilisateur_info['id_e'], 0, "change-email", "Demande de changement d'email initiée {$utilisateur_info['email']} -> $email");
 

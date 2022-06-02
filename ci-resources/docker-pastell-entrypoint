@@ -3,12 +3,6 @@ set -e
 
 /bin/bash /var/www/pastell/ci-resources/docker-pastell-init > /data/config/DockerSettings.php
 
-# Génération fichier ssmtp.conf
-if [ "$SMTP_SERVER" ] ; then
-  /bin/bash /var/www/pastell/ci-resources/generate-msmtp.conf.sh > /data/config/msmtprc
-  chmod 600 /data/config/msmtprc
-fi
-
 # Utilisation de l'authentification cliente si nécessaire
 if [ "$AUTHENTICATION_WITH_CLIENT_CERTIFICATE" ] ; then
     sed -i 's/# SSLVerifyclient optional/SSLVerifyclient optional/' /etc/apache2/sites-available/pastell-apache-config.conf

@@ -65,6 +65,8 @@
 - Suppression de DAEMON_USER, DAEMON_LOG_FILE, PID_FILE
 - Suppression de la fonction util.php::mail_wrapper(), utilisé symfony/mailer à la place
 - Suppression du fichier de sous-type qui ne servait plus dans le connecteur i-Parapheur #1505
+- Suppression de lib/ZenMail, utilisé symfony/mailer à la place
+- Suppression de SMTP_SERVER, SMTP_PORT, SMTP_USER, SMTP_PASSWORD, utilisé MAILER_DSN à la place. Voir https://symfony.com/doc/current/mailer.html#using-built-in-transports
 
 # [3.1.14] - 2022-05-16
 

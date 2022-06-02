@@ -1,0 +1,85 @@
+From: PASTELL <test@libriciel.net>
+To: jdoe@example.org
+Subject: entite: Bourg-en-Bresse -- titre : mon titre
+Reply-To: test@libriciel.net
+X-PASTELL-DOCUMENT: NOTTESTABLE
+Message-ID: NOTTESTABLE
+MIME-Version: 1.0
+DATE: NOTTESTABLE
+Content-Type: multipart/alternative; boundary=NOTTESTABLE
+
+--NOTTESTABLE
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+
+
+
+
+Mise =C3=A0 disposition d'une facture
+
+Bonjour,
+
+La soc=
+i=C3=A9t=C3=A9  met =C3=A0 votre dispostion la facture num=C3=A9ro .
+
+=
+
+Le montant de cette commande est de : 42 francs
+
+
+Vous pouvez r=
+=C3=A9cup=C3=A9rer votre facture en clique sur le lien suivant :
+
+
+R=
+=C3=A9cup=C3=A9rer la facture
+
+
+Cordialement.
+
+
+
+
+
+
+--NOTTESTABLE
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+
+<body>
+
+<h1>Mise =C3=A0 disposition d'une facture</h1>
+=
+
+<p>Bonjour,</p>
+
+<p>La soci=C3=A9t=C3=A9 <b></b> met =C3=A0 votre di=
+spostion la facture num=C3=A9ro <b></b>.</p>
+
+
+<p>Le montant de cette=
+ commande est de : 42 francs</p>
+
+
+<p>Vous pouvez r=C3=A9cup=C3=A9rer=
+ votre facture en clique sur le lien suivant :</p>
+
+
+<p><a href=3D'ht=
+tps://localhost:8443index.php?key=NOTTESTABLE
+=C3=A9cup=C3=A9rer la facture</a></p>
+
+
+<p>Cordialement.</p>
+
+<im=
+g src=3D'cid:NOTTESTABLEimage0' alt=3D''/>
+<img src=3D'cid:NOTTESTABLEimage1' alt=3D''/>
+
+<=
+/body>
+</html>
+--NOTTESTABLE
