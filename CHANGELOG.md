@@ -87,6 +87,7 @@
 
 ## Corrections
 
+- Il manquait la récupération de l'identifiant de l'archive sur le SAE dans le cas du SEDA 2.1 #1518
 - Refactoring de ConnecteurFactory::getManquant() #1485
 
 ## Ajouts
