@@ -161,7 +161,7 @@ class MailSec extends MailsecConnecteur
             $templatedEmail
                 ->getHeaders()
                 ->addTextHeader(UndeliveredMail::PASTELL_RETURN_INFO_HEADER, $mailPastellId);
-            /** @var UndeliveredMail? $undeliveredMail */
+            /** @var UndeliveredMail|false $undeliveredMail */
             $undeliveredMail = $this->connecteurFactory->getGlobalConnecteur(UndeliveredMail::CONNECTOR_TYPE);
             if ($undeliveredMail) {
                 $templatedEmail->returnPath($undeliveredMail->getReturnPath());

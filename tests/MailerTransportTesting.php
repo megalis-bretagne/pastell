@@ -14,9 +14,9 @@ class MailerTransportTesting extends AbstractTransport
      */
     private array $messages;
 
-    protected function doSend(SentMessage $messages): void
+    protected function doSend(SentMessage $message): void
     {
-        $this->messages[] = $messages;
+        $this->messages[] = $message;
     }
 
     public function __toString(): string
