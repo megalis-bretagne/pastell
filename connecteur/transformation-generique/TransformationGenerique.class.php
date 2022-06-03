@@ -23,7 +23,7 @@ class TransformationGenerique extends TransformationConnecteur
             'pa_entity_name' => "Nom de l'entité Pastell dans laquelle le document a été créé",
             'pa_entity_siren' => "SIREN de l'entité Pastell dans laquelle le document a été créé",
             'pa_creator_lastname' => "Nom de l'utilisateur ayant créé le document",
-            'pa_creator_firtname' => "Prénom de l'utilisateur ayant créé le document",
+            'pa_creator_firstname' => "Prénom de l'utilisateur ayant créé le document",
             'pa_creator_email' => "Email de l'utilisateur ayant créé le document",
             'pa_creator_login' => "Login de l'utilisateur ayant créé le document",
             'pa_creator_id_u' => "Identifiant de l'utilisateur ayant créé le document",
