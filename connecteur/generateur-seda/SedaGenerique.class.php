@@ -177,6 +177,18 @@ class SedaGenerique extends SedaNG
                 'seda' => 'ServiceLevel',
                 'libelle' => "Niveau de service demandé"
             ],
+            'OriginatingAgencyArchiveIdentifier' => [
+                'seda' => 'OriginatingAgencyArchiveIdentifier',
+                'libelle' => "Identifiant donné à l'archive par le service producteur",
+                'commentaire' => "OriginatingAgencyArchiveIdentifier (seda 1.0) / " .
+                    "OriginatingAgencyArchiveUnitIdentifier (seda 2.1)"
+            ],
+            'TransferringAgencyArchiveIdentifier' => [
+                'seda' => 'TransferringAgencyArchiveIdentifier',
+                'libelle' => "Identifiant donné à l'archive par le service versant",
+                'commentaire' => "TransferringAgencyArchiveIdentifier (seda 1.0) / " .
+                    "TransferringAgencyArchiveUnitIdentifier (seda 2.1)"
+            ],
             'DescriptionLevel' => [
                 'seda' => 'DescriptionLevel',
                 'libelle' => "Niveau de description",
