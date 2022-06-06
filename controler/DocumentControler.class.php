@@ -1246,12 +1246,15 @@ class DocumentControler extends PastellControler
             $this->getObjectInstancier()
                 ->getInstance(DocumentEmailReponseSQL::class)
                 ->getInfoFromIdReponse($id_d);
-        $mail_info =
-            $this->getObjectInstancier()
-                ->getInstance(DocumentEmail::class)
-                ->getInfoFromPK($reponse_info['id_de']);
 
-        if ($mail_info['id_d']) {
+        if (!empty($reponse_info)) {
+            $mail_info =
+                $this->getObjectInstancier()
+                    ->getInstance(DocumentEmail::class)
+                    ->getInfoFromPK($reponse_info['id_de']);
+        }
+
+        if (!empty($mail_info)) {
             $this->verifDroitLecture($id_e, $mail_info['id_d']);
         } else {
             $this->verifDroitLecture($id_e, $id_d);
