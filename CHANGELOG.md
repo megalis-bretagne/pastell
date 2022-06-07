@@ -1,5 +1,6 @@
 # [3.1.15] - 2022-06-13
 ***Cette version nécessite une modification de la base de données***
+***Cette version nécessite une mise à jour du générateur SEDA en 0.8.3***
 
 ## Corrections
 
@@ -12,6 +13,7 @@
 
 - Ajout de la date de réponse à un Mail sécurisé #1535
 - Ajout de la taille totale dans le connecteur de statistiques #1534
+- Generateur SEDA: ajout des balises OriginatingAgencyArchiveIdentifier et TransferringAgencyArchiveIdentifier #1463
 
 # [3.1.14] - 2022-05-16
 
