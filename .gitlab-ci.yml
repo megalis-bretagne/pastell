@@ -8,6 +8,10 @@ include:
     ref: master
     file: '/security-check.yml'
 
+  - project: "libriciel/integration-continue/templates"
+    ref: pev-trivy-filesystem
+    file: '/security-check-fs.yml'
+
 stages:
     - build
     - static-analysis
