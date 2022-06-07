@@ -125,7 +125,7 @@ class FluxEntiteHeritageSQL extends SQL
     public function hasInheritance($id_e, $flux)
     {
         $sql = "SELECT count(*) FROM flux_entite_heritage WHERE id_e=? AND flux=?";
-        return $this->queryOne($sql, $id_e, $flux);
+        return $this->queryOne($sql, $id_e, $flux) >= 1 ;
     }
 
     public function setInheritanceAllFlux($id_e)

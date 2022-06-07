@@ -2,6 +2,7 @@
 
 use Monolog\Logger;
 use Pastell\Service\Droit\DroitService;
+use Pastell\Service\FeatureToggleService;
 
 class PastellControler extends Controler
 {
@@ -31,6 +32,14 @@ class PastellControler extends Controler
             $id_e,
             $this->getId_u()
         ));
+    }
+
+    protected function setDroitImportExportConfig(int $id_e): void
+    {
+        $this->setViewParameter(
+            'droit_on_import_export',
+            $this->getDroitService()->hasDroit($this->getId_u(), 'system:edition', $id_e)
+        );
     }
 
     /**
@@ -218,7 +227,10 @@ class PastellControler extends Controler
                 $this->setViewParameter('daemon_stopped_warning', false);
             }
         }
-
+        $this->setViewParameter(
+            'featureToggleService',
+            $this->getObjectInstancier()->getInstance(FeatureToggleService::class)
+        );
         parent::renderDefault();
     }
 

@@ -30,7 +30,7 @@ class MailsecEnvoyerTest extends PastellTestCase
 
         $documentEmail = $this->getObjectInstancier()->getInstance(DocumentEmail::class);
 
-        $this->assertEquals(
+        $this->assertEqualsCanonicalizing(
             [
                 '"bar" <bar@test.com>',
                 '"baz" <baz@test.com>',

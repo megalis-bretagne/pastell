@@ -14,6 +14,7 @@ class MailSecControler extends PastellControler
         $this->setViewParameter('menu_gauche_select', 'MailSec/annuaire');
         $this->setViewParameter('menu_gauche_template', "EntiteMenuGauche");
         $this->setDroitLectureOnConnecteur($id_e);
+        $this->setDroitImportExportConfig($id_e);
     }
 
 
