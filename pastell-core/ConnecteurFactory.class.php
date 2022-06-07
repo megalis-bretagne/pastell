@@ -95,20 +95,18 @@ class ConnecteurFactory
     {
         $connecteur_manquant_list = [];
         $all_connecteur_extension = $this->objectInstancier->getInstance(Extensions::class)->getAllConnecteur();
-        $all_connecteur_used = $this->objectInstancier->getInstance(ConnecteurEntiteSQL::class)->getAllUsed();
-        foreach ($all_connecteur_used as $id_connecteur) {
-            $id_connecteur_used = $this->objectInstancier->getInstance(ConnecteurEntiteSQL::class)->getAllById($id_connecteur);
-            foreach ($id_connecteur_used as $connecteur_info) {
-                $id_e = $connecteur_info['id_e'];
-                if (empty($all_connecteur_extension[$id_connecteur])) {
-                    $connecteur_manquant_list[$id_connecteur][] = $connecteur_info;
-                } elseif ($id_e) {
-                    if ($this->isRestrictedConnecteur($id_connecteur)) {
-                        $connecteur_manquant_list[$id_connecteur][] = $connecteur_info;
-                    }
-                } elseif ($this->isRestrictedConnecteur($id_connecteur, true)) {
+        $all_connecteur_used = $this->objectInstancier->getInstance(ConnecteurEntiteSQL::class)->getAllForPlateform();
+        foreach ($all_connecteur_used as $connecteur_info) {
+            $id_e = $connecteur_info['id_e'];
+            $id_connecteur = $connecteur_info['id_connecteur'];
+            if (empty($all_connecteur_extension[$id_connecteur])) {
+                $connecteur_manquant_list[$id_connecteur][] = $connecteur_info;
+            } elseif ($id_e) {
+                if ($this->isRestrictedConnecteur($id_connecteur)) {
                     $connecteur_manquant_list[$id_connecteur][] = $connecteur_info;
                 }
+            } elseif ($this->isRestrictedConnecteur($id_connecteur, true)) {
+                $connecteur_manquant_list[$id_connecteur][] = $connecteur_info;
             }
         }
         asort($connecteur_manquant_list);
