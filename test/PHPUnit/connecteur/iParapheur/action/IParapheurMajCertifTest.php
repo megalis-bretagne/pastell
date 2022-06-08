@@ -10,14 +10,14 @@ class IParapheurMajCertifTest extends PastellTestCase
                 'tmp_name' => __DIR__ . '/../../../fixtures/vide.pdf'
             ]
         ];
-        $globalIparapheur = $this->createConnector('iParapheur', 'iParapheur GLOBAL', 0);
+        $globalIparapheur = $this->createConnector('s2low', 's2low GLOBAL', 0);
         $id_ce = $globalIparapheur['id_ce'];
         $this->expectOutputRegex("/Location: (.*)editionModif\?id_ce=$id_ce/");
 
         $this->getObjectInstancier()->getInstance(ActionExecutorFactory::class)->goChoiceOnConnecteur(
             $id_ce,
             self::ID_U_ADMIN,
-            'mise-a-jour-certif-i-parapheur',
+            'mise-a-jour-certif-s2low',
             'changement-certificat',
             false,
             ['id_ce_list' => '123']
