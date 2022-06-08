@@ -148,13 +148,15 @@ action:
 	non-recu:
 		name: Non reçu
 		name-action: Définir comme non reçu
-		warning: "ok"
+		warning: ok
 		rule:
 			last-action:
-				envoi
-				renvoi
-				reception-partielle
-		action-class: Defaut
+				- envoi
+				- renvoi
+				- reception-partielle
+		action-class: StandardAction
+		connecteur-type: mailsec
+		connecteur-type-action: MailsecNotReceived
 
 	compute_read_mail:
 		name: Calcul des mails lus

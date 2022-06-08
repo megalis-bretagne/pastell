@@ -260,7 +260,10 @@ bar', $output);
         $this->assertTrue(
             $this->triggerActionOnDocument($id_d, "non-recu")
         );
-        $this->assertLastMessage("L'action Non reçu a été executée sur le document");
+        $this->assertLastMessage("Mail défini comme non-reçu.");
+
+        $documentEmail = $this->getObjectInstancier()->getInstance(DocumentEmail::class);
+        $this->assertEmpty($documentEmail->getInfo('id_d'));
 
         $this->assertLastDocumentAction('non-recu', $id_d);
         $this->assertActionPossible(['supression'], $id_d);

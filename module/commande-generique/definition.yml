@@ -356,12 +356,14 @@ action:
     non-recu:
         name: Non reçu
         name-action: Définir comme non reçu
-        warning: "ok"
+        warning: ok
         rule:
             last-action:
-                renvoi
-                envoi-mail
-        action-class: Defaut
+                - renvoi
+                - envoi-mail
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecNotReceived
         action-automatique: orientation
 
     reception:

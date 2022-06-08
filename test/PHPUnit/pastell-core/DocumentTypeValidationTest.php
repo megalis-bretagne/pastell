@@ -14,7 +14,7 @@ class DocumentTypeValidationTest extends PHPUnit\Framework\TestCase
         $this->documentTypeValidation->setActionClassList(array('Supprimer', 'StandardAction', 'Defaut'));
         $this->documentTypeValidation->setEntiteTypeList(array());
         $this->documentTypeValidation->setConnecteurTypeActionClassList(
-            ['MailsecEnvoyer', 'MailsecRenvoyer', 'MailsecComputeReadMail']
+            ['MailsecEnvoyer', 'MailsecRenvoyer', 'MailsecComputeReadMail', 'MailsecNotReceived']
         );
     }
 
