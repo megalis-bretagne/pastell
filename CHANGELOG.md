@@ -81,6 +81,13 @@
   - GedIdDocumentsVisionneuse devient Pastell\Viewer\GedIdDocumentsViewer
 - Suppression de la fonction SEDAConnecteur::getInfoARActes()
 
+# [3.1.16]
+***Cette version nécessite une mise à jour du générateur SEDA en 0.8.3***
+
+## Ajouts
+
+- Generateur SEDA: ajout des balises OriginatingAgencyArchiveIdentifier et TransferringAgencyArchiveIdentifier #1463
+
 # [3.1.15] - 2022-06-13
 ***Cette version nécessite une modification de la base de données***
 
