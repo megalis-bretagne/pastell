@@ -1,4 +1,4 @@
-# [3.1.15]
+# [3.1.15] - 2022-06-13
 ***Cette version nécessite une modification de la base de données***
 
 ## Corrections
