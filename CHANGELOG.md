@@ -39,7 +39,7 @@
   TedetisAnnulation, TedetisRecupAnnulation, TedetisSendReponsePref, TedetisVerifReponsePref,
   FournisseurCommandeEnvoiGED, FournisseurCommandeEnvoiSAE, GEDEnvoiDocumentASigner, IParapheurEnvoieDocumentASigner,
   IParapheurRecupDocumentASigner, HeliosEnvoieSAEChange, HeliosGEDEnvoi, HeliosGeneriqueSAEValidation,
-  HeliosGeneriqueSAEVerif, IparapheurEnvoieHelios
+  HeliosGeneriqueSAEVerif, IparapheurEnvoieHelios, PDFGeneriqueRelance
 - Suppression de la propriété Controler::lastError
 - La récupération des acquittements du flux pes-marché est standardisé avec les autres flux (modification du nom du fichier de l'acquittement)
 - Suppression de la constante MODE_MUTUALISE. Lors de l'envoi d'un mail sécurisé, mailsec_from prend la valeur de PLATEFORME_MAIL.
