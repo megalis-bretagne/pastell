@@ -357,7 +357,7 @@ action:
         rule:
             role_id_e: no-role
     preparation-non-recu:
-        name: Préparation au passage comme non reçu
+        name: 'Préparation au passage comme non reçu'
         rule:
             role_id_e: no-role
         action-automatique: non-recu
