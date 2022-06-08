@@ -133,10 +133,10 @@ action:
                 - envoi
                 - renvoi
                 - reception-partielle
-		action-class: StandardAction
-		connecteur-type: mailsec
-		connecteur-type-action: MailsecNotReceived
-	compute_read_mail:
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecNotReceived
+    compute_read_mail:
         name: 'Calcul des mails lus'
         rule:
             role_id_e: no-role

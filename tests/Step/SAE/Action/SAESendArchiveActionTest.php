@@ -55,7 +55,7 @@ final class SAESendArchiveActionTest extends PastellTestCase
         $this->assertTrue(
             $this->triggerActionOnDocument($documentId, 'orientation')
         );
-        $this->assertLastMessage("sélection automatique  de l'action suivante");
+        $this->assertLastMessage("sélection automatique de l'action suivante");
 
         $result = $this->triggerActionOnDocument($documentId, SAEActionsEnum::GENERATE_ARCHIVE->value);
         $this->assertTrue($result);
@@ -84,7 +84,7 @@ final class SAESendArchiveActionTest extends PastellTestCase
         $this->assertTrue(
             $this->triggerActionOnDocument($documentId, 'orientation')
         );
-        $this->assertLastMessage("sélection automatique  de l'action suivante");
+        $this->assertLastMessage("sélection automatique de l'action suivante");
 
         $result = $this->triggerActionOnDocument($documentId, SAEActionsEnum::GENERATE_ARCHIVE->value);
         $this->assertTrue($result);
