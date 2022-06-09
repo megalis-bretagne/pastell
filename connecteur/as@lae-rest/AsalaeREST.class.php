@@ -1,24 +1,18 @@
 <?php
 
+use Monolog\Logger;
+
 class AsalaeREST extends SAEConnecteur
 {
-    private $curlWrapperFactory;
-    /** @var \Monolog\Logger */
-    private $logger;
-
     private $url;
     private $login;
     private $password;
-    private $originatingAgency;
     private $chunk_size_in_bytes;
 
-    /** @var  DonneesFormulaire */
-    private $connecteur_config;
-
-    public function __construct(CurlWrapperFactory $curlWrapperFactory, \Monolog\Logger $logger)
-    {
-        $this->curlWrapperFactory = $curlWrapperFactory;
-        $this->logger = $logger;
+    public function __construct(
+        private readonly CurlWrapperFactory $curlWrapperFactory,
+        private readonly Logger $logger,
+    ) {
     }
 
     public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire)
@@ -26,9 +20,7 @@ class AsalaeREST extends SAEConnecteur
         $this->url = $donneesFormulaire->get('url');
         $this->login = $donneesFormulaire->get('login');
         $this->password = $donneesFormulaire->get('password');
-        $this->originatingAgency = $donneesFormulaire->get('originating_agency');
-        $this->chunk_size_in_bytes = intval($donneesFormulaire->get('chunk_size_in_bytes'));
-        $this->connecteur_config = $donneesFormulaire;
+        $this->chunk_size_in_bytes = (int)$donneesFormulaire->get('chunk_size_in_bytes');
     }
 
     /**
@@ -223,7 +215,7 @@ class AsalaeREST extends SAEConnecteur
             throw new Exception("$result - code d'erreur HTTP : $http_code");
         }
         $old_result = $result;
-        if ($accept == "application/json") {
+        if ($accept === "application/json") {
             $result = json_decode($result, true);
         }
         if (! $result) {

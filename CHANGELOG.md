@@ -67,6 +67,7 @@
 - Suppression du fichier de sous-type qui ne servait plus dans le connecteur i-Parapheur #1505
 - Suppression de lib/ZenMail, utilisé symfony/mailer à la place
 - Suppression de SMTP_SERVER, SMTP_PORT, SMTP_USER, SMTP_PASSWORD, utilisé MAILER_DSN à la place. Voir https://symfony.com/doc/current/mailer.html#using-built-in-transports
+- Suppression du service versant dans le connecteur asalae #1504
 
 # [3.1.15] - 2022-06-13
 ***Cette version nécessite une modification de la base de données***
