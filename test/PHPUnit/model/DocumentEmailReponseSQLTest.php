@@ -46,14 +46,6 @@ class DocumentEmailReponseSQLTest extends PastellTestCase
             'has_date_reponse' => '0'
         ], $this->getDocumentEmailReponseSQL()->getInfo(42));
         $this->getDocumentEmailReponseSQL()->validateReponse(42);
-        $this->assertEquals([
-            'id_reponse' => '1',
-            'id_de' => '42',
-            'id_d_reponse' => '43',
-            'is_lu' => '0',
-            'has_reponse' => '1',
-        ], $this->getDocumentEmailReponseSQL()->getInfo(42));
-        $this->getDocumentEmailReponseSQL()->validateReponse(42);
         $this->assertEquals(1, $this->getDocumentEmailReponseSQL()->getInfo(42)['has_reponse']);
     }
 
