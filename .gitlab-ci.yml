@@ -116,7 +116,7 @@ acceptance_test:
     artifacts:
         when: on_failure
         paths:
-            - /var/www/pastell/test/codeception/tests/_output/
+            - /var/www/pastell/test/codeception/tests/output/
 
 security_scan:
   allow_failure: true
