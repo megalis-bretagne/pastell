@@ -110,6 +110,7 @@ acceptance_test:
         - redis:latest
     script:
         - cd /var/www/pastell
+        - echo "" > .env
         - /bin/bash -c "source /etc/apache2/envvars && exec /usr/sbin/apache2"
         - composer codecept
     artifacts:
