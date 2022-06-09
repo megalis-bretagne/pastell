@@ -39,7 +39,7 @@
   TedetisAnnulation, TedetisRecupAnnulation, TedetisSendReponsePref, TedetisVerifReponsePref,
   FournisseurCommandeEnvoiGED, FournisseurCommandeEnvoiSAE, GEDEnvoiDocumentASigner, IParapheurEnvoieDocumentASigner,
   IParapheurRecupDocumentASigner, HeliosEnvoieSAEChange, HeliosGEDEnvoi, HeliosGeneriqueSAEValidation,
-  HeliosGeneriqueSAEVerif, IparapheurEnvoieHelios
+  HeliosGeneriqueSAEVerif, IparapheurEnvoieHelios, PDFGeneriqueRelance
 - Suppression de la propriété Controler::lastError
 - La récupération des acquittements du flux pes-marché est standardisé avec les autres flux (modification du nom du fichier de l'acquittement)
 - Suppression de la constante MODE_MUTUALISE. Lors de l'envoi d'un mail sécurisé, mailsec_from prend la valeur de PLATEFORME_MAIL.
@@ -67,6 +67,21 @@
 - Suppression du fichier de sous-type qui ne servait plus dans le connecteur i-Parapheur #1505
 - Suppression de lib/ZenMail, utilisé symfony/mailer à la place
 - Suppression de SMTP_SERVER, SMTP_PORT, SMTP_USER, SMTP_PASSWORD, utilisé MAILER_DSN à la place. Voir https://symfony.com/doc/current/mailer.html#using-built-in-transports
+
+# [3.1.15] - 2022-06-13
+***Cette version nécessite une modification de la base de données***
+
+## Corrections
+
+- Correction du workflow du flux `facture-cpp` en mode automatique #1502
+- Il n'y avait plus d'accès au fichier réponse d'un mail sécurisé sans les droits NOM_DU_FLUX-reponse,
+  c'est rétablit avec les droits NOM_DU_FLUX #1486
+- Généralisation de la correction "Il n'est plus possible pour un destinataire de visualiser un mail sécurisé si celui-ci est passé dans l'état "Non reçu" #1365
+
+## Ajouts
+
+- Ajout de la date de réponse à un Mail sécurisé #1535
+- Ajout de la taille totale dans le connecteur de statistiques #1534
 
 # [3.1.14] - 2022-05-16
 

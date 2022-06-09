@@ -14,10 +14,14 @@ class FactureCPPOrientation extends ActionExecutor
         $documentActionEntite = $this->getDocumentActionEntite();
         $last_action = $documentActionEntite->getLastAction($this->id_e, $this->id_d);
         $donneesFormulaire = $this->getDonneesFormulaire();
-        $envoi_visa = $donneesFormulaire->get('envoi_visa');
-        $envoi_ged = $donneesFormulaire->get('envoi_ged');
-        $check_mise_a_dispo_gf = $donneesFormulaire->get('check_mise_a_dispo_gf');
-        $envoi_sae = $donneesFormulaire->get('envoi_sae');
+        $envoi_visa = ($donneesFormulaire->get('envoi_visa')
+            && (! $donneesFormulaire->get('has_historique')));
+        $envoi_ged = ($donneesFormulaire->get('envoi_ged')
+            && (! $donneesFormulaire->get('has_send_ged')));
+        $check_mise_a_dispo_gf = ($donneesFormulaire->get('check_mise_a_dispo_gf')
+            && (! $donneesFormulaire->get('has_mise_a_dispo_gf')));
+        $envoi_sae = ($donneesFormulaire->get('envoi_sae')
+            && (! $donneesFormulaire->get('sae_transfert_id')));
         $envoi_auto = $donneesFormulaire->get('envoi_auto');
         $action_cible = 'modification';
 
@@ -84,8 +88,9 @@ class FactureCPPOrientation extends ActionExecutor
             }
         }
 
-        $this->getActionCreator()->addAction($this->id_e, 0, $action_cible, "Affectation automatique du nouvel état");
-        $this->setLastMessage("Préparation pour le prochain état : $action_cible");
+        $message = "sélection automatique de l'action suivante";
+        $this->notify($action_cible, $this->type, $message);
+        $this->changeAction($action_cible, $message);
         return true;
     }
 }

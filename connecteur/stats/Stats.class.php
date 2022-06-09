@@ -95,7 +95,7 @@ class Stats extends Connecteur
         );
 
         $file = new SplFileObject($this->connecteurConfig->getFilePath(self::CSV_FILE_FIELD), 'wb');
-        $file->fputcsv(['id_e', 'Entité', 'Nombre', 'Taille', 'État', 'État label']);
+        $file->fputcsv(['id_e', 'Entité', 'Nombre', 'Taille en octet', 'Taille arrondie', 'État', 'État label']);
 
         $this->writeEntityUsageToFile($this->entityId, $documentType, $file);
 
@@ -128,6 +128,7 @@ class Stats extends Connecteur
                     $data['id_e'],
                     $data['denomination'],
                     $documentsInfo['number'],
+                    $documentsInfo['size'],
                     $this->documentSize->getHumanReadableSize($documentsInfo['size']),
                     $state,
                     $documentsInfo['action_label'],
@@ -147,10 +148,13 @@ class Stats extends Connecteur
             if (!array_key_exists($document['last_action'], $entity['documentsInfo'])) {
                 $entity['documentsInfo'][$document['last_action']]['number'] = 0;
                 $entity['documentsInfo'][$document['last_action']]['size'] = 0;
-                $entity['documentsInfo'][$document['last_action']]['action_label'] = $documentType->getAction()->getActionName($document['last_action']);
+                $entity['documentsInfo'][$document['last_action']]['action_label'] = $documentType->getAction()
+                    ->getActionName($document['last_action']);
             }
             ++$entity['documentsInfo'][$document['last_action']]['number'];
-            $entity['documentsInfo'][$document['last_action']]['size'] += $this->documentSize->getSize($document['id_d']);
+            $entity['documentsInfo'][$document['last_action']]['size'] += $this->documentSize->getSize(
+                $document['id_d']
+            );
         }
         return $entity;
     }

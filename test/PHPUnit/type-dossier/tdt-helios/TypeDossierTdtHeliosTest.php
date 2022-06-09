@@ -47,7 +47,7 @@ class TypeDossierTdtHeliosTest extends PastellTestCase
         $this->assertTrue(
             $this->triggerActionOnDocument($info['id_d'], "orientation")
         );
-        $this->assertLastMessage("sélection automatique  de l'action suivante");
+        $this->assertLastMessage("sélection automatique de l'action suivante");
 
         $this->assertLastDocumentAction('helios-pre-extraction', $info['id_d']);
 
@@ -89,7 +89,7 @@ class TypeDossierTdtHeliosTest extends PastellTestCase
         $this->assertTrue(
             $this->triggerActionOnDocument($info['id_d'], "orientation")
         );
-        $this->assertLastMessage("sélection automatique  de l'action suivante");
+        $this->assertLastMessage("sélection automatique de l'action suivante");
 
         $this->assertLastDocumentAction('termine', $info['id_d']);
     }

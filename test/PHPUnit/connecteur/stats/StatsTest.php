@@ -33,9 +33,9 @@ class StatsTest extends PastellTestCase
             $test->get('csv_generation_date')
         );
         $expectedCsvContent = <<<EOT
-id_e,Entité,Nombre,Taille,État,"État label"
-1,Bourg-en-Bresse,1,225B,creation,Créé
-2,CCAS,1,260B,creation,Créé
+id_e,Entité,Nombre,"Taille en octet","Taille arrondie",État,"État label"
+1,Bourg-en-Bresse,1,225,225B,creation,Créé
+2,CCAS,1,260,260B,creation,Créé
 
 EOT;
         $this->assertSame($expectedCsvContent, $test->getFileContent('csv_file'));

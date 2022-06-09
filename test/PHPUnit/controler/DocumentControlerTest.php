@@ -2,6 +2,8 @@
 
 class DocumentControlerTest extends ControlerTestCase
 {
+    use MailsecTestTrait;
+
     /**
      * @throws Exception
      */
@@ -317,5 +319,55 @@ class DocumentControlerTest extends ControlerTestCase
         $this->expectExceptionMessageMatches("/L'action unknown_action n'existe pas/");
 
         $documentController->changeEtatAction();
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testRecuperationFichierAction()
+    {
+        $mail_sec_info = $this->createMailSec('mailsec-bidir', 'envoi-mail');
+        $key = $mail_sec_info['key'];
+
+        /** @var MailSecDestinataireControler $mailsecController */
+        $mailsecController = $this->getControlerInstance(MailSecDestinataireControler::class);
+        $this->setPostInfo(['reponse' => 'ceci est ma réponse', 'key' => $key]);
+        $mailsecController->setServerInfo(['REMOTE_ADDR' => '127.0.0.1', 'REQUEST_METHOD' => 'POST']);
+
+        ob_start();
+        $mailsecController->repondreAction();
+        try {
+            $mailsecController->reponseEditionAction();
+        } catch (Exception $e) {
+        }
+        ob_end_clean();
+
+        $documentEmail = $this->getObjectInstancier()->getInstance(DocumentEmail::class);
+        $info = $documentEmail->getInfoFromKey($key);
+        $id_de = $info['id_de'];
+
+        $documentEmailReponseSQL = $this->getObjectInstancier()->getInstance(DocumentEmailReponseSQL::class);
+        $id_d_reponse = $documentEmailReponseSQL->getInfo($id_de)['id_d_reponse'];
+
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d_reponse);
+        $donneesFormulaire->addFileFromData('document_attache', 'foo.txt', 'bar');
+
+        $documentController = $this->getControlerInstance(DocumentControler::class);
+
+        $this->setGetInfo([
+            'id_e' => 1,
+            'id_d' => $id_d_reponse,
+            'field' => 'document_attache',
+        ]);
+
+        ob_start();
+        $documentController->recuperationFichierAction();
+        $output = ob_get_clean();
+        $this->assertEquals('Content-type: text/plain
+Content-disposition: attachment; filename*=UTF-8\'\'foo.txt; filename=foo.txt
+Expires: 0
+Cache-Control: must-revalidate, post-check=0,pre-check=0
+Pragma: public
+bar', $output);
     }
 }
