@@ -31,17 +31,17 @@ class UpdateCertificateTest extends PastellTestCase
 
     public function testDisplayGlobalUpdate()
     {
-        $this->createConnector('iParapheur', 'Mon i-Parapheur connecteur entite');
+        $this->createConnector('s2low', 'Mon s2low connecteur entite');
 
-        $id_ce = $this->createConnector('iParapheur', 'i-Parapheur', 0)['id_ce'];
+        $id_ce = $this->createConnector('s2low', 's2low', 0)['id_ce'];
 
         $actionExecutorFactory = $this->getObjectInstancier()->getInstance(ActionExecutorFactory::class);
 
-        $this->expectOutputRegex("#Mon i-Parapheur connecteur entite#");
+        $this->expectOutputRegex("#Mon s2low connecteur entite#");
         $actionExecutorFactory->displayChoiceOnConnecteur(
             $id_ce,
             0,
-            "mise-a-jour-certif-i-parapheur",
+            "mise-a-jour-certif-s2low",
             "changement-certificat"
         );
     }

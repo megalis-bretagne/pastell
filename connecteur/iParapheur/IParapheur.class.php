@@ -12,13 +12,8 @@ class IParapheur extends SignatureConnecteur
     private const REJECTED_STATE = ['RejetVisa', 'RejetSignataire','RejetCachet', 'RejetMailSecPastell'];
 
     private $wsdl;
-    private $userCert;
-    private $userCertPassword;
     private $login_http;
     private $password_http;
-
-    private $userKeyOnly;
-    private $userCertOnly;
 
     private $iparapheur_type;
     private $iparapheur_nb_jour_max;
@@ -49,13 +44,9 @@ class IParapheur extends SignatureConnecteur
         $this->collectiviteProperties = $collectiviteProperties;
 
         $this->wsdl = $collectiviteProperties->get("iparapheur_wsdl");
-        $this->userCert = $collectiviteProperties->getFilePath("iparapheur_user_key_pem");
-        $this->userCertPassword = $collectiviteProperties->get("iparapheur_user_certificat_password");
         $this->login_http = $collectiviteProperties->get("iparapheur_login");
         $this->password_http = $collectiviteProperties->get("iparapheur_password");
 
-        $this->userKeyOnly = $collectiviteProperties->getFilePath("iparapheur_user_key_only_pem");
-        $this->userCertOnly = $collectiviteProperties->getFilePath("iparapheur_user_certificat_pem");
         $this->iparapheur_type = $collectiviteProperties->get("iparapheur_type");
         $this->iparapheur_nb_jour_max = $collectiviteProperties->get("iparapheur_nb_jour_max");
 
@@ -638,15 +629,11 @@ class IParapheur extends SignatureConnecteur
         $client = $this->soapClientFactory->getInstance(
             $this->wsdl,
             [
-                    'local_cert' => $this->userCert,
-                    'passphrase' => $this->userCertPassword,
                     'login' => $this->login_http,
                     'password' => $this->password_http,
                     'trace' => 1,
                     'exceptions' => 1,
                     'use_curl' => 1,
-                    'userKeyOnly' => $this->userKeyOnly,
-                    'userCertOnly' => $this->userCertOnly,
                     "stream_context" => $stream_context
                 ],
             true

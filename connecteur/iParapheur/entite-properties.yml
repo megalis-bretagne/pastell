@@ -5,24 +5,6 @@ formulaire:
     page0:
         iparapheur_wsdl:
             name: 'URL du WSDL'
-        iparapheur_user_certificat:
-            name: 'Certificat utilisateur (format P12)'
-            type: file
-            content-type: application/octet-stream
-            onchange: update-certificate
-        iparapheur_user_certificat_password:
-            name: 'Mot de passe du certificat utilisateur'
-            type: password
-            onchange: update-certificate
-        iparapheur_user_key_pem:
-            type: file
-            no-show: true
-        iparapheur_user_certificat_pem:
-            type: file
-            no-show: true
-        iparapheur_user_key_only_pem:
-            type: file
-            no-show: true
         iparapheur_login:
             name: 'Login HTTP'
         iparapheur_password:
@@ -81,19 +63,6 @@ action:
         action-class: IParapheurTestSend
         rule:
             droit_id_u: 'entite:edition'
-    update-certificate:
-        name: 'Mettre à jour les certificats'
-        rule:
-            role_id_e: no-role
-        action-class: StandardAction
-        connecteur-type: utilities
-        connecteur-type-action: UpdateCertificate
-        connecteur-type-mapping:
-            certificat_connexion: iparapheur_user_certificat
-            certificat_password: iparapheur_user_certificat_password
-            certificat_connexion_cert_pem: iparapheur_user_certificat_pem
-            certificat_connexion_key_pem: iparapheur_user_key_only_pem
-            certificat_connexion_key_cert_pem: iparapheur_user_key_pem
     display-sous-type:
         name: 'Voir les sous-types'
         action-class: DisplaySousType
