@@ -1,6 +1,7 @@
 <?php
 
 namespace PHPUnit\connecteur\s2low\action;
+
 use ActionExecutorFactory;
 use LastError;
 use PastellTestCase;
