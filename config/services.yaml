@@ -16,8 +16,6 @@ services:
   Pastell\:
     resource: '../src/'
     exclude:
-      - '../src/DependencyInjection/'
-      - '../src/Entity/'
       - '../src/Kernel.php'
       - '../src/functions.php'
       - '../src/Service/TypeDossier'

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pastell\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,7 +14,7 @@ class AboutController extends AbstractController
     public function index(): JsonResponse
     {
         return $this->json([
-            'message' => 'Controler de test pour symfony',
+            'message' => 'Controller de test pour symfony',
             'path' => 'src/Controller/AboutController.php',
         ]);
     }
