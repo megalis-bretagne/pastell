@@ -31,7 +31,7 @@ class ExportConfigService
     ) {
     }
 
-    public static function getOption(): array
+    public static function getOptions(): array
     {
         return [
             self::INCLUDE_ENTITY => "Inclure les informations sur l'entité",

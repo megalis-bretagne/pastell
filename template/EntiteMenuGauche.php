@@ -4,13 +4,9 @@
  * @var Gabarit $this
  * @var $menu_gauche_select
  * @var $droit_lecture_on_connecteur
- * @var FeatureToggleService $featureToggleService
  * @var int $id_e
- * @var bool $droit_on_import_export;
+ * @var bool $permission_on_import_export;
  */
-
-
-use Pastell\Service\FeatureToggleService;
 
 $admninistration_menu = [
     "Entite/detail" => "Informations (entités)",
@@ -23,7 +19,7 @@ if ($droit_lecture_on_connecteur) {
     $admninistration_menu["Flux/index"] = $id_e ? "Types de dossier (association)" : 'Associations connecteurs globaux';
 }
 
-if (! empty($droit_on_import_export)) {
+if (! empty($permission_on_import_export)) {
     $admninistration_menu["Entite/exportConfig"] = "Export de la configuration";
     $admninistration_menu["Entite/importConfig"] = "Import de la configuration";
 }

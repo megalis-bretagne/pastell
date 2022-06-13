@@ -19,6 +19,8 @@ class ExportConfigServiceTest extends PastellTestCase
      */
     public function testAll(): void
     {
+        $fluxEntiteSQl = $this->getObjectInstancier()->getInstance(\FluxEntiteSQL::class);
+        $fluxEntiteSQl->deleteConnecteur(1,'fournisseur-invitation', 'mail-fournisseur-invitation');
         $id_ce = $this->createConnector('test', "foo", 2)['id_ce'];
         $this->configureConnector($id_ce, [
             'champs1' => 'bar',

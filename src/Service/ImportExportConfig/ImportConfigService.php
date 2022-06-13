@@ -2,13 +2,13 @@
 
 namespace Pastell\Service\ImportExportConfig;
 
-use ConnecteurEntiteSQL;
 use ConnecteurFactory;
 use DonneesFormulaireException;
 use EntiteCreator;
 use Exception;
 use FluxEntiteHeritageSQL;
-use FluxEntiteSQL;
+use Pastell\Service\Connecteur\ConnecteurAssociationService;
+use Pastell\Service\Connecteur\ConnecteurCreationService;
 
 class ImportConfigService
 {
@@ -19,10 +19,10 @@ class ImportConfigService
 
     public function __construct(
         private readonly EntiteCreator $entiteCreator,
-        private readonly ConnecteurEntiteSQL $connecteurEntiteSQL,
         private readonly ConnecteurFactory $connecteurFactory,
-        private readonly FluxEntiteSQL $fluxEntiteSQL,
         private readonly FluxEntiteHeritageSQL $fluxEntiteHeritageSQL,
+        private readonly ConnecteurCreationService $connecteurCreationService,
+        private readonly ConnecteurAssociationService $connecteurAssociationService,
     ) {
     }
 
@@ -107,10 +107,11 @@ class ImportConfigService
                 continue;
             }
             $connecteurInfo['id_e'] = $id_e_mapping[$connecteurInfo['id_e']];
-            $id_ce = $this->connecteurEntiteSQL->addConnecteur(
-                $connecteurInfo['id_e'],
+            $id_ce = $this->connecteurCreationService->createConnecteur(
                 $connecteurInfo['id_connecteur'],
                 $connecteurInfo['type'],
+                $connecteurInfo['id_e'],
+                0,
                 $connecteurInfo['libelle']
             );
             $connectorMapping[$connecteurInfo['id_ce']] = $id_ce;
@@ -133,24 +134,25 @@ class ImportConfigService
             foreach ($fluxInfo as $flux_name => $connecteurInfo) {
                 foreach ($connecteurInfo as $typeFlux => $listConnecteurInfo) {
                     foreach ($listConnecteurInfo as $theConnectorInfo) {
-                        $this->createConnector($theConnectorInfo, $id_e_mapping[$id_e], $flux_name, $typeFlux, $connectorMapping);
+                        $this->associateConnector($theConnectorInfo, $id_e_mapping[$id_e], $flux_name, $typeFlux, $connectorMapping);
                     }
                 }
             }
         }
     }
 
-    private function createConnector(array $theConnectorInfo, int $id_e, string $flux_name, string $typeFlux, array $connectorMapping)
+    private function associateConnector(array $theConnectorInfo, int $id_e, string $flux_name, string $typeFlux, array $connectorMapping): void
     {
         if (empty($connectorMapping[$theConnectorInfo['id_ce']])) {
             $this->lastErrors[] = "La définition du connecteur id_ce={$theConnectorInfo['id_ce']} n'est pas présente : l'association n'a pas été importée.";
             return;
         }
-        $this->fluxEntiteSQL->addConnecteur(
+        $this->connecteurAssociationService->addConnecteurAssociation(
             $id_e,
-            $flux_name,
-            $typeFlux,
             $connectorMapping[$theConnectorInfo['id_ce']],
+            $typeFlux,
+            0,
+            $flux_name,
             $theConnectorInfo['num_same_type']
         );
     }

@@ -11,11 +11,11 @@ use Pastell\Service\ImportExportConfig\ExportConfigService;
 
 <div class="box">
 
-    <form action='Entite/exportConfigVerif' method='get'>
+    <form action='Entite/exportConfigVerif' method='post'>
         <?php $this->displayCSRFInput() ?>
         <input type='hidden' name='id_e' value='<?php hecho($id_e)?>'>
-        <table class='table table-striped'>
-            <?php foreach (ExportConfigService::getOption() as $id => $label) : ?>
+        <table class='table table-striped' aria-label="Export de la configuration">
+            <?php foreach (ExportConfigService::getOptions() as $id => $label) : ?>
             <tr>
                 <th id="<?php hecho($id)?>-th">
                     <label for="<?php hecho($id)?>"><?php hecho($label)?></label>

@@ -58,10 +58,10 @@ use Pastell\Service\ImportExportConfig\ExportConfigService;
     <form action='Entite/doExportConfig' method='post'>
         <?php $this->displayCSRFInput() ?>
         <input type='hidden' name='id_e' value='<?php hecho($id_e)?>'>
-        <?php foreach (ExportConfigService::getOption() as $id => $label) : ?>
+        <?php foreach (ExportConfigService::getOptions() as $id => $label) : ?>
             <input type="hidden" name="<?php hecho($id) ?>" value="<?php hecho($options[$id])?>"/>
         <?php endforeach; ?>
-        <table class='table table-striped'>
+        <table class='table table-striped' aria-label="Demande de mot de passe pour l'export de la configuration">
             <tr>
                 <th>
                     <label for='password'>

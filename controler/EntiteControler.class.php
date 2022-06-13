@@ -571,8 +571,10 @@ class EntiteControler extends PastellControler
 
     /**
      * @throws NotFoundException
+     * @throws LastMessageException
+     * @throws LastErrorException
      */
-    public function exportConfigAction()
+    public function exportConfigAction(): void
     {
         $recuperateur = $this->getGetInfo();
         $id_e = $recuperateur->getInt('id_e', 0);
@@ -588,8 +590,10 @@ class EntiteControler extends PastellControler
 
     /**
      * @throws NotFoundException
+     * @throws LastMessageException
+     * @throws LastErrorException
      */
-    public function importConfigAction()
+    public function importConfigAction(): void
     {
         $recuperateur = $this->getGetInfo();
         $id_e = $recuperateur->getInt('id_e', 0);
@@ -605,14 +609,16 @@ class EntiteControler extends PastellControler
 
     /**
      * @throws NotFoundException
+     * @throws LastMessageException
+     * @throws LastErrorException
      */
-    public function exportConfigVerifAction()
+    public function exportConfigVerifAction(): void
     {
-        $recuperateur = $this->getGetInfo();
+        $recuperateur = $this->getPostInfo();
         $id_e = $recuperateur->getInt('id_e', 0);
         $this->verifDroit(0, "system:edition");
         $options = [];
-        foreach (ExportConfigService::getOption() as $id => $label) {
+        foreach (ExportConfigService::getOptions() as $id => $label) {
             $options[$id] = $recuperateur->get($id);
         }
         $exportConfigService = $this->getObjectInstancier()->getInstance(ExportConfigService::class);
@@ -631,7 +637,7 @@ class EntiteControler extends PastellControler
      * @throws LastErrorException
      * @throws JsonException
      */
-    public function doExportConfigAction()
+    public function doExportConfigAction(): void
     {
         $recuperateur = $this->getPostInfo();
         $id_e = $recuperateur->getInt('id_e', 0);
@@ -642,7 +648,7 @@ class EntiteControler extends PastellControler
 
         $options = [];
         $link = "/Entite/exportConfigVerif?";
-        foreach (ExportConfigService::getOption() as $id => $label) {
+        foreach (ExportConfigService::getOptions() as $id => $label) {
             $options[$id] = $recuperateur->get($id);
             $link .= sprintf("%s=%s&", $id, $options[$id]);
         }
@@ -668,18 +674,21 @@ class EntiteControler extends PastellControler
             ->sendData($encryptedInfo, $filename, 'application/json');
     }
 
-    public function doImportConfigAction()
+    /**
+     * @throws DonneesFormulaireException
+     * @throws LastErrorException
+     * @throws LastMessageException
+     */
+    public function doImportConfigAction(): void
     {
-        //TODO : a raffiner en fonction des droits sur l'entité ?
         $this->verifDroit(0, "system:edition");
-
-        $recuperateur = $this->getPostInfo();
         $fileUploader = new FileUploader();
         $file_content = $fileUploader->getFileContent('pser');
         $password = $this->getPostInfo()->get('password');
         $id_e = $this->getPostInfo()->getInt('id_e');
         $message = $this->getInstance(Crypto::class)->decrypt($file_content, $password);
-        $message = json_decode($message, true);
+
+        $message = json_decode($message, true, 512, JSON_THROW_ON_ERROR);
         $importConfigService = $this->getObjectInstancier()->getInstance(ImportConfigService::class);
         $importConfigService->import($message, $id_e);
         $lastErrors = $importConfigService->getLastErrors();
