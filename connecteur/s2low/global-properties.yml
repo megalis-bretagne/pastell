@@ -1,6 +1,6 @@
 nom: S²low
 type: TdT
-description: 'Permet de faire des actions sur l''ensemble des connecteurs S²low installés sur Pastell.'
+description: "Permet de faire des actions sur l'ensemble des connecteurs S²low installés sur Pastell."
 formulaire:
     page0:
         changement_certificat:

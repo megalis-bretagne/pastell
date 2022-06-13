@@ -1,103 +1,75 @@
-
 formulaire:
     page0:
         depot_type_depot:
-            name: Type de dépôt
+            name: 'Type de dépôt'
             type: select
             value:
-                1: Création d'un répertoire
-                2: Envoi d'un fichier zip
-                3: Fichiers à la racine
-
+                1: "Création d'un répertoire"
+                2: "Envoi d'un fichier zip"
+                3: 'Fichiers à la racine'
         depot_titre_repertoire:
-            name: Nom du répertoire/du zip
+            name: 'Nom du répertoire/du zip'
             type: select
             value:
-                1: Titre du dossier Pastell
-                2: Expression à partir des métadonnées du document
-                3: Identifiant du document Pastell
-
+                1: 'Titre du dossier Pastell'
+                2: 'Expression à partir des métadonnées du document'
+                3: 'Identifiant du document Pastell'
         depot_titre_expression:
-            name: Expression pour la construction du nom du répertoire
+            name: 'Expression pour la construction du nom du répertoire'
             commentaire: '%metadonnee% est remplacé par le contenu de la métadonnée. Exemple : %objet%-%actes_nature%'
-
         depot_metadonnees:
-            name: Sauvegarde des métadonnées
+            name: 'Sauvegarde des métadonnées'
             type: select
             value:
-                1: Pas de métadonnées
-                2: métadonnées en XML
-                3: métadonnées en JSON
-                4: métadonnées en YAML
-
+                1: 'Pas de métadonnées'
+                2: 'métadonnées en XML'
+                3: 'métadonnées en JSON'
+                4: 'métadonnées en YAML'
         depot_metadonnes_filename:
-            name: Nom du fichier de métadonnées
+            name: 'Nom du fichier de métadonnées'
             commentaire: "Calculé automatiquement si non rempli. Possibilité d'utiliser des %metadonnees%"
-
         depot_metadonnees_restriction:
-            name: Liste des métadonnées sauvegardées
-            commentaire: |
-                Identifiants des métadonnées à sauvegarder, séparés par des virgules, toutes par défaut.
-                Exemple: actes_nature, actes_date, iparapheur_status
-
+            name: 'Liste des métadonnées sauvegardées'
+            commentaire: "Identifiants des métadonnées à sauvegarder, séparés par des virgules, toutes par défaut.\nExemple: actes_nature, actes_date, iparapheur_status\n"
         depot_pastell_file_filename:
-            name: Nom des fichiers déposés
-            commentaire: |
-                Exemple de nom original : PESALR2_20171024.xml; exemple de nom Pastell : qJO7qzV.yml_pes_aller_0
+            name: 'Nom des fichiers déposés'
+            commentaire: "Exemple de nom original : PESALR2_20171024.xml; exemple de nom Pastell : qJO7qzV.yml_pes_aller_0\n"
             type: select
             value:
-                1: nom original
-                2: nom Pastell
-                3: nom défini par une expression régulière
-
+                1: 'nom original'
+                2: 'nom Pastell'
+                3: 'nom défini par une expression régulière'
         depot_file_restriction:
-            name: Liste des fichiers sauvegardés
-            commentaire: |
-              Identifiants des fichiers à déposer, séparés par des virgules, tous les fichiers par défaut.
-              Exemple: actes, annexe, iparapheur_bordereau
-
+            name: 'Liste des fichiers sauvegardés'
+            commentaire: "Identifiants des fichiers à déposer, séparés par des virgules, tous les fichiers par défaut.\nExemple: actes, annexe, iparapheur_bordereau\n"
         depot_filename_replacement_regexp:
-            name: Nettoyage des noms de fichiers et de répertoire
-            commentaire: |
-                Une expression régulière dont tout ce qui correspond sera remplacé par des tirets (-).
-                L'expression par défaut est #[\\\\/]# (exlusion du caractère de séparation des répertoire)
-                Les noms de fichiers ne sont pas remplacés dans les métadonnées !
-
+            name: 'Nettoyage des noms de fichiers et de répertoire'
+            commentaire: "Une expression régulière dont tout ce qui correspond sera remplacé par des tirets (-).\nL'expression par défaut est #[\\\\\\\\/]# (exlusion du caractère de séparation des répertoire)\nLes noms de fichiers ne sont pas remplacés dans les métadonnées !\n"
         depot_filename_preg_match:
-            name: Expressions pour modifier le nom des fichiers
+            name: 'Expressions pour modifier le nom des fichiers'
             type: textarea
-            commentaire: |
-                Une expression par ligne identifiant_fichier: expression
-                Possibilité d'utiliser les éléments du type de dossier avec %identifiant_element%
-
+            commentaire: "Une expression par ligne identifiant_fichier: expression\nPossibilité d'utiliser les éléments du type de dossier avec %identifiant_element%\n"
         depot_creation_fichier_termine:
-            name: Créer un fichier à la fin du transfert
-            commentaire: inactif en mode zip
+            name: 'Créer un fichier à la fin du transfert'
+            commentaire: 'inactif en mode zip'
             type: checkbox
-
         depot_nom_fichier_termine:
-            name: Nom du fichier créé à la fin du transfert
-            commentaire: fichier_termine.txt par défaut
-
+            name: 'Nom du fichier créé à la fin du transfert'
+            commentaire: 'fichier_termine.txt par défaut'
         depot_existe_deja:
-            name: Stratégie si le répertoire ou fichier existe déjà
-            commentaire: |
-                Par défaut, une erreur est générée.
-                La modification consiste à ajouter la date et une chaine aléatoire.
+            name: 'Stratégie si le répertoire ou fichier existe déjà'
+            commentaire: "Par défaut, une erreur est générée.\nLa modification consiste à ajouter la date et une chaine aléatoire.\n"
             type: select
             value:
-                1: Lancer une erreur
-                2: Modifier le nom du fichier à déposer
-
+                1: 'Lancer une erreur'
+                2: 'Modifier le nom du fichier à déposer'
 action:
     test_lecture:
-        name: Lister le contenu du répertoire
+        name: 'Lister le contenu du répertoire'
         action-class: DepotTestLecture
-
     test_ecriture_fichier:
-        name: Tester un dépot d'un fichier
+        name: "Tester un dépot d'un fichier"
         action-class: DepotTestEcritureFichier
-
     test_ecriture:
-        name: Tester un dépot sur le répertoire
+        name: 'Tester un dépot sur le répertoire'
         action-class: DepotTestEcriture

@@ -6,6 +6,6 @@ namespace Pastell\Seda;
 
 enum SedaVersion: string
 {
-case VERSION_1_0 = '1.0';
-case VERSION_2_1 = '2.1';
-    }
+    case VERSION_1_0 = '1.0';
+    case VERSION_2_1 = '2.1';
+}

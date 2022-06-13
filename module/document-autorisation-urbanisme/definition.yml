@@ -1,4 +1,4 @@
-nom: 'Document d''autorisation d''urbanisme'
+nom: "Document d'autorisation d'urbanisme"
 type: 'Pack urbanisme'
 description: ''
 connecteur:
@@ -20,7 +20,7 @@ formulaire:
             commentaire: 'Titre du document'
             title: true
         id_document_externe:
-            name: 'Identifiant du document sur l''application métier'
+            name: "Identifiant du document sur l'application métier"
             type: text
             requis: false
             multiple: false
@@ -77,7 +77,7 @@ formulaire:
             default: ''
             read-only: false
         envoi_sae:
-            name: 'Système d''Archivage Électronique'
+            name: "Système d'Archivage Électronique"
             type: checkbox
             onchange: cheminement-change
             default: ''
@@ -152,7 +152,7 @@ formulaire:
             multiple: true
     Acte:
         acte_nature:
-            name: 'Nature de l''acte'
+            name: "Nature de l'acte"
             type: select
             requis: true
             value:
@@ -164,14 +164,14 @@ formulaire:
                 5: 'Documents budgétaires et financiers'
             onchange: autre_document_attache-change
         numero_de_lacte:
-            name: 'Numéro de l''acte'
+            name: "Numéro de l'acte"
             requis: true
             commentaire: '15 caractères maximum (chiffres, lettres en majuscule ou _)'
             preg_match: '#^[0-9A-Z_]{1,15}$#'
             preg_match_error: '15 caractères maximum (chiffres, lettres en majuscule ou _)'
             index: true
         date_de_lacte:
-            name: 'Date de l''acte'
+            name: "Date de l'acte"
             type: date
             requis: true
             commentaire: 'Date de la décision'
@@ -211,7 +211,7 @@ formulaire:
         tedetis_transaction_id:
             name: 'Identifiant de la transaction sur le Tdt'
         bordereau:
-            name: 'Bordereau d''acquittement'
+            name: "Bordereau d'acquittement"
             type: file
         aractes:
             name: 'Accusé de réception technique'
@@ -225,16 +225,16 @@ formulaire:
             type: file
             multiple: true
         date_ar:
-            name: 'Date de l''accusé de réception'
+            name: "Date de l'accusé de réception"
             type: date
     Annulation:
         has_annulation:
             no-show: true
         date_ar_annulation:
-            name: 'Date de l''accusé de réception d''annulation'
+            name: "Date de l'accusé de réception d'annulation"
             type: date
         tedetis_annulation_id:
-            name: 'Identifiant de la transaction d''annulation'
+            name: "Identifiant de la transaction d'annulation"
     'Mail sécurisé':
         to:
             name: Destinataire(s)
@@ -311,16 +311,16 @@ formulaire:
             type: file
             name: 'Accusé de réception SAE'
         sae_ack_comment:
-            name: 'Commentaire de l''accusé de réception'
+            name: "Commentaire de l'accusé de réception"
         reply_sae:
             type: file
             name: 'Réponse du SAE'
         sae_archival_identifier:
-            name: 'Identifiant de l''archive sur le SAE'
+            name: "Identifiant de l'archive sur le SAE"
         sae_atr_comment:
             name: 'Commentaire de la réponse du SAE'
         url_archive:
-            name: 'URL de l''archive'
+            name: "URL de l'archive"
             type: url
 champs-affiches:
     - titre
@@ -438,7 +438,7 @@ action:
         rule:
             role_id_e: no-role
     preparation-send-iparapheur:
-        name: 'Préparation de l''envoi au parapheur'
+        name: "Préparation de l'envoi au parapheur"
         rule:
             role_id_e: no-role
         action-automatique: send-iparapheur
@@ -469,7 +469,7 @@ action:
             autre_document_attache: annexe
         action-automatique: verif-iparapheur
     send-signature-error:
-        name: 'Erreur lors de l''envoi du dossier à la signature'
+        name: "Erreur lors de l'envoi du dossier à la signature"
         editable-content:
             - fast_parapheur_circuit
             - fast_parapheur_circuit_configuration
@@ -530,7 +530,7 @@ action:
             iparapheur_sous_type: iparapheur_sous_type
             fast_parapheur_circuit: fast_parapheur_circuit
     pre-send-tdt:
-        name: 'Préparation de l''envoi au Tdt'
+        name: "Préparation de l'envoi au Tdt"
         rule:
             role_id_e: no-role
         action-automatique: send-tdt
@@ -560,7 +560,7 @@ action:
             objet: titre
         action-automatique: verif-tdt
     send-tdt-erreur:
-        name: 'Erreur lors de l''envoi des données au TdT'
+        name: "Erreur lors de l'envoi des données au TdT"
         rule:
             role_id_e: no-role
     document-transmis-tdt:
@@ -617,7 +617,7 @@ action:
             autre_document_attache: annexe
             objet: titre
     erreur-verif-tdt:
-        name: 'Erreur lors de la vérification du statut de l''acte'
+        name: "Erreur lors de la vérification du statut de l'acte"
         rule:
             role_id_e: no-role
     tdt-error:
@@ -631,7 +631,7 @@ action:
         action-automatique: orientation
     annulation-tdt:
         name-action: 'Annuler la transaction'
-        name: 'Demande d''annulation envoyée'
+        name: "Demande d'annulation envoyée"
         rule:
             has-action:
                 - acquiter-tdt
@@ -646,9 +646,9 @@ action:
             has_annulation: has_annulation
             annulation-tdt: annulation-tdt
         action-automatique: verif-annulation-tdt
-        warning: 'Attention cette action n''est pas réversible'
+        warning: "Attention cette action n'est pas réversible"
     verif-annulation-tdt:
-        name-action: 'Vérifier le statut de la transaction d''annulation'
+        name-action: "Vérifier le statut de la transaction d'annulation"
         name: 'Statut vérifié par le TdT'
         rule:
             last-action:
@@ -707,13 +707,13 @@ action:
             arrete: document
             autre_document_attache: annexe
     preparation-send-mailsec:
-        name: 'Préparation de l''envoi par mail sécurisé'
+        name: "Préparation de l'envoi par mail sécurisé"
         rule:
             role_id_e: no-role
         action-automatique: send-mailsec
     send-mailsec:
         name-action: 'Envoyer le mail sécurisé'
-        name: 'Envoi d''un mail sécurisé'
+        name: "Envoi d'un mail sécurisé"
         rule:
             last-action:
                 - preparation-send-mailsec
@@ -816,7 +816,7 @@ action:
         connecteur-type-mapping:
             sent_mail_answered: sent_mail_answered
     preparation-send-ged:
-        name: 'Préparation de l''envoi à la GED'
+        name: "Préparation de l'envoi à la GED"
         rule:
             role_id_e: no-role
         action-automatique: send-ged
@@ -838,12 +838,12 @@ action:
         rule:
             role_id_e: no-role
     preparation-send-sae:
-        name: 'Préparation de l''envoi au SAE'
+        name: "Préparation de l'envoi au SAE"
         rule:
             role_id_e: no-role
         action-automatique: generate-archive
     generate-archive:
-        name-action: 'Générer l''archive'
+        name-action: "Générer l'archive"
         name: 'Archive générée'
         rule:
             last-action:
@@ -854,7 +854,7 @@ action:
         connecteur-type-action: Pastell\Step\SAE\Action\SAEGenerateArchiveAction
         action-automatique: send-archive
     generate-archive-error:
-        name: 'Erreur lors de la génération de l''archive'
+        name: "Erreur lors de la génération de l'archive"
         rule:
             role_id_e: no-role
     send-archive:
@@ -870,12 +870,12 @@ action:
         connecteur-type-action: Pastell\Step\SAE\Action\SAESendArchiveAction
         action-automatique: verif-sae
     erreur-envoie-sae:
-        name: 'Erreur lors de l''envoi au SAE'
+        name: "Erreur lors de l'envoi au SAE"
         rule:
             role_id_e: no-role
     verif-sae:
-        name-action: 'Récupérer l''AR du document sur le SAE'
-        name: 'Récuperation de l''AR sur le SAE'
+        name-action: "Récupérer l'AR du document sur le SAE"
+        name: "Récuperation de l'AR sur le SAE"
         rule:
             last-action:
                 - send-archive
@@ -884,7 +884,7 @@ action:
         connecteur-type: SAE
         connecteur-type-action: SAEVerifier
     verif-sae-erreur:
-        name: 'Erreur lors de la récupération de l''AR'
+        name: "Erreur lors de la récupération de l'AR"
         rule:
             role_id_e: no-role
     ar-recu-sae:
@@ -893,8 +893,8 @@ action:
             role_id_e: no-role
         action-automatique: validation-sae
     validation-sae:
-        name-action: 'Vérifier l''acceptation par le SAE'
-        name: 'Vérification de l''acceptation par le SAE'
+        name-action: "Vérifier l'acceptation par le SAE"
+        name: "Vérification de l'acceptation par le SAE"
         rule:
             last-action:
                 - ar-recu-sae

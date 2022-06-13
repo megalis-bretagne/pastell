@@ -105,7 +105,7 @@ action:
             role_id_e: 'no-role,'
         action-class: CheminementChangeTypeDossierPersonnalise
     preparation-send-ged:
-        name: 'Préparation de l''envoi à la GED'
+        name: "Préparation de l'envoi à la GED"
         rule:
             role_id_e: no-role
         action-automatique: send-ged

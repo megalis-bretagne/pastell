@@ -10,10 +10,10 @@ formulaire:
             type: checkbox
         iparapheur_type:
             name: 'Type iParapheur'
-            commentaire: 'Obligatoire dans le cas de l''envoi pour validation iParapheur'
+            commentaire: "Obligatoire dans le cas de l'envoi pour validation iParapheur"
         iparapheur_sous_type:
             name: 'Sous Type iParapheur'
-            commentaire: 'Obligatoire dans le cas de l''envoi pour validation iParapheur'
+            commentaire: "Obligatoire dans le cas de l'envoi pour validation iParapheur"
         envoi_ged:
             name: 'Transmission en entrepôt'
             type: checkbox
@@ -25,7 +25,7 @@ formulaire:
             name: 'Transmission au SAE'
             type: checkbox
         envoi_auto:
-            name: 'Envoyer automatiquement les documents d''étape en étape'
+            name: "Envoyer automatiquement les documents d'étape en étape"
             type: checkbox
         nb_jours_avant_supp:
             name: 'Durée de maintien des dossiers dans Pastell'

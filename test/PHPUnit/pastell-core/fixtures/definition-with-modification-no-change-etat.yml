@@ -22,14 +22,14 @@ action:
         name-action: 'juste un test'
         name: 'juste un test'
     modification-pas-de-changement:
-        name-action: 'Modifier sans changer d''état'
+        name-action: "Modifier sans changer d'état"
         name: Modifié
         modification-no-change-etat: true
         editable-content:
             - test
         action-class: Defaut
     modification-changement:
-        name-action: 'Modifier sans changer d''état'
+        name-action: "Modifier sans changer d'état"
         name: Modifié
         editable-content:
             - test

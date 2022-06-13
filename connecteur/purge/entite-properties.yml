@@ -17,33 +17,33 @@ formulaire:
             name: 'Etat source du dossier'
             type: externalData
             choice-action: document_etat
-            link_name: 'Sélectionner l''état source du dossier'
+            link_name: "Sélectionner l'état source du dossier"
         document_etat:
             no-show: true
         passer_par_l_etat:
             name: 'Type de sélection'
             type: select
             value:
-                IN_STATE: 'Dossiers qui sont dans l''état source'
-                GO_TROUGH_STATE: 'Dossiers qui sont passés par l''état source'
-            commentaire: 'Par défaut, les dossiers qui sont dans l''état source'
+                IN_STATE: "Dossiers qui sont dans l'état source"
+                GO_TROUGH_STATE: "Dossiers qui sont passés par l'état source"
+            commentaire: "Par défaut, les dossiers qui sont dans l'état source"
         verrou:
             name: Verrou
-            commentaire: 'Permet d''ajouter un verrou au lancement des jobs qui seront générés par l''action de purge'
+            commentaire: "Permet d'ajouter un verrou au lancement des jobs qui seront générés par l'action de purge"
         document_etat_cible_libelle:
             name: 'Action sur le dossier'
             type: externalData
             choice-action: document_etat_cible
-            link_name: 'Sélectionner l''action à programmer sur le dossier'
-            commentaire: '<b style=''color:red;font-size:120%''>Supprimer par défaut</b>'
+            link_name: "Sélectionner l'action à programmer sur le dossier"
+            commentaire: "<b style='color:red;font-size:120%'>Supprimer par défaut</b>"
         document_etat_cible:
             no-show: true
         nb_days:
-            name: 'Nombre de jours minimum passés dans l''état source'
+            name: "Nombre de jours minimum passés dans l'état source"
         modification:
             name: 'Modifier les éléments du dossier'
             type: textarea
-            commentaire: 'Une modification par ligne sous la forme : <br/>nom_de_l_element: nouvelle_valeur_de_l_element<br/>La modification est appliquée avant le changement d''état'
+            commentaire: "Une modification par ligne sous la forme : <br/>nom_de_l_element: nouvelle_valeur_de_l_element<br/>La modification est appliquée avant le changement d'état"
 action:
     test:
         name: 'Lister les dossiers à traiter'

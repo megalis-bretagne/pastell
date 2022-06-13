@@ -20,7 +20,7 @@ formulaire:
         service_destinataire_code:
             name: 'Code du service destinataire'
         facture_numero_engagement:
-            name: 'Numéro d''engagement'
+            name: "Numéro d'engagement"
         facture_numero_marche:
             name: 'Numéro de marché'
     Fournisseur:
@@ -34,7 +34,7 @@ formulaire:
                 3: '3- Structure hors UE'
                 4: '4- RIDET'
                 5: '5- Numéro TAHITI'
-                6: '6- Tiers en cours d''immatriculation'
+                6: "6- Tiers en cours d'immatriculation"
                 7: '7- Particulier'
         fournisseur:
             name: 'Identifiant du fournisseur'
@@ -79,32 +79,32 @@ formulaire:
             requis: true
             type: select
             value:
-                A1: 'A1- Dépôt par un fournisseur d''une facture'
-                A2: 'A2- Dépôt par un fournisseur d''une facture déjà payée'
-                A3: 'A3- Dépôt par un fournisseur d''un mémoire de frais de justice'
-                A4: 'A4- Dépôt par un fournisseur d''un projet de décompte mensuel'
-                A5: 'A5- Dépôt par un fournisseur d''un état d''acompte'
-                A6: 'A6- Dépôt par un fournisseur d''un état d''acompte validé'
-                A7: 'A7- Dépôt par un fournisseur d''un projet de décompte final'
-                A8: 'A8- Dépôt par un fournisseur d''un décompte général et définitif'
-                A9: 'A9- Dépôt par un sous-traitant d''une facture'
-                A10: 'A10- Dépôt par un sous-traitant d''un projet de décompte mensuel'
-                A12: 'A12- Dépôt par un cotraitant d''une facture'
-                A13: 'A13- Dépôt par un cotraitant d''un projet de décompte mensuel'
-                A14: 'A14- Dépôt par un cotraitant d''un projet de décompte final'
-                A15: 'A15- Dépôt par une MOE d''un état d''acompte'
-                A16: 'A16- Dépôt par une MOE d''un état d''acompte validé'
-                A17: 'A17- Dépôt par une MOE d''un projet de décompte général'
-                A18: 'A18- Dépôt par une MOE d''un décompte général'
-                A19: 'A19- Dépôt par une MOE d''un état d''acompte validé'
-                A20: 'A20- Dépôt par une MOE d''un décompte général'
-                A21: 'A21- Dépôt par un bénéficiaire d''une demande de remboursement de la TIC'
+                A1: "A1- Dépôt par un fournisseur d'une facture"
+                A2: "A2- Dépôt par un fournisseur d'une facture déjà payée"
+                A3: "A3- Dépôt par un fournisseur d'un mémoire de frais de justice"
+                A4: "A4- Dépôt par un fournisseur d'un projet de décompte mensuel"
+                A5: "A5- Dépôt par un fournisseur d'un état d'acompte"
+                A6: "A6- Dépôt par un fournisseur d'un état d'acompte validé"
+                A7: "A7- Dépôt par un fournisseur d'un projet de décompte final"
+                A8: "A8- Dépôt par un fournisseur d'un décompte général et définitif"
+                A9: "A9- Dépôt par un sous-traitant d'une facture"
+                A10: "A10- Dépôt par un sous-traitant d'un projet de décompte mensuel"
+                A12: "A12- Dépôt par un cotraitant d'une facture"
+                A13: "A13- Dépôt par un cotraitant d'un projet de décompte mensuel"
+                A14: "A14- Dépôt par un cotraitant d'un projet de décompte final"
+                A15: "A15- Dépôt par une MOE d'un état d'acompte"
+                A16: "A16- Dépôt par une MOE d'un état d'acompte validé"
+                A17: "A17- Dépôt par une MOE d'un projet de décompte général"
+                A18: "A18- Dépôt par une MOE d'un décompte général"
+                A19: "A19- Dépôt par une MOE d'un état d'acompte validé"
+                A20: "A20- Dépôt par une MOE d'un décompte général"
+                A21: "A21- Dépôt par un bénéficiaire d'une demande de remboursement de la TIC"
                 A22: 'A22- Projet de décompte général déposé par le fournisseur ou le mandataire'
                 A23: 'A23- Décompte général et définitif tacite déposé par le fournisseur ou le mandataire'
-                A24: 'A24- Dépôt d''un décompte gérénral et définitif par la maitrise d oeuvrage'
+                A24: "A24- Dépôt d'un décompte gérénral et définitif par la maitrise d oeuvrage"
                 A25: 'A25- Décompte général et définitif déposé par la maitrise d ouvrage dans le cadre de la facturation d un marché de travaux'
         date_facture:
-            name: 'Date d''émission de la facture'
+            name: "Date d'émission de la facture"
             requis: true
             type: date
             index: true
@@ -168,7 +168,7 @@ formulaire:
             multiple: true
         fichier_facture:
             name: 'Fichier CPPFacturePivot'
-            commentaire: 'Fichier xml contenant un seul bloc CPPFacturePivotUnitaire. Ce fichier peut être intégré ou créé d''après le formulaire et les fichiers joints.'
+            commentaire: "Fichier xml contenant un seul bloc CPPFacturePivotUnitaire. Ce fichier peut être intégré ou créé d'après le formulaire et les fichiers joints."
             type: file
 champs-affiches:
     - titre
@@ -212,8 +212,8 @@ action:
                 - modification
         action-class: FactureFormulaireAffecterValeurs
     extraire-pivot:
-        name-action: 'Renseigner d''après le fichier Pivot'
-        name: 'Renseigné d''après le fichier Pivot'
+        name-action: "Renseigner d'après le fichier Pivot"
+        name: "Renseigné d'après le fichier Pivot"
         rule:
             last-action:
                 - modification

@@ -14,10 +14,10 @@ formulaire:
             name: 'Préfixe éditeur'
             commentaire: 'Obligatoire pour les actes !'
         numero_abonnement:
-            name: 'Numéro d''abonnement (SIREN)'
+            name: "Numéro d'abonnement (SIREN)"
             requis: true
         dn_user:
-            name: 'DN de l''utilisateur'
+            name: "DN de l'utilisateur"
             commentaire: "<mark>Obligatoire pour les actes !</mark><br />\nLes informations du « DN » qui correspondent à l'utilisateur qui réalise les télétransmissions. Exemple : <br>\nE = john.doe@example.org, CN = AGENT TEST, OU = 0002 999100057, OU = CACertificat, O = LIBRICIEL, L = PARIS, C = FR"
         certificat_connexion:
             name: 'Certificat de connexion'

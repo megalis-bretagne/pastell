@@ -17,16 +17,16 @@ formulaire:
             name: 'Client secret'
             requis: true
         login_attribute:
-            name: 'Nom de l''attribut utilisé pour le login'
+            name: "Nom de l'attribut utilisé pour le login"
             commentaire: "Cet attribut doit être disponible pour tous les utilisateurs lors de l'appel sur l'endpoint 'userinfo' <br />\nExemple: given_name, email, name, preferred_username, ..."
         given_name_attribute:
-            name: 'Nom de l''attribut utilisé pour le prénom'
+            name: "Nom de l'attribut utilisé pour le prénom"
             commentaire: ''
         family_name_attribute:
-            name: 'Nom de l''attribut utilisé pour le nom de famille'
+            name: "Nom de l'attribut utilisé pour le nom de famille"
             commentaire: ''
         email_attribute:
-            name: 'Nom de l''attribut utilisé pour l''email'
+            name: "Nom de l'attribut utilisé pour l'email"
             commentaire: ''
         redirect_url:
             name: 'URL de redirection après déconnexion'

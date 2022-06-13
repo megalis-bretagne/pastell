@@ -1,8 +1,8 @@
-nom: 'Changement d''email'
-type: 'Type de dossier d''administration'
+nom: "Changement d'email"
+type: "Type de dossier d'administration"
 description: "Type de dossier permettant aux utilisateurs de changer leur adresse email après un contrôle par l'administrateur.\nLe type de dossier vérifie d'abord l'existence de l'adresse email via un circuit de validation classique (envoie d'un mail à l'utilisateur qui contient un lien),\npuis, un document pastell est créé qui doit être validé par un administrateur Pastell (droit changement-email:edition sur l'entité de base de l'utilisateur)."
 formulaire:
-    'Changement d''email':
+    "Changement d'email":
         id_u:
             no-show: true
         login:
@@ -16,7 +16,7 @@ formulaire:
         message:
             name: Message
             type: textarea
-            commentaire: 'Message qui sera envoyé dans le mail de l''utilisateur'
+            commentaire: "Message qui sera envoyé dans le mail de l'utilisateur"
 action:
     creation:
         name-action: Créer
@@ -37,7 +37,7 @@ action:
             role_id_e: editeur
             droit_id_u: 'changement-email:edition'
     accepter:
-        name-action: 'Accepter le changement d''email'
+        name-action: "Accepter le changement d'email"
         name: 'Acceptation du nouvel email'
         rule:
             last-action:
@@ -46,7 +46,7 @@ action:
             droit_id_u: 'changement-email:edition'
         action-class: Accepter
     refuser:
-        name-action: 'Refuser le changement d''email'
+        name-action: "Refuser le changement d'email"
         name: 'Refus du nouvel email'
         rule:
             last-action:

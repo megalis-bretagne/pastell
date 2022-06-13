@@ -23,7 +23,7 @@ formulaire:
             name: 'Visuel PDF'
             type: file
             requis: false
-            commentaire: 'Format PDF - obligatoire dans le cas de l''envoi au parapheur'
+            commentaire: "Format PDF - obligatoire dans le cas de l'envoi au parapheur"
         tedetis_transaction_id:
             no-show: true
     Cheminement:
@@ -194,16 +194,16 @@ formulaire:
             type: file
             name: 'Accusé de réception SAE'
         sae_ack_comment:
-            name: 'Commentaire de l''accusé de réception'
+            name: "Commentaire de l'accusé de réception"
         reply_sae:
             type: file
             name: 'Réponse du SAE'
         sae_archival_identifier:
-            name: 'Identifiant de l''archive sur le SAE'
+            name: "Identifiant de l'archive sur le SAE"
         sae_atr_comment:
             name: 'Commentaire de la réponse du SAE'
         url_archive:
-            name: 'URL de l''archive'
+            name: "URL de l'archive"
             type: url
     'Informations complémentaires':
         has_information_complementaire:
@@ -345,7 +345,7 @@ action:
         action-class: StandardAction
         action-automatique: verif-iparapheur
     send-signature-error:
-        name: 'Erreur lors de l''envoi du dossier à la signature'
+        name: "Erreur lors de l'envoi du dossier à la signature"
         editable-content:
             - fast_parapheur_circuit
             - fast_parapheur_circuit_configuration
@@ -519,12 +519,12 @@ action:
         action-class: SAEEnvoiHelios
         action-automatique: verif-sae
     erreur-envoie-sae:
-        name: 'Erreur lors de l''envoi au SAE'
+        name: "Erreur lors de l'envoi au SAE"
         rule:
             role_id_e: no-role
     verif-sae:
-        name-action: 'Récupérer l''AR du document sur le SAE'
-        name: 'Récupération de l''AR sur le SAE'
+        name-action: "Récupérer l'AR du document sur le SAE"
+        name: "Récupération de l'AR sur le SAE"
         rule:
             last-action:
                 - send-archive
@@ -534,7 +534,7 @@ action:
         connecteur-type: SAE
         connecteur-type-action: SAEVerifier
     verif-sae-erreur:
-        name: 'Erreur lors de la récupération de l''AR'
+        name: "Erreur lors de la récupération de l'AR"
         rule:
             role_id_e: no-role
     ar-recu-sae:
@@ -543,8 +543,8 @@ action:
             role_id_e: no-role
         action-automatique: validation-sae
     validation-sae:
-        name-action: 'Vérifier l''acceptation par le SAE'
-        name: 'Vérification de l''acceptation par le SAE'
+        name-action: "Vérifier l'acceptation par le SAE"
+        name: "Vérification de l'acceptation par le SAE"
         rule:
             last-action:
                 - ar-recu-sae

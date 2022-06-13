@@ -14,7 +14,7 @@ action:
         connecteur-type-mapping:
             document: test
     no-connecteur-type:
-        name: 'Cet actin n''a pas de clé connecteur-type'
+        name: "Cette action n'a pas de clé connecteur-type"
     no-connecteur-type-action:
         name-action: Modifier
         name: 'En cours de rédaction'
@@ -22,7 +22,7 @@ action:
         connecteur-type-mapping:
             document: test
     no-action-class:
-        name: 'L''action class de cette action n''est pas défini'
+        name: "L'action class de cette action n'est pas défini"
         connecteur-type: signature
         connecteur-type-action: noExists
         connecteur-type-mapping:

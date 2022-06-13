@@ -11,7 +11,7 @@ formulaire:
             commentaire: '389 par défaut, 636 pour LDAPS (dont MS Active Directory)'
         ldap_user:
             name: 'Utilisateur technique'
-            commentaire: 'Sous la forme d''un DN :  cn=admin,dc=example,dc=com'
+            commentaire: "Sous la forme d'un DN :  cn=admin,dc=example,dc=com"
         ldap_password:
             name: 'Mot de passe'
             type: password
@@ -19,7 +19,7 @@ formulaire:
             name: 'Racine de recherche'
             commentaire: 'Exemple: dc=example,dc=com'
         ldap_login_attribute:
-            name: 'Nom de l''attribut utilisé pour le login'
+            name: "Nom de l'attribut utilisé pour le login"
             commentaire: "Exemple: uid, cn, samaccountname, sAMAccountName, userPrincipalName, ...\nAttention, sur Active Directory, le nom de l'attribut peut être sensible à la casse !"
         ldap_filter:
             name: 'Filtre LDAP'

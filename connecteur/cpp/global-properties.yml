@@ -18,7 +18,7 @@ formulaire:
             commentaire: 'https://sandbox-api.aife.economie.gouv.fr/, https://api.aife.economie.gouv.fr/'
         proxy:
             name: Proxy
-            commentaire: 'Utilisation d''un proxy. Exemple : 10.0.0.1:8080'
+            commentaire: "Utilisation d'un proxy. Exemple : 10.0.0.1:8080"
 action:
     verification_connectivite:
         name: 'Vérifier la connectivité des connecteurs Chorus Pro'

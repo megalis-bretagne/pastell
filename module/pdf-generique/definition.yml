@@ -1,5 +1,5 @@
 nom: 'Document PDF (Générique)'
-description: 'Type de dossier permettant le cheminement d''un document PDF'
+description: "Type de dossier permettant le cheminement d'un document PDF"
 connecteur:
     - signature
     - GED
@@ -140,16 +140,16 @@ formulaire:
             type: file
             name: 'Accusé de réception SAE'
         sae_ack_comment:
-            name: 'Commentaire de l''accusé de réception'
+            name: "Commentaire de l'accusé de réception"
         reply_sae:
             type: file
             name: 'Réponse du SAE'
         sae_archival_identifier:
-            name: 'Identifiant de l''archive sur le SAE'
+            name: "Identifiant de l'archive sur le SAE"
         sae_atr_comment:
             name: 'Commentaire de la réponse du SAE'
         url_archive:
-            name: 'URL de l''archive'
+            name: "URL de l'archive"
             type: url
 page-condition:
     i-Parapheur:
@@ -228,7 +228,7 @@ action:
             document_is_valide: true
         action-class: PDFGeneriqueOrientation
     preparation-send-iparapheur:
-        name: 'Préparation de l''envoi au parapheur'
+        name: "Préparation de l'envoi au parapheur"
         rule:
             role_id_e: no-role
         action-automatique: send-iparapheur
@@ -276,7 +276,7 @@ action:
         rule:
             role_id_e: no-role
     preparation-send-ged-1:
-        name: 'Préparation de l''envoi à la GED'
+        name: "Préparation de l'envoi à la GED"
         rule:
             role_id_e: no-role
         action-automatique: send-ged-1
@@ -300,13 +300,13 @@ action:
         rule:
             role_id_e: no-role
     preparation-send-mailsec:
-        name: 'Préparation de l''envoi par mail sécurisé'
+        name: "Préparation de l'envoi par mail sécurisé"
         rule:
             role_id_e: no-role
         action-automatique: send-mailsec
     send-mailsec:
         name-action: 'Envoyer le mail sécurisé'
-        name: 'Envoi d''un mail sécurisé'
+        name: "Envoi d'un mail sécurisé"
         rule:
             last-action:
                 - preparation-send-mailsec
@@ -375,7 +375,7 @@ action:
         connecteur-type-action: MailsecNotReceived
         action-automatique: orientation
     preparation-send-ged-2:
-        name: 'Préparation de l''envoi à la GED'
+        name: "Préparation de l'envoi à la GED"
         rule:
             role_id_e: no-role
         action-automatique: send-ged-2
@@ -397,7 +397,7 @@ action:
         rule:
             role_id_e: no-role
     preparation-send-sae:
-        name: 'Préparation de l''envoi au SAE'
+        name: "Préparation de l'envoi au SAE"
         rule:
             role_id_e: no-role
         action-automatique: send-archive
@@ -411,12 +411,12 @@ action:
         action-class: PDFGeneriqueEnvoiSAE
         action-automatique: verif-sae
     erreur-envoie-sae:
-        name: 'Erreur lors de l''envoi au SAE'
+        name: "Erreur lors de l'envoi au SAE"
         rule:
             role_id_e: no-role
     verif-sae:
-        name-action: 'Récupérer l''AR du document sur le SAE'
-        name: 'Récuperation de l''AR sur le SAE'
+        name-action: "Récupérer l'AR du document sur le SAE"
+        name: "Récuperation de l'AR sur le SAE"
         rule:
             last-action:
                 - send-archive
@@ -426,7 +426,7 @@ action:
         connecteur-type: SAE
         connecteur-type-action: SAEVerifier
     verif-sae-erreur:
-        name: 'Erreur lors de la récupération de l''AR'
+        name: "Erreur lors de la récupération de l'AR"
         rule:
             role_id_e: no-role
     ar-recu-sae:
@@ -435,8 +435,8 @@ action:
             role_id_e: no-role
         action-automatique: validation-sae
     validation-sae:
-        name-action: 'Vérifier l''acceptation par le SAE'
-        name: 'Vérification de l''acceptation par le SAE'
+        name-action: "Vérifier l'acceptation par le SAE"
+        name: "Vérification de l'acceptation par le SAE"
         rule:
             last-action:
                 - ar-recu-sae

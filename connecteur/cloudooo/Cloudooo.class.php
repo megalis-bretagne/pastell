@@ -1,15 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
+use PhpXmlRpc\Client;
+use PhpXmlRpc\Request;
+use PhpXmlRpc\Value;
+
 class Cloudooo extends ConvertisseurPDF
 {
-    private $tmpFolder;
+    private string $cloudooo_hostname;
+    private string $cloudooo_port;
 
-    private $cloudooo_hostname;
-    private $cloudooo_port;
-
-    public function __construct(TmpFolder $tmpFolder)
-    {
-        $this->tmpFolder = $tmpFolder;
+    public function __construct(
+        private TmpFolder $tmpFolder,
+    ) {
     }
 
     public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire)
@@ -18,38 +22,49 @@ class Cloudooo extends ConvertisseurPDF
         $this->cloudooo_port = $donneesFormulaire->get('cloudooo_port');
     }
 
-    public function convertToPDF($source)
+    /**
+     * @throws UnrecoverableException
+     * @throws Exception
+     */
+    public function convertToPDF(string $source): string
     {
-        if (! file_exists($source) || ! is_readable($source)) {
+        if (!file_exists($source) || !is_readable($source)) {
             throw new Exception("Impossible de lire le fichier $source ");
         }
 
         $info = pathinfo($source);
-        $new_filename = $info['filename'] . '.pdf' ;
+        $new_filename = $info['filename'] . '.pdf';
         $new_filepath = dirname($source) . "/" . $new_filename;
 
         $dataaConvertir = file_get_contents($source);
 
         $dataExtention = pathinfo($source, PATHINFO_EXTENSION);
-        $dataSortieExtention = "pdf";
+        $dataSortieExtention = 'pdf';
 
-        $options = [
-                'uglyStructHack' => true
-        ];
+        $url = sprintf("http://%s:%s", $this->cloudooo_hostname, $this->cloudooo_port);
+        $client = new Client($url);
 
-        $url = "http://{$this->cloudooo_hostname}:{$this->cloudooo_port}" ;
-        $client = @ XML_RPC2_Client::create($url, $options);
+        $result = $client->send(
+            new Request(
+                'convertFile',
+                [
+                    new Value(base64_encode($dataaConvertir)),
+                    new Value($dataExtention),
+                    new Value($dataSortieExtention),
+                    new Value(false),
+                    new Value(true),
+                ]
+            )
+        );
 
-        try {
-            $result = $client->convertFile(base64_encode($dataaConvertir), $dataExtention, $dataSortieExtention, false, true);
-        } catch (XML_RPC2_FaultException $e) {
-            throw new Exception('Exception #' . $e->getFaultCode() . ' : ' . $e->getFaultString());
+        if ($result->faultCode()) {
+            throw new UnrecoverableException('Exception #' . $result->faultCode() . ' : ' . $result->faultString());
         }
 
-        file_put_contents($new_filepath, base64_decode($result));
+        file_put_contents($new_filepath, base64_decode($result->value()->scalarval()));
 
 
-        if (! file_exists($new_filepath)) {
+        if (!file_exists($new_filepath)) {
             throw new Exception("Le fichier « $new_filepath » n'a pas pu être créé");
         }
 
@@ -57,19 +72,29 @@ class Cloudooo extends ConvertisseurPDF
     }
 
 
-    public function convertField(DonneesFormulaire $donneesFormulaire, $input_field_name, $output_field_name)
-    {
+    /**
+     * @throws UnrecoverableException
+     * @throws DonneesFormulaireException
+     * @throws Exception
+     */
+    public function convertField(
+        DonneesFormulaire $donneesFormulaire,
+        string $input_field_name,
+        string $output_field_name,
+    ): void {
         $filename = $donneesFormulaire->getFileName($input_field_name);
         $file_path = $donneesFormulaire->getFilePath($input_field_name);
 
         $tmp_folder = $this->tmpFolder->create();
-        $tmp_file_source = $tmp_folder . "/" . $filename;
-        copy($file_path, $tmp_file_source);
-        $new_filepath = $this->convertToPDF($tmp_file_source);
-        $new_filename = basename($new_filepath);
 
-        $donneesFormulaire->addFileFromCopy($output_field_name, $new_filename, $new_filepath, 0);
-
-        $this->tmpFolder->delete($tmp_folder);
+        try {
+            $tmp_file_source = $tmp_folder . "/" . $filename;
+            copy($file_path, $tmp_file_source);
+            $new_filepath = $this->convertToPDF($tmp_file_source);
+            $new_filename = basename($new_filepath);
+            $donneesFormulaire->addFileFromCopy($output_field_name, $new_filename, $new_filepath, 0);
+        } finally {
+            $this->tmpFolder->delete($tmp_folder);
+        }
     }
 }

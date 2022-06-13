@@ -1,6 +1,6 @@
 nom: i-Parapheur
 type: signature
-description: 'Connecteur pour le iParapheur de l''Adullact'
+description: "Connecteur pour le iParapheur de l'Adullact"
 formulaire:
     page0:
         iparapheur_wsdl:
@@ -29,10 +29,10 @@ formulaire:
         visuel_pdf_default:
             name: 'Visuel PDF par défaut'
             type: file
-            commentaire: 'Utilisé dans le cadre de l''envoi de flux PES'
+            commentaire: "Utilisé dans le cadre de l'envoi de flux PES"
         XPathPourSignatureXML:
             name: 'Position des signatures PES'
-            commentaire: 'Permet de préciser au iParapheur l''emplacement des signatures pour les PES'
+            commentaire: "Permet de préciser au iParapheur l'emplacement des signatures pour les PES"
             type: select
             value:
                 1: 'Bordereau si possible ou PES_Aller sinon (defaut)'
@@ -47,7 +47,7 @@ formulaire:
             value:
                 EFFACER: 'Effacer le dossier du parapheur'
                 ARCHIVER: 'Archiver le dossier sur le parapheur'
-            commentaire: 'L''action par défaut est l''effacement'
+            commentaire: "L'action par défaut est l'effacement"
         iparapheur_multi_doc:
             name: 'Appliquer le multi-document'
             type: checkbox

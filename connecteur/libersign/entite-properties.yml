@@ -4,10 +4,10 @@ description: "Connecteur permettant d'inclure l'applet de signature Libersign da
 formulaire:
     page0:
         libersign_applet_url:
-            name: 'URL de l''applet'
+            name: "URL de l'applet"
             commentaire: 'Exemple : https://pastell.libriciel.fr/libersign/'
         libersign_extension_update_url:
-            name: 'URL de l''extension Libersign V2'
+            name: "URL de l'extension Libersign V2"
             commentaire: 'Exemple : https://pastell.libriciel.fr/libersign/'
         libersign_city:
             name: Ville
@@ -47,7 +47,7 @@ formulaire:
             read-only: true
         libersign_test:
             name: 'Tester Libersign V2'
-            commentaire: 'Il n''y a pas de bouton permettant de déclencher une action externalData...'
+            commentaire: "Il n'y a pas de bouton permettant de déclencher une action externalData..."
             link_name: 'Tester Libersign V2'
             type: externalData
             choice-action: test-libersign

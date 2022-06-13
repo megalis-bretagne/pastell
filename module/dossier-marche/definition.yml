@@ -1,5 +1,5 @@
 nom: 'Dossier de marché (archivage)'
-description: 'Versement de toute les pièces d''un marché dans un SAE'
+description: "Versement de toute les pièces d'un marché dans un SAE"
 type: 'Types de dossier marché'
 restriction_pack:
     - pack_marche
@@ -7,7 +7,7 @@ connecteur:
     - 'Bordereau SEDA'
     - SAE
 formulaire:
-    'Données d''entrées':
+    "Données d'entrées":
         libelle:
             name: 'Libellé du marché'
             requis: true
@@ -18,8 +18,8 @@ formulaire:
             requis: true
             value:
                 MAPA: 'MAPA - Marchés A Procédures Adaptées'
-                AOO: 'AOO - Appel d''Offres Ouvert'
-                AOR: 'AOR - Appel d''Offres Restreint'
+                AOO: "AOO - Appel d'Offres Ouvert"
+                AOR: "AOR - Appel d'Offres Restreint"
                 DC: 'DC - Dialogue Compétitif'
                 MS: 'MS - Marché Subséquent'
                 PC: 'PC - Procédure Concurrentielle'
@@ -37,7 +37,7 @@ formulaire:
                 T: 'T - Travaux'
                 F: 'F - Fournitures'
                 S: 'S - Services'
-                TIC: 'TIC - Techniques de l''information et de la communication'
+                TIC: "TIC - Techniques de l'information et de la communication"
                 MO: 'MO - Maîtrise d’œuvre'
                 PI: 'PI - Prestation intellectuelle'
         recurrent:
@@ -110,7 +110,7 @@ formulaire:
             type: file
             name: 'Réponse du SAE'
         url_archive:
-            name: 'URL sur le système d''archive'
+            name: "URL sur le système d'archive"
             type: url
 page-condition:
     SAE:
@@ -170,12 +170,12 @@ action:
         connecteur-type-data-seda-class-name: FluxDataSedaDossierMarche
         action-automatique: verif-sae
     erreur-envoie-sae:
-        name: 'Erreur lors de l''envoi au SAE'
+        name: "Erreur lors de l'envoi au SAE"
         rule:
             role_id_e: no-role
     verif-sae:
-        name-action: 'Récupérer l''AR du dossier sur le SAE'
-        name: 'Récuperation de l''AR sur le SAE'
+        name-action: "Récupérer l'AR du dossier sur le SAE"
+        name: "Récuperation de l'AR sur le SAE"
         rule:
             last-action:
                 - send-archive
@@ -184,7 +184,7 @@ action:
         connecteur-type: SAE
         connecteur-type-action: SAEVerifier
     verif-sae-erreur:
-        name: 'Erreur lors de la récupération de l''AR'
+        name: "Erreur lors de la récupération de l'AR"
         rule:
             role_id_e: no-role
     ar-recu-sae:
@@ -193,8 +193,8 @@ action:
             role_id_e: no-role
         action-automatique: validation-sae
     validation-sae:
-        name-action: 'Vérifier l''acceptation par le SAE'
-        name: 'Vérification de l''acceptation par le SAE'
+        name-action: "Vérifier l'acceptation par le SAE"
+        name: "Vérification de l'acceptation par le SAE"
         rule:
             last-action:
                 - ar-recu-sae

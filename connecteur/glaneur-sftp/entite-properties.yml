@@ -16,4 +16,4 @@ formulaire:
             type: password
         glaneur_sftp_fingerprint:
             name: 'Empreinte (fingerprint) du serveur'
-            commentaire: 'L''empreinte du serveur sera affichée lors d''un premier essai sur « Lister les répertoires »'
+            commentaire: "L'empreinte du serveur sera affichée lors d'un premier essai sur « Lister les répertoires »"

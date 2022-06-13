@@ -11,7 +11,7 @@ formulaire:
                 error: Erreur
             default: ok
         seda_archive_generation_response:
-            name: 'Réponse lors de la génération de l''archive'
+            name: "Réponse lors de la génération de l'archive"
             type: select
             value:
                 ok: OK

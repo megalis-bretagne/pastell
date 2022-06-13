@@ -115,7 +115,7 @@ action:
             role_id_e: 'no-role,'
         action-class: CheminementChangeTypeDossierPersonnalise
     preparation-send-ged_1:
-        name: 'Préparation de l''envoi à la GED #1'
+        name: "Préparation de l'envoi à la GED #1"
         rule:
             role_id_e: no-role
         action-automatique: send-ged_1
@@ -140,7 +140,7 @@ action:
             role_id_e: no-role
         num-same-connecteur: '0'
     preparation-send-ged_2:
-        name: 'Préparation de l''envoi à la GED #2'
+        name: "Préparation de l'envoi à la GED #2"
         rule:
             role_id_e: no-role
         action-automatique: send-ged_2

@@ -1,6 +1,6 @@
 nom: Statistiques
 type: stats
-description: 'Connecteur permettant de récupérer des statistiques d''utilisation des flux'
+description: "Connecteur permettant de récupérer des statistiques d'utilisation des flux"
 formulaire:
     page:
         entity_label:
@@ -8,7 +8,7 @@ formulaire:
             type: externalData
             commentaire: 'Ce champ est obligatoire'
             choice-action: entity_list
-            link_name: 'Sélectionner l''entité'
+            link_name: "Sélectionner l'entité"
         entity_id:
             no-show: true
         include_children:
@@ -59,4 +59,4 @@ action:
         connecteur-type: utilities
         connecteur-type-action: GetEntityList
         connecteur-type-mapping:
-            page_title: 'Choix de l''entité'
+            page_title: "Choix de l'entité"

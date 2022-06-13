@@ -135,13 +135,13 @@ action:
             role_id_e: 'no-role,'
         action-class: CheminementChangeTypeDossierPersonnalise
     preparation-send-mailsec:
-        name: 'Préparation de l''envoi par mail sécurisé'
+        name: "Préparation de l'envoi par mail sécurisé"
         rule:
             role_id_e: no-role
         action-automatique: send-mailsec
     send-mailsec:
         name-action: 'Envoyer le mail sécurisé'
-        name: 'Envoi d''un mail sécurisé'
+        name: "Envoi d'un mail sécurisé"
         rule:
             last-action:
                 - preparation-send-mailsec

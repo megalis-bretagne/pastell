@@ -7,7 +7,7 @@ formulaire:
             name: 'URL du service Fast Parapheur'
             commentaire: 'https://demo-parapheur.dfast.fr pour la plateforme de recettes'
         numero_abonnement:
-            name: 'Numéro d''abonnement (SIREN)'
+            name: "Numéro d'abonnement (SIREN)"
         certificat_connexion:
             name: 'Certificat de connexion'
             commentaire: 'Fichier au format PKCS'
@@ -37,7 +37,7 @@ formulaire:
             default: 30
         parapheur_do_not_delete_on_rejection:
             name: 'Ne pas supprimer lors du rejet'
-            commentaire: 'Ne pas supprimer le dossier sur le parapheur lors d''un rejet de visa ou de signature'
+            commentaire: "Ne pas supprimer le dossier sur le parapheur lors d'un rejet de visa ou de signature"
             type: checkbox
 action:
     update-certificate:

@@ -1,5 +1,5 @@
 nom: 'Suppression en masse'
-description: 'Permet de déclencher la suppresion des documents d''un ou plusieurs type sur toutes les entités, quelque soit l''état du document'
+description: "Permet de déclencher la suppresion des documents d'un ou plusieurs type sur toutes les entités, quelque soit l'état du document"
 type: Purge
 formulaire:
     Information:
@@ -8,7 +8,7 @@ formulaire:
             type: checkbox
         document_type_libelle:
             name: 'Type de dossier'
-            commentaire: 'Si aucun selectionné, s''applique sur TOUS les types de document'
+            commentaire: "Si aucun selectionné, s'applique sur TOUS les types de document"
             type: externalData
             choice-action: type_document
             link_name: 'Sélectionner le type de dossier'

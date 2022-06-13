@@ -1,6 +1,6 @@
 nom: 'Pièces de marché'
 type: 'Types de dossier marché'
-description: 'Types de dossier permettant le cheminement d''un dossier de type pièce de marché'
+description: "Types de dossier permettant le cheminement d'un dossier de type pièce de marché"
 restriction_pack:
     - pack_marche
 connecteur:
@@ -22,8 +22,8 @@ formulaire:
             type: select
             value:
                 MAPA: 'MAPA - Marchés A Procédures Adaptées'
-                AOO: 'AOO - Appel d''Offres Ouvert'
-                AOR: 'AOR - Appel d''Offres Restreint'
+                AOO: "AOO - Appel d'Offres Ouvert"
+                AOR: "AOR - Appel d'Offres Restreint"
                 DC: 'DC - Dialogue Compétitif'
                 MS: 'MS - Marché Subséquent'
                 PC: 'PC - Procédure Concurrentielle'
@@ -41,7 +41,7 @@ formulaire:
                 T: 'T - Travaux'
                 F: 'F - Fournitures'
                 S: 'S - Services'
-                TIC: 'TIC - Techniques de l''information et de la communication'
+                TIC: "TIC - Techniques de l'information et de la communication"
                 MO: 'MO - Maîtrise d’œuvre'
                 PI: 'PI - Prestation intellectuelle'
         recurrent:
@@ -68,7 +68,7 @@ formulaire:
             index: true
             value:
                 ARN: 'Accusé de Réception de Notification (ARN)'
-                AE: 'Acte d''Engagement (AE)'
+                AE: "Acte d'Engagement (AE)"
                 AS: 'Acte de sous-traitance (AS)'
                 AN: 'Annexes (AN)'
                 AL: 'Annonces Légales (AL)'
@@ -76,12 +76,12 @@ formulaire:
                 APD: 'Avant Projet Détaillé (APD)'
                 APS: 'Avant Projet Sommaire (APS)'
                 AV: 'Avenant (AV)'
-                AC: 'Avis d''appel à la Concurrence (AC)'
+                AC: "Avis d'appel à la Concurrence (AC)"
                 BC: 'Bon de commande (BC)'
                 BPU: 'Bordereau des Prix Unitaires (BPU)'
                 CCAP: 'Cahier des Clauses Administratives Particulières (CCAP)'
                 CCTP: 'Cahier des Clauses Techniques Particulières (CCTP)'
-                CA: 'Courrier d''Attribution (CA)'
+                CA: "Courrier d'Attribution (CA)"
                 CM: 'Courrier marché générique (CM)'
                 CN: 'Courrier de notification (CN)'
                 DS: 'Déclaration sans suite (DS)'
@@ -90,16 +90,16 @@ formulaire:
                 DQE: 'Détail Quantitatif Estimatif (DQE)'
                 DR: 'Dossier de Réponse (DR)'
                 EC: 'Échange en cours de Consultation (EC)'
-                EA: 'Etat d''acompte (EA)'
+                EA: "Etat d'acompte (EA)"
                 E: 'Étude (E)'
                 LR: 'Lettre de Rejet (LR)'
                 LC: 'Liste des Candidatures (LC)'
                 MP: 'Mise au point (MP)'
                 OS: 'Ordre de service (OS)'
                 P: 'Programme (P)'
-                AO: 'Rapport d''Analyse des Offres (A0)'
-                CAO: 'Rapport de Commission d''Appel d''Offres (CAO)'
-                COP: 'Rapport de Commission d''Ouverture des Plis (COP)'
+                AO: "Rapport d'Analyse des Offres (A0)"
+                CAO: "Rapport de Commission d'Appel d'Offres (CAO)"
+                COP: "Rapport de Commission d'Ouverture des Plis (COP)"
                 RP: 'Rapport de Présentation (RP)'
                 RDP: 'Récépissé de dépôt de pli (RDP)'
                 RC: 'Règlement de la Consultation (RC)'
@@ -110,7 +110,7 @@ formulaire:
             index: true
         montant:
             name: 'Montant (estimatif ou notifié)'
-            commentaire: 'La nature du montant dépend de l''étape et du type de pièce'
+            commentaire: "La nature du montant dépend de l'étape et du type de pièce"
             preg_match: '#^(?:\d+(?:[.,]?\d+)?)?$#'
             preg_match_error: 'Nombre décimal sans espace'
         date_document:
@@ -254,7 +254,7 @@ formulaire:
             type: file
             name: 'Réponse du SAE'
         url_archive:
-            name: 'URL sur le système d''archive'
+            name: "URL sur le système d'archive"
             type: url
 champs-affiches:
     - titre
@@ -388,11 +388,11 @@ action:
             document_is_valide: true
         action-class: PieceMarcheOrientation
     erreur-orientation:
-        name: 'Erreur lors de l''envoi du dossier'
+        name: "Erreur lors de l'envoi du dossier"
         rule:
             role_id_e: no-role
     preparation-send-iparapheur:
-        name: 'Préparation de l''envoi au parapheur'
+        name: "Préparation de l'envoi au parapheur"
         rule:
             role_id_e: no-role
         action-automatique: send-iparapheur
@@ -440,13 +440,13 @@ action:
         rule:
             role_id_e: no-role
     preparation-send-mailsec:
-        name: 'Préparation de l''envoi par mail sécurisé'
+        name: "Préparation de l'envoi par mail sécurisé"
         rule:
             role_id_e: no-role
         action-automatique: send-mailsec
     send-mailsec:
         name-action: 'Envoyer le mail sécurisé'
-        name: 'Envoi d''un mail sécurisé'
+        name: "Envoi d'un mail sécurisé"
         rule:
             last-action:
                 - preparation-send-mailsec
@@ -514,7 +514,7 @@ action:
         connecteur-type-action: MailsecNotReceived
         action-automatique: orientation
     preparation-send-ged:
-        name: 'Préparation de l''envoi à la GED'
+        name: "Préparation de l'envoi à la GED"
         rule:
             role_id_e: no-role
         action-automatique: send-ged
@@ -538,7 +538,7 @@ action:
         rule:
             role_id_e: no-role
     preparation-send-sae:
-        name: 'Préparation de l''envoi au SAE'
+        name: "Préparation de l'envoi au SAE"
         rule:
             role_id_e: no-role
         action-automatique: send-archive
@@ -566,12 +566,12 @@ action:
         connecteur-type-data-seda-class-name: FluxDataSedaPieceMarche
         action-automatique: verif-sae
     erreur-envoie-sae:
-        name: 'Erreur lors de l''envoi au SAE'
+        name: "Erreur lors de l'envoi au SAE"
         rule:
             role_id_e: no-role
     verif-sae:
-        name-action: 'Récupérer l''AR du dossier sur le SAE'
-        name: 'Récuperation de l''AR sur le SAE'
+        name-action: "Récupérer l'AR du dossier sur le SAE"
+        name: "Récuperation de l'AR sur le SAE"
         rule:
             last-action:
                 - send-archive
@@ -581,7 +581,7 @@ action:
         connecteur-type: SAE
         connecteur-type-action: SAEVerifier
     verif-sae-erreur:
-        name: 'Erreur lors de la récupération de l''AR'
+        name: "Erreur lors de la récupération de l'AR"
         rule:
             role_id_e: no-role
     ar-recu-sae:
@@ -590,8 +590,8 @@ action:
             role_id_e: no-role
         action-automatique: validation-sae
     validation-sae:
-        name-action: 'Vérifier l''acceptation par le SAE'
-        name: 'Vérification de l''acceptation par le SAE'
+        name-action: "Vérifier l'acceptation par le SAE"
+        name: "Vérification de l'acceptation par le SAE"
         rule:
             last-action:
                 - ar-recu-sae

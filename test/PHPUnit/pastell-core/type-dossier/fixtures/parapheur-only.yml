@@ -163,7 +163,7 @@ action:
             role_id_e: 'no-role,'
         action-class: CheminementChangeTypeDossierPersonnalise
     preparation-send-iparapheur:
-        name: 'Préparation de l''envoi au parapheur'
+        name: "Préparation de l'envoi au parapheur"
         rule:
             role_id_e: no-role
         action-automatique: send-iparapheur
@@ -191,7 +191,7 @@ action:
             document: fichier
         action-automatique: verif-iparapheur
     send-signature-error:
-        name: 'Erreur lors de l''envoi du dossier à la signature'
+        name: "Erreur lors de l'envoi du dossier à la signature"
         editable-content:
             - fast_parapheur_circuit
             - fast_parapheur_circuit_configuration

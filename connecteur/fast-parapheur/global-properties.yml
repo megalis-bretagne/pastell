@@ -1,6 +1,6 @@
 nom: 'Fast Parapheur'
 type: signature
-description: 'Permet de faire des actions sur l''ensemble des connecteurs Fast parapheur installés sur Pastell.'
+description: "Permet de faire des actions sur l'ensemble des connecteurs Fast parapheur installés sur Pastell."
 formulaire:
     page:
         changement_certificat:
