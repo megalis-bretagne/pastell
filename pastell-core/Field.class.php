@@ -15,7 +15,7 @@ class Field
     public const MAX_FILE_SIZE = 'max_file_size';
     public const MAX_MULTIPLE_FILE_SIZE = 'max_multiple_file_size';
     public const CONTENT_TYPE = 'content-type';
-    public const EMPTY = 'empty';
+    public const EMPTY_VALUE = 'empty';
 
     public const TYPE_FILE = 'file';
     public const TYPE_SELECT = 'select';
@@ -103,7 +103,7 @@ class Field
     {
         if ($this->getType() == 'date') {
             if ($this->getProperties(self::DEFAULT)) {
-                if ($this->getProperties(self::DEFAULT) === self::EMPTY) {
+                if ($this->getProperties(self::DEFAULT) === self::EMPTY_VALUE) {
                     return '';
                 }
                 $default = strtotime($this->getProperties(self::DEFAULT));
