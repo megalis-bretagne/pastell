@@ -18,7 +18,7 @@ formulaire:
             type: file
 action:
     test-token:
-        name: 'Tester la création d''un token'
+        name: "Tester la création d'un token"
         action-class: TestToken
         rule:
             droit_id_u: 'entite:edition'

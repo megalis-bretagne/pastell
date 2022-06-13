@@ -49,13 +49,13 @@ formulaire:
             multiple: false
             commentaire: ''
         nom_organisme:
-            name: 'Nom de l''organisme'
+            name: "Nom de l'organisme"
             type: text
             requis: false
             multiple: false
             commentaire: ''
         entree:
-            name: 'Date d''entrée dans la collectivité'
+            name: "Date d'entrée dans la collectivité"
             type: text
             requis: false
             multiple: false

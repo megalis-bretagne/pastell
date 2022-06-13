@@ -74,7 +74,7 @@ formulaire:
             index: true
 action:
     helios-pre-extraction:
-        name: 'Préparation de l''extraction des informations'
+        name: "Préparation de l'extraction des informations"
         rule:
             role_id_e: no-role
         action-automatique: helios-extraction
@@ -100,7 +100,7 @@ action:
             pes_etat_ack: pes_etat_ack
         action-automatique: pre-send-tdt
     pre-send-tdt:
-        name: 'Préparation de l''envoi au TdT'
+        name: "Préparation de l'envoi au TdT"
         rule:
             last-action:
                 - helios-extraction

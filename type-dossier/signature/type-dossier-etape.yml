@@ -14,10 +14,10 @@ configuration_etape_formulaire:
         name: 'Autre document(s) à envoyer au parapheur'
         type: multi_file
     has_date_limite:
-        name: 'Permettre l''utilisation d''une date limite'
+        name: "Permettre l'utilisation d'une date limite"
         type: checkbox
     has_metadata_in_json:
-        name: 'Permettre l''envoi d''un fichier de méta-données en JSON'
+        name: "Permettre l'envoi d'un fichier de méta-données en JSON"
         type: checkbox
     continue_after_refusal:
         name: 'Continuer le cheminement après un refus de signature'
@@ -104,7 +104,7 @@ page-condition:
         has_signature: true
 action:
     preparation-send-iparapheur:
-        name: 'Préparation de l''envoi au parapheur'
+        name: "Préparation de l'envoi au parapheur"
         rule:
             role_id_e: no-role
         action-automatique: send-iparapheur
@@ -131,7 +131,7 @@ action:
             send-signature-error: send-signature-error
         action-automatique: verif-iparapheur
     send-signature-error:
-        name: 'Erreur lors de l''envoi du dossier à la signature'
+        name: "Erreur lors de l'envoi du dossier à la signature"
         editable-content:
             - fast_parapheur_circuit
             - fast_parapheur_circuit_configuration

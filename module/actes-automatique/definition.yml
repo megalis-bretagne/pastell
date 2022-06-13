@@ -13,7 +13,7 @@ connecteur:
 formulaire:
     Acte:
         acte_nature:
-            name: 'Nature de l''acte'
+            name: "Nature de l'acte"
             type: select
             requis: true
             value:
@@ -25,7 +25,7 @@ formulaire:
                 5: 'Documents budgétaires et financiers'
             onchange: autre_document_attache-change
         numero_de_lacte:
-            name: 'Numéro de l''acte'
+            name: "Numéro de l'acte"
             requis: true
             commentaire: '15 caractères maximum (chiffres, lettres en majuscule ou _)'
             preg_match: '#^[0-9A-Z_]{1,15}$#'
@@ -37,9 +37,9 @@ formulaire:
             title: true
             type: textarea
             preg_match: '#^.{1,499}$#us'
-            preg_match_error: 'L''objet doit faire entre 1 et 499 charactères'
+            preg_match_error: "L'objet doit faire entre 1 et 499 charactères"
         date_de_lacte:
-            name: 'Date de l''acte'
+            name: "Date de l'acte"
             type: date
             requis: true
             commentaire: 'date de la décision'
@@ -143,12 +143,12 @@ formulaire:
         signature_locale_display:
             no-show: true
         signature_link:
-            name: 'Signer l''acte'
+            name: "Signer l'acte"
             type: externalData
             choice-action: signature-locale
-            link_name: 'Signer l''acte'
+            link_name: "Signer l'acte"
         signature:
-            name: 'Signature de l''acte'
+            name: "Signature de l'acte"
             read-only: true
             type: file
             requis: true
@@ -167,7 +167,7 @@ formulaire:
         is_pades:
             no-show: true
         signature:
-            name: 'Signature de l''acte'
+            name: "Signature de l'acte"
             type: file
         document_signe:
             name: 'Bordereau de signature'
@@ -182,13 +182,13 @@ formulaire:
             read-only: true
             commentaire: 'Utiliser pour remplir les informations de réponse si le document ne passe pas par une étape de TDT'
         signature:
-            name: 'Signature de l''acte'
+            name: "Signature de l'acte"
             type: file
         document_signe:
             name: 'Bordereau de signature'
             type: file
         bordereau:
-            name: 'Bordereau d''acquittement'
+            name: "Bordereau d'acquittement"
             type: file
         date_tdt_postage:
             name: 'Date de postage'
@@ -199,34 +199,34 @@ formulaire:
             commentaire: 'Accusé de réception (XML) envoyé par la préfecture'
         echange_prefecture:
             name: 'Documents échangés avec la préfecture'
-            commentaire: 'faire suivre les échanges aller par les échanges retours, faire suivre l''échange retour principal par les annexes'
+            commentaire: "faire suivre les échanges aller par les échanges retours, faire suivre l'échange retour principal par les annexes"
             type: file
             multiple: true
         echange_prefecture_ar:
             name: 'Accusé de réception des documents échangés'
-            commentaire: 'l''ordre des accusés de réception doit correspondre à celle des documents échangés.'
+            commentaire: "l'ordre des accusés de réception doit correspondre à celle des documents échangés."
             type: file
             multiple: true
         echange_prefecture_type:
-            name: 'Type de l''échange'
+            name: "Type de l'échange"
             type: select
             depend: echange_prefecture
             value:
                 2A: 'Courrier simple'
                 2B: 'Réponse courrier simple'
                 3A: 'Demande de pièces complémentaires'
-                4A: 'Lettre d''observations'
+                4A: "Lettre d'observations"
                 5A: 'Déféré au tribunal administratif'
                 2R: 'Réponse à un courrier simple'
                 3R: 'Réponse à une demande de pièces complémentaires'
-                3RB: 'Annexe d''une réponse à une demande de pièce complémentaires'
-                4R: 'Réponse à une lettre d''observations'
+                3RB: "Annexe d'une réponse à une demande de pièce complémentaires"
+                4R: "Réponse à une lettre d'observations"
     Bordereau:
         has_bordereau:
             no-show: true
             read-only: true
         bordereau:
-            name: 'Bordereau d''acquittement'
+            name: "Bordereau d'acquittement"
             type: file
         aractes:
             name: 'Accusé de réception technique'
@@ -266,22 +266,22 @@ formulaire:
             name: 'Accusé de réception SAE'
             type: file
         sae_ack_comment:
-            name: 'Commentaire de l''accusé de réception'
+            name: "Commentaire de l'accusé de réception"
         reply_sae:
             type: file
             name: 'Réponse du SAE'
         sae_archival_identifier:
-            name: 'Identifiant de l''archive sur le SAE'
+            name: "Identifiant de l'archive sur le SAE"
         sae_atr_comment:
             name: 'Commentaire de la réponse du SAE'
         url_archive:
-            name: 'URL de l''archive'
+            name: "URL de l'archive"
             type: url
     Annulation:
         has_annulation:
             no-show: true
         tedetis_annulation_id:
-            name: 'Identifiant de la transaction d''annulation'
+            name: "Identifiant de la transaction d'annulation"
     'Réponses de la préfecture':
         has_reponse_prefecture:
             no-show: true
@@ -417,8 +417,8 @@ action:
             - signature_link
         action-class: SignatureLocaleNotif
     prepare-iparapheur:
-        name-action: 'Préparation de l''envoi au parapheur'
-        name: 'Préparation de l''envoi au iParapheur'
+        name-action: "Préparation de l'envoi au parapheur"
+        name: "Préparation de l'envoi au iParapheur"
         rule:
             role_id_e: no-role
         action-automatique: send-iparapheur
@@ -450,7 +450,7 @@ action:
         action-class: StandardAction
         action-automatique: verif-iparapheur
     send-signature-error:
-        name: 'Erreur lors de l''envoi du dossier à la signature'
+        name: "Erreur lors de l'envoi du dossier à la signature"
         editable-content:
             - fast_parapheur_circuit
             - fast_parapheur_circuit_configuration
@@ -485,7 +485,7 @@ action:
             role_id_e: no-role
         action-automatique: orientation
     prepare-tdt:
-        name: 'Préparation de l''envoi au TdT'
+        name: "Préparation de l'envoi au TdT"
         rule:
             role_id_e: no-role
         action-automatique: send-tdt
@@ -539,7 +539,7 @@ action:
         action-class: TedetisEnvoie
         action-automatique: verif-tdt
     send-tdt-erreur:
-        name: 'Erreur lors de l''envoi des données au TdT'
+        name: "Erreur lors de l'envoi des données au TdT"
         rule:
             role_id_e: no-role
         editable-content:
@@ -587,7 +587,7 @@ action:
         action-class: TedetisRecup
         connecteur-type: TdT
     erreur-verif-tdt:
-        name: 'Erreur lors de la vérification du statut de l''acte'
+        name: "Erreur lors de la vérification du statut de l'acte"
         rule:
             role_id_e: no-role
     tdt-error:
@@ -604,7 +604,7 @@ action:
         action-automatique: orientation
     annulation-tdt:
         name-action: 'Annuler la transaction'
-        name: 'Demande d''annulation envoyée'
+        name: "Demande d'annulation envoyée"
         rule:
             has-action:
                 - acquiter-tdt
@@ -616,9 +616,9 @@ action:
         connecteur-type: TdT
         connecteur-type-action: TdTAnnulation
         action-automatique: verif-annulation-tdt
-        warning: 'Attention cette action n''est pas réversible'
+        warning: "Attention cette action n'est pas réversible"
     verif-annulation-tdt:
-        name-action: 'Vérifier le statut de la transaction d''annulation'
+        name-action: "Vérifier le statut de la transaction d'annulation"
         name: 'Statut vérifié par le TdT'
         rule:
             last-action:
@@ -680,7 +680,7 @@ action:
         rule:
             role_id_e: no-role
     prepare-sae:
-        name: 'Préparation de l''envoi au SAE'
+        name: "Préparation de l'envoi au SAE"
         rule:
             role_id_e: no-role
         action-automatique: send-archive
@@ -728,12 +728,12 @@ action:
         action-class: SAEEnvoiActes
         action-automatique: verif-sae
     erreur-envoie-sae:
-        name: 'Erreur lors de l''envoi au SAE'
+        name: "Erreur lors de l'envoi au SAE"
         rule:
             role_id_e: no-role
     verif-sae:
-        name-action: 'Récupérer l''AR du document sur le SAE'
-        name: 'Récupération de l''AR sur le SAE'
+        name-action: "Récupérer l'AR du document sur le SAE"
+        name: "Récupération de l'AR sur le SAE"
         rule:
             last-action:
                 - send-archive
@@ -743,7 +743,7 @@ action:
         connecteur-type: SAE
         connecteur-type-action: SAEVerifier
     verif-sae-erreur:
-        name: 'Erreur lors de la récupération de l''AR'
+        name: "Erreur lors de la récupération de l'AR"
         rule:
             role_id_e: no-role
     ar-recu-sae:
@@ -752,8 +752,8 @@ action:
             role_id_e: no-role
         action-automatique: validation-sae
     validation-sae:
-        name-action: 'Vérifier l''acceptation par le SAE'
-        name: 'Vérification de l''acceptation par le SAE'
+        name-action: "Vérifier l'acceptation par le SAE"
+        name: "Vérification de l'acceptation par le SAE"
         rule:
             last-action:
                 - ar-recu-sae
@@ -775,7 +775,7 @@ action:
         rule:
             role_id_e: no-role
     arrete-change:
-        name: 'Modificatio de l''arrêté'
+        name: "Modificatio de l'arrêté"
         no-workflow: true
         rule:
             role_id_e: no-role

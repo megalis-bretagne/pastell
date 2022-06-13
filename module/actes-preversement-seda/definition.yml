@@ -10,12 +10,12 @@ formulaire:
             type: file
             requis: true
         document:
-            name: 'Document de l''enveloppe métier (1-1_X)'
+            name: "Document de l'enveloppe métier (1-1_X)"
             type: file
             multiple: true
             requis: true
         aractes:
-            name: 'Accusé de réception de l''actes (1-2)'
+            name: "Accusé de réception de l'actes (1-2)"
             type: file
             requis: true
 action:
@@ -44,14 +44,14 @@ action:
         rule:
             role_id_e: no-role
     create-acte:
-        name-action: 'Créer l''acte'
+        name-action: "Créer l'acte"
         name: 'Acte crée'
         action-class: ActesPreversementSEDACreate
         action-automatique: termine
         rule:
             document_is_valide: true
     erreur:
-        name: 'Erreur lors de l''import'
+        name: "Erreur lors de l'import"
         rule:
             role_id_e: no-role
     termine:

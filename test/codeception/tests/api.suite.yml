@@ -1,6 +1,7 @@
 actor: ApiTester
 modules:
     enabled:
-        - REST:
-            depends: PhpBrowser
+        -
+            REST:
+                depends: PhpBrowser
         - \Helper\Api

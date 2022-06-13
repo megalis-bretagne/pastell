@@ -9,7 +9,7 @@ formulaire:
             name: Port
         cas_context:
             name: Contexte
-            commentaire: 'chemin vers l''application CAS'
+            commentaire: "chemin vers l'application CAS"
         cas_ca:
             name: 'Certificat du serveur CAS ou AC de celui-ci'
             type: file

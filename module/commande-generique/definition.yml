@@ -30,7 +30,7 @@ formulaire:
             name: 'Adresse e-mail du fournisseur'
             requis: true
         date_emission:
-            name: 'Date d''émission'
+            name: "Date d'émission"
             type: date
         lieu_livraison:
             name: 'Lieu de livraison'
@@ -55,7 +55,7 @@ formulaire:
         num_bon_commande:
             name: 'Numéro du bon de commande'
         num_engagement:
-            name: 'Numéro d''engagement'
+            name: "Numéro d'engagement"
         num_marche:
             name: 'Numéro de marché'
     Cheminement:
@@ -70,7 +70,7 @@ formulaire:
             name: 'Transmission à la GED'
             type: checkbox
         envoi_auto:
-            name: 'Envoyer automatiquement les dossiers d''étape en étape'
+            name: "Envoyer automatiquement les dossiers d'étape en étape"
             type: checkbox
     Parapheur:
         iparapheur_type:
@@ -192,8 +192,8 @@ action:
         editable-content:
             - envoi_ged
     prepare-iparapheur:
-        name-action: 'Préparation de l''envoi au parapheur'
-        name: 'Préparation de l''envoi au iParapheur'
+        name-action: "Préparation de l'envoi au parapheur"
+        name: "Préparation de l'envoi au iParapheur"
         rule:
             role_id_e: no-role
         action-automatique: send-iparapheur
@@ -249,7 +249,7 @@ action:
         rule:
             role_id_e: no-role
     prepare-envoi-mail:
-        name: 'Préparation de l''envoi du mail au fournisseur'
+        name: "Préparation de l'envoi du mail au fournisseur"
         rule:
             role_id_e: no-role
         action-automatique: envoi-mail
@@ -338,7 +338,7 @@ action:
         action-class: FournisseurCommandeRenvoyerMail
         action-automatique: mailsec-attente
     prepare-ged:
-        name: 'Préparation de l''envoi à la GED'
+        name: "Préparation de l'envoi à la GED"
         rule:
             role_id_e: no-role
         action-automatique: send-ged

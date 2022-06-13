@@ -1,6 +1,6 @@
 nom: Glaneur
 id: glaneur
-description: 'Ensemble de connecteur permettant d''aller chercher des fichiers et de créer des documents Pastell suivant une logique défini par le connecteur'
+description: "Ensemble de connecteur permettant d'aller chercher des fichiers et de créer des documents Pastell suivant une logique défini par le connecteur"
 version: 4
 extensions_versions_accepted:
     - 3

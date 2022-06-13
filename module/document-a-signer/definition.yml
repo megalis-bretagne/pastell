@@ -3,7 +3,7 @@ threshold_size: '150000000'
 threshold_fields:
     - document
     - autre_document_attache
-description: 'Type de dossier permettant l''envoi et la récupération de document à un parapheur électronique et éventuellement le dépôt en GED. Un connecteur de parametrage peut être associé afin de définir le cheminement et l''automatisme.'
+description: "Type de dossier permettant l'envoi et la récupération de document à un parapheur électronique et éventuellement le dépôt en GED. Un connecteur de parametrage peut être associé afin de définir le cheminement et l'automatisme."
 connecteur:
     - signature
     - GED
@@ -44,7 +44,7 @@ formulaire:
             name: 'Transmission à la GED'
             type: checkbox
         envoi_auto:
-            name: 'Envoyer automatiquement les dossiers d''étape en étape'
+            name: "Envoyer automatiquement les dossiers d'étape en étape"
             type: checkbox
     'Retour Parapheur':
         iparapheur_dossier_id:
@@ -149,8 +149,8 @@ action:
         editable-content:
             - envoi_ged
     prepare-iparapheur:
-        name-action: 'Préparation de l''envoi au parapheur'
-        name: 'Préparation de l''envoi au iParapheur'
+        name-action: "Préparation de l'envoi au parapheur"
+        name: "Préparation de l'envoi au iParapheur"
         rule:
             role_id_e: no-role
         action-automatique: send-iparapheur

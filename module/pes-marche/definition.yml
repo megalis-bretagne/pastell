@@ -66,7 +66,7 @@ formulaire:
         has_reponse:
             no-show: true
         tedetis_transaction_id:
-            name: 'Identifiant de la transaction sur l''ODT'
+            name: "Identifiant de la transaction sur l'ODT"
         fichier_reponse:
             name: 'PES Acquit'
             type: file
@@ -106,7 +106,7 @@ formulaire:
             type: file
             name: 'Réponse du SAE'
         url_archive:
-            name: 'URL sur le système d''archive'
+            name: "URL sur le système d'archive"
             type: url
     'Informations complémentaires':
         has_information_complementaire:
@@ -215,7 +215,7 @@ action:
         rule:
             role_id_e: no-role
     prepare-affectation:
-        name: 'Préparation de l''affectation'
+        name: "Préparation de l'affectation"
         rule:
             role_id_e: no-role
         action-automatique: affectation-orientation
@@ -258,11 +258,11 @@ action:
             document_is_valide: true
         action-class: PESMarcheOrientation
     erreur-orientation:
-        name: 'Erreur lors de l''envoi du dossier'
+        name: "Erreur lors de l'envoi du dossier"
         rule:
             role_id_e: no-role
     preparation-send-tdt:
-        name: 'Préparation de l''envoi au TdT'
+        name: "Préparation de l'envoi au TdT"
         rule:
             role_id_e: no-role
         action-automatique: send-tdt
@@ -321,7 +321,7 @@ action:
         rule:
             role_id_e: no-role
     preparation-send-ged:
-        name: 'Préparation de l''envoi à la GED'
+        name: "Préparation de l'envoi à la GED"
         rule:
             role_id_e: no-role
         action-automatique: send-ged
@@ -347,7 +347,7 @@ action:
         rule:
             role_id_e: no-role
     preparation-send-sae:
-        name: 'Préparation de l''envoi au SAE'
+        name: "Préparation de l'envoi au SAE"
         rule:
             role_id_e: no-role
         action-automatique: send-archive
@@ -375,12 +375,12 @@ action:
         connecteur-type-data-seda-class-name: FluxDataSedaPesMarche
         action-automatique: verif-sae
     erreur-envoie-sae:
-        name: 'Erreur lors de l''envoi au SAE'
+        name: "Erreur lors de l'envoi au SAE"
         rule:
             role_id_e: no-role
     verif-sae:
-        name-action: 'Récupérer l''AR du dossier sur le SAE'
-        name: 'Récupération de l''AR sur le SAE'
+        name-action: "Récupérer l'AR du dossier sur le SAE"
+        name: "Récupération de l'AR sur le SAE"
         rule:
             last-action:
                 - send-archive
@@ -390,7 +390,7 @@ action:
         connecteur-type: SAE
         connecteur-type-action: SAEVerifier
     verif-sae-erreur:
-        name: 'Erreur lors de la récupération de l''AR'
+        name: "Erreur lors de la récupération de l'AR"
         rule:
             role_id_e: no-role
     ar-recu-sae:
@@ -399,8 +399,8 @@ action:
             role_id_e: no-role
         action-automatique: validation-sae
     validation-sae:
-        name-action: 'Vérifier l''acceptation par le SAE'
-        name: 'Vérification de l''acceptation par le SAE'
+        name-action: "Vérifier l'acceptation par le SAE"
+        name: "Vérification de l'acceptation par le SAE"
         rule:
             last-action:
                 - ar-recu-sae

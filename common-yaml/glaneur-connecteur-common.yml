@@ -1,106 +1,73 @@
-
 formulaire:
-  onglet:
-
-    traitement_actif:
-      name: "Traitement activé"
-      type: checkbox
-
-    type_depot:
-      name: Type d'élements à glaner
-      type: select
-      value:
-        ZIP: Fichiers ZIP
-        FOLDER: Sous-repertoires
-        VRAC: Fichiers en vrac
-      commentaire: Fichier ZIP par défaut
-
-    manifest_type:
-      name: Type de fichier de métadonnées
-      type: select
-      value:
-        no: aucun
-        xml: xml
-      commentaire: aucun par défaut. S'il y en a un, les éléments flux_name et file_preg_match ne sont pas pris en compte
-
-    manifest_filename:
-      name: Nom du fichier de métadonnées
-      commentaire: manifest.xml par défaut
-
-    flux_name:
-      name: Identifiant du type de dossier à alimenter
-      commentaire: Pris dans le manifest s'il existe
-
-    file_preg_match:
-      name: Expressions rationnelles pour associer les fichiers
-      type: textarea
-      commentaire: |
-        une expression par ligne identifiant_fichier:expression rationnelle
-        utiliser .* pour attrapper le reste des fichiers
-        possibilité d'utiliser $matches[num_ligne][num_parenthese] contenant les élements attrapés
-        par les parenthèses des expressions
-        précédentes. Attention, pour les expressions sur les fichiers multiple, c'est le dernier fichier qui est attrapé.
-
-    metadata_static:
-      name: Métadonnées du formulaire
-      commentaire: |
-        Une ligne par métadonnée de la forme clé:valeur, les élements du manifest ont priorité.
-        Possibilité d'utiliser le nom des fichiers avec %element_fichier%
-        Possibilité d'utiliser $matches[num_ligne][num_parenthese] contenant les élements attrapés
-        par les parenthèses des expressions pour associer les fichiers
-      type: textarea
-
-    force_action_ok:
-      type: checkbox
-      name: Déclencher l'action d'import réussie même si le dossier n'est pas valide
-      commentaire: Attention ! Rien ne garantit la cohérence de l'action !
-
-    action_ok:
-      name: Action à déclencher en cas d'import réussie, les élements du manifest ont priorité
-      commentaire: Le dossier créé est valide
-
-    action_ko:
-      name: Action à déclencher en cas d'échec
-      commentaire: Le dossier créé n'est pas valide. "fatal-error" par défaut.
-
-    directory:
-      name: Répertoire contenant les données à glaner
-      requis: true
-
-    directory_send:
-      name: Répertoire où sont déplacés les données
-      commentaire: |
-        Après leur récupération, les dossiers seront déposés dans le répertoire
-        et supprimés du répertoire d'origine
-      requis: true
-
-    directory_error:
-      name: Répertoire où sont déplacés les données en erreur
-      commentaire: |
-        Après leur récupération, si le glaneur rencontre un problème,
-        les données sont déplacés dans le repertoire d'erreur
-      requis: true
-
-    fichier_exemple:
-      name: Fichier exemple
-      type: file
-      commentaire: Permet de créer un document d'après le fichier exemple (au format ZIP)
-
+    onglet:
+        traitement_actif:
+            name: 'Traitement activé'
+            type: checkbox
+        type_depot:
+            name: "Type d'élements à glaner"
+            type: select
+            value:
+                ZIP: 'Fichiers ZIP'
+                FOLDER: Sous-repertoires
+                VRAC: 'Fichiers en vrac'
+            commentaire: 'Fichier ZIP par défaut'
+        manifest_type:
+            name: 'Type de fichier de métadonnées'
+            type: select
+            value:
+                'no': aucun
+                xml: xml
+            commentaire: "aucun par défaut. S'il y en a un, les éléments flux_name et file_preg_match ne sont pas pris en compte"
+        manifest_filename:
+            name: 'Nom du fichier de métadonnées'
+            commentaire: 'manifest.xml par défaut'
+        flux_name:
+            name: 'Identifiant du type de dossier à alimenter'
+            commentaire: "Pris dans le manifest s'il existe"
+        file_preg_match:
+            name: 'Expressions rationnelles pour associer les fichiers'
+            type: textarea
+            commentaire: "une expression par ligne identifiant_fichier:expression rationnelle\nutiliser .* pour attrapper le reste des fichiers\npossibilité d'utiliser $matches[num_ligne][num_parenthese] contenant les élements attrapés\npar les parenthèses des expressions\nprécédentes. Attention, pour les expressions sur les fichiers multiple, c'est le dernier fichier qui est attrapé.\n"
+        metadata_static:
+            name: 'Métadonnées du formulaire'
+            commentaire: "Une ligne par métadonnée de la forme clé:valeur, les élements du manifest ont priorité.\nPossibilité d'utiliser le nom des fichiers avec %element_fichier%\nPossibilité d'utiliser $matches[num_ligne][num_parenthese] contenant les élements attrapés\npar les parenthèses des expressions pour associer les fichiers\n"
+            type: textarea
+        force_action_ok:
+            type: checkbox
+            name: "Déclencher l'action d'import réussie même si le dossier n'est pas valide"
+            commentaire: "Attention ! Rien ne garantit la cohérence de l'action !"
+        action_ok:
+            name: "Action à déclencher en cas d'import réussie, les élements du manifest ont priorité"
+            commentaire: 'Le dossier créé est valide'
+        action_ko:
+            name: "Action à déclencher en cas d'échec"
+            commentaire: 'Le dossier créé n''est pas valide. "fatal-error" par défaut.'
+        directory:
+            name: 'Répertoire contenant les données à glaner'
+            requis: true
+        directory_send:
+            name: 'Répertoire où sont déplacés les données'
+            commentaire: "Après leur récupération, les dossiers seront déposés dans le répertoire\net supprimés du répertoire d'origine\n"
+            requis: true
+        directory_error:
+            name: 'Répertoire où sont déplacés les données en erreur'
+            commentaire: "Après leur récupération, si le glaneur rencontre un problème,\nles données sont déplacés dans le repertoire d'erreur\n"
+            requis: true
+        fichier_exemple:
+            name: 'Fichier exemple'
+            type: file
+            commentaire: "Permet de créer un document d'après le fichier exemple (au format ZIP)"
 action:
-
-  lister_repertoires:
-    name: Lister les répertoires
-    action-class: GlaneurTester
-
-  recuperation-test:
-    name: Créer un document d'après le fichier exemple
-    action-class: GlaneurGlanerFichierExemple
-
-  test_glaneur:
-    name: Glaner un seul fichier
-    action-class: GlaneurGlanerUneFois
-
-  go:
-    name: Lancer le glanage
-    action-class: GlaneurLancerGlanage
-    action-automatique: go
+    lister_repertoires:
+        name: 'Lister les répertoires'
+        action-class: GlaneurTester
+    recuperation-test:
+        name: "Créer un document d'après le fichier exemple"
+        action-class: GlaneurGlanerFichierExemple
+    test_glaneur:
+        name: 'Glaner un seul fichier'
+        action-class: GlaneurGlanerUneFois
+    go:
+        name: 'Lancer le glanage'
+        action-class: GlaneurLancerGlanage
+        action-automatique: go

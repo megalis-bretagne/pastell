@@ -1,5 +1,5 @@
 nom: 'Générateur SEDA'
-description: 'Permet de générer des bordereaux SEDA via l''outil générateur SEDA'
+description: "Permet de générer des bordereaux SEDA via l'outil générateur SEDA"
 type: 'Bordereau SEDA'
 formulaire:
     onglet:
@@ -9,7 +9,7 @@ formulaire:
             type: file
             visionneuse: SedaGeneriqueVisionneuse
         files:
-            name: 'Fichier de l''archive'
+            name: "Fichier de l'archive"
             read-only: true
             type: file
             visionneuse: XMLVisionneuse
@@ -35,7 +35,7 @@ formulaire:
             commentaire: '(utilisation avancée uniquement)'
         seda_generator_url:
             name: 'URL du générateur de SEDA'
-            commentaire: 'Remplace l''URL définie au niveau du connecteur global'
+            commentaire: "Remplace l'URL définie au niveau du connecteur global"
 action:
     fill-data:
         name: 'Configurer les méta-données'

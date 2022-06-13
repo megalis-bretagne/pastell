@@ -19,11 +19,11 @@ formulaire:
             name: 'URL du service PISTE api'
             commentaire: 'https://sandbox-api.aife.economie.gouv.fr/, https://api.aife.economie.gouv.fr/. Si non renseigné, utilise la propriété globale'
         user_login:
-            name: 'Login de l''utilisateur'
+            name: "Login de l'utilisateur"
             no-show: true
         user_password:
             type: password
-            name: 'Mot de passe de l''utilisateur'
+            name: "Mot de passe de l'utilisateur"
             no-show: true
         identifiant_structure_cpp:
             name: 'Identifiant CPP de la structure'

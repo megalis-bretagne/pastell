@@ -162,7 +162,7 @@ action:
             role_id_e: 'no-role,'
         action-class: CheminementChangeTypeDossierPersonnalise
     helios-pre-extraction:
-        name: 'Préparation de l''extraction des informations'
+        name: "Préparation de l'extraction des informations"
         rule:
             role_id_e: no-role
         action-automatique: helios-extraction
@@ -189,7 +189,7 @@ action:
             fichier_pes: pes_aller
         action-automatique: pre-send-tdt
     pre-send-tdt:
-        name: 'Préparation de l''envoi au TdT'
+        name: "Préparation de l'envoi au TdT"
         rule:
             last-action:
                 - helios-extraction

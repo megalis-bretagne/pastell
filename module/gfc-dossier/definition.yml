@@ -55,13 +55,13 @@ formulaire:
             multiple: false
             commentaire: ''
         nom_organisme:
-            name: 'Nom de l''organisme'
+            name: "Nom de l'organisme"
             type: text
             requis: false
             multiple: false
             commentaire: ''
         entree:
-            name: 'Date d''entrée dans la collectivité'
+            name: "Date d'entrée dans la collectivité"
             type: date
             requis: false
             multiple: false
@@ -269,16 +269,16 @@ formulaire:
             type: file
             name: 'Accusé de réception SAE'
         sae_ack_comment:
-            name: 'Commentaire de l''accusé de réception'
+            name: "Commentaire de l'accusé de réception"
         reply_sae:
             type: file
             name: 'Réponse du SAE'
         sae_archival_identifier:
-            name: 'Identifiant de l''archive sur le SAE'
+            name: "Identifiant de l'archive sur le SAE"
         sae_atr_comment:
             name: 'Commentaire de la réponse du SAE'
         url_archive:
-            name: 'URL de l''archive'
+            name: "URL de l'archive"
             type: url
 champs-affiches:
     - titre
@@ -368,7 +368,7 @@ action:
             role_id_e: 'no-role,'
         action-class: CheminementChangeTypeDossierPersonnalise
     preparation-send-iparapheur:
-        name: 'Préparation de l''envoi au parapheur'
+        name: "Préparation de l'envoi au parapheur"
         rule:
             role_id_e: no-role
         action-automatique: send-iparapheur
@@ -400,7 +400,7 @@ action:
             autre_document_attache: pj
         action-automatique: verif-iparapheur
     send-signature-error:
-        name: 'Erreur lors de l''envoi du dossier à la signature'
+        name: "Erreur lors de l'envoi du dossier à la signature"
         editable-content:
             - fast_parapheur_circuit
             - fast_parapheur_circuit_configuration
@@ -460,13 +460,13 @@ action:
             iparapheur_sous_type: iparapheur_sous_type
             fast_parapheur_circuit: fast_parapheur_circuit
     preparation-send-mailsec:
-        name: 'Préparation de l''envoi par mail sécurisé'
+        name: "Préparation de l'envoi par mail sécurisé"
         rule:
             role_id_e: no-role
         action-automatique: send-mailsec
     send-mailsec:
         name-action: 'Envoyer le mail sécurisé'
-        name: 'Envoi d''un mail sécurisé'
+        name: "Envoi d'un mail sécurisé"
         rule:
             last-action:
                 - preparation-send-mailsec
@@ -567,7 +567,7 @@ action:
         connecteur-type-mapping:
             sent_mail_answered: sent_mail_answered
     preparation-send-ged:
-        name: 'Préparation de l''envoi à la GED'
+        name: "Préparation de l'envoi à la GED"
         rule:
             role_id_e: no-role
         action-automatique: send-ged
@@ -588,12 +588,12 @@ action:
         rule:
             role_id_e: no-role
     preparation-send-sae:
-        name: 'Préparation de l''envoi au SAE'
+        name: "Préparation de l'envoi au SAE"
         rule:
             role_id_e: no-role
         action-automatique: generate-archive
     generate-archive:
-        name-action: 'Générer l''archive'
+        name-action: "Générer l'archive"
         name: 'Archive générée'
         rule:
             last-action:
@@ -604,7 +604,7 @@ action:
         connecteur-type-action: Pastell\Step\SAE\Action\SAEGenerateArchiveAction
         action-automatique: send-archive
     generate-archive-error:
-        name: 'Erreur lors de la génération de l''archive'
+        name: "Erreur lors de la génération de l'archive"
         rule:
             role_id_e: no-role
     send-archive:
@@ -620,12 +620,12 @@ action:
         connecteur-type-action: Pastell\Step\SAE\Action\SAESendArchiveAction
         action-automatique: verif-sae
     erreur-envoie-sae:
-        name: 'Erreur lors de l''envoi au SAE'
+        name: "Erreur lors de l'envoi au SAE"
         rule:
             role_id_e: no-role
     verif-sae:
-        name-action: 'Récupérer l''AR du document sur le SAE'
-        name: 'Récuperation de l''AR sur le SAE'
+        name-action: "Récupérer l'AR du document sur le SAE"
+        name: "Récuperation de l'AR sur le SAE"
         rule:
             last-action:
                 - send-archive
@@ -634,7 +634,7 @@ action:
         connecteur-type: SAE
         connecteur-type-action: SAEVerifier
     verif-sae-erreur:
-        name: 'Erreur lors de la récupération de l''AR'
+        name: "Erreur lors de la récupération de l'AR"
         rule:
             role_id_e: no-role
     ar-recu-sae:
@@ -643,8 +643,8 @@ action:
             role_id_e: no-role
         action-automatique: validation-sae
     validation-sae:
-        name-action: 'Vérifier l''acceptation par le SAE'
-        name: 'Vérification de l''acceptation par le SAE'
+        name-action: "Vérifier l'acceptation par le SAE"
+        name: "Vérification de l'acceptation par le SAE"
         rule:
             last-action:
                 - ar-recu-sae

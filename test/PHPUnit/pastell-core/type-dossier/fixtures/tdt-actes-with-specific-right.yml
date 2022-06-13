@@ -34,7 +34,7 @@ formulaire:
             read-only: true
     Acte:
         acte_nature:
-            name: 'Nature de l''acte'
+            name: "Nature de l'acte"
             type: select
             requis: true
             value:
@@ -46,14 +46,14 @@ formulaire:
                 5: 'Documents budgétaires et financiers'
             onchange: autre_document_attache-change
         numero_de_lacte:
-            name: 'Numéro de l''acte'
+            name: "Numéro de l'acte"
             requis: true
             commentaire: '15 caractères maximum (chiffres, lettres en majuscule ou _)'
             preg_match: '#^[0-9A-Z_]{1,15}$#'
             preg_match_error: '15 caractères maximum (chiffres, lettres en majuscule ou _)'
             index: true
         date_de_lacte:
-            name: 'Date de l''acte'
+            name: "Date de l'acte"
             type: date
             requis: true
             commentaire: 'Date de la décision'
@@ -93,7 +93,7 @@ formulaire:
         tedetis_transaction_id:
             name: 'Identifiant de la transaction sur le Tdt'
         bordereau:
-            name: 'Bordereau d''acquittement'
+            name: "Bordereau d'acquittement"
             type: file
         aractes:
             name: 'Accusé de réception technique'
@@ -107,16 +107,16 @@ formulaire:
             type: file
             multiple: true
         date_ar:
-            name: 'Date de l''accusé de réception'
+            name: "Date de l'accusé de réception"
             type: date
     Annulation:
         has_annulation:
             no-show: true
         date_ar_annulation:
-            name: 'Date de l''accusé de réception d''annulation'
+            name: "Date de l'accusé de réception d'annulation"
             type: date
         tedetis_annulation_id:
-            name: 'Identifiant de la transaction d''annulation'
+            name: "Identifiant de la transaction d'annulation"
 champs-affiches:
     - titre
     - dernier_etat
@@ -189,7 +189,7 @@ action:
             role_id_e: 'no-role,'
         action-class: CheminementChangeTypeDossierPersonnalise
     pre-send-tdt:
-        name: 'Préparation de l''envoi au Tdt'
+        name: "Préparation de l'envoi au Tdt"
         rule:
             role_id_e: no-role
         action-automatique: send-tdt
@@ -219,7 +219,7 @@ action:
             objet: objet
         action-automatique: verif-tdt
     send-tdt-erreur:
-        name: 'Erreur lors de l''envoi des données au TdT'
+        name: "Erreur lors de l'envoi des données au TdT"
         rule:
             role_id_e: no-role
     document-transmis-tdt:
@@ -277,7 +277,7 @@ action:
             autre_document_attache: annexe
             objet: objet
     erreur-verif-tdt:
-        name: 'Erreur lors de la vérification du statut de l''acte'
+        name: "Erreur lors de la vérification du statut de l'acte"
         rule:
             role_id_e: no-role
     tdt-error:
@@ -291,7 +291,7 @@ action:
         action-automatique: orientation
     annulation-tdt:
         name-action: 'Annuler la transaction'
-        name: 'Demande d''annulation envoyée'
+        name: "Demande d'annulation envoyée"
         rule:
             has-action:
                 - acquiter-tdt
@@ -306,9 +306,9 @@ action:
             has_annulation: has_annulation
             annulation-tdt: annulation-tdt
         action-automatique: verif-annulation-tdt
-        warning: 'Attention cette action n''est pas réversible'
+        warning: "Attention cette action n'est pas réversible"
     verif-annulation-tdt:
-        name-action: 'Vérifier le statut de la transaction d''annulation'
+        name-action: "Vérifier le statut de la transaction d'annulation"
         name: 'Statut vérifié par le TdT'
         rule:
             last-action:

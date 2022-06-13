@@ -1,6 +1,6 @@
 nom: 'Facture Chorus fournisseur'
 type: 'Types de dossier Facture Chorus Pro'
-description: 'Permet de créer et d''envoyer des factures vers le portail Chorus Pro'
+description: "Permet de créer et d'envoyer des factures vers le portail Chorus Pro"
 restriction_pack:
     - pack_chorus_pro
 connecteur:
@@ -14,9 +14,9 @@ formulaire:
             name: 'Type de dépot'
             type: select
             value:
-                DEPOT_PDF_API: 'Dépot d''une facture PDF'
+                DEPOT_PDF_API: "Dépot d'une facture PDF"
                 SAISIE_API: 'Saisie manuelle'
-                UPLOAD_API: 'Dépot d''une facture structuré XML'
+                UPLOAD_API: "Dépot d'une facture structuré XML"
         fichier_facture_pdf:
             name: 'Fichier facture pdf/xml'
             type: file
@@ -28,7 +28,7 @@ formulaire:
             read-only: true
         syntaxe_flux_in:
             name: 'Syntaxe flux XML'
-            commentaire: 'Seulement pour le dépot d''une facture structuré XML, IN_DP_E1_UBL_INVOICE par défaut'
+            commentaire: "Seulement pour le dépot d'une facture structuré XML, IN_DP_E1_UBL_INVOICE par défaut"
             type: select
             value:
                 IN_DP_E1_UBL_INVOICE: IN_DP_E1_UBL_INVOICE
@@ -126,7 +126,7 @@ formulaire:
             name: 'Date de dépôt de la facture'
         histo_statut_cpp:
             name: 'Historique des statuts Chorus Pro'
-            commentaire: 'Fichier json contenant l''historique des statuts Chorus Pro'
+            commentaire: "Fichier json contenant l'historique des statuts Chorus Pro"
             type: file
             read-only: true
             visionneuse: HistoStatusCPPVisionneuse
@@ -145,7 +145,7 @@ formulaire:
             name: 'Date de dépôt de la facture'
         histo_statut_cpp:
             name: 'Historique des statuts Chorus Pro'
-            commentaire: 'Fichier json contenant l''historique des statuts Chorus Pro'
+            commentaire: "Fichier json contenant l'historique des statuts Chorus Pro"
             type: file
             read-only: true
             visionneuse: HistoStatusCPPVisionneuse
@@ -190,7 +190,7 @@ formulaire:
             link_name: 'Modifier les lignes de poste'
         fichier_ligne_de_poste:
             name: 'Ligne de poste (fichier)'
-            commentaire: 'Ce fichier est éditable avec l''utilitaire ligne de poste au dessus'
+            commentaire: "Ce fichier est éditable avec l'utilitaire ligne de poste au dessus"
             type: file
     'Donnée dépot':
         has_donnees_depot:
@@ -200,7 +200,7 @@ formulaire:
         etat_courant_flux:
             name: 'Etat courant du flux'
         date_heure_etat_courant_flux:
-            name: 'Date et heure du passage à l''état courant'
+            name: "Date et heure du passage à l'état courant"
         nom_fichier_flux:
             name: 'Nom fichier du flux'
         fichier_cr:
@@ -225,16 +225,16 @@ formulaire:
             name: 'Accusé de réception SAE'
             type: file
         sae_ack_comment:
-            name: 'Commentaire de l''accusé de réception'
+            name: "Commentaire de l'accusé de réception"
         reply_sae:
             name: 'Réponse du SAE'
             type: file
         sae_archival_identifier:
-            name: 'Identifiant de l''archive sur le SAE'
+            name: "Identifiant de l'archive sur le SAE"
         sae_atr_comment:
             name: 'Commentaire de la réponse du SAE'
         url_archive:
-            name: 'URL sur le système d''archive'
+            name: "URL sur le système d'archive"
             type: url
 page-condition:
     'Saisie manuelle':
@@ -386,7 +386,7 @@ action:
         action-class: ChorusProFournisseurSyncrhoniser
         connecteur-type: PortailFacture
     recup-facture-cpp-id:
-        name-action: 'Récupérer l''identifiant CPP de la facture'
+        name-action: "Récupérer l'identifiant CPP de la facture"
         name: 'Identifiant de la facture récupéré'
         rule:
             last-action:
@@ -410,7 +410,7 @@ action:
             role_id_e: no-role
         action-class: CppFournisseurFichierFactureOnChange
     preparation-send-sae:
-        name: 'Préparation de l''envoi au SAE'
+        name: "Préparation de l'envoi au SAE"
         rule:
             role_id_e: no-role
         action-automatique: send-archive
@@ -432,12 +432,12 @@ action:
         action-class: FactureCPPSAEEnvoyer
         action-automatique: verif-sae
     erreur-envoie-sae:
-        name: 'Erreur lors de l''envoi au SAE'
+        name: "Erreur lors de l'envoi au SAE"
         rule:
             role_id_e: no-role
     verif-sae:
-        name-action: 'Récupérer l''AR du document sur le SAE'
-        name: 'Récupération de l''AR sur le SAE'
+        name-action: "Récupérer l'AR du document sur le SAE"
+        name: "Récupération de l'AR sur le SAE"
         rule:
             last-action:
                 - send-archive
@@ -446,7 +446,7 @@ action:
         connecteur-type: SAE
         connecteur-type-action: SAEVerifier
     verif-sae-erreur:
-        name: 'Erreur lors de la récupération de l''AR'
+        name: "Erreur lors de la récupération de l'AR"
         rule:
             role_id_e: no-role
     ar-recu-sae:
@@ -455,8 +455,8 @@ action:
             role_id_e: no-role
         action-automatique: validation-sae
     validation-sae:
-        name-action: 'Vérifier l''acceptation par le SAE'
-        name: 'Vérification de l''acceptation par le SAE'
+        name-action: "Vérifier l'acceptation par le SAE"
+        name: "Vérification de l'acceptation par le SAE"
         rule:
             last-action:
                 - ar-recu-sae

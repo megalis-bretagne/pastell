@@ -7,9 +7,9 @@ formulaire:
     page0:
         recup_status_facture:
             name: 'Récupération des status des factures'
-            commentaire: 'Permet de récuperer le statuts des factures une fois l''identifiant de facture récupéré'
+            commentaire: "Permet de récuperer le statuts des factures une fois l'identifiant de facture récupéré"
             type: checkbox
         nb_jour_max_synchro:
             name: 'Nombre de jours maximum de synchronisation'
-            commentaire: 'Nombre de jours avant de stopper la synchronisation s''il n''y a pas de changement de statut (30 par défaut)'
+            commentaire: "Nombre de jours avant de stopper la synchronisation s'il n'y a pas de changement de statut (30 par défaut)"
             default: 30

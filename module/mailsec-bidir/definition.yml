@@ -1,5 +1,5 @@
 nom: 'Mail sécurisé avec réponse'
-description: 'Type de dossier permettant d''envoyer des mail sécurisés et de récupérer des réponses du destinataire'
+description: "Type de dossier permettant d'envoyer des mail sécurisés et de récupérer des réponses du destinataire"
 connecteur:
     - mailsec
 formulaire:
@@ -97,7 +97,7 @@ action:
         warning: 'Êtes-vous sûr ?'
     envoi-mail:
         name: 'Mail envoyé'
-        name-action: 'Envoyer l''email'
+        name-action: "Envoyer l'email"
         rule:
             last-action:
                 - modification

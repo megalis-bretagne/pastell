@@ -4,24 +4,24 @@ description: 'Connecteur permettant de configurer le mail sécurisé pour une en
 formulaire:
     'Mail sécurisé':
         mailsec_from_description:
-            name: 'Nom de l''emetteur'
+            name: "Nom de l'emetteur"
             default: PASTELL
         mailsec_reply_to:
             name: Reply-To
-            commentaire: 'Lors de l''envoi, prend la valeur de l''emetteur PLATEFORME_MAIL si non renseigné'
+            commentaire: "Lors de l'envoi, prend la valeur de l'emetteur PLATEFORME_MAIL si non renseigné"
         mailsec_subject:
             name: 'Sujet du mail sécurisé'
             default: '[Pastell] Vous avez reçu un mail sécurisé'
             commentaire: "Vous pouvez utiliser les mêmes méta-informations que le contenu du mail texte\npar le nom de l'entité et par le titre du dossier Pastell."
         content_html:
             name: 'Mail HTML'
-            commentaire: 'Un fichier HTML suceptible d''être envoyé par mail. Peux contenir les même méta-information que le contenu texte'
+            commentaire: "Un fichier HTML suceptible d'être envoyé par mail. Peux contenir les même méta-information que le contenu texte"
             type: file
         embeded_image:
             name: 'Images jointes'
             type: file
             multiple: true
-            commentaire: 'Fichier permettant de mettre des images et/ou des pieces jointes. Utiliser cid:imageXX dans le mail HTML avec XX le numéro de l''image (commence à 0)'
+            commentaire: "Fichier permettant de mettre des images et/ou des pieces jointes. Utiliser cid:imageXX dans le mail HTML avec XX le numéro de l'image (commence à 0)"
         mailsec_content:
             name: 'Contenu du mail texte'
             type: textarea
@@ -31,9 +31,9 @@ formulaire:
             name: Annuaire
             type: link
             script: MailSec/annuaire
-            link_name: 'Accéder à l''annuaire'
+            link_name: "Accéder à l'annuaire"
             read-only: true
 action:
     test:
-        name: 'Tester l''envoi à Reply-To'
+        name: "Tester l'envoi à Reply-To"
         action-class: MailsecTest

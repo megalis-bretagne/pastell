@@ -1,10 +1,10 @@
-libelle: 'Système d''archivage électronique'
+libelle: "Système d'archivage électronique"
 connecteur_type:
     - 'Bordereau SEDA'
     - SAE
 configuration_etape_formulaire:
     sae_has_metadata_in_json:
-        name: 'Permettre l''envoi d''un fichier de méta-donnée en JSON'
+        name: "Permettre l'envoi d'un fichier de méta-donnée en JSON"
         type: checkbox
 formulaire:
     'Configuration SAE':
@@ -37,16 +37,16 @@ formulaire:
             type: file
             name: 'Accusé de réception SAE'
         sae_ack_comment:
-            name: 'Commentaire de l''accusé de réception'
+            name: "Commentaire de l'accusé de réception"
         reply_sae:
             type: file
             name: 'Réponse du SAE'
         sae_archival_identifier:
-            name: 'Identifiant de l''archive sur le SAE'
+            name: "Identifiant de l'archive sur le SAE"
         sae_atr_comment:
             name: 'Commentaire de la réponse du SAE'
         url_archive:
-            name: 'URL de l''archive'
+            name: "URL de l'archive"
             type: url
 page-condition:
     'Configuration SAE':
@@ -55,12 +55,12 @@ page-condition:
         sae_show: true
 action:
     preparation-send-sae:
-        name: 'Préparation de l''envoi au SAE'
+        name: "Préparation de l'envoi au SAE"
         rule:
             role_id_e: no-role
         action-automatique: generate-archive
     generate-archive:
-        name-action: 'Générer l''archive'
+        name-action: "Générer l'archive"
         name: 'Archive générée'
         rule:
             last-action:
@@ -71,7 +71,7 @@ action:
         connecteur-type-action: Pastell\Step\SAE\Action\SAEGenerateArchiveAction
         action-automatique: send-archive
     generate-archive-error:
-        name: 'Erreur lors de la génération de l''archive'
+        name: "Erreur lors de la génération de l'archive"
         rule:
             role_id_e: no-role
     send-archive:
@@ -87,12 +87,12 @@ action:
         connecteur-type-action: Pastell\Step\SAE\Action\SAESendArchiveAction
         action-automatique: verif-sae
     erreur-envoie-sae:
-        name: 'Erreur lors de l''envoi au SAE'
+        name: "Erreur lors de l'envoi au SAE"
         rule:
             role_id_e: no-role
     verif-sae:
-        name-action: 'Récupérer l''AR du document sur le SAE'
-        name: 'Récuperation de l''AR sur le SAE'
+        name-action: "Récupérer l'AR du document sur le SAE"
+        name: "Récuperation de l'AR sur le SAE"
         rule:
             last-action:
                 - send-archive
@@ -101,7 +101,7 @@ action:
         connecteur-type: SAE
         connecteur-type-action: SAEVerifier
     verif-sae-erreur:
-        name: 'Erreur lors de la récupération de l''AR'
+        name: "Erreur lors de la récupération de l'AR"
         rule:
             role_id_e: no-role
     ar-recu-sae:
@@ -110,8 +110,8 @@ action:
             role_id_e: no-role
         action-automatique: validation-sae
     validation-sae:
-        name-action: 'Vérifier l''acceptation par le SAE'
-        name: 'Vérification de l''acceptation par le SAE'
+        name-action: "Vérifier l'acceptation par le SAE"
+        name: "Vérification de l'acceptation par le SAE"
         rule:
             last-action:
                 - ar-recu-sae

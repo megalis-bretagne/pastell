@@ -5,7 +5,7 @@ connecteur:
 formulaire:
     'Réponse de la préfecture':
         acte_nature:
-            name: 'Nature de l''acte'
+            name: "Nature de l'acte"
             read-only: true
             type: select
             requis: true
@@ -17,7 +17,7 @@ formulaire:
                 1: Délibérations
                 5: 'Documents budgétaires et financiers'
         numero_de_lacte:
-            name: 'Numéro de l''acte'
+            name: "Numéro de l'acte"
             read-only: true
             index: true
             title: true
@@ -29,7 +29,7 @@ formulaire:
             value:
                 2: 'Courrier simple'
                 3: 'Demande de pièces complémentaires'
-                4: 'Lettre d''observation'
+                4: "Lettre d'observation"
                 5: 'Déféré au tribunal administratif'
         related_transaction_id:
             name: 'Identifiant de la transaction acte'
@@ -41,7 +41,7 @@ formulaire:
             name: 'Identifiant du statut'
             read-only: true
         url_acte:
-            name: 'URL de l''acte'
+            name: "URL de l'acte"
             type: url
         reponse_prefecture:
             name: 'Réponse de la préfecture (original)'
@@ -102,7 +102,7 @@ formulaire:
             multiple: true
             onchange: pc-reponse_pj_demande_piece_complementaire-change
         refus_reponse:
-            name: 'Cocher cette case s''il s''agit d''un refus de réponse'
+            name: "Cocher cette case s'il s'agit d'un refus de réponse"
             type: checkbox
         type_piece_demande_piece_complementaire:
             name: 'Typologie des pièces'
@@ -127,14 +127,14 @@ formulaire:
         response_transaction_id:
             name: 'Identifiant de la transaction réponse'
             read-only: true
-    'Lettre d''observation':
+    "Lettre d'observation":
         reponse:
-            name: 'Réponse à la lettre d''observation'
+            name: "Réponse à la lettre d'observation"
             commentaire: 'format PDF'
             requis: true
             type: file
         refus_reponse:
-            name: 'Cocher cette case s''il s''agit d''un refus de réponse'
+            name: "Cocher cette case s'il s'agit d'un refus de réponse"
             type: checkbox
         type_piece_lettre_observation:
             name: 'Typologie des pièces'
@@ -182,7 +182,7 @@ page-condition:
     'Demande de pièces complementaires':
         type_reponse: '3'
         repondre: true
-    'Lettre d''observation':
+    "Lettre d'observation":
         type_reponse: '4'
         repondre: true
     'Acquittement de réception':
@@ -221,7 +221,7 @@ action:
         action-class: Supprimer
         warning: 'Êtes-vous sûr ?'
     erreur-verif-tdt:
-        name: 'Erreur lors de la vérification du statut de l''acte'
+        name: "Erreur lors de la vérification du statut de l'acte"
         rule:
             role_id_e: no-role
     tdt-error:
@@ -248,7 +248,7 @@ action:
                 repondre: false
         action-class: ActeReponsePrefectureRepondre
     verif-reponse-tdt:
-        name-action: 'Vérifier l''acquittement'
+        name-action: "Vérifier l'acquittement"
         name: 'Acquittement de la réponse reçu'
         rule:
             last-action:

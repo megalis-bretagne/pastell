@@ -264,7 +264,7 @@ action:
             role_id_e: 'no-role,'
         action-class: CheminementChangeTypeDossierPersonnalise
     preparation-send-iparapheur_1:
-        name: 'Préparation de l''envoi au parapheur #1'
+        name: "Préparation de l'envoi au parapheur #1"
         rule:
             role_id_e: no-role
         action-automatique: send-iparapheur_1
@@ -298,7 +298,7 @@ action:
         action-automatique: verif-iparapheur_1
         num-same-connecteur: '0'
     send-signature-error_1:
-        name: 'Erreur lors de l''envoi du dossier à la signature #1'
+        name: "Erreur lors de l'envoi du dossier à la signature #1"
         editable-content:
             - fast_parapheur_circuit_1
             - fast_parapheur_circuit_configuration_1
@@ -365,7 +365,7 @@ action:
             fast_parapheur_circuit: fast_parapheur_circuit_1
         num-same-connecteur: '0'
     preparation-send-iparapheur_2:
-        name: 'Préparation de l''envoi au parapheur #2'
+        name: "Préparation de l'envoi au parapheur #2"
         rule:
             role_id_e: no-role
         action-automatique: send-iparapheur_2
@@ -399,7 +399,7 @@ action:
         action-automatique: verif-iparapheur_2
         num-same-connecteur: '1'
     send-signature-error_2:
-        name: 'Erreur lors de l''envoi du dossier à la signature #2'
+        name: "Erreur lors de l'envoi du dossier à la signature #2"
         editable-content:
             - fast_parapheur_circuit_2
             - fast_parapheur_circuit_configuration_2

@@ -1,6 +1,6 @@
 nom: 'Pièces de marché par étape'
 type: 'Types de dossier marché'
-description: 'Permet d''alimenter le type de dossier Pièces de marché avec l''ensemble des pièces d''une même étape.'
+description: "Permet d'alimenter le type de dossier Pièces de marché avec l'ensemble des pièces d'une même étape."
 restriction_pack:
     - pack_marche
 formulaire:
@@ -14,8 +14,8 @@ formulaire:
             type: select
             value:
                 MAPA: 'MAPA - Marchés A Procédures Adaptées'
-                AOO: 'AOO - Appel d''Offres Ouvert'
-                AOR: 'AOR - Appel d''Offres Restreint'
+                AOO: "AOO - Appel d'Offres Ouvert"
+                AOR: "AOR - Appel d'Offres Restreint"
                 DC: 'DC - Dialogue Compétitif'
                 MS: 'MS - Marché Subséquent'
                 PC: 'PC - Procédure Concurrentielle'
@@ -33,7 +33,7 @@ formulaire:
                 T: 'T - Travaux'
                 F: 'F - Fournitures'
                 S: 'S - Services'
-                TIC: 'TIC - Techniques de l''information et de la communication'
+                TIC: "TIC - Techniques de l'information et de la communication"
                 MO: 'MO - Maîtrise d’œuvre'
                 PI: 'PI - Prestation intellectuelle'
         recurrent:
@@ -58,7 +58,7 @@ formulaire:
             index: true
         montant:
             name: 'Montant (estimatif ou notifié)'
-            commentaire: 'La nature du montant dépend de l''étape et du type de pièce'
+            commentaire: "La nature du montant dépend de l'étape et du type de pièce"
         date_document:
             name: 'Date des documents'
             type: date
@@ -66,14 +66,14 @@ formulaire:
         zip_etape:
             name: 'Fichier ZIP des pièces'
             type: file
-            commentaire: 'Fichier ZIP de l''ensemble des pièces de l''étape'
+            commentaire: "Fichier ZIP de l'ensemble des pièces de l'étape"
             progress_bar: true
             onchange: extraction
         piece:
-            name: 'Pièce(s) de l''étape'
+            name: "Pièce(s) de l'étape"
             type: file
             multiple: true
-            commentaire: 'Ensemble des pièces de l''étape'
+            commentaire: "Ensemble des pièces de l'étape"
             progress_bar: true
         type_piece:
             name: 'Typologie des pièces'
@@ -145,15 +145,15 @@ action:
         rule:
             role_id_e: no-role
     extraction-prepare:
-        name-action: 'Programmer l''extraction de l''archive'
-        name: 'Programmation de l''extraction de l''archive'
+        name-action: "Programmer l'extraction de l'archive"
+        name: "Programmation de l'extraction de l'archive"
         rule:
             role_id_e: no-role
         action-class: Defaut
         action-automatique: extraction
     extraction:
         name: 'Archive extraite'
-        name-action: 'Extraction de l''archive'
+        name-action: "Extraction de l'archive"
         rule:
             last-action:
                 - extraction-prepare
@@ -179,7 +179,7 @@ action:
             - type_piece
         action-class: PieceMarcheParEtapeExtraire
     extraction-error:
-        name: 'Erreur lors de l''extraction de l''archive'
+        name: "Erreur lors de l'extraction de l'archive"
         rule:
             role_id_e: no-role
         editable-content:

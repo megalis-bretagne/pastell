@@ -1,6 +1,6 @@
 nom: 'Bouchon de signature'
 type: signature
-description: 'Il s''agit d''un bouchon utilisé pour le développement ou les démonstrations pendant lesquels l''utilisation d''un vrai iParapheur ne se révelerait pas commode.'
+description: "Il s'agit d'un bouchon utilisé pour le développement ou les démonstrations pendant lesquels l'utilisation d'un vrai iParapheur ne se révelerait pas commode."
 formulaire:
     page0:
         iparapheur_type:
@@ -15,7 +15,7 @@ formulaire:
             name: 'Liste des sous types du type Custom'
             commentaire: "Les sous types doivent être séparés par des ';'\nExemple pour les sous types BUREAUTIQUE et PES : \"PES;BUREAUTIQUE\""
         iparapheur_envoi_status:
-            name: 'Réponse lors de l''envoi au parapheur'
+            name: "Réponse lors de l'envoi au parapheur"
             type: select
             value:
                 ok: 'Accepter le document'

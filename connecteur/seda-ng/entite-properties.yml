@@ -20,7 +20,7 @@ formulaire:
             type: file
             no-show: true
         date_dernier_transfert:
-            name: 'Date de la dernière génération d''un bordereau'
+            name: "Date de la dernière génération d'un bordereau"
             read-only: true
         dernier_numero_transfert:
             name: 'Nombre de bordereaux générés à la date du dernier transfert'
