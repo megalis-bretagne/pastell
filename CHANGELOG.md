@@ -82,13 +82,19 @@
 - Suppression de la fonction SEDAConnecteur::getInfoARActes()
 
 # [3.1.16]
+
 ***Cette version nécessite une mise à jour du générateur SEDA en 0.8.3***
 
 ## Ajouts
 
-- Generateur SEDA: ajout des balises OriginatingAgencyArchiveIdentifier et TransferringAgencyArchiveIdentifier #1463
+- Générateur SEDA: ajout des balises OriginatingAgencyArchiveIdentifier et TransferringAgencyArchiveIdentifier #1463
+
+## Évolutions
+
+- Permettre de définir les fréquences en secondes #1553
 
 # [3.1.15] - 2022-06-13
+
 ***Cette version nécessite une modification de la base de données***
 
 ## Corrections
