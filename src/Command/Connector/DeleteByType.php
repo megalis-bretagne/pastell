@@ -54,7 +54,7 @@ final class DeleteByType extends BaseCommand
     /**
      * @throws \Exception
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $type = $input->getArgument('type');
         $scope = $input->getArgument('scope');
