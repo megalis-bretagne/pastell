@@ -10,7 +10,7 @@ class AideControlerTest extends ControlerTestCase
         parent::setUp();
         $this->aideControler = $this->getControlerInstance(AideControler::class);
     }
-    
+
     /**
      * @throws NotFoundException
      */
