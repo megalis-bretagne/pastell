@@ -190,26 +190,24 @@ class ConnecteurFrequenceTest extends PastellTestCase
         return [ [1, 0], [1, 1], [1, 4], [60, 5], [60, 14], [1,15], [1,49], [42,50], [42,500]];
     }
 
-    /**
-     * @throws Exception
-     */
-    public function testRelativeDate()
+    public function expressionsProvider(): iterable
     {
-        $connecteurFrequence = new ConnecteurFrequence();
-        $connecteurFrequence->expression = 10;
-        $next = $connecteurFrequence->getNextTry(42, "2012-06-27 18:23:46");
-        $this->assertEquals("2012-06-27 18:33:46", $next);
+        yield 'every 10 minutes' => ['10', '2012-06-27 18:23:46', '2012-06-27 18:33:46'];
+        yield 'at 2:40' => ['(40 2 * * *)', '2017-04-13 11:48:45', '2017-04-14 02:40:00'];
+        yield 'every 10 seconds' => ['10s', '2022-06-14 00:00:00', '2022-06-14 00:00:10'];
+        yield '43 times every second' => ['1s X 43', '2022-06-14 00:00:00', '2022-06-14 00:00:01'];
     }
 
     /**
+     * @dataProvider expressionsProvider
      * @throws Exception
      */
-    public function testFrequenceCron()
+    public function testNextTry(string $expression, string $relativeDate, string $expectedNextTry): void
     {
         $connecteurFrequence = new ConnecteurFrequence();
-        $connecteurFrequence->expression = "(40 2 * * *)";
-        $next = $connecteurFrequence->getNextTry(42, "2017-04-13 11:48:45");
-        $this->assertEquals("2017-04-14 02:40:00", $next);
+        $connecteurFrequence->expression = $expression;
+        $next = $connecteurFrequence->getNextTry(42, $relativeDate);
+        $this->assertSame($expectedNextTry, $next);
     }
 
     /**
@@ -224,12 +222,22 @@ class ConnecteurFrequenceTest extends PastellTestCase
         $connecteurFrequence->getNextTry(11);
     }
 
-    public function testGetExpressionAsString()
+    public function testGetExpressionAsString(): void
     {
         $connecteurFrequence = new ConnecteurFrequence();
-        $connecteurFrequence->expression = "1 X 10\n(* * * * *) X 1\n60 X 1";
+        $connecteurFrequence->expression = "1 X 10\n10s X 10\n(* * * * *) X 1\n60 X 1";
         $expr = $connecteurFrequence->getExpressionAsString();
-        $this->assertEquals("Toutes les minutes (10 fois)\nA (* * * * *) (1 fois)\nToutes les 60 minutes (1 fois)\nSuspendre le travail", $expr);
+        $this->assertSame(
+            <<<EOT
+Toutes les minutes (10 fois)
+Toutes les 10 secondes (10 fois)
+A (* * * * *) (1 fois)
+Toutes les 60 minutes (1 fois)
+Suspendre le travail
+EOT
+            ,
+            $expr
+        );
     }
 
     public function testGetExpressionAsStringEmpty()

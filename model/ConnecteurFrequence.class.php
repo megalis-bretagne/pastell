@@ -130,15 +130,17 @@ class ConnecteurFrequence
             return $cron->getNextRunDate($time)->format("Y-m-d H:i:s");
         }
 
-        $next_try_in_minutes = intval($frequence_list[$i]['frequence']);
-        return date('Y-m-d H:i:s', strtotime("$relative_date +{$next_try_in_minutes} minutes"));
+        $nextTry = $frequence_list[$i]['frequence'];
+        $nextTryUnit = $frequence_list[$i]['unit'];
+        return date('Y-m-d H:i:s', strtotime(sprintf('%s +%d %s', $relative_date, $nextTry, $nextTryUnit)));
     }
 
-    private function getExpressionArray()
+    private function getExpressionArray(): array
     {
         $all_line = explode("\n", $this->expression);
-        $frequence_list = array();
+        $frequence_list = [];
         foreach ($all_line as $line) {
+            $unit = 'minutes';
             preg_match('#([^X]*)\s*X?\s*(\d*)#', $line, $matches);
             $expression = trim($matches[1]);
             $nb_try = intval($matches[2]);
@@ -147,24 +149,31 @@ class ConnecteurFrequence
             if (preg_match("#\(([^\)]*)\)#", $expression, $matches)) {
                 $cron = $matches[1];
             } else {
-                $frequence = intval($expression);
+                if (\preg_match('/\d*\s*s/', $expression)) {
+                    $unit = 'seconds';
+                }
+                $frequence = (int)$expression;
             }
-            $frequence_list[] = array('frequence' => $frequence,'cron' => $cron,'nb_try' => $nb_try);
+            $frequence_list[] = ['frequence' => $frequence, 'unit' => $unit, 'cron' => $cron, 'nb_try' => $nb_try];
         }
         return $frequence_list;
     }
 
-    public function getExpressionAsString()
+    public function getExpressionAsString(): string
     {
         $expression_list = $this->getExpressionArray();
-        $result = "";
+        $result = '';
         $nb_expression = 0;
         foreach ($expression_list as $nb_expression => $expression) {
             if ($expression['frequence']) {
+                $unit = $expression['unit'];
+                if ($unit === 'seconds') {
+                    $unit = 'secondes';
+                }
                 if ($expression['frequence'] == 1) {
-                    $result .= "Toutes les minutes";
+                    $result .= "Toutes les $unit";
                 } else {
-                    $result .= "Toutes les {$expression['frequence']} minutes";
+                    $result .= "Toutes les {$expression['frequence']} $unit";
                 }
             } elseif ($expression['cron']) {
                 $result .= "A ({$expression['cron']})";
