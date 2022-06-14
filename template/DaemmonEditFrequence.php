@@ -121,16 +121,25 @@
     <p>L'expression peut contenir plusieurs lignes.</p>
     <p>Chaque ligne est de la forme <i>fréquence</i> X <i>nombre d'exécutions</i></p>
     <p>La fréquence est soit un nombre de minutes, soit une expression de type <a href="https://fr.wikipedia.org/wiki/Cron#Syntaxe_de_la_table">cron</a></p>
+    <p>Il est également possible de définir la fréquence en secondes en suffixant par le caractère "s"</p>
 
-    <p><strong>Exemples</strong></p>
-    <table border="1">
+    <p id="desc-expressions-table"><strong>Exemples</strong></p>
+    <table border="1" aria-labelledby="desc-expressions-table">
+        <tr>
+            <th>Expression</th>
+            <th>Résultat</th>
+        </tr>
         <tr>
             <td>10</td>
-            <td>La tâche sera executée toutes les 10 minutes</td>
+            <td>La tâche sera exécutée toutes les 10 minutes</td>
+        </tr>
+        <tr>
+            <td>10s</td>
+            <td>La tâche sera exécutée toutes les 10 secondes</td>
         </tr>
         <tr>
             <td>10 X 2<br>60</td>
-            <td>La tâche sera executée toutes les 10 minutes, 2 fois, puis toutes les heures </td>
+            <td>La tâche sera exécutée toutes les 10 minutes, 2 fois, puis toutes les heures</td>
         </tr>
         <tr>
             <td>(40 2 * * *) X 1<br>60</td>
@@ -138,7 +147,7 @@
         </tr>
         <tr>
             <td>1 X 10</td>
-            <td>La tâche sera executée chaque minute 10 fois, puis la tâche sera suspendue</td>
+            <td>La tâche sera exécutée chaque minute 10 fois, puis la tâche sera suspendue</td>
         </tr>
     </table>
 
