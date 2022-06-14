@@ -10,16 +10,7 @@ class AideControlerTest extends ControlerTestCase
         parent::setUp();
         $this->aideControler = $this->getControlerInstance(AideControler::class);
     }
-
-    /**
-     * @throws NotFoundException
-     */
-    public function testIndex()
-    {
-        $this->expectOutputRegex("##");
-        $this->aideControler->indexAction();
-    }
-
+    
     /**
      * @throws NotFoundException
      */
