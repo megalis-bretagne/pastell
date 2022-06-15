@@ -33,28 +33,28 @@ services:
     ports:
       - "${DATABASE_TEST_PORT:-13306}:3306"
 
-#  phpmyadmin:
-#    image: phpmyadmin/phpmyadmin
-#    links:
-#      - db:db
-#    ports:
-#      - "${PHPMYADMIN_WEB_PORT:-8001}:80"
-#
-#  phpmyadmin_test:
-#    image: phpmyadmin/phpmyadmin
-#    links:
-#      - db_test:db
-#    ports:
-#      - "${PHPMYADMIN_TEST_PORT:-8004}:80"
-#
-#  php-redis-admin:
-#    image: faktiva/php-redis-admin
-#    environment:
-#      - PHPREDMIN_DATABASE_REDIS_0_HOST=redis
-#    ports:
-#      - "${PHP_REDIS_PORT:-8005}:80"
-#    depends_on:
-#      - redis
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - db:db
+    ports:
+      - "${PHPMYADMIN_WEB_PORT:-8001}:80"
+
+  phpmyadmin_test:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - db_test:db
+    ports:
+      - "${PHPMYADMIN_TEST_PORT:-8004}:80"
+
+  php-redis-admin:
+    image: faktiva/php-redis-admin
+    environment:
+      - PHPREDMIN_DATABASE_REDIS_0_HOST=redis
+    ports:
+      - "${PHP_REDIS_PORT:-8005}:80"
+    depends_on:
+      - redis
 
   glaneur-sftp:
     image: atmoz/sftp
