@@ -111,7 +111,7 @@ class ExportConfigServiceTest extends PastellTestCase
         $this->assertEquals('Foo', $info['denomination']);
         $this->assertEquals(0, $info['entite_mere']);
         $this->assertEquals(
-            [0 => "L'entité mère de Foo est inconnue, l'entité sera attachée à l'entité racine."],
+            [0 => "L'entité mère de Foo est inconnue, l'entité sera attachée à l'entité 0."],
             $importConfigService->getLastErrors()
         );
     }
@@ -127,7 +127,11 @@ class ExportConfigServiceTest extends PastellTestCase
                 ExportConfigService::CONNECTOR_INFO => [
                     [
                         'id_e' => 12,
-                        'libelle' => 'Bar'
+                        'libelle' => 'Bar',
+                        'id_connecteur' => 'test',
+                        'type' => 'test',
+                        'id_ce' => 42,
+                        'data' => json_encode(['metadata' => ['champs1' => 'Foo']]),
                     ]
                 ]
             ],
@@ -213,5 +217,50 @@ class ExportConfigServiceTest extends PastellTestCase
             [0 => "L'entité du fichier d'import id_e=12 n'est pas présente : les héritages d'associations n'ont pas été importées."],
             $importConfigService->getLastErrors()
         );
+    }
+
+    public function testWhenImportOnlyEntiteFille(): void
+    {
+        $importConfigService = $this->getObjectInstancier()->getInstance(ImportConfigService::class);
+        $importConfigService->import(
+            [
+                ExportConfigService::ENTITY_CHILD => [
+                    12 =>  [
+                        'denomination' => 'Foo',
+                        'id_e' => 12,
+                        'siren' => '000000000',
+                        'entite_mere' => 1,
+                        'type' => 'collectivite',
+                    ],
+                ],
+            ],
+            1
+        );
+
+        $entiteSQL = $this->getObjectInstancier()->getInstance(EntiteSQL::class);
+        self::assertEquals('Foo', $entiteSQL->getFille(1)[1]['denomination']);
+    }
+
+    public function testWhenImportOnlyEntiteConnector(): void
+    {
+        $importConfigService = $this->getObjectInstancier()->getInstance(ImportConfigService::class);
+        $importConfigService->import(
+            [
+                ExportConfigService::CONNECTOR_INFO => [
+                    [
+                        'id_e' => 12,
+                        'libelle' => 'Bar',
+                        'id_connecteur' => 'test',
+                        'type' => 'test',
+                        'id_ce' => 42,
+                        'data' => json_encode(['metadata' => ['champs1' => 'Foo']]),
+                    ]
+                ],
+            ],
+            1
+        );
+        $connectorConfig = $this->getConnecteurFactory()
+            ->getConnecteurConfig(14);
+        self::assertEquals('Foo', $connectorConfig->get('champs1'));
     }
 }

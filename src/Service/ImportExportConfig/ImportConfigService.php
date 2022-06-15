@@ -40,10 +40,10 @@ class ImportConfigService
     {
         $this->lastErrors = [];
         $id_e_mapping = $this->importEntity($exportedData, $id_e_root);
-        $id_e_mapping = $this->importChildEntity($exportedData, $id_e_mapping);
-        $connectorMapping = $this->importConnector($exportedData, $id_e_mapping);
-        $this->importAssociation($exportedData, $id_e_mapping, $connectorMapping);
-        $this->importAssociationInheritance($exportedData, $id_e_mapping);
+        $id_e_mapping = $this->importChildEntity($exportedData, $id_e_mapping, $id_e_root);
+        $connectorMapping = $this->importConnector($exportedData, $id_e_mapping, $id_e_root);
+        $this->importAssociation($exportedData, $id_e_mapping, $connectorMapping, $id_e_root);
+        $this->importAssociationInheritance($exportedData, $id_e_mapping, $id_e_root);
     }
 
     private function importEntity(array $exportedData, int $id_e_root): array
@@ -64,15 +64,15 @@ class ImportConfigService
         return $id_e_mapping;
     }
 
-    public function importChildEntity(array $exportedData, array $id_e_mapping): array
+    public function importChildEntity(array $exportedData, array $id_e_mapping, int $id_e_root): array
     {
         if (empty($exportedData[ExportConfigService::ENTITY_CHILD])) {
             return $id_e_mapping;
         }
         foreach ($exportedData[ExportConfigService::ENTITY_CHILD] as $entity_child) {
             if (empty($id_e_mapping[$entity_child['entite_mere']])) {
-                $this->lastErrors[] = "L'entité mère de {$entity_child['denomination']} est inconnue, l'entité sera attachée à l'entité racine.";
-                $entity_child['entite_mere'] = 0;
+                $this->lastErrors[] = "L'entité mère de {$entity_child['denomination']} est inconnue, l'entité sera attachée à l'entité $id_e_root.";
+                $entity_child['entite_mere'] = $id_e_root;
             } else {
                 $entity_child['entite_mere'] = $id_e_mapping[$entity_child['entite_mere']];
             }
@@ -95,7 +95,7 @@ class ImportConfigService
      * @throws DonneesFormulaireException
      * @throws Exception
      */
-    private function importConnector(array $exportedData, array $id_e_mapping): array
+    private function importConnector(array $exportedData, array $id_e_mapping, int $id_e_root): array
     {
         $connectorMapping = [];
         if (empty($exportedData[ExportConfigService::CONNECTOR_INFO])) {
@@ -103,8 +103,12 @@ class ImportConfigService
         }
         foreach ($exportedData[ExportConfigService::CONNECTOR_INFO] as $connecteurInfo) {
             if ($connecteurInfo['id_e'] !== 0 && empty($id_e_mapping[$connecteurInfo['id_e']])) {
-                $this->lastErrors[] = "Le connecteur {$connecteurInfo['libelle']} est attaché à une entité inconnue : il n'a pas été importé.";
-                continue;
+                if ($id_e_root === 0) {
+                    $this->lastErrors[] = "Le connecteur {$connecteurInfo['libelle']} est attaché à une entité inconnue : il n'a pas été importé.";
+                    continue;
+                }
+                $this->lastErrors[] = "Le connecteur {$connecteurInfo['libelle']} est attaché à une entité inconnue : il sera attaché à l'entité $id_e_root.";
+                $id_e_mapping[$connecteurInfo['id_e']] = $id_e_root;
             }
             $connecteurInfo['id_e'] = $id_e_mapping[$connecteurInfo['id_e']];
             $id_ce = $this->connecteurCreationService->createConnecteur(
@@ -121,15 +125,19 @@ class ImportConfigService
         return $connectorMapping;
     }
 
-    private function importAssociation(array $exportedData, array $id_e_mapping, array $connectorMapping): void
+    private function importAssociation(array $exportedData, array $id_e_mapping, array $connectorMapping, int $id_e_root): void
     {
         if (empty($exportedData[ExportConfigService::ASSOCIATION_INFO])) {
             return;
         }
         foreach ($exportedData[ExportConfigService::ASSOCIATION_INFO] as $id_e => $fluxInfo) {
             if ($id_e !== 0 && empty($id_e_mapping[$id_e])) {
-                $this->lastErrors[] = "L'entité du fichier d'import id_e=$id_e n'est pas présente : ces associations n'ont pas été importées.";
-                continue;
+                if ($id_e_root === 0) {
+                    $this->lastErrors[] = "L'entité du fichier d'import id_e=$id_e n'est pas présente : ces associations n'ont pas été importées.";
+                    continue;
+                }
+                $this->lastErrors[] = "L'entité du fichier d'import id_e=$id_e n'est pas présente : associations importées sur l'entité $id_e_root.";
+                $id_e = $id_e_root;
             }
             foreach ($fluxInfo as $flux_name => $connecteurInfo) {
                 foreach ($connecteurInfo as $typeFlux => $listConnecteurInfo) {
@@ -157,15 +165,19 @@ class ImportConfigService
         );
     }
 
-    private function importAssociationInheritance(array $exportedData, array $id_e_mapping): void
+    private function importAssociationInheritance(array $exportedData, array $id_e_mapping, int $id_e_root): void
     {
         if (empty($exportedData[ExportConfigService::ASSOCIATION_HERITAGE_INFO])) {
             return;
         }
         foreach ($exportedData[ExportConfigService::ASSOCIATION_HERITAGE_INFO] as $id_e => $heritage_list) {
             if (empty($id_e_mapping[$id_e])) {
-                $this->lastErrors[] = "L'entité du fichier d'import id_e=$id_e n'est pas présente : les héritages d'associations n'ont pas été importées.";
-                continue;
+                if ($id_e_root === 0) {
+                    $this->lastErrors[] = "L'entité du fichier d'import id_e=$id_e n'est pas présente : les héritages d'associations n'ont pas été importées.";
+                    continue;
+                }
+                $this->lastErrors[] = "L'entité du fichier d'import id_e=$id_e n'est pas présente : les héritages d'associations sont importées sur $id_e_root.";
+                $id_e_mapping[$id_e] = $id_e_root;
             }
             foreach ($heritage_list as $flux) {
                 $this->fluxEntiteHeritageSQL->setInheritance($id_e_mapping[$id_e], $flux);
