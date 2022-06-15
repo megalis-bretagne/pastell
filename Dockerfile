@@ -40,21 +40,21 @@ WORKDIR /var/www/pastell/
 ENV PATH="${PATH}:/var/www/pastell/vendor/bin/"
 
 # Install requirements
-COPY ./ci-resources/install-requirements.sh /var/www/pastell/ci-resources/
-RUN /bin/bash /var/www/pastell/ci-resources/install-requirements.sh
+COPY ./docker/install-requirements.sh /var/www/pastell/docker/
+RUN /bin/bash /var/www/pastell/docker/install-requirements.sh
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # Create Pastell needs
-COPY ./ci-resources /var/www/pastell/ci-resources
+COPY ./docker /var/www/pastell/docker
 
-RUN /bin/bash /var/www/pastell/ci-resources/docker-construction.sh
+RUN /bin/bash /var/www/pastell/docker/docker-construction.sh
 
 COPY --chown=${USERNAME}:${GROUPNAME} --from=node_modules /var/www/pastell/node_modules /var/www/pastell/node_modules
 
 # Composer stuff
 COPY ./composer.* /var/www/pastell/
-RUN /bin/bash /var/www/pastell/ci-resources/github/create-auth-file.sh && \
+RUN /bin/bash /var/www/pastell/docker/github/create-auth-file.sh && \
     /bin/bash -c 'mkdir -p /var/www/pastell/{web,web-mailsec}' && \
     composer install --no-dev --no-autoloader && \
     rm -rf /root/.composer/
@@ -82,6 +82,6 @@ ARG USERNAME=www-data
 ARG GROUPNAME=www-data
 
 USER root
-RUN /bin/bash /var/www/pastell/ci-resources/install-dev-requirements.sh
+RUN /bin/bash /var/www/pastell/docker/install-dev-requirements.sh
 USER "${USERNAME}"
 FROM pastell_base as pastell_prod

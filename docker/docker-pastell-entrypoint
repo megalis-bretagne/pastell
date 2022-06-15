@@ -1,7 +1,7 @@
 #! /bin/bash
 set -e
 
-/bin/bash /var/www/pastell/ci-resources/docker-pastell-init > /data/config/DockerSettings.php
+/bin/bash /var/www/pastell/docker/docker-pastell-init > /data/config/DockerSettings.php
 
 # Utilisation de l'authentification cliente si nécessaire
 if [ "$AUTHENTICATION_WITH_CLIENT_CERTIFICATE" ] ; then
@@ -29,7 +29,7 @@ if [ -z "$DONT_RETRIEVE_VALIDCA" ] ; then
 fi
 
 if [ -z "$DONT_INIT_DATABASE" ] ; then
-  php /var/www/pastell/ci-resources/init-docker.php
+  php /var/www/pastell/docker/init-docker.php
 fi
 
 exec "$@"

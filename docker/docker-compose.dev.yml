@@ -4,7 +4,7 @@ services:
   web:
     image: pastell-local-dev
     build:
-      context: .
+      context: ..
       target: pastell_dev
       args:
         GITHUB_API_TOKEN: ${GITHUB_API_TOKEN:-}
@@ -13,11 +13,11 @@ services:
         USERNAME: ${USERNAME:-www-data}
         GROUPNAME: ${GROUPNAME:-www-data}
     volumes:
-      - .:/var/www/pastell:cached
+      - ..:/var/www/pastell:cached
 
   db:
     volumes:
-      - ./ci-resources/mysql-dev/:/etc/mysql/conf.d/
+      - ./docker/mysql-dev/:/etc/mysql/conf.d/
     ports:
       - "${DATABASE_PORT:-8306}:3306"
 
