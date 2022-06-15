@@ -88,12 +88,6 @@ il convient donc de spécifier les variables d'environnements directement dans l
 
 Gitlab-ci utilise la commande `entrypoint` mais surcharge la commande.
 
-## Démarrage des services annexes
-
-```bash
-docker-compose -f ci-resources/production/docker-compose.yml up -d
-```
-
 # Utilisation de l'API Pastell
 
 Pour utiliser l'API de Pastell en PHP, on pourra utiliser le package pastell-api-php

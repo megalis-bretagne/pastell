@@ -11,10 +11,10 @@
     <file>./api</file>
     <file>./batch</file>
     <file>./bin</file>
-    <file>./ci-resources</file>
     <file>./connecteur</file>
     <file>./connecteur-type</file>
     <file>./controler</file>
+    <file>./docker</file>
     <file>./extensions</file>
     <file>./installation</file>
     <file>./lib</file>

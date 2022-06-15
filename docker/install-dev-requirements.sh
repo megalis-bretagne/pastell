@@ -14,7 +14,7 @@ rm -r /var/lib/apt/lists/*
 
 phpenmod xdebug pcov
 
-/bin/bash /var/www/pastell/ci-resources/github/create-auth-file.sh
+/bin/bash /var/www/pastell/docker/github/create-auth-file.sh
 
 composer install
 

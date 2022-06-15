@@ -17,7 +17,7 @@ services:
 
   db:
     volumes:
-      - ./ci-resources/mysql-dev/:/etc/mysql/conf.d/
+      - ./docker/mysql-dev/:/etc/mysql/conf.d/
     ports:
       - "${DATABASE_PORT:-8306}:3306"
 
