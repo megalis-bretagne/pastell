@@ -1,7 +1,7 @@
 .dockerignore
 Dockerfile
-docker-compose.override.yml
-docker-compose.yml
+/docker/docker-compose.override.yml
+/docker/docker-compose.yml
 .gitlab-ci.yml
 .git
 vendor
