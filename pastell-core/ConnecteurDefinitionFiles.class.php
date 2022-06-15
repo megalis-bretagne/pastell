@@ -54,6 +54,18 @@ class ConnecteurDefinitionFiles
         return $result;
     }
 
+    public function getAllDefinitionPath($filePath)
+    {
+        $result = [];
+        foreach ($this->extensions->getAllConnecteur() as $id_connecteur => $connecteur_path) {
+            $entitiesDefinitionFilePath = $connecteur_path . '/' . $filePath;
+            if (file_exists($entitiesDefinitionFilePath)) {
+                $result[$id_connecteur]  = $entitiesDefinitionFilePath;
+            }
+        }
+        return $result;
+    }
+
     private function sortConnecteur($a, $b)
     {
         return strcasecmp($a[self::NOM], $b[self::NOM]);

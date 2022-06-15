@@ -11,33 +11,28 @@ formulaire:
 action:
     demande-classification:
         name: 'Envoyer une demande de classification pour toutes les collectivités'
-        tab: TdT
         action-class: DemandeClassificationAll
         rule:
             droit_id_u: 'entite:edition'
     recup-classification:
         name: 'Récupérer la classification pour toutes les collectivités'
-        tab: TdT
         action-class: RecupClassificationAll
         rule:
             droit_id_u: 'entite:edition'
     recup-pes-retour:
         name: 'Récupérer les PES retour pour toutes les collectivités'
-        tab: TdT
         action-class: RecupPESRetourAll
         rule:
             droit_id_u: 'entite:edition'
         action-automatique: recup-pes-retour
     recup-reponse-prefecture:
         name: 'Récupérer les réponses de la préfecture pour toutes les collectivités'
-        tab: TdT
         action-class: RecupReponsePrefectureAll
         rule:
             droit_id_u: 'entite:edition'
         action-automatique: recup-reponse-prefecture
     redirect-to-mise-a-jour-certif-s2low:
         name: 'Mettre à jour les certificats'
-        tab: TdT
         rule:
             droit_id_u: 'entite:edition'
         action-class: StandardAction
@@ -45,7 +40,6 @@ action:
         connecteur-type-action: RedirectToGlobalUpdateCertificate
     mise-a-jour-certif-s2low:
         name: 'Mettre à jour les certificats'
-        tab: TdT
         rule:
             role_id_e: no-role
         action-class: StandardChoiceAction
