@@ -54,7 +54,7 @@ class ReplaceGedSshWithDepotSftp extends BaseCommand
     /**
      * @throws Exception
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->getIO()->title("Start replacing associated `ged-ssh` connectors with `depot-sftp`");
         $associatedConnectors = $this->fluxEntiteSQL->getAssociatedConnectorsById('ged-ssh');

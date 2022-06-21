@@ -1,32 +1,33 @@
 #!/usr/bin/env php
 <?php
 
-/**
- * @var ObjectInstancier $objectInstancier
- */
-
-
 use Pastell\Helpers\ClassHelper;
-use Symfony\Component\Console\Application;
+use Pastell\Kernel;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
 
-if (false === in_array(PHP_SAPI, ['cli', 'phpdbg', 'embed'], true)) {
-    echo 'Warning: The console should be invoked via the CLI version of PHP, not the ' . PHP_SAPI . ' SAPI' . PHP_EOL;
+if (!is_file(dirname(__DIR__).'/vendor/autoload_runtime.php')) {
+    throw new LogicException('Symfony Runtime is missing. Try running "composer require symfony/runtime".');
 }
 
-require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'init.php';
+require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-// run the command application
-$application = new Application();
+require __DIR__ . '/../init.php';
 
-$all_command = ClassHelper::findRecursive("Pastell\Command");
-foreach($all_command as $commandClassName) {
-    $reflexionClass = new ReflectionClass($commandClassName);
-    if ($reflexionClass->isAbstract()){
-        continue;
+
+return function (array $context) {
+    $kernel = new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG']);
+
+    $application = new Application($kernel);
+
+    $all_command = ClassHelper::findRecursive("Pastell\Command");
+    foreach($all_command as $commandClassName) {
+        $reflexionClass = new ReflectionClass($commandClassName);
+        if ($reflexionClass->isAbstract()){
+            continue;
+        }
+        /** @var Pastell\Command\BaseCommand $commandClass */
+        $commandClass = ObjectInstancierFactory::getObjetInstancier()->getInstance($commandClassName);
+        $application->add($commandClass);
     }
-    /** @var Pastell\Command\BaseCommand $commandClass */
-    $commandClass = $objectInstancier->getInstance($commandClassName);
-
-    $application->add($commandClass);
-}
-$application->run();
+    return $application;
+};
