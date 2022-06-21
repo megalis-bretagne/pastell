@@ -4,8 +4,9 @@
  * @var Gabarit $this
  * @var $menu_gauche_select
  * @var $droit_lecture_on_connecteur
+ * @var int $id_e
+ * @var bool $permission_on_import_export;
  */
-
 
 $admninistration_menu = [
     "Entite/detail" => "Informations (entités)",
@@ -18,11 +19,15 @@ if ($droit_lecture_on_connecteur) {
     $admninistration_menu["Flux/index"] = $id_e ? "Types de dossier (association)" : 'Associations connecteurs globaux';
 }
 
+if (! empty($permission_on_import_export)) {
+    $admninistration_menu["Entite/exportConfig"] = "Export de la configuration";
+    $admninistration_menu["Entite/importConfig"] = "Import de la configuration";
+}
+
 $donnees_menu = [
     "MailSec/annuaire" => "Annuaire (mail sécurisé)",
     "Entite/agents" => "Agents (Actes)",
 ];
-
 
 ?>
 

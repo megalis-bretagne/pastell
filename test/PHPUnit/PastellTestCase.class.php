@@ -19,7 +19,7 @@ abstract class PastellTestCase extends TestCase
     public const ID_U_ADMIN = 1;
 
     private $databaseConnection;
-    private $objectInstancier;
+    private ObjectInstancier $objectInstancier;
 
     private $emulated_disk;
 
@@ -96,7 +96,7 @@ abstract class PastellTestCase extends TestCase
         $this->setListPack(["pack_chorus_pro" => true, "pack_marche" => true, "pack_test" => true]);
     }
 
-    public function getObjectInstancier()
+    public function getObjectInstancier(): ObjectInstancier
     {
         return $this->objectInstancier;
     }

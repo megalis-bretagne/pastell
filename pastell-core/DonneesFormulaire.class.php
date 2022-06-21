@@ -948,7 +948,7 @@ class DonneesFormulaire
 
     public function jsonExport()
     {
-        $result['metadata'] = $this->getRawData();
+        $result['metadata'] = $this->getRawData() ?? [];
         foreach ($this->getAllFile() as $field) {
             foreach ($this->get($field) as $file_num => $file_name) {
                 $result['file'][$field][$file_num] = base64_encode($this->getFileContent($field, $file_num));

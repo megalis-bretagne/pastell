@@ -33,6 +33,14 @@ class PastellControler extends Controler
         ));
     }
 
+    protected function setDroitImportExportConfig(int $id_e): void
+    {
+        $this->setViewParameter(
+            'permission_on_import_export',
+            $this->getDroitService()->hasDroit($this->getId_u(), 'system:edition', $id_e)
+        );
+    }
+
     /**
      * @throws LastMessageException
      * @throws LastErrorException
@@ -218,7 +226,6 @@ class PastellControler extends Controler
                 $this->setViewParameter('daemon_stopped_warning', false);
             }
         }
-
         parent::renderDefault();
     }
 

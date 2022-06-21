@@ -1,5 +1,9 @@
 <?php
 
+use Pastell\Service\Crypto;
+use Pastell\Service\ImportExportConfig\ExportConfigService;
+use Pastell\Service\ImportExportConfig\ImportConfigService;
+
 class EntiteControler extends PastellControler
 {
     public function _beforeAction()
@@ -13,6 +17,7 @@ class EntiteControler extends PastellControler
         $this->setViewParameter('menu_gauche_template', "EntiteMenuGauche");
         $this->setViewParameter('menu_gauche_select', "Entite/detail");
         $this->setDroitLectureOnConnecteur($id_e);
+        $this->setDroitImportExportConfig($id_e);
     }
 
     private function getAgentSQL()
@@ -227,7 +232,7 @@ class EntiteControler extends PastellControler
         $this->hasDroitEdition($id_e);
         $this->setViewParameter('entite_info', $this->getEntiteSQL()->getInfo($id_e));
         $this->setViewParameter('template_milieu', "EntiteImport");
-        $this->setViewParameter('page_title', "Importer");
+        $this->setViewParameter('page_title', "Importer (fichier CSV)");
 
         if ($page == 0) {
             $this->setViewParameter('allCDG', $this->getEntiteListe()->getAll(Entite::TYPE_CENTRE_DE_GESTION));
@@ -562,5 +567,132 @@ class EntiteControler extends PastellControler
         }
         $this->setLastMessage("$nb_grade grades ont été importés");
         $this->redirect("/Entite/import?page=2");
+    }
+
+    /**
+     * @throws NotFoundException
+     * @throws LastMessageException
+     * @throws LastErrorException
+     */
+    public function exportConfigAction(): void
+    {
+        $recuperateur = $this->getGetInfo();
+        $id_e = $recuperateur->getInt('id_e', 0);
+
+        $this->verifDroit(0, "system:edition");
+
+        $this->setViewParameter('id_e', $id_e);
+        $this->setViewParameter('template_milieu', 'EntiteExportConfig');
+        $this->setViewParameter('menu_gauche_select', 'Entite/exportConfig');
+        $this->setPageTitle("Export de la configuration");
+        $this->renderDefault();
+    }
+
+    /**
+     * @throws NotFoundException
+     * @throws LastMessageException
+     * @throws LastErrorException
+     */
+    public function importConfigAction(): void
+    {
+        $recuperateur = $this->getGetInfo();
+        $id_e = $recuperateur->getInt('id_e', 0);
+
+        $this->verifDroit(0, "system:edition");
+
+        $this->setViewParameter('id_e', $id_e);
+        $this->setViewParameter('template_milieu', "EntiteImportConfig");
+        $this->setViewParameter('menu_gauche_select', "Entite/importConfig");
+        $this->setPageTitle("Import de la configuration");
+        $this->renderDefault();
+    }
+
+    /**
+     * @throws NotFoundException
+     * @throws LastMessageException
+     * @throws LastErrorException
+     */
+    public function exportConfigVerifAction(): void
+    {
+        $recuperateur = $this->getPostInfo();
+        $id_e = $recuperateur->getInt('id_e', 0);
+        $this->verifDroit(0, "system:edition");
+        $options = [];
+        foreach (ExportConfigService::getOptions() as $id => $label) {
+            $options[$id] = $recuperateur->get($id);
+        }
+        $exportConfigService = $this->getObjectInstancier()->getInstance(ExportConfigService::class);
+        $exportInfo = $exportConfigService->getInfo($id_e, $options);
+        $this->setViewParameter('id_e', $id_e);
+        $this->setViewParameter('exportInfo', $exportInfo);
+        $this->setViewParameter('template_milieu', "EntiteExportConfigVerif");
+        $this->setViewParameter('menu_gauche_select', "Entite/exportConfig");
+        $this->setViewParameter('options', $options);
+        $this->setPageTitle("Vérification de l'import de la configuration");
+        $this->renderDefault();
+    }
+
+    /**
+     * @throws LastMessageException
+     * @throws LastErrorException
+     * @throws JsonException
+     */
+    public function doExportConfigAction(): void
+    {
+        $recuperateur = $this->getPostInfo();
+        $id_e = $recuperateur->getInt('id_e', 0);
+        $password = $this->getPostInfo()->get('password');
+        $password_check = $this->getPostInfo()->get('password_check');
+
+        $this->verifDroit(0, "system:edition");
+
+        $options = [];
+        $link = "/Entite/exportConfigVerif?";
+        foreach (ExportConfigService::getOptions() as $id => $label) {
+            $options[$id] = $recuperateur->get($id);
+            $link .= sprintf("%s=%s&", $id, $options[$id]);
+        }
+
+
+        if ($password !== $password_check) {
+            $this->setLastError('Les mots de passe ne correspondent pas.');
+            $this->redirect($link);
+        } elseif (mb_strlen($password) < Crypto::PASSWORD_MINIMUM_LENGTH) {
+            $this->setLastError('Le mot de passe fait moins de ' . Crypto::PASSWORD_MINIMUM_LENGTH . ' caractères.');
+            $this->redirect($link);
+        }
+
+
+        $exportConfigService = $this->getObjectInstancier()->getInstance(ExportConfigService::class);
+        $exportInfo = $exportConfigService->getExportedFile($id_e, $options);
+        $encryptedInfo = $this->getInstance(Crypto::class)
+            ->encrypt($exportInfo, $password);
+
+        $filename = 'export.json';
+
+        $this->getInstance(SendFileToBrowser::class)
+            ->sendData($encryptedInfo, $filename, 'application/json');
+    }
+
+    /**
+     * @throws DonneesFormulaireException
+     * @throws LastErrorException
+     * @throws LastMessageException
+     */
+    public function doImportConfigAction(): void
+    {
+        $this->verifDroit(0, "system:edition");
+        $fileUploader = new FileUploader();
+        $file_content = $fileUploader->getFileContent('pser');
+        $password = $this->getPostInfo()->get('password');
+        $id_e = $this->getPostInfo()->getInt('id_e');
+        $message = $this->getInstance(Crypto::class)->decrypt($file_content, $password);
+
+        $message = json_decode($message, true, 512, JSON_THROW_ON_ERROR);
+        $importConfigService = $this->getObjectInstancier()->getInstance(ImportConfigService::class);
+        $importConfigService->import($message, $id_e);
+        $lastErrors = $importConfigService->getLastErrors();
+        $this->setLastMessage("Les données ont été importées<br/>" . implode('<br/>', $lastErrors));
+        $this->redirect("/Entite/detail?id_e=$id_e");
     }
 }
