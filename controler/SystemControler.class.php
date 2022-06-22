@@ -420,6 +420,7 @@ class SystemControler extends PastellControler
         $this->setViewParameter('template_milieu', 'SystemMissingConnecteur');
         $this->setViewParameter('menu_gauche_select', self::SYSTEM_INDEX_PAGE);
 
+        $detail_manquant_list = [];
         $connecteur_manquant_list = $this->getConnecteurFactory()->getManquant();
         foreach ($connecteur_manquant_list as $id_connecteur) {
             $id_ce_list = $this->getConnecteurEntiteSQL()->getAllById($id_connecteur);

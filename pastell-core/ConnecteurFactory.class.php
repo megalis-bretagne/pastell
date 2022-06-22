@@ -94,29 +94,37 @@ class ConnecteurFactory
     public function getManquant(): array
     {
         $connecteur_manquant_list = [];
-        $all_connecteur = $this->objectInstancier->getInstance(Extensions::class)->getAllConnecteur();
+        $all_connecteur = $this->objectInstancier
+            ->getInstance(Extensions::class)
+            ->getAllConnecteur();
 
-        $all_connecteur_global_used = $this->objectInstancier->getInstance(ConnecteurEntiteSQL::class)
+        $all_connecteur_global_used = $this->objectInstancier
+            ->getInstance(ConnecteurEntiteSQL::class)
             ->getAllUsedByScope(true);
         foreach ($all_connecteur_global_used as $id_connecteur) {
-            if (!in_array($id_connecteur, $connecteur_manquant_list)) {
-                if (empty($all_connecteur[$id_connecteur])) {
-                    $connecteur_manquant_list[] = $id_connecteur;
-                } elseif ($this->isRestrictedConnecteur($id_connecteur, true)) {
-                    $connecteur_manquant_list[] = $id_connecteur;
-                }
+            if (
+                !in_array($id_connecteur, $connecteur_manquant_list, true)
+                && (
+                    empty($all_connecteur[$id_connecteur])
+                    || $this->isRestrictedConnecteur($id_connecteur, true)
+                )
+            ) {
+                $connecteur_manquant_list[] = $id_connecteur;
             }
         }
 
-        $all_connecteur_entite_used = $this->objectInstancier->getInstance(ConnecteurEntiteSQL::class)
+        $all_connecteur_entite_used = $this->objectInstancier
+            ->getInstance(ConnecteurEntiteSQL::class)
             ->getAllUsedByScope(false);
         foreach ($all_connecteur_entite_used as $id_connecteur) {
-            if (!in_array($id_connecteur, $connecteur_manquant_list)) {
-                if (empty($all_connecteur[$id_connecteur])) {
-                    $connecteur_manquant_list[] = $id_connecteur;
-                } elseif ($this->isRestrictedConnecteur($id_connecteur)) {
-                    $connecteur_manquant_list[] = $id_connecteur;
-                }
+            if (
+                !in_array($id_connecteur, $connecteur_manquant_list, true)
+                && (
+                    empty($all_connecteur[$id_connecteur])
+                    || $this->isRestrictedConnecteur($id_connecteur)
+                )
+            ) {
+                $connecteur_manquant_list[] = $id_connecteur;
             }
         }
 
@@ -151,7 +159,8 @@ class ConnecteurFactory
     {
         return in_array(
             $id_connecteur,
-            $this->objectInstancier->getInstance(ConnecteurDefinitionFiles::class)->getAllRestricted($global)
+            $this->objectInstancier->getInstance(ConnecteurDefinitionFiles::class)->getAllRestricted($global),
+            true
         );
     }
 }
