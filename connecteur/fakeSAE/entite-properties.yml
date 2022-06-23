@@ -3,7 +3,13 @@ type: SAE
 description: "Il s'agit d'un bouchon utilisé pour le développement ou les démonstrations pendant lesquels l'utilisation d'un vrai SAE ne se révelerait pas commode."
 formulaire:
     page0:
-        result_send:
+        seda_version:
+			name: "Version du SEDA"
+			type: select
+			value:
+				1: '1.0'
+				2: '2.1'
+		result_send:
             name: "Résultat de l'envoi"
             type: select
             value:
