@@ -2,6 +2,10 @@
 
 ***Cette version nécessite une mise à jour du générateur SEDA en 0.8.3***
 
+## Corrections
+
+- Refactoring de ConnecteurFactory::getManquant() #1485
+
 ## Ajouts
 
 - Générateur SEDA: ajout des balises OriginatingAgencyArchiveIdentifier et TransferringAgencyArchiveIdentifier #1463

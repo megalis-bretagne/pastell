@@ -144,9 +144,15 @@ class ConnecteurEntiteSQL extends SQL
         return  $this->query($sql);
     }
 
-    public function getAllUsed()
+    public function getAllUsedByScope($global = false)
     {
-        $sql = "SELECT distinct id_connecteur FROM connecteur_entite";
+        if ($global) {
+            $sql = "SELECT distinct id_connecteur FROM connecteur_entite " .
+                " WHERE id_e = 0";
+        } else {
+            $sql = "SELECT distinct id_connecteur FROM connecteur_entite " .
+                " WHERE id_e != 0";
+        }
         return  $this->queryOneCol($sql);
     }
 

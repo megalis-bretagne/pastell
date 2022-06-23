@@ -112,7 +112,12 @@ class ConnecteurEntiteSQLTest extends PastellTestCase
 
     public function testGetAllUsed()
     {
-        $info = $this->getConnecteurEntiteSQL()->getAllUsed();
-        $this->assertCount(12, $info);
+        $this->assertCount(
+            12,
+            array_merge(
+                $this->getConnecteurEntiteSQL()->getAllUsedByScope(false),
+                $this->getConnecteurEntiteSQL()->getAllUsedByScope(true)
+            )
+        );
     }
 }
