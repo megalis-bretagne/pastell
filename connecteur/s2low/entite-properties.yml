@@ -1,5 +1,4 @@
 nom: S²low
-extends: TdT
 description: "Connecteur pour le logiciel S²low de l'Adullact. Permet l'utilisation des protocoles Actes et Helios.\nConfiguration du connecteur, option \"Utiliser l'authentification par certificat sur S2low pour la télétransmission\":\nCette option est prise en compte pour les types de dossier Actes (générique) sur l'action \"Transmettre à la préfecture\". Apparaît alors un bouton « Ordonner la télétransmission au TdT ». Sur cette action, l'utilisateur est redirigé vers S2low afin de présenter un certificat valide, puis S2low redirige l'utilisateur vers Pastell. Ceci afin de se substituer à l'action de l'agent sur s2low qui valide en cliquant sur le bouton « Poster ce document ».\nRemarque: Lorsque cette case est cochée, La case « Confirmer la transaction sur S²LOW » n'a plus d'effet. De fait la transaction necessite une authentification par certificat."
 type: TdT
 formulaire:
@@ -50,7 +49,6 @@ formulaire:
 action:
     test-tedetis:
         name: 'Tester la connectivité'
-        tab: TdT
         action-class: TestConnexion
         rule:
             droit_id_u: 'entite:edition'
@@ -61,19 +59,16 @@ action:
             droit_id_u: 'entite:edition'
     demande-classification:
         name: 'Envoyer une demande de classification à la préfecture'
-        tab: TdT
         action-class: EnvoieDemandeClassification
         rule:
             droit_id_u: 'entite:edition'
     recup-classification:
         name: 'Récupérer la classification'
-        tab: TdT
         action-class: RecupClassification
         rule:
             droit_id_u: 'entite:edition'
     update-certificate:
         name: 'Mettre à jour les certificats'
-        tab: TdT
         rule:
             role_id_e: no-role
         action-class: StandardAction
@@ -91,13 +86,11 @@ action:
             role_id_e: no-role
     recup-pes-retour:
         name: 'Récupérer les PES retour'
-        tab: TdT
         action-class: RecupPESRetour
         rule:
             droit_id_u: 'entite:edition'
     recup-reponse-prefecture:
         name: 'Récupérer les réponses de la préfecture'
-        tab: TdT
         action-class: RecupReponsePrefecture
         rule:
             droit_id_u: 'entite:edition'

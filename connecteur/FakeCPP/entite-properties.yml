@@ -4,7 +4,7 @@ description: 'Connecteur bouchon CPP'
 restriction_pack:
     - pack_chorus_pro
 formulaire:
-    page0: ''
+    page0: []
 action:
     import-facture:
         name: 'Récupérer les factures cpp'

@@ -5,12 +5,12 @@ restriction_pack:
     - pack_test
 formulaire:
     page0:
-        champs1: ''
-        champs2: ''
+        champs1:
+        champs2:
         champs3:
             commentaire: 'Un changement sur champs3 entraine un changement sur champs4'
             onchange: change_4
-        champs4: ''
+        champs4:
 action:
     ok:
         name: 'Répondre "OK !"'

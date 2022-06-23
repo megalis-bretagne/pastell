@@ -4,4 +4,4 @@ formulaire:
     onglet:
         mon_fichier:
             type: file
-action: ''
+action: []

@@ -17,4 +17,4 @@ formulaire:
                 ok: OK
                 error: Erreur
             default: ok
-action: ''
+action: []

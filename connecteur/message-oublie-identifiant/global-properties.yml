@@ -9,4 +9,4 @@ formulaire:
         message:
             name: 'Message à afficher'
             type: textarea
-action: ''
+action: []
