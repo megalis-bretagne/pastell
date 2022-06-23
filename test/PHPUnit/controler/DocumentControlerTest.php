@@ -203,7 +203,7 @@ class DocumentControlerTest extends ControlerTestCase
 
         $roleUtilisateur = $this->getObjectInstancier()->getInstance(RoleUtilisateur::class);
         $roleUtilisateur->addRole($id_u, "admin", 2);
-        $this->getObjectInstancier()->getInstance(Authentification::class)->Connexion('admin', $id_u);
+        $this->getObjectInstancier()->getInstance(Authentification::class)->connexion('admin', $id_u);
 
         $documentController = $this->getObjectInstancier()->getInstance(DocumentControler::class);
         $documentController->setGetInfo(new Recuperateur(['id_e' => 1,]));
@@ -229,7 +229,7 @@ class DocumentControlerTest extends ControlerTestCase
         $roleUtilisateur = $this->getObjectInstancier()->getInstance(RoleUtilisateur::class);
         $roleUtilisateur->addRole($id_u, "admin", 2);
         $roleUtilisateur->addRole($id_u, "admin", 1);
-        $this->getObjectInstancier()->getInstance(Authentification::class)->Connexion('admin', $id_u);
+        $this->getObjectInstancier()->getInstance(Authentification::class)->connexion('admin', $id_u);
 
         $documentController = $this->getObjectInstancier()->getInstance(DocumentControler::class);
 
@@ -252,7 +252,7 @@ class DocumentControlerTest extends ControlerTestCase
         $roleUtilisateur = $this->getObjectInstancier()->getInstance(RoleUtilisateur::class);
         $roleUtilisateur->addRole($id_u, "admin", 2);
         $roleUtilisateur->addRole($id_u, "utilisateur", 1);
-        $this->getObjectInstancier()->getInstance(Authentification::class)->Connexion('admin', $id_u);
+        $this->getObjectInstancier()->getInstance(Authentification::class)->connexion('admin', $id_u);
 
         $documentController = $this->getObjectInstancier()->getInstance(DocumentControler::class);
         $documentController->setGetInfo(new Recuperateur(['id_e' => 1]));

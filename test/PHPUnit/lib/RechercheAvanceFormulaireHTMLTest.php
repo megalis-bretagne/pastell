@@ -19,7 +19,7 @@ class RechercheAvanceFormulaireHTMLTest extends PastellTestCase
 
         $this->associateFluxWithConnector($id_ce, "pdf-generique", "signature");
 
-        $this->getObjectInstancier()->getInstance(Authentification::class)->Connexion('admin', 1);
+        $this->getObjectInstancier()->getInstance(Authentification::class)->connexion('admin', 1);
         $rechercheAvancerFormulaireHTML  = $this->getObjectInstancier()->getInstance(
             RechercheAvanceFormulaireHTML::class
         );
@@ -43,7 +43,7 @@ class RechercheAvanceFormulaireHTMLTest extends PastellTestCase
     public function testWhenHaveExternalDataFieldAndNoAssociation()
     {
 
-        $this->getObjectInstancier()->getInstance(Authentification::class)->Connexion('admin', 1);
+        $this->getObjectInstancier()->getInstance(Authentification::class)->connexion('admin', 1);
         $rechercheAvancerFormulaireHTML  = $this->getObjectInstancier()->getInstance(
             RechercheAvanceFormulaireHTML::class
         );

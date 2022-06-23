@@ -28,7 +28,7 @@ class ControlerTestCase extends PastellTestCase
 
     public function getControlerInstance($class_name)
     {
-        $this->getObjectInstancier()->getInstance(Authentification::class)->Connexion('admin', 1);
+        $this->getObjectInstancier()->getInstance(Authentification::class)->connexion('admin', 1);
         $this->controler = $this->getObjectInstancier()->getInstance($class_name);
         $this->controler->setDontRedirect(true);
         $this->controler->setGetInfo(new Recuperateur($this->get_info));
@@ -51,7 +51,7 @@ class ControlerTestCase extends PastellTestCase
         $roleUtilisateur = $this->getObjectInstancier()->getInstance(RoleUtilisateur::class);
         $roleUtilisateur->addRole($id_u, "my_role", $id_e);
 
-        $this->getObjectInstancier()->getInstance(Authentification::class)->Connexion('my_login', $id_u);
+        $this->getObjectInstancier()->getInstance(Authentification::class)->connexion('my_login', $id_u);
 
         return $id_u;
     }

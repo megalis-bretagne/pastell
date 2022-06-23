@@ -12,22 +12,23 @@ class HelpURLTest extends PastellTestCase
         $id_ce = $this->createConnector('help-url', "URL d'aide", 0)['id_ce'];
         $this->configureConnector($id_ce, ['help_url' => 'https://foo.bar/baz'], 0);
         $this->associateGlobalConnector($id_ce);
-        $this->getObjectInstancier()->getInstance(Authentification::class)->Connexion('admin', 1);
+        $this->getObjectInstancier()->getInstance(Authentification::class)->connexion('admin', 1);
         $aideController = $this->getObjectInstancier()->getInstance(AideControler::class);
         $this->expectOutputRegex('#https://foo.bar/baz#');
         $aideController->RGPDAction();
     }
 
     /**
-     * @throws UnrecoverableException
+     * @return void
+     * @throws NotFoundException
      */
-    public function testWithoutHelpURL()
+    public function testWithoutHelpURL(): void
     {
-        $this->getObjectInstancier()->getInstance(Authentification::class)->Connexion('admin', 1);
+        $this->getObjectInstancier()->getInstance(Authentification::class)->connexion('admin', 1);
         $aideController = $this->getObjectInstancier()->getInstance(AideControler::class);
         ob_start();
         $aideController->RGPDAction();
         $result = ob_get_clean();
-        self::assertStringNotContainsString("<span>Aide</span>", $result);
+        self::assertStringNotContainsString('<span>Aide</span>', $result);
     }
 }

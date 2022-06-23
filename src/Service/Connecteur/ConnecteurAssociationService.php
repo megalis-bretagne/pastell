@@ -38,14 +38,14 @@ class ConnecteurAssociationService
     public function addConnecteurAssociation(
         int $id_e,
         int $id_ce,
-        string $type_connecteur = '',
+        ?string $type_connecteur = null,
         int $id_u = 0,
         string $type_dossier = '',
         int $num_same_type = 0
     ): int {
 
         $info = $this->connecteurEntiteSQL->getInfo($id_ce);
-        if ($type_connecteur === '') {
+        if ($type_connecteur === null) {
             $type_connecteur = $info['type'];
         }
         if ($info['type'] != $type_connecteur) {
