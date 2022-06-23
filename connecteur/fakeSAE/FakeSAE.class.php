@@ -3,11 +3,22 @@
 class FakeSAE extends SAEConnecteur
 {
     public const CONNECTEUR_ID = 'fakeSAE';
+    private const FIXTURE = __DIR__ . '/fixtures/%s/';
+    private const SEDA_VERSION = [
+        1 => 'seda-1.0',
+        2 => 'seda-2.1',
+    ];
+    private const FILENAME = [
+        'ACK' => 'ACK.xml',
+        'ATR' => 'ATR.xml',
+        'ATR_refused' => 'ATR_refused.xml'
+    ];
 
     private $tmpFile;
 
     /** @var DonneesFormulaire */
     private $collectiviteProperties;
+    private $sedaVersion;
 
     public function __construct(TmpFile $tmpFile)
     {
@@ -17,6 +28,13 @@ class FakeSAE extends SAEConnecteur
     public function setConnecteurConfig(DonneesFormulaire $collectiviteProperties)
     {
         $this->collectiviteProperties = $collectiviteProperties;
+        $this->sedaVersion = $this->collectiviteProperties->get('seda_version') ?: 1;
+    }
+
+    private function getFixture(string $name): string
+    {
+        return sprintf(self::FIXTURE, self::SEDA_VERSION[$this->sedaVersion])
+            . '/' . self::FILENAME[$name];
     }
 
     /**
@@ -61,10 +79,15 @@ class FakeSAE extends SAEConnecteur
         }
 
         $simpleXMLWrapper = new SimpleXMLWrapper();
-        $xml = $simpleXMLWrapper->loadFile(__DIR__ . "/fixtures/ACK.xml");
+        $xml = $simpleXMLWrapper->loadFile($this->getFixture('ACK'));
         $xml->{'Date'} = date("c");
         $xml->{'MessageReceivedIdentifier'} = "$id_transfert";
-        $xml->{'AcknowledgementIdentifier'}  = "ACK_" . mt_rand(0, mt_getrandmax());
+        if ($this->sedaVersion == 1) {
+            $xml->{'AcknowledgementIdentifier'}  = "ACK_" . mt_rand(0, mt_getrandmax());
+        } else {
+            $xml->{'MessageIdentifier'}  = "ACK_" . mt_rand(0, mt_getrandmax());
+        }
+
         return $xml->asXML();
     }
 
@@ -79,9 +102,18 @@ class FakeSAE extends SAEConnecteur
         $simpleXMLWrapper = new SimpleXMLWrapper();
         $xml = $simpleXMLWrapper->loadFile($atr_filepath);
         $xml->{'Date'} = date("c");
-        $xml->{'TransferIdentifier'} = "$id_transfert";
-        $xml->{'TransferReplyIdentifier'}  = "ATR_" . mt_rand(0, mt_getrandmax());
-        $xml->{'Archive'}->{'ArchivalAgencyArchiveIdentifier'} = mt_rand(0, mt_getrandmax());
+        if ($this->sedaVersion == 1) {
+            $xml->{'TransferIdentifier'} = "$id_transfert";
+            $xml->{'TransferReplyIdentifier'}  = "ATR_" . mt_rand(0, mt_getrandmax());
+            $xml->{'Archive'}->{'ArchivalAgencyArchiveIdentifier'} = mt_rand(0, mt_getrandmax());
+        } else {
+            $xml->{'MessageIdentifier'} = "$id_transfert";
+            $xml->{'MessageRequestIdentifier'}  = "ATR_" . mt_rand(0, mt_getrandmax());
+            $xml->{'DataObjectPackage'}->{'DescriptiveMetadata'}->{'ArchiveUnit'}
+                ->{'Content'}->{'ArchivalAgencyArchiveUnitIdentifier'}
+                = mt_rand(0, mt_getrandmax());
+        }
+
         return $xml->asXML();
     }
 
@@ -90,10 +122,10 @@ class FakeSAE extends SAEConnecteur
         $result_verif = $this->collectiviteProperties->get('result_verif') ?: 1;
 
         if ($result_verif == 1) {
-            return $this->getATRintern($id_transfer, __DIR__ . "/fixtures/ATR.xml");
+            return $this->getATRintern($id_transfer, $this->getFixture('ATR'));
         }
         if ($result_verif == 2) {
-            return $this->getATRintern($id_transfer, __DIR__ . "/fixtures/ATR_refused.xml");
+            return $this->getATRintern($id_transfer, $this->getFixture('ATR_refused'));
         }
 
         throw new UnrecoverableException("Impossible de lire le message");

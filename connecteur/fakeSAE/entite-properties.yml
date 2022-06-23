@@ -5,6 +5,13 @@ description: |
 
 formulaire:
 	page0:
+		seda_version:
+			name: Version du SEDA
+			type: select
+			value:
+				1: '1.0'
+				2: '2.1'
+
 		result_send:
 			name: Résultat de l'envoi
 			type: select
