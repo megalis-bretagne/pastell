@@ -10,7 +10,7 @@ class ConnecteurFileTest extends PastellTestCase
      * @dataProvider filesEntitiesProvider
      * @return void
      */
-    public function testAllConnecteur($filePath): void
+    public function testAllConnecteur(string $filePath): void
     {
         $processor = new Processor();
         $connectorConfiguration = new ConnectorConfiguration();
@@ -28,14 +28,14 @@ class ConnecteurFileTest extends PastellTestCase
     public function filesEntitiesProvider(): array
     {
         $provider = [];
-        $connecteurDefintionFiles = $this->getObjectInstancier()->getInstance(ConnecteurDefinitionFiles::class);
-        $allEntitiesFiles = $connecteurDefintionFiles->getAllDefinitionPath(
+        $connecteurDefinitionFiles = $this->getObjectInstancier()->getInstance(ConnecteurDefinitionFiles::class);
+        $allEntitiesFiles = $connecteurDefinitionFiles->getAllDefinitionPath(
             ConnecteurDefinitionFiles::ENTITE_PROPERTIES_FILENAME
         );
         foreach ($allEntitiesFiles as $connecteurId => $filePath) {
             $provider[$connecteurId] = [$filePath];
         }
-        $allEntitiesFiles = $connecteurDefintionFiles->getAllDefinitionPath(
+        $allEntitiesFiles = $connecteurDefinitionFiles->getAllDefinitionPath(
             ConnecteurDefinitionFiles::GLOBAL_PROPERTIES_FILENAME
         );
         foreach ($allEntitiesFiles as $connecteurId => $filePath) {

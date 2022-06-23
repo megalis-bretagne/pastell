@@ -9,7 +9,7 @@ use Symfony\Component\Yaml\Yaml;
 
 class ConnectorConfigurationTest extends TestCase
 {
-    public function testNominalCase()
+    public function testNominalCase(): void
     {
         $config = Yaml::parse(
             file_get_contents(__DIR__ . '/fixtures/nominal-connector.yml')
@@ -23,7 +23,10 @@ class ConnectorConfigurationTest extends TestCase
         self::assertEquals('Nominal Connector', $processedConfiguration['nom']);
     }
 
-    public function testTrueConnector()
+    /**
+     * @throws \JsonException
+     */
+    public function testTrueConnector(): void
     {
         $config = Yaml::parse(
             file_get_contents(__DIR__ . '/../../connecteur/as@lae-rest/entite-properties.yml')

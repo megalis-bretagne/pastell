@@ -1,31 +1,25 @@
 <?php
 
-//Chargé des fichier entite-properties.yml et global-properties.yml
+declare(strict_types=1);
 
+//Chargé des fichiers entite-properties.yml et global-properties.yml
+
+use Pastell\Configuration\ConnectorConfiguration;
 use Pastell\Service\Pack\PackService;
 
 class ConnecteurDefinitionFiles
 {
-    public const NOM = 'nom';
-    public const TYPE = 'type';
-    public const DESCRIPTION = 'description';
-    public const RESTRICTION_PACK = 'restriction_pack';
+    public const ENTITE_PROPERTIES_FILENAME = 'entite-properties.yml';
+    public const GLOBAL_PROPERTIES_FILENAME = 'global-properties.yml';
 
-    public const ENTITE_PROPERTIES_FILENAME = "entite-properties.yml";
-    public const GLOBAL_PROPERTIES_FILENAME = "global-properties.yml";
-
-    private $extensions;
-    private $yml_loader;
-    private $packService;
-
-    public function __construct(Extensions $extensions, YMLLoader $yml_loader, PackService $packService)
-    {
-        $this->extensions = $extensions;
-        $this->yml_loader = $yml_loader;
-        $this->packService = $packService;
+    public function __construct(
+        private readonly Extensions $extensions,
+        private readonly YMLLoader $yml_loader,
+        private readonly PackService $packService,
+    ) {
     }
 
-    public function getAll($global = false)
+    public function getAll(bool $global = false): array
     {
         if ($global) {
             return $this->getAllGlobal();
@@ -33,16 +27,16 @@ class ConnecteurDefinitionFiles
         return $this->getAllConnecteurByFile(self::ENTITE_PROPERTIES_FILENAME);
     }
 
-    public function getAllGlobal()
+    public function getAllGlobal(): array
     {
         return $this->getAllConnecteurByFile(self::GLOBAL_PROPERTIES_FILENAME);
     }
 
-    private function getAllConnecteurByFile($file_name)
+    private function getAllConnecteurByFile(string $file_name): array
     {
         $result = [];
         foreach ($this->extensions->getAllConnecteur() as $id_connecteur => $connecteur_path) {
-            $definition_file_path = $connecteur_path . "/" . $file_name;
+            $definition_file_path = $connecteur_path . '/' . $file_name;
             if (file_exists($definition_file_path)) {
                 $connecteur_definition = $this->yml_loader->getArray($definition_file_path);
                 if (!($connecteur_definition && $this->isRestrictedConnecteur($connecteur_definition))) {
@@ -50,11 +44,11 @@ class ConnecteurDefinitionFiles
                 }
             }
         }
-        uasort($result, [$this,"sortConnecteur"]);
+        uasort($result, [$this, 'sortConnecteur']);
         return $result;
     }
 
-    public function getAllDefinitionPath($filePath)
+    public function getAllDefinitionPath(string $filePath): array
     {
         $result = [];
         foreach ($this->extensions->getAllConnecteur() as $id_connecteur => $connecteur_path) {
@@ -66,27 +60,27 @@ class ConnecteurDefinitionFiles
         return $result;
     }
 
-    private function sortConnecteur($a, $b)
+    private function sortConnecteur(array $a, array $b): int
     {
-        return strcasecmp($a[self::NOM], $b[self::NOM]);
+        return strcasecmp($a[ConnectorConfiguration::NOM], $b[ConnectorConfiguration::NOM]);
     }
 
 
-    public function getAllType()
+    public function getAllType(): array
     {
         return $this->getAllTypeByDef($this->getAll());
     }
 
-    public function getAllGlobalType()
+    public function getAllGlobalType(): array
     {
         return $this->getAllTypeByDef($this->getAllGlobal());
     }
 
-    private function getAllTypeByDef(array $connecteur_definition)
+    private function getAllTypeByDef(array $connecteur_definition): array
     {
         $result = [];
         foreach ($connecteur_definition as $def) {
-            $result[$def[self::TYPE]] = 1;
+            $result[$def[ConnectorConfiguration::TYPE]] = 1;
         }
         $result = array_keys($result);
 
@@ -94,12 +88,12 @@ class ConnecteurDefinitionFiles
         return $result;
     }
 
-    public function getAllByIdE($id_e)
+    public function getAllByIdE(int $id_e): array
     {
         return $id_e ? $this->getAll() : $this->getAllGlobal();
     }
 
-    public function getInfo($id_connecteur, $global = false)
+    public function getInfo(string $id_connecteur, bool $global = false): bool|array
     {
         if ($global) {
             return $this->getInfoGlobal($id_connecteur);
@@ -116,13 +110,18 @@ class ConnecteurDefinitionFiles
         return $array;
     }
 
-    public function getInfoGlobal($id_connecteur)
+    public function getInfoGlobal(string $id_connecteur): bool|array
     {
         $connecteur_path = $this->extensions->getConnecteurPath($id_connecteur);
         return $this->yml_loader->getArray("$connecteur_path/" . self::GLOBAL_PROPERTIES_FILENAME);
     }
 
-    public function getConnecteurClass($id_connecteur)
+    /**
+     * @param string $id_connecteur
+     * @return mixed
+     * @throws Exception
+     */
+    public function getConnecteurClass(string $id_connecteur): mixed
     {
         $connecteur_path = $this->extensions->getConnecteurPath($id_connecteur);
         $all = glob("$connecteur_path/*.class.php");
@@ -130,18 +129,18 @@ class ConnecteurDefinitionFiles
             throw new Exception("Impossible de trouver une classe pour le connecteur $id_connecteur");
         }
         $class_file = $all[0];
-        $class_name = basename($class_file, ".class.php");
+        $class_name = basename($class_file, '.class.php');
         if (!class_exists($class_name, false)) {
             require_once($class_file);
         }
         return $class_name;
     }
 
-    public function getAllByFamille($famille_connecteur, $global = false)
+    public function getAllByFamille(string $famille_connecteur, bool $global = false): array
     {
         $result = [];
         foreach ($this->getAll($global) as $connecteur_id => $connecteur_properties) {
-            if ($connecteur_properties['type'] == $famille_connecteur) {
+            if ($connecteur_properties['type'] === $famille_connecteur) {
                 $result[$connecteur_id] = true;
             }
         }
@@ -178,7 +177,7 @@ class ConnecteurDefinitionFiles
     {
         $result = [];
         foreach ($this->extensions->getAllConnecteur() as $id_connecteur => $connecteur_path) {
-            $definition_file_path = $connecteur_path . "/" . $file_name;
+            $definition_file_path = $connecteur_path . '/' . $file_name;
             if (file_exists($definition_file_path)) {
                 $connecteur_definition = $this->yml_loader->getArray($definition_file_path);
                 if ($connecteur_definition && $this->isRestrictedConnecteur($connecteur_definition)) {
@@ -195,7 +194,7 @@ class ConnecteurDefinitionFiles
      */
     private function isRestrictedConnecteur(array $connecteur_definition = []): bool
     {
-        $restriction_pack = $connecteur_definition[self::RESTRICTION_PACK] ?? [];
+        $restriction_pack = $connecteur_definition[ConnectorConfiguration::RESTRICTION_PACK] ?? [];
         return (! $this->packService->hasOneOrMorePackEnabled($restriction_pack));
     }
 }
