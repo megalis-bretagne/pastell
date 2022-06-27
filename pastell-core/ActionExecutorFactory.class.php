@@ -485,7 +485,6 @@ class ActionExecutorFactory
     {
         $module_path = $this->extensions->getModulePath($flux);
         $action_class_file = "$module_path/" . self::ACTION_FOLDERNAME . "/$action_class_name.class.php";
-
         if (file_exists($action_class_file)) {
             return $action_class_file;
         }

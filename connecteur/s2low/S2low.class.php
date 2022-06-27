@@ -576,55 +576,56 @@ class S2low extends TdtConnecteur
      * @param $id_transaction
      * @return bool|mixed|string
      * @throws S2lowException
+     * @throws JsonException
      */
-    public function getActeTamponne($id_transaction)
+    public function getActeTamponne($id_transaction, string $date_affichage = null): ?string
     {
         $file_list = $this->getActeTamponneS2lowV2FileList($id_transaction);
         if (! $file_list) {
             //S2low v<2
-            $result = $this->exec(
+            return $this->exec(
                 self::URL_ACTES_TAMPONNE . "?transaction=$id_transaction",
                 false
             );
-            return $result;
         }
         //S2low v2
-        return $this->getActeTamponneS2lowV2($file_list);
+        return $this->getActeTamponneS2lowV2($file_list, $date_affichage);
     }
 
-    private function getActeTamponneS2lowV2FileList($id_transaction)
+    /**
+     * @throws JsonException
+     */
+    private function getActeTamponneS2lowV2FileList(string $id_transaction)
     {
         try {
-            $file_list = $this->exec(self::URL_GET_FILE_LIST . "?transaction=$id_transaction");
+            $url = self::URL_GET_FILE_LIST . "?transaction=$id_transaction";
+            $file_list = $this->exec($url);
         } catch (Exception $e) {
-            return false;
+            return [];
         }
         if (!$file_list) {
-            return false;
+            return [];
         }
-        $file_list = json_decode($file_list, true);
+        $file_list = json_decode($file_list, true, 512, JSON_THROW_ON_ERROR);
         if (!$file_list) {
-            return false;
+            return [];
         }
         return $file_list;
     }
 
     /**
-     * @param $file_list
-     * @return bool|mixed|string
      * @throws S2lowException
      */
-    private function getActeTamponneS2lowV2($file_list)
+    private function getActeTamponneS2lowV2(array $file_list, ?string $date_affichage = null): ?string
     {
-        if ($file_list[1]['mimetype'] != 'application/pdf') {
-            return false;
+        if ($file_list[1]['mimetype'] !== 'application/pdf') {
+            return null;
         }
-
-        $result = $this->exec(
-            self::URL_DOWNLOAD_FILE . "?file={$file_list[1]['id']}&tampon=true",
-            false
-        );
-        return $result;
+        $url = self::URL_DOWNLOAD_FILE . "?file={$file_list[1]['id']}&tampon=true";
+        if ($date_affichage) {
+            $url .= "&date_affichage=$date_affichage";
+        }
+        return $this->exec($url, false);
     }
 
     /**
@@ -968,7 +969,7 @@ class S2low extends TdtConnecteur
     //Elle ne lance pas d'exception (la branche 1.5 ne connait pas cette fonction).
     //Lorsque la version 1.5 de S2low n'existera plus, il conviendra de modifier la fonction
     //pour qu'elle déclenche de véritables erreurs en cas de problème.
-    public function getAnnexesTamponnees($transaction_id)
+    public function getAnnexesTamponnees(string $transaction_id, ?string $date_affichage = null): array
     {
         try {
             $file_list = $this->exec(self::URL_GET_FILE_LIST . "?transaction=$transaction_id");
@@ -995,10 +996,11 @@ class S2low extends TdtConnecteur
                 $result[] = [];
                 continue;
             }
-            $content = $this->exec(
-                self::URL_DOWNLOAD_FILE . "?file={$file['id']}&tampon=true",
-                false
-            );
+            $url = self::URL_DOWNLOAD_FILE . "?file={$file['id']}&tampon=true";
+            if ($date_affichage) {
+                $url .= "&date_affichage=$date_affichage";
+            }
+            $content = $this->exec($url, false);
             $result[] = [
                 'filename' => $filename,
                 'content' => $content

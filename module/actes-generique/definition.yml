@@ -242,6 +242,12 @@ formulaire:
             name: 'Annexe(s) tamponnée(s) par le TdT'
             type: file
             multiple: true
+        acte_use_publication_date:
+            name: Utiliser une date sur le tampon
+            type: checkbox
+        acte_publication_date:
+            name: Date de publication du tampon
+            type: date
     'Retour GED':
         has_ged_document_id:
             no-show: true
@@ -583,6 +589,8 @@ action:
         editable-content:
             - envoi_ged
             - envoi_sae
+            - acte_use_publication_date
+            - acte_publication_date
     termine:
         name: 'Traitement terminé'
         rule:
@@ -617,6 +625,12 @@ action:
         name: 'Transaction annulée'
         rule:
             role_id_e: no-role
+    tamponner-tdt:
+        name: "Retamponner l'acte et les annexes"
+        rule:
+            has-action:
+                - acquiter-tdt
+        action-class: ActesTamponner
     send-ged:
         name-action: 'Verser à la GED'
         name: 'Versé à la GED'
@@ -647,6 +661,8 @@ action:
                         - error-ged
         editable-content:
             - envoi_sae
+            - acte_use_publication_date
+            - acte_publication_date
         action-class: StandardAction
         connecteur-type: GED
         connecteur-type-action: GEDEnvoyer
@@ -739,6 +755,9 @@ action:
         name: 'Transfert accepté par le SAE'
         rule:
             role_id_e: no-role
+        editable-content:
+            - acte_use_publication_date
+            - acte_publication_date
     rejet-sae:
         name: 'Transfert rejeté par le SAE'
         rule:

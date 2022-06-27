@@ -2,6 +2,7 @@
 
 class TedetisRecupTest extends PastellTestCase
 {
+    use CurlUtilitiesTestTrait;
     /**
      * @throws Exception
      */
@@ -265,4 +266,48 @@ class TedetisRecupTest extends PastellTestCase
         $message = $this->getSQLQuery()->queryOne($sql);
         $this->assertEquals("Transaction en erreur sur le TdT : Enveloppe invalide : raison de l'erreur hyper détaillé", $message);
     }
+
+    public function testReStamp(): void
+    {
+        $this->mockCurl([
+            '/admin/users/api-list-login.php' => true,
+            '/modules/actes/actes_download_file.php?file=3968&tampon=true&date_affichage=2022-02-18' => 'some pdf stuff tamponne',
+            '/modules/actes/actes_download_file.php?file=3969&tampon=true&date_affichage=2022-02-18' => 'some annexe tamponne',
+             '/modules/actes/actes_transac_get_files_list.php?transaction=42' =>
+                 file_get_contents(__DIR__ . "/../fixtures/actes_transac_get_files_list.json"),
+        ]);
+        $id_ce = $this->createConnector('s2low', 'S2low')['id_ce'];
+        $this->associateFluxWithConnector($id_ce,'actes-generique','TdT');
+
+
+        $id_d = $this->createDocument('actes-generique')['id_d'];
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
+        $donneesFormulaire->setData('tedetis_transaction_id', 42);
+        $donneesFormulaire->setData('acte_use_publication_date', true);
+        $donneesFormulaire->setData('acte_publication_date', '2022-02-18');
+
+        $donneesFormulaire->addFileFromData('arrete', 'mon_acte.pdf', '');
+        $donneesFormulaire->addFileFromData('autre_document_attache', 'ma_premiere_annexe.pdf', '');
+
+        $actionCreator = $this->getObjectInstancier()->getInstance(ActionCreatorSQL::class);
+        $actionCreator->addAction(1,0,'acquiter-tdt',"test", $id_d);
+
+
+        $result = $this->triggerActionOnDocument($id_d,'tamponner-tdt');
+        if (! $result){
+            print_r($this->getLogRecords());
+        }
+        static::assertTrue($result);
+        static::assertEquals(
+            'some pdf stuff tamponne',
+            $donneesFormulaire->getFileContent('acte_tamponne')
+        );
+        static::assertEquals(
+            'some annexe tamponne',
+            $donneesFormulaire->getFileContent('annexes_tamponnees', 0)
+        );
+    }
+
+    //TODO test goLot tampon..
+
 }
