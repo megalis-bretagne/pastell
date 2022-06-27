@@ -5,6 +5,7 @@
 ## Corrections
 
 - Il manquait la récupération de l'identifiant de l'archive sur le SAE dans le cas du SEDA 2.1 #1518
+- Il manquait le connecteur CPP pour les fréquences par défaut #1540
 - Refactoring de ConnecteurFactory::getManquant() #1485
 
 ## Ajouts
