@@ -354,7 +354,7 @@ iparapheur_retour: Archive',
         ]);
     }
 
-    public function associateGlobalConnector($id_ce): void
+    public function associateGlobalConnector(int $id_ce): void
     {
         $connecteurAssociationService = $this->getObjectInstancier()->getInstance(
             ConnecteurAssociationService::class
