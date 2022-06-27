@@ -94,10 +94,6 @@ if (!defined("PLATEFORME_MAIL")) {
     define("PLATEFORME_MAIL", "test@libriciel.net");
 }
 
-if (!defined("AIDE_URL")) {
-    define("AIDE_URL", "Aide/index");
-}
-
 if (!defined("TEMPLATE_PATH")) {
     define("TEMPLATE_PATH", __DIR__ . "/template/");
 }

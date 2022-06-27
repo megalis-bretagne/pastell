@@ -13,6 +13,7 @@
 - La bibliothèque de lecture YAML Spyc est remplacé par la bibliothèque Symfony YAML plus performante.
   Le script console dev:fix-yaml permet de modifier ce qui était permis (de manière incorrect) par Spyc #1515
 - Possibilité de supprimer ou de désactiver un utilisateur #112
+- Ajout du connecteur help-url qui permet de définir l'URL dune page d'aide #1547
 
 ## Suppressions
 
@@ -69,6 +70,7 @@
 - Suppression de SMTP_SERVER, SMTP_PORT, SMTP_USER, SMTP_PASSWORD, utilisé MAILER_DSN à la place. Voir https://symfony.com/doc/current/mailer.html#using-built-in-transports
 - Suppression du service versant dans le connecteur asalae #1504
 - Suppression du certificat utilisateur sur le connecteur i-Parapheur ; Suppression du connecteur global i-Parapheur #1476
+- Suppression de AIDE_URL remplacé par le connecteur help-url
 
 # [3.1.15] - 2022-06-13
 ***Cette version nécessite une modification de la base de données***

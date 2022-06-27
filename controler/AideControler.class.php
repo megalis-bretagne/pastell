@@ -14,16 +14,6 @@ class AideControler extends PastellControler
     /**
      * @throws NotFoundException
      */
-    public function indexAction()
-    {
-        $this->setViewParameter('page_title', "Aide");
-        $this->setViewParameter('template_milieu', "AideIndex");
-        $this->renderDefault();
-    }
-
-    /**
-     * @throws NotFoundException
-     */
     public function RGPDAction()
     {
         $this->setViewParameter('page_title', "RGPD");

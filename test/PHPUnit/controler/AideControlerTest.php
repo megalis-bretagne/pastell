@@ -14,15 +14,6 @@ class AideControlerTest extends ControlerTestCase
     /**
      * @throws NotFoundException
      */
-    public function testIndex()
-    {
-        $this->expectOutputRegex("##");
-        $this->aideControler->indexAction();
-    }
-
-    /**
-     * @throws NotFoundException
-     */
     public function testApropos()
     {
         $this->expectOutputRegex("#Journal des modifications#");

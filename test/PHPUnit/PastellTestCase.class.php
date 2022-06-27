@@ -3,6 +3,7 @@
 use Monolog\Handler\TestHandler;
 use Monolog\Logger;
 use org\bovigo\vfs\vfsStream;
+use Pastell\Service\Connecteur\ConnecteurAssociationService;
 use Pastell\Service\Pack\PackService;
 use PHPUnit\Framework\TestCase;
 use Pastell\Service\TypeDossier\TypeDossierImportService;
@@ -351,6 +352,15 @@ iparapheur_retour: Archive',
             'type' => $type,
             'num_same_type' => $num_same_type,
         ]);
+    }
+
+    public function associateGlobalConnector(int $id_ce): void
+    {
+        $connecteurAssociationService = $this->getObjectInstancier()->getInstance(
+            ConnecteurAssociationService::class
+        );
+
+        $connecteurAssociationService->addConnecteurAssociation(0, $id_ce);
     }
 
     /**

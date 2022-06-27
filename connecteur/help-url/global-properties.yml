@@ -1,0 +1,12 @@
+nom: "URL de la page d'aide"
+type: help-url
+description: "Permet de créer un lien supplémentaire dans le menu principal. Si le connecteur n'est pas configuré ou pas associé, le lien n'apparait pas"
+formulaire:
+  page0:
+    help_url:
+      name: "URL de la page d'aide"
+      preg_match: '/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i'
+      preg_match_error: "L'URL fournie semble incorrecte"
+      type: url
+
+

@@ -226,7 +226,18 @@ class PastellControler extends Controler
                 $this->setViewParameter('daemon_stopped_warning', false);
             }
         }
+        $this->setViewParameter('helpURL', $this->getHelpURL());
         parent::renderDefault();
+    }
+
+    private function getHelpURL(): string
+    {
+        $connecteurFactory = $this->getObjectInstancier()->getInstance(ConnecteurFactory::class);
+        $donneesFormulaire = $connecteurFactory->getGlobalConnecteurConfig('help-url');
+        if ($donneesFormulaire === false) {
+            return '';
+        }
+        return $donneesFormulaire->get('help_url');
     }
 
     public function setBreadcrumbs()

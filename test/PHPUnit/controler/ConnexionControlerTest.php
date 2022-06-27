@@ -30,7 +30,7 @@ class ConnexionControlerTest extends ControlerTestCase
      */
     public function testConnexion()
     {
-        $this->getObjectInstancier()->getInstance(Authentification::class)->Connexion('admin', 1);
+        $this->getObjectInstancier()->getInstance(Authentification::class)->connexion('admin', 1);
         $this->assertTrue($this->connexionControler->verifConnected());
     }
 
