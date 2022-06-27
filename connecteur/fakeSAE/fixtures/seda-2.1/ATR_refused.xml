@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<ArchiveTransferReply xmlns="fr:gouv:culture:archivesdefrance:seda:v2.1">
+  <Comment>Transfert de l'acte administratif TRDYTVB</Comment>
+  <Date>2022-06-22T16:23:49+02:00</Date>
+  <MessageIdentifier>1bc19af9-2212-4e5a-956a-36591c4ac27a</MessageIdentifier>
+  <ArchivalAgreement>acc_actes</ArchivalAgreement>
+  <CodeListVersions/>
+  <ReplyCode>101</ReplyCode>
+  <MessageRequestIdentifier>FRADCH_ATR_17388</MessageRequestIdentifier>
+  <GrantDate>2022-06-22T16:23:49+02:00</GrantDate>
+  <ArchivalAgency>
+    <Identifier>FRLSCH</Identifier>
+  </ArchivalAgency>
+  <TransferringAgency>
+    <Identifier>ville_02</Identifier>
+  </TransferringAgency>
+</ArchiveTransferReply>
