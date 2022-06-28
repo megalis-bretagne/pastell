@@ -3,6 +3,7 @@
 class TedetisRecupTest extends PastellTestCase
 {
     use CurlUtilitiesTestTrait;
+
     /**
      * @throws Exception
      */
@@ -277,7 +278,7 @@ class TedetisRecupTest extends PastellTestCase
                  file_get_contents(__DIR__ . "/../fixtures/actes_transac_get_files_list.json"),
         ]);
         $id_ce = $this->createConnector('s2low', 'S2low')['id_ce'];
-        $this->associateFluxWithConnector($id_ce,'actes-generique','TdT');
+        $this->associateFluxWithConnector($id_ce, 'actes-generique', 'TdT');
 
 
         $id_d = $this->createDocument('actes-generique')['id_d'];
@@ -290,11 +291,11 @@ class TedetisRecupTest extends PastellTestCase
         $donneesFormulaire->addFileFromData('autre_document_attache', 'ma_premiere_annexe.pdf', '');
 
         $actionCreator = $this->getObjectInstancier()->getInstance(ActionCreatorSQL::class);
-        $actionCreator->addAction(1,0,'acquiter-tdt',"test", $id_d);
+        $actionCreator->addAction(1, 0, 'acquiter-tdt', "test", $id_d);
 
 
-        $result = $this->triggerActionOnDocument($id_d,'tamponner-tdt');
-        if (! $result){
+        $result = $this->triggerActionOnDocument($id_d, 'tamponner-tdt');
+        if (! $result) {
             print_r($this->getLogRecords());
         }
         static::assertTrue($result);
@@ -309,5 +310,4 @@ class TedetisRecupTest extends PastellTestCase
     }
 
     //TODO test goLot tampon..
-
 }

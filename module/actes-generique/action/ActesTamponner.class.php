@@ -16,12 +16,12 @@ class ActesTamponner extends ActionExecutor
 
     public function goLot(array $all_id_d)
     {
-        foreach($all_id_d as $id_d) {
+        foreach ($all_id_d as $id_d) {
             $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
-            if ( ! $donneesFormulaire->get('acte_use_publication_date')){
+            if (! $donneesFormulaire->get('acte_use_publication_date')) {
                 $donneesFormulaire->setData('acte_use_publication_date', true);
             }
-            if ( ! $donneesFormulaire->get('acte_publication_date')){
+            if (! $donneesFormulaire->get('acte_publication_date')) {
                 $donneesFormulaire->setData('acte_publication_date', date("Y-m-d"));
             }
         }

@@ -73,7 +73,7 @@ class TdtRetriever
             $message = 'Transaction en erreur sur le TdT : ' . $tdtConnecteur->getLastError();
             $this->setLastMessage($message);
             $this->actionCreatorSQL->addAction($id_e, $id_u, 'erreur-verif-tdt', $message, $id_d);
-            $this->notificationMail->notify($id_e, $id_d,'erreur-verif-tdt', $type_flux, $message);
+            $this->notificationMail->notify($id_e, $id_d, 'erreur-verif-tdt', $type_flux, $message);
             return false;
         }
 
@@ -110,7 +110,7 @@ class TdtRetriever
         string $type_flux,
         int $id_e,
         string $id_d
-    ) : bool {
+    ): bool {
         if ($actes_tamponne) {
             $actes_original_filename = $donneesFormulaire->getFileNameWithoutExtension('arrete');
             $donneesFormulaire->addFileFromData('acte_tamponne', $actes_original_filename . "-tampon.pdf", $actes_tamponne);
@@ -126,7 +126,7 @@ class TdtRetriever
                     $message = "Une erreur est survenue lors de la récupération des annexes tamponnées de " . $tdtConnecteur->getLogicielName() . " L'annexe tamponée " . $annexe_tamponnee['filename'] . " ne correspond pas avec " . $annexe_filename_send;
                     $this->setLastMessage($message);
                     $this->actionCreatorSQL->addAction($id_e, 0, 'tdt_error', $message, $id_d);
-                    $this->notificationMail->notify($id_e, $id_d,'tdt_error', $type_flux, $message);
+                    $this->notificationMail->notify($id_e, $id_d, 'tdt_error', $type_flux, $message);
                     return false;
                 }
                 $annexe_filename = $donneesFormulaire->getFileNameWithoutExtension('autre_document_attache', $i);
@@ -149,7 +149,7 @@ class TdtRetriever
 
         $tedetis_transaction_id = $this->getTransactionId($tdtConnecteur, $type_flux, $id_d, $id_e);
 
-        if ( ! $this->retrieveStatus($tdtConnecteur, $type_flux, $id_e, $id_d, $id_u)) {
+        if (! $this->retrieveStatus($tdtConnecteur, $type_flux, $id_e, $id_d, $id_u)) {
             return false;
         }
 
@@ -185,21 +185,23 @@ class TdtRetriever
             $donneesFormulaire->setData('acte_unique_id', $idActe);
         }
 
-        if ( ! $this->retrieveDocumentTamponne(
-            $actes_tamponne,
-            $annexes_tamponnees_list,
-            $donneesFormulaire,
-            $tdtConnecteur,
-            $type_flux,
-            $id_e,
-            $id_d
-        )) {
+        if (
+            ! $this->retrieveDocumentTamponne(
+                $actes_tamponne,
+                $annexes_tamponnees_list,
+                $donneesFormulaire,
+                $tdtConnecteur,
+                $type_flux,
+                $id_e,
+                $id_d
+            )
+        ) {
             return false;
         }
 
         $donneesFormulaire->setData('date_ar', $tdtConnecteur->getDateAR($tedetis_transaction_id));
 
-        $this->notificationMail->notify($id_e, $id_d,'acquiter-tdt', $type_flux, $message);
+        $this->notificationMail->notify($id_e, $id_d, 'acquiter-tdt', $type_flux, $message);
 
         $this->setLastMessage("L'acquittement du contrôle de légalité a été reçu.");
         return true;
