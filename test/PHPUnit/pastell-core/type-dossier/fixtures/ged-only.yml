@@ -29,6 +29,7 @@ formulaire:
     'Retour GED':
         has_ged_document_id:
             no-show: true
+            read-only: true
         ged_document_id_file:
             name: 'Identifiants des documents sur la GED'
             type: file
@@ -99,6 +100,12 @@ action:
         name: 'Traitement terminé'
         rule:
             role_id_e: no-role
+    reouverture:
+        name: 'Rouvrir le dossier'
+        rule:
+            last-action:
+                - termine
+        action-class: Reopen
     cheminement-change:
         no-workflow: true
         rule:

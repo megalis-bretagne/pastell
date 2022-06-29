@@ -2,6 +2,8 @@
 
 class TypeDossierSignatureEtape implements TypeDossierEtapeSetSpecificInformation
 {
+    use TypeDossierRemoveFromEditableContent;
+
     public function setSpecificInformation(TypeDossierEtapeProperties $typeDossierEtape, array $result, StringMapper $stringMapper): array
     {
         $onglet_name = $stringMapper->get('i-Parapheur');
@@ -23,8 +25,14 @@ class TypeDossierSignatureEtape implements TypeDossierEtapeSetSpecificInformatio
         }
 
         if (empty($typeDossierEtape->specific_type_info['has_date_limite'])) {
-            unset($result[DocumentType::FORMULAIRE][$onglet_name][$has_date_limite_element]);
-            unset($result[DocumentType::FORMULAIRE][$onglet_name][$date_limite_element]);
+            unset(
+                $result[DocumentType::FORMULAIRE][$onglet_name][$has_date_limite_element],
+                $result[DocumentType::FORMULAIRE][$onglet_name][$date_limite_element]
+            );
+            $this->removeFromEditableContent(
+                ['has_date_limite','date_limite'],
+                $result
+            );
         } else {
             $result[DocumentType::ACTION][$send_iparapheur_action][Action::CONNECTEUR_TYPE_MAPPING]['iparapheur_has_date_limite'] = $has_date_limite_element;
             $result[DocumentType::ACTION][$send_iparapheur_action][Action::CONNECTEUR_TYPE_MAPPING]['iparapheur_date_limite'] = $date_limite_element;
@@ -35,6 +43,10 @@ class TypeDossierSignatureEtape implements TypeDossierEtapeSetSpecificInformatio
         if (empty($typeDossierEtape->specific_type_info['has_metadata_in_json'])) {
             unset($result[DocumentType::FORMULAIRE][$onglet_name][$json_metadata_element]);
             unset($result[DocumentType::ACTION][$send_iparapheur_action][Action::CONNECTEUR_TYPE_MAPPING]['json_metadata']);
+            $this->removeFromEditableContent(
+                ['json_metadata'],
+                $result
+            );
         }
 
         if (!empty($typeDossierEtape->specific_type_info[$continue_after_refusal])) {

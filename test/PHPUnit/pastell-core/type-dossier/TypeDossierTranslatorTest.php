@@ -23,6 +23,8 @@ class TypeDossierTranslatorTest extends PastellTestCase
         yield 'tdt-actes-with-specific-righ' => ['tdt-actes-with-specific-right'];
         yield 'double-transformation' => ['double-transformation'];
         yield 'studio-transformation' => ['studio-transformation'];
+        yield 'test-modif-cheminement' => ['test-modif-cheminement'];
+        yield 'double-ged-facultatif' => ['double-ged-facultatif'];
     }
     /**
      * @dataProvider caseProvider
@@ -50,7 +52,7 @@ class TypeDossierTranslatorTest extends PastellTestCase
         $type_dossier = 'cas-nominal';
         $this->loadDossierType("{$type_dossier}.json");
         $this->validateDefinitionFile($type_dossier);
-         //file_put_contents(__DIR__ . "/fixtures/{$type_dossier}.yml", file_get_contents($this->getWorkspacePath() . "/type-dossier-personnalise/module/$type_dossier/definition.yml"));
+        //file_put_contents(__DIR__ . "/fixtures/{$type_dossier}.yml", file_get_contents($this->getWorkspacePath() . "/type-dossier-personnalise/module/$type_dossier/definition.yml"));
         $this->assertFileEquals(
             __DIR__ . "/fixtures/{$type_dossier}.yml",
             $this->getWorkspacePath() . "/type-dossier-personnalise/module/$type_dossier/definition.yml"

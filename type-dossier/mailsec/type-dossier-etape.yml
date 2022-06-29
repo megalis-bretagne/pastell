@@ -32,18 +32,22 @@ formulaire:
             is_equal_error: 'Les mots de passe ne correspondent pas'
         key:
             no-show: true
+            read-only: true
         sent_mail_number:
             name: Destinataires
             default: '0'
             no-show: true
+            read-only: true
         sent_mail_read:
             name: 'Mails lus'
             default: '0'
             no-show: true
+            read-only: true
         sent_mail_answered:
             name: 'Mails répondus'
             default: '0'
             no-show: true
+            read-only: true
 page-condition:
     'Mail sécurisé':
         envoi_mailsec: true

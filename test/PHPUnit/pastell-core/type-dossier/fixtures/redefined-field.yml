@@ -88,31 +88,40 @@ formulaire:
             read-only: true
         tedetis_transaction_id:
             name: 'Identifiant de la transaction sur le Tdt'
+            read-only: true
         bordereau:
             name: "Bordereau d'acquittement"
             type: file
+            read-only: true
         aractes:
             name: 'Accusé de réception technique'
             type: file
             commentaire: 'Accusé de réception (XML) envoyé par la préfecture'
+            read-only: true
         acte_tamponne:
             name: 'Acte tamponné par le TdT'
             type: file
+            read-only: true
         annexes_tamponnees:
             name: 'Annexe(s) tamponnée(s) par le TdT'
             type: file
             multiple: true
+            read-only: true
         date_ar:
             name: "Date de l'accusé de réception"
             type: date
+            read-only: true
     Annulation:
         has_annulation:
             no-show: true
+            read-only: true
         date_ar_annulation:
             name: "Date de l'accusé de réception d'annulation"
             type: date
+            read-only: true
         tedetis_annulation_id:
             name: "Identifiant de la transaction d'annulation"
+            read-only: true
 champs-affiches:
     - titre
     - dernier_etat
@@ -181,6 +190,12 @@ action:
         name: 'Traitement terminé'
         rule:
             role_id_e: no-role
+    reouverture:
+        name: 'Rouvrir le dossier'
+        rule:
+            last-action:
+                - termine
+        action-class: Reopen
     cheminement-change:
         no-workflow: true
         rule:

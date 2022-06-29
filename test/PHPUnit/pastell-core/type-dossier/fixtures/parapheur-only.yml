@@ -36,7 +36,6 @@ formulaire:
             name: 'Sous-type i-Parapheur'
             requis: true
             index: true
-            read-only: true
             type: externalData
             choice-action: iparapheur-sous-type
             link_name: 'Sélectionner un sous-type'
@@ -64,30 +63,39 @@ formulaire:
     Signature:
         iparapheur_dossier_id:
             name: '#ID dossier parapheur'
+            read-only: true
         iparapheur_historique:
             name: 'Historique iparapheur'
             type: file
+            read-only: true
         parapheur_last_message:
             name: 'Dernier message reçu du parapheur'
+            read-only: true
         has_signature:
             no-show: true
+            read-only: true
         signature:
             name: 'Signature détachée'
             type: file
+            read-only: true
         bordereau_signature:
             name: 'Bordereau de signature'
             type: file
+            read-only: true
         document_original:
             name: 'Document original'
             type: file
+            read-only: true
         multi_document_original:
             name: 'Multi-document(s) original'
             type: file
             multiple: true
+            read-only: true
         iparapheur_annexe_sortie:
             name: 'Annexe(s) de sortie du parapheur'
             type: file
             multiple: true
+            read-only: true
 champs-affiches:
     - titre
     - dernier_etat
@@ -157,6 +165,12 @@ action:
         name: 'Traitement terminé'
         rule:
             role_id_e: no-role
+    reouverture:
+        name: 'Rouvrir le dossier'
+        rule:
+            last-action:
+                - termine
+        action-class: Reopen
     cheminement-change:
         no-workflow: true
         rule:

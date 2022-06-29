@@ -29,6 +29,7 @@ formulaire:
     'Information PES Aller':
         pes_information_pes_aller:
             no-show: true
+            read-only: true
         id_coll:
             name: 'Établissement émetteur'
             index: true
@@ -69,12 +70,15 @@ formulaire:
     'Retour Tdt':
         pes_has_reponse:
             no-show: true
+            read-only: true
         pes_tedetis_transaction_id:
             name: 'Identifiant de la transaction sur le Tdt'
+            read-only: true
         pes_acquit:
             name: 'PES Acquit'
             type: file
             visionneuse: PESRetourVisionneuse
+            read-only: true
         pes_etat_ack:
             name: 'Etat acquittement Helios'
             type: select
@@ -83,6 +87,7 @@ formulaire:
                 - 'Acquittement OK'
                 - 'Acquittement KO'
             index: true
+            read-only: true
 champs-affiches:
     - titre
     - dernier_etat
@@ -156,6 +161,12 @@ action:
         name: 'Traitement terminé'
         rule:
             role_id_e: no-role
+    reouverture:
+        name: 'Rouvrir le dossier'
+        rule:
+            last-action:
+                - termine
+        action-class: Reopen
     cheminement-change:
         no-workflow: true
         rule:

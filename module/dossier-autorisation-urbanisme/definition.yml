@@ -139,6 +139,12 @@ action:
         name: 'Traitement terminé'
         rule:
             role_id_e: no-role
+    reouverture:
+        name: 'Rouvrir le dossier'
+        rule:
+            last-action:
+                - termine
+        action-class: Reopen
     cheminement-change:
         no-workflow: true
         rule:

@@ -1,0 +1,75 @@
+{
+  "id_type_dossier": "test-modif-cheminement",
+  "pastell-version": "%VERSION%",
+  "timestamp": 1656407786,
+  "raw_data": {
+    "nom": "test-modif-cheminement",
+    "type": "Types de dossier personnalis\u00e9s",
+    "etape": [
+      {
+        "type": "transformation",
+        "label": "",
+        "requis": "",
+        "num_etape": 0,
+        "automatique": "",
+        "defaultChecked": false,
+        "specific_type_info": [],
+        "num_etape_same_type": 0,
+        "etape_with_same_type_exists": false
+      },
+      {
+        "type": "depot",
+        "label": "",
+        "requis": "",
+        "num_etape": 1,
+        "automatique": "",
+        "defaultChecked": false,
+        "specific_type_info": [],
+        "num_etape_same_type": 0,
+        "etape_with_same_type_exists": true
+      },
+      {
+        "type": "mailsec",
+        "label": "",
+        "requis": "",
+        "num_etape": 2,
+        "automatique": "",
+        "defaultChecked": false,
+        "specific_type_info": [],
+        "num_etape_same_type": 0,
+        "etape_with_same_type_exists": false
+      },
+      {
+        "type": "depot",
+        "label": "",
+        "requis": "",
+        "num_etape": 3,
+        "automatique": "",
+        "defaultChecked": false,
+        "specific_type_info": [],
+        "num_etape_same_type": 1,
+        "etape_with_same_type_exists": true
+      }
+    ],
+    "nom_onglet": "onglet1",
+    "description": "",
+    "id_type_dossier": "test-modif-cheminement",
+    "restriction_pack": "",
+    "formulaireElement": [
+      {
+        "name": "Titre",
+        "type": "text",
+        "titre": "on",
+        "requis": "on",
+        "element_id": "titre",
+        "preg_match": "",
+        "commentaire": "",
+        "content_type": "",
+        "select_value": "",
+        "champs_affiches": "",
+        "preg_match_error": "",
+        "champs_recherche_avancee": ""
+      }
+    ]
+  }
+}

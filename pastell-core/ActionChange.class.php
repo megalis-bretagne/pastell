@@ -21,6 +21,21 @@ class ActionChange extends SQL
         $this->documentActionEntite->add($id_a, $id_e, $id_j);
     }
 
+    public function removeLastAction($id_d, $id_e, $id_u)
+    {
+        $this->documentActionSQL->removeAction($id_e, $id_d);
+        $this->journal->addSQL(
+            Journal::DOCUMENT_ACTION,
+            $id_e,
+            $id_u,
+            $id_d,
+            "reopen",
+            "Le dossier a été rouvert."
+        );
+    }
+
+
+
     public function updateModification($id_d, $id_e, $id_u, $action)
     {
         $document_action = $this->documentActionSQL->getLastActionInfo($id_d, $id_e);

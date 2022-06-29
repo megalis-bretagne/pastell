@@ -76,7 +76,7 @@ module-pack-gfc: docker-compose-up ## Run make-module pack_gfc
 	$(MAKE_MODULE) ./pack-json/pack-gfc/dossier-wgfc.json ./module/ --id gfc-dossier
 	$(MAKE_MODULE) ./pack-json/pack-gfc/dossier-wgfc-destinataire.json ./module/ --id gfc-dossier-destinataire
 
-all-module: module-pack-gfc module-pack-urbanisme
+all-module: module-pack-gfc module-pack-urbanisme ## Run make-module for all pack
 
 build-extensions: ## Build extensions
 	$(EXEC_COMPOSER) composer install --ignore-platform-reqs --working-dir=./extensions/pastell-depot-cmis/
