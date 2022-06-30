@@ -9,11 +9,12 @@
 - Le champ SIREN n'est plus obligatoire sur la définition d'une entité #1009
 - La constante PASSWORD_MIN_ENTROPY passe par défaut à 80 suivant les recommandations de l'ANSSI
 - Studio: La génération du bordereau et de l'archive est indépendant de l'envoi au SAE grâce à un nouvel état
-  intermédiaire : "Archive générée" #1357
+  intermédiaire : "Paquet d'archive (SIP) généré" #1357
 - La bibliothèque de lecture YAML Spyc est remplacé par la bibliothèque Symfony YAML plus performante.
   Le script console dev:fix-yaml permet de modifier ce qui était permis (de manière incorrect) par Spyc #1515
 - Possibilité de supprimer ou de désactiver un utilisateur #112
 - Ajout du connecteur help-url qui permet de définir l'URL dune page d'aide #1547
+- Modification du vocabulaire concernant les transferts au SAE #1552
 
 ## Suppressions
 
