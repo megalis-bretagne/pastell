@@ -13,7 +13,7 @@ formulaire:
         champs4:
         champs5:
             type: file
-            visionneuse: RawVisionneuse
+            visionneuse: Pastell\Viewer\RawViewer
         champs6:
             type: file
             multiple: true

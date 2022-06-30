@@ -1,26 +1,38 @@
 <?php
 
-class SedaGeneriqueVisionneuse extends Visionneuse
+declare(strict_types=1);
+
+use Pastell\Viewer\ConnectorViewer;
+
+class SedaGeneriqueVisionneuse extends ConnectorViewer
 {
-    public function display($filename, $filepath)
+    /**
+     * @throws \JsonException
+     */
+    public function display(string $filename, string $filepath): void
     {
-        if (! $filepath || ! file_exists($filepath)) {
+        if (!$filepath || !\file_exists($filepath)) {
             echo "<br/>Aucune donnée n'a été renseignée.<br/>";
-            return false;
+            return;
         }
 
-        $pastell2Seda = SedaGenerique::getPastellToSeda();
-        $content = json_decode(file_get_contents($filepath), true);
+        /** @var SedaGenerique $connector */
+        $connector = $this->getConnector();
+        $pastell2Seda = $connector::getPastellToSeda();
+        $content = \json_decode(\file_get_contents($filepath), true, 512, \JSON_THROW_ON_ERROR);
         ?>
-        <table   class="table table-striped" >
-            <?php foreach ($content as $key => $value) : ?>
+        <table class="table table-striped" aria-label="Données du bordereau">
+            <?php
+            foreach ($content as $key => $value) : ?>
                 <tr>
-                    <th class="w500"><?php hecho($pastell2Seda[$key]['libelle'] ?? $key); ?></th>
-                    <td><?php echo nl2br(get_hecho($value)); ?></td>
+                    <th class="w500"><?php
+                        \hecho($pastell2Seda[$key]['libelle'] ?? $key); ?></th>
+                    <td><?php
+                        echo \nl2br(\get_hecho($value)); ?></td>
                 </tr>
-            <?php endforeach; ?>
+                <?php
+            endforeach; ?>
         </table>
         <?php
-        return true;
     }
 }

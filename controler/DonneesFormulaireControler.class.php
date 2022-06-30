@@ -4,6 +4,7 @@ use Flow\Basic;
 use Flow\Config;
 use Flow\Request;
 use Flow\Uploader;
+use Pastell\Viewer\ViewerFactory;
 
 class DonneesFormulaireControler extends PastellControler
 {
@@ -185,7 +186,7 @@ class DonneesFormulaireControler extends PastellControler
     /**
      * @throws Exception
      */
-    public function visionneuseAction()
+    public function visionneuseAction(): void
     {
         $getInfo = $this->getGetInfo();
         $id_e = $getInfo->getInt('id_e');
@@ -197,7 +198,7 @@ class DonneesFormulaireControler extends PastellControler
         $this->verifDroitLectureOnDocumentOrConnecteur($id_e, $id_d, $id_ce);
 
         try {
-            $visionneuseFactory = $this->getObjectInstancier()->getInstance(VisionneuseFactory::class);
+            $visionneuseFactory = $this->getObjectInstancier()->getInstance(ViewerFactory::class);
             if ($id_d) {
                 $visionneuseFactory->display($id_d, $field, $num);
             } else {

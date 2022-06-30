@@ -27,7 +27,6 @@
     <file>./test</file>
     <file>./tests</file>
     <file>./type-dossier</file>
-    <file>./visionneuse</file>
     <file>DefaultSettings.php</file>
     <file>init.php</file>
     <file>init-no-db.php</file>

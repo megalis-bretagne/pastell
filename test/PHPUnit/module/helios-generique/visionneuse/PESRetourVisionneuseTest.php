@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
+use Pastell\Viewer\ViewerFactory;
+
 class PESRetourVisionneuseTest extends PastellTestCase
 {
-    public function testVisionneuse()
+    public function testVisionneuse(): void
     {
         $id_d = $this->createDocument("helios-generique")['id_d'];
 
@@ -14,7 +18,7 @@ class PESRetourVisionneuseTest extends PastellTestCase
             __DIR__ . "/../fixtures/pes_acquit_no_ack.xml"
         );
 
-        $visionneuseFactory = $this->getObjectInstancier()->getInstance(VisionneuseFactory::class);
+        $visionneuseFactory = $this->getObjectInstancier()->getInstance(ViewerFactory::class);
 
         ob_start();
         $visionneuseFactory->display($id_d, 'fichier_reponse');

@@ -71,6 +71,12 @@
 - Suppression du service versant dans le connecteur asalae #1504
 - Suppression du certificat utilisateur sur le connecteur i-Parapheur ; Suppression du connecteur global i-Parapheur #1476
 - Suppression de AIDE_URL remplacé par le connecteur help-url
+- Suppression de Visionneuse.class.php, les visionneuses doivent désormais implémenter l'interface Viewer
+  - XMLVisionneuse devient Pastell\Viewer\XmlViewer
+  - TypologieActesVisionneuse devient Pastell\Viewer\TypologyActesViewer
+  - RawVisionneuse devient Pastell\Viewer\RawViewer
+  - ReponsePrefectureLinkVisionneuse devient Pastell\Viewer\ReponsePrefectureLinkViewer
+  - GedIdDocumentsVisionneuse devient Pastell\Viewer\GedIdDocumentsViewer
 
 # [3.1.15] - 2022-06-13
 ***Cette version nécessite une modification de la base de données***

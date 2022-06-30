@@ -12,7 +12,7 @@ formulaire:
             name: "Fichier de l'archive"
             read-only: true
             type: file
-            visionneuse: XMLVisionneuse
+            visionneuse: Pastell\Viewer\XmlViewer
         fill-data:
             name: 'Méta-données du bordereau'
             edit-only: true

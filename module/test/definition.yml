@@ -44,7 +44,7 @@ formulaire:
             multiple: true
         fichier_simple:
             type: file
-            visionneuse: RawVisionneuse
+            visionneuse: Pastell\Viewer\RawViewer
         test_external_data:
             type: externalData
             link_name: choix

@@ -114,8 +114,7 @@
       "model",
       "module",
       "pastell-core",
-      "type-dossier",
-      "visionneuse"
+      "type-dossier"
     ]
   },
   "autoload-dev": {
