@@ -11,8 +11,6 @@ use RecoverableException;
 
 final class ViewerFactory
 {
-    public const VISIONNEUSE_FOLDERNAME = 'visionneuse';
-
     public function __construct(
         private readonly ObjectInstancier $objectInstancier,
     ) {
