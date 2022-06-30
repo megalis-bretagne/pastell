@@ -12,6 +12,18 @@
     "id_verrou": ""
   },
   {
+    "id_cf": "13",
+    "type_connecteur": "entite",
+    "famille_connecteur": "PortailFacture",
+    "id_connecteur": "cpp",
+    "id_ce": "",
+    "action_type": "connecteur",
+    "type_document": "",
+    "action": "",
+    "expression": "30",
+    "id_verrou": "CHORUS"
+  },
+  {
     "id_cf": "5",
     "type_connecteur": "entite",
     "famille_connecteur": "Purge",
@@ -108,6 +120,18 @@
     "id_verrou": ""
   },
   {
+    "id_cf": "14",
+    "type_connecteur": "global",
+    "famille_connecteur": "PortailFacture",
+    "id_connecteur": "",
+    "id_ce": "",
+    "action_type": "",
+    "type_document": "",
+    "action": "",
+    "expression": "1440",
+    "id_verrou": ""
+  },
+  {
     "id_cf": "12",
     "type_connecteur": "global",
     "famille_connecteur": "TdT",
@@ -120,7 +144,7 @@
     "id_verrou": ""
   },
   {
-    "id_cf": "13",
+    "id_cf": "15",
     "type_connecteur": "global",
     "famille_connecteur": "UndeliveredMail",
     "id_connecteur": "",

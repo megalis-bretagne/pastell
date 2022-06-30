@@ -352,6 +352,19 @@ class PastellBootstrap
             'type_connecteur' => ConnecteurFrequence::TYPE_GLOBAL,
             'famille_connecteur' => 'TdT',
         ];
+        yield 'cpp entité' => [
+            'expression' => '30',
+            'type_connecteur' => ConnecteurFrequence::TYPE_ENTITE,
+            'famille_connecteur' => 'PortailFacture',
+            'id_connecteur' => 'cpp',
+            'action_type' => ConnecteurFrequence::TYPE_ACTION_CONNECTEUR,
+            'id_verrou' => "CHORUS",
+        ];
+        yield 'cpp global' => [
+            'expression' => '1440',
+            'type_connecteur' => ConnecteurFrequence::TYPE_GLOBAL,
+            'famille_connecteur' => 'PortailFacture',
+        ];
         yield 'UndeliveredMail' => [
             'expression' => '1440',
             'type_connecteur' => ConnecteurFrequence::TYPE_GLOBAL,
