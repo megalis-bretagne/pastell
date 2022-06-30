@@ -1,5 +1,7 @@
 <?php
 
+use Symfony\Component\Security\Csrf\TokenGenerator\UriSafeTokenGenerator;
+
 class CSRFToken
 {
     public const TOKEN_NAME =  'csrf_token';
@@ -51,10 +53,13 @@ class CSRFToken
         }
     }
 
+    /**
+     * @throws Exception
+     */
     public function getCSRFToken()
     {
         if (empty($this->session[self::TOKEN_NAME])) {
-            $this->session[self::TOKEN_NAME] = base64_encode(openssl_random_pseudo_bytes(32));
+            $this->session[self::TOKEN_NAME] = (new UriSafeTokenGenerator())->generateToken();
         }
         return $this->session[self::TOKEN_NAME];
     }

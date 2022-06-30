@@ -5,6 +5,7 @@ use Pastell\Service\TokenGenerator;
 use Pastell\Service\LoginAttemptLimit;
 use Pastell\Service\PasswordEntropy;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Security\Csrf\TokenGenerator\UriSafeTokenGenerator;
 
 class ConnexionControler extends PastellControler
 {
@@ -473,9 +474,7 @@ class ConnexionControler extends PastellControler
         $infoUtilisateur = $utilisateur->getInfo($id_u);
         $utilisateur->setPassword($id_u, $password);
 
-        $passwordGenerator = new PasswordGenerator();
-        $mailVerifPassword = $passwordGenerator->getPassword();
-        $utilisateur->reinitPassword($id_u, $mailVerifPassword);
+        $utilisateur->reinitPassword($id_u, (new UriSafeTokenGenerator())->generateToken());
 
         $this->getJournal()->add(
             Journal::MODIFICATION_UTILISATEUR,
