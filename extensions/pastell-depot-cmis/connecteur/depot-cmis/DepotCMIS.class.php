@@ -44,7 +44,6 @@ class DepotCMIS extends DepotConnecteur
     private function restoreErrorReporting()
     {
         error_reporting($this->errorReporting);
-
     }
 
     public function listDirectory()
@@ -55,7 +54,7 @@ class DepotCMIS extends DepotConnecteur
             foreach (@ $this->getFolder()->getChildren() as $children) {
                 $result[] = $children->getName();
             }
-        } catch (Exception $e){
+        } catch (Exception $e) {
             throw $e;
         } finally {
             $this->restoreErrorReporting();
@@ -74,7 +73,7 @@ class DepotCMIS extends DepotConnecteur
 
             ];
             $this->getFolder()->createFolder($properties);
-        } catch (Exception $e){
+        } catch (Exception $e) {
             throw $e;
         } finally {
             $this->restoreErrorReporting();
@@ -87,7 +86,6 @@ class DepotCMIS extends DepotConnecteur
     {
         $this->disableDeprecated();
         try {
-
             $fileContentType = new FileContentType();
             $properties = [
                 PropertyIds::OBJECT_TYPE_ID => 'cmis:document',
@@ -115,7 +113,7 @@ class DepotCMIS extends DepotConnecteur
             );
 
             $this->addGedDocumentId($filename, $document->getId());
-        } catch (Exception $e){
+        } catch (Exception $e) {
             throw $e;
         } finally {
             $this->restoreErrorReporting();
