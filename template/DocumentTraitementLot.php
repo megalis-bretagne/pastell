@@ -1,14 +1,24 @@
 <?php
 
-/** @var Gabarit $this */
-/** @var array $all_action */
-/** @var array $listDocument */
-/** @var Action $theAction */
-/** @var string $search */
-/** @var string $filtre  */
+/**
+ * @var Gabarit $this
+ * @var int $id_e
+ * @var string $type
+ * @var string $search
+ * @var string $filtre
+ * @var int $offset
+ * @var array $all_action
+ * @var array $listDocument
+ * @var Action $theAction
+ */
 
 ?>
-<a class='btn btn-link' href='<?php $this->url(hecho("Document/list?id_e=$id_e&type=$type&search=$search&filtre=$filtre&offset=$offset")) ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des dossiers</a>
+<a 
+        class='btn btn-link' 
+        href='<?php $this->url(get_hecho("Document/list?id_e=$id_e&type=$type&search=$search&filtre=$filtre&offset=$offset")) ?>'
+>
+    <i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des dossiers
+</a>
 <div class="box">
     <form action='<?php $this->url("Document/confirmTraitementLot"); ?>' >
         <h3>Selectionner un ou plusieurs objets, puis l'action à éxecuter</h3>
