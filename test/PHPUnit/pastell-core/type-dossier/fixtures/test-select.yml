@@ -127,7 +127,7 @@ formulaire:
         ged_document_id_file:
             name: 'Identifiants des documents sur la GED'
             type: file
-            visionneuse: GedIdDocumentsVisionneuse
+            visionneuse: Pastell\Viewer\GedIdDocumentsViewer
             read-only: true
             requis: true
             visionneuse-no-link: true
@@ -216,7 +216,7 @@ formulaire:
         type_piece_fichier:
             name: 'Typologie des pièces'
             type: file
-            visionneuse: TypologieActesVisionneuse
+            visionneuse: Pastell\Viewer\TypologyActesViewer
             read-only: true
             requis: true
             visionneuse-no-link: true

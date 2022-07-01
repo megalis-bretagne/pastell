@@ -1,23 +1,19 @@
 <?php
 
-class PESViewerVisionneuse extends Visionneuse
+declare(strict_types=1);
+
+use Pastell\Viewer\ConnectorViewer;
+
+class PESViewerVisionneuse extends ConnectorViewer
 {
-    private $connecteurFactory;
-
-    public function __construct(ConnecteurFactory $connecteurFactory)
-    {
-        $this->connecteurFactory = $connecteurFactory;
-    }
-
     /**
-     * @param string $filename
-     * @param string $filepath
+     * @throws UnrecoverableException
      * @throws Exception
      */
-    public function display($filename, $filepath)
+    public function display(string $filename, string $filepath): void
     {
         /** @var PESViewer $visionneusePES */
-        $visionneusePES = ($this->connecteurFactory->getGlobalConnecteur('visionneuse_pes'));
+        $visionneusePES = $this->getConnector();
         if ($visionneusePES) {
             $result = $visionneusePES->getURL($filepath);
             ?>
@@ -29,6 +25,6 @@ class PESViewerVisionneuse extends Visionneuse
 
 
 
-        exit_wrapper();
+        \exit_wrapper();
     }
 }

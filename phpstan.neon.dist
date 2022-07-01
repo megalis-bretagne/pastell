@@ -21,7 +21,6 @@ parameters:
     - test
     - tests
     - type-dossier
-    - visionneuse
   ignoreErrors:
     -
       # Le mécanisme d'extension empêche d'analyser le contenu du build de chaque extension.

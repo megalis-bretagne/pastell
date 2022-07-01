@@ -75,7 +75,7 @@ formulaire:
         type_piece_fichier:
             name: 'Typologie des pièces'
             type: file
-            visionneuse: TypologieActesVisionneuse
+            visionneuse: Pastell\Viewer\TypologyActesViewer
             read-only: true
             requis: true
             visionneuse-no-link: true
@@ -248,7 +248,7 @@ formulaire:
         ged_document_id_file:
             name: 'Identifiants des documents sur la GED'
             type: file
-            visionneuse: GedIdDocumentsVisionneuse
+            visionneuse: Pastell\Viewer\GedIdDocumentsViewer
             read-only: true
             requis: true
             visionneuse-no-link: true
@@ -288,7 +288,7 @@ formulaire:
         reponse_prefecture_file:
             name: 'Réponse préfecture'
             type: file
-            visionneuse: ReponsePrefectureLinkVisionneuse
+            visionneuse: Pastell\Viewer\ReponsePrefectureLinkViewer
             read-only: true
             visionneuse-no-link: true
 champs-affiches:

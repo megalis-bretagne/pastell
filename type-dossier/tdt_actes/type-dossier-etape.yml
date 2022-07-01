@@ -68,7 +68,7 @@ formulaire:
         type_piece_fichier:
             name: 'Typologie des pièces'
             type: file
-            visionneuse: TypologieActesVisionneuse
+            visionneuse: Pastell\Viewer\TypologyActesViewer
             read-only: true
             requis: true
             visionneuse-no-link: true

@@ -1,14 +1,18 @@
 <?php
 
-class PESRetourVisionneuse extends Visionneuse
+declare(strict_types=1);
+
+use Pastell\Viewer\Viewer;
+
+class PESRetourVisionneuse implements Viewer
 {
-    private function getDomaineLibelle($libelle_numero)
+    private function getDomaineLibelle(string $libelle_numero): string
     {
         $libelle_list = ["technique","technique","technique","validité du certificat","pièce justificative","dépense","recette","budget"];
         return $libelle_list[$libelle_numero];
     }
 
-    public function display($filename, $filepath)
+    public function display(string $filename, string $filepath): void
     {
 
         if (! file_exists($filepath)) {
@@ -60,10 +64,10 @@ class PESRetourVisionneuse extends Visionneuse
             <?php foreach ($xml->ACQUIT->ElementACQUIT as $elementACQUIT) : ?>
         <tr>
             <td>
-                <?php echo $this->getDomaineLibelle(strval($elementACQUIT->DomaineAck['V']))?>
+                <?php echo $this->getDomaineLibelle((string)$elementACQUIT->DomaineAck['V'])?>
             </td>
-            <td><?php hecho($elementACQUIT->ExerciceBord['V'])?></td>
-            <td><?php hecho($elementACQUIT->NumBord['V'])?></td>
+            <td><?php hecho((string)$elementACQUIT->ExerciceBord['V'])?></td>
+            <td><?php hecho((string)$elementACQUIT->NumBord['V'])?></td>
             <td>
                 <?php if ($elementACQUIT->EtatAck['V'] == 1) : ?>
                     <b style='color:green'>OUI</b>
@@ -90,9 +94,9 @@ class PESRetourVisionneuse extends Visionneuse
                         <?php foreach ($detailPiece->DetailLigne as $detailLigne) : ?>
                             <?php if ($detailLigne->Erreur->NumAnoAck['V']) : ?>
                                 <br>
-                                Sur pièce n° <?php hecho($detailPiece->NumPiece['V'])?>
-                                , ligne n° <?php hecho($detailLigne->NumLigne['V'])?>
-                                , <?php hecho($detailLigne->Erreur->NumAnoAck['V']) ?> : <?php hecho($detailLigne->Erreur->LibelleAnoAck['V'])?>
+                                Sur pièce n° <?php hecho((string)$detailPiece->NumPiece['V'])?>
+                                , ligne n° <?php hecho((string)$detailLigne->NumLigne['V'])?>
+                                , <?php hecho((string)$detailLigne->Erreur->NumAnoAck['V']) ?> : <?php hecho((string)$detailLigne->Erreur->LibelleAnoAck['V'])?>
                             <?php endif;?>
                         <?php endforeach;?>
                     <?php endforeach;?></b>

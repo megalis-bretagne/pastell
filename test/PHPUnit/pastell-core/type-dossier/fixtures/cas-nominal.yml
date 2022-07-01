@@ -144,7 +144,7 @@ formulaire:
         ged_document_id_file_1:
             name: 'Identifiants des documents sur la GED'
             type: file
-            visionneuse: GedIdDocumentsVisionneuse
+            visionneuse: Pastell\Viewer\GedIdDocumentsViewer
             read-only: true
             requis: true
             visionneuse-no-link: true
@@ -195,7 +195,7 @@ formulaire:
         ged_document_id_file_2:
             name: 'Identifiants des documents sur la GED'
             type: file
-            visionneuse: GedIdDocumentsVisionneuse
+            visionneuse: Pastell\Viewer\GedIdDocumentsViewer
             read-only: true
             requis: true
             visionneuse-no-link: true
