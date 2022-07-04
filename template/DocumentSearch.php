@@ -2,6 +2,22 @@
 
 /**
  * @var Gabarit $this
+ * @var int $id_e
+ * @var string $type
+ * @var string $search
+ * @var string $lastEtat
+ * @var string $last_state_begin_iso
+ * @var string $last_state_end_iso
+ * @var string $etatTransit
+ * @var string $state_begin_iso
+ * @var string $state_end_iso
+ * @var string $tri
+ * @var string $sens_tri
+ * @var array $indexedFieldValue
+ * @var DocumentActionEntite $documentActionEntite
+ * @var int $offset
+ * @var int $limit
+ * @var array $allDroitEntite
  */
 ?>
 
@@ -10,13 +26,6 @@
 
     <div class="accordion" id="accordionExample">
       <div class="card">
-        <!-- <div class="card-header" id="headingOne">
-          <h2 class="mb-0">
-            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-             <i class="fa fa-search"></i> Recherche avancée <i class="fa fa-plus-square-o"></i>
-            </button>
-          </h2>
-        </div> -->
             <a id="headingOne" class="card-header ls-accordion" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
              <i class="fa fa-search"></i> Recherche avancée <i class="fa fa-plus-square plier"></i><i class="fa fa-minus-square deplier"></i>
                  </a>
@@ -30,7 +39,7 @@
     <input type='hidden' name='go' value='go' />
     <input type='hidden' name='date_in_fr' value='true' />
 
-    <?php  $this->RechercheAvanceFormulaireHTML->display(); ?>
+    <?php $this->getRechercheAvanceFormulaireHTML()->display(); ?>
 
     <a class='btn btn-outline-primary' href='<?php $this->url("Document/list?id_e=$id_e&type=$type"); ?>'>
         <i class="fa fa-times-circle"></i>
@@ -82,8 +91,8 @@ if ($go = 'go') {
     $listDocument = $documentActionEntite->getListBySearch($id_e, $type, $offset, $limit, $search, $lastEtat, $last_state_begin_iso, $last_state_end_iso, $tri, $allDroitEntite, $etatTransit, $state_begin_iso, $state_end_iso);
     $count = $documentActionEntite->getNbDocumentBySearch($id_e, $type, $search, $lastEtat, $last_state_begin_iso, $last_state_end_iso, $allDroitEntite, $etatTransit, $state_begin_iso, $state_end_iso, $indexedFieldValue);
     if ($count) {
-        $this->SuivantPrecedent($offset, $limit, $count, "Document/search?$url");
-        $this->url = $url;
+        $this->suivantPrecedent($offset, $limit, $count, "Document/search?$url");
+        $this->setViewParameter('url', $url);
         $this->render("DocumentListBox");
 
 

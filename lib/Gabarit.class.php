@@ -89,7 +89,7 @@ class Gabarit
         include("{$this->template_path}/SuivantPrecedent.php");
     }
 
-    public function url($route = "")
+    public function url(string $route = ""): void
     {
         echo rtrim(SITE_BASE, "/") . "/" . ltrim($route, "/");
     }
@@ -131,5 +131,10 @@ class Gabarit
     public function getHTMLPurifier(): HTMLPurifier
     {
         return $this->objectInstancier->getInstance(HTMLPurifier::class);
+    }
+
+    public function getRechercheAvanceFormulaireHTML(): RechercheAvanceFormulaireHTML
+    {
+        return $this->objectInstancier->getInstance(RechercheAvanceFormulaireHTML::class);
     }
 }
