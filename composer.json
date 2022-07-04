@@ -55,6 +55,7 @@
     "symfony/mailer": "^6.1",
     "symfony/rate-limiter": "^6.1",
     "symfony/runtime": "^6.1",
+    "symfony/security-csrf": "^6.1",
     "symfony/twig-bridge": "^6.1",
     "symfony/yaml": "^6.1",
     "twig/twig": "^3.3"
