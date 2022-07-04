@@ -11,11 +11,16 @@
  * @var array $listDocument
  * @var Action $theAction
  */
+ 
+$return_url = "Document/list?id_e=$id_e&type=$type&filtre=$filtre&offset=$offset";
+if ($search) {
+    $return_url .= "&search=$search";
+}
 
 ?>
 <a 
         class='btn btn-link' 
-        href='<?php $this->url(get_hecho("Document/list?id_e=$id_e&type=$type&search=$search&filtre=$filtre&offset=$offset")) ?>'
+        href='<?php $this->url(get_hecho($return_url)) ?>'
 >
     <i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des dossiers
 </a>
