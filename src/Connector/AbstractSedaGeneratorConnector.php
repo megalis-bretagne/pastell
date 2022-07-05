@@ -8,10 +8,7 @@ use ConnecteurFactory;
 use CurlWrapperFactory;
 use DonneesFormulaire;
 use DonneesFormulaireException;
-use Exception;
 use FluxData;
-use JsonException;
-use LibXMLError;
 use Pastell\Seda\Message\SedaMessageBuilder;
 use SEDAConnecteur;
 use SimpleXMLWrapperException;
@@ -67,7 +64,7 @@ abstract class AbstractSedaGeneratorConnector extends SEDAConnecteur
         }
         $curlWrapper = $this->curlWrapperFactory->getInstance();
         $result = $curlWrapper->get($this->getURLEndpoint(self::SEDA_GENERATOR_VERSION_PATH));
-        if ($curlWrapper->getLastHttpCode() != 200) {
+        if ($curlWrapper->getLastHttpCode() !== 200) {
             throw new UnrecoverableException(
                 'SedaGenerator did not return a 200 response. ' . $curlWrapper->getFullMessage()
             );
@@ -75,7 +72,7 @@ abstract class AbstractSedaGeneratorConnector extends SEDAConnecteur
         return $result;
     }
 
-    public static function getPastellToSeda(): array
+    public function getPastellToSeda(): array
     {
         return [
             'version' => [
@@ -202,16 +199,19 @@ abstract class AbstractSedaGeneratorConnector extends SEDAConnecteur
 
     private function getURLEndpoint(string $endpoint_path): string
     {
-        return sprintf(
+        return \sprintf(
             '%s%s',
-            rtrim($this->getSedaGeneratorURL(), '/'),
+            \rtrim($this->getSedaGeneratorURL(), '/'),
             $endpoint_path
         );
     }
 
     /**
+     * @throws DonneesFormulaireException
+     * @throws SimpleXMLWrapperException
      * @throws UnrecoverableException
-     * @throws Exception
+     * @throws \JsonException
+     * @throws \Exception
      */
     public function getBordereau(FluxData $fluxData): string
     {
@@ -222,11 +222,11 @@ abstract class AbstractSedaGeneratorConnector extends SEDAConnecteur
         }
         $curlWrapper = $this->curlWrapperFactory->getInstance();
 
-        $dataFromBordereau = json_decode(
+        $dataFromBordereau = \json_decode(
             $this->connecteurConfig->getFileContent('data'),
             true,
             512,
-            JSON_THROW_ON_ERROR
+            \JSON_THROW_ON_ERROR
         );
         $dataFromFiles = $this->connecteurConfig->getFileContent('files');
 
@@ -236,7 +236,7 @@ abstract class AbstractSedaGeneratorConnector extends SEDAConnecteur
             $curlWrapper->addPostFile('template', $this->connecteurConfig->getFilePath('template'));
             $tmp_folder = $this->tmpFolder->create();
             try {
-                file_put_contents($tmp_folder . '/data.json', json_encode($message));
+                \file_put_contents($tmp_folder . '/data.json', \json_encode($message, \JSON_THROW_ON_ERROR));
                 $curlWrapper->addPostFile('json_data', $tmp_folder . '/data.json');
                 $url = $this->getURLEndpoint(self::SEDA_GENERATOR_GENERATE_PATH_WITH_TEMPLATE);
             } finally {
@@ -251,7 +251,7 @@ abstract class AbstractSedaGeneratorConnector extends SEDAConnecteur
         }
 
         $result = $curlWrapper->get($url);
-        if ($curlWrapper->getLastHttpCode() != 200) {
+        if ($curlWrapper->getLastHttpCode() !== 200) {
             throw new UnrecoverableException(
                 'SedaGenerator did not return a 200 response. ' . $curlWrapper->getFullMessage()
             );
@@ -259,8 +259,8 @@ abstract class AbstractSedaGeneratorConnector extends SEDAConnecteur
         if (!$result) {
             throw new UnrecoverableException($curlWrapper->getLastError());
         }
-        if (json_decode($result, true)) {
-            $json = json_decode($result, true);
+        if (\json_decode($result, true)) {
+            $json = \json_decode($result, true);
             if (isset($json['message'])) {
                 throw new UnrecoverableException($json['message']);
             }
@@ -275,7 +275,7 @@ abstract class AbstractSedaGeneratorConnector extends SEDAConnecteur
     }
 
     /**
-     * @return LibXMLError[]
+     * @return \LibXMLError[]
      */
     public function getLastValidationError(): array
     {
@@ -284,14 +284,14 @@ abstract class AbstractSedaGeneratorConnector extends SEDAConnecteur
 
     /**
      * @throws UnrecoverableException
-     * @throws Exception
+     * @throws \Exception
      */
     public function generateArchive(FluxData $fluxData, string $archive_path): void
     {
         $tmp_folder = $this->tmpFolder->create();
         try {
             $this->generateArchiveThrow($fluxData, $archive_path, $tmp_folder);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             throw new UnrecoverableException($e);
         } finally {
             $this->tmpFolder->delete($tmp_folder);
@@ -302,7 +302,7 @@ abstract class AbstractSedaGeneratorConnector extends SEDAConnecteur
      * @throws UnrecoverableException
      * @throws DonneesFormulaireException
      * @throws SimpleXMLWrapperException
-     * @throws JsonException
+     * @throws \JsonException
      */
     public function getMessage(FluxData $fluxData, array $dataFromBordereau, string $dataFromFiles): array
     {
@@ -315,11 +315,11 @@ abstract class AbstractSedaGeneratorConnector extends SEDAConnecteur
             ->buildArchiveUnit($dataFromFiles)
             ->getMessage();
 
-        return json_decode(
-            json_encode($message, JSON_THROW_ON_ERROR),
+        return \json_decode(
+            \json_encode($message, \JSON_THROW_ON_ERROR),
             true,
             512,
-            JSON_THROW_ON_ERROR
+            \JSON_THROW_ON_ERROR
         );
     }
 }

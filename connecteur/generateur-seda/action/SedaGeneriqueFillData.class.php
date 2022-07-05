@@ -1,5 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
+use Pastell\Connector\AbstractSedaGeneratorConnector;
+
 class SedaGeneriqueFillData extends ChoiceActionExecutor
 {
     /**
@@ -8,10 +12,12 @@ class SedaGeneriqueFillData extends ChoiceActionExecutor
      */
     public function go()
     {
-        $pastell_to_seda = SedaGenerique::getPastellToSeda();
+        /** @var AbstractSedaGeneratorConnector $connector */
+        $connector = $this->getMyConnecteur();
+        $pastell_to_seda = $connector->getPastellToSeda();
 
         $data = $this->getConnecteurConfig($this->id_ce)->getFileContent('data');
-        $json = json_decode($data ?? "{}", true);
+        $json = json_decode($data ?? "{}", true, 512, JSON_THROW_ON_ERROR);
 
         foreach ($pastell_to_seda as $pastell_id => $element_info) {
             $json[$pastell_id] = $this->getRecuperateur()->get($pastell_id);
@@ -21,12 +27,15 @@ class SedaGeneriqueFillData extends ChoiceActionExecutor
         $this->getConnecteurConfig($this->id_ce)->addFileFromData(
             'data',
             "data.json",
-            json_encode($json)
+            json_encode($json, JSON_THROW_ON_ERROR)
         );
 
         return true;
     }
 
+    /**
+     * @throws JsonException
+     */
     public function display()
     {
         $fluxEntiteSQL = $this->objectInstancier->getInstance(FluxEntiteSQL::class);
@@ -36,13 +45,15 @@ class SedaGeneriqueFillData extends ChoiceActionExecutor
         $this->setViewParameter('fieldsList', $documentType->getFormulaire()->getFieldsList());
 
         $json = $this->getConnecteurConfig($this->id_ce)->getFileContent('data');
-        $this->setViewParameter('data', json_decode($json, true));
+        $this->setViewParameter('data', json_decode($json, true, 512, JSON_THROW_ON_ERROR));
 
-        $this->setViewParameter('pastell_to_seda', SedaGenerique::getPastellToSeda());
+        /** @var AbstractSedaGeneratorConnector $connector */
+        $connector = $this->getMyConnecteur();
+        $this->setViewParameter('pastell_to_seda', $connector->getPastellToSeda());
 
         $this->renderPage(
-            "Sélection des méta-données du bordereau",
-            __DIR__ . "/../template/SedaGeneriqueFillData.php"
+            'Sélection des méta-données du bordereau',
+            __DIR__ . '/../template/SedaGeneriqueFillData.php'
         );
         return true;
     }

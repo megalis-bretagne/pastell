@@ -18,7 +18,7 @@ class SedaGeneriqueVisionneuse extends ConnectorViewer
 
         /** @var SedaGenerique $connector */
         $connector = $this->getConnector();
-        $pastell2Seda = $connector::getPastellToSeda();
+        $pastell2Seda = $connector->getPastellToSeda();
         $content = \json_decode(\file_get_contents($filepath), true, 512, \JSON_THROW_ON_ERROR);
         ?>
         <table class="table table-striped" aria-label="Données du bordereau">
