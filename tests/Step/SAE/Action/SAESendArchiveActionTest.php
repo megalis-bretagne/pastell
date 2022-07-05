@@ -57,7 +57,7 @@ final class SAESendArchiveActionTest extends PastellTestCase
         );
         $this->assertLastMessage("sélection automatique de l'action suivante");
 
-        $result = $this->triggerActionOnDocument($documentId, SAEActionsEnum::GENERATE_ARCHIVE->value);
+        $result = $this->triggerActionOnDocument($documentId, SAEActionsEnum::GENERATE_SIP->value);
         $this->assertTrue($result);
 
         $result = $this->triggerActionOnDocument($documentId, SAEActionsEnum::SEND_ARCHIVE->value);
@@ -86,7 +86,7 @@ final class SAESendArchiveActionTest extends PastellTestCase
         );
         $this->assertLastMessage("sélection automatique de l'action suivante");
 
-        $result = $this->triggerActionOnDocument($documentId, SAEActionsEnum::GENERATE_ARCHIVE->value);
+        $result = $this->triggerActionOnDocument($documentId, SAEActionsEnum::GENERATE_SIP->value);
         $this->assertTrue($result);
 
         $result = $this->triggerActionOnDocument($documentId, SAEActionsEnum::SEND_ARCHIVE->value);

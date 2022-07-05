@@ -318,7 +318,7 @@ formulaire:
             type: file
 
         sae_archive:
-            name: Archive
+            name: Paquet d'archive (SIP)
             type: file
 
         ar_sae:
@@ -851,18 +851,18 @@ action:
             role_id_e: no-role
 
     accepter-sae:
-        name: Archive acceptée par le SAE
+        name: Transfert accepté par le SAE
         rule:
             role_id_e: no-role
 
     rejet-sae:
-        name: Archive rejetée par le SAE
+        name: Transfert rejeté par le SAE
         rule:
             role_id_e: no-role
 
 
     arrete-change:
-        name: Modificatio de l'arrêté
+        name: Modification de l'arrêté
         no-workflow: true
         rule:
             role_id_e: no-role

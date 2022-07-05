@@ -29,8 +29,8 @@ final class SAEGenerateArchiveAction extends ConnecteurTypeActionExecutor
         try {
             $result = $this->goInternal($tmp_folder);
         } catch (UnrecoverableException $e) {
-            $this->changeAction(SAEActionsEnum::GENERATE_ARCHIVE_ERROR->value, $e->getMessage());
-            $this->notify(SAEActionsEnum::GENERATE_ARCHIVE_ERROR->value, $this->type, $e->getMessage());
+            $this->changeAction(SAEActionsEnum::GENERATE_SIP_ERROR->value, $e->getMessage());
+            $this->notify(SAEActionsEnum::GENERATE_SIP_ERROR->value, $this->type, $e->getMessage());
         } finally {
             $tmpFolder->delete($tmp_folder);
         }

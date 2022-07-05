@@ -31,7 +31,7 @@ formulaire:
             name: 'Bordereau SEDA'
             type: file
         sae_archive:
-            name: Archive
+            name: Paquet d'archive (SIP)
             type: file
         ar_sae:
             type: file
@@ -58,19 +58,19 @@ action:
         name: "Préparation de l'envoi au SAE"
         rule:
             role_id_e: no-role
-        action-automatique: generate-archive
-    generate-archive:
-        name-action: "Générer l'archive"
-        name: 'Archive générée'
+        action-automatique: generate-sip
+    generate-sip:
+        name-action: "Générer le paquet d'archive (SIP)"
+        name: "Paquet d'archive (SIP) généré"
         rule:
             last-action:
                 - preparation-send-sae
-                - generate-archive-error
+                - generate-sip-error
         action-class: StandardAction
         connecteur-type: SAE
         connecteur-type-action: Pastell\Step\SAE\Action\SAEGenerateArchiveAction
         action-automatique: send-archive
-    generate-archive-error:
+    generate-sip-error:
         name: "Erreur lors de la génération de l'archive"
         rule:
             role_id_e: no-role
@@ -79,7 +79,7 @@ action:
         name: 'Versé au SAE'
         rule:
             last-action:
-                - generate-archive
+                - generate-sip
                 - rejet-sae
                 - erreur-envoie-sae
         action-class: StandardAction
@@ -124,11 +124,11 @@ action:
         rule:
             role_id_e: no-role
     accepter-sae:
-        name: 'Archive acceptée par le SAE'
+        name: 'Transfert accepté par le SAE'
         rule:
             role_id_e: no-role
         action-automatique: orientation
     rejet-sae:
-        name: 'Archive rejetée par le SAE'
+        name: 'Transfert rejeté par le SAE'
         rule:
             role_id_e: no-role
