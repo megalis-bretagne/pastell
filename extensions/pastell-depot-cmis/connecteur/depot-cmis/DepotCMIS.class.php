@@ -30,18 +30,18 @@ class DepotCMIS extends DepotConnecteur
     /** @var  Session */
     private $session;
 
-    private $errorReporting;
+    private int $errorReporting;
 
     /**
      * The version of Guzzle is not compatible with PHP 8.1
      * @return void
      */
-    private function disableDeprecated()
+    private function disableDeprecated(): void
     {
         $this->errorReporting = error_reporting(error_reporting() & ~E_DEPRECATED);
     }
 
-    private function restoreErrorReporting()
+    private function restoreErrorReporting(): void
     {
         error_reporting($this->errorReporting);
     }
@@ -51,11 +51,9 @@ class DepotCMIS extends DepotConnecteur
         $this->disableDeprecated();
         try {
             $result = [];
-            foreach (@ $this->getFolder()->getChildren() as $children) {
+            foreach ($this->getFolder()->getChildren() as $children) {
                 $result[] = $children->getName();
             }
-        } catch (Exception $e) {
-            throw $e;
         } finally {
             $this->restoreErrorReporting();
         }
@@ -73,8 +71,6 @@ class DepotCMIS extends DepotConnecteur
 
             ];
             $this->getFolder()->createFolder($properties);
-        } catch (Exception $e) {
-            throw $e;
         } finally {
             $this->restoreErrorReporting();
         }
@@ -102,7 +98,7 @@ class DepotCMIS extends DepotConnecteur
                 );
             }
 
-            @  $document = $folder->createDocument(
+            $document = $folder->createDocument(
                 $properties,
                 Stream::factory(fopen($filepath, 'r')),
                 $versionningState,
@@ -113,8 +109,6 @@ class DepotCMIS extends DepotConnecteur
             );
 
             $this->addGedDocumentId($filename, $document->getId());
-        } catch (Exception $e) {
-            throw $e;
         } finally {
             $this->restoreErrorReporting();
         }
