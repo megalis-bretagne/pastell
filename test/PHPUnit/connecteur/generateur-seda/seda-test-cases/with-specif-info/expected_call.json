@@ -55,6 +55,7 @@
                 {
                     "Id": "NOT_TESTABLE_5",
                     "Filename": "aractes.xml",
+                    "Uri": "aractes.xml",
                     "MessageDigest": "342b4ca6da58a3de2aeb0bd56483373f90e3906535f12f0c5bfa3d8f31af2812",
                     "Size": "866",
                     "MimeType": "application\/xml",
@@ -63,6 +64,7 @@
                 {
                     "Id": "NOT_TESTABLE_6",
                     "Filename": "borderau.pdf",
+                    "Uri": "borderau.pdf",
                     "MessageDigest": "c974edcc822646513cf07a71028847461a1e4fcd11d3c8e55c2764756345a4d3",
                     "Size": "11",
                     "MimeType": "text\/plain",
@@ -75,6 +77,7 @@
         {
             "Id": "NOT_TESTABLE_1",
             "Filename": "actes.pdf",
+            "Uri": "actes.pdf",
             "MessageDigest": "fbc1a9f858ea9e177916964bd88c3d37b91a1e84412765e29950777f265c4b75",
             "Size": "7",
             "MimeType": "text\/plain",
@@ -83,6 +86,7 @@
         {
             "Id": "NOT_TESTABLE_2",
             "Filename": "annexe1.pdf",
+            "Uri": "annexe1.pdf",
             "MessageDigest": "dbd318c1c462aee872f41109a4dfd3048871a03dedd0fe0e757ced57dad6f2d7",
             "Size": "11",
             "MimeType": "text\/plain",
@@ -91,6 +95,7 @@
         {
             "Id": "NOT_TESTABLE_3",
             "Filename": "annexe2.pdf",
+            "Uri": "annexe2.pdf",
             "MessageDigest": "d12441fc641d202581cf7f6396cb1f1f36a033620b5d306d023c6f6fb21918f2",
             "Size": "3",
             "MimeType": "text\/plain",

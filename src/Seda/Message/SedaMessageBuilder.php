@@ -82,6 +82,13 @@ class SedaMessageBuilder
         return $this->message;
     }
 
+
+    public function setVersion(string $version): self
+    {
+        $this->message->setVersion(SedaVersion::from($version ?: SedaVersion::VERSION_2_1->value));
+        return $this;
+    }
+
     /**
      * @throws UnrecoverableException
      */
@@ -91,9 +98,6 @@ class SedaMessageBuilder
             $dataFromBordereau[$i] = $this->getStringWithMetatadaReplacement($data);
         }
 
-        $this->message->setVersion(
-            SedaVersion::from($dataFromBordereau['version'] ?? SedaVersion::VERSION_2_1->value)
-        );
         $this->message->comment = $dataFromBordereau['commentaire'] ?? null;
         $this->message->title = $dataFromBordereau['titre'] ?? null;
         $this->message->archivalAgreement = $dataFromBordereau['archival_agreement'] ?? null;
@@ -104,6 +108,8 @@ class SedaMessageBuilder
         $this->message->serviceLevel = $dataFromBordereau['ServiceLevel'] ?? null;
         $this->message->startDate = $dataFromBordereau['StartDate'] ?? null;
         $this->message->endDate = $dataFromBordereau['EndDate'] ?? null;
+        $this->message->originatingAgencyIdentifier = $dataFromBordereau['OriginatingAgencyIdentifier'] ?? null;
+        $this->message->submissionAgencyIdentifier = $dataFromBordereau['SubmissionAgencyIdentifier'] ?? null;
 
         if ($this->message->getVersion() === SedaVersion::VERSION_1_0) {
             $appraisalRuleFinalAction = [
@@ -216,6 +222,7 @@ class SedaMessageBuilder
                 $file = new File(($this->idGeneratorFunction)());
                 $file->filename = $filename;
                 $file->messageDigest = $this->getDonneesFormulaire()->getFileDigest($field, $filenum);
+                $file->uri = $this->normalizeUri($filename, $file->messageDigest);
                 $file->size = (string)$this->getDonneesFormulaire()->getFileSize($field, $filenum);
                 if (empty($localFile['do_not_put_mime_type'])) {
                     $file->mimeType = $this->getDonneesFormulaire()->getContentType($field, $filenum);
@@ -225,7 +232,7 @@ class SedaMessageBuilder
                 $file->title = $this->getStringWithMetatadaReplacement($description);
                 $this->getFluxData()->setFileList(
                     $localFile['field_expression'],
-                    $filename,
+                    $file->uri,
                     $this->getDonneesFormulaire()->getFilePath($field, $filenum)
                 );
                 $files[] = $file;
@@ -541,8 +548,10 @@ class SedaMessageBuilder
             } elseif (\is_file($filepath)) {
                 $relativePath = $this->getRelativePath($rootDirectory, $filepath);
                 $file = new File(($this->idGeneratorFunction)());
-                $file->filename = $relativePath;
+                $realFileName = \basename($relativePath);
+                $file->filename = $realFileName;
                 $file->messageDigest = \hash_file('sha256', $filepath);
+                $file->uri = $this->normalizeUri($relativePath, $file->messageDigest);
                 $file->size = (string)\filesize($filepath);
 
                 $fileContentType = new FileContentType();
@@ -555,7 +564,7 @@ class SedaMessageBuilder
                 $files[] = $file;
                 $this->getFluxData()->setFileList(
                     $field,
-                    $relativePath,
+                    $file->uri,
                     $filepath
                 );
             }
@@ -594,5 +603,10 @@ class SedaMessageBuilder
     private function excludeFileList(): array
     {
         return ['.', '..', '__MACOSX', '.DS_Store', '.gitkeep'];
+    }
+
+    protected function normalizeUri(string $filepath, string $digest): string
+    {
+        return $filepath;
     }
 }

@@ -26,6 +26,8 @@ abstract class AbstractSedaGeneratorConnector extends SEDAConnecteur
 
     private DonneesFormulaire $connecteurConfig;
 
+    private ?string $bordereau = null;
+
     public function __construct(
         private readonly CurlWrapperFactory $curlWrapperFactory,
         private readonly ConnecteurFactory $connecteurFactory,
@@ -75,40 +77,15 @@ abstract class AbstractSedaGeneratorConnector extends SEDAConnecteur
     public function getPastellToSeda(): array
     {
         return [
-            'version' => [
-                'seda' => 'version',
-                'libelle' => 'Version du SEDA',
-                'value' => ['1.0', '2.1'],
-            ],
             'archival_agency_identifier' => [
                 'seda' => 'ArchivalAgency.Identifier',
                 'libelle' => "Identifiant du service d'archive",
                 'commentaire' => 'ArchivalAgency - Identifier',
             ],
-            'archival_agency_name' => [
-                'seda' => 'ArchivalAgency.Name',
-                'libelle' => "Nom du service d'archive",
-                'commentaire' => 'ArchivalAgency - Name',
-            ],
             'transferring_agency_identifier' => [
                 'seda' => 'TransferringAgency.Identifier',
                 'libelle' => 'Identifiant du service versant',
                 'commentaire' => 'TransferringAgency - Identifier',
-            ],
-            'transferring_agency_name' => [
-                'seda' => 'TransferringAgency.Name',
-                'libelle' => 'Nom du service versant',
-                'commentaire' => 'TransferringAgency - Name',
-            ],
-            'originating_agency_identifier' => [
-                'seda' => 'OriginatingAgency.Identifier',
-                'libelle' => 'Identifiant du service producteur',
-                'commentaire' => 'OriginatingAgency - Identifier',
-            ],
-            'originating_agency_name' => [
-                'seda' => 'OriginatingAgency.Name',
-                'libelle' => 'Nom du service producteur',
-                'commentaire' => 'OriginatingAgency - Name',
             ],
             'commentaire' => [
                 'seda' => 'Comment',
@@ -215,6 +192,10 @@ abstract class AbstractSedaGeneratorConnector extends SEDAConnecteur
      */
     public function getBordereau(FluxData $fluxData): string
     {
+        if ($this->bordereau !== null) {
+            return $this->bordereau;
+        }
+
         if (!$this->getSedaGeneratorURL()) {
             throw new UnrecoverableException(
                 "L'URL du générateur n'a pas été trouvé. Avez-vous pensé à créer un connecteur global Generateur SEDA et à l'associer ?"
@@ -266,6 +247,7 @@ abstract class AbstractSedaGeneratorConnector extends SEDAConnecteur
             }
         }
 
+        $this->bordereau = $result;
         return $result;
     }
 
@@ -309,6 +291,7 @@ abstract class AbstractSedaGeneratorConnector extends SEDAConnecteur
         $message = $this->sedaMessageBuilder
             ->setDonneesFormulaire($this->getDocDonneesFormulaire())
             ->setFluxData($fluxData)
+            ->setVersion($dataFromBordereau['version'] ?? '')
             ->buildHeaders($dataFromBordereau)
             ->buildKeywords($dataFromBordereau['keywords'] ?? '')
             ->buildFiles($dataFromFiles)
