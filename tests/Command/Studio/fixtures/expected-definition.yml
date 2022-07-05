@@ -841,19 +841,19 @@ action:
         name: "Préparation de l'envoi au SAE"
         rule:
             role_id_e: no-role
-        action-automatique: generate-archive
-    generate-archive:
+        action-automatique: generate-sip
+    generate-sip:
         name-action: "Générer le paquet d'archive (SIP)"
         name: "Paquet d'archive (SIP) généré"
         rule:
             last-action:
                 - preparation-send-sae
-                - generate-archive-error
+                - generate-sip-error
         action-class: StandardAction
         connecteur-type: SAE
         connecteur-type-action: Pastell\Step\SAE\Action\SAEGenerateArchiveAction
         action-automatique: send-archive
-    generate-archive-error:
+    generate-sip-error:
         name: "Erreur lors de la génération de l'archive"
         rule:
             role_id_e: no-role
@@ -862,7 +862,7 @@ action:
         name: 'Versé au SAE'
         rule:
             last-action:
-                - generate-archive
+                - generate-sip
                 - rejet-sae
                 - erreur-envoie-sae
         action-class: StandardAction

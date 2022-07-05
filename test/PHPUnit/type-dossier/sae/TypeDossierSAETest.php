@@ -68,7 +68,7 @@ class TypeDossierSAETest extends PastellTestCase
         );
         $this->assertLastMessage("sélection automatique de l'action suivante");
 
-        $this->triggerActionOnDocument($info['id_d'], SAEActionsEnum::GENERATE_ARCHIVE->value);
+        $this->triggerActionOnDocument($info['id_d'], SAEActionsEnum::GENERATE_SIP->value);
         $result = $this->triggerActionOnDocument($info['id_d'], SAEActionsEnum::SEND_ARCHIVE->value);
         if (! $result) {
             $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($info['id_d']);

@@ -4,8 +4,8 @@ namespace Pastell\Step\SAE\Enum;
 
 enum SAEActionsEnum: string
 {
-    case GENERATE_ARCHIVE = 'generate-archive';
-    case GENERATE_ARCHIVE_ERROR = 'generate-archive-error';
+    case GENERATE_SIP = 'generate-sip';
+    case GENERATE_SIP_ERROR = 'generate-sip-error';
     case SEND_ARCHIVE = 'send-archive';
     case SEND_ARCHIVE_ERROR = 'erreur-envoie-sae';
     case CHECK_SAE = 'verif-sae';

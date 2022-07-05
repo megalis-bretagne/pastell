@@ -67,11 +67,11 @@ final class SAEGenerateArchiveActionTest extends PastellTestCase
         );
         $this->assertLastMessage("sélection automatique de l'action suivante");
 
-        $result = $this->triggerActionOnDocument($documentId, SAEActionsEnum::GENERATE_ARCHIVE->value);
+        $result = $this->triggerActionOnDocument($documentId, SAEActionsEnum::GENERATE_SIP->value);
         $this->assertTrue($result);
 
         $this->assertLastMessage("L'archive a été générée");
-        $this->assertLastDocumentAction(SAEActionsEnum::GENERATE_ARCHIVE->value, $documentId);
+        $this->assertLastDocumentAction(SAEActionsEnum::GENERATE_SIP->value, $documentId);
     }
 
     /**
@@ -94,11 +94,11 @@ final class SAEGenerateArchiveActionTest extends PastellTestCase
         );
         $this->assertLastMessage("sélection automatique de l'action suivante");
 
-        $result = $this->triggerActionOnDocument($documentId, SAEActionsEnum::GENERATE_ARCHIVE->value);
+        $result = $this->triggerActionOnDocument($documentId, SAEActionsEnum::GENERATE_SIP->value);
         $this->assertFalse($result);
 
         $this->assertLastMessage('Fichier de configuration SAE : Syntax error');
-        $this->assertLastDocumentAction(SAEActionsEnum::GENERATE_ARCHIVE_ERROR->value, $documentId);
+        $this->assertLastDocumentAction(SAEActionsEnum::GENERATE_SIP_ERROR->value, $documentId);
     }
 
     /**
@@ -124,11 +124,11 @@ final class SAEGenerateArchiveActionTest extends PastellTestCase
         );
         $this->assertLastMessage("sélection automatique de l'action suivante");
 
-        $result = $this->triggerActionOnDocument($documentId, SAEActionsEnum::GENERATE_ARCHIVE->value);
+        $result = $this->triggerActionOnDocument($documentId, SAEActionsEnum::GENERATE_SIP->value);
         $this->assertFalse($result);
 
         $this->assertLastMessage('FakeSEDA: Erreur provoquée par le simulateur');
-        $this->assertLastDocumentAction(SAEActionsEnum::GENERATE_ARCHIVE_ERROR->value, $documentId);
+        $this->assertLastDocumentAction(SAEActionsEnum::GENERATE_SIP_ERROR->value, $documentId);
     }
 
     /**
@@ -154,10 +154,10 @@ final class SAEGenerateArchiveActionTest extends PastellTestCase
         );
         $this->assertLastMessage("sélection automatique de l'action suivante");
 
-        $result = $this->triggerActionOnDocument($documentId, SAEActionsEnum::GENERATE_ARCHIVE->value);
+        $result = $this->triggerActionOnDocument($documentId, SAEActionsEnum::GENERATE_SIP->value);
         $this->assertFalse($result);
 
         $this->assertLastMessage('FakeSEDA: Invalid bordereau : <br/><br/>FakeSEDA: Error 1<br/>');
-        $this->assertLastDocumentAction(SAEActionsEnum::GENERATE_ARCHIVE_ERROR->value, $documentId);
+        $this->assertLastDocumentAction(SAEActionsEnum::GENERATE_SIP_ERROR->value, $documentId);
     }
 }
