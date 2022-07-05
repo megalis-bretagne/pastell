@@ -79,6 +79,7 @@
   - RawVisionneuse devient Pastell\Viewer\RawViewer
   - ReponsePrefectureLinkVisionneuse devient Pastell\Viewer\ReponsePrefectureLinkViewer
   - GedIdDocumentsVisionneuse devient Pastell\Viewer\GedIdDocumentsViewer
+- Suppression de la fonction SEDAConnecteur::getInfoARActes()
 
 # [3.1.15] - 2022-06-13
 ***Cette version nécessite une modification de la base de données***

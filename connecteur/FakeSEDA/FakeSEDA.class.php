@@ -22,7 +22,7 @@ class FakeSEDA extends SEDAConnecteur
         return true;
     }
 
-    public function getLastValidationError()
+    public function getLastValidationError(): array
     {
         if ($this->donneesFormulaire->get('seda_bordereau_generation_response') === 'error') {
             $error1 = new LibXMLError();

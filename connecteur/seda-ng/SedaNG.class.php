@@ -23,7 +23,7 @@ class SedaNG extends SEDAConnecteur
     /**
      * @return mixed
      */
-    public function getLastValidationError()
+    public function getLastValidationError(): array
     {
         return $this->last_validation_error;
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 abstract class SEDAConnecteur extends Connecteur
 {
     /**
@@ -9,8 +11,6 @@ abstract class SEDAConnecteur extends Connecteur
 
     /**
      * Permet de valider un bordereau SEDA en fonction des schéma du connecteur
-     * @param string $bordereau
-     * @return bool
      */
     abstract public function validateBordereau(string $bordereau): bool;
 
@@ -18,47 +18,14 @@ abstract class SEDAConnecteur extends Connecteur
      * Permet de récupérer les erreurs provenant de la validation du bordereau SEDA
      * @return LibXMLError[]
      */
-    abstract public function getLastValidationError();
+    abstract public function getLastValidationError(): array;
 
     /**
      *
      * Génère l'archive en fonction des données du flux sur archive_path
-     * @param FluxData $fluxData
-     * @param string $archive_path
-     * @return void
      */
     abstract public function generateArchive(FluxData $fluxData, string $archive_path): void;
 
-    /**
-     * @param $file_path
-     * @return array
-     * @throws Exception
-     */
-    protected function getInfoARActes($file_path)
-    {
-        $file_name = basename($file_path);
-        @ $xml = simplexml_load_file($file_path);
-        if ($xml === false) {
-            throw new Exception("Le fichier AR actes $file_name n'est pas exploitable");
-        }
-        $namespaces = $xml->getNameSpaces(true);
-        if (empty($namespaces['actes'])) {
-            throw new Exception("Le fichier AR actes $file_name n'est pas exploitable");
-        }
-
-        $attr = $xml->attributes($namespaces['actes']);
-        if (!$attr) {
-            throw new Exception("Le fichier AR actes $file_name n'est pas exploitable");
-        }
-        return ['DateReception' => $attr['DateReception'], 'IDActe' => $attr['IDActe']];
-    }
-
-    /**
-     * @param FluxData $fluxData
-     * @param string $archive_path
-     * @param string $tmp_folder
-     * @throws Exception
-     */
     public function generateArchiveThrow(FluxData $fluxData, string $archive_path, string $tmp_folder): void
     {
         foreach ($fluxData->getFilelist() as $file_id) {
@@ -68,20 +35,20 @@ abstract class SEDAConnecteur extends Connecteur
             if (!$filepath) {
                 break;
             }
-            $dirname = dirname($tmp_folder . "/" . $filename);
-            if (!file_exists($dirname)) {
-                mkdir($dirname, 0777, true);
+            $dirname = \dirname($tmp_folder . '/' . $filename);
+            if (!\file_exists($dirname) && !\mkdir($dirname, 0777, true) && !\is_dir($dirname)) {
+                throw new \RuntimeException(\sprintf('Directory "%s" was not created', $dirname));
             }
-            copy($filepath, "$tmp_folder/$filename");
+            \copy($filepath, "$tmp_folder/$filename");
         }
 
         $command = "cd $tmp_folder && tar -cvzf $archive_path * 2>&1";
 
-        exec($command, $output, $return_var);
+        \exec($command, $output, $return_var);
 
-        if ($return_var != 0) {
-            $output = implode("\n", $output);
-            throw new Exception(
+        if ($return_var !== 0) {
+            $output = \implode("\n", $output);
+            throw new \RuntimeException(
                 "Impossible de créer le fichier d'archive $archive_path - status : $return_var - output: $output"
             );
         }
@@ -89,7 +56,7 @@ abstract class SEDAConnecteur extends Connecteur
 
     public function getTransferId(string $bordereau): string
     {
-        $xml = simplexml_load_string($bordereau);
-        return $xml->TransferIdentifier ?? $xml->MessageIdentifier;
+        $xml = \simplexml_load_string($bordereau);
+        return (string)($xml->TransferIdentifier ?? $xml->MessageIdentifier);
     }
 }
