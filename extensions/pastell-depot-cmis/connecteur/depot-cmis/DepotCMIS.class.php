@@ -30,56 +30,88 @@ class DepotCMIS extends DepotConnecteur
     /** @var  Session */
     private $session;
 
+    private int $errorReporting;
+
+    /**
+     * The version of Guzzle is not compatible with PHP 8.1
+     * @return void
+     */
+    private function disableDeprecated(): void
+    {
+        $this->errorReporting = error_reporting(error_reporting() & ~E_DEPRECATED);
+    }
+
+    private function restoreErrorReporting(): void
+    {
+        error_reporting($this->errorReporting);
+    }
+
     public function listDirectory()
     {
-        $result = [];
-        foreach ($this->getFolder()->getChildren() as $children) {
-            $result[] = $children->getName();
+        $this->disableDeprecated();
+        try {
+            $result = [];
+            foreach ($this->getFolder()->getChildren() as $children) {
+                $result[] = $children->getName();
+            }
+        } finally {
+            $this->restoreErrorReporting();
         }
+
         return $result;
     }
 
     public function makeDirectory(string $directory_name)
     {
-        $properties = [
-            PropertyIds::OBJECT_TYPE_ID => 'cmis:folder',
-            PropertyIds::NAME => $directory_name,
+        $this->disableDeprecated();
+        try {
+            $properties = [
+                PropertyIds::OBJECT_TYPE_ID => 'cmis:folder',
+                PropertyIds::NAME => $directory_name,
 
-        ];
-        $this->getFolder()->createFolder($properties);
+            ];
+            $this->getFolder()->createFolder($properties);
+        } finally {
+            $this->restoreErrorReporting();
+        }
+
         return $directory_name;
     }
 
     public function saveDocument(string $directory_name, string $filename, string $filepath)
     {
-        $fileContentType = new FileContentType();
-        $properties = [
-            PropertyIds::OBJECT_TYPE_ID => 'cmis:document',
-            PropertyIds::NAME => $filename,
-            PropertyIds::CONTENT_STREAM_MIME_TYPE => $fileContentType->getContentType($filepath),
-        ];
+        $this->disableDeprecated();
+        try {
+            $fileContentType = new FileContentType();
+            $properties = [
+                PropertyIds::OBJECT_TYPE_ID => 'cmis:document',
+                PropertyIds::NAME => $filename,
+                PropertyIds::CONTENT_STREAM_MIME_TYPE => $fileContentType->getContentType($filepath),
+            ];
 
-        $versionningState = new VersioningState(VersioningState::MAJOR);
+            $versionningState = new VersioningState(VersioningState::MAJOR);
 
-        $folder = $this->getFolder();
-        if ($directory_name) {
-            $folder = $this->session->getObjectByPath(
-                $this->connecteurConfig->get(self::DEPOT_CMIS_DIRECTORY) . "/" . $directory_name
+            $folder = $this->getFolder();
+            if ($directory_name) {
+                $folder = $this->session->getObjectByPath(
+                    $this->connecteurConfig->get(self::DEPOT_CMIS_DIRECTORY) . "/" . $directory_name
+                );
+            }
+
+            $document = $folder->createDocument(
+                $properties,
+                Stream::factory(fopen($filepath, 'r')),
+                $versionningState,
+                [],
+                [],
+                [],
+                new OperationContext()
             );
+
+            $this->addGedDocumentId($filename, $document->getId());
+        } finally {
+            $this->restoreErrorReporting();
         }
-
-        $document = $folder->createDocument(
-            $properties,
-            Stream::factory(fopen($filepath, 'r')),
-            $versionningState,
-            [],
-            [],
-            [],
-            new OperationContext()
-        );
-
-        $this->addGedDocumentId($filename, $document->getId());
-
         return $directory_name . "/" . $filename;
     }
 
