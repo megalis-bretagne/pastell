@@ -243,10 +243,10 @@ formulaire:
             type: file
             multiple: true
         acte_use_publication_date:
-            name: Utiliser une date sur le tampon
+            name: Utiliser la date de publication sur le tampon
             type: checkbox
         acte_publication_date:
-            name: Date de publication du tampon
+            name: Date de publication de l'acte
             type: date
     'Retour GED':
         has_ged_document_id:

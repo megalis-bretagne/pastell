@@ -16,12 +16,12 @@ class TdtRetriever
     ) {
     }
 
-    private function setLastMessage(string $message)
+    private function setLastMessage(string $message): void
     {
         $this->lastMessage = $message;
     }
 
-    public function getLastMessage()
+    public function getLastMessage(): string
     {
         return $this->lastMessage;
     }
@@ -37,7 +37,7 @@ class TdtRetriever
         return $tdtConnecteur;
     }
 
-    private function getTransactionId(TdtConnecteur $tdtConnecteur, $type_flux, $id_d, $id_e)
+    private function getTransactionId(TdtConnecteur $tdtConnecteur, $type_flux, $id_d, $id_e): string|bool
     {
 
         $donneesFormulaire = $this->donneesFormulaireFactory->get($id_d);

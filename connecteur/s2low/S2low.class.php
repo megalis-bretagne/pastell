@@ -567,35 +567,23 @@ class S2low extends TdtConnecteur
         return $result;
     }
 
-
-    /**
-     * Fonction compatible S2low v2 et S2low < v2
-     * @see TdtConnecteur::getActeTamponne()
-     */
     /**
      * @param $id_transaction
-     * @return bool|mixed|string
-     * @throws S2lowException
+     * @param string|null $date_affichage
+     * @return string|null
      * @throws JsonException
+     * @throws S2lowException
      */
     public function getActeTamponne($id_transaction, string $date_affichage = null): ?string
     {
-        $file_list = $this->getActeTamponneS2lowV2FileList($id_transaction);
-        if (! $file_list) {
-            //S2low v<2
-            return $this->exec(
-                self::URL_ACTES_TAMPONNE . "?transaction=$id_transaction",
-                false
-            );
-        }
-        //S2low v2
-        return $this->getActeTamponneS2lowV2($file_list, $date_affichage);
+        $file_list = $this->getActeTamponneS2lowFileList($id_transaction);
+        return $this->getActeTamponneS2low($file_list, $date_affichage);
     }
 
     /**
      * @throws JsonException
      */
-    private function getActeTamponneS2lowV2FileList(string $id_transaction)
+    private function getActeTamponneS2lowFileList(string $id_transaction)
     {
         try {
             $url = self::URL_GET_FILE_LIST . "?transaction=$id_transaction";
@@ -616,7 +604,7 @@ class S2low extends TdtConnecteur
     /**
      * @throws S2lowException
      */
-    private function getActeTamponneS2lowV2(array $file_list, ?string $date_affichage = null): ?string
+    private function getActeTamponneS2low(array $file_list, ?string $date_affichage = null): ?string
     {
         if ($file_list[1]['mimetype'] !== 'application/pdf') {
             return null;
