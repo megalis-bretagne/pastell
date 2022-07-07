@@ -73,15 +73,9 @@ class TedetisRecupTest extends PastellTestCase
         $actionChange = $this->getObjectInstancier()->getInstance(ActionChange::class);
         $actionChange->addAction($id_d, PastellTestCase::ID_E_COL, 0, 'send-tdt', 'phpunit');
 
-        // Test
-        try {
-            $result = $this->getInternalAPI()->post(
-                "/entite/" . PastellTestCase::ID_E_COL . "/document/{$id_d}/action/verif-tdt"
-            );
-        } catch (Exception $e) {
-            print_r($this->getLogRecords());
-            throw $e;
-        }
+        $result = $this->getInternalAPI()->post(
+            "/entite/" . PastellTestCase::ID_E_COL . "/document/{$id_d}/action/verif-tdt"
+        );
 
         //Analyse des résultats
         $this->assertEquals(1, $result['result']);

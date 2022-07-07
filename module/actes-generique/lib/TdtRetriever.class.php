@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+/**
+ * @deprecated
+ */
 class TdtRetriever
 {
     private string $lastMessage = '';
@@ -37,7 +40,7 @@ class TdtRetriever
         return $tdtConnecteur;
     }
 
-    private function getTransactionId(TdtConnecteur $tdtConnecteur, $type_flux, $id_d, $id_e): string|bool
+    private function getTransactionId(TdtConnecteur $tdtConnecteur, string $type_flux, string $id_d, int $id_e): string|bool
     {
 
         $donneesFormulaire = $this->donneesFormulaireFactory->get($id_d);
