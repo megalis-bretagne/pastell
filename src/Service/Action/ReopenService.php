@@ -10,7 +10,7 @@ use DocumentEntite;
 use Journal;
 use UnrecoverableException;
 
-class Reopen
+class ReopenService
 {
     public function __construct(
         private readonly DocumentActionSQL $documentActionSQL,
@@ -35,7 +35,7 @@ class Reopen
         $this->documentActionEntite->remove($id_a);
 
         $lastAction = $this->documentActionSQL->getLastActionInfo($id_d, $id_e);
-        $this->documentEntite->fixLastAction($id_e, $id_d, $lastAction['action'], $lastAction['date']);
+        $this->documentEntite->changeAction($id_e, $id_d, $lastAction['action'], $lastAction['date']);
 
          $this->journal->addSQL(
              Journal::DOCUMENT_ACTION,

@@ -212,7 +212,7 @@ class DocumentEntite extends SQL
         return $this->query($sql, $data);
     }
 
-    public function fixLastAction(int $id_e, string $id_d, string $action, string $date): void
+    public function changeAction(int $id_e, string $id_d, string $action, string $date): void
     {
         $sql = 'UPDATE document_entite SET last_action=? , last_action_date=? WHERE id_d=? AND id_e=?';
         $this->query($sql, $action, $date, $id_d, $id_e);

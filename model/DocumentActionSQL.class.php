@@ -51,7 +51,7 @@ class DocumentActionSQL extends SQL
         return $this->queryOne($sql, $id_d, 'creation');
     }
 
-    public function removeLastAction($id_e, $id_d): int
+    public function removeLastAction(int $id_e, string $id_d): int
     {
         $lastAction = $this->getLastActionInfo($id_d, $id_e);
         $sql = 'DELETE FROM document_action WHERE id_a = ?';

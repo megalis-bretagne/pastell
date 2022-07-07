@@ -230,22 +230,22 @@ class TypeDossierTranslator
             array_shift($cheminementElementIdList);
             foreach ($this->typeDossierEtapeDefinition->getActionForEtape($etape) as $action_id => $action_properties) {
                 if (isset($action_properties[Action::ACTION_AUTOMATIQUE]) && $action_properties[Action::ACTION_AUTOMATIQUE] == self::ORIENTATION) {
-                    $result['action'][self::ORIENTATION][Action::ACTION_RULE][Action::ACTION_RULE_LAST_ACTION][] = $action_id;
+                    $result[DocumentType::ACTION][self::ORIENTATION][Action::ACTION_RULE][Action::ACTION_RULE_LAST_ACTION][] = $action_id;
                     if (!$etape->automatique) {
-                        unset($result['action'][$action_id][Action::ACTION_AUTOMATIQUE]);
+                        unset($result[DocumentType::ACTION][$action_id][Action::ACTION_AUTOMATIQUE]);
                     }
                     if ($cheminementElementIdList) {
-                        $result['action'][ModificationAction::ACTION_ID][Action::ACTION_RULE][Action::ACTION_RULE_LAST_ACTION][] = $action_id;
-                        $result['action'][$action_id][Action::EDITABLE_CONTENT] = $cheminementElementIdList;
+                        $result[DocumentType::ACTION][ModificationAction::ACTION_ID][Action::ACTION_RULE][Action::ACTION_RULE_LAST_ACTION][] = $action_id;
+                        $result[DocumentType::ACTION][$action_id][Action::EDITABLE_CONTENT] = $cheminementElementIdList;
                         foreach ($cheminementElementIdList as $elementId) {
                             if (! empty($ongletElementId[$elementId])) {
-                                $result['action'][$action_id][Action::EDITABLE_CONTENT] = array_merge(
-                                    $result['action'][$action_id][Action::EDITABLE_CONTENT],
+                                $result[DocumentType::ACTION][$action_id][Action::EDITABLE_CONTENT] = array_merge(
+                                    $result[DocumentType::ACTION][$action_id][Action::EDITABLE_CONTENT],
                                     $ongletElementId[$elementId]
                                 );
                             }
                         }
-                        $result['action'][$action_id][Action::MODIFICATION_NO_CHANGE_ETAT] = true;
+                        $result[DocumentType::ACTION][$action_id][Action::MODIFICATION_NO_CHANGE_ETAT] = true;
                     }
                 }
             }

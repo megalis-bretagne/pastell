@@ -1,6 +1,6 @@
 <?php
 
-use Pastell\Service\Action\Reopen as ReopenServices;
+use Pastell\Service\Action\ReopenService;
 
 class Reopen extends ActionExecutor
 {
@@ -9,7 +9,7 @@ class Reopen extends ActionExecutor
      */
     public function go()
     {
-        $this->objectInstancier->getInstance(ReopenServices::class)
+        $this->objectInstancier->getInstance(ReopenService::class)
             ->reopen($this->id_e, $this->id_d, $this->id_u);
         $this->setLastMessage("Le dossier a été rouvert, l'état terminé a été supprimé.");
         return true;
