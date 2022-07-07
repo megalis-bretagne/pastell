@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 use PHPUnit\Framework\TestCase;
 
 class GenerateurSedaFillFilesTest extends TestCase
 {
-    private const FIXTURE_FILEPATH = __DIR__ . "/../fixtures/fill-files.xml";
+    private const FIXTURE_FILEPATH = __DIR__ . "/../../../../../tests/Connector/fixtures/seda-generator/fill-files.xml";
 
-    private $generateurSedaFillFiles;
+    private GenerateurSedaFillFiles $generateurSedaFillFiles;
 
     protected function setUp(): void
     {

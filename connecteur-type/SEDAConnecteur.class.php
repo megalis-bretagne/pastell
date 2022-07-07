@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Symfony\Component\Filesystem\Filesystem;
+
 abstract class SEDAConnecteur extends Connecteur
 {
     /**
@@ -36,8 +38,9 @@ abstract class SEDAConnecteur extends Connecteur
                 break;
             }
             $dirname = \dirname($tmp_folder . '/' . $filename);
-            if (!\file_exists($dirname) && !\mkdir($dirname, 0777, true) && !\is_dir($dirname)) {
-                throw new \RuntimeException(\sprintf('Directory "%s" was not created', $dirname));
+            $filesystem = new Filesystem();
+            if (!$filesystem->exists($dirname)) {
+                $filesystem->mkdir($dirname);
             }
             \copy($filepath, "$tmp_folder/$filename");
         }

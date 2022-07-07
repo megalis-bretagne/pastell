@@ -45,6 +45,9 @@ class SedaGeneriqueFillData extends ChoiceActionExecutor
         $this->setViewParameter('fieldsList', $documentType->getFormulaire()->getFieldsList());
 
         $json = $this->getConnecteurConfig($this->id_ce)->getFileContent('data');
+        if ($json === false) {
+            $json = '{}';
+        }
         $this->setViewParameter('data', json_decode($json, true, 512, JSON_THROW_ON_ERROR));
 
         /** @var AbstractSedaGeneratorConnector $connector */

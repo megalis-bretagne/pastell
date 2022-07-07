@@ -101,6 +101,9 @@ class SedaGeneriqueFillFiles extends ChoiceActionExecutor
         $this->setViewParameter('fieldsList', $documentType->getFormulaire()->getFieldsList());
 
         $files = $this->getConnecteurConfig($this->id_ce)->getFileContent('files');
+        if ($files === false) {
+            $files = '';
+        }
 
         $this->setViewParameter('generateurSedaFillFiles', new GenerateurSedaFillFiles($files));
 
