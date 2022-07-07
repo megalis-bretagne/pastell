@@ -2,6 +2,10 @@
 
 **Cette version nécessite une modification de la base de données**
 
+## Ajouts
+
+- Permettre d'utiliser des jetons d'authentification pour utiliser l'API #1572
+
 ## Évolutions
 
 - Les extensions doivent charger leurs fichiers PHP dans un fichier `autoload.php` à la racine de l'application ou via

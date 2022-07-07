@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\Utilisateur\UserTokenService;
+
 class UtilisateurControlerTest extends ControlerTestCase
 {
     /**
@@ -153,5 +155,33 @@ class UtilisateurControlerTest extends ControlerTestCase
             /* Nothing to do*/
         }
         self::assertTrue($utilisateurSQL->isEnabled(1));
+    }
+
+    public function testAddToken(): void
+    {
+        $this->setPostInfo([
+            'name' => 'token',
+        ]);
+        try {
+            $this->getUtilisateurControler()->doAddTokenAction();
+        } catch (Exception $e) {
+            static::assertMatchesRegularExpression('/Votre token est <strong>(.*)<\/strong>/', $e->getMessage());
+        }
+    }
+
+    public function testDeleteToken(): void
+    {
+        $userTokenService = $this->getObjectInstancier()->getInstance(UserTokenService::class);
+        $token = $userTokenService->createToken(self::ID_U_ADMIN, 'token');
+        $this->setPostInfo(['id' => 1]);
+        try {
+            $this->getUtilisateurControler()->deleteTokenAction();
+        } catch (Exception $e) {
+            self::assertMatchesRegularExpression(
+                "/Le jeton a été supprimé/",
+                $e->getMessage()
+            );
+        }
+        static::assertNull($userTokenService->getUserFromToken($token));
     }
 }
