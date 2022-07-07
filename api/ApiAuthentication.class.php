@@ -68,7 +68,7 @@ class ApiAuthentication
         }
 
         if (!$id_u) {
-            if (!empty($this->server['HTTP_AUTHORIZATION'])) {
+            if (!empty($this->server['HTTP_AUTHORIZATION']) && $this->isBearer($this->server['HTTP_AUTHORIZATION'])) {
                 $id_u = $this->authenticateByToken();
             } elseif (!empty($this->server['PHP_AUTH_USER'])) {
                 $id_u = $this->authenticateByPassword($utilisateurListe, $utilisateur, $certificatConnexion);
@@ -87,15 +87,13 @@ class ApiAuthentication
     private function authenticateByToken(): ?int
     {
         $authorizationHeader = $this->server['HTTP_AUTHORIZATION'];
-        if (stripos($authorizationHeader, 'Bearer ') !== false) {
-            $token = substr($authorizationHeader, 7);
-            $user = $this->userTokenService->getUserFromToken($token);
-            if (
-                $user !== null &&
-                ($user['expired_at'] === null || $user['expired_at'] > date(Date::DATE_ISO))
-            ) {
-                return $user['id_u'];
-            }
+        $token = substr($authorizationHeader, 7);
+        $user = $this->userTokenService->getUserFromToken($token);
+        if (
+            $user !== null &&
+            ($user['expired_at'] === null || $user['expired_at'] > date(Date::DATE_ISO))
+        ) {
+            return $user['id_u'];
         }
         return null;
     }
@@ -120,5 +118,10 @@ class ApiAuthentication
             $userId = null;
         }
         return $userId;
+    }
+
+    private function isBearer(string $authorizationHeader): bool
+    {
+        return stripos($authorizationHeader, 'Bearer ') !== false;
     }
 }

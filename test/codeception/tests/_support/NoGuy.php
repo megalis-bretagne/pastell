@@ -70,6 +70,7 @@ class NoGuy extends Actor
     {
         $I = $this;
         $I->amHttpAuthenticated('admin', 'admin');
+//        $I->haveHttpHeader('Cookie', 'XDEBUG_SESSION=PHPSTORM');
     }
 
     public function verifyJsonResponseOK(
