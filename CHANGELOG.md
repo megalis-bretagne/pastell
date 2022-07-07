@@ -11,6 +11,7 @@
 ## Ajouts
 
 - Générateur SEDA: ajout des balises OriginatingAgencyArchiveIdentifier et TransferringAgencyArchiveIdentifier #1463
+- Ajout des flux "Actes publication" `ls-actes-publication` et "Document PDF" `ls-document-pdf` #1517
 
 ## Évolutions
 
