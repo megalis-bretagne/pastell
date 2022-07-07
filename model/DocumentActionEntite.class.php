@@ -394,4 +394,10 @@ class DocumentActionEntite extends SQL
         $list = $this->query($sql, $binding);
         return $list;
     }
+
+    public function remove(int $id_a): void
+    {
+        $sql = 'DELETE FROM document_action_entite WHERE id_a=?';
+        $this->query($sql, $id_a);
+    }
 }

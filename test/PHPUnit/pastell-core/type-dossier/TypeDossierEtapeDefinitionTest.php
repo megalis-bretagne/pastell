@@ -207,7 +207,6 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
                             'name' => 'Sous-type i-Parapheur',
                             'requis' => true,
                             'index' => true,
-                            'read-only' => true,
                             'type' => 'externalData',
                             'choice-action' => 'iparapheur-sous-type_2',
                             'link_name' => 'Sélectionner un sous-type',
@@ -237,44 +236,53 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
                     'iparapheur_dossier_id_2' =>
                         [
                             'name' => '#ID dossier parapheur',
+                            'read-only' => true,
                         ],
                     'iparapheur_historique_2' =>
                         [
                             'name' => 'Historique iparapheur',
                             'type' => 'file',
+                            'read-only' => true,
                         ],
                     'parapheur_last_message_2' => [
                         'name' => 'Dernier message reçu du parapheur',
+                        'read-only' => true,
                     ],
                     'has_signature_2' =>
                         [
                             'no-show' => true,
+                            'read-only' => true,
                         ],
                     'signature_2' =>
                         [
                             'name' => 'Signature détachée',
                             'type' => 'file',
+                            'read-only' => true,
                         ],
                     'bordereau_signature_2' => [
                         'name' => 'Bordereau de signature',
                         'type' => 'file',
+                        'read-only' => true,
                     ],
                     'document_original_2' =>
                         [
                             'name' => 'Document original',
                             'type' => 'file',
+                            'read-only' => true,
                         ],
                     'multi_document_original_2' =>
                         [
                             'name' => 'Multi-document(s) original',
                             'type' => 'file',
                             'multiple' => true,
+                            'read-only' => true,
                         ],
                     'iparapheur_annexe_sortie_2' =>
                         [
                             'name' => 'Annexe(s) de sortie du parapheur',
                             'type' => 'file',
                             'multiple' => true,
+                            'read-only' => true,
                         ],
                 ],
             'Parapheur FAST #2' => [

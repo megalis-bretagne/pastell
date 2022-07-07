@@ -1,0 +1,44 @@
+{
+  "id_type_dossier": "double-ged-facultatif",
+  "pastell-version": "%VERSION%",
+  "timestamp": 1554975094,
+  "raw_data": {
+    "nom": "double-ged-facultatif",
+    "type": "Flux G\u00e9n\u00e9raux",
+    "etape": [
+      {
+        "type": "depot",
+        "requis": "",
+        "num_etape": 0,
+        "automatique": "",
+        "specific_type_info": [],
+        "num_etape_same_type": 0,
+        "etape_with_same_type_exists": false
+      },
+      {
+        "type": "depot",
+        "requis": "",
+        "num_etape": 1,
+        "automatique": "",
+        "specific_type_info": [],
+        "num_etape_same_type": 0,
+        "etape_with_same_type_exists": false
+      }
+    ],
+    "nom_onglet": "onglet1",
+    "description": "",
+    "id_type_dossier": "double-ged",
+    "formulaireElement": [
+      {
+        "name": "The fichier",
+        "type": "file",
+        "titre": "",
+        "requis": "on",
+        "element_id": "fichier",
+        "commentaire": "",
+        "champs_affiches": "",
+        "champs_recherche_avancee": ""
+      }
+    ]
+  }
+}

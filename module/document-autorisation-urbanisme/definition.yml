@@ -92,7 +92,6 @@ formulaire:
             name: 'Sous-type i-Parapheur'
             requis: true
             index: true
-            read-only: true
             type: externalData
             choice-action: iparapheur-sous-type
             link_name: 'Sélectionner un sous-type'
@@ -126,30 +125,39 @@ formulaire:
     Signature:
         iparapheur_dossier_id:
             name: '#ID dossier parapheur'
+            read-only: true
         iparapheur_historique:
             name: 'Historique iparapheur'
             type: file
+            read-only: true
         parapheur_last_message:
             name: 'Dernier message reçu du parapheur'
+            read-only: true
         has_signature:
             no-show: true
+            read-only: true
         signature:
             name: 'Signature détachée'
             type: file
+            read-only: true
         bordereau_signature:
             name: 'Bordereau de signature'
             type: file
+            read-only: true
         document_original:
             name: 'Document original'
             type: file
+            read-only: true
         multi_document_original:
             name: 'Multi-document(s) original'
             type: file
             multiple: true
+            read-only: true
         iparapheur_annexe_sortie:
             name: 'Annexe(s) de sortie du parapheur'
             type: file
             multiple: true
+            read-only: true
     Acte:
         acte_nature:
             name: "Nature de l'acte"
@@ -210,31 +218,40 @@ formulaire:
             read-only: true
         tedetis_transaction_id:
             name: 'Identifiant de la transaction sur le Tdt'
+            read-only: true
         bordereau:
             name: "Bordereau d'acquittement"
             type: file
+            read-only: true
         aractes:
             name: 'Accusé de réception technique'
             type: file
             commentaire: 'Accusé de réception (XML) envoyé par la préfecture'
+            read-only: true
         acte_tamponne:
             name: 'Acte tamponné par le TdT'
             type: file
+            read-only: true
         annexes_tamponnees:
             name: 'Annexe(s) tamponnée(s) par le TdT'
             type: file
             multiple: true
+            read-only: true
         date_ar:
             name: "Date de l'accusé de réception"
             type: date
+            read-only: true
     Annulation:
         has_annulation:
             no-show: true
+            read-only: true
         date_ar_annulation:
             name: "Date de l'accusé de réception d'annulation"
             type: date
+            read-only: true
         tedetis_annulation_id:
             name: "Identifiant de la transaction d'annulation"
+            read-only: true
     'Mail sécurisé':
         to:
             name: Destinataire(s)
@@ -264,21 +281,26 @@ formulaire:
             is_equal_error: 'Les mots de passe ne correspondent pas'
         key:
             no-show: true
+            read-only: true
         sent_mail_number:
             name: Destinataires
             default: '0'
             no-show: true
+            read-only: true
         sent_mail_read:
             name: 'Mails lus'
             default: '0'
             no-show: true
+            read-only: true
         sent_mail_answered:
             name: 'Mails répondus'
             default: '0'
             no-show: true
+            read-only: true
     'Retour GED':
         has_ged_document_id:
             no-show: true
+            read-only: true
         ged_document_id_file:
             name: 'Identifiants des documents sur la GED'
             type: file
@@ -369,6 +391,12 @@ action:
                 - creation
                 - modification
                 - importation
+                - transformation
+                - recu-iparapheur
+                - acquiter-tdt
+                - reception
+                - non-recu
+                - send-ged
                 - send-signature-error
     supression:
         name-action: Supprimer
@@ -412,6 +440,12 @@ action:
         name: 'Traitement terminé'
         rule:
             role_id_e: no-role
+    reouverture:
+        name: 'Rouvrir le dossier'
+        rule:
+            last-action:
+                - termine
+        action-class: Reopen
     cheminement-change:
         no-workflow: true
         rule:
@@ -433,6 +467,50 @@ action:
         action-automatique: orientation
         connecteur-type: transformation
         connecteur-type-action: TransformationTransform
+        editable-content:
+            - envoi_signature
+            - envoi_tdt_actes
+            - envoi_mailsec
+            - envoi_depot
+            - envoi_sae
+            - envoi_iparapheur
+            - iparapheur_sous_type
+            - has_date_limite
+            - date_limite
+            - envoi_fast
+            - fast_parapheur_circuit
+            - fast_parapheur_circuit_configuration
+            - fast_parapheur_email_destinataire
+            - fast_parapheur_email_cc
+            - fast_parapheur_agents
+            - acte_nature
+            - numero_de_lacte
+            - date_de_lacte
+            - document_papier
+            - classification
+            - type_piece
+            - type_acte
+            - type_pj
+            - to
+            - cc
+            - bcc
+            - password
+            - password2
+            - sae_show
+            - journal
+            - date_journal_debut
+            - date_cloture_journal
+            - date_cloture_journal_iso8601
+            - sae_transfert_id
+            - sae_bordereau
+            - sae_archive
+            - ar_sae
+            - sae_ack_comment
+            - reply_sae
+            - sae_archival_identifier
+            - sae_atr_comment
+            - url_archive
+        modification-no-change-etat: true
     transformation-error:
         name: 'Erreur lors de la transformation du dossier'
         rule:
@@ -515,6 +593,39 @@ action:
         rule:
             role_id_e: no-role
         action-automatique: orientation
+        editable-content:
+            - envoi_tdt_actes
+            - envoi_mailsec
+            - envoi_depot
+            - envoi_sae
+            - acte_nature
+            - numero_de_lacte
+            - date_de_lacte
+            - document_papier
+            - classification
+            - type_piece
+            - type_acte
+            - type_pj
+            - to
+            - cc
+            - bcc
+            - password
+            - password2
+            - sae_show
+            - journal
+            - date_journal_debut
+            - date_cloture_journal
+            - date_cloture_journal_iso8601
+            - sae_transfert_id
+            - sae_bordereau
+            - sae_archive
+            - ar_sae
+            - sae_ack_comment
+            - reply_sae
+            - sae_archival_identifier
+            - sae_atr_comment
+            - url_archive
+        modification-no-change-etat: true
     rejet-iparapheur:
         name: 'Signature refusée'
         rule:
@@ -629,6 +740,30 @@ action:
         rule:
             role_id_e: no-role
         action-automatique: orientation
+        editable-content:
+            - envoi_mailsec
+            - envoi_depot
+            - envoi_sae
+            - to
+            - cc
+            - bcc
+            - password
+            - password2
+            - sae_show
+            - journal
+            - date_journal_debut
+            - date_cloture_journal
+            - date_cloture_journal_iso8601
+            - sae_transfert_id
+            - sae_bordereau
+            - sae_archive
+            - ar_sae
+            - sae_ack_comment
+            - reply_sae
+            - sae_archival_identifier
+            - sae_atr_comment
+            - url_archive
+        modification-no-change-etat: true
     annulation-tdt:
         name-action: 'Annuler la transaction'
         name: "Demande d'annulation envoyée"
@@ -768,6 +903,24 @@ action:
         rule:
             role_id_e: no-role
         action-automatique: orientation
+        editable-content:
+            - envoi_depot
+            - envoi_sae
+            - sae_show
+            - journal
+            - date_journal_debut
+            - date_cloture_journal
+            - date_cloture_journal_iso8601
+            - sae_transfert_id
+            - sae_bordereau
+            - sae_archive
+            - ar_sae
+            - sae_ack_comment
+            - reply_sae
+            - sae_archival_identifier
+            - sae_atr_comment
+            - url_archive
+        modification-no-change-etat: true
     reception-partielle:
         name: 'Reçu partiellement'
         rule:
@@ -792,6 +945,24 @@ action:
         connecteur-type: mailsec
         connecteur-type-action: MailsecNotReceived
         action-automatique: orientation
+        editable-content:
+            - envoi_depot
+            - envoi_sae
+            - sae_show
+            - journal
+            - date_journal_debut
+            - date_cloture_journal
+            - date_cloture_journal_iso8601
+            - sae_transfert_id
+            - sae_bordereau
+            - sae_archive
+            - ar_sae
+            - sae_ack_comment
+            - reply_sae
+            - sae_archival_identifier
+            - sae_atr_comment
+            - url_archive
+        modification-no-change-etat: true
     reponse:
         name: 'Une réponse a été enregistrée'
         rule:
@@ -833,6 +1004,23 @@ action:
         connecteur-type-action: GEDEnvoyer
         connecteur-type-mapping:
             fatal-error: error-ged
+        editable-content:
+            - envoi_sae
+            - sae_show
+            - journal
+            - date_journal_debut
+            - date_cloture_journal
+            - date_cloture_journal_iso8601
+            - sae_transfert_id
+            - sae_bordereau
+            - sae_archive
+            - ar_sae
+            - sae_ack_comment
+            - reply_sae
+            - sae_archival_identifier
+            - sae_atr_comment
+            - url_archive
+        modification-no-change-etat: true
     error-ged:
         name: 'Erreur irrécupérable lors du dépôt'
         rule:

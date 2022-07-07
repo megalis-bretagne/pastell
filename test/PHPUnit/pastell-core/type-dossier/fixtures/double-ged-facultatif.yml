@@ -1,23 +1,52 @@
-nom: double-transformation
-type: 'Types de dossier personnalisés'
+nom: double-ged-facultatif
+type: 'Flux Généraux'
 description: ''
 connecteur:
-    - transformation
-    - transformation
+    - GED
+    - GED
 formulaire:
+    onglet1:
+        fichier:
+            name: 'The fichier'
+            type: file
+            requis: true
+            multiple: false
+            commentaire: ''
     Cheminement:
-        envoi_transformation_1:
-            name: 'Transformation #1'
+        envoi_depot_1:
+            name: 'Dépôt (GED, FTP, ...) #1'
             type: checkbox
             onchange: cheminement-change
             default: ''
             read-only: false
-        envoi_transformation_2:
-            name: 'Transformation #2'
+        envoi_depot_2:
+            name: 'Dépôt (GED, FTP, ...) #2'
             type: checkbox
             onchange: cheminement-change
             default: ''
             read-only: false
+    'Retour GED #1':
+        has_ged_document_id_1:
+            no-show: true
+            read-only: true
+        ged_document_id_file_1:
+            name: 'Identifiants des documents sur la GED'
+            type: file
+            visionneuse: Pastell\Viewer\GedIdDocumentsViewer
+            read-only: true
+            requis: true
+            visionneuse-no-link: true
+    'Retour GED #2':
+        has_ged_document_id_2:
+            no-show: true
+            read-only: true
+        ged_document_id_file_2:
+            name: 'Identifiants des documents sur la GED'
+            type: file
+            visionneuse: Pastell\Viewer\GedIdDocumentsViewer
+            read-only: true
+            requis: true
+            visionneuse-no-link: true
 champs-affiches:
     - titre
     - dernier_etat
@@ -30,6 +59,11 @@ champs-recherche-avancee:
     - etatTransit
     - state_begin
     - search
+page-condition:
+    'Retour GED #1':
+        has_ged_document_id_1: true
+    'Retour GED #2':
+        has_ged_document_id_2: true
 action:
     creation:
         name-action: Créer
@@ -44,7 +78,7 @@ action:
                 - creation
                 - modification
                 - importation
-                - transformation_1
+                - send-ged_1
     supression:
         name-action: Supprimer
         name: Supprimé
@@ -55,8 +89,6 @@ action:
                 - importation
                 - termine
                 - fatal-error
-                - transformation-error_1
-                - transformation-error_2
         action-class: Supprimer
         warning: 'Êtes-vous sûr ?'
     importation:
@@ -72,8 +104,8 @@ action:
                 - creation
                 - modification
                 - importation
-                - transformation_1
-                - transformation_2
+                - send-ged_1
+                - send-ged_2
             document_is_valide: true
         action-class: OrientationTypeDossierPersonnalise
     termine:
@@ -91,50 +123,54 @@ action:
         rule:
             role_id_e: 'no-role,'
         action-class: CheminementChangeTypeDossierPersonnalise
-    preparation-transformation_1:
-        name: 'Préparation à la transformation #1'
+    preparation-send-ged_1:
+        name: "Préparation de l'envoi à la GED #1"
         rule:
             role_id_e: no-role
-        action-automatique: transformation_1
+        action-automatique: send-ged_1
         num-same-connecteur: '0'
-    transformation_1:
-        name-action: 'Transformer le document #1'
-        name: 'Transformation du document #1'
+    send-ged_1:
+        name-action: 'Verser à la GED #1'
+        name: 'Versé à la GED #1'
         rule:
             last-action:
-                - preparation-transformation_1
-                - transformation-error_1
+                - preparation-send-ged_1
+                - error-ged_1
         action-class: StandardAction
-        connecteur-type: transformation
-        connecteur-type-action: TransformationTransform
+        connecteur-type: GED
+        connecteur-type-action: GEDEnvoyer
+        connecteur-type-mapping:
+            fatal-error: error-ged_1
         num-same-connecteur: '0'
         editable-content:
-            - envoi_transformation_2
+            - envoi_depot_2
         modification-no-change-etat: true
-    transformation-error_1:
-        name: 'Erreur lors de la transformation du dossier #1'
+    error-ged_1:
+        name: 'Erreur irrécupérable lors du dépôt #1'
         rule:
             role_id_e: no-role
         num-same-connecteur: '0'
-    preparation-transformation_2:
-        name: 'Préparation à la transformation #2'
+    preparation-send-ged_2:
+        name: "Préparation de l'envoi à la GED #2"
         rule:
             role_id_e: no-role
-        action-automatique: transformation_2
+        action-automatique: send-ged_2
         num-same-connecteur: '1'
-    transformation_2:
-        name-action: 'Transformer le document #2'
-        name: 'Transformation du document #2'
+    send-ged_2:
+        name-action: 'Verser à la GED #2'
+        name: 'Versé à la GED #2'
         rule:
             last-action:
-                - preparation-transformation_2
-                - transformation-error_2
+                - preparation-send-ged_2
+                - error-ged_2
         action-class: StandardAction
-        connecteur-type: transformation
-        connecteur-type-action: TransformationTransform
+        connecteur-type: GED
+        connecteur-type-action: GEDEnvoyer
+        connecteur-type-mapping:
+            fatal-error: error-ged_2
         num-same-connecteur: '1'
-    transformation-error_2:
-        name: 'Erreur lors de la transformation du dossier #2'
+    error-ged_2:
+        name: 'Erreur irrécupérable lors du dépôt #2'
         rule:
             role_id_e: no-role
         num-same-connecteur: '1'

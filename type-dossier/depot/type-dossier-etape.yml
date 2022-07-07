@@ -5,6 +5,7 @@ formulaire:
     'Retour GED':
         has_ged_document_id:
             no-show: true
+            read-only: true
         ged_document_id_file:
             name: 'Identifiants des documents sur la GED'
             type: file

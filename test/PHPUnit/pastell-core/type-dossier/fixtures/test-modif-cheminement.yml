@@ -1,9 +1,12 @@
-nom: mailsec-only
-type: 'Flux Généraux'
+nom: test-modif-cheminement
+type: 'Types de dossier personnalisés'
 description: ''
 connecteur:
+    - transformation
+    - GED
     - mailsec
     - pdf-relance
+    - GED
 formulaire:
     onglet1:
         titre:
@@ -13,19 +16,42 @@ formulaire:
             multiple: false
             commentaire: ''
             title: true
-        document:
-            name: Document
-            type: file
-            requis: true
-            multiple: false
-            commentaire: ''
     Cheminement:
+        envoi_transformation:
+            name: Transformation
+            type: checkbox
+            onchange: cheminement-change
+            default: ''
+            read-only: false
+        envoi_depot_1:
+            name: 'Dépôt (GED, FTP, ...) #1'
+            type: checkbox
+            onchange: cheminement-change
+            default: ''
+            read-only: false
         envoi_mailsec:
             name: 'Mail sécurisé'
             type: checkbox
             onchange: cheminement-change
-            default: checked
+            default: ''
+            read-only: false
+        envoi_depot_2:
+            name: 'Dépôt (GED, FTP, ...) #2'
+            type: checkbox
+            onchange: cheminement-change
+            default: ''
+            read-only: false
+    'Retour GED #1':
+        has_ged_document_id_1:
+            no-show: true
             read-only: true
+        ged_document_id_file_1:
+            name: 'Identifiants des documents sur la GED'
+            type: file
+            visionneuse: Pastell\Viewer\GedIdDocumentsViewer
+            read-only: true
+            requis: true
+            visionneuse-no-link: true
     'Mail sécurisé':
         to:
             name: Destinataire(s)
@@ -71,6 +97,17 @@ formulaire:
             default: '0'
             no-show: true
             read-only: true
+    'Retour GED #2':
+        has_ged_document_id_2:
+            no-show: true
+            read-only: true
+        ged_document_id_file_2:
+            name: 'Identifiants des documents sur la GED'
+            type: file
+            visionneuse: Pastell\Viewer\GedIdDocumentsViewer
+            read-only: true
+            requis: true
+            visionneuse-no-link: true
 champs-affiches:
     - titre
     - dernier_etat
@@ -84,8 +121,12 @@ champs-recherche-avancee:
     - state_begin
     - search
 page-condition:
+    'Retour GED #1':
+        has_ged_document_id_1: true
     'Mail sécurisé':
         envoi_mailsec: true
+    'Retour GED #2':
+        has_ged_document_id_2: true
 action:
     creation:
         name-action: Créer
@@ -100,6 +141,10 @@ action:
                 - creation
                 - modification
                 - importation
+                - transformation
+                - send-ged_1
+                - reception
+                - non-recu
     supression:
         name-action: Supprimer
         name: Supprimé
@@ -110,6 +155,7 @@ action:
                 - importation
                 - termine
                 - fatal-error
+                - transformation-error
         action-class: Supprimer
         warning: 'Êtes-vous sûr ?'
     importation:
@@ -125,8 +171,11 @@ action:
                 - creation
                 - modification
                 - importation
+                - transformation
+                - send-ged_1
                 - reception
                 - non-recu
+                - send-ged_2
             document_is_valide: true
         action-class: OrientationTypeDossierPersonnalise
     termine:
@@ -144,6 +193,68 @@ action:
         rule:
             role_id_e: 'no-role,'
         action-class: CheminementChangeTypeDossierPersonnalise
+    preparation-transformation:
+        name: 'Préparation à la transformation'
+        rule:
+            role_id_e: no-role
+        action-automatique: transformation
+    transformation:
+        name-action: 'Transformer le document'
+        name: 'Transformation du document'
+        rule:
+            last-action:
+                - preparation-transformation
+                - transformation-error
+        action-class: StandardAction
+        connecteur-type: transformation
+        connecteur-type-action: TransformationTransform
+        editable-content:
+            - envoi_depot_1
+            - envoi_mailsec
+            - envoi_depot_2
+            - to
+            - cc
+            - bcc
+            - password
+            - password2
+        modification-no-change-etat: true
+    transformation-error:
+        name: 'Erreur lors de la transformation du dossier'
+        rule:
+            role_id_e: no-role
+    preparation-send-ged_1:
+        name: "Préparation de l'envoi à la GED #1"
+        rule:
+            role_id_e: no-role
+        action-automatique: send-ged_1
+        num-same-connecteur: '0'
+    send-ged_1:
+        name-action: 'Verser à la GED #1'
+        name: 'Versé à la GED #1'
+        rule:
+            last-action:
+                - preparation-send-ged_1
+                - error-ged_1
+        action-class: StandardAction
+        connecteur-type: GED
+        connecteur-type-action: GEDEnvoyer
+        connecteur-type-mapping:
+            fatal-error: error-ged_1
+        num-same-connecteur: '0'
+        editable-content:
+            - envoi_mailsec
+            - envoi_depot_2
+            - to
+            - cc
+            - bcc
+            - password
+            - password2
+        modification-no-change-etat: true
+    error-ged_1:
+        name: 'Erreur irrécupérable lors du dépôt #1'
+        rule:
+            role_id_e: no-role
+        num-same-connecteur: '0'
     preparation-send-mailsec:
         name: "Préparation de l'envoi par mail sécurisé"
         rule:
@@ -205,7 +316,9 @@ action:
         name: Reçu
         rule:
             role_id_e: no-role
-        action-automatique: orientation
+        editable-content:
+            - envoi_depot_2
+        modification-no-change-etat: true
     reception-partielle:
         name: 'Reçu partiellement'
         rule:
@@ -229,7 +342,9 @@ action:
         action-class: StandardAction
         connecteur-type: mailsec
         connecteur-type-action: MailsecNotReceived
-        action-automatique: orientation
+        editable-content:
+            - envoi_depot_2
+        modification-no-change-etat: true
     reponse:
         name: 'Une réponse a été enregistrée'
         rule:
@@ -253,3 +368,27 @@ action:
         connecteur-type-action: MailsecComputeAnsweredMail
         connecteur-type-mapping:
             sent_mail_answered: sent_mail_answered
+    preparation-send-ged_2:
+        name: "Préparation de l'envoi à la GED #2"
+        rule:
+            role_id_e: no-role
+        action-automatique: send-ged_2
+        num-same-connecteur: '1'
+    send-ged_2:
+        name-action: 'Verser à la GED #2'
+        name: 'Versé à la GED #2'
+        rule:
+            last-action:
+                - preparation-send-ged_2
+                - error-ged_2
+        action-class: StandardAction
+        connecteur-type: GED
+        connecteur-type-action: GEDEnvoyer
+        connecteur-type-mapping:
+            fatal-error: error-ged_2
+        num-same-connecteur: '1'
+    error-ged_2:
+        name: 'Erreur irrécupérable lors du dépôt #2'
+        rule:
+            role_id_e: no-role
+        num-same-connecteur: '1'

@@ -86,7 +86,6 @@ formulaire:
             name: 'Sous-type i-Parapheur'
             requis: true
             index: true
-            read-only: true
             type: externalData
             choice-action: iparapheur-sous-type
             link_name: 'Sélectionner un sous-type'
@@ -114,33 +113,43 @@ formulaire:
     Signature:
         iparapheur_dossier_id:
             name: '#ID dossier parapheur'
+            read-only: true
         iparapheur_historique:
             name: 'Historique iparapheur'
             type: file
+            read-only: true
         parapheur_last_message:
             name: 'Dernier message reçu du parapheur'
+            read-only: true
         has_signature:
             no-show: true
+            read-only: true
         signature:
             name: 'Signature détachée'
             type: file
+            read-only: true
         bordereau_signature:
             name: 'Bordereau de signature'
             type: file
+            read-only: true
         document_original:
             name: 'Document original'
             type: file
+            read-only: true
         multi_document_original:
             name: 'Multi-document(s) original'
             type: file
             multiple: true
+            read-only: true
         iparapheur_annexe_sortie:
             name: 'Annexe(s) de sortie du parapheur'
             type: file
             multiple: true
+            read-only: true
     'Retour GED #1':
         has_ged_document_id_1:
             no-show: true
+            read-only: true
         ged_document_id_file_1:
             name: 'Identifiants des documents sur la GED'
             type: file
@@ -177,21 +186,26 @@ formulaire:
             is_equal_error: 'Les mots de passe ne correspondent pas'
         key:
             no-show: true
+            read-only: true
         sent_mail_number:
             name: Destinataires
             default: '0'
             no-show: true
+            read-only: true
         sent_mail_read:
             name: 'Mails lus'
             default: '0'
             no-show: true
+            read-only: true
         sent_mail_answered:
             name: 'Mails répondus'
             default: '0'
             no-show: true
+            read-only: true
     'Retour GED #2':
         has_ged_document_id_2:
             no-show: true
+            read-only: true
         ged_document_id_file_2:
             name: 'Identifiants des documents sur la GED'
             type: file
@@ -280,6 +294,11 @@ action:
                 - creation
                 - modification
                 - importation
+                - recu-iparapheur
+                - send-ged_1
+                - reception
+                - non-recu
+                - send-ged_2
                 - send-signature-error
     supression:
         name-action: Supprimer
@@ -320,6 +339,12 @@ action:
         name: 'Traitement terminé'
         rule:
             role_id_e: no-role
+    reouverture:
+        name: 'Rouvrir le dossier'
+        rule:
+            last-action:
+                - termine
+        action-class: Reopen
     cheminement-change:
         no-workflow: true
         rule:
@@ -399,6 +424,31 @@ action:
         rule:
             role_id_e: no-role
         action-automatique: orientation
+        editable-content:
+            - envoi_depot_1
+            - envoi_mailsec
+            - envoi_depot_2
+            - envoi_sae
+            - to
+            - cc
+            - bcc
+            - password
+            - password2
+            - sae_show
+            - journal
+            - date_journal_debut
+            - date_cloture_journal
+            - date_cloture_journal_iso8601
+            - sae_transfert_id
+            - sae_bordereau
+            - sae_archive
+            - ar_sae
+            - sae_ack_comment
+            - reply_sae
+            - sae_archival_identifier
+            - sae_atr_comment
+            - url_archive
+        modification-no-change-etat: true
     rejet-iparapheur:
         name: 'Signature refusée'
         rule:
@@ -433,6 +483,30 @@ action:
         connecteur-type-mapping:
             fatal-error: error-ged_1
         num-same-connecteur: '0'
+        editable-content:
+            - envoi_mailsec
+            - envoi_depot_2
+            - envoi_sae
+            - to
+            - cc
+            - bcc
+            - password
+            - password2
+            - sae_show
+            - journal
+            - date_journal_debut
+            - date_cloture_journal
+            - date_cloture_journal_iso8601
+            - sae_transfert_id
+            - sae_bordereau
+            - sae_archive
+            - ar_sae
+            - sae_ack_comment
+            - reply_sae
+            - sae_archival_identifier
+            - sae_atr_comment
+            - url_archive
+        modification-no-change-etat: true
     error-ged_1:
         name: 'Erreur irrécupérable lors du dépôt #1'
         rule:
@@ -500,6 +574,24 @@ action:
         rule:
             role_id_e: no-role
         action-automatique: orientation
+        editable-content:
+            - envoi_depot_2
+            - envoi_sae
+            - sae_show
+            - journal
+            - date_journal_debut
+            - date_cloture_journal
+            - date_cloture_journal_iso8601
+            - sae_transfert_id
+            - sae_bordereau
+            - sae_archive
+            - ar_sae
+            - sae_ack_comment
+            - reply_sae
+            - sae_archival_identifier
+            - sae_atr_comment
+            - url_archive
+        modification-no-change-etat: true
     reception-partielle:
         name: 'Reçu partiellement'
         rule:
@@ -524,6 +616,24 @@ action:
         connecteur-type: mailsec
         connecteur-type-action: MailsecNotReceived
         action-automatique: orientation
+        editable-content:
+            - envoi_depot_2
+            - envoi_sae
+            - sae_show
+            - journal
+            - date_journal_debut
+            - date_cloture_journal
+            - date_cloture_journal_iso8601
+            - sae_transfert_id
+            - sae_bordereau
+            - sae_archive
+            - ar_sae
+            - sae_ack_comment
+            - reply_sae
+            - sae_archival_identifier
+            - sae_atr_comment
+            - url_archive
+        modification-no-change-etat: true
     reponse:
         name: 'Une réponse a été enregistrée'
         rule:
@@ -567,6 +677,23 @@ action:
         connecteur-type-mapping:
             fatal-error: error-ged_2
         num-same-connecteur: '1'
+        editable-content:
+            - envoi_sae
+            - sae_show
+            - journal
+            - date_journal_debut
+            - date_cloture_journal
+            - date_cloture_journal_iso8601
+            - sae_transfert_id
+            - sae_bordereau
+            - sae_archive
+            - ar_sae
+            - sae_ack_comment
+            - reply_sae
+            - sae_archival_identifier
+            - sae_atr_comment
+            - url_archive
+        modification-no-change-etat: true
     error-ged_2:
         name: 'Erreur irrécupérable lors du dépôt #2'
         rule:

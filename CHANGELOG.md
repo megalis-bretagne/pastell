@@ -15,6 +15,7 @@
 - Possibilité de supprimer ou de désactiver un utilisateur #112
 - Ajout du connecteur help-url qui permet de définir l'URL dune page d'aide #1547
 - Modification du vocabulaire concernant les transferts au SAE #1552
+- Possibilité de revenir en arrière sur les flux studio sur les étapes non réalisés #1539
 
 ## Suppressions
 

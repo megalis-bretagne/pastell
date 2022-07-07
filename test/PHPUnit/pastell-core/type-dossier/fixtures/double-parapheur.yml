@@ -48,7 +48,6 @@ formulaire:
             name: 'Sous-type i-Parapheur'
             requis: true
             index: true
-            read-only: true
             type: externalData
             choice-action: iparapheur-sous-type_1
             link_name: 'Sélectionner un sous-type'
@@ -86,30 +85,39 @@ formulaire:
     'Signature #1':
         iparapheur_dossier_id_1:
             name: '#ID dossier parapheur'
+            read-only: true
         iparapheur_historique_1:
             name: 'Historique iparapheur'
             type: file
+            read-only: true
         parapheur_last_message_1:
             name: 'Dernier message reçu du parapheur'
+            read-only: true
         has_signature_1:
             no-show: true
+            read-only: true
         signature_1:
             name: 'Signature détachée'
             type: file
+            read-only: true
         bordereau_signature_1:
             name: 'Bordereau de signature'
             type: file
+            read-only: true
         document_original_1:
             name: 'Document original'
             type: file
+            read-only: true
         multi_document_original_1:
             name: 'Multi-document(s) original'
             type: file
             multiple: true
+            read-only: true
         iparapheur_annexe_sortie_1:
             name: 'Annexe(s) de sortie du parapheur'
             type: file
             multiple: true
+            read-only: true
     'i-Parapheur #2':
         envoi_iparapheur_2:
             no-show: true
@@ -120,7 +128,6 @@ formulaire:
             name: 'Sous-type i-Parapheur'
             requis: true
             index: true
-            read-only: true
             type: externalData
             choice-action: iparapheur-sous-type_2
             link_name: 'Sélectionner un sous-type'
@@ -158,30 +165,39 @@ formulaire:
     'Signature #2':
         iparapheur_dossier_id_2:
             name: '#ID dossier parapheur'
+            read-only: true
         iparapheur_historique_2:
             name: 'Historique iparapheur'
             type: file
+            read-only: true
         parapheur_last_message_2:
             name: 'Dernier message reçu du parapheur'
+            read-only: true
         has_signature_2:
             no-show: true
+            read-only: true
         signature_2:
             name: 'Signature détachée'
             type: file
+            read-only: true
         bordereau_signature_2:
             name: 'Bordereau de signature'
             type: file
+            read-only: true
         document_original_2:
             name: 'Document original'
             type: file
+            read-only: true
         multi_document_original_2:
             name: 'Multi-document(s) original'
             type: file
             multiple: true
+            read-only: true
         iparapheur_annexe_sortie_2:
             name: 'Annexe(s) de sortie du parapheur'
             type: file
             multiple: true
+            read-only: true
 champs-affiches:
     - titre
     - dernier_etat
@@ -221,6 +237,7 @@ action:
                 - creation
                 - modification
                 - importation
+                - recu-iparapheur_1
                 - send-signature-error_1
                 - send-signature-error_2
     supression:
@@ -258,6 +275,12 @@ action:
         name: 'Traitement terminé'
         rule:
             role_id_e: no-role
+    reouverture:
+        name: 'Rouvrir le dossier'
+        rule:
+            last-action:
+                - termine
+        action-class: Reopen
     cheminement-change:
         no-workflow: true
         rule:
@@ -348,6 +371,20 @@ action:
             role_id_e: no-role
         action-automatique: orientation
         num-same-connecteur: '0'
+        editable-content:
+            - envoi_signature_2
+            - envoi_iparapheur_2
+            - iparapheur_sous_type_2
+            - json_metadata_2
+            - has_date_limite_2
+            - date_limite_2
+            - envoi_fast_2
+            - fast_parapheur_circuit_2
+            - fast_parapheur_circuit_configuration_2
+            - fast_parapheur_email_destinataire_2
+            - fast_parapheur_email_cc_2
+            - fast_parapheur_agents_2
+        modification-no-change-etat: true
     rejet-iparapheur_1:
         name: 'Signature refusée #1'
         rule:

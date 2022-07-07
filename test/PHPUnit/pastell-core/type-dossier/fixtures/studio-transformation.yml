@@ -61,7 +61,6 @@ formulaire:
             name: 'Sous-type i-Parapheur'
             requis: true
             index: true
-            read-only: true
             type: externalData
             choice-action: iparapheur-sous-type
             link_name: 'Sélectionner un sous-type'
@@ -89,30 +88,39 @@ formulaire:
     Signature:
         iparapheur_dossier_id:
             name: '#ID dossier parapheur'
+            read-only: true
         iparapheur_historique:
             name: 'Historique iparapheur'
             type: file
+            read-only: true
         parapheur_last_message:
             name: 'Dernier message reçu du parapheur'
+            read-only: true
         has_signature:
             no-show: true
+            read-only: true
         signature:
             name: 'Signature détachée'
             type: file
+            read-only: true
         bordereau_signature:
             name: 'Bordereau de signature'
             type: file
+            read-only: true
         document_original:
             name: 'Document original'
             type: file
+            read-only: true
         multi_document_original:
             name: 'Multi-document(s) original'
             type: file
             multiple: true
+            read-only: true
         iparapheur_annexe_sortie:
             name: 'Annexe(s) de sortie du parapheur'
             type: file
             multiple: true
+            read-only: true
     Acte:
         acte_nature:
             name: "Nature de l'acte"
@@ -173,31 +181,40 @@ formulaire:
             read-only: true
         tedetis_transaction_id:
             name: 'Identifiant de la transaction sur le Tdt'
+            read-only: true
         bordereau:
             name: "Bordereau d'acquittement"
             type: file
+            read-only: true
         aractes:
             name: 'Accusé de réception technique'
             type: file
             commentaire: 'Accusé de réception (XML) envoyé par la préfecture'
+            read-only: true
         acte_tamponne:
             name: 'Acte tamponné par le TdT'
             type: file
+            read-only: true
         annexes_tamponnees:
             name: 'Annexe(s) tamponnée(s) par le TdT'
             type: file
             multiple: true
+            read-only: true
         date_ar:
             name: "Date de l'accusé de réception"
             type: date
+            read-only: true
     Annulation:
         has_annulation:
             no-show: true
+            read-only: true
         date_ar_annulation:
             name: "Date de l'accusé de réception d'annulation"
             type: date
+            read-only: true
         tedetis_annulation_id:
             name: "Identifiant de la transaction d'annulation"
+            read-only: true
 champs-affiches:
     - titre
     - dernier_etat
@@ -237,6 +254,8 @@ action:
                 - creation
                 - modification
                 - importation
+                - transformation
+                - recu-iparapheur
                 - send-signature-error
     supression:
         name-action: Supprimer
@@ -276,6 +295,12 @@ action:
         name: 'Traitement terminé'
         rule:
             role_id_e: no-role
+    reouverture:
+        name: 'Rouvrir le dossier'
+        rule:
+            last-action:
+                - termine
+        action-class: Reopen
     cheminement-change:
         no-workflow: true
         rule:
@@ -296,6 +321,26 @@ action:
         action-class: StandardAction
         connecteur-type: transformation
         connecteur-type-action: TransformationTransform
+        editable-content:
+            - envoi_signature
+            - envoi_tdt_actes
+            - envoi_iparapheur
+            - iparapheur_sous_type
+            - envoi_fast
+            - fast_parapheur_circuit
+            - fast_parapheur_circuit_configuration
+            - fast_parapheur_email_destinataire
+            - fast_parapheur_email_cc
+            - fast_parapheur_agents
+            - acte_nature
+            - numero_de_lacte
+            - date_de_lacte
+            - document_papier
+            - classification
+            - type_piece
+            - type_acte
+            - type_pj
+        modification-no-change-etat: true
     transformation-error:
         name: 'Erreur lors de la transformation du dossier'
         rule:
@@ -371,6 +416,17 @@ action:
         name: 'Signature récuperée'
         rule:
             role_id_e: no-role
+        editable-content:
+            - envoi_tdt_actes
+            - acte_nature
+            - numero_de_lacte
+            - date_de_lacte
+            - document_papier
+            - classification
+            - type_piece
+            - type_acte
+            - type_pj
+        modification-no-change-etat: true
     rejet-iparapheur:
         name: 'Signature refusée'
         rule:
