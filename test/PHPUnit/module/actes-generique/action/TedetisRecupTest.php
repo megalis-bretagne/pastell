@@ -2,6 +2,8 @@
 
 class TedetisRecupTest extends PastellTestCase
 {
+    use CurlUtilitiesTestTrait;
+
     /**
      * @throws Exception
      */
@@ -71,15 +73,9 @@ class TedetisRecupTest extends PastellTestCase
         $actionChange = $this->getObjectInstancier()->getInstance(ActionChange::class);
         $actionChange->addAction($id_d, PastellTestCase::ID_E_COL, 0, 'send-tdt', 'phpunit');
 
-        // Test
-        try {
-            $result = $this->getInternalAPI()->post(
-                "/entite/" . PastellTestCase::ID_E_COL . "/document/{$id_d}/action/verif-tdt"
-            );
-        } catch (Exception $e) {
-            print_r($this->getLogRecords());
-            throw $e;
-        }
+        $result = $this->getInternalAPI()->post(
+            "/entite/" . PastellTestCase::ID_E_COL . "/document/{$id_d}/action/verif-tdt"
+        );
 
         //Analyse des résultats
         $this->assertEquals(1, $result['result']);
@@ -264,5 +260,65 @@ class TedetisRecupTest extends PastellTestCase
         $sql = "SELECT message FROM journal ORDER BY id_j DESC LIMIT 1";
         $message = $this->getSQLQuery()->queryOne($sql);
         $this->assertEquals("Transaction en erreur sur le TdT : Enveloppe invalide : raison de l'erreur hyper détaillé", $message);
+    }
+
+    public function testReStamp(): void
+    {
+        $this->mockCurl([
+            '/admin/users/api-list-login.php' => true,
+            '/modules/actes/actes_download_file.php?file=3968&tampon=true&date_affichage=2022-02-18' => 'some pdf stuff tamponne',
+            '/modules/actes/actes_download_file.php?file=3969&tampon=true&date_affichage=2022-02-18' => 'some annexe tamponne',
+             '/modules/actes/actes_transac_get_files_list.php?transaction=42' =>
+                 file_get_contents(__DIR__ . "/../fixtures/actes_transac_get_files_list.json"),
+        ]);
+        $id_ce = $this->createConnector('s2low', 'S2low')['id_ce'];
+        $this->associateFluxWithConnector($id_ce, 'actes-generique', 'TdT');
+
+
+        $id_d = $this->createDocument('actes-generique')['id_d'];
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
+        $donneesFormulaire->setData('tedetis_transaction_id', 42);
+        $donneesFormulaire->setData('acte_use_publication_date', true);
+        $donneesFormulaire->setData('acte_publication_date', '2022-02-18');
+
+        $donneesFormulaire->addFileFromData('arrete', 'mon_acte.pdf', '');
+        $donneesFormulaire->addFileFromData('autre_document_attache', 'ma_premiere_annexe.pdf', '');
+
+        $actionCreator = $this->getObjectInstancier()->getInstance(ActionCreatorSQL::class);
+        $actionCreator->addAction(1, 0, 'acquiter-tdt', "test", $id_d);
+
+
+        $result = $this->triggerActionOnDocument($id_d, 'tamponner-tdt');
+        if (! $result) {
+            print_r($this->getLogRecords());
+        }
+        static::assertTrue($result);
+        static::assertEquals(
+            'some pdf stuff tamponne',
+            $donneesFormulaire->getFileContent('acte_tamponne')
+        );
+        static::assertEquals(
+            'some annexe tamponne',
+            $donneesFormulaire->getFileContent('annexes_tamponnees', 0)
+        );
+    }
+
+    public function testReStampInGoLot(): void
+    {
+
+        $id_d = $this->createDocument('actes-generique')['id_d'];
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
+        $donneesFormulaire->setData('acte_use_publication_date', true);
+        $donneesFormulaire->setData('acte_publication_date', '2022-02-18');
+
+        $actionCreator = $this->getObjectInstancier()->getInstance(ActionCreatorSQL::class);
+        $actionCreator->addAction(1, 0, 'acquiter-tdt', "test", $id_d);
+
+        $actionExecutorFactory = $this->getObjectInstancier()->getInstance(ActionExecutorFactory::class);
+        $actionExecutorFactory->executeLotDocument(1, 1, [$id_d], "tamponner-tdt");
+
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
+        self::assertEquals(1, $donneesFormulaire->get('acte_use_publication_date'));
+        self::assertEquals('2022-02-18', $donneesFormulaire->get('acte_publication_date'));
     }
 }

@@ -242,6 +242,12 @@ formulaire:
             name: 'Annexe(s) tamponnée(s) par le TdT'
             type: file
             multiple: true
+        acte_use_publication_date:
+            name: Utiliser la date de publication sur le tampon
+            type: checkbox
+        acte_publication_date:
+            name: Date de publication de l'acte
+            type: date
     'Retour GED':
         has_ged_document_id:
             no-show: true
@@ -341,6 +347,7 @@ action:
                 - send-tdt-erreur
                 - acquiter-tdt
                 - send-ged
+                - termine
             role_id_e: editeur
             droit_id_u: 'actes-automatique:edition'
     supression:
@@ -380,6 +387,9 @@ action:
                         - termine
                         - send-tdt-erreur
                         - annuler-tdt
+                and_6:
+                    has-action:
+                        - termine
             role_id_e: editeur
             droit_id_u: 'actes-automatique:edition'
         action-class: Supprimer
@@ -400,6 +410,8 @@ action:
             role_id_e: no-role
         editable-content:
             - envoi_sae
+            - acte_use_publication_date
+            - acte_publication_date
     send-signature-local:
         name-action: Signer
         name: 'Document à faire signer'
@@ -601,7 +613,15 @@ action:
         editable-content:
             - envoi_ged
             - envoi_sae
+            - acte_use_publication_date
+            - acte_publication_date
         action-automatique: orientation
+    tamponner-tdt:
+        name: "Retamponner l'acte et les annexes"
+        rule:
+            has-action:
+                - acquiter-tdt
+        action-class: ActesTamponner
     annulation-tdt:
         name-action: 'Annuler la transaction'
         name: "Demande d'annulation envoyée"
@@ -669,6 +689,8 @@ action:
                         - error-ged
         editable-content:
             - envoi_sae
+            - acte_use_publication_date
+            - acte_publication_date
         action-automatique: orientation
         action-class: StandardAction
         connecteur-type: GED
@@ -770,6 +792,9 @@ action:
         name: 'Transfert accepté par le SAE'
         rule:
             role_id_e: no-role
+        editable-content:
+            - acte_use_publication_date
+            - acte_publication_date
     rejet-sae:
         name: 'Transfert rejeté par le SAE'
         rule:

@@ -40,9 +40,9 @@ class FakeTdT extends TdtAdapter
         return file_get_contents(__DIR__ . "/fixtures/vide.pdf");
     }
 
-    public function getActeTamponne($id_transaction)
+    public function getActeTamponne($id_transaction, string $date_affichage = null): ?string
     {
-        return file_get_contents(__DIR__ . "/fixtures/vide.pdf");
+        return file_get_contents(__DIR__ . '/fixtures/vide.pdf');
     }
 
     public function getListReponsePrefecture($transaction_id)
@@ -70,7 +70,7 @@ class FakeTdT extends TdtAdapter
         return file_get_contents(__DIR__ . "/fixtures/pes_acquit.xml");
     }
 
-    public function getAnnexesTamponnees($transaction_id)
+    public function getAnnexesTamponnees(string $transaction_id, ?string $date_publication = null): array
     {
         return [];
     }

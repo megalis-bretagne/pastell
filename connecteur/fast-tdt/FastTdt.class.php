@@ -504,12 +504,13 @@ class FastTdt extends TdtConnecteur
     }
 
     /**
-     * @param $id_transaction
-     * @return bool
+     * @param string $id_transaction
+     * @param string|null $date_affichage
+     * @return ?string
      */
-    public function getActeTamponne($id_transaction)
+    public function getActeTamponne(string $id_transaction, string $date_affichage = null): ?string
     {
-        return false;
+        return null;
     }
 
     /**
@@ -542,7 +543,7 @@ class FastTdt extends TdtConnecteur
      * @param $transaction_id
      * @return bool
      */
-    public function getAnnexesTamponnees($transaction_id)
+    public function getAnnexesTamponnees(string $transaction_id, ?string $date_affichage = null): array
     {
         return false;
     }
