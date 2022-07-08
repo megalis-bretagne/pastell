@@ -60,5 +60,9 @@ module-pack-gfc: docker-compose-up ## Run make-module pack_gfc
 	$(MAKE_MODULE) ./pack-json/pack-gfc/dossier-wgfc.json ./module/ --id gfc-dossier
 	$(MAKE_MODULE) ./pack-json/pack-gfc/dossier-wgfc-destinataire.json ./module/ --id gfc-dossier-destinataire
 
-all-module: module-pack-gfc module-pack-urbanisme
+module-pack-publication: docker-compose-up ## Run make-module pack_publication
+	$(MAKE_MODULE) ./pack-json/pack-publication/ls-actes-publication-draft.json ./module/ --id ls-actes-publication --name "Actes publication"
+	$(MAKE_MODULE) ./pack-json/pack-publication/ls-document-pdf-draft.json ./module/ --id ls-document-pdf --name "Document PDF"
+
+all-module: module-pack-gfc module-pack-urbanisme module-pack-publication
 
