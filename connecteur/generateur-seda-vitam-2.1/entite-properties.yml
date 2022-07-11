@@ -1,0 +1,4 @@
+nom: 'Générateur SEDA Vitam 2.1'
+type: 'Bordereau SEDA'
+description: "Permet de générer des bordereaux SEDA 2.1 à destination de Vitam"
+heritage: seda-generator-common

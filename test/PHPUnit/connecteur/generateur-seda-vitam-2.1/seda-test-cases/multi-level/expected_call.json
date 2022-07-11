@@ -1,0 +1,89 @@
+{
+    "version": "2.1-vitam",
+    "Title": "Actes soumis au contr\u00f4le de l\u00e9galit\u00e9 : Nomination du colonel Moutarde",
+    "ArchivalAgreement": "ACCORDS_ACTES",
+    "ArchivalProfile": "PROFILE_ACTES",
+    "Language": "fra",
+    "Description": "Actes",
+    "DescriptionLanguage": "fra",
+    "StartDate": "2020-12-04",
+    "EndDate": "2020-12-04",
+    "AccessRule": {
+        "Rule": "AR038",
+        "StartDate": "2020-12-04"
+    },
+    "AppraisalRule": {
+        "FinalAction": "Destroy",
+        "Rule": "P10Y",
+        "StartDate": "2020-12-04"
+    },
+    "Keywords": [
+        {
+            "KeywordContent": "D\u00e9lib\u00e9ration"
+        },
+        {
+            "KeywordContent": "1.1 Titulaire de la fonction publique territoriale"
+        }
+    ],
+    "ArchiveUnits": [
+        {
+            "Id": "NOT_TESTABLE_1",
+            "Title": "NIVEAU 1",
+            "ArchiveUnits": [
+                {
+                    "Id": "NOT_TESTABLE_2",
+                    "Title": "NIVEAU 1\nSOUS NIVEAU 1",
+                    "ArchiveUnits": [
+                        {
+                            "Id": "NOT_TESTABLE_3",
+                            "Title": "NIVEAU 1\nSOUS NIVEAU 1\nSOUS SOUS NIVEAU 1",
+                            "ArchiveUnits": [
+                                {
+                                    "Id": "NOT_TESTABLE_4",
+                                    "Title": "LOIN",
+                                    "Files": [
+                                        {
+                                            "Id": "NOT_TESTABLE_5",
+                                            "Filename": "actes.pdf",
+                                            "Uri": "content\/fbc1a9f858ea9e177916964bd88c3d37b91a1e84412765e29950777f265c4b75.pdf",
+                                            "MessageDigest": "fbc1a9f858ea9e177916964bd88c3d37b91a1e84412765e29950777f265c4b75",
+                                            "Size": "7",
+                                            "MimeType": "text\/plain",
+                                            "Title": "actes"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Id": "NOT_TESTABLE_6",
+            "Title": "NIVEAU 2",
+            "ArchiveUnits": [
+                {
+                    "Id": "NOT_TESTABLE_7",
+                    "Title": "NIVEAU 3"
+                },
+                {
+                    "Id": "NOT_TESTABLE_8",
+                    "Title": "NIVEAU 3"
+                }
+            ]
+        }
+    ],
+    "OriginatingAgency": {
+        "Identifier": "491 011 698 0001",
+        "Name": "LIBRICIEL SCOP service RH"
+    },
+    "ArchivalAgency": {
+        "Identifier": "FRAD000",
+        "Name": "Service d'archive de Libriceil"
+    },
+    "TransferringAgency": {
+        "Identifier": "491 011 698",
+        "Name": "LIBRICIEL SCOP"
+    }
+}

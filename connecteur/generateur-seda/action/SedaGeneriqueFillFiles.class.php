@@ -1,9 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
+use Pastell\Connector\AbstractSedaGeneratorConnector;
+
 class SedaGeneriqueFillFiles extends ChoiceActionExecutor
 {
     /**
      * @return bool
+     * @throws SimpleXMLWrapperException
+     * @throws UnrecoverableException
      * @throws Exception
      */
     public function go()
@@ -75,12 +81,16 @@ class SedaGeneriqueFillFiles extends ChoiceActionExecutor
             $node_id = $this->getRecuperateur()->get('unit-content');
             $this->redirect("/Connecteur/externalData?id_ce={$this->id_ce}&field=fill_files&node_id=$node_id");
         }
-        if (! $this->getRecuperateur()->get('enregistrer')) {
+        if (!$this->getRecuperateur()->get('enregistrer')) {
             $this->redirect("/Connecteur/externalData?id_ce={$this->id_ce}&field=fill_files&node_id=$node_id");
         }
         return true;
     }
 
+    /**
+     * @throws SimpleXMLWrapperException
+     * @throws Exception
+     */
     public function display()
     {
         $this->setViewParameter('node_id', $this->getRecuperateur()->get('node_id'));
@@ -91,15 +101,19 @@ class SedaGeneriqueFillFiles extends ChoiceActionExecutor
         $this->setViewParameter('fieldsList', $documentType->getFormulaire()->getFieldsList());
 
         $files = $this->getConnecteurConfig($this->id_ce)->getFileContent('files');
+        if ($files === false) {
+            $files = '';
+        }
 
         $this->setViewParameter('generateurSedaFillFiles', new GenerateurSedaFillFiles($files));
 
-
-        $this->setViewParameter('pastell_to_seda', SedaGenerique::getPastellToSeda());
+        /** @var AbstractSedaGeneratorConnector $connector */
+        $connector = $this->getMyConnecteur();
+        $this->setViewParameter('pastell_to_seda', $connector->getPastellToSeda());
 
         $this->renderPage(
             "Gestion des fichiers de l'archive",
-            __DIR__ . "/../template/SedaGeneriqueFillFiles.php"
+            __DIR__ . '/../template/SedaGeneriqueFillFiles.php'
         );
         return true;
     }
