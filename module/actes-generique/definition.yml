@@ -225,6 +225,9 @@ formulaire:
         has_bordereau:
             no-show: true
             read-only: true
+        tedetis_transaction_id:
+            name: 'Identifiant de la transaction sur le TdT'
+            read-only: true
         bordereau:
             name: "Bordereau d'acquittement"
             type: file
@@ -242,6 +245,10 @@ formulaire:
             name: 'Annexe(s) tamponnée(s) par le TdT'
             type: file
             multiple: true
+        date_ar:
+            name: "Date de l'accusé de réception"
+            type: date
+            read-only: true
         acte_use_publication_date:
             name: Utiliser la date de publication sur le tampon
             type: checkbox
@@ -572,8 +579,10 @@ action:
                 - return-teletransmission-tdt
             role_id_e: editeur
             droit_id_u: 'actes-generique:edition'
-        action-class: TedetisRecup
+        action-class: StandardAction
         connecteur-type: TdT
+        connecteur-type-action: TdTRecupActe
+
     erreur-verif-tdt:
         name: "Erreur lors de la vérification du statut de l'acte"
         rule:
@@ -591,6 +600,7 @@ action:
             - envoi_sae
             - acte_use_publication_date
             - acte_publication_date
+        modification-no-change-etat: true
     termine:
         name: 'Traitement terminé'
         rule:
@@ -630,7 +640,9 @@ action:
         rule:
             has-action:
                 - acquiter-tdt
-        action-class: ActesTamponner
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdTRestamp
     send-ged:
         name-action: 'Verser à la GED'
         name: 'Versé à la GED'
@@ -663,6 +675,7 @@ action:
             - envoi_sae
             - acte_use_publication_date
             - acte_publication_date
+        modification-no-change-etat: true
         action-class: StandardAction
         connecteur-type: GED
         connecteur-type-action: GEDEnvoyer
@@ -758,6 +771,7 @@ action:
         editable-content:
             - acte_use_publication_date
             - acte_publication_date
+        modification-no-change-etat: true
     rejet-sae:
         name: 'Transfert rejeté par le SAE'
         rule:

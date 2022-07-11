@@ -61,7 +61,7 @@ formulaire:
             no-show: true
             read-only: true
         pes_tedetis_transaction_id:
-            name: 'Identifiant de la transaction sur le Tdt'
+            name: 'Identifiant de la transaction sur le TdT'
             read-only: true
         pes_acquit:
             name: 'PES Acquit'

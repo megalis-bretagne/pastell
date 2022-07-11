@@ -217,7 +217,7 @@ formulaire:
             no-show: true
             read-only: true
         tedetis_transaction_id:
-            name: 'Identifiant de la transaction sur le Tdt'
+            name: 'Identifiant de la transaction sur le TdT'
             read-only: true
         bordereau:
             name: "Bordereau d'acquittement"
@@ -241,6 +241,12 @@ formulaire:
             name: "Date de l'accusé de réception"
             type: date
             read-only: true
+        acte_use_publication_date:
+            name: 'Utiliser la date de publication sur le tampon'
+            type: checkbox
+        acte_publication_date:
+            name: "Date de publication de l'acte"
+            type: date
     Annulation:
         has_annulation:
             no-show: true
@@ -398,6 +404,12 @@ action:
                 - non-recu
                 - send-ged
                 - send-signature-error
+                - acquiter-tdt
+                - reception
+                - non-recu
+                - send-ged
+                - accepter-sae
+                - termine
     supression:
         name-action: Supprimer
         name: Supprimé
@@ -440,6 +452,10 @@ action:
         name: 'Traitement terminé'
         rule:
             role_id_e: no-role
+        editable-content:
+            - acte_use_publication_date
+            - acte_publication_date
+        modification-no-change-etat: true
     reouverture:
         name: 'Rouvrir le dossier'
         rule:
@@ -491,6 +507,8 @@ action:
             - type_piece
             - type_acte
             - type_pj
+            - acte_use_publication_date
+            - acte_publication_date
             - to
             - cc
             - bcc
@@ -606,6 +624,8 @@ action:
             - type_piece
             - type_acte
             - type_pj
+            - acte_use_publication_date
+            - acte_publication_date
             - to
             - cc
             - bcc
@@ -763,6 +783,8 @@ action:
             - sae_archival_identifier
             - sae_atr_comment
             - url_archive
+            - acte_use_publication_date
+            - acte_publication_date
         modification-no-change-etat: true
     annulation-tdt:
         name-action: 'Annuler la transaction'
@@ -782,6 +804,24 @@ action:
             annulation-tdt: annulation-tdt
         action-automatique: verif-annulation-tdt
         warning: "Attention cette action n'est pas réversible"
+    tamponner-tdt:
+        name: "Retamponner l'acte et les annexes"
+        rule:
+            has-action:
+                - acquiter-tdt
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdTRestamp
+        connecteur-type-mapping:
+            tedetis_transaction_id: tedetis_transaction_id
+            acte_tamponne: acte_tamponne
+            annexes_tamponnees: annexes_tamponnees
+            date_ar: date_ar
+            acte_use_publication_date: acte_use_publication_date
+            acte_publication_date: acte_publication_date
+            arrete: document
+            autre_document_attache: annexe
+            objet: titre
     verif-annulation-tdt:
         name-action: "Vérifier le statut de la transaction d'annulation"
         name: 'Statut vérifié par le TdT'
@@ -920,6 +960,8 @@ action:
             - sae_archival_identifier
             - sae_atr_comment
             - url_archive
+            - acte_use_publication_date
+            - acte_publication_date
         modification-no-change-etat: true
     reception-partielle:
         name: 'Reçu partiellement'
@@ -962,6 +1004,8 @@ action:
             - sae_archival_identifier
             - sae_atr_comment
             - url_archive
+            - acte_use_publication_date
+            - acte_publication_date
         modification-no-change-etat: true
     reponse:
         name: 'Une réponse a été enregistrée'
@@ -1020,6 +1064,8 @@ action:
             - sae_archival_identifier
             - sae_atr_comment
             - url_archive
+            - acte_use_publication_date
+            - acte_publication_date
         modification-no-change-etat: true
     error-ged:
         name: 'Erreur irrécupérable lors du dépôt'
@@ -1100,6 +1146,10 @@ action:
         rule:
             role_id_e: no-role
         action-automatique: orientation
+        editable-content:
+            - acte_use_publication_date
+            - acte_publication_date
+        modification-no-change-etat: true
     rejet-sae:
         name: 'Transfert rejeté par le SAE'
         rule:

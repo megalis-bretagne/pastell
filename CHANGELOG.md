@@ -16,6 +16,7 @@
 - Ajout du connecteur help-url qui permet de définir l'URL dune page d'aide #1547
 - Modification du vocabulaire concernant les transferts au SAE #1552
 - Possibilité de revenir en arrière sur les flux studio sur les étapes non réalisés #1539
+- Possibilité de retamponner les actes et les annexes (flux studio, actes generique et automatique ) #627
 
 ## Suppressions
 
@@ -42,7 +43,7 @@
   TedetisAnnulation, TedetisRecupAnnulation, TedetisSendReponsePref, TedetisVerifReponsePref,
   FournisseurCommandeEnvoiGED, FournisseurCommandeEnvoiSAE, GEDEnvoiDocumentASigner, IParapheurEnvoieDocumentASigner,
   IParapheurRecupDocumentASigner, HeliosEnvoieSAEChange, HeliosGEDEnvoi, HeliosGeneriqueSAEValidation,
-  HeliosGeneriqueSAEVerif, IparapheurEnvoieHelios, PDFGeneriqueRelance
+  HeliosGeneriqueSAEVerif, IparapheurEnvoieHelios, PDFGeneriqueRelance, TedetisRecup
 - Suppression de la propriété Controler::lastError
 - La récupération des acquittements du flux pes-marché est standardisé avec les autres flux (modification du nom du fichier de l'acquittement)
 - Suppression de la constante MODE_MUTUALISE. Lors de l'envoi d'un mail sécurisé, mailsec_from prend la valeur de PLATEFORME_MAIL.

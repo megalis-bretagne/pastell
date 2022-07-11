@@ -104,7 +104,9 @@ class TdTRecupActe extends ConnecteurTypeActionExecutor
                 }
                 $annexe_filename_send = $tdT->getFilenameTransformation($this->getDonneesFormulaire()->getFileName($autre_document_attache_element, $i));
                 if (strcmp($annexe_filename_send, $annexe_tamponnee['filename']) !== 0) {
-                    $message = "Une erreur est survenue lors de la récupération des annexes tamponnées de " . $tdT->getLogicielName();
+                    $message = "Une erreur est survenue lors de la récupération des annexes tamponnées de " . $tdT->getLogicielName() .
+                        " L'annexe tamponée " . $annexe_tamponnee['filename'] . " ne correspond pas avec " . $annexe_filename_send;
+                    ;
                     $this->setLastMessage($message);
                     $actionCreator->addAction($this->id_e, 0, $tdt_error, $message);
                     $this->notify($tdt_error, $this->type, $message);

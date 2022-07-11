@@ -135,10 +135,11 @@ class TypeDossierControler extends PastellControler
 
         $target_type_dossier_id = $this->getPostOrGetInfo()->get('id_type_dossier');
         $typeDossierProperties = $this->getTypeDossierManager()->getTypeDossierProperties($id_t);
-        $source_type_dossier_id = $typeDossierProperties->id_type_dossier;
 
-        $this->verifyTypeDossierIsUnused($source_type_dossier_id);
-
+        if (! $is_new) {
+            $source_type_dossier_id = $typeDossierProperties->id_type_dossier;
+            $this->verifyTypeDossierIsUnused($source_type_dossier_id);
+        }
         $typeDossierEditionService = $this->getTypeDossierEditionService();
         try {
             $typeDossierEditionService->checkTypeDossierId($target_type_dossier_id);
