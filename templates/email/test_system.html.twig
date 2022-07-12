@@ -1,7 +1,16 @@
+{% extends "base-email.html.twig" %}
 
+{% block title %}
+    <h1>Mail de test envoyé par Pastell</h1>
+{% endblock %}
 
-<p>Ceci est un mail de test envoyé par <em>Pastell</em>.</p>
+{% block content %}
+<div>
+    <p>Ceci est un mail de test envoyé par Pastell.</p>
 
-
-<p>--</p>
-<p>Pastell - {{ SITE_BASE }}</p>
+    <div style="text-align: center;">
+        <a href="{{ SITE_BASE }}" class="btn">Allez sur Pastell</a>
+    </div>
+    <p>Date de génération du mail: {{ "now"|date("c") }}</p>
+</div>
+{% endblock %}

@@ -1,11 +1,21 @@
-<p>Bonjour,</p>
+{% extends "base-email.html.twig" %}
 
-<p>Voici la suite de la procédure pour changer votre email sur Pastell.</p>
+{% block title %}
+    <h1>Procédure de changement de mail</h1>
+{% endblock %}
 
-<p>Veuillez cliquer sur le lien suivant :
-<br><a href="{{ link }}">{{ link }}</a>
-</p>
+{% block content %}
+    <div>
 
-<p>Cordialement.</p>
-<p>--</p>
-<p>Ce mail vous est envoyé automatiquement par le système Pastell</p>
+        <p>Bonjour,</p>
+
+        <p>Voici la suite de la procédure pour changer votre email sur Pastell.</p>
+
+        <p>Veuillez cliquer sur le lien suivant :</p>
+        <div style="text-align: center;">
+            <a href="{{ link }}" class="btn">Réinitialiser mon email</a>
+        </div>
+
+        <p>Ce mail vous est envoyé automatiquement par le système Pastell</p>
+    </div>
+{% endblock %}

@@ -1,16 +1,24 @@
-<p>Bonjour,</p>
-<p>
-Le système Pastell a reçu une demande de rappel de mot de passe correspondant au compte associé à votre adresse mail.
-</p>
-<p>
-Afin de réinitialiser votre mot de passe, veuillez vous rendre sur la page suivante :
-<br/><br/>
-    <a href="{{ link }}">{{ link }}</a>
-</p>
-<p>
-Si vous n'avez pas initié cette procédure, veuillez prévenir votre administrateur Pastell.
-</p>
-<br/>
--- <br/>
-Ce mail vous est envoyé automatiquement par Pastell.
-<br/>
+{% extends "base-email.html.twig" %}
+
+{% block title %}
+    <h1>Modification de votre mot de passe</h1>
+{% endblock %}
+
+{% block content %}
+    <div>
+        <p>Bonjour,</p>
+        <p>
+            Le système Pastell a reçu une demande de rappel de mot de passe
+            correspondant au compte associé à votre adresse email.
+        </p>
+        <p>
+            Afin de réinitialiser votre mot de passe, veuillez vous rendre sur la page suivante :
+        </p>
+        <div style="text-align: center;">
+            <a href="{{ link }}" class="btn">Réinitialiser mon mot de passe</a>
+        </div>
+        <p>
+            Si vous n'avez pas initié cette procédure, veuillez prévenir votre administrateur Pastell.
+        </p>
+    </div>
+{% endblock %}

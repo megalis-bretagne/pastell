@@ -10,7 +10,9 @@ class NotificationMail
         private readonly Notification $notification,
         private readonly Mailer $mailer,
         private readonly Journal $journal,
-        private NotificationDigestSQL $notificationDigestSQL
+        private readonly NotificationDigestSQL $notificationDigestSQL,
+        private readonly EntiteSQL $entiteSQL,
+        private readonly DocumentSQL $documentSQL,
     ) {
     }
 
@@ -34,6 +36,9 @@ class NotificationMail
      */
     private function sendMail($mail, $id_e, $id_d, $action, $type, $message, array $attachment = []): void
     {
+        $entityInfo = $this->entiteSQL->getInfo($id_e);
+        $documentInfo = $this->documentSQL->getInfo($id_d);
+
         $url = sprintf('%s/Document/detail?id_d=%s&id_e=%d', SITE_BASE, $id_d, $id_e);
         $templatedEmail = (new TemplatedEmail())
             ->to($mail)
@@ -41,6 +46,8 @@ class NotificationMail
             ->htmlTemplate('notification.html.twig')
             ->context([
                 'message' => $message,
+                'entityName' => $entityInfo['denomination'],
+                'documentTitle' => $documentInfo['titre'] ?? $id_d,
                 'url' => $url,
                 'action' => $action,
                 'type' => $type,

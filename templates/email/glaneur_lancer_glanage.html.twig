@@ -1,3 +1,15 @@
-<p>Le glaneur {{ url }} est en erreur.</p>
+{% extends "base-email.html.twig" %}
 
-<p>{{ message }}</p>
+{% block title %}
+    <h1>Glaneur en erreur</h1>
+{% endblock %}
+
+{% block content %}
+    <div>
+        <p>Le glaneur {{ url }} est en erreur.</p>
+
+        <p>{{ message }}</p>
+    </div>
+{% endblock %}
+
+
