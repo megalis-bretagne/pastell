@@ -276,7 +276,7 @@ formulaire:
             name: 'Bordereau SEDA'
             type: file
         sae_archive:
-            name: Paquet d'archive (SIP)
+            name: "Paquet d'archive (SIP)"
             type: file
         ar_sae:
             type: file
@@ -703,6 +703,7 @@ action:
             last-action:
                 - preparation-send-sae
                 - generate-sip-error
+                - rejet-sae
         action-class: StandardAction
         connecteur-type: SAE
         connecteur-type-action: Pastell\Step\SAE\Action\SAEGenerateArchiveAction

@@ -1,305 +1,316 @@
----
-nom: Document PDF
-type: Types de dossier Document
-description: ""
+nom: 'Document PDF'
+type: 'Types de dossier Document'
+description: ''
 connecteur:
-  - transformation
-  - signature
+    - transformation
+    - signature
 formulaire:
-  Informations:
-    libelle:
-      name: Libellé
-      type: text
-      requis: true
-      multiple: false
-      commentaire: ""
-      title: true
-    document:
-      name: Document pdf
-      type: file
-      requis: true
-      multiple: false
-      commentaire: ""
-      content-type: application/pdf
-  Cheminement:
-    envoi_transformation:
-      name: Transformation initiale
-      type: checkbox
-      onchange: cheminement-change
-      default: checked
-      read-only: true
-    envoi_signature:
-      name: Visa/Signature
-      type: checkbox
-      onchange: cheminement-change
-      default: ""
-      read-only: false
-  i-Parapheur:
-    envoi_iparapheur:
-      no-show: true
-    iparapheur_type:
-      name: Type iParapheur
-      read-only: true
-    iparapheur_sous_type:
-      name: Sous-type i-Parapheur
-      requis: true
-      index: true
-      read-only: true
-      type: externalData
-      choice-action: iparapheur-sous-type
-      link_name: Sélectionner un sous-type
-    has_date_limite:
-      name: Utiliser une date limite
-      type: checkbox
-    date_limite:
-      name: Date limite
-      type: date
-  Parapheur FAST:
-    envoi_fast:
-      no-show: true
-    fast_parapheur_circuit:
-      name: Circuit sur le parapheur
-      type: externalData
-      choice-action: iparapheur-sous-type
-      link_name: Liste des circuits
-    fast_parapheur_circuit_configuration:
-      name: >
-        Configuration du circuit à la volée
-        (au format JSON)
-      commentaire: >
-        Si ce fichier est déposé, il remplace
-        le circuit choisi dans le champ "Circuit
-        sur le parapheur"
-      type: file
-    fast_parapheur_email_destinataire:
-      name: Email du destinataire
-      commentaire: |
-        Email de la personne à qui l’on souhaite envoyer le document après sa signature<br />
-        Uniquement avec le mode "circuit à la volée"
-    fast_parapheur_email_cc:
-      name: Email des destinataires en copie carbone
-      commentaire: |
-        Permet de rajouter des destinataires mais en copie carbone<br />
-        Uniquement avec le mode "circuit à la volée"
-    fast_parapheur_agents:
-      name: Emails des agents
-      commentaire: |
-        Les emails des utilisateurs à rajouter en tant qu’agent. Séparé par des virgules<br />
-        Uniquement avec le mode "circuit à la volée"
-  Signature:
-    iparapheur_dossier_id:
-      name: '#ID dossier parapheur'
-    iparapheur_historique:
-      name: Historique iparapheur
-      type: file
-    parapheur_last_message:
-      name: Dernier message reçu du parapheur
-    has_signature:
-      no-show: true
-    signature:
-      name: Signature détachée
-      type: file
-    bordereau_signature:
-      name: Bordereau de signature
-      type: file
-    document_original:
-      name: Document original
-      type: file
-    multi_document_original:
-      name: Multi-document(s) original
-      type: file
-      multiple: true
-    iparapheur_annexe_sortie:
-      name: Annexe(s) de sortie du parapheur
-      type: file
-      multiple: true
+    Informations:
+        libelle:
+            name: Libellé
+            type: text
+            requis: true
+            multiple: false
+            commentaire: ''
+            title: true
+        document:
+            name: 'Document pdf'
+            type: file
+            requis: true
+            multiple: false
+            commentaire: ''
+            content-type: application/pdf
+    Cheminement:
+        envoi_transformation:
+            name: 'Transformation initiale'
+            type: checkbox
+            onchange: cheminement-change
+            default: checked
+            read-only: true
+        envoi_signature:
+            name: Visa/Signature
+            type: checkbox
+            onchange: cheminement-change
+            default: ''
+            read-only: false
+    i-Parapheur:
+        envoi_iparapheur:
+            no-show: true
+        iparapheur_type:
+            name: 'Type iParapheur'
+            read-only: true
+        iparapheur_sous_type:
+            name: 'Sous-type i-Parapheur'
+            requis: true
+            index: true
+            type: externalData
+            choice-action: iparapheur-sous-type
+            link_name: 'Sélectionner un sous-type'
+        has_date_limite:
+            name: 'Utiliser une date limite'
+            type: checkbox
+        date_limite:
+            name: 'Date limite'
+            type: date
+    'Parapheur FAST':
+        envoi_fast:
+            no-show: true
+        fast_parapheur_circuit:
+            name: 'Circuit sur le parapheur'
+            type: externalData
+            choice-action: iparapheur-sous-type
+            link_name: 'Liste des circuits'
+        fast_parapheur_circuit_configuration:
+            name: 'Configuration du circuit à la volée (au format JSON)'
+            commentaire: 'Si ce fichier est déposé, il remplace le circuit choisi dans le champ "Circuit sur le parapheur"'
+            type: file
+        fast_parapheur_email_destinataire:
+            name: 'Email du destinataire'
+            commentaire: "Email de la personne à qui l’on souhaite envoyer le document après sa signature<br />\nUniquement avec le mode \"circuit à la volée\""
+        fast_parapheur_email_cc:
+            name: 'Email des destinataires en copie carbone'
+            commentaire: "Permet de rajouter des destinataires mais en copie carbone<br />\nUniquement avec le mode \"circuit à la volée\""
+        fast_parapheur_agents:
+            name: 'Emails des agents'
+            commentaire: "Les emails des utilisateurs à rajouter en tant qu’agent. Séparé par des virgules<br />\nUniquement avec le mode \"circuit à la volée\""
+    Signature:
+        iparapheur_dossier_id:
+            name: '#ID dossier parapheur'
+            read-only: true
+        iparapheur_historique:
+            name: 'Historique iparapheur'
+            type: file
+            read-only: true
+        parapheur_last_message:
+            name: 'Dernier message reçu du parapheur'
+            read-only: true
+        has_signature:
+            no-show: true
+            read-only: true
+        signature:
+            name: 'Signature détachée'
+            type: file
+            read-only: true
+        bordereau_signature:
+            name: 'Bordereau de signature'
+            type: file
+            read-only: true
+        document_original:
+            name: 'Document original'
+            type: file
+            read-only: true
+        multi_document_original:
+            name: 'Multi-document(s) original'
+            type: file
+            multiple: true
+            read-only: true
+        iparapheur_annexe_sortie:
+            name: 'Annexe(s) de sortie du parapheur'
+            type: file
+            multiple: true
+            read-only: true
 champs-affiches:
-  - titre
-  - dernier_etat
-  - date_dernier_etat
+    - titre
+    - dernier_etat
+    - date_dernier_etat
 champs-recherche-avancee:
-  - type
-  - id_e
-  - lastetat
-  - last_state_begin
-  - etatTransit
-  - state_begin
-  - search
+    - type
+    - id_e
+    - lastetat
+    - last_state_begin
+    - etatTransit
+    - state_begin
+    - search
 page-condition:
-  i-Parapheur:
-    envoi_iparapheur: true
-  Parapheur FAST:
-    envoi_fast: true
-  Signature:
-    has_signature: true
+    i-Parapheur:
+        envoi_iparapheur: true
+    'Parapheur FAST':
+        envoi_fast: true
+    Signature:
+        has_signature: true
 action:
-  creation:
-    name-action: Créer
-    name: Créé
-    rule:
-      no-last-action: ""
-  modification:
-    name-action: Modifier
-    name: En cours de rédaction
-    rule:
-      last-action:
-        - creation
-        - modification
-        - importation
-        - send-signature-error
-  supression:
-    name-action: Supprimer
-    name: Supprimé
-    rule:
-      last-action:
-        - creation
-        - modification
-        - importation
-        - termine
-        - fatal-error
-        - transformation-error
-        - rejet-iparapheur
-    action-class: Supprimer
-    warning: Êtes-vous sûr ?
-  importation:
-    name: Importation du document
-    rule:
-      role_id_e: no-role
-    action-automatique: orientation
-  orientation:
-    name: Envoi du document
-    name-action: Envoyer le document
-    rule:
-      last-action:
-        - creation
-        - modification
-        - importation
-        - transformation
-        - recu-iparapheur
-      document_is_valide: true
-    action-class: OrientationTypeDossierPersonnalise
-  termine:
-    name: Traitement terminé
-    rule:
-      role_id_e: no-role
-  cheminement-change:
-    no-workflow: true
-    rule:
-      role_id_e: no-role,
-    action-class: CheminementChangeTypeDossierPersonnalise
-  preparation-transformation:
-    name: Préparation à la transformation
-    rule:
-      role_id_e: no-role
-    action-automatique: transformation
-  transformation:
-    name-action: Transformer le document
-    name: Transformation du document
-    rule:
-      last-action:
-        - preparation-transformation
-        - transformation-error
-    action-class: StandardAction
-    action-automatique: orientation
-    connecteur-type: transformation
-    connecteur-type-action: TransformationTransform
-  transformation-error:
-    name: >
-      Erreur lors de la transformation du
-      dossier
-    rule:
-      role_id_e: no-role
-  preparation-send-iparapheur:
-    name: "Préparation de l'envoi au parapheur"
-    rule:
-      role_id_e: no-role
-    action-automatique: send-iparapheur
-  send-iparapheur:
-    name-action: Transmettre au parapheur
-    name: Transmis au parapheur
-    rule:
-      last-action:
-        - preparation-send-iparapheur
-        - send-signature-error
-    action-class: StandardAction
-    connecteur-type: signature
-    connecteur-type-action: SignatureEnvoie
-    connecteur-type-mapping:
-      iparapheur_type: iparapheur_type
-      iparapheur_sous_type: iparapheur_sous_type
-      iparapheur_dossier_id: iparapheur_dossier_id
-      fast_parapheur_circuit: fast_parapheur_circuit
-      fast_parapheur_circuit_configuration: fast_parapheur_circuit_configuration
-      fast_parapheur_email_destinataire: fast_parapheur_email_destinataire
-      fast_parapheur_email_cc: fast_parapheur_email_cc
-      fast_parapheur_agents: fast_parapheur_agents
-      send-signature-error: send-signature-error
-      iparapheur_has_date_limite: has_date_limite
-      iparapheur_date_limite: date_limite
-      objet: libelle
-      document: document
-    action-automatique: verif-iparapheur
-  send-signature-error:
-    name: "Erreur lors de l'envoi du dossier à la signature"
-    editable-content:
-      - fast_parapheur_circuit
-      - fast_parapheur_circuit_configuration
-      - fast_parapheur_email_destinataire
-      - fast_parapheur_email_cc
-      - fast_parapheur_agents
-    rule:
-      role_id_e: no-role
-  verif-iparapheur:
-    name-action: Vérifier le statut de signature
-    name: Vérification de la signature
-    rule:
-      last-action:
-        - erreur-verif-iparapheur
-        - send-iparapheur
-    action-class: StandardAction
-    connecteur-type: signature
-    connecteur-type-action: SignatureRecuperation
-    connecteur-type-mapping:
-      iparapheur_historique: iparapheur_historique
-      parapheur_last_message: parapheur_last_message
-      has_signature: has_signature
-      signature: signature
-      document_original: document_original
-      multi_document_original: multi_document_original
-      bordereau: bordereau_signature
-      iparapheur_annexe_sortie: iparapheur_annexe_sortie
-      iparapheur_dossier_id: iparapheur_dossier_id
-      recu-iparapheur: recu-iparapheur
-      rejet-iparapheur: rejet-iparapheur
-      erreur-verif-iparapheur: erreur-verif-iparapheur
-      iparapheur_has_date_limite: has_date_limite
-      iparapheur_date_limite: date_limite
-      objet: libelle
-      document: document
-  erreur-verif-iparapheur:
-    name: >
-      Erreur lors de la vérification du
-      statut de signature
-    rule:
-      role_id_e: no-role
-  recu-iparapheur:
-    name: Signature récuperée
-    rule:
-      role_id_e: no-role
-    action-automatique: orientation
-  rejet-iparapheur:
-    name: Signature refusée
-    rule:
-      role_id_e: no-role
-  iparapheur-sous-type:
-    name: Liste des sous-type iParapheur
-    no-workflow: true
-    rule:
-      role_id_e: no-role
-    action-class: IparapheurSousType
-    connecteur-type-mapping:
-      iparapheur_type: iparapheur_type
-      iparapheur_sous_type: iparapheur_sous_type
-      fast_parapheur_circuit: fast_parapheur_circuit
-studio_definition: >
-  eyJpZF90eXBlX2Rvc3NpZXIiOiJscy1kb2N1bWVudC1wZGYtZHJhZnQiLCJwYXN0ZWxsLXZlcnNpb24iOiIlVkVSU0lPTiUiLCJ0aW1lc3RhbXAiOjE2NTcyMDU1NjQsInJhd19kYXRhIjp7Im5vbSI6IkRvY3VtZW50IFBERiAoRHJhZnQpIiwidHlwZSI6IlR5cGVzIGRlIGRvc3NpZXIgRG9jdW1lbnQiLCJldGFwZSI6W3sidHlwZSI6InRyYW5zZm9ybWF0aW9uIiwibGFiZWwiOiJUcmFuc2Zvcm1hdGlvbiBpbml0aWFsZSIsInJlcXVpcyI6Im9uIiwibnVtX2V0YXBlIjowLCJhdXRvbWF0aXF1ZSI6Im9uIiwiZGVmYXVsdENoZWNrZWQiOmZhbHNlLCJzcGVjaWZpY190eXBlX2luZm8iOltdLCJudW1fZXRhcGVfc2FtZV90eXBlIjowLCJldGFwZV93aXRoX3NhbWVfdHlwZV9leGlzdHMiOmZhbHNlfSx7InR5cGUiOiJzaWduYXR1cmUiLCJsYWJlbCI6IlZpc2FcL1NpZ25hdHVyZSIsInJlcXVpcyI6IiIsIm51bV9ldGFwZSI6IjEiLCJhdXRvbWF0aXF1ZSI6Im9uIiwiZGVmYXVsdENoZWNrZWQiOmZhbHNlLCJzcGVjaWZpY190eXBlX2luZm8iOnsiYW5uZXhlIjoiIiwiaGFzX2RhdGVfbGltaXRlIjoib24iLCJkb2N1bWVudF9hX3NpZ25lciI6ImRvY3VtZW50IiwibGliZWxsZV9wYXJhcGhldXIiOiJsaWJlbGxlIiwiaGFzX21ldGFkYXRhX2luX2pzb24iOiIiLCJjb250aW51ZV9hZnRlcl9yZWZ1c2FsIjoiIn0sIm51bV9ldGFwZV9zYW1lX3R5cGUiOjAsImV0YXBlX3dpdGhfc2FtZV90eXBlX2V4aXN0cyI6ZmFsc2V9XSwibm9tX29uZ2xldCI6IkluZm9ybWF0aW9ucyIsImRlc2NyaXB0aW9uIjoiIiwiaWRfdHlwZV9kb3NzaWVyIjoibHMtZG9jdW1lbnQtcGRmLWRyYWZ0IiwicmVzdHJpY3Rpb25fcGFjayI6IiIsImZvcm11bGFpcmVFbGVtZW50IjpbeyJuYW1lIjoiTGliZWxsXHUwMGU5IiwidHlwZSI6InRleHQiLCJ0aXRyZSI6Im9uIiwicmVxdWlzIjoib24iLCJlbGVtZW50X2lkIjoibGliZWxsZSIsInByZWdfbWF0Y2giOiIiLCJjb21tZW50YWlyZSI6IiIsImNvbnRlbnRfdHlwZSI6IiIsInNlbGVjdF92YWx1ZSI6IiIsImNoYW1wc19hZmZpY2hlcyI6IiIsInByZWdfbWF0Y2hfZXJyb3IiOiIiLCJjaGFtcHNfcmVjaGVyY2hlX2F2YW5jZWUiOiIifSx7Im5hbWUiOiJEb2N1bWVudCBwZGYiLCJ0eXBlIjoiZmlsZSIsInRpdHJlIjpmYWxzZSwicmVxdWlzIjoib24iLCJlbGVtZW50X2lkIjoiZG9jdW1lbnQiLCJwcmVnX21hdGNoIjoiIiwiY29tbWVudGFpcmUiOiIiLCJjb250ZW50X3R5cGUiOiJhcHBsaWNhdGlvblwvcGRmIiwic2VsZWN0X3ZhbHVlIjoiIiwiY2hhbXBzX2FmZmljaGVzIjoiIiwicHJlZ19tYXRjaF9lcnJvciI6IiIsImNoYW1wc19yZWNoZXJjaGVfYXZhbmNlZSI6IiJ9XX19
+    creation:
+        name-action: Créer
+        name: Créé
+        rule:
+            no-last-action: ''
+    modification:
+        name-action: Modifier
+        name: 'En cours de rédaction'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - transformation
+                - send-signature-error
+    supression:
+        name-action: Supprimer
+        name: Supprimé
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - termine
+                - fatal-error
+                - transformation-error
+                - rejet-iparapheur
+        action-class: Supprimer
+        warning: 'Êtes-vous sûr ?'
+    importation:
+        name: 'Importation du document'
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+    orientation:
+        name: 'Envoi du document'
+        name-action: 'Envoyer le document'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - transformation
+                - recu-iparapheur
+            document_is_valide: true
+        action-class: OrientationTypeDossierPersonnalise
+    termine:
+        name: 'Traitement terminé'
+        rule:
+            role_id_e: no-role
+    reouverture:
+        name: 'Rouvrir le dossier'
+        rule:
+            last-action:
+                - termine
+        action-class: Reopen
+    cheminement-change:
+        no-workflow: true
+        rule:
+            role_id_e: 'no-role,'
+        action-class: CheminementChangeTypeDossierPersonnalise
+    preparation-transformation:
+        name: 'Préparation à la transformation'
+        rule:
+            role_id_e: no-role
+        action-automatique: transformation
+    transformation:
+        name-action: 'Transformer le document'
+        name: 'Transformation du document'
+        rule:
+            last-action:
+                - preparation-transformation
+                - transformation-error
+        action-class: StandardAction
+        action-automatique: orientation
+        connecteur-type: transformation
+        connecteur-type-action: TransformationTransform
+        editable-content:
+            - envoi_signature
+            - envoi_iparapheur
+            - iparapheur_sous_type
+            - has_date_limite
+            - date_limite
+            - envoi_fast
+            - fast_parapheur_circuit
+            - fast_parapheur_circuit_configuration
+            - fast_parapheur_email_destinataire
+            - fast_parapheur_email_cc
+            - fast_parapheur_agents
+        modification-no-change-etat: true
+    transformation-error:
+        name: 'Erreur lors de la transformation du dossier'
+        rule:
+            role_id_e: no-role
+    preparation-send-iparapheur:
+        name: "Préparation de l'envoi au parapheur"
+        rule:
+            role_id_e: no-role
+        action-automatique: send-iparapheur
+    send-iparapheur:
+        name-action: 'Transmettre au parapheur'
+        name: 'Transmis au parapheur'
+        rule:
+            last-action:
+                - preparation-send-iparapheur
+                - send-signature-error
+        action-class: StandardAction
+        connecteur-type: signature
+        connecteur-type-action: SignatureEnvoie
+        connecteur-type-mapping:
+            iparapheur_type: iparapheur_type
+            iparapheur_sous_type: iparapheur_sous_type
+            iparapheur_dossier_id: iparapheur_dossier_id
+            fast_parapheur_circuit: fast_parapheur_circuit
+            fast_parapheur_circuit_configuration: fast_parapheur_circuit_configuration
+            fast_parapheur_email_destinataire: fast_parapheur_email_destinataire
+            fast_parapheur_email_cc: fast_parapheur_email_cc
+            fast_parapheur_agents: fast_parapheur_agents
+            send-signature-error: send-signature-error
+            iparapheur_has_date_limite: has_date_limite
+            iparapheur_date_limite: date_limite
+            objet: libelle
+            document: document
+        action-automatique: verif-iparapheur
+    send-signature-error:
+        name: "Erreur lors de l'envoi du dossier à la signature"
+        editable-content:
+            - fast_parapheur_circuit
+            - fast_parapheur_circuit_configuration
+            - fast_parapheur_email_destinataire
+            - fast_parapheur_email_cc
+            - fast_parapheur_agents
+        rule:
+            role_id_e: no-role
+    verif-iparapheur:
+        name-action: 'Vérifier le statut de signature'
+        name: 'Vérification de la signature'
+        rule:
+            last-action:
+                - erreur-verif-iparapheur
+                - send-iparapheur
+        action-class: StandardAction
+        connecteur-type: signature
+        connecteur-type-action: SignatureRecuperation
+        connecteur-type-mapping:
+            iparapheur_historique: iparapheur_historique
+            parapheur_last_message: parapheur_last_message
+            has_signature: has_signature
+            signature: signature
+            document_original: document_original
+            multi_document_original: multi_document_original
+            bordereau: bordereau_signature
+            iparapheur_annexe_sortie: iparapheur_annexe_sortie
+            iparapheur_dossier_id: iparapheur_dossier_id
+            recu-iparapheur: recu-iparapheur
+            rejet-iparapheur: rejet-iparapheur
+            erreur-verif-iparapheur: erreur-verif-iparapheur
+            iparapheur_has_date_limite: has_date_limite
+            iparapheur_date_limite: date_limite
+            objet: libelle
+            document: document
+    erreur-verif-iparapheur:
+        name: 'Erreur lors de la vérification du statut de signature'
+        rule:
+            role_id_e: no-role
+    recu-iparapheur:
+        name: 'Signature récuperée'
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+    rejet-iparapheur:
+        name: 'Signature refusée'
+        rule:
+            role_id_e: no-role
+    iparapheur-sous-type:
+        name: 'Liste des sous-type iParapheur'
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: IparapheurSousType
+        connecteur-type-mapping:
+            iparapheur_type: iparapheur_type
+            iparapheur_sous_type: iparapheur_sous_type
+            fast_parapheur_circuit: fast_parapheur_circuit
+studio_definition: eyJpZF90eXBlX2Rvc3NpZXIiOiJscy1kb2N1bWVudC1wZGYtZHJhZnQiLCJwYXN0ZWxsLXZlcnNpb24iOiIlVkVSU0lPTiUiLCJ0aW1lc3RhbXAiOjE2NTcyMDU1NjQsInJhd19kYXRhIjp7Im5vbSI6IkRvY3VtZW50IFBERiAoRHJhZnQpIiwidHlwZSI6IlR5cGVzIGRlIGRvc3NpZXIgRG9jdW1lbnQiLCJldGFwZSI6W3sidHlwZSI6InRyYW5zZm9ybWF0aW9uIiwibGFiZWwiOiJUcmFuc2Zvcm1hdGlvbiBpbml0aWFsZSIsInJlcXVpcyI6Im9uIiwibnVtX2V0YXBlIjowLCJhdXRvbWF0aXF1ZSI6Im9uIiwiZGVmYXVsdENoZWNrZWQiOmZhbHNlLCJzcGVjaWZpY190eXBlX2luZm8iOltdLCJudW1fZXRhcGVfc2FtZV90eXBlIjowLCJldGFwZV93aXRoX3NhbWVfdHlwZV9leGlzdHMiOmZhbHNlfSx7InR5cGUiOiJzaWduYXR1cmUiLCJsYWJlbCI6IlZpc2FcL1NpZ25hdHVyZSIsInJlcXVpcyI6IiIsIm51bV9ldGFwZSI6IjEiLCJhdXRvbWF0aXF1ZSI6Im9uIiwiZGVmYXVsdENoZWNrZWQiOmZhbHNlLCJzcGVjaWZpY190eXBlX2luZm8iOnsiYW5uZXhlIjoiIiwiaGFzX2RhdGVfbGltaXRlIjoib24iLCJkb2N1bWVudF9hX3NpZ25lciI6ImRvY3VtZW50IiwibGliZWxsZV9wYXJhcGhldXIiOiJsaWJlbGxlIiwiaGFzX21ldGFkYXRhX2luX2pzb24iOiIiLCJjb250aW51ZV9hZnRlcl9yZWZ1c2FsIjoiIn0sIm51bV9ldGFwZV9zYW1lX3R5cGUiOjAsImV0YXBlX3dpdGhfc2FtZV90eXBlX2V4aXN0cyI6ZmFsc2V9XSwibm9tX29uZ2xldCI6IkluZm9ybWF0aW9ucyIsImRlc2NyaXB0aW9uIjoiIiwiaWRfdHlwZV9kb3NzaWVyIjoibHMtZG9jdW1lbnQtcGRmLWRyYWZ0IiwicmVzdHJpY3Rpb25fcGFjayI6IiIsImZvcm11bGFpcmVFbGVtZW50IjpbeyJuYW1lIjoiTGliZWxsXHUwMGU5IiwidHlwZSI6InRleHQiLCJ0aXRyZSI6Im9uIiwicmVxdWlzIjoib24iLCJlbGVtZW50X2lkIjoibGliZWxsZSIsInByZWdfbWF0Y2giOiIiLCJjb21tZW50YWlyZSI6IiIsImNvbnRlbnRfdHlwZSI6IiIsInNlbGVjdF92YWx1ZSI6IiIsImNoYW1wc19hZmZpY2hlcyI6IiIsInByZWdfbWF0Y2hfZXJyb3IiOiIiLCJjaGFtcHNfcmVjaGVyY2hlX2F2YW5jZWUiOiIifSx7Im5hbWUiOiJEb2N1bWVudCBwZGYiLCJ0eXBlIjoiZmlsZSIsInRpdHJlIjpmYWxzZSwicmVxdWlzIjoib24iLCJlbGVtZW50X2lkIjoiZG9jdW1lbnQiLCJwcmVnX21hdGNoIjoiIiwiY29tbWVudGFpcmUiOiIiLCJjb250ZW50X3R5cGUiOiJhcHBsaWNhdGlvblwvcGRmIiwic2VsZWN0X3ZhbHVlIjoiIiwiY2hhbXBzX2FmZmljaGVzIjoiIiwicHJlZ19tYXRjaF9lcnJvciI6IiIsImNoYW1wc19yZWNoZXJjaGVfYXZhbmNlZSI6IiJ9XX19
