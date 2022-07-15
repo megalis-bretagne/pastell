@@ -70,7 +70,7 @@ services:
         image: redis:6.2.6
 
     seda-generator:
-        image: 'registry.libriciel.fr:443/public/plateforme/seda-generator:0.8.2'
+        image: 'registry.libriciel.fr:443/public/plateforme/seda-generator:0.8.3'
         restart: unless-stopped
         volumes:
             - '/etc/localtime:/etc/localtime:ro'

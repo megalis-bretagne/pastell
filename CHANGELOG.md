@@ -81,7 +81,27 @@
   - GedIdDocumentsVisionneuse devient Pastell\Viewer\GedIdDocumentsViewer
 - Suppression de la fonction SEDAConnecteur::getInfoARActes()
 
+# [3.1.16] - 2022-07-18
+
+***Cette version nécessite une mise à jour du générateur SEDA en 0.8.3***
+
+## Corrections
+
+- Il manquait la récupération de l'identifiant de l'archive sur le SAE dans le cas du SEDA 2.1 #1518
+- Il manquait le connecteur CPP pour les fréquences par défaut #1540
+- Refactoring de ConnecteurFactory::getManquant() #1485
+
+## Ajouts
+
+- Générateur SEDA: ajout des balises OriginatingAgencyArchiveIdentifier et TransferringAgencyArchiveIdentifier #1463
+- Ajout des flux "Actes publication" `ls-actes-publication` et "Document PDF" `ls-document-pdf` #1517
+
+## Évolutions
+
+- Permettre de définir les fréquences en secondes #1553
+
 # [3.1.15] - 2022-06-13
+
 ***Cette version nécessite une modification de la base de données***
 
 ## Corrections

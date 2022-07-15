@@ -36,6 +36,18 @@ final class SedaGenerique extends AbstractSedaGeneratorConnector
                     'libelle' => 'Nom du service producteur',
                     'commentaire' => 'OriginatingAgency - Name',
                 ],
+                'OriginatingAgencyArchiveIdentifier' => [
+                    'seda' => 'OriginatingAgencyArchiveIdentifier',
+                    'libelle' => "Identifiant donné à l'archive par le service producteur",
+                    'commentaire' => "OriginatingAgencyArchiveIdentifier (seda 1.0) / " .
+                        "OriginatingAgencyArchiveUnitIdentifier (seda 2.1)"
+                ],
+                'TransferringAgencyArchiveIdentifier' => [
+                    'seda' => 'TransferringAgencyArchiveIdentifier',
+                    'libelle' => "Identifiant donné à l'archive par le service versant",
+                    'commentaire' => "TransferringAgencyArchiveIdentifier (seda 1.0) / " .
+                        "TransferringAgencyArchiveUnitIdentifier (seda 2.1)"
+                ],
             ]
         );
     }

@@ -93,7 +93,7 @@ class SAEValider extends ConnecteurTypeActionExecutor
             return false;
         }
 
-        $sae_archival_identifier = strval($xml->{'Archive'}->{'ArchivalAgencyArchiveIdentifier'});
+        $sae_archival_identifier = $sedaHelper->getSAEArchivalIdentifierFromAtr($xml);
         $donneesFormulaire->setData($sae_archival_identifier_element, $sae_archival_identifier);
         $url = $sae->getURL($sae_archival_identifier);
         $donneesFormulaire->setData($url_archive_element, $url);
