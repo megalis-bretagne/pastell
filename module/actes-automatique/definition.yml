@@ -630,7 +630,9 @@ action:
         rule:
             has-action:
                 - acquiter-tdt
-        action-class: ActesTamponner
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdTRestamp
     annulation-tdt:
         name-action: 'Annuler la transaction'
         name: "Demande d'annulation envoyée"
