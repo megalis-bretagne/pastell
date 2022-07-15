@@ -98,7 +98,6 @@ class FakeSAE extends SAEConnecteur
         }
 
         throw new UnrecoverableException("Impossible de lire le message");
-
     }
 
     /**
