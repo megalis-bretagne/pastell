@@ -4,12 +4,12 @@ description: "Il s'agit d'un bouchon utilisé pour le développement ou les dém
 formulaire:
     page0:
         seda_version:
-			name: "Version du SEDA"
-			type: select
-			value:
-				1: '1.0'
-				2: '2.1'
-		result_send:
+            name: "Version du SEDA"
+            type: select
+            value:
+               1: '1.0'
+               2: '2.1'
+        result_send:
             name: "Résultat de l'envoi"
             type: select
             value:
