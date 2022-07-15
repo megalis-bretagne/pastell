@@ -29,6 +29,16 @@ class PastellPackTest extends PastellTestCase
             'document-autorisation-urbanisme-destinataire',
             "Document d'autorisation d'urbanisme (destinataire)"
         ],
+        'ls-actes-publication-draft' => [
+            '',
+            'ls-actes-publication',
+            'Actes publication',
+        ],
+        'ls-document-pdf-draft' => [
+            '',
+            'ls-document-pdf',
+            'Document PDF',
+        ],
     ];
 
     public function jsonProvider(): array
