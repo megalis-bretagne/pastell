@@ -422,7 +422,7 @@ class SystemControler extends PastellControler
 
         $connecteur_manquant_list = $this->getConnecteurFactory()->getManquant();
         foreach ($connecteur_manquant_list as $id_connecteur) {
-            $id_ce_list = $this->connecteurEntiteSQL->getAllById($id_connecteur);
+            $id_ce_list = $this->getConnecteurEntiteSQL()->getAllById($id_connecteur);
             foreach ($id_ce_list as $connecteur_info) {
                 $detail_manquant_list[$id_connecteur][] = $connecteur_info;
             }
