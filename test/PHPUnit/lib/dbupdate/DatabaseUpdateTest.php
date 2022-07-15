@@ -1,10 +1,12 @@
 <?php
 
+use Pastell\Database\DatabaseUpdater;
+
 class DatabaseUpdateTest extends PastellTestCase
 {
     public function testCreateSQL()
     {
-        $databaseUpdate = new DatabaseUpdate(file_get_contents(PASTELL_PATH . "/installation/pastell.bin"), $this->getSQLQuery());
+        $databaseUpdate = new DatabaseUpdate(DatabaseUpdater::DATABASE_FILE, $this->getSQLQuery());
         $this->assertIsArray($databaseUpdate->getAllSQLCommand());
     }
 
@@ -43,7 +45,7 @@ class DatabaseUpdateTest extends PastellTestCase
 
     public function testLongtextTypeInsteadOfJsonType()
     {
-        $databaseSchema = file_get_contents(PASTELL_PATH . '/installation/pastell.bin');
+        $databaseSchema = file_get_contents(DatabaseUpdater::DATABASE_FILE);
         $databaseUpdate = new DatabaseUpdate($databaseSchema, $this->getSQLQuery());
 
         $pastellSchema = json_decode($databaseSchema, true);
@@ -55,7 +57,7 @@ class DatabaseUpdateTest extends PastellTestCase
 
     public function testUpdateFromJsonToLongtextIsDone()
     {
-        $databaseSchema = file_get_contents(PASTELL_PATH . '/installation/pastell.bin');
+        $databaseSchema = file_get_contents(DatabaseUpdater::DATABASE_FILE);
         $pastellSchema = json_decode($databaseSchema, true);
 
         $pastellSchema['type_dossier']['Column']['definition']['Type'] = 'longtext';

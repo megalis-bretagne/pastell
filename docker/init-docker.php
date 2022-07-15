@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Database\DatabaseUpdater;
+
 try {
     echo "Initialisation de Pastell [DOCKER]\n";
 
@@ -13,13 +15,8 @@ try {
     $sqlQuery->waitStarting(function ($message) {
         echo "[" . date("Y-m-d H:i:s") . "][Pastell - wait for MySL] $message\n";
     });
-    $databaseUpdate = new DatabaseUpdate(file_get_contents(__DIR__ . "/../installation/pastell.bin"), $sqlQuery);
-    $databaseUpdate->majDatabase(
-        $sqlQuery,
-        function ($message) {
-            echo "[" . date("Y-m-d H:i:s") . "][Pastell - SQL init] $message\n";
-        }
-    );
+    $databaseUpdater = new DatabaseUpdater($sqlQuery, $logger);
+    $databaseUpdater->update();
 
 # Deuxième étape : initialisation normal de Pastell
     require_once __DIR__ . "/../init.php";
