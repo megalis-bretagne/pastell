@@ -519,6 +519,18 @@ class ActionExecutorFactory
         return $result;
     }
 
+    public function getAllConnecteurActionClass()
+    {
+        $result = ['StandardAction', 'StandardChoiceAction']; //FIXME : l'action StandardAction marche par hasard sur les connecteurs...
+        foreach ($this->extensions->getAllConnecteur() as $connecteur_id => $connecteur_path) {
+            foreach (glob($connecteur_path . "/" . self::ACTION_FOLDERNAME . "/*.class.php") as $action_class_path) {
+                preg_match("#/([^/]+).class.php$#", $action_class_path, $matches);
+                $result[] = $matches[1];
+            }
+        }
+        return $result;
+    }
+
     public function executeLotDocument($id_e, $id_u, array $all_id_d, $action_name, $id_destinataire = [], $from_api = false, $action_params = [], $id_worker = 0)
     {
         $actionClass = $this->getActionClass($all_id_d[0], $id_e, $id_u, $action_name, $id_destinataire, $from_api, $action_params, $id_worker);

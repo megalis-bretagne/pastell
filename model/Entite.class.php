@@ -30,14 +30,15 @@ class Entite extends SQL
         return $type_nom[$type];
     }
 
+    /** @deprecated 4.0.0 */
     public static function getAllType()
     {
         return [
-        self::TYPE_COLLECTIVITE => "Collectivité",
-                            self::TYPE_FOURNISSEUR => "Fournisseur",
-                            self::TYPE_CENTRE_DE_GESTION => "Centre de gestion",
-                            self::TYPE_SERVICE => 'Service',
-                            self::TYPE_CITOYEN => 'Citoyen'
+            self::TYPE_COLLECTIVITE => "Collectivité",
+            self::TYPE_FOURNISSEUR => "Fournisseur",
+            self::TYPE_CENTRE_DE_GESTION => "Centre de gestion",
+            self::TYPE_SERVICE => 'Service',
+            self::TYPE_CITOYEN => 'Citoyen'
         ];
     }
 

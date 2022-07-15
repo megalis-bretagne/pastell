@@ -48,8 +48,8 @@ action:
     connecteur_info:
         action-class: SedaNGConnecteurInfo
         rule:
-            role_id_e: no-role
+            automatique: true
     flux_info:
         action-class: SedaNGFluxInfo
         rule:
-            role_id_e: no-role
+            automatique: true

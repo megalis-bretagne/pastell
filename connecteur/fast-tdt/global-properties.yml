@@ -25,7 +25,7 @@ action:
     update-list-certificate:
         name: 'Mettre à jour les certificats'
         rule:
-            role_id_e: no-role
+            automatique: true
         action-class: StandardChoiceAction
         connecteur-type: utilities
         connecteur-type-action: GlobalUpdateCertificate

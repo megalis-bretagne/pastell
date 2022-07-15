@@ -56,7 +56,7 @@ action:
     update-certificate:
         name: 'Mettre à jour les certificats'
         rule:
-            role_id_e: no-role
+            automatique: true
         action-class: StandardAction
         connecteur-type: utilities
         connecteur-type-action: UpdateCertificate

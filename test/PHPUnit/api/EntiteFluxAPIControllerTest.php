@@ -63,7 +63,7 @@ class EntiteFluxAPIControllerTest extends PastellTestCase
     {
         $this->associateConnecteur();
         $this->expectException("Exception");
-        $this->expectExceptionMessage("L'action « not_possible »  n'est pas permise : role_id_e n'est pas vérifiée");
+        $this->expectExceptionMessage("L'action « not_possible »  n'est pas permise : automatique n'est pas vérifiée");
         $this->getInternalAPI()->post("/entite/1/flux/test/action", ["type" => "test","id_ce" => 12,"flux" => 'test',"action" => "not_possible"]);
     }
 

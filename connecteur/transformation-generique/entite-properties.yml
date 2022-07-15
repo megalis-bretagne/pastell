@@ -20,5 +20,5 @@ action:
     fill-data:
         name: 'Configurer les transformations'
         rule:
-            role_id_e: no-role
+            automatique: true
         action-class: TransformationGeneriqueFillData

@@ -20,7 +20,8 @@ action:
         action-class: PastellCoreTestFail
     not_possible:
         rule:
-            role_id_e: no-role
+            automatique: true
     change_4:
-        no-workflow: true
+        rule:
+            automatique: true
         action-class: PastellCoreChange4

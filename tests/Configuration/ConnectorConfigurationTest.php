@@ -3,22 +3,19 @@
 namespace Pastell\Tests\Configuration;
 
 use Pastell\Configuration\ConnectorConfiguration;
+use Pastell\Configuration\ConnectorValidation;
+use PastellTestCase;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Yaml\Yaml;
 
-class ConnectorConfigurationTest extends TestCase
+class ConnectorConfigurationTest extends PastellTestCase
 {
     public function testNominalCase(): void
     {
-        $config = Yaml::parse(
-            file_get_contents(__DIR__ . '/fixtures/nominal-connector.yml')
-        );
-        $processor = new Processor();
-        $connectorConfiguration = new ConnectorConfiguration();
-        $processedConfiguration = $processor->processConfiguration(
-            $connectorConfiguration,
-            [$config]
+        $connectorValidation = $this->getObjectInstancier()->getInstance(ConnectorValidation::class);
+        $processedConfiguration = $connectorValidation->getConfiguration(
+            __DIR__ . '/fixtures/nominal-connector.yml'
         );
         self::assertEquals('Nominal Connector', $processedConfiguration['nom']);
     }
@@ -28,14 +25,9 @@ class ConnectorConfigurationTest extends TestCase
      */
     public function testTrueConnector(): void
     {
-        $config = Yaml::parse(
-            file_get_contents(__DIR__ . '/../../connecteur/as@lae-rest/entite-properties.yml')
-        );
-        $processor = new Processor();
-        $connectorConfiguration = new ConnectorConfiguration();
-        $processedConfiguration = $processor->processConfiguration(
-            $connectorConfiguration,
-            [$config]
+        $connectorValidation = $this->getObjectInstancier()->getInstance(ConnectorValidation::class);
+        $processedConfiguration = $connectorValidation->getConfiguration(
+            __DIR__ . '/../../connecteur/as@lae-rest/entite-properties.yml'
         );
         self::assertEquals('As@lae (Rest)', $processedConfiguration['nom']);
         /*file_put_contents(

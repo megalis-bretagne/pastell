@@ -57,7 +57,7 @@ action:
         action-class: PurgePurgerAsync
     type_document:
         rule:
-            role_id_e: no-role
+            automatique: true
         action-class: StandardChoiceAction
         connecteur-type: utilities
         connecteur-type-action: GetModuleList
@@ -67,9 +67,9 @@ action:
             module_type_label: document_type_libelle
     document_etat:
         rule:
-            role_id_e: no-role
+            automatique: true
         action-class: PurgeDocumentEtat
     document_etat_cible:
         rule:
-            role_id_e: no-role
+            automatique: true
         action-class: PurgeDocumentEtatCible

@@ -14,6 +14,5 @@ enum ElementType: string
     case EXTERNAL_DATA = 'externalData';
     case TEXTAREA = 'textarea';
     case DATE = 'date';
-    case LINK = 'link';
     case URL = 'url';
 }
