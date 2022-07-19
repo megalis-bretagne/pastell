@@ -63,16 +63,19 @@ class GlaneurDocumentCreator
         $fileUploader = new FileUploader();
         $fileUploader->setDontUseMoveUploadedFile(true);
         $fileUploader->setFiles($files);
-
-        $this->documentModificationService->modifyDocumentWithoutAuthorizationChecking(
-            $glaneurLocalDocumentInfo->id_e,
-            0,
-            $new_id_d,
-            new Recuperateur($glaneurLocalDocumentInfo->metadata),
-            $fileUploader,
-            1,
-            1
-        );
+        try {
+            $this->documentModificationService->modifyDocumentWithoutAuthorizationChecking(
+                $glaneurLocalDocumentInfo->id_e,
+                0,
+                $new_id_d,
+                new Recuperateur($glaneurLocalDocumentInfo->metadata),
+                $fileUploader,
+                1,
+                1
+            );
+        } catch (Exception $e) {
+            // Errors will be caught on document validation
+        }
 
         $this->actionCreatorSQL->addAction(
             $glaneurLocalDocumentInfo->id_e,

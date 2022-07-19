@@ -1,3 +1,9 @@
+# [3.1.17]
+
+## Corrections
+
+- Le glaneur pouvait se verrouiller et bloquer sur le même fichier lorsque le fichier n'est pas valide #1568
+
 # [3.1.16] - 2022-07-18
 
 ***Cette version nécessite une mise à jour du générateur SEDA en 0.8.3***
