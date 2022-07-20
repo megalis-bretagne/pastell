@@ -223,6 +223,9 @@ use Pastell\Utilities\Certificate;
                 </td>
                 <td>
                     <?php hecho($token['expired_at'] ?? 'Jamais'); ?>
+                    <?php if ($token['is_expired']) : ?>
+                        <p class="badge badge-danger">Expiré</p>
+                    <?php endif; ?>
                 </td>
                 <td>
 

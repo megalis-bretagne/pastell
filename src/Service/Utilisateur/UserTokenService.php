@@ -23,7 +23,17 @@ final class UserTokenService
 
     public function getTokens(int $userId): array
     {
-        return $this->usersToken->getTokensOfUser($userId);
+        $now = \time();
+        $tokens = $this->usersToken->getTokensOfUser($userId);
+        \array_walk($tokens, static function (&$token) use ($now) {
+            if ($token['expired_at'] === null) {
+                $isExpired = false;
+            } else {
+                $isExpired = \strtotime($token['expired_at']) < $now;
+            }
+            $token['is_expired'] = $isExpired;
+        });
+        return $tokens;
     }
 
     public function getUser(int $tokenId): ?int
@@ -33,7 +43,16 @@ final class UserTokenService
 
     public function getUserFromToken(string $token): ?array
     {
-        return $this->usersToken->getUserFromToken($token);
+        $user = $this->usersToken->getUserFromToken($token);
+        if ($user !== null) {
+            if ($user['expired_at'] === null) {
+                $isExpired = false;
+            } else {
+                $isExpired = \strtotime($user['expired_at']) < \time();
+            }
+            $user['is_expired'] = $isExpired;
+        }
+        return $user;
     }
 
     public function deleteToken(int $tokenId): void

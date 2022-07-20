@@ -19,7 +19,7 @@ declare(strict_types=1);
         <div class="form-group row">
             <label for="name" class="col-sm-2 col-form-label">Nom du jeton<span class='obl'>*</span></label>
             <div class="col-md-4">
-                <input name="name" id="name" class="form-control" type="text" required>
+                <input name="name" id="name" class="form-control" type="text" maxlength="64" required>
             </div>
         </div>
 

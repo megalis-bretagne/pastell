@@ -89,10 +89,7 @@ class ApiAuthentication
         $authorizationHeader = $this->server['HTTP_AUTHORIZATION'];
         $token = substr($authorizationHeader, 7);
         $user = $this->userTokenService->getUserFromToken($token);
-        if (
-            $user !== null &&
-            ($user['expired_at'] === null || $user['expired_at'] > date(Date::DATE_ISO))
-        ) {
+        if ($user !== null && !$user['is_expired']) {
             return $user['id_u'];
         }
         return null;
@@ -109,7 +106,7 @@ class ApiAuthentication
             );
         }
         $userId = $utilisateurListe->getUtilisateurByLogin($this->server['PHP_AUTH_USER']);
-        if ($utilisateur->verifPassword($userId, $this->server['PHP_AUTH_PW'])) {
+        if ($userId && $utilisateur->verifPassword($userId, $this->server['PHP_AUTH_PW'])) {
             $this->loginAttemptLimit->resetLoginAttempt($this->server['PHP_AUTH_USER']);
         } else {
             $userId = null;
