@@ -1,8 +1,10 @@
 <?php
 
-/* @var $service_list
- * @var $id_ce
- * @var $field
+/**
+ * @var Gabarit $this
+ * @var int $id_ce
+ * @var array $service_list
+ * @var string $field
  */
 ?>
 
@@ -30,7 +32,7 @@
                 </form>
             </td>
             <td><?php hecho($service_info['libelleService']); ?></td>
-            <td><?php echo $this->FancyDate->getDateFr($service_info['dateDbtService']); ?></td>
+            <td><?php echo $this->getFancyDate()->getDateFr($service_info['dateDbtService']); ?></td>
             <td><?php hecho($service_info['estActif'] ? "OUI" : "NON"); ?></td>
         </tr>
     <?php endforeach; ?>

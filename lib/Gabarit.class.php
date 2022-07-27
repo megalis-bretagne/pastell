@@ -137,4 +137,9 @@ class Gabarit
     {
         return $this->objectInstancier->getInstance(RechercheAvanceFormulaireHTML::class);
     }
+
+    public function getFancyDate(): FancyDate
+    {
+        return $this->objectInstancier->getInstance(FancyDate::class);
+    }
 }

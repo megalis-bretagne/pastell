@@ -41,6 +41,8 @@ class PESMarcheInfo extends PESV2XMLFile
         $info['is_facture'] = isset($xml->PES_Facture);
         $info['is_marche'] = isset($xml->PES_Marche);
         $info['is_concession'] = false;
+        $zone_id_marche = null;
+        $zone_marche = null;
         if ($info['is_marche']) {
             if (isset($xml->PES_Marche->Marches)) {
                 $zone_marche = $xml->PES_Marche->Marches->Marche;

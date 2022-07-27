@@ -114,10 +114,9 @@ function header_wrapper($str)
 }
 
 /**
- * @param int $code
  * @throws Exception
  */
-function exit_wrapper($code = 0)
+function exit_wrapper(int $code = 0): never
 {
     if (TESTING_ENVIRONNEMENT) {
         throw new Exception("Exit called with code $code");

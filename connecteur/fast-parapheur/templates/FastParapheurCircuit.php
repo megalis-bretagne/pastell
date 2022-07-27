@@ -1,6 +1,13 @@
 <?php
 
-/** @var Gabarit $this */
+/**
+ * @var Gabarit $this
+ * @var string $id_d
+ * @var int $id_e
+ * @var int $page
+ * @var string $field
+ * @var array $circuits
+ */
 ?>
 
 <div class="box">

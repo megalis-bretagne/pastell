@@ -109,6 +109,7 @@ class IParapheur extends SignatureConnecteur
             return $info;
         }
 
+        $bordereau = null;
         foreach ($result->DocumentsAnnexes->DocAnnexe as $bordereau) {
         }
         $info['document'] = $bordereau->fichier->_;
@@ -648,6 +649,7 @@ class IParapheur extends SignatureConnecteur
 
     public function getType()
     {
+        $result = [];
         try {
             $type = $this->getClient()->GetListeTypes()->TypeTechnique;
             if (is_array($type)) {

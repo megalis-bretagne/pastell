@@ -3,7 +3,11 @@
 
 //Script à passer tous les jours pour éviter des problèmes de performance et de corruption de la table worker
 
-require_once __DIR__ . "/../init.php";
+/**
+ * @var ObjectInstancier $objectInstancier
+ */
+
+require_once __DIR__ . '/../init.php';
 
 /** @var SQLQuery $sqlQuery */
 $sqlQuery = $objectInstancier->getInstance(SQLQuery::class);

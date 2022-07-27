@@ -1,8 +1,11 @@
 <?php
 
+/**
+ * @var SQLQuery $sqlQuery
+ */
 //TODO à mettre dans un connecteur global #1356
 
-require_once(__DIR__ . "/../init.php");
+require_once __DIR__ . '/../init.php';
 
 
 if ($argc < 1 || ! preg_match("#\d{4}-\d{2}-\d{2}#", $argv[1])) {
@@ -11,7 +14,7 @@ if ($argc < 1 || ! preg_match("#\d{4}-\d{2}-\d{2}#", $argv[1])) {
     exit;
 }
 
-$date_debut = $argv[1];
+$date = $argv[1];
 
 
 $sql = "SELECT journal_historique.*,document.titre,entite.denomination, utilisateur.nom, utilisateur.prenom,entite.siren  FROM journal_historique " .
@@ -22,7 +25,7 @@ $sql = "SELECT journal_historique.*,document.titre,entite.denomination, utilisat
 
 
 
-$sqlQuery->prepareAndExecute($sql, $date_debut);
+$sqlQuery->prepareAndExecute($sql, $date);
 $CSVoutput = new CSVoutput();
 $CSVoutput->displayHTTPHeader("pastell-export-journal-$date.csv");
 

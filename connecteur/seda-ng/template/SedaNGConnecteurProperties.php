@@ -1,3 +1,13 @@
+<?php
+
+/**
+ * @var Gabarit $this
+ * @var int $id_e
+ * @var int $id_ce
+ * @var string $field
+ * @var array $properties
+ */
+?>
 <div class="box">
 <form action='<?php
 

@@ -240,6 +240,7 @@ class NotBuggySoapClient extends SoapClient
 
             // Insertion des parts dans l'enveloppe principale
             $parts = [];
+            $content_enveloppe = '';
             foreach ($multiParts as $mpart) {
                 if ($mpart->isEnv == true) {
                     $content_enveloppe = $mpart->content;

@@ -1,11 +1,23 @@
 <?php
 
-/** @var $pieces array */
-/** @var $pieces_type_pj_list array */
-/** @vat $type_pj_selection array */
+/**
+ * @var Gabarit $this
+ * @var string $id_d
+ * @var int $id_e
+ * @var int $page
+ * @var array $info
+ * @var string $field
+ * @var array $pieces
+ * @var array $pieces_type_pj_list
+ * @var array $type_pj_selection
+ */
 
 ?>
-<a class='btn btn-link' href='Document/edition?id_d=<?php echo $id_d?>&id_e=<?php echo $id_e?>&page=<?php echo $page?>'><i class="fa fa-arrow-left"></i>&nbsp;<?php echo $info['titre'] ? $info['titre'] : $info['id_d']?></a>
+<a class='btn btn-link'
+   href='Document/edition?id_d=<?php echo $id_d ?>&id_e=<?php echo $id_e ?>&page=<?php echo $page ?>'
+>
+    <i class="fa fa-arrow-left"></i>&nbsp;<?php echo $info['titre'] ?: $info['id_d'] ?>
+</a>
 
 
 <div id='box_type_piece' class='box'>

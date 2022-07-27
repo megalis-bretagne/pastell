@@ -1,6 +1,10 @@
 <?php
 
-require_once(__DIR__ . "/../init.php");
+/**
+ * @var ObjectInstancier $objectInstancier
+ */
+
+require_once __DIR__ . '/../init.php';
 
 if ($argc < 3) {
     echo "Usage: {$argv[0]} login password\n";

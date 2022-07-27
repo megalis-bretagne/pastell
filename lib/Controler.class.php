@@ -172,11 +172,10 @@ class Controler
     }
 
     /**
-     * @param string $to
      * @throws LastErrorException
      * @throws LastMessageException
      */
-    public function redirect($to = "")
+    public function redirect(string $to = ''): never
     {
         $url = rtrim(SITE_BASE, "/") . "/" . ltrim($to, "/");
         $this->doRedirect($url);
@@ -187,7 +186,11 @@ class Controler
         $this->doRedirect($url);
     }
 
-    private function doRedirect($url)
+    /**
+     * @throws LastMessageException
+     * @throws LastErrorException
+     */
+    private function doRedirect(string $url): never
     {
         if ($this->isDontRedirect()) {
             $error = $this->getLastError()->getLastError();

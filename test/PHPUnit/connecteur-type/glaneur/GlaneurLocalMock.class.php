@@ -25,6 +25,7 @@ class GlaneurLocalMock extends GlaneurConnecteur
 
     protected function listAllFile(string $directory): array
     {
+        $result = [];
         $finder = new Finder();
         $iter = $finder->in($directory);
         /** @var \Symfony\Component\Finder\SplFileInfo $file */

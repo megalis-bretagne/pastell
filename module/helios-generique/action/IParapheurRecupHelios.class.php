@@ -72,6 +72,7 @@ class IParapheurRecupHelios extends ActionExecutor
             $dossierID = $signature->getDossierID($helios->get('objet'), $filename);
         }
 
+        $all_historique = [];
         try {
             $all_historique = $signature->getAllHistoriqueInfo($dossierID);
         } catch (Exception $e) {
@@ -224,6 +225,7 @@ class IParapheurRecupHelios extends ActionExecutor
      */
     private function getFileHistory(FastParapheur $signature, string $documentId)
     {
+        $history = [];
         try {
             $history = $signature->getAllHistoriqueInfo($documentId);
         } catch (Exception $e) {

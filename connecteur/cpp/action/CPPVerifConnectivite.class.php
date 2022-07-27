@@ -74,6 +74,7 @@ class CPPVerifConnectivite extends ActionExecutor
             /** @var CPP $cpp */
             $cpp = $this->getConnecteurFactory()->getConnecteurById($connecteur['id_ce']);
 
+            $message = '';
             try {
                 $result = $cpp->testConnexion();
             } catch (Exception $ex) {

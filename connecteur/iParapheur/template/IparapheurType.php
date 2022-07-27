@@ -1,6 +1,11 @@
 <?php
 
-    /** @var Gabarit $this */
+/**
+ * @var Gabarit $this
+ * @var int $id_ce
+ * @var string $field
+ * @var array $type_iparapheur
+ */
 ?>
 
 <a class='btn btn-link' href='Connecteur/editionModif?id_ce=<?php echo $id_ce?>'>

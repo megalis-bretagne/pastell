@@ -1,15 +1,16 @@
 <?php
+
 /**
- * @var $field
- * @var $pastell_to_seda
- * @var $fieldsList
- * @var GenerateurSedaFillFiles $generateurSedaFillFiles
+ * @var Gabarit $this
  * @var string $node_id
- * @var string $flux
+ * @var GenerateurSedaFillFiles $generateurSedaFillFiles
  * @var int $id_ce
- *
+ * @var string $field
+ * @var string $flux
+ * @var Field[] $fieldsList
  */
 
+$specific_info = [];
 if ($node_id) {
     $specific_info = $generateurSedaFillFiles->getArchiveUnitSpecificInfo($node_id);
 }
@@ -204,7 +205,7 @@ if ($node_id) {
                     <th class="w200">Type</th>
                     <th>Commentaire</th>
                 </tr>
-                <?php /** @var Field $theField */foreach ($fieldsList as $theField) : ?>
+                <?php foreach ($fieldsList as $theField) : ?>
                     <tr>
                         <td>{{ <?php hecho($theField->getName()) ?> }}</td>
                         <td><?php hecho($theField->getLibelle()) ?></td>

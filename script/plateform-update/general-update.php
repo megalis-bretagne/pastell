@@ -3,11 +3,13 @@
 /**
  * Ce script doit être appelé à chaque mise à jour
  * Il procède à toutes les opérations de mise à jour, sauf la base de données
+ *
+ * @var ObjectInstancier $objectInstancier
  */
 
 use Pastell\Updater;
 
-require_once __DIR__ . "/../../init.php";
+require_once __DIR__ . '/../../init.php';
 
 
 $scriptname = basename($argv[0] ?? 'general-update');

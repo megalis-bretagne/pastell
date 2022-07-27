@@ -268,6 +268,7 @@ class IParapheurRecup extends ActionExecutor
      */
     private function getFileHistory(FastParapheur $signature, $documentId)
     {
+        $history = [];
         try {
             $history = $signature->getAllHistoriqueInfo($documentId);
         } catch (Exception $e) {
