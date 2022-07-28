@@ -221,10 +221,10 @@ class DocumentType
         return $this->module_definition[self::THRESHOLD_FIELDS] ?? false;
     }
 
-    public function getStudioDefinition(): string
+    public function getStudioDefinition(): ?string
     {
         if (empty($this->module_definition[self::STUDIO_DEFINITION])) {
-            return false;
+            return null;
         }
         return base64_decode($this->module_definition[self::STUDIO_DEFINITION]);
     }

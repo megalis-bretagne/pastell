@@ -5,7 +5,6 @@ class CreationAction extends ActionExecutor
     public const ACTION_ID = 'creation';
 
     /**
-     * @return string
      * @throws Exception
      */
     public function go()

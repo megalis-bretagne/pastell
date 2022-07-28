@@ -203,7 +203,7 @@ class DonneesFormulaire
     /**
      * @param $item
      * @param bool|false $default
-     * @return string | array
+     * @return string|array|bool
      */
     public function get($item, $default = false)
     {

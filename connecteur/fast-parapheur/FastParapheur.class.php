@@ -65,7 +65,7 @@ class FastParapheur extends SignatureConnecteur
         $this->subscriberNumber = $donneesFormulaire->get('numero_abonnement');
         $this->circuits = $donneesFormulaire->get('circuits');
         $this->maxNumberOfDaysInParapheur = $donneesFormulaire->get("parapheur_nb_jour_max");
-        $this->doNotDeleteAfterRejection = $donneesFormulaire->get('parapheur_do_not_delete_on_rejection');
+        $this->doNotDeleteAfterRejection = (bool)$donneesFormulaire->get('parapheur_do_not_delete_on_rejection');
 
         $this->connectionCertificatePath = $donneesFormulaire->getFilePath('certificat_connexion');
         $this->connectionCertificatePassword = $donneesFormulaire->get('certificat_password');

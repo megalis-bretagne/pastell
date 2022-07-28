@@ -36,7 +36,7 @@ class GlaneurSFTP extends GlaneurConnecteur
             $sftpProperties->host = $this->connecteurConfig->get(self::GLANEUR_SFTP_HOST);
             $sftpProperties->login = $this->connecteurConfig->get(self::GLANEUR_SFTP_LOGIN);
             $sftpProperties->password = $this->connecteurConfig->get(self::GLANEUR_SFTP_PASSWORD);
-            $sftpProperties->port = $this->connecteurConfig->get(self::GLANEUR_SFTP_PORT);
+            $sftpProperties->port = (int)$this->connecteurConfig->get(self::GLANEUR_SFTP_PORT);
             $this->sftp = $this->sftpFactory->getInstance($sftpProperties);
         }
         return $this->sftp;
@@ -71,11 +71,9 @@ class GlaneurSFTP extends GlaneurConnecteur
     }
 
     /**
-     * @param string $directory
-     * @return string
      * @throws Exception
      */
-    protected function getNextItem(string $directory): string
+    protected function getNextItem(string $directory): ?string
     {
         $list = $this->getSFTP()->listDirectory($directory);
 
@@ -85,7 +83,7 @@ class GlaneurSFTP extends GlaneurConnecteur
             }
             return $file;
         }
-        return false;
+        return null;
     }
 
     /**

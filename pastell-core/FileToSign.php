@@ -29,8 +29,7 @@ class FileToSign
     /** @var string */
     public $agents;
 
-    /** @var int */
-    public $dossierId;
+    public string $dossierId;
 
     /** @var Fichier $visualPdf */
     public $visualPdf;

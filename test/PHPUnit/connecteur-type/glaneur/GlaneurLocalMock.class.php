@@ -36,7 +36,7 @@ class GlaneurLocalMock extends GlaneurConnecteur
     }
 
 
-    protected function getNextItem(string $directory): string
+    protected function getNextItem(string $directory): ?string
     {
         $finder = new Finder();
         $found = $finder->in($directory);
@@ -45,7 +45,7 @@ class GlaneurLocalMock extends GlaneurConnecteur
         foreach ($found as $file) {
             return $file->getBasename();
         }
-        return false;
+        return null;
     }
 
     protected function isDir(string $directory_or_file): bool

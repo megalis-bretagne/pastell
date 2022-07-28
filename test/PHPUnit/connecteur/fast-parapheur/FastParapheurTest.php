@@ -234,7 +234,11 @@ class FastParapheurTest extends PastellTestCase
         $this->fastParapheur = $this->getFastParapheur();
 
         $fileToSign = $this->getFileToSign();
-        $fileToSign->annexes = ['not empty'];
+        $annex = new Fichier();
+        $annex->filename = 'empty.txt';
+        $annex->filepath = __DIR__ . '/fixtures/empty.txt';
+        $annex->content = 'content';
+        $fileToSign->annexes = [$annex];
         $this->assertFalse($this->fastParapheur->sendDossier($fileToSign));
         $this->assertStringContainsString(
             "Impossible de créer le fichier d'archive : ",

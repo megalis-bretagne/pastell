@@ -61,10 +61,8 @@ abstract class GlaneurConnecteur extends Connecteur
 
     /**
      * Permet de scanner le prochain objet d'un repertoire
-     * @param string $directory
-     * @return string $file_or_directory (chemin relatif à partir de $directory)
      */
-    abstract protected function getNextItem(string $directory): string;
+    abstract protected function getNextItem(string $directory): ?string;
 
     /**
      * Indique si un élement est ou non un repertoire
@@ -189,11 +187,10 @@ abstract class GlaneurConnecteur extends Connecteur
 
 
     /**
-     * @return int $id_d : identifiant du document créé
      * @throws UnrecoverableException
      * @throws Exception
      */
-    public function glaner()
+    public function glaner(): string|bool
     {
         if (!$this->connecteurConfig->get(self::TRAITEMENT_ACTIF)) {
             $this->last_message[] = "Le traitement du glaneur est désactivé";
@@ -251,14 +248,10 @@ abstract class GlaneurConnecteur extends Connecteur
     }
 
     /**
-     * @param $directory
-     * @param $directory_send
-     * @param string $tmp_folder
-     * @return bool
      * @throws UnrecoverableException
      * @throws Exception
      */
-    private function glanerThrow($directory, $directory_send, string $tmp_folder)
+    private function glanerThrow(string $directory, string $directory_send, string $tmp_folder): string|bool
     {
         $type_depot = $this->connecteurConfig->get(self::TYPE_DEPOT);
 
@@ -277,18 +270,14 @@ abstract class GlaneurConnecteur extends Connecteur
     }
 
     /**
-     * @param $directory
-     * @param $directory_send
-     * @param $tmp_folder
-     * @return bool
      * @throws Exception
      */
-    private function glanerFolder($directory, $directory_send, $tmp_folder)
+    private function glanerFolder(string $directory, string $directory_send, string $tmp_folder): string|bool
     {
 
         $current = $this->getNextItem($directory);
 
-        if (!$current) {
+        if ($current === null) {
             $this->last_message[] = "Le répertoire est vide";
             return true;
         }
@@ -301,7 +290,7 @@ abstract class GlaneurConnecteur extends Connecteur
             return false;
         }
 
-        if (! $this->getNextItem($directory)) {
+        if ($this->getNextItem($directory) === null) {
             $this->moveToErrorDirectory([$directory]);
             $this->last_message[] = "Le répertoire est vide";
             return false;
@@ -355,18 +344,13 @@ abstract class GlaneurConnecteur extends Connecteur
     }
 
     /**
-     * @param $directory
-     * @param $directory_send
-     * @param $tmp_folder
-     * @return bool
      * @throws UnrecoverableException
      * @throws Exception
      */
-    private function glanerVrac($directory, $directory_send, $tmp_folder)
+    private function glanerVrac(string $directory, string $directory_send, string $tmp_folder): string|bool
     {
-
         $repertoire = $directory;
-        if (! $this->getNextItem($directory)) {
+        if ($this->getNextItem($directory) === null) {
             $this->last_message[] = "Le répertoire est vide";
             return true;
         }
@@ -397,10 +381,10 @@ abstract class GlaneurConnecteur extends Connecteur
      * @return bool
      * @throws Exception
      */
-    public function glanerZip($directory, $directory_send, $tmp_folder)
+    public function glanerZip(string $directory, string $directory_send, string $tmp_folder): string|bool
     {
         $current = $this->getNextItem($directory);
-        if (!$current) {
+        if ($current === null) {
             $this->last_message[] = "Le répertoire est vide";
             return true;
         }
@@ -432,11 +416,9 @@ abstract class GlaneurConnecteur extends Connecteur
 
 
     /**
-     * @param $tmp_folder
-     * @return bool|string
      * @throws Exception
      */
-    private function glanerRepertoire($tmp_folder)
+    private function glanerRepertoire(string $tmp_folder): string|bool
     {
         $glaneurLocalGlanerRepertoire = $this->getGlaneurGlanerRepertoire();
         $result = $glaneurLocalGlanerRepertoire->glanerRepertoire($tmp_folder);

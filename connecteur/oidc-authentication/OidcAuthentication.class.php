@@ -39,7 +39,7 @@ class OidcAuthentication extends AuthenticationConnecteur
         $this->familyNameAttribute = $donneesFormulaire->get('family_name_attribute');
         $this->emailAttribute = $donneesFormulaire->get('email_attribute');
         $this->logoutRedirectUrl = $donneesFormulaire->get('redirect_url', '');
-        $this->userCreation = $donneesFormulaire->get('user_creation');
+        $this->userCreation = (bool)$donneesFormulaire->get('user_creation');
         $this->oidc = $this->openIDConnectClientFactory->getInstance(
             $providerUrl,
             $clientId,

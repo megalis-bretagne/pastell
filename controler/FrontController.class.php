@@ -102,23 +102,20 @@ class FrontController
         return $csrfToken->verifToken();
     }
 
-    /**
-     * @return MailSecDestinataireControler
-     */
-    public function getMailSecDestinataireControler()
+    public function getMailSecDestinataireControler(): ?MailSecDestinataireControler
     {
         /* pour le mail sécurisé on a pas de système propre de dispatch... */
         $this->setGetParameter($_GET);
         $this->setPostParameter($_POST);
         $this->setServerInfo($_SERVER);
         try {
+            /** @var MailSecDestinataireControler $controller */
             $controller = $this->getController("MailSecDestinataire");
         } catch (Exception $e) {
             print_r($e->getMessage());
             echo "Le controleur MailSecDestinataireControler n'a pas été trouvé";
             return null;
         }
-        /** @var $controller MailSecDestinataireControler */
         return $controller;
     }
 }

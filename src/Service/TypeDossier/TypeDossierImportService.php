@@ -77,11 +77,9 @@ class TypeDossierImportService
     }
 
     /**
-     * @param string $file_content
-     * @return array
      * @throws TypeDossierException
      */
-    public function getInfoFromFileContent(string $file_content): array
+    public function getInfoFromFileContent(?string $file_content): array
     {
         $json_content = $this->checkFileContent($file_content);
         $typeDossierProperties = $this->typeDossierManager->getTypeDossierFromArray($json_content[TypeDossierUtilService::RAW_DATA]);
@@ -92,13 +90,11 @@ class TypeDossierImportService
 
 
     /**
-     * @param $file_content
-     * @return array
      * @throws TypeDossierException
      */
-    private function checkFileContent($file_content): array
+    private function checkFileContent(?string $file_content): array
     {
-        if (! $file_content) {
+        if ($file_content === null || $file_content === '') {
             throw new TypeDossierException("La définition du type de dossier est vide");
         }
         $json_content = json_decode($file_content, true);

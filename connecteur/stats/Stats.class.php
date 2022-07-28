@@ -30,14 +30,8 @@ class Stats extends Connecteur
      * @var DocumentTypeFactory
      */
     private $documentTypeFactory;
-    /**
-     * @var int
-     */
-    private $entityId;
-    /**
-     * @var bool
-     */
-    private $includeChildren;
+    private int $entityId;
+    private bool $includeChildren;
     /**
      * @var string
      */
@@ -67,8 +61,8 @@ class Stats extends Connecteur
     public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire)
     {
         $this->connecteurConfig = $donneesFormulaire;
-        $this->entityId = $donneesFormulaire->get(self::ENTITY_ID_FIELD);
-        $this->includeChildren = $donneesFormulaire->get(self::INCLUDE_CHILDREN_FIELDS);
+        $this->entityId = (int)$donneesFormulaire->get(self::ENTITY_ID_FIELD);
+        $this->includeChildren = (bool)$donneesFormulaire->get(self::INCLUDE_CHILDREN_FIELDS);
         $this->moduleType = $donneesFormulaire->get(self::TYPE_FIELD);
         $this->startDate = $this->connecteurConfig->get(self::START_DATE_FIELD);
         $this->endDate = $this->connecteurConfig->get(self::END_DATE_FIELD);
