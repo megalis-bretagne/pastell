@@ -12,6 +12,8 @@ services:
         GID: ${GID:-33}
         USERNAME: ${USERNAME:-www-data}
         GROUPNAME: ${GROUPNAME:-www-data}
+    environment:
+      XDEBUG_MODE: "develop, coverage, debug"
     volumes:
       - ..:/var/www/pastell:cached
 
