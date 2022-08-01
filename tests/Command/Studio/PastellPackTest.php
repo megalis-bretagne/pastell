@@ -5,6 +5,7 @@ namespace Pastell\Tests\Command\Studio;
 use Exception;
 use Pastell\Service\TypeDossier\TypeDossierExportFileToModuleService;
 use PastellTestCase;
+use SplFileInfo;
 use Symfony\Component\Finder\Finder;
 use TmpFolder;
 use TypeDossierException;
@@ -46,10 +47,10 @@ class PastellPackTest extends PastellTestCase
         $result = [];
         $finder = new Finder();
         $paths = $finder->in(__DIR__ . "/../../../pack-json/")->files()->name('*.json');
+        /** @var SplFileInfo $file */
         foreach ($paths as $file) {
-            $data = [$file->getPathname()];
             $data = array_merge(
-                $data,
+                [$file->getPathname()],
                 $this->moduleDefinition[$file->getFilenameWithoutExtension()]
                 ??
                 ['',$file->getFilenameWithoutExtension(),'']
