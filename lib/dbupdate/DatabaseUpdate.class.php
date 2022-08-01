@@ -32,19 +32,6 @@ class DatabaseUpdate
         return $this->databaseDiff->getDiff($this->databaseDefinition, []);
     }
 
-    /**
-     * @param SQLQuery $sqlQuery
-     * @param Closure $function_log
-     * @throws Exception
-     */
-    public function majDatabase(SQLQuery $sqlQuery, Closure $function_log)
-    {
-        foreach ($this->getDiff() as $sql) {
-            $function_log($sql);
-            $sqlQuery->query($sql);
-        }
-    }
-
     public function getDiff()
     {
         return $this->databaseDiff->getDiff($this->fileContent, $this->databaseDefinition);

@@ -5,6 +5,7 @@
  */
 
 use Monolog\Logger;
+use Pastell\Database\DatabaseUpdater;
 use Pastell\Service\FeatureToggleService;
 use Symfony\Component\Lock\LockFactory;
 use Symfony\Component\Lock\Store\InMemoryStore;
@@ -79,15 +80,12 @@ $documentTypeFactory = $objectInstancier->getInstance(DocumentTypeFactory::class
 $donneesFormulaireFactory = $objectInstancier->getInstance(DonneesFormulaireFactory::class);
 $roleUtilisateur = $objectInstancier->getInstance(RoleUtilisateur::class);
 
-define("DATABASE_FILE", PASTELL_PATH . "/installation/pastell.bin");
-
-
 $objectInstancier->getInstance(Extensions::class)->autoloadExtensions();
 
 
 $objectInstancier->setInstance('journal_max_age_in_months', JOURNAL_MAX_AGE_IN_MONTHS);
 $objectInstancier->setInstance('admin_email', ADMIN_EMAIL);
-$objectInstancier->setInstance('database_file', __DIR__ . "/installation/pastell.bin");
+$objectInstancier->setInstance('database_file', DatabaseUpdater::DATABASE_FILE);
 $objectInstancier->setInstance('rgpd_page_path', RGPD_PAGE_PATH);
 
 $htmlPurifier = new HTMLPurifier();

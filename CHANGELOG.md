@@ -80,6 +80,10 @@
   - ReponsePrefectureLinkVisionneuse devient Pastell\Viewer\ReponsePrefectureLinkViewer
   - GedIdDocumentsVisionneuse devient Pastell\Viewer\GedIdDocumentsViewer
 - Suppression de la fonction SEDAConnecteur::getInfoARActes()
+- Suppression du script script/plateform-update/database-update.php, remplacer par un script console app:database:update
+- Suppression du script installation/filedbupdate.php, remplacer par un script console dev:database:update-definition
+- Suppression de la constante DATABASE_FILE
+
 
 # [3.1.16] - 2022-07-18
 
