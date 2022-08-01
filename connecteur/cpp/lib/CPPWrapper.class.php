@@ -321,6 +321,9 @@ class CPPWrapper
                         'nbResultatsMaximum' => self::MAX_FACTURE_LIST
                     )
                 );
+                if ($this->cppWrapperConfig->fetchDownloadedInvoices !== null) {
+                    $data['factureTelechargeeParDestinataire'] = $this->cppWrapperConfig->fetchDownloadedInvoices;
+                }
                 if (intval($idFournisseur)) {
                     $data['listeFournisseurs'][0] = array(
                         'idFournisseur' => intval($idFournisseur)
