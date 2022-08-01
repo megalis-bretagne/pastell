@@ -6,7 +6,10 @@ class DatabaseUpdateTest extends PastellTestCase
 {
     public function testCreateSQL()
     {
-        $databaseUpdate = new DatabaseUpdate(DatabaseUpdater::DATABASE_FILE, $this->getSQLQuery());
+        $databaseUpdate = new DatabaseUpdate(
+            file_get_contents(DatabaseUpdater::DATABASE_FILE),
+            $this->getSQLQuery()
+        );
         $this->assertIsArray($databaseUpdate->getAllSQLCommand());
     }
 

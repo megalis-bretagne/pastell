@@ -1,5 +1,6 @@
 <?php
 
+use Monolog\Logger;
 use Pastell\Database\DatabaseUpdater;
 
 try {
@@ -7,6 +8,9 @@ try {
 
 # Première étape : Sans la connexion BD vu que celle-ci n'existe pas encore...
     require_once(__DIR__ . "/../init-no-db.php");
+    /**
+     * @var Logger $logger
+     */
 
     echo "Utilisation de la base " . BD_DSN . " avec l'utilisateur " . BD_USER . "\n";
 
@@ -22,7 +26,7 @@ try {
     require_once __DIR__ . "/../init.php";
 
     /** @var PastellBootstrap $pastellBootstrap */
-    $pastellBootstrap = $objectInstancier->getInstance(PastellBootstrap::class);
+    $pastellBootstrap = ObjectInstancierFactory::getObjetInstancier()->getInstance(PastellBootstrap::class);
 
     $envWrapper = new EnvWrapper();
     $utilisateurObject = new UtilisateurObject();

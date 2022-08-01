@@ -37,6 +37,6 @@ class DatabaseUpdater
     public function updateDefinitionFromDatabase(): void
     {
         $databaseUpdate = new DatabaseUpdate(false, $this->sqlQuery);
-        $databaseUpdate->writeDefinition(DatabaseUpdater::DATABASE_FILE, self::DATABASE_SQL_FILE);
+        $databaseUpdate->writeDefinition(self::DATABASE_FILE, self::DATABASE_SQL_FILE);
     }
 }

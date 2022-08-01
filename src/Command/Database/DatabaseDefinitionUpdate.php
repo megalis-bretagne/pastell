@@ -31,6 +31,6 @@ class DatabaseDefinitionUpdate extends BaseCommand
         $this->getIO()->title('Mise à jour des fichiers de définition de la base de données');
         $this->databaseUpdater->updateDefinitionFromDatabase();
         $this->getIO()->success('Les fichiers sont à jour');
-        return 0;
+        return self::SUCCESS;
     }
 }

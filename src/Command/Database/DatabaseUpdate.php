@@ -42,7 +42,7 @@ class DatabaseUpdate extends BaseCommand
         if (! $queries) {
             $this->getIO()->text('La base de données est déjà à jour');
             $this->getIO()->success('Done');
-            return 0;
+            return self::SUCCESS;
         }
         if (! $force) {
             $this->getIO()->text('Requêtes à passer pour mettre à jour la base de données: ');
@@ -50,7 +50,7 @@ class DatabaseUpdate extends BaseCommand
                 $this->getIO()->text($query);
             }
             $confirm =  $this->getIO()->confirm(
-                'Êtes-vous certain de vouloir executer ces requêtes ?',
+                'Êtes-vous certain de vouloir exécuter ces requêtes ?',
                 false
             );
         } else {
@@ -58,11 +58,11 @@ class DatabaseUpdate extends BaseCommand
         }
         if (! $confirm) {
             $this->getIO()->note('Abandon de la modification de la base de données');
-            return 1;
+            return self::FAILURE;
         }
 
         $this->databaseUpdater->update();
         $this->getIO()->success('La base de données a été modifiée');
-        return 0;
+        return self::SUCCESS;
     }
 }
