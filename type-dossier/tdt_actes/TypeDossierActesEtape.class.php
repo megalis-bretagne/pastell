@@ -65,7 +65,10 @@ class TypeDossierActesEtape implements TypeDossierEtapeSetSpecificInformation
             }
             $go = true;
 
-            if (isset($action_info[Action::ACTION_AUTOMATIQUE]) && $action_info[Action::ACTION_AUTOMATIQUE] == TypeDossierTranslator::ORIENTATION) {
+            if (
+                isset($action_info[Action::ACTION_AUTOMATIQUE])
+                && $action_info[Action::ACTION_AUTOMATIQUE] === TypeDossierTranslator::ORIENTATION
+            ) {
                 $this->makeEditable($action_id, $result, $stringMapper);
             }
         }
@@ -74,7 +77,7 @@ class TypeDossierActesEtape implements TypeDossierEtapeSetSpecificInformation
         return $result;
     }
 
-    private function makeEditable(string $action_id, array &$result, StringMapper $stringMapper)
+    private function makeEditable(string $action_id, array &$result, StringMapper $stringMapper): void
     {
         $acte_use_publication_date = $stringMapper->get('acte_use_publication_date');
         $acte_publication_date = $stringMapper->get('acte_publication_date');
@@ -84,6 +87,7 @@ class TypeDossierActesEtape implements TypeDossierEtapeSetSpecificInformation
         $result[DocumentType::ACTION][$action_id][Action::EDITABLE_CONTENT][] = $acte_use_publication_date;
         $result[DocumentType::ACTION][$action_id][Action::EDITABLE_CONTENT][] = $acte_publication_date;
         $result[DocumentType::ACTION][$action_id][Action::MODIFICATION_NO_CHANGE_ETAT] = true;
-        $result[DocumentType::ACTION]['modification'][Action::ACTION_RULE][Action::ACTION_RULE_LAST_ACTION][] = $action_id;
+        $result[DocumentType::ACTION][Action::MODIFICATION][Action::ACTION_RULE][Action::ACTION_RULE_LAST_ACTION][] =
+            $action_id;
     }
 }
