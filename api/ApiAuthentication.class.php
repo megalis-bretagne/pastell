@@ -86,10 +86,12 @@ class ApiAuthentication
 
     private function authenticateByToken(): ?int
     {
+        $this->checkRateLimit();
         $authorizationHeader = $this->server['HTTP_AUTHORIZATION'];
         $token = substr($authorizationHeader, 7);
         $user = $this->userTokenService->getUserFromToken($token);
         if ($user !== null && !$user['is_expired']) {
+            $this->resetRateLimit();
             return $user['id_u'];
         }
         return null;
@@ -100,14 +102,10 @@ class ApiAuthentication
         UtilisateurSQL $utilisateur,
         CertificatConnexion $certificatConnexion
     ): ?int {
-        if ($this->loginAttemptLimit->isLoginAttemptAuthorized($this->server['PHP_AUTH_USER']) === false) {
-            throw new RateLimitExceededException(
-                $this->loginAttemptLimit->getRateLimit($this->server['PHP_AUTH_USER'])
-            );
-        }
+        $this->checkRateLimit();
         $userId = $utilisateurListe->getUtilisateurByLogin($this->server['PHP_AUTH_USER']);
         if ($userId && $utilisateur->verifPassword($userId, $this->server['PHP_AUTH_PW'])) {
-            $this->loginAttemptLimit->resetLoginAttempt($this->server['PHP_AUTH_USER']);
+            $this->resetRateLimit();
         } else {
             $userId = null;
         }
@@ -119,6 +117,26 @@ class ApiAuthentication
 
     private function isBearer(string $authorizationHeader): bool
     {
-        return stripos($authorizationHeader, 'Bearer ') !== false;
+        return \str_starts_with($authorizationHeader, 'Bearer ');
+    }
+
+    private function checkRateLimit(): void
+    {
+        if (!isset($this->server['REMOTE_ADDR'])) {
+            return;
+        }
+        if ($this->loginAttemptLimit->isLoginAttemptAuthorized($this->server['REMOTE_ADDR']) === false) {
+            throw new RateLimitExceededException(
+                $this->loginAttemptLimit->getRateLimit($this->server['REMOTE_ADDR'])
+            );
+        }
+    }
+
+    private function resetRateLimit(): void
+    {
+        if (!isset($this->server['REMOTE_ADDR'])) {
+            return;
+        }
+        $this->loginAttemptLimit->resetLoginAttempt($this->server['REMOTE_ADDR']);
     }
 }
