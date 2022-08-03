@@ -1,125 +1,50 @@
-nom: studio-transformation
+nom: actes-avant-après
 type: 'Types de dossier personnalisés'
 description: ''
 connecteur:
     - transformation
-    - signature
     - TdT
+    - GED
 formulaire:
     onglet1:
         titre:
             name: Titre
             type: text
-            requis: true
+            requis: false
             multiple: false
             commentaire: ''
             title: true
-        fichier:
-            name: Fichier
+        document:
+            name: document
+            type: file
+            requis: true
+            multiple: false
+            commentaire: ''
+        annexe:
+            name: Annexe(s)
             type: file
             requis: false
-            multiple: false
+            multiple: true
             commentaire: ''
-        fichier_csv_transform:
-            name: 'Fichier CSV Transform'
-            type: file
-            requis: false
-            multiple: false
-            commentaire: ''
-        adresse:
-            name: Adresse
-            type: text
-            requis: false
-            multiple: false
-            commentaire: ''
+            onchange: autre_document_attache-change
     Cheminement:
         envoi_transformation:
             name: Transformation
             type: checkbox
             onchange: cheminement-change
-            default: ''
-            read-only: false
-        envoi_signature:
-            name: Visa/Signature
-            type: checkbox
-            onchange: cheminement-change
-            default: ''
-            read-only: false
+            default: checked
+            read-only: true
         envoi_tdt_actes:
             name: 'Envoi à la préfecture (via un Tdt)'
             type: checkbox
             onchange: cheminement-change
-            default: ''
-            read-only: false
-    i-Parapheur:
-        envoi_iparapheur:
-            no-show: true
-        iparapheur_type:
-            name: 'Type iParapheur'
+            default: checked
             read-only: true
-        iparapheur_sous_type:
-            name: 'Sous-type i-Parapheur'
-            requis: true
-            index: true
-            type: externalData
-            choice-action: iparapheur-sous-type
-            link_name: 'Sélectionner un sous-type'
-    'Parapheur FAST':
-        envoi_fast:
-            no-show: true
-        fast_parapheur_circuit:
-            name: 'Circuit sur le parapheur'
-            type: externalData
-            choice-action: iparapheur-sous-type
-            link_name: 'Liste des circuits'
-        fast_parapheur_circuit_configuration:
-            name: 'Configuration du circuit à la volée (au format JSON)'
-            commentaire: 'Si ce fichier est déposé, il remplace le circuit choisi dans le champ "Circuit sur le parapheur"'
-            type: file
-        fast_parapheur_email_destinataire:
-            name: 'Email du destinataire'
-            commentaire: "Email de la personne à qui l’on souhaite envoyer le document après sa signature<br />\nUniquement avec le mode \"circuit à la volée\""
-        fast_parapheur_email_cc:
-            name: 'Email des destinataires en copie carbone'
-            commentaire: "Permet de rajouter des destinataires mais en copie carbone<br />\nUniquement avec le mode \"circuit à la volée\""
-        fast_parapheur_agents:
-            name: 'Emails des agents'
-            commentaire: "Les emails des utilisateurs à rajouter en tant qu’agent. Séparé par des virgules<br />\nUniquement avec le mode \"circuit à la volée\""
-    Signature:
-        iparapheur_dossier_id:
-            name: '#ID dossier parapheur'
-            read-only: true
-        iparapheur_historique:
-            name: 'Historique iparapheur'
-            type: file
-            read-only: true
-        parapheur_last_message:
-            name: 'Dernier message reçu du parapheur'
-            read-only: true
-        has_signature:
-            no-show: true
-            read-only: true
-        signature:
-            name: 'Signature détachée'
-            type: file
-            read-only: true
-        bordereau_signature:
-            name: 'Bordereau de signature'
-            type: file
-            read-only: true
-        document_original:
-            name: 'Document original'
-            type: file
-            read-only: true
-        multi_document_original:
-            name: 'Multi-document(s) original'
-            type: file
-            multiple: true
-            read-only: true
-        iparapheur_annexe_sortie:
-            name: 'Annexe(s) de sortie du parapheur'
-            type: file
-            multiple: true
+        envoi_depot:
+            name: 'Dépôt (GED, FTP, ...)'
+            type: checkbox
+            onchange: cheminement-change
+            default: checked
             read-only: true
     Acte:
         acte_nature:
@@ -221,6 +146,17 @@ formulaire:
         tedetis_annulation_id:
             name: "Identifiant de la transaction d'annulation"
             read-only: true
+    'Retour GED':
+        has_ged_document_id:
+            no-show: true
+            read-only: true
+        ged_document_id_file:
+            name: 'Identifiants des documents sur la GED'
+            type: file
+            visionneuse: Pastell\Viewer\GedIdDocumentsViewer
+            read-only: true
+            requis: true
+            visionneuse-no-link: true
 champs-affiches:
     - titre
     - dernier_etat
@@ -234,18 +170,14 @@ champs-recherche-avancee:
     - state_begin
     - search
 page-condition:
-    i-Parapheur:
-        envoi_iparapheur: true
-    'Parapheur FAST':
-        envoi_fast: true
-    Signature:
-        has_signature: true
     Acte:
         envoi_tdt_actes: true
     'Retour Tdt':
         has_bordereau: true
     Annulation:
         has_annulation: true
+    'Retour GED':
+        has_ged_document_id: true
 action:
     creation:
         name-action: Créer
@@ -261,8 +193,9 @@ action:
                 - modification
                 - importation
                 - transformation
-                - recu-iparapheur
-                - send-signature-error
+                - acquiter-tdt
+                - acquiter-tdt
+                - send-ged
                 - termine
     supression:
         name-action: Supprimer
@@ -275,7 +208,6 @@ action:
                 - termine
                 - fatal-error
                 - transformation-error
-                - rejet-iparapheur
                 - annuler-tdt
         action-class: Supprimer
         warning: 'Êtes-vous sûr ?'
@@ -293,9 +225,8 @@ action:
                 - modification
                 - importation
                 - transformation
-                - recu-iparapheur
                 - acquiter-tdt
-                - rejet-iparapheur
+                - send-ged
             document_is_valide: true
         action-class: OrientationTypeDossierPersonnalise
     termine:
@@ -330,19 +261,12 @@ action:
                 - preparation-transformation
                 - transformation-error
         action-class: StandardAction
+        action-automatique: orientation
         connecteur-type: transformation
         connecteur-type-action: TransformationTransform
         editable-content:
-            - envoi_signature
             - envoi_tdt_actes
-            - envoi_iparapheur
-            - iparapheur_sous_type
-            - envoi_fast
-            - fast_parapheur_circuit
-            - fast_parapheur_circuit_configuration
-            - fast_parapheur_email_destinataire
-            - fast_parapheur_email_cc
-            - fast_parapheur_agents
+            - envoi_depot
             - acte_nature
             - numero_de_lacte
             - date_de_lacte
@@ -358,104 +282,6 @@ action:
         name: 'Erreur lors de la transformation du dossier'
         rule:
             role_id_e: no-role
-    preparation-send-iparapheur:
-        name: "Préparation de l'envoi au parapheur"
-        rule:
-            role_id_e: no-role
-        action-automatique: send-iparapheur
-    send-iparapheur:
-        name-action: 'Transmettre au parapheur'
-        name: 'Transmis au parapheur'
-        rule:
-            last-action:
-                - preparation-send-iparapheur
-                - send-signature-error
-        action-class: StandardAction
-        connecteur-type: signature
-        connecteur-type-action: SignatureEnvoie
-        connecteur-type-mapping:
-            iparapheur_type: iparapheur_type
-            iparapheur_sous_type: iparapheur_sous_type
-            iparapheur_dossier_id: iparapheur_dossier_id
-            fast_parapheur_circuit: fast_parapheur_circuit
-            fast_parapheur_circuit_configuration: fast_parapheur_circuit_configuration
-            fast_parapheur_email_destinataire: fast_parapheur_email_destinataire
-            fast_parapheur_email_cc: fast_parapheur_email_cc
-            fast_parapheur_agents: fast_parapheur_agents
-            send-signature-error: send-signature-error
-            objet: titre
-            document: fichier
-        action-automatique: verif-iparapheur
-    send-signature-error:
-        name: "Erreur lors de l'envoi du dossier à la signature"
-        editable-content:
-            - fast_parapheur_circuit
-            - fast_parapheur_circuit_configuration
-            - fast_parapheur_email_destinataire
-            - fast_parapheur_email_cc
-            - fast_parapheur_agents
-        rule:
-            role_id_e: no-role
-    verif-iparapheur:
-        name-action: 'Vérifier le statut de signature'
-        name: 'Vérification de la signature'
-        rule:
-            last-action:
-                - erreur-verif-iparapheur
-                - send-iparapheur
-        action-class: StandardAction
-        connecteur-type: signature
-        connecteur-type-action: SignatureRecuperation
-        connecteur-type-mapping:
-            iparapheur_historique: iparapheur_historique
-            parapheur_last_message: parapheur_last_message
-            has_signature: has_signature
-            signature: signature
-            document_original: document_original
-            multi_document_original: multi_document_original
-            bordereau: bordereau_signature
-            iparapheur_annexe_sortie: iparapheur_annexe_sortie
-            iparapheur_dossier_id: iparapheur_dossier_id
-            recu-iparapheur: recu-iparapheur
-            rejet-iparapheur: rejet-iparapheur
-            erreur-verif-iparapheur: erreur-verif-iparapheur
-            objet: titre
-            document: fichier
-    erreur-verif-iparapheur:
-        name: 'Erreur lors de la vérification du statut de signature'
-        rule:
-            role_id_e: no-role
-    recu-iparapheur:
-        name: 'Signature récuperée'
-        rule:
-            role_id_e: no-role
-        editable-content:
-            - envoi_tdt_actes
-            - acte_nature
-            - numero_de_lacte
-            - date_de_lacte
-            - document_papier
-            - classification
-            - type_piece
-            - type_acte
-            - type_pj
-            - acte_use_publication_date
-            - acte_publication_date
-        modification-no-change-etat: true
-    rejet-iparapheur:
-        name: 'Signature refusée'
-        rule:
-            role_id_e: no-role
-    iparapheur-sous-type:
-        name: 'Liste des sous-type iParapheur'
-        no-workflow: true
-        rule:
-            role_id_e: no-role
-        action-class: IparapheurSousType
-        connecteur-type-mapping:
-            iparapheur_type: iparapheur_type
-            iparapheur_sous_type: iparapheur_sous_type
-            fast_parapheur_circuit: fast_parapheur_circuit
     pre-send-tdt:
         name: "Préparation de l'envoi au Tdt"
         rule:
@@ -482,7 +308,8 @@ action:
             send-tdt-erreur: send-tdt-erreur
             document-transmis-tdt: document-transmis-tdt
             tedetis_transaction_id: tedetis_transaction_id
-            arrete: fichier
+            arrete: document
+            autre_document_attache: annexe
             objet: titre
         action-automatique: verif-tdt
     send-tdt-erreur:
@@ -539,7 +366,8 @@ action:
             acte_tamponne: acte_tamponne
             annexes_tamponnees: annexes_tamponnees
             date_ar: date_ar
-            arrete: fichier
+            arrete: document
+            autre_document_attache: annexe
             objet: titre
     erreur-verif-tdt:
         name: "Erreur lors de la vérification du statut de l'acte"
@@ -553,6 +381,12 @@ action:
         name: 'Acquitté par la préfecture'
         rule:
             role_id_e: no-role
+        action-automatique: orientation
+        editable-content:
+            - envoi_depot
+            - acte_use_publication_date
+            - acte_publication_date
+        modification-no-change-etat: true
     annulation-tdt:
         name-action: 'Annuler la transaction'
         name: "Demande d'annulation envoyée"
@@ -586,7 +420,8 @@ action:
             date_ar: date_ar
             acte_use_publication_date: acte_use_publication_date
             acte_publication_date: acte_publication_date
-            arrete: fichier
+            arrete: document
+            autre_document_attache: annexe
             objet: titre
     verif-annulation-tdt:
         name-action: "Vérifier le statut de la transaction d'annulation"
@@ -617,7 +452,8 @@ action:
         connecteur-type-mapping:
             acte_nature: acte_nature
             classification: classification
-            arrete: fichier
+            arrete: document
+            autre_document_attache: annexe
     classification:
         name: 'Classification ACTES'
         no-workflow: true
@@ -644,4 +480,31 @@ action:
             type_piece: type_piece
             type_piece_fichier: type_piece_fichier
             acte_nature: acte_nature
-            arrete: fichier
+            arrete: document
+            autre_document_attache: annexe
+    preparation-send-ged:
+        name: "Préparation de l'envoi à la GED"
+        rule:
+            role_id_e: no-role
+        action-automatique: send-ged
+    send-ged:
+        name-action: 'Verser à la GED'
+        name: 'Versé à la GED'
+        rule:
+            last-action:
+                - preparation-send-ged
+                - error-ged
+        action-automatique: orientation
+        action-class: StandardAction
+        connecteur-type: GED
+        connecteur-type-action: GEDEnvoyer
+        connecteur-type-mapping:
+            fatal-error: error-ged
+        editable-content:
+            - acte_use_publication_date
+            - acte_publication_date
+        modification-no-change-etat: true
+    error-ged:
+        name: 'Erreur irrécupérable lors du dépôt'
+        rule:
+            role_id_e: no-role

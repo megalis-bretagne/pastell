@@ -399,6 +399,7 @@ abstract class ActionExecutor
                 "Programmation dans le cadre d'un traitement par lot"
             );
         }
+        return true;
     }
 
     //Lors d'un traitement par lot spécifique (synchrone par exemple), il est nécessaire de réactiver le job manager pour le docuemnt en question

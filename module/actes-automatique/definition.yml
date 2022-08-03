@@ -225,6 +225,9 @@ formulaire:
         has_bordereau:
             no-show: true
             read-only: true
+        tedetis_transaction_id:
+            name: 'Identifiant de la transaction sur le TdT'
+            read-only: true
         bordereau:
             name: "Bordereau d'acquittement"
             type: file
@@ -242,6 +245,10 @@ formulaire:
             name: 'Annexe(s) tamponnée(s) par le TdT'
             type: file
             multiple: true
+        date_ar:
+            name: "Date de l'accusé de réception"
+            type: date
+            read-only: true
         acte_use_publication_date:
             name: Utiliser la date de publication sur le tampon
             type: checkbox
@@ -412,6 +419,7 @@ action:
             - envoi_sae
             - acte_use_publication_date
             - acte_publication_date
+        modification-no-change-etat: true
     send-signature-local:
         name-action: Signer
         name: 'Document à faire signer'
@@ -596,8 +604,9 @@ action:
                 - return-teletransmission-tdt
             role_id_e: editeur
             droit_id_u: 'actes-automatique:edition'
-        action-class: TedetisRecup
+        action-class: StandardAction
         connecteur-type: TdT
+        connecteur-type-action: TdTRecupActe
     erreur-verif-tdt:
         name: "Erreur lors de la vérification du statut de l'acte"
         rule:
@@ -621,7 +630,9 @@ action:
         rule:
             has-action:
                 - acquiter-tdt
-        action-class: ActesTamponner
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdTRestamp
     annulation-tdt:
         name-action: 'Annuler la transaction'
         name: "Demande d'annulation envoyée"
@@ -691,6 +702,7 @@ action:
             - envoi_sae
             - acte_use_publication_date
             - acte_publication_date
+        modification-no-change-etat: true
         action-automatique: orientation
         action-class: StandardAction
         connecteur-type: GED
@@ -795,6 +807,7 @@ action:
         editable-content:
             - acte_use_publication_date
             - acte_publication_date
+        modification-no-change-etat: true
     rejet-sae:
         name: 'Transfert rejeté par le SAE'
         rule:
