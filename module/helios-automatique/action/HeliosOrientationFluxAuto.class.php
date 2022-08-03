@@ -37,7 +37,9 @@ class HeliosOrientationFluxAuto extends ActionExecutor
                     $this->notifyAndExit("Impossible de faire avancer le document depuis l'état : $last_action");
                 }
                 if ($envoi_signature_check == true) {
-                    $localSignature = $this->getConnecteur('signature')->isLocalSignature();
+                    /** @var SignatureConnecteur $connector */
+                    $connector = $this->getConnecteur('signature');
+                    $localSignature = $connector->isLocalSignature();
                     $donneesFormulaire->setData('envoi_signature', !$localSignature);
                     $donneesFormulaire->setData('has_signature_locale', $localSignature);
                     if ($localSignature) {

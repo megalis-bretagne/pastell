@@ -62,20 +62,22 @@ class FactureFichierPivot
         return $document;
     }
 
-    public function getFichierPivot(array $docInfo)
+    public function getFichierPivot(array $docInfo): string
     {
         $this->checkInformation($docInfo);
 
         $cppFacturePivot = new ZenXML('CPPFacturePivot');
-        $cppFacturePivot['xmlns:xsi'] = "http://www.w3.org/2001/XMLSchema-instance";
+        $cppFacturePivot['xmlns:xsi'] = 'http://www.w3.org/2001/XMLSchema-instance';
 
         $cppFacturePivot['xsi:noNamespaceSchemaLocation'] = $this->getNameXSDFichierPivot();
 
         //EnveloppeUnitaire
-        $cppFacturePivot->Enveloppe->EnveloppeUnitaire['NumOrdre'] = "1";
+        $enveloppe = $cppFacturePivot->get('Enveloppe');
+        $enveloppeUnitaire = $enveloppe->get('EnveloppeUnitaire');
+        $enveloppeUnitaire['NumOrdre'] = '1';
 
         //Parametres
-        $parametre = $cppFacturePivot->Enveloppe->EnveloppeUnitaire->Parametres;
+        $parametre = $enveloppeUnitaire->get('Parametres');
         $parametre->ParametreIndiv[0]['NumOrdre'] = "0001";
         $parametre->ParametreIndiv[0]->Code = "DtPrd";
         $parametre->ParametreIndiv[0]->Valeurparametre = date('Y-m-d', strtotime($docInfo['date_production']));
@@ -84,16 +86,19 @@ class FactureFichierPivot
         $parametre->ParametreIndiv[1]->Valeurparametre = $docInfo['id_flux'];
 
         //Partenaires
-        $partenaires = $cppFacturePivot->Enveloppe->EnveloppeUnitaire->Partenaires;
+        $partenaires = $enveloppeUnitaire->get('Partenaires');
         $partenaires->Recepteur->Id = $docInfo['recepteur_id'];
         $partenaires->Emetteur->Id = $docInfo['emetteur_id'];
 
         //CPPFacturePivotUnitaire
-        $cppFacturePivot->CPPFactures['Compteur'] = 1;
-        $cppFacturePivot->CPPFactures->CPPFacturePivotUnitaire['NumOrdre'] = 1;
+        $cppFactures = $cppFacturePivot->get('CPPFactures');
+        $cppFactures['Compteur'] = 1;
+
+        $cppFacturePivotUnitaire = $cppFactures->get('CPPFacturePivotUnitaire');
+        $cppFacturePivotUnitaire['NumOrdre'] = 1;
 
         //Fournisseur
-        $fournisseur = $cppFacturePivot->CPPFactures->CPPFacturePivotUnitaire->Fournisseur;
+        $fournisseur = $cppFacturePivotUnitaire->get('Fournisseur');
         $fournisseur->TypeIdentifiant = $docInfo['fournisseur_type_id'];
         $fournisseur->Identifiant = $docInfo['fournisseur'];
         $fournisseur->RaisonSociale = htmlspecialchars($docInfo['fournisseur_raison_sociale'], ENT_QUOTES, "ISO8859-1");
@@ -106,13 +111,13 @@ class FactureFichierPivot
         $fournisseur->ModeEmission = $docInfo['fournisseur_mode_emission'];
 
         //Debiteur
-        $debiteur = $cppFacturePivot->CPPFactures->CPPFacturePivotUnitaire->Debiteur;
+        $debiteur = $cppFacturePivotUnitaire->get('Debiteur');
         $debiteur->TypeIdentifiant = 1; //Valeur possible: 1 pour SIRET
         $debiteur->Identifiant = $docInfo['siret'];
         $debiteur->CodeService = $docInfo['service_destinataire_code'];
 
         //Donnees facture
-        $donneesFacture = $cppFacturePivot->CPPFactures->CPPFacturePivotUnitaire->DonneesFacture;
+        $donneesFacture = $cppFacturePivotUnitaire->get('DonneesFacture');
         $donneesFacture->Id = $docInfo['no_facture'];
         $donneesFacture->Type = $docInfo['facture_type'];
         $donneesFacture->Cadre = $docInfo['facture_cadre'];
@@ -143,12 +148,12 @@ class FactureFichierPivot
         $i = 0;
         //Fichier facture pdf
         if ($docInfo['facture_pj_01']) {
-            $cppFacturePivot->CPPFactures->CPPFacturePivotUnitaire->PJ[$i] = $this->getDocument($docInfo['facture_pj_01']['path'], $docInfo['facture_pj_01']['name'], $i, '01', $docInfo['facture_pj_01']['type']);
+            $cppFacturePivotUnitaire->get('PJ')[$i] = $this->getDocument($docInfo['facture_pj_01']['path'], $docInfo['facture_pj_01']['name'], $i, '01', $docInfo['facture_pj_01']['type']);
             $i++;
         }
         //Pieces jointes complémentaires
         foreach ($docInfo['facture_pj_02'] as $fileInfo) {
-            $cppFacturePivot->CPPFactures->CPPFacturePivotUnitaire->PJ[$i] = $this->getDocument($fileInfo['path'], $fileInfo['name'], $i, '02', $fileInfo['type']);
+            $cppFacturePivotUnitaire->get('PJ')[$i] = $this->getDocument($fileInfo['path'], $fileInfo['name'], $i, '02', $fileInfo['type']);
             $i++;
         }
 

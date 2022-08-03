@@ -18,12 +18,12 @@ class MailsecEnvoyer extends ConnecteurTypeActionExecutor
     }
 
     /**
-     * @return MailsecConnecteur|Connecteur
      * @throws NotFoundException
      * @throws UnrecoverableException
      */
-    private function getMailSecConnecteur(): MailsecConnecteur
+    private function getMailSecConnecteur(): MailSec
     {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $this->getConnecteur(MailsecConnecteur::CONNECTEUR_TYPE_ID);
     }
 

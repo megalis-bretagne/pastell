@@ -1,9 +1,12 @@
+includes:
+    - vendor/phpstan/phpstan-symfony/extension.neon
+
 parameters:
   scanFiles:
     - init.php
   bootstrapFiles:
     - init-no-db.php
-  level: 0
+  level: 2
   paths:
     - action
     - api
@@ -30,7 +33,21 @@ parameters:
       paths:
         - test/PHPUnit/extensions
     -
+      message: '/PHPDoc tag @var for variable \$class contains unknown class DepotCMIS/'
+      paths:
+        - test/PHPUnit/extensions/pastell-depot-cmis/DepotCMISTest.php
+    -
+      message: '/Call to method getClient\(\) on an unknown class DepotCMIS/'
+      paths:
+        - test/PHPUnit/extensions/pastell-depot-cmis/DepotCMISTest.php
+    -
       # Il s'agit de symboles externes utilisés par l'extension PHP Soap, donc pas corrigeables
       message: '/Access to an undefined property NotBuggySoapClient::\$__last_request(.*)/'
       paths:
         - lib/NotBuggySoapClient.class.php
+    -
+      message: '/Access to an undefined property object::(\$nom|\$NomDocPrincipal)/'
+      path: connecteur/iParapheur/IParapheur.class.php
+    -
+      message: '/PHPDoc tag @throws with type (.*) is not subtype of Throwable/'
+      path: test/codeception/tests/_support/_generated/

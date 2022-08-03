@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @var Logger $logger
+ */
+
+use Monolog\Logger;
 use Pastell\Database\DatabaseUpdater;
 
 ini_set('MAX_EXECUTION_TIME', -1);

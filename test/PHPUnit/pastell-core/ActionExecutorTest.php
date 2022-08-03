@@ -2,11 +2,7 @@
 
 class ActionExecutorTest extends PastellTestCase
 {
-    /**
-     * @return ActionExecutor|PHPUnit_Framework_MockObject_MockObject
-     * @throws ReflectionException
-     */
-    private function getActionExecutor()
+    private function getActionExecutor(): ActionExecutor
     {
         return $this->getMockForAbstractClass(
             ActionExecutor::class,

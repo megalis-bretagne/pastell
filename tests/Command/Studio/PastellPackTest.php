@@ -5,8 +5,8 @@ namespace Pastell\Tests\Command\Studio;
 use Exception;
 use Pastell\Service\TypeDossier\TypeDossierExportFileToModuleService;
 use PastellTestCase;
-use SplFileInfo;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 use TmpFolder;
 use TypeDossierException;
 

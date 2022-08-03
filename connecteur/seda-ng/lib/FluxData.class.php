@@ -20,11 +20,7 @@ abstract class FluxData
         $this->connecteur_content = $connecteur_content;
     }
 
-    /**
-     * @param string $clé du tableau connecteur_content
-     * @return string $valeur correspondante
-     */
-    public function getConnecteurContent($index)
+    public function getConnecteurContent(string $index): string
     {
         if (! isset($this->connecteur_content[$index])) {
             return "";

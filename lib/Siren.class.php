@@ -23,7 +23,7 @@ class Siren
         $siren_array = str_split($siren);
         foreach ($siren_array as $i => $chiffre) {
             if ($i % 2 == 1) {
-                $chiffre2 = str_split($chiffre * 2);
+                $chiffre2 = str_split((int)$chiffre * 2);
                 foreach ($chiffre2 as $c) {
                     $sum += $c;
                 }

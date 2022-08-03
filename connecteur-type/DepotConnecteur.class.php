@@ -254,7 +254,7 @@ abstract class DepotConnecteur extends GEDConnecteur
 
     private function saveMetaData(DonneesFormulaire $donneesFormulaire)
     {
-        $depot_metadonnees = $this->connecteurConfig->get(self::DEPOT_METADONNEES);
+        $depot_metadonnees = (int)$this->connecteurConfig->get(self::DEPOT_METADONNEES);
         if (
             !in_array(
                 $depot_metadonnees,
@@ -311,12 +311,12 @@ abstract class DepotConnecteur extends GEDConnecteur
 
     private function saveFileWithPastellFileName(): bool
     {
-        return $this->connecteurConfig->get(self::DEPOT_PASTELL_FILE_FILENAME) == self::DEPOT_PASTELL_FILE_FILENAME_PASTELL;
+        return (int)$this->connecteurConfig->get(self::DEPOT_PASTELL_FILE_FILENAME) === self::DEPOT_PASTELL_FILE_FILENAME_PASTELL;
     }
 
     private function saveFileWithRegexFileName(): bool
     {
-        return $this->connecteurConfig->get(self::DEPOT_PASTELL_FILE_FILENAME) == self::DEPOT_PASTELL_FILE_FILENAME_REGEX;
+        return (int)$this->connecteurConfig->get(self::DEPOT_PASTELL_FILE_FILENAME) === self::DEPOT_PASTELL_FILE_FILENAME_REGEX;
     }
 
     /**
@@ -325,9 +325,9 @@ abstract class DepotConnecteur extends GEDConnecteur
      */
     private function finallySave(DonneesFormulaire $donneesFormulaire)
     {
-        if ($this->connecteurConfig->get(self::DEPOT_TYPE_DEPOT) == self::DEPOT_TYPE_DEPOT_ZIP) {
+        if ((int)$this->connecteurConfig->get(self::DEPOT_TYPE_DEPOT) === self::DEPOT_TYPE_DEPOT_ZIP) {
             $this->saveZip($donneesFormulaire);
-        } elseif ($this->connecteurConfig->get(self::DEPOT_TYPE_DEPOT) == self::DEPOT_TYPE_DEPOT_FICHIERS) {
+        } elseif ((int)$this->connecteurConfig->get(self::DEPOT_TYPE_DEPOT) === self::DEPOT_TYPE_DEPOT_FICHIERS) {
             $this->saveFichiers();
         } else {
             $this->saveDirectory($donneesFormulaire);
@@ -392,7 +392,7 @@ abstract class DepotConnecteur extends GEDConnecteur
         if (!$this->directoryExists($directory_name)) {
             return $directory_name;
         }
-        if ($this->connecteurConfig->get(self::DEPOT_EXISTE_DEJA) == self::DEPOT_EXISTE_DEJA_RENAME) {
+        if ((int)$this->connecteurConfig->get(self::DEPOT_EXISTE_DEJA) === self::DEPOT_EXISTE_DEJA_RENAME) {
             return $directory_name . "_" . date("Ymdhis") . "_" . mt_rand(0, mt_getrandmax());
         }
         throw new UnrecoverableException("Le répertoire $directory_name existe déjà !");
@@ -408,7 +408,7 @@ abstract class DepotConnecteur extends GEDConnecteur
         if (!$this->fileExists($filename)) {
             return $filename;
         }
-        if ($this->connecteurConfig->get(self::DEPOT_EXISTE_DEJA) == self::DEPOT_EXISTE_DEJA_RENAME) {
+        if ((int)$this->connecteurConfig->get(self::DEPOT_EXISTE_DEJA) === self::DEPOT_EXISTE_DEJA_RENAME) {
             $basename = pathinfo($filename, PATHINFO_FILENAME);
             $extension = pathinfo($filename, PATHINFO_EXTENSION);
             return $basename . "_" . date("Ymdhis") . "_" . mt_rand(0, mt_getrandmax()) . "." . $extension;
@@ -418,16 +418,16 @@ abstract class DepotConnecteur extends GEDConnecteur
 
     private function getDirectoryName(DonneesFormulaire $donneesFormulaire)
     {
-        $directoryTitleChoice = $this->connecteurConfig->get(self::DEPOT_TITRE_REPERTOIRE);
+        $directoryTitleChoice = (int)$this->connecteurConfig->get(self::DEPOT_TITRE_REPERTOIRE);
         if (
-            $directoryTitleChoice == self::DEPOT_TITRE_REPERTOIRE_METADATA
+            $directoryTitleChoice === self::DEPOT_TITRE_REPERTOIRE_METADATA
             && $this->connecteurConfig->get(self::DEPOT_TITRE_EXPRESSION)
         ) {
             $name = $this->getNameFromMetadata(
                 $donneesFormulaire,
                 $this->connecteurConfig->get(self::DEPOT_TITRE_EXPRESSION)
             );
-        } elseif ($directoryTitleChoice == self::DEPOT_TITRE_REPERTOIRE_ID_DOCUMENT) {
+        } elseif ($directoryTitleChoice === self::DEPOT_TITRE_REPERTOIRE_ID_DOCUMENT) {
             $name = $donneesFormulaire->id_d;
         } else {
             $name = $donneesFormulaire->getTitre();
@@ -460,8 +460,8 @@ abstract class DepotConnecteur extends GEDConnecteur
     {
         if (
             !$this->connecteurConfig->get(self::DEPOT_CREATION_FICHIER_TERMINE)
-            || $this->connecteurConfig->get(self::DEPOT_TYPE_DEPOT) == self::DEPOT_TYPE_DEPOT_ZIP
-            || $this->connecteurConfig->get(self::DEPOT_TYPE_DEPOT) == self::DEPOT_TYPE_DEPOT_FICHIERS
+            || (int)$this->connecteurConfig->get(self::DEPOT_TYPE_DEPOT) === self::DEPOT_TYPE_DEPOT_ZIP
+            || (int)$this->connecteurConfig->get(self::DEPOT_TYPE_DEPOT) === self::DEPOT_TYPE_DEPOT_FICHIERS
         ) {
             return;
         }

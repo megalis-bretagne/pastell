@@ -51,7 +51,7 @@ class SimpleTwigRenderer
             }
 
             /**
-             * @var $simpleTwigFunction ISimpleTwigFunction
+             * @var ISimpleTwigFunction $simpleTwigFunction
              */
             $simpleTwigFunction = new $function_class();
             $twigEnvironment->addFunction($simpleTwigFunction->getFunction($donneesFormulaire));

@@ -4,6 +4,7 @@ class LDAPCreateUser extends ActionExecutor
 {
     public function go()
     {
+        /** @var LDAPVerification $ldap */
         $ldap = $this->getMyConnecteur();
         $utilisateur = $this->objectInstancier->getInstance(UtilisateurSQL::class);
         $users = $ldap->getUserToCreate($utilisateur);

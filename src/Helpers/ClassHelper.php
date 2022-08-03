@@ -37,14 +37,13 @@ class ClassHelper
     {
         $classes = [];
 
-        /**
-         * @var RecursiveDirectoryIterator $iterator
-         * @var SplFileInfo $item
-         */
         $iterator = new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator($namespacePath, RecursiveDirectoryIterator::SKIP_DOTS),
             RecursiveIteratorIterator::SELF_FIRST
         );
+        /**
+         * @var SplFileInfo $item
+         */
         foreach ($iterator as $item) {
             if ($item->isDir()) {
                 $nextPath = $iterator->current()->getPathname();

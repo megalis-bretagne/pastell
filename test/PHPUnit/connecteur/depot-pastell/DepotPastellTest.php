@@ -337,6 +337,7 @@ class DepotPastellTest extends PastellTestCase
         $this->configureConnector($id_ce, [
             DepotPastell::PASTELL_ACTION => DepotPastell::NO_ACTION,
         ]);
+        /** @var DepotPastell $depotPastell */
         $depotPastell = $this->getConnecteurFactory()->getConnecteurById($id_ce);
         $donneesFormulaire = $this->getDonneesFormulaire();
         $this->assertSame(

@@ -596,12 +596,12 @@ class DonneesFormulaire
         if (empty($this->fieldDataList)) {
             return;
         }
+
+        $all_index = $this->documentIndexor->getAllIndex();
         /**
          * @var string $fieldName
          * @var FieldData $fieldData
          */
-
-        $all_index = $this->documentIndexor->getAllIndex();
         foreach ($this->fieldDataList as $fieldName => $fieldData) {
             if (! isset($all_index[$fieldName]) || $all_index[$fieldName] != $fieldData->getValueForIndex()) {
                 $this->updateIndexedField($fieldData);

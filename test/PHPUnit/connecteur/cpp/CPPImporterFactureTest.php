@@ -90,7 +90,7 @@ class CPPImporterFactureTest extends ExtensionCppTestCase
 
         $this->triggerActionOnConnector($id_ce, 'import-facture');
 
-        /** @var cpp $cpp */
+        /** @var CPP $cpp */
         $cpp = $this->getConnecteurFactory()->getConnecteurById($id_ce);
 
         $last_message_expected = 'Récupération des factures ayant changé de statut entre le ' .
@@ -230,7 +230,7 @@ class CPPImporterFactureTest extends ExtensionCppTestCase
 
         $this->triggerActionOnConnector($id_ce, 'import-facture');
 
-        /** @var cpp $cpp */
+        /** @var CPP $cpp */
         $cpp = $this->getConnecteurFactory()->getConnecteurById($id_ce);
 
         $last_message_expected =

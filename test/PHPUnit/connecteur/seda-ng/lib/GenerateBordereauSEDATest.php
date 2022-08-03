@@ -2,13 +2,7 @@
 
 class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase
 {
-    /**
-     * @var
-     */
     private $relax_ng_path;
-    /**
-     * @var
-     */
     private $bordereau_seda_with_annotation;
 
     /** @var  AnnotationWrapper */

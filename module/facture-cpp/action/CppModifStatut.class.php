@@ -14,7 +14,6 @@ class CppModifStatut extends ActionExecutor
      */
     public function metier()
     {
-        /** @var DonneesFormulaire $donneesFormulaire */
         $doc = $this->getDonneesFormulaire();
         $statut_cible_liste = $doc->get(AttrFactureCPP::ATTR_STATUT_CIBLE_LISTE);
         $statut_cpp = $doc->get(AttrFactureCPP::ATTR_STATUT_CPP);
@@ -64,7 +63,6 @@ class CppModifStatut extends ActionExecutor
      */
     public function go()
     {
-        /** @var DonneesFormulaire $donneesFormulaire */
         $doc = $this->getDonneesFormulaire();
 
         if (!$doc->get('is_cpp')) {
@@ -132,7 +130,6 @@ class CppModifStatut extends ActionExecutor
 
                 $this->addActionOK('La facture est en statut ' . $result_modif['statut']);
 
-                /** @var DonneesFormulaire $donneesFormulaire */
                 $doc = $this->getDonneesFormulaire();
                 $statut_cible_liste = $doc->get(AttrFactureCPP::ATTR_STATUT_CIBLE_LISTE);
                 $statut_cpp = $doc->get(AttrFactureCPP::ATTR_STATUT_CPP);
@@ -276,8 +273,6 @@ class CppModifStatut extends ActionExecutor
      */
     private function modifStatut($statut_cible)
     {
-
-        /** @var DonneesFormulaire $donneesFormulaire */
         $doc = $this->getDonneesFormulaire();
         $statut_cpp = $doc->get(AttrFactureCPP::ATTR_STATUT_CPP);
         $id_facture_cpp = $doc->get(AttrFactureCPP::ATTR_ID_FACTURE_CPP);

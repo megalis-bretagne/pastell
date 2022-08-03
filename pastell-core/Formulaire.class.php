@@ -166,9 +166,8 @@ class Formulaire
     /**
      * Liste l'ensemble des champs d'un formulaire en prenant les propriétés des champs qui sont dans les onglets affiché d'abord.
      * i.e : si un champs est dans plusieurs onglet, alors les propriétés seront celui du derniers onglets affichés.
-     * @return multitype :Field
      */
-    public function getAllFieldsDisplayedFirst()
+    public function getAllFieldsDisplayedFirst(): array
     {
         $fields = [];
         foreach ($this->origFormArray as $name => $tab) {

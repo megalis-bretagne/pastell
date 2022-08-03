@@ -89,8 +89,6 @@ class ChorusProImportSynchroService
     }
 
     /**
-     * @param string $id_d
-     * @return mixed
      * @throws CPPException
      */
     private function synchroniseStatus(string $id_d): string

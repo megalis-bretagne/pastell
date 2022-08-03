@@ -3,12 +3,12 @@
 class MailsecRenvoyer extends ConnecteurTypeActionExecutor
 {
     /**
-     * @return Connecteur
      * @throws NotFoundException
      * @throws UnrecoverableException
      */
-    private function getMailSecConnecteur()
+    private function getMailSecConnecteur(): MailSec
     {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $this->getConnecteur('mailsec');
     }
 

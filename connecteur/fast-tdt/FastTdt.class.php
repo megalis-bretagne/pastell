@@ -539,10 +539,6 @@ class FastTdt extends TdtConnecteur
         // TODO: Implement sendResponse() method.
     }
 
-    /**
-     * @param $transaction_id
-     * @return bool
-     */
     public function getAnnexesTamponnees(string $transaction_id, ?string $date_affichage = null): array
     {
         return false;

@@ -4,6 +4,7 @@ class TestConnexionRGS extends ActionExecutor
 {
     public function go()
     {
+        /** @var S2low $s2low */
         $s2low = $this->getMyConnecteur();
         $connecteur_properties = $this->getConnecteurProperties();
 

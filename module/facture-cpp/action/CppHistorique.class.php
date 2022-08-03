@@ -12,7 +12,6 @@ class CppHistorique extends ActionExecutor
     {
         /** @var PortailFactureConnecteur $connPortailFacture */
         $connPortailFacture = $this->getConnecteur('PortailFacture');
-        /** @var DonneesFormulaire $donneesFormulaire */
         $doc  = $this->objectInstancier->getInstance(DonneesFormulaireFactory::class)->get($this->id_d);
 
         return $connPortailFacture->getHistoStatutFacture($doc->get(AttrFactureCPP::ATTR_ID_FACTURE_CPP));

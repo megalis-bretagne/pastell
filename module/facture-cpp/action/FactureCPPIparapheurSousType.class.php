@@ -46,6 +46,7 @@ class FactureCPPIparapheurSousType extends ChoiceActionExecutor
      */
     private function getSousType()
     {
+        /** @var SignatureConnecteur $signature */
         $signature = $this->getConnecteur('signature');
         return $signature->getSousType();
     }

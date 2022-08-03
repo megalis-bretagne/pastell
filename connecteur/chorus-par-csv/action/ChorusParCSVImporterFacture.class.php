@@ -57,7 +57,7 @@ class ChorusParCSVImporterFacture extends ActionExecutor
      */
     public function metier(): string
     {
-        /** @var ChorusParCSV $connecteur_chorus */
+        /** @var ChorusParCsv $connecteur_chorus */
         $connecteur_chorus = $this->getMyConnecteur();
         $min_date_statut_courant = $this->getChorusProUtilService()->getMinDateStatutCourant(
             $this->id_e,
@@ -114,7 +114,7 @@ class ChorusParCSVImporterFacture extends ActionExecutor
         $liste_facture_a_creer = [];
         $result_all = [];
 
-        /** @var ChorusParCSV $connecteur_chorus */
+        /** @var ChorusParCsv $connecteur_chorus */
         $connecteur_chorus = $this->getMyConnecteur();
 
         $utilisateur_technique = $connecteur_chorus->getUserLogin();

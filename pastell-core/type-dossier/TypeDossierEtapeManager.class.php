@@ -260,7 +260,7 @@ class TypeDossierEtapeManager
         $basename = basename($type_dossier_etape_class[0]);
         preg_match("#^(.*)\.class\.php$#", $basename, $matches);
         /**
-         * @var $typeDossierSpecificEtape TypeDossierEtapeSetSpecificInformation
+         * @var TypeDossierEtapeSetSpecificInformation $typeDossierSpecificEtape
          */
         $typeDossierSpecificEtape = new $matches[1]();
 
