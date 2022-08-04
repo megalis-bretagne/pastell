@@ -128,6 +128,8 @@ class DocumentTypeFactory
 
     public function getActionByRole($allDroit)
     {
+        $allType = [];
+        $result = [];
         foreach ($allDroit as $droit) {
             $r = explode(":", $droit);
             $allType[$r[0]] = true;

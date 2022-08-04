@@ -1,3 +1,15 @@
+<?php
+
+/**
+ * @var Gabarit $this
+ * @var int $id_ce
+ * @var string $field
+ * @var array $list_etat
+ * @var string $document_etat
+ */
+
+?>
+
 <a class='btn btn-link' href='Connecteur/editionModif?id_ce=<?php
 
 echo $id_ce?>'>

@@ -1,11 +1,15 @@
 <?php
 
+/**
+ * @var ObjectInstancier $objectInstancier
+ */
+
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Pastell\Service\Connecteur\ConnecteurAssociationService;
 use Pastell\Service\Connecteur\ConnecteurDeletionService;
 
-require_once __DIR__ . "/../init.php";
+require_once __DIR__ . '/../init.php';
 
 $id_e = get_argv(1);
 $do = get_argv(2);

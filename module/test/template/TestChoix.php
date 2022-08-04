@@ -1,6 +1,12 @@
 <?php
 
-/** @var Gabarit $this */
+/**
+ * @var Gabarit $this
+ * @var string $id_d
+ * @var int $id_e
+ * @var int $page
+ * @var string $field
+ */
 ?>
 <a class='btn btn-mini' href='<?php $this->url("Document/edition?id_d=$id_d&id_e=$id_e&page=$page"); ?>'>
     <i class="fa fa-arrow-left"></i>&nbsp;Retour à l'édition du document <em><?php echo $id_d?></em></a>

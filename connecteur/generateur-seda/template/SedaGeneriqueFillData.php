@@ -1,9 +1,12 @@
 <?php
+
 /**
- * @var $field
- * @var $pastell_to_seda
- * @var $fieldsList
- *
+ * @var Gabarit $this
+ * @var int $id_ce
+ * @var string $field
+ * @var array $pastell_to_seda
+ * @var string $flux
+ * @var Field[] $fieldsList
  */
 ?>
 <div id='box_signature' class='box'>
@@ -88,7 +91,7 @@
                     <th class="w200">Type</th>
                     <th>Commentaire</th>
                 </tr>
-                <?php /** @var Field $theField */foreach ($fieldsList as $theField) : ?>
+                <?php foreach ($fieldsList as $theField) : ?>
                     <tr>
                         <td>{{ <?php hecho($theField->getName()) ?> }}</td>
                         <td><?php hecho($theField->getLibelle()) ?></td>

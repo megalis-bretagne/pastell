@@ -1,9 +1,12 @@
 <?php
 
 /**
- * @var $field
+ * @var Gabarit $this
+ * @var int $id_ce
+ * @var string $field
  * @var array $transformation_data
- *
+ * @var string $flux
+ * @var Field[] $fieldsList
  */
 
 ?>
@@ -72,7 +75,7 @@
                     <th class="w200">Type</th>
                     <th>Commentaire</th>
                 </tr>
-                <?php /** @var Field $theField */foreach ($fieldsList as $theField) : ?>
+                <?php foreach ($fieldsList as $theField) : ?>
                     <tr>
                         <td><?php hecho($theField->getName()) ?></td>
                         <td><?php hecho($theField->getLibelle()) ?></td>

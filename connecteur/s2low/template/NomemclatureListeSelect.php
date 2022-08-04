@@ -1,6 +1,11 @@
 <?php
 
-/** @var Gabarit $this */
+/**
+ * @var Gabarit $this
+ * @var int $id_ce
+ * @var array $classifCDG
+ * @var string $field
+ */
 ?>
 <a class='btn btn-link' href='<?php $this->url("Connecteur/editionModif?id_ce=$id_ce") ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la définition du connecteur</a>
 

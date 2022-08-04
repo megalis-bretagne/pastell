@@ -242,6 +242,7 @@ class DocumentControler extends PastellControler
             $this->redirect("/Document/list");
         }
 
+        $info = [];
         if ($action) {
             $info = $document->getInfo($id_d);
             $type = $info['type'];

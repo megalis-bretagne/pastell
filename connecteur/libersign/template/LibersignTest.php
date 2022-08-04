@@ -1,6 +1,7 @@
 <?php
 
 /**
+ * @var Gabarit $this
  * @var Libersign $libersignConnecteur
  * @var int $id_ce
  * @var string $field

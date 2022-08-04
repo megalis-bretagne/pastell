@@ -1,6 +1,10 @@
 <?php
 
-/** @var Gabarit $this */
+/**
+ * @var Gabarit $this
+ * @var int $id_ce
+ * @var string $field
+ */
 ?>
 <a class='btn btn-mini' href='<?php $this->url("Document/edition?id_ce=$id_ce"); ?>'>
     <i class="fa fa-arrow-left"></i>&nbsp;Retour à la définition du connecteur <em><?php echo $id_ce?></em></a>

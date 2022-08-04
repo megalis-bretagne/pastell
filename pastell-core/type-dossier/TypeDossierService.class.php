@@ -296,6 +296,7 @@ class TypeDossierService
             throw new TypeDossierException("Impossible de trouver la première action à effectuer sur le document");
         }
 
+        $next_etape = null;
         foreach ($etapeList as $num_etape => $etape) {
             $action = $this->typeDossierEtapeDefinition->getActionForEtape($etape);
             foreach ($action as $action_name => $action_info) {
