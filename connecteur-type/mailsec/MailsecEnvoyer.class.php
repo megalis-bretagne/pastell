@@ -23,8 +23,9 @@ class MailsecEnvoyer extends ConnecteurTypeActionExecutor
      */
     private function getMailSecConnecteur(): MailSec
     {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return $this->getConnecteur(MailsecConnecteur::CONNECTEUR_TYPE_ID);
+        /** @var MailSec $connector */
+        $connector = $this->getConnecteur(MailsecConnecteur::CONNECTEUR_TYPE_ID);
+        return $connector;
     }
 
     private function add2SendEmail($to, $type)

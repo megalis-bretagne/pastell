@@ -51,14 +51,3 @@ parameters:
     -
       message: '/PHPDoc tag @throws with type (.*) is not subtype of Throwable/'
       path: test/codeception/tests/_support/_generated/
-
-    -
-      message : '/Method (.*) should return (.*) but returns (.*)/'
-      paths:
-        - connecteur-type/mailsec/MailsecEnvoyer.class.php
-        - connecteur-type/mailsec/MailsecRenvoyer.class.php
-        - module/actes-generique/action/EnvoieSignatureChange.class.php
-        - module/commande-generique/action/FournisseurCommandeRenvoyerMail.class.php
-        - module/helios-generique/action/HeliosEnvoieSignatureChange.class.php
-        - module/pdf-generique/action/PDFGeneriqueRenvoyer.class.php
-        - test/PHPUnit/connecteur/transformation-generique/TransformationGeneriqueTest.php

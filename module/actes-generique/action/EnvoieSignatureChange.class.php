@@ -8,8 +8,9 @@ class EnvoieSignatureChange extends ActionExecutor
      */
     private function getConnecteurSignature(): SignatureConnecteur
     {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return $this->getConnecteur('signature');
+        /** @var SignatureConnecteur $connector */
+        $connector = $this->getConnecteur('signature');
+        return $connector;
     }
 
     /**
