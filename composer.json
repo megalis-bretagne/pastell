@@ -62,7 +62,7 @@
   },
   "require-dev": {
     "ext-pcov": "^1.0",
-    "codeception/codeception": "5.0.0-RC3",
+    "codeception/codeception": "^5.0",
     "codeception/module-phpbrowser": "^3.0",
     "codeception/module-rest": "^3.1",
     "mikey179/vfsstream": "^1.6",
