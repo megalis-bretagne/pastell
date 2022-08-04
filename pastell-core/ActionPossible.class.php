@@ -12,8 +12,7 @@ class ActionPossible
     private $roleUtilisateur;
     /** @var DocumentTypeFactory */
     private $documentTypeFactory;
-    /** @var Document */
-    private $document;
+    private DocumentSQL $document;
     private $entiteSQL;
     private $donneesFormulaireFactory;
     private $connecteurEntiteSQL;

@@ -249,6 +249,7 @@ class ActionExecutorFactory
 
 
         $this->loadDocumentActionFile($infoDocument['type'], $action_class_name);
+        /** @var ChoiceActionExecutor $actionClass */
         $actionClass = $this->getInstance($action_class_name, $id_e, $id_u, $action_name);
         $actionClass->setDocumentId($infoDocument['type'], $id_d);
         return $actionClass->isEnabled();
@@ -270,7 +271,7 @@ class ActionExecutorFactory
         }
 
         $action_class_name = $this->getActionClassName($documentType, $action_name);
-
+        /** @var ChoiceActionExecutor $actionClass */
         $actionClass = $this->getInstance($action_class_name, $connecteur_entite_info['id_e'], $id_u, $action_name);
         $actionClass->setConnecteurId($connecteur_entite_info['id_connecteur'], $id_ce);
         $actionClass->setField($field);

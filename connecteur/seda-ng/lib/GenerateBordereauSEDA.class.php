@@ -61,23 +61,23 @@ class GenerateBordereauSEDA
         /** @var DOMElement $annotation */
         foreach ($annotation_list as $annotation) {
             $annotationReturn = $annotationWrapper->wrap((string) $annotation->nodeValue);
-
+            /** @var DOMElement $parent */
+            $parent = $annotation->parentNode;
             if ($annotationReturn->type == AnnotationReturn::STRING) {
                 //Pour une raison que j'ignore, il semble qu'il faille mettre les attributes avant la valeur du node (???)
                 foreach ($annotationReturn->node_attributes as $attributeName => $attributeValue) {
-                    $annotation->parentNode->setAttribute($attributeName, $attributeValue);
+                    $parent->setAttribute($attributeName, $attributeValue);
                 }
-                $parent = $annotation->parentNode;
                 $parent->nodeValue = '';
                 $parent->appendChild($dom->createTextNode($annotationReturn->string)) ;
             } elseif ($annotationReturn->type == AnnotationReturn::XML_REPLACE) {
-                $nodeToReplace[] = [$annotation->parentNode,$annotationReturn->string];
+                $nodeToReplace[] = [$parent, $annotationReturn->string];
             } elseif ($annotationReturn->type == AnnotationReturn::EMPTY_RETURN) {
                 $nodeToRemove[] = $annotation;
             } elseif ($annotationReturn->type == AnnotationReturn::ATTACHMENT_INFO) {
-                $annotation->parentNode->setAttribute('filename', $annotationReturn->string);
-                if ($annotationReturn->data['content-type'] && $annotation->parentNode->attributes->getNamedItem('mimeCode')) {
-                    $annotation->parentNode->attributes->getNamedItem('mimeCode')->nodeValue = $annotationReturn->data['content-type'];
+                $parent->setAttribute('filename', $annotationReturn->string);
+                if ($annotationReturn->data['content-type'] && $parent->attributes->getNamedItem('mimeCode')) {
+                    $parent->attributes->getNamedItem('mimeCode')->nodeValue = $annotationReturn->data['content-type'];
                 }
                 $nodeToRemove[] = $annotation;
             } else {
@@ -109,11 +109,12 @@ class GenerateBordereauSEDA
             }
         }
 
+        /** @var DomAttr $node */
         foreach ($nodeToRemove as $node) {
             if ($node->parentNode) {
-                /** @var DomAttr $node */
-                /** @var DomElement $node ->parentNode */
-                $node->parentNode->removeAttributeNode($node);
+                /** @var DOMElement $parent */
+                $parent = $node->parentNode;
+                $parent->removeAttributeNode($node);
             }
         }
 

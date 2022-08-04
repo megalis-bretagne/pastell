@@ -120,7 +120,6 @@ class SystemControler extends PastellControler
         $actionExecutorFactory = $this->getViewParameterOrObject('ActionExecutorFactory');
         $all_action_class = $actionExecutorFactory->getAllActionClass();
 
-        /** @var PackService $packService */
         $list_pack = $this->getInstance(PackService::class)->getListPack();
         $all_connecteur_type = $this->getConnecteurDefinitionFiles()->getAllType();
         $all_type_entite = array_keys(Entite::getAllType());

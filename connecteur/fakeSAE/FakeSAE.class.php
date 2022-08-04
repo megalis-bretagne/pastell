@@ -49,10 +49,10 @@ class FakeSAE extends SAEConnecteur
     {
         $this->collectiviteProperties->addFileFromData('last_bordereau', 'bordereau_seda.xml', $bordereauSEDA);
         $this->collectiviteProperties->addFileFromData('last_file', 'donnes.zip', file_get_contents($archivePath));
-        if ($this->collectiviteProperties->get('result_send') == 2) {
+        if ((int)$this->collectiviteProperties->get('result_send') === 2) {
             throw new UnrecoverableException("Ce connecteur bouchon est configuré pour renvoyer une erreur");
         }
-        if ($this->collectiviteProperties->get('result_send') == 3) {
+        if ((int)$this->collectiviteProperties->get('result_send') === 3) {
             header("Content-type: text/xml");
             echo $bordereauSEDA;
             exit;
@@ -68,8 +68,8 @@ class FakeSAE extends SAEConnecteur
     public function getAcuseReception($transfert_id)
     {
 
-        $result_ack = $this->collectiviteProperties->get('result_ack') ?: 1;
-        if ($result_ack == 2) {
+        $result_ack = (int)$this->collectiviteProperties->get('result_ack') ?: 1;
+        if ($result_ack === 2) {
             throw new Exception("Erreur provoquer par le bouchon SAE - code d'erreur HTTP : 500");
         }
 
@@ -88,12 +88,12 @@ class FakeSAE extends SAEConnecteur
 
     public function getAtr(string $transfert_id, string $originating_agency_id): string
     {
-        $result_verif = $this->collectiviteProperties->get('result_verif') ?: 1;
+        $result_verif = (int)$this->collectiviteProperties->get('result_verif') ?: 1;
 
-        if ($result_verif == 1) {
+        if ($result_verif === 1) {
             return $this->getATRintern($transfert_id, $this->getFixture('ATR'));
         }
-        if ($result_verif == 2) {
+        if ($result_verif === 2) {
             return $this->getATRintern($transfert_id, $this->getFixture('ATR_refused'));
         }
 

@@ -13,6 +13,7 @@ class LDAPTestRecupEntry extends ActionExecutor
 
     public function go()
     {
+        /** @var LDAPVerification $ldap */
         $ldap = $this->getMyConnecteur();
         $login = $this->objectInstancier->getInstance(Authentification::class)->getLogin();
         $entry = $ldap->getEntry($login);

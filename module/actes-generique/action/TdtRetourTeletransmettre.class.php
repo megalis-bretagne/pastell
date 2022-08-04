@@ -14,6 +14,7 @@ class TdtRetourTeletransmettre extends ActionExecutor
             throw new Exception("Erreur sur le Tdt : " . $message);
         }
 
+        /** @var TdtConnecteur $tdt */
         $tdt = $this->getConnecteur("TdT");
 
         $tedetis_transaction_id = $this->getDonneesFormulaire()->get($stringMapper->get('tedetis_transaction_id'));

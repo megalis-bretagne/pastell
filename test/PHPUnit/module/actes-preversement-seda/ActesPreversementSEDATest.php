@@ -84,7 +84,6 @@ class ActesPreversementSEDATest extends PastellTestCase
     }
 
     /**
-     * @return mixed
      * @throws DonneesFormulaireException
      * @throws NotFoundException
      */

@@ -25,7 +25,7 @@ class IParapheurTest extends PastellTestCase
 
     private function getIParapheurConnecteur($soapClient = null)
     {
-        $soapClientFactory = $this->createMock('SoapClientFactory');
+        $soapClientFactory = $this->createMock(SoapClientFactory::class);
 
         if (! $soapClient) {
             $soapClient = $this->createMock(SoapClient::class);
@@ -42,8 +42,6 @@ class IParapheurTest extends PastellTestCase
             ->method('getInstance')
             ->willReturn($soapClient);
 
-        /** @var SoapClientFactory $soapClientFactory */
-        /** @var DonneesFormulaire $donneesFormulaire */
         $iParapheur = new IParapheur($soapClientFactory);
 
         $collectiviteProperties = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();

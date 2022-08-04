@@ -19,7 +19,6 @@ abstract class PastellTestCase extends TestCase
     public const ID_E_SERVICE = 2;
     public const ID_U_ADMIN = 1;
 
-    private $databaseConnection;
     private ObjectInstancier $objectInstancier;
 
     private $emulated_disk;
@@ -57,7 +56,7 @@ abstract class PastellTestCase extends TestCase
         $this->objectInstancier->setInstance('plateforme_mail', 'test@libriciel.net');
 
         $this->objectInstancier->setInstance(MemoryCache::class, new StaticWrapper());
-        $this->objectInstancier->{'RedisWrapper'} = $this->createMock(RedisWrapper::class);
+        $this->objectInstancier->setInstance(RedisWrapper::class, $this->createMock(RedisWrapper::class));
 
         $this->objectInstancier->setInstance(LockFactory::class, new LockFactory(new InMemoryStore()));
 
@@ -136,14 +135,6 @@ iparapheur_retour: Archive',
     public function reinitDatabase()
     {
         $this->getSQLQuery()->query(file_get_contents(__DIR__ . "/pastell_test.sql"));
-    }
-
-    /**
-     * @return PHPUnit_Extensions_Database_DB_IDatabaseConnection
-     */
-    public function getConnection()
-    {
-        return $this->databaseConnection;
     }
 
     protected function setUp(): void
@@ -420,15 +411,12 @@ iparapheur_retour: Archive',
         );
     }
 
-    /**
-     * @param $id_d
-     * @param array $action_possible
-     * @param int $id_e
-     * @param int $id_u
-     * @throws Exception
-     */
-    protected function assertActionPossible(array $expected_action_possible, $id_d, $id_e = self::ID_E_COL, $id_u = 0)
-    {
+    protected function assertActionPossible(
+        array $expected_action_possible,
+        string $id_d,
+        int $id_e = self::ID_E_COL,
+        int $id_u = 0
+    ): void {
         $actionPossible = $this->getObjectInstancier()->getInstance(ActionPossible::class);
         $this->assertSame(
             $expected_action_possible,

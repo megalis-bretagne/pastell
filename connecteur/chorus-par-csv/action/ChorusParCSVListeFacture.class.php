@@ -45,7 +45,7 @@ class ChorusParCSVListeFacture extends ActionExecutor
             $connecteur_properties->setData('user_password', $col[1]);
             $connecteur_properties->setData('identifiant_structure_cpp', $col[3]);
 
-            /** @var ChorusParCSV $connecteur_chorus */
+            /** @var ChorusParCsv $connecteur_chorus */
             $connecteur_chorus = $this->getMyConnecteur();
             $result .= 'Pour la ligne CSV: ' . $col[0] . ";" . $col[2] . ";" . $col[3] . ";" .
                 $col[4] . ";" . $col[5] . '<br/>';

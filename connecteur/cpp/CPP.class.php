@@ -71,10 +71,6 @@ class CPP extends PortailFactureConnecteur
         $this->cppWrapper->setCppWrapperConfig($cppWrapperConfig);
     }
 
-    /**
-     * @param DonneesFormulaire $donneesFormulaire
-     * @return array|int|string
-     */
     public function setDeposeNbJours(DonneesFormulaire $donneesFormulaire): void
     {
         $depose_depuis_nb_jours = $donneesFormulaire->get('depose_depuis_nb_jours');

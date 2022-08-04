@@ -3,11 +3,10 @@
 class TransformationGeneriqueTest extends PastellTestCase
 {
     /**
-     * @return bool|Connecteur
      * @throws DonneesFormulaireException
      * @throws Exception
      */
-    private function getConnecteur()
+    private function getConnecteur(): TransformationGenerique|bool
     {
         $id_ce = $this->createConnector(
             'transformation-generique',

@@ -303,7 +303,7 @@ trait ApiTesterActions
      * ]]);
      * ```
      *
-     * @param array|string|JsonSerializable $params
+     * @param array|string $params
      * @param array $files A list of filenames or "mocks" of $_FILES (each entry being an array with the following
      *                     keys: name, type, error, size, tmp_name (pointing to the real file path). Each key works
      *                     as the "name" attribute of a file input field.
@@ -379,7 +379,7 @@ trait ApiTesterActions
      * $response = $I->sendPut('/message/1', ['subject' => 'Read this!']);
      * ```
      *
-     * @param array|string|JsonSerializable $params
+     * @param array|string $params
      * @part json
      * @part xml
      * @see \Codeception\Module\REST::sendPut()
@@ -399,7 +399,7 @@ trait ApiTesterActions
      * $response = $I->sendPatch('/message/1', ['subject' => 'Read this!']);
      * ```
      *
-     * @param array|string|JsonSerializable $params
+     * @param array|string $params
      * @part json
      * @part xml
      * @see \Codeception\Module\REST::sendPatch()
@@ -433,7 +433,7 @@ trait ApiTesterActions
      *
      * Sends a HTTP request.
      *
-     * @param array|string|JsonSerializable $params
+     * @param array|string $params
      * @part json
      * @part xml
      * @see \Codeception\Module\REST::send()

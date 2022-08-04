@@ -24,21 +24,13 @@ class Extensions
     private $workspace_path;
 
 
-    /**
-     *
-     * @param ExtensionSQL $extensionSQL
-     * @param ManifestFactory $manifestFactory
-     * @param String $pastell_path racine des fichiers Pastell
-     * @param MemoryCache
-     * @param int cache_ttl_in_seconds
-     */
     public function __construct(
         ExtensionSQL $extensionSQL,
         ManifestFactory $manifestFactory,
-        $pastell_path,
+        string $pastell_path,
         MemoryCache $memoryCache,
-        $cache_ttl_in_seconds,
-        $workspacePath
+        int $cache_ttl_in_seconds,
+        string $workspacePath
     ) {
         $this->extensionSQL = $extensionSQL;
         $this->manifestFactory = $manifestFactory;

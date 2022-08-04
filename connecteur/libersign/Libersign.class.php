@@ -395,7 +395,7 @@ class Libersign extends SignatureConnecteur
                     'colorCode' => '#000000',
                     'font' => 'HELVETICA_BOLD',
                     'fontSize' => 8,
-                    'value' => implode(PHP_EOL, [$signatory, date('d/m/Y', $signatureDateTime / 1000)]),
+                    'value' => implode(PHP_EOL, [$signatory, date('d/m/Y', (int)$signatureDateTime / 1000)]),
                 ],
                 [
                     'type' => 'IMAGE',

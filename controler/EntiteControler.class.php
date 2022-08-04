@@ -228,13 +228,13 @@ class EntiteControler extends PastellControler
     {
         $recuperateur = new Recuperateur($_GET);
         $id_e = $recuperateur->getInt('id_e', 0);
-        $page =  $recuperateur->getInt('page', 0);
+        $page =  (int)$recuperateur->getInt('page', 0);
         $this->hasDroitEdition($id_e);
         $this->setViewParameter('entite_info', $this->getEntiteSQL()->getInfo($id_e));
         $this->setViewParameter('template_milieu', "EntiteImport");
         $this->setViewParameter('page_title', "Importer (fichier CSV)");
 
-        if ($page == 0) {
+        if ($page === 0) {
             $this->setViewParameter('allCDG', $this->getEntiteListe()->getAll(Entite::TYPE_CENTRE_DE_GESTION));
             $this->setViewParameter('cdg_selected', false);
         }
@@ -250,15 +250,15 @@ class EntiteControler extends PastellControler
     public function editionAction()
     {
         $recuperateur = new Recuperateur($_GET);
-        $entite_mere = $recuperateur->getInt('entite_mere', 0);
-        $id_e = $recuperateur->getInt('id_e', 0);
+        $entite_mere = (int)$recuperateur->getInt('entite_mere', 0);
+        $id_e = (int)$recuperateur->getInt('id_e', 0);
         if ($entite_mere) {
             $this->hasDroitEdition($entite_mere);
         }
         if ($id_e) {
             $this->hasDroitEdition($id_e);
         }
-        if ($entite_mere == 0 && $id_e == 0) {
+        if ($entite_mere === 0 && $id_e === 0) {
             $this->hasDroitEdition(0);
         }
 

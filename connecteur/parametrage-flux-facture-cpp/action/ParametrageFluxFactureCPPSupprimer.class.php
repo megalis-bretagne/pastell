@@ -8,6 +8,7 @@ class ParametrageFluxFactureCPPSupprimer extends SupprimerFacture
      */
     public function getNbJourAvantSupp()
     {
+        /** @var ParametrageFluxFactureCPP $conn */
         $conn = $this->getMyConnecteur();
         return $conn->getNbJourAvantSupp();
     }

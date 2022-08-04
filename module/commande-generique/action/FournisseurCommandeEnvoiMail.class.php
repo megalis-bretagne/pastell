@@ -4,6 +4,7 @@ class FournisseurCommandeEnvoiMail extends ActionExecutor
 {
     public function go()
     {
+        /** @var MailSec $mailsec */
         $mailsec = $this->getConnecteur('mailsec');
         $this->getDonneesFormulaire()->setData('has_message', true);
         $this->getDonneesFormulaire()->setData('objet', $this->getDonneesFormulaire()->get('libelle'));

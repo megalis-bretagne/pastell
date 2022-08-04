@@ -104,8 +104,6 @@ abstract class GlaneurConnecteur extends Connecteur
 
     /**
      * Copie un fichier depuis le système distant vers le système local
-     * @param string $originFile
-     * @param string $targetFile
      * @return mixed
      */
     abstract protected function copy(string $originFile, string $targetFileOnLocal);

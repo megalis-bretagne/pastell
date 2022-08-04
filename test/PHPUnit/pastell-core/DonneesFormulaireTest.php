@@ -13,10 +13,9 @@ class DonneesFormulaireTest extends PastellTestCase
 
     /**
      * @throws Exception
-     * @var $password
      * @dataProvider getPassword
      */
-    public function testPassword($password)
+    public function testPassword(string $password)
     {
         $recuperateur = new Recuperateur(['password' => $password]);
         $this->getDonneesFormulaire()->saveTab($recuperateur, new FileUploader(), 0);

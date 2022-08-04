@@ -83,11 +83,6 @@ class ChorusProImportCreationService
         $this->donneesFormulaireFactory = $donneesFormulaireFactory;
     }
 
-    /**
-     * @param array $facture_a_creer
-     * @param string $nommage_csv
-     * @return array|mixed
-     */
     public function analyseOneFactureCreation(array $facture_a_creer, string $nommage_csv = ""): array
     {
         // Avant la création, il faut vérifier que la facture n'existe pas sur une autre entité.

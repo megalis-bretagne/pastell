@@ -20,9 +20,6 @@ class SedaNG extends SEDAConnecteur
         $this->connecteurConfig = $connecteurConfig;
     }
 
-    /**
-     * @return mixed
-     */
     public function getLastValidationError(): array
     {
         return $this->last_validation_error;
@@ -34,7 +31,7 @@ class SedaNG extends SEDAConnecteur
     private function getTransferIdentifier()
     {
         $last_date = $this->connecteurConfig->get("date_dernier_transfert");
-        $numero_transfert = $this->connecteurConfig->get("dernier_numero_transfert");
+        $numero_transfert = (int)$this->connecteurConfig->get("dernier_numero_transfert");
 
         $date = date('Y-m-d');
         if ($last_date == $date) {

@@ -1,17 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 class ControlerTest extends PHPUnit\Framework\TestCase
 {
-    /** @var  ObjectInstancier */
-    private $objectInstancier;
-
-    /** @var  Controler */
-    private $controler;
+    private ObjectInstancier $objectInstancier;
+    private Controler $controler;
 
     protected function setUp(): void
     {
         $this->objectInstancier = new ObjectInstancier();
-        $this->controler = $this->getMockForAbstractClass("Controler", [$this->objectInstancier]);
+        $this->controler = new Controler($this->objectInstancier);
     }
 
     public function testSetDontRedirect()
@@ -20,28 +19,10 @@ class ControlerTest extends PHPUnit\Framework\TestCase
         $this->assertTrue($this->controler->isDontRedirect());
     }
 
-    public function testMagicMethod()
-    {
-        $this->controler->{'foo'} = 'bar';
-        $this->assertEquals('bar', $this->controler->{'foo'});
-    }
-
-    public function testMagicMethodFromObjectInstancier()
-    {
-        $this->objectInstancier->setInstance('foo', 'bar');
-        $this->assertEquals('bar', $this->controler->{'foo'});
-    }
-
     public function testSetAllViewParameter()
     {
         $this->controler->setAllViewParameter(['foo' => 'bar']);
         $this->assertEquals('bar', $this->controler->getViewParameter()['foo']);
-    }
-
-    public function testIsViewParameter()
-    {
-        $this->controler->{'foo'} = 'bar';
-        $this->assertTrue($this->controler->isViewParameter('foo'));
     }
 
     public function testRedirect()
@@ -55,20 +36,15 @@ class ControlerTest extends PHPUnit\Framework\TestCase
     public function testRender()
     {
         $this->objectInstancier->setInstance('template_path', __DIR__ . "/fixtures/");
-        $this->expectOutputString("OK");
+        $this->expectOutputString("OK\n");
         $this->controler->render("template");
     }
 
     public function testRenderDefault()
     {
         $this->objectInstancier->setInstance('template_path', __DIR__ . "/fixtures/");
-        $this->controler->template_milieu = "template";
-        $this->expectOutputString("OK");
+        $this->controler->setViewParameter('template_milieu', 'template');
+        $this->expectOutputString("OK\n");
         $this->controler->renderDefault();
-    }
-
-    public function testGetLastError()
-    {
-        $this->assertEmpty($this->controler->getLastError());
     }
 }

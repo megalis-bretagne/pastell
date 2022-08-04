@@ -22,7 +22,6 @@ class DepotFTPTest extends PastellTestCase
         $connecteurConfig = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
         $connecteurConfig->setData(DepotFTP::DEPOT_FTP_DIRECTORY, '/foo/');
 
-        /** @var FTPClientWrapper $FTPClientWrapper*/
         $this->depotFTP = new DepotFTP();
         $this->depotFTP->setFtpClient($FTPClientWrapper);
         $this->depotFTP->setConnecteurConfig($connecteurConfig);

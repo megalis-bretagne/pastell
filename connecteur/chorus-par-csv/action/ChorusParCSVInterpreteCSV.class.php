@@ -53,7 +53,7 @@ class ChorusParCSVInterpreteCSV extends ActionExecutor
      */
     public function recupIdChorus($siret)
     {
-        /** @var ChorusParCSV $connecteur_chorus */
+        /** @var ChorusParCsv $connecteur_chorus */
         $connecteur_chorus = $this->getMyConnecteur();
         $id_chorus = $connecteur_chorus->getIdentifiantStructureCPPByIdentifiantStructure($siret, "false");
         if ((!$id_chorus) && ($siret)) {

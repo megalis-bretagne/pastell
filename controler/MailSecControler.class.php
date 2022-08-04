@@ -89,7 +89,7 @@ class MailSecControler extends PastellControler
     public function groupeListAction()
     {
         $recuperateur = new Recuperateur($_GET);
-        $id_e = $recuperateur->getInt('id_e');
+        $id_e = (int)$recuperateur->getInt('id_e');
         $this->verifDroit($id_e, "annuaire:lecture");
         $this->setViewParameter('can_edit', $this->hasDroit($id_e, "annuaire:edition"));
         $annuaireGroupe = new AnnuaireGroupe($this->getSQLQuery(), $id_e);
@@ -97,7 +97,7 @@ class MailSecControler extends PastellControler
 
 
         $infoEntite = $this->getEntiteSQL()->getInfo($id_e);
-        if ($id_e == 0) {
+        if ($id_e === 0) {
             $infoEntite = ["denomination" => "Annuaire global"];
         }
 
@@ -418,7 +418,7 @@ class MailSecControler extends PastellControler
     {
 
         $recuperateur = new Recuperateur($_POST);
-        $id_e = $recuperateur->getInt('id_e');
+        $id_e = (int)$recuperateur->getInt('id_e');
         $id_e_owner = $recuperateur->getInt('id_e_owner');
         $role = $recuperateur->get('role');
 
@@ -428,7 +428,7 @@ class MailSecControler extends PastellControler
 
         $infoEntite = $this->getEntiteSQL()->getInfo($id_e);
 
-        if ($id_e != 0) {
+        if ($id_e !== 0) {
             $nom = "$role - {$infoEntite['denomination']}";
         } else {
             $nom = "$role - toutes les collectivités";
