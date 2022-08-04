@@ -528,11 +528,10 @@ class IParapheur extends SignatureConnecteur
     }
 
     /**
-     * @return string
      * @throws UnrecoverableException
      * @throws Exception
      */
-    public function sendDocumentTest()
+    public function sendDocumentTest(): ?string
     {
         if (! $this->iparapheur_type) {
             throw new UnrecoverableException("Il faut d'abord choisir un type avant de procéder à un test d'envoi.");
@@ -582,7 +581,7 @@ class IParapheur extends SignatureConnecteur
         $this->lastError = "Erreur lors de l'envoi d'un fichier PDF : $pdf_last_error\n" .
             "Erreur lors de l'envoi d'un fichier XML {$this->lastError}\n" .
             $this->getStringFromFileToSign($fileToSign);
-        return false;
+        return null;
     }
 
     private function getStringFromFileToSign(FileToSign $fileToSign)

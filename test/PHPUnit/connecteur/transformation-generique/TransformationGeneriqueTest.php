@@ -6,7 +6,7 @@ class TransformationGeneriqueTest extends PastellTestCase
      * @throws DonneesFormulaireException
      * @throws Exception
      */
-    private function getConnecteur(): TransformationGenerique|bool
+    private function getConnecteur(): TransformationGenerique
     {
         $id_ce = $this->createConnector(
             'transformation-generique',
@@ -20,7 +20,9 @@ class TransformationGeneriqueTest extends PastellTestCase
             "definition.json",
             __DIR__ . "/fixtures/definition.json"
         );
-        return $this->getConnecteurFactory()->getConnecteurById($id_ce);
+        /** @var TransformationGenerique $connector */
+        $connector = $this->getConnecteurFactory()->getConnecteurById($id_ce);
+        return $connector;
     }
 
     /**

@@ -6,7 +6,7 @@ parameters:
     - init.php
   bootstrapFiles:
     - init-no-db.php
-  level: 2
+  level: 3
   paths:
     - action
     - api

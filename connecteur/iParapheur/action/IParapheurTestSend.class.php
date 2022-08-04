@@ -14,7 +14,7 @@ class IParapheurTestSend extends ActionExecutor
         $iParapheur = $this->getMyConnecteur();
 
         $result = $iParapheur->sendDocumentTest();
-        if (! $result) {
+        if ($result === null) {
             $last_error = $iParapheur->getLastError();
             $this->setLastMessage("$last_error");
             return false;

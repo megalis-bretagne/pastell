@@ -24,8 +24,7 @@ class ActionPossible
     private $action_list;
     private $utilisateur_droit_list;
     private $connecteur_entite_info;
-    /** @var DonneesFormulaire */
-    private $donneesFormulaire;
+    private ?DonneesFormulaire $donneesFormulaire;
     private $entite_info;
     /** @var DocumentType */
     private $documentType;

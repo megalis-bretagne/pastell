@@ -16,8 +16,7 @@ abstract class ActionExecutor
     protected $id_worker;
 
     protected $objectInstancier;
-    /** @var  DonneesFormulaire */
-    private $docDonneesFormulaire;
+    private ?DonneesFormulaire $docDonneesFormulaire = null;
     private $connecteurs;
     private $connecteurConfigs;
 
@@ -56,10 +55,10 @@ abstract class ActionExecutor
         $this->type = $type;
     }
 
-    public function clearCache()
+    public function clearCache(): void
     {
         $this->connecteurs = false;
-        $this->docDonneesFormulaire = false;
+        $this->docDonneesFormulaire = null;
         $this->connecteurConfigs = [];
     }
 
@@ -115,12 +114,11 @@ abstract class ActionExecutor
     }
 
     /**
-     * @return DonneesFormulaire
      * @throws NotFoundException
      */
-    public function getDonneesFormulaire()
+    public function getDonneesFormulaire(): DonneesFormulaire
     {
-        if (!$this->docDonneesFormulaire) {
+        if ($this->docDonneesFormulaire === null) {
             $this->docDonneesFormulaire = $this->getDonneesFormulaireFactory()->get($this->id_d);
         }
         return $this->docDonneesFormulaire;

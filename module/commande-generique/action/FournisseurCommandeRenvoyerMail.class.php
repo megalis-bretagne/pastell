@@ -2,12 +2,11 @@
 
 class FournisseurCommandeRenvoyerMail extends ActionExecutor
 {
-    /**
-     * @return MailSec
-     */
-    private function getMailSecConnecteur()
+    private function getMailSecConnecteur(): MailSec
     {
-        return $this->getConnecteur('mailsec');
+        /** @var MailSec $connector */
+        $connector = $this->getConnecteur(MailsecConnecteur::CONNECTEUR_TYPE_ID);
+        return $connector;
     }
 
     public function go()

@@ -69,11 +69,9 @@ class GlaneurGlanerRepertoire
     }
 
     /**
-     * @param $repertoire
-     * @return GlaneurDocumentInfo
      * @throws Exception
      */
-    private function glanerModeFilematcher($repertoire)
+    private function glanerModeFilematcher(string $repertoire): ?GlaneurDocumentInfo
     {
         $file_match = $this->getFileMatch($repertoire);
 
@@ -202,11 +200,9 @@ class GlaneurGlanerRepertoire
     }
 
     /**
-     * @param $repertoire
-     * @return  GlaneurDocumentInfo
      * @throws Exception
      */
-    private function glanerModeManifest($repertoire)
+    private function glanerModeManifest(string $repertoire): ?GlaneurDocumentInfo
     {
 
         $glaneurLocalDocumentInfo = new GlaneurDocumentInfo($this->id_e);

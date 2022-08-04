@@ -321,7 +321,7 @@ class S2low extends TdtConnecteur
 
     /**
      * @param TdtActes $tdtActes
-     * @return bool
+     * @return string
      * @throws S2lowException
      */
     public function sendActes(TdtActes $tdtActes)

@@ -3,13 +3,14 @@
 class HeliosEnvoieSignatureChange extends ActionExecutor
 {
     /**
-     * @return SignatureConnecteur
      * @throws NotFoundException
      * @throws UnrecoverableException
      */
-    private function getConnecteurSignature()
+    private function getConnecteurSignature(): SignatureConnecteur
     {
-        return $this->getConnecteur('signature');
+        /** @var SignatureConnecteur $connector */
+        $connector = $this->getConnecteur('signature');
+        return $connector;
     }
 
     /**

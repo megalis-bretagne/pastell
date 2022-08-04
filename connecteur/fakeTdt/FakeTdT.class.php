@@ -2,12 +2,11 @@
 
 class FakeTdT extends TdtAdapter
 {
-    /** @var int */
-    private $checkStatus;
+    private int $checkStatus;
 
     public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire)
     {
-        $this->checkStatus = $donneesFormulaire->get('tdt_check_status', TdtConnecteur::STATUS_ACQUITTEMENT_RECU);
+        $this->checkStatus = (int)$donneesFormulaire->get('tdt_check_status', TdtConnecteur::STATUS_ACQUITTEMENT_RECU);
     }
 
     public function getLogicielName()

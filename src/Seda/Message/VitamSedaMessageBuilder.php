@@ -10,7 +10,7 @@ final class VitamSedaMessageBuilder extends SedaMessageBuilder
 {
     public const BASE_CONTENT_DIRECTORY = 'content';
 
-    public function setVersion(string $version): self
+    public function setVersion(string $version): static
     {
         return parent::setVersion(SedaVersion::VERSION_2_1_VITAM->value);
     }

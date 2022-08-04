@@ -541,7 +541,7 @@ class FastTdt extends TdtConnecteur
 
     public function getAnnexesTamponnees(string $transaction_id, ?string $date_affichage = null): array
     {
-        return false;
+        return [];
     }
 
     /**

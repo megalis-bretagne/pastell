@@ -8,8 +8,7 @@ class TypeDossierTransformationTest extends PastellTestCase
     /** @var TypeDossierLoader */
     private $typeDossierLoader;
 
-    /** @var TmpFolder */
-    private $tmpFolder;
+    private ?TmpFolder $tmpFolder;
 
     /** @var string */
     private $workspace_path;
