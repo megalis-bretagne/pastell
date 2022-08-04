@@ -330,6 +330,16 @@ CREATE TABLE `type_dossier_action` (
 	PRIMARY KEY (`id_a`),
 	KEY `id_t` (`id_t`)
 )  ENGINE=MyISAM  ;
+CREATE TABLE `users_token` (
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`id_u` int(11) NOT NULL,
+	`name` varchar(64) NOT NULL,
+	`token` varchar(64) NOT NULL,
+	`created_at` datetime NOT NULL,
+	`expired_at` datetime,
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `users_token_token_uindex` (`token`) 
+)  ENGINE=MyISAM  ;
 CREATE TABLE `utilisateur` (
 	`id_u` int(11) NOT NULL AUTO_INCREMENT,
 	`email` varchar(128) NOT NULL,

@@ -1,6 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 use Pastell\Service\LoginAttemptLimit;
+use Pastell\Service\Utilisateur\UserTokenService;
 use Symfony\Component\RateLimiter\Exception\RateLimitExceededException;
 
 class ApiAuthentication
@@ -9,10 +12,11 @@ class ApiAuthentication
     private array $request = [];
 
     public function __construct(
-        private ConnexionControler $connexionControler,
-        private SQLQuery $sqlQuery,
-        private LoginAttemptLimit $loginAttemptLimit,
-        private UtilisateurSQL $utilisateurSQL,
+        private readonly ConnexionControler $connexionControler,
+        private readonly SQLQuery $sqlQuery,
+        private readonly LoginAttemptLimit $loginAttemptLimit,
+        private readonly UtilisateurSQL $utilisateurSQL,
+        private readonly UserTokenService $userTokenService,
     ) {
     }
 
@@ -27,10 +31,9 @@ class ApiAuthentication
     }
 
     /**
-     * @return array|bool|mixed
      * @throws UnauthorizedException
      */
-    public function getUtilisateurId()
+    public function getUtilisateurId(): int
     {
         try {
             $id_u = $this->getUtilisateurIdThrow();
@@ -43,10 +46,9 @@ class ApiAuthentication
     }
 
     /**
-     * @return array|bool|mixed
      * @throws Exception
      */
-    private function getUtilisateurIdThrow()
+    private function getUtilisateurIdThrow(): int
     {
         $recuperateur = new Recuperateur($this->request);
         $auth = $recuperateur->get("auth");
@@ -65,27 +67,76 @@ class ApiAuthentication
             $id_u = $certificatConnexion->autoConnect();
         }
 
-        if (! $id_u && ! empty($this->server['PHP_AUTH_USER'])) {
-            if (false === $this->loginAttemptLimit->isLoginAttemptAuthorized($this->server['PHP_AUTH_USER'])) {
-                throw new RateLimitExceededException($this->loginAttemptLimit->getRateLimit($this->server['PHP_AUTH_USER']));
-            }
-            $id_u = $utilisateurListe->getUtilisateurByLogin($this->server['PHP_AUTH_USER']);
-            if ($utilisateur->verifPassword($id_u, $this->server['PHP_AUTH_PW'])) {
-                $this->loginAttemptLimit->resetLoginAttempt($this->server['PHP_AUTH_USER']);
-            } else {
-                $id_u = false;
-            }
-            if (! $certificatConnexion->connexionGranted($id_u)) {
-                $id_u = false;
+        if (!$id_u) {
+            if (!empty($this->server['HTTP_AUTHORIZATION']) && $this->isBearer($this->server['HTTP_AUTHORIZATION'])) {
+                $id_u = $this->authenticateByToken();
+            } elseif (!empty($this->server['PHP_AUTH_USER'])) {
+                $id_u = $this->authenticateByPassword($utilisateurListe, $utilisateur, $certificatConnexion);
             }
         }
 
-        if (! $id_u) {
-            throw new Exception("Accès interdit");
+        if (!$id_u) {
+            throw new UnauthorizedException("Accès interdit");
         }
         if (! $this->utilisateurSQL->isEnabled($id_u)) {
             throw new UnauthorizedException('Votre compte a été désactivé');
         }
         return $id_u;
+    }
+
+    private function authenticateByToken(): ?int
+    {
+        $this->checkRateLimit();
+        $authorizationHeader = $this->server['HTTP_AUTHORIZATION'];
+        $token = substr($authorizationHeader, 7);
+        $user = $this->userTokenService->getUserFromToken($token);
+        if ($user !== null && !$user['is_expired']) {
+            $this->resetRateLimit();
+            return $user['id_u'];
+        }
+        return null;
+    }
+
+    private function authenticateByPassword(
+        UtilisateurListe $utilisateurListe,
+        UtilisateurSQL $utilisateur,
+        CertificatConnexion $certificatConnexion
+    ): ?int {
+        $this->checkRateLimit();
+        $userId = $utilisateurListe->getUtilisateurByLogin($this->server['PHP_AUTH_USER']);
+        if ($userId && $utilisateur->verifPassword($userId, $this->server['PHP_AUTH_PW'])) {
+            $this->resetRateLimit();
+        } else {
+            $userId = null;
+        }
+        if (!$certificatConnexion->connexionGranted($userId)) {
+            $userId = null;
+        }
+        return $userId;
+    }
+
+    private function isBearer(string $authorizationHeader): bool
+    {
+        return \str_starts_with($authorizationHeader, 'Bearer ');
+    }
+
+    private function checkRateLimit(): void
+    {
+        if (!isset($this->server['REMOTE_ADDR'])) {
+            return;
+        }
+        if ($this->loginAttemptLimit->isLoginAttemptAuthorized($this->server['REMOTE_ADDR']) === false) {
+            throw new RateLimitExceededException(
+                $this->loginAttemptLimit->getRateLimit($this->server['REMOTE_ADDR'])
+            );
+        }
+    }
+
+    private function resetRateLimit(): void
+    {
+        if (!isset($this->server['REMOTE_ADDR'])) {
+            return;
+        }
+        $this->loginAttemptLimit->resetLoginAttempt($this->server['REMOTE_ADDR']);
     }
 }
