@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="fr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html charset=UTF-8" />
+    <style type="text/css">
+
+        *{
+            font-family: 'Ubuntu', sans-serif;
+            color: #222222;
+        }
+
+        #main{
+            max-width: 600px;
+            padding: 20px 30px;
+            margin: auto;
+            background-color: #f7f7f7;
+        }
+
+        body a{
+            color: #42a1e8;
+            text-decoration: underline;
+        }
+
+        body a.btn{
+            display: inline-block;
+            margin: 10px 0;
+            padding: 10px 15px;
+            background-color:#383D77;
+            color: #fff;
+            border-radius: 0.25rem;
+            text-decoration: none;
+        }
+
+        body h1{
+            margin:0;
+            color: #242a54;
+        }
+
+        body hr{
+            border-color: #D3D3D3;
+        }
+
+    </style>
+    {% block title_head %}
+    <title></title>
+    {% endblock %}
+</head>
+<body>
+
+<div id="main">
+    {% block title %}
+    {% endblock %}
+    <hr>
+    {% block content %}
+    {% endblock %}
+    <hr>
+    <div>
+        <p>Ce mail vous est envoyé automatiquement par <span style="font-weight:bold;"><span style="color:#4B508A;">Pa</span>stell</span>.</p>
+        {% if SITE_BASE is not empty %}
+            <a href="{{ SITE_BASE }}">{{ SITE_BASE }}</a>
+        {% endif %}
+    </div>
+</div>
+</body>
+</html>

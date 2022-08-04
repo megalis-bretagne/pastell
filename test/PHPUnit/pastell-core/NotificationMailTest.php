@@ -34,6 +34,6 @@ class NotificationMailTest extends PastellTestCase
         $notificationMail = $this->getObjectInstancier()->getInstance(NotificationMail::class);
         $notificationMail->notify(1, $id_d, 'send-ged', 'actes-generique', 'foo');
         $notificationMail->sendDailyDigest();
-        $this->assertMessageContainsString('journalier sur certains types de');
+        $this->assertMessageContainsString('journalier sur certains');
     }
 }

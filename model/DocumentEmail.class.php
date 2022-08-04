@@ -15,8 +15,8 @@ class DocumentEmail extends SQL
 
     public function __construct(
         private readonly SQLQuery $sqlQuery,
-        private readonly Mailer $mailer,
         private readonly Journal $journal,
+        private readonly NotificationMail $notificationMail,
     ) {
         parent::__construct($sqlQuery);
     }
@@ -135,14 +135,7 @@ class DocumentEmail extends SQL
         }
         $message .= "\n\nConsulter le détail du document : " . SITE_BASE . "Document/detail?id_d={$result['id_d']}&id_e=$id_e";
 
-        $notification = new Notification($this->sqlQuery);
-        $notificationMail = new NotificationMail(
-            $notification,
-            $this->mailer,
-            $journal,
-            new NotificationDigestSQL($this->sqlQuery)
-        );
-        $notificationMail->notify($id_e, $result['id_d'], $next_action, $infoDocument['type'], $message);
+        $this->notificationMail->notify($id_e, $result['id_d'], $next_action, $infoDocument['type'], $message);
 
         return $this->getInfoFromKey($key);
     }

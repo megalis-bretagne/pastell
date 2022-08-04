@@ -1,13 +1,18 @@
-<p>Bonjour,</p>
+{% extends "base-email.html.twig" %}
 
-<p>Votre demande de changement d'email sur Pastell a été refusée.</p>
+{% block title %}
+    <h1>Demande de changement d'email refusée</h1>
+{% endblock %}
 
-{% if message is not empty %}
-    <p>Voici le message de l'administrateur ayant refusé votre demande :</p>
-    <p>
-        {{ message }}
-    </p>
-{% endif %}
+{% block content %}
+    <div>
+        <p>Votre demande de changement d'email sur Pastell a été refusée.</p>
 
-<p>-- </p>
-<p>Ce mail vous est envoyé automatiquement par Pastell.</p>
+        {% if message is not empty %}
+            <p>Voici le message de l'administrateur ayant refusé votre demande :</p>
+            <p>
+                {{ message }}
+            </p>
+        {% endif %}
+    </div>
+{% endblock %}

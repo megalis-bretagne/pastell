@@ -1,19 +1,27 @@
-<p>Bonjour, </p>
 
-<p>Le système Pastell vous envoie les notifications suivantes (résumé journalier) : </p>
+{% extends "base-email.html.twig" %}
 
-{% for info_notification in info %}
-    <p>*******************</p>
-    <p>
-        {{ info_notification['message'] }}
-    </p>
-    <p>URL de consultation du document : </p>
-    <p>{{ SITE_BASE }}/Document/detail?id_d={{ info_notification['id_d'] }}&id_e={{ info_notification['id_e'] }}</p>
+{% block title %}
+    <h1>Notifications (résumé journalier)</h1>
+{% endblock %}
 
-    <p>*******************</p>
-{% endfor %}
+{% block content %}
+    <div>
+        <p>Bonjour, </p>
 
-<p>-- </p> 
-<p>Pastell - {{ SITE_BASE }}</p>
+        <p>Le système Pastell vous envoie les notifications suivantes (résumé journalier) : </p>
 
-<p>Vous recevez ce message, car vous avez sélectionné la réception d'un résumé journalier sur certains types de messages.</p>
+        {% for info_notification in info %}
+            <p>*******************</p>
+            <p>
+                {{ info_notification['message'] }}
+            </p>
+            <p>URL de consultation du document : </p>
+            <p>{{ SITE_BASE }}/Document/detail?id_d={{ info_notification['id_d'] }}&id_e={{ info_notification['id_e'] }}</p>
+
+            <p>*******************</p>
+        {% endfor %}
+
+        <p>Vous recevez ce message, car vous avez sélectionné la réception d'un résumé journalier sur certains types de messages.</p>
+    </div>
+{% endblock %}

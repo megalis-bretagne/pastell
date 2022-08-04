@@ -1,13 +1,38 @@
-<p>Bonjour, </p>
+{% extends "base-email.html.twig" %}
 
-<p>Le système Pastell vous envoie la notification suivante : </p>
+{% block title %}
+    <h1>Notification</h1>
+{% endblock %}
 
-<p>{{ message }}</p>
+{% block content %}
+    <div>
+        <p>Bonjour, </p>
 
-<p>URL de consultation du document :  <a href="{{ url }}">{{ url }}</a> </p>
+        <p>Le système Pastell vous envoie la notification suivante : </p>
 
-<p>-- </p>
-<p>Pastell - {{ SITE_BASE }}</p>
+        <table aria-describedby="table-caption" border="1">
+            <caption id="table-caption">Propriété du document: </caption>
+            <tr>
+                <th>Entité</th>
+                <td>{{ entityName }}</td>
+            </tr>
+            <tr>
+                <th>Document </th>
+                <td> {{ documentTitle }} ({{ type }})</td>
+            </tr>
+            <tr>
+                <th>Action réalisée</th>
+                <td>{{ message }} ({{ action }})</td>
+            </tr>
 
-<p>Vous recevez ce message car vous êtes abonné aux messages de type « {{ type }}  ».</p>
+        </table>
+
+        <div style="text-align: center;">
+            <a href="{{ url }}" class="btn">Consulter le document</a>
+        </div>
+
+        <p>Vous recevez ce message car vous êtes abonné aux messages de type « {{ type }}  ».</p>
+    </div>
+{% endblock %}
+
 
