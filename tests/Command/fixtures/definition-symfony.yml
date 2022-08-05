@@ -274,9 +274,6 @@ formulaire:
             name: "Identifiant de l'archive sur le SAE"
         sae_atr_comment:
             name: 'Commentaire de la réponse du SAE'
-        url_archive:
-            name: "URL de l'archive"
-            type: url
     Annulation:
         has_annulation:
             no-show: true

@@ -201,9 +201,6 @@ formulaire:
             name: "Identifiant de l'archive sur le SAE"
         sae_atr_comment:
             name: 'Commentaire de la réponse du SAE'
-        url_archive:
-            name: "URL de l'archive"
-            type: url
     'Informations complémentaires':
         has_information_complementaire:
             no-show: true
@@ -597,12 +594,18 @@ action:
         rule:
             role_id_e: no-role
         action-automatique: validation-sae
+    ack-not-provided:
+        name: 'En attente de la validation par le SAE'
+        rule:
+            role_id_e: no-role
+        action-automatique: validation-sae
     validation-sae:
         name-action: "Vérifier l'acceptation par le SAE"
         name: "Vérification de l'acceptation par le SAE"
         rule:
             last-action:
                 - ar-recu-sae
+                - ack-not-provided
                 - validation-sae-erreur
             droit_id_u: 'helios-automatique:edition'
         action-class: StandardAction

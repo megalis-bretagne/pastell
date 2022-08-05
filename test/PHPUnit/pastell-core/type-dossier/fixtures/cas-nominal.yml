@@ -246,9 +246,6 @@ formulaire:
             name: "Identifiant de l'archive sur le SAE"
         sae_atr_comment:
             name: 'Commentaire de la réponse du SAE'
-        url_archive:
-            name: "URL de l'archive"
-            type: url
 champs-affiches:
     - titre
     - dernier_etat
@@ -447,7 +444,6 @@ action:
             - reply_sae
             - sae_archival_identifier
             - sae_atr_comment
-            - url_archive
         modification-no-change-etat: true
     rejet-iparapheur:
         name: 'Signature refusée'
@@ -505,7 +501,6 @@ action:
             - reply_sae
             - sae_archival_identifier
             - sae_atr_comment
-            - url_archive
         modification-no-change-etat: true
     error-ged_1:
         name: 'Erreur irrécupérable lors du dépôt #1'
@@ -590,7 +585,6 @@ action:
             - reply_sae
             - sae_archival_identifier
             - sae_atr_comment
-            - url_archive
         modification-no-change-etat: true
     reception-partielle:
         name: 'Reçu partiellement'
@@ -632,7 +626,6 @@ action:
             - reply_sae
             - sae_archival_identifier
             - sae_atr_comment
-            - url_archive
         modification-no-change-etat: true
     reponse:
         name: 'Une réponse a été enregistrée'
@@ -692,7 +685,6 @@ action:
             - reply_sae
             - sae_archival_identifier
             - sae_atr_comment
-            - url_archive
         modification-no-change-etat: true
     error-ged_2:
         name: 'Erreur irrécupérable lors du dépôt #2'
@@ -755,12 +747,18 @@ action:
         rule:
             role_id_e: no-role
         action-automatique: validation-sae
+    ack-not-provided:
+        name: 'En attente de la validation par le SAE'
+        rule:
+            role_id_e: no-role
+        action-automatique: validation-sae
     validation-sae:
         name-action: "Vérifier l'acceptation par le SAE"
         name: "Vérification de l'acceptation par le SAE"
         rule:
             last-action:
                 - ar-recu-sae
+                - ack-not-provided
                 - validation-sae-erreur
         action-class: StandardAction
         connecteur-type: SAE

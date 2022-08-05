@@ -40,7 +40,6 @@
 - Suppression de la classe SSH2 et de la dépendance à l'extension php ssh2
 - Suppression des fonctions GEDConnecteur::{send, sendDonneesFormulaire, createFolder, addDocument, getRootFolder, listFolder, getSanitizedFolder, getSanitizedFilename, forceAddDocument, forceCreateFolder}
 - Suppression de la fonction PastellTestCase::loadExtension
-- Suppression de la fonction SAEConnecteur::getLastErrorCode
 - Suppression du script create-default-horodatage.php
 - Suppression des classes PDFGeneriqueSendGED, PDFGeneriqueSAEVerif, PDFGeneriqueSAEValidation,
   PDFGeneriqueReceptionIParapheur, PDFGeneriqueEnvoieIParapheur, EnvoieSAEChange, IParapheurEnvoie, SAEVerif,
@@ -60,7 +59,14 @@
   d'initialisation du conteneur.
 - Suppression du modèle `Document`, remplacé par `DocumentSQL`
 - Suppression du modèle `Utilisateur`, remplacé par `UtilisateurSQL`
-- Suppression des fonctions SAEConnecteur::getAcuseReception et SAEConnecteur::getReply
+- Suppression des fonctions :
+  - SAEConnecteur::getAcuseReception
+  - SAEConnecteur::getReply
+  - SAEConnecteur::getLastErrorCode
+  - SAEConnecteur::generateArchive
+  - SAEConnecteur::getTransferId
+  - SAEConnecteur::getURL
+  - SAEConnecteur::getErrorString
 - Suppression de TdtConnecteur::postHelios(), remplacé par TdtConnecteur::sendHelios()
 - Suppression de la méthode magique `Controler::__get`
 - Suppression de TdtConnecteur::postActes(), remplacé par TdtConnecteur::sendActes()
@@ -90,6 +96,8 @@
 - Suppression de la constante DATABASE_FILE
 - Suppression de la possibilité de mettre la règle 'role_id_e: no-role' sur les connecteurs. Il faut remplacer par la règle 'automatique: true' pour obtenir le même comportement
 - Suppression des élements relatifs au centre de gestions sur la version standard. Il est possible de les remettre avec la feature flag CDGFeature.
+- Suppression de l'URL dans l'onglet de retour du SAE
+
 
 # [3.1.16] - 2022-07-18
 

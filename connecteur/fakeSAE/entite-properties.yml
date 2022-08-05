@@ -17,11 +17,12 @@ formulaire:
                 2: 'simuler un échec'
                 3: 'afficher le bordereau'
         result_ack:
-            name: "Résultat de l'aquittement"
+            name: "Résultat de l'acquittement"
             type: select
             value:
                 1: Acquitter
                 2: 'Erreur 500'
+                3: "Pas d'ACK"
         result_verif:
             name: "Résultat de l'acceptance"
             type: select

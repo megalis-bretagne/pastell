@@ -42,8 +42,6 @@ class SAEEnvoiActes extends ActionExecutor
         $fluxData = new FluxDataSedaActes($donneesFormulaire);
         $bordereau = $actesSEDA->getBordereau($fluxData);
         $donneesFormulaire->addFileFromData('sae_bordereau', "bordereau.xml", $bordereau);
-        $transferId = $sae->getTransferId($bordereau);
-        $donneesFormulaire->setData("sae_transfert_id", $transferId);
 
         try {
             $actesSEDA->validateBordereau($bordereau);
@@ -68,6 +66,7 @@ class SAEEnvoiActes extends ActionExecutor
             return false;
         }
 
+        $donneesFormulaire->setData('sae_transfert_id', $result);
         $this->addActionOK("Le document a été envoyé au SAE");
         $this->notify($this->action, $this->type, "Le document a été envoyé au SAE");
 

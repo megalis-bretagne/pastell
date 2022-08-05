@@ -59,8 +59,6 @@ class SAEEnvoiHelios extends ActionExecutor
         // ! generateArchive doit être postérieur à getBordereauNG afin que la liste des fichiers à traiter (file_list de FluxDataSedaDefault) soit renseignée.
         $heliosSEDA->generateArchive($fluxData, $archive_path);
 
-        $transferId = $sae->getTransferId($bordereau);
-        $donneesFormulaire->setData("sae_transfert_id", $transferId);
         $donneesFormulaire->addFileFromData('sae_bordereau', "bordereau.xml", $bordereau);
         $donneesFormulaire->addFileFromCopy('sae_archive', "archive.tar.gz", $archive_path);
 
@@ -70,6 +68,7 @@ class SAEEnvoiHelios extends ActionExecutor
             $this->setLastMessage("L'envoi du bordereau a échoué : " . $sae->getLastError());
             return false;
         }
+        $donneesFormulaire->setData('sae_transfert_id', $result);
 
         $this->addActionOK("Le document a été envoyé au SAE");
         $this->notify($this->action, $this->type, "Le document a été envoyé au SAE");

@@ -51,8 +51,6 @@ class PDFGeneriqueEnvoiSAE extends ActionExecutor
 
         $bordereau = $sedaNG->getBordereau($fluxData);
         $this->getDonneesFormulaire()->addFileFromData('sae_bordereau', "bordereau.xml", $bordereau);
-        $transferId = $sae->getTransferId($bordereau);
-        $this->getDonneesFormulaire()->setData("sae_transfert_id", $transferId);
 
         try {
             $sedaNG->validateBordereau($bordereau);
@@ -67,8 +65,6 @@ class PDFGeneriqueEnvoiSAE extends ActionExecutor
         $archive_path = $tmp_folder . "/archive.tar.gz";
         $sedaNG->generateArchive($fluxData, $archive_path);
 
-        $transferId = $sae->getTransferId($bordereau);
-        $this->getDonneesFormulaire()->setData("sae_transfert_id", $transferId);
         $this->getDonneesFormulaire()->addFileFromData('sae_bordereau', "bordereau.xml", $bordereau);
         $this->getDonneesFormulaire()->addFileFromCopy('sae_archive', "archive.tar.gz", $archive_path);
 
@@ -79,6 +75,7 @@ class PDFGeneriqueEnvoiSAE extends ActionExecutor
             return false;
         }
 
+        $this->getDonneesFormulaire()->setData('sae_transfert_id', $result);
         $this->addActionOK("Le document a été envoyé au SAE");
         $this->notify($this->action, $this->type, "Le document a été envoyé au SAE");
         return true;
