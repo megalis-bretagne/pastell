@@ -22,17 +22,17 @@
 <?php endif;?>
 
 <table class='table table-striped'>
-    <?php if ($cdg_feature): ?>
+    <?php if ($cdg_feature) : ?>
     <tr>
 
         <th class='w300'>Type d'entité</th>
 
     <td><select name='type' class="form-control col-md-4">
-    <?php foreach ([Entite::TYPE_COLLECTIVITE, Entite::TYPE_CENTRE_DE_GESTION] as $type) :?>
+        <?php foreach ([Entite::TYPE_COLLECTIVITE, Entite::TYPE_CENTRE_DE_GESTION] as $type) :?>
         <option value='<?php echo $type?>'
              <?php echo $infoEntite['type'] == $type ? 'selected="selected"' : ''?>> 
-        <?php echo Entite::getNom($type) ?> </option>   
-    <?php endforeach;?>
+            <?php echo Entite::getNom($type) ?> </option>   
+        <?php endforeach;?>
 
     </select></td>
     </tr>
@@ -50,8 +50,7 @@
 <td>
     <input class="form-control col-md-4" type="text" maxlength="9" name="siren" id="siren" value='<?php echo $infoEntite['siren']?>'/></td>
 </tr>
-    <?php if ($cdg_feature): ?>
-
+    <?php if ($cdg_feature) : ?>
 <tr>
     <th><label for="cdg">Centre de gestion</label></th>
     <td>

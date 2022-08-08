@@ -154,7 +154,7 @@ class EntiteAPIController extends BaseAPIController
         if (!$nom) {
             throw new Exception("Le nom (denomination) est obligatoire");
         }
-        if (! $type ) {
+        if (! $type) {
             $type = Entite::TYPE_COLLECTIVITE;
         }
         if (! in_array($type, [Entite::TYPE_SERVICE,Entite::TYPE_CENTRE_DE_GESTION,Entite::TYPE_COLLECTIVITE])) {

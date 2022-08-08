@@ -17,7 +17,7 @@ $id_e = $entiteExtendedInfo['id_e'];
 <div class="box">
 <h2>Informations générales</h2>
 <table class='table table-striped'>
-    <?php if ($cdg_feature): ?>
+    <?php if ($cdg_feature) : ?>
     <tr>
         <th class='w200'>Type</th>
         <td><?php echo Entite::getNom($entiteExtendedInfo['type']) ?></td>
@@ -123,7 +123,7 @@ $id_e = $entiteExtendedInfo['id_e'];
         <tr>
             <th>Dénomination</th>
             <th>SIREN</th>
-            <?php if ($cdg_feature): ?>
+            <?php if ($cdg_feature) : ?>
                 <th>Type</th>
             <?php endif; ?>
             <th>Active</th>
@@ -135,13 +135,13 @@ $id_e = $entiteExtendedInfo['id_e'];
                         <?php hecho($fille['denomination']); ?>
                     </a>
                 <td><?php hecho($fille['siren']); ?></td>
-                <?php if ($cdg_feature): ?>
+                <?php if ($cdg_feature) : ?>
                     <td><?php hecho($fille['type']); ?></td>
                 <?php endif; ?>
                 <td>
-                    <?php if ($fille['is_active']):?>
+                    <?php if ($fille['is_active']) :?>
                         <p class="badge badge-info">Activée</p>
-                    <?php else: ?>
+                    <?php else : ?>
                         <p class="badge badge-danger">Désactivée</p>
                     <?php endif; ?>
                 </td>

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Pastell\Service\FeatureToggle;
 
 use Pastell\Service\FeatureToggleDefault;

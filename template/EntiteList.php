@@ -39,7 +39,7 @@ $this->SuivantPrecedent($offset, 20, $nbCollectivite, "Entite/detail?search=$sea
     <tr>
         <th class='w200'>Dénomination</th>
         <th>Siren</th>
-        <?php if ($cdg_feature): ?>
+        <?php if ($cdg_feature) : ?>
             <th>Type</th>
         <?php endif; ?>
         <th>État</th>
@@ -49,7 +49,7 @@ $this->SuivantPrecedent($offset, 20, $nbCollectivite, "Entite/detail?search=$sea
         <td><a href='<?php $this->url("Entite/detail?id_e={$info['id_e']}") ?>'><?php hecho($info['denomination']) ?></a></td>
         <td><?php
         echo $info['siren'] ?></td>
-        <?php if ($cdg_feature): ?>
+        <?php if ($cdg_feature) : ?>
         <td>
             <?php echo Entite::getNom($info['type']) ?>
         </td>

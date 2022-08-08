@@ -9,7 +9,7 @@
 <div class="box">
     <form action="Entite/doImport" method='post' enctype='multipart/form-data'>
         <?php $this->displayCSRFInput() ?>
-    <input type='hidden' name='id_e' value='<?php hecho($entite_info['id_e']??0)?>' />
+    <input type='hidden' name='id_e' value='<?php hecho($entite_info['id_e'] ?? 0)?>' />
     <table class='table'>
         <?php if (! empty($entite_info['id_e'])) : ?>
         <tr>
