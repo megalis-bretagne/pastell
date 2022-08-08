@@ -120,7 +120,7 @@ class ExtensionsTest extends PastellTestCase
 
     public function testGetInfoNotExists()
     {
-        $extensionSQLGetAllResult = [['id_e' => '42','path' => 'toto']];
+        $extensionSQLGetAllResult = [['id_e' => '42','path' => 'foo']];
         $extensions = $this->getExtensions($extensionSQLGetAllResult);
         $info = $extensions->getInfo(42);
         $this->assertNotEmpty($info['error']);
