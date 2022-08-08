@@ -57,7 +57,7 @@ action:
         action-class: PurgePurgerAsync
     type_document:
         rule:
-            automatique: true
+            internal-action: true
         action-class: StandardChoiceAction
         connecteur-type: utilities
         connecteur-type-action: GetModuleList
@@ -67,9 +67,9 @@ action:
             module_type_label: document_type_libelle
     document_etat:
         rule:
-            automatique: true
+            internal-action: true
         action-class: PurgeDocumentEtat
     document_etat_cible:
         rule:
-            automatique: true
+            internal-action: true
         action-class: PurgeDocumentEtatCible

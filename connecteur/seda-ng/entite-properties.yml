@@ -48,8 +48,8 @@ action:
     connecteur_info:
         action-class: SedaNGConnecteurInfo
         rule:
-            automatique: true
+            internal-action: true
     flux_info:
         action-class: SedaNGFluxInfo
         rule:
-            automatique: true
+            internal-action: true

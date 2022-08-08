@@ -20,5 +20,5 @@ action:
     fill-data:
         name: 'Configurer les transformations'
         rule:
-            automatique: true
+            internal-action: true
         action-class: TransformationGeneriqueFillData

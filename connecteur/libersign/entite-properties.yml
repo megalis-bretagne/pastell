@@ -56,7 +56,7 @@ action:
     test-libersign:
         name: 'Test libersign'
         rule:
-            automatique: true
+            internal-action: true
         action-class: LibersignTestV2
     test-libersign-button:
         name: 'Tester Libersign'

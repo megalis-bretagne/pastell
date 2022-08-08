@@ -166,7 +166,7 @@ class ConnecteurAPIControllerTest extends PastellTestCase
     {
         $internalAPI = $this->getInternalAPI();
         $this->expectException(Exception::class);
-        $this->expectExceptionMessage("L'action « not_possible »  n'est pas permise : automatique n'est pas vérifiée");
+        $this->expectExceptionMessage("L'action « not_possible »  n'est pas permise : internal-action n'est pas vérifiée");
         $internalAPI->post("/entite/1/connecteur/12/action/not_possible");
     }
 

@@ -70,7 +70,7 @@ action:
     update-certificate:
         name: 'Mettre à jour les certificats'
         rule:
-            automatique: true
+            internal-action: true
         action-class: StandardAction
         connecteur-type: utilities
         connecteur-type-action: UpdateCertificate
@@ -83,7 +83,7 @@ action:
         name: 'Liste des fichiers de nomemclature'
         action-class: NomemclatureListe
         rule:
-            automatique: true
+            internal-action: true
     recup-pes-retour:
         name: 'Récupérer les PES retour'
         action-class: RecupPESRetour

@@ -71,7 +71,7 @@ action:
     iparapheur-type:
         name: 'Liste des types iParapheur'
         rule:
-            automatique: true
+            internal-action: true
         action-class: IparapheurType
     iparapheur-empty-cache:
         name: 'Vider le cache WSDL'

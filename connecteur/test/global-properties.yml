@@ -20,8 +20,8 @@ action:
         action-class: PastellCoreTestFail
     not_possible:
         rule:
-            automatique: true
+            internal-action: true
     change_4:
         rule:
-            automatique: true
+            internal-action: true
         action-class: PastellCoreChange4

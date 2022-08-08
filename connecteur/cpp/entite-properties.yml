@@ -103,5 +103,5 @@ action:
     choix-service:
         name: 'Choix du service'
         rule:
-            automatique: true
+            internal-action: true
         action-class: CPPChoixService

@@ -41,7 +41,7 @@ action:
     mise-a-jour-certif-s2low:
         name: 'Mettre à jour les certificats'
         rule:
-            automatique: true
+            internal-action: true
         action-class: StandardChoiceAction
         connecteur-type: utilities
         connecteur-type-action: GlobalUpdateCertificate

@@ -2,7 +2,7 @@
 
 namespace Pastell\Configuration;
 
-use ActionExecutorFactory;
+use ActionExecutor;
 use Entite;
 use Pastell\Viewer\Viewer;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
@@ -47,6 +47,8 @@ class ConnectorConfiguration implements ConfigurationInterface
     public const ACTION_RULE = 'rule';
     public const ACTION_RULE_USER_PERMISSION = 'droit_id_u';
     public const ACTION_RULE_ENTITY_ROLE = 'role_id_e';
+    public const ACTION_RULE_INTERNAL_ACTION = 'internal-action';
+
     public const ACTION_AUTOMATIQUE = 'action-automatique';
     public const ACTION_CONNECTEUR_TYPE = 'connecteur-type';
     public const ACTION_CONNECTEUR_TYPE_ACTION = 'connecteur-type-action';
@@ -55,7 +57,6 @@ class ConnectorConfiguration implements ConfigurationInterface
     public const ACTION_CONNECTEUR_TYPE_ELEMENT_ID = 'element_id';
 
     public function __construct(
-        private readonly ActionExecutorFactory $actionExecutorFactory,
         private readonly \RoleDroit $roleDroit,
     ) {
     }
@@ -169,9 +170,7 @@ class ConnectorConfiguration implements ConfigurationInterface
 
     private function addActionNode(): NodeDefinition
     {
-        $connecteurActionClassList = $this->actionExecutorFactory->getAllConnecteurActionClass();
         $droitList = $this->roleDroit->getAllDroit();
-
         $treeBuilder = new TreeBuilder(self::ACTION);
         $treeBuilder->getRootNode()
             ->normalizeKeys(false)
@@ -183,11 +182,14 @@ class ConnectorConfiguration implements ConfigurationInterface
                         ->end()
                         ->scalarNode(self::ACTION_CLASS)
                             ->validate()
-                                ->ifNotInArray($connecteurActionClassList)
+                                ->ifTrue(function (string $className) {
+                                    return ! class_exists($className) || ! is_subclass_of($className, ActionExecutor::class);
+                                })
                                 ->thenInvalid('Invalid connecteur action class %s')
                             ->end()
                         ->end()
                         ->arrayNode(self::ACTION_RULE)
+                                ->normalizeKeys(false)
                                 ->children()
                                     ->scalarNode(self::ACTION_RULE_USER_PERMISSION)
                                         ->validate()
@@ -202,7 +204,7 @@ class ConnectorConfiguration implements ConfigurationInterface
                                         ->end()
                                         ->setDeprecated('libriciel/pastell', '4.0.0')
                                     ->end()
-                                    ->booleanNode('automatique')
+                                    ->booleanNode(self::ACTION_RULE_INTERNAL_ACTION)
                                         ->info("Permet de créer des actions qui se déclenchent automatiquement sur une mise à jour d'un élément. L'action n'est pas disponible ni sur la console ni via l'API")
                                     ->end()
                                 ->end()

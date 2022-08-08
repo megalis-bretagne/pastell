@@ -43,7 +43,7 @@ action:
     update-certificate:
         name: 'Mettre à jour les certificats'
         rule:
-            automatique: true
+            internal-action: true
         action-class: StandardAction
         connecteur-type: utilities
         connecteur-type-action: UpdateCertificate

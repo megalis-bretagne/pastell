@@ -30,14 +30,14 @@ action:
         action-class: PastellCoreTestFail
     not_possible:
         rule:
-            automatique: true
+            internal-action: true
     change_4:
         rule:
-            automatique: true
+            internal-action: true
         action-class: PastellCoreChange4
     PastellCoreConnecteurTestExternalData:
         rule:
-            automatique: true
+            internal-action: true
         action-class: PastellCoreConnecteurTestExternalData
     une_action_auto:
         action-class: PastellCoreTestOK
