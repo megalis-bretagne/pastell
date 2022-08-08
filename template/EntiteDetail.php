@@ -6,6 +6,7 @@
  * @var bool $droit_lecture_cdg
  * @var bool $droit_edition
  * @var bool $is_supprimable
+ * @var bool $cdg_feature
  */
 $id_e = $entiteExtendedInfo['id_e'];
 ?>
@@ -16,10 +17,12 @@ $id_e = $entiteExtendedInfo['id_e'];
 <div class="box">
 <h2>Informations générales</h2>
 <table class='table table-striped'>
+    <?php if ($cdg_feature): ?>
     <tr>
         <th class='w200'>Type</th>
         <td><?php echo Entite::getNom($entiteExtendedInfo['type']) ?></td>
     </tr>
+    <?php endif; ?>
 
     <tr>
         <th>Dénomination</th>
@@ -27,12 +30,12 @@ $id_e = $entiteExtendedInfo['id_e'];
     </tr>
     <?php if ($entiteExtendedInfo['siren']) : ?>
         <tr>
-            <th>Siren</th>
+            <th>SIREN</th>
             <td><?php echo $entiteExtendedInfo['siren'] ?></td>
         </tr>
     <?php endif;?>
     <tr>
-        <th>Date d'inscription</th>
+        <th>Date de création</th>
         <td><?php echo time_iso_to_fr($entiteExtendedInfo['date_inscription']) ?></td>
     </tr>
     <?php if ($entiteExtendedInfo['entite_mere']) : ?>
@@ -119,8 +122,10 @@ $id_e = $entiteExtendedInfo['id_e'];
     <table class='table table-striped'>
         <tr>
             <th>Dénomination</th>
-            <th>Siren</th>
-            <th>Type</th>
+            <th>SIREN</th>
+            <?php if ($cdg_feature): ?>
+                <th>Type</th>
+            <?php endif; ?>
             <th>Active</th>
         </tr>
         <?php foreach ($entiteExtendedInfo['filles'] as $fille) : ?>
@@ -130,8 +135,16 @@ $id_e = $entiteExtendedInfo['id_e'];
                         <?php hecho($fille['denomination']); ?>
                     </a>
                 <td><?php hecho($fille['siren']); ?></td>
-                <td><?php hecho($fille['type']); ?></td>
-                <td><?php echo $fille['is_active'] ? '' : 'Désactivée'; ?></td>
+                <?php if ($cdg_feature): ?>
+                    <td><?php hecho($fille['type']); ?></td>
+                <?php endif; ?>
+                <td>
+                    <?php if ($fille['is_active']):?>
+                        <p class="badge badge-info">Activée</p>
+                    <?php else: ?>
+                        <p class="badge badge-danger">Désactivée</p>
+                    <?php endif; ?>
+                </td>
             </tr>
         <?php endforeach;?>
 

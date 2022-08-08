@@ -9,7 +9,7 @@ $feature_toggle = [];
 
 /** Exemple d'activation d'une fonctionnalité optionnelle */
 $feature_toggle[TestingFeature::class] = true;
-$feature_toggle[DisplayFeatureToggleInTestPage::class] = false;
+$feature_toggle[DisplayFeatureToggleInTestPage::class] = true;
 
 
 if (file_exists(__DIR__ . "/LocalSettings.php")) {

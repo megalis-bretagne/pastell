@@ -38,6 +38,7 @@ class EntiteControlerTest extends ControlerTestCase
         $this->expectOutputRegex("#Informations - Pastell#");
 
         $this->setGetInfo(['id_e' => 1]);
+        $this->entiteControler->_beforeAction();
         $this->entiteControler->detailEntite();
         $info = $this->entiteControler->getViewParameter()['entiteExtendedInfo'];
         $this->assertEquals('Bourg-en-Bresse', $info['denomination']);
@@ -110,7 +111,7 @@ class EntiteControlerTest extends ControlerTestCase
     {
         $this->getObjectInstancier()->getInstance(RoleUtilisateur::class)
             ->addRole(self::ID_U_ADMIN, 'admin', self::ID_E_COL);
-
+        $this->entiteControler->_beforeAction();
         ob_start();
         $this->entiteControler->detailAction();
         ob_end_clean();

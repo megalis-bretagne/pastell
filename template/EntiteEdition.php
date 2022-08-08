@@ -1,6 +1,9 @@
 <?php
 
-/** @var Gabarit $this */
+/**
+ * @var Gabarit $this
+ * @var bool $cdg_feature
+ */
 ?>
 
 
@@ -19,8 +22,11 @@
 <?php endif;?>
 
 <table class='table table-striped'>
+    <?php if ($cdg_feature): ?>
     <tr>
-    <td class='w300'>Type d'entité</td>
+
+        <th class='w300'>Type d'entité</th>
+
     <td><select name='type' class="form-control col-md-4">
     <?php foreach ([Entite::TYPE_COLLECTIVITE, Entite::TYPE_CENTRE_DE_GESTION] as $type) :?>
         <option value='<?php echo $type?>'
@@ -30,6 +36,7 @@
 
     </select></td>
     </tr>
+    <?php endif;?>
 <tr>
 <th><label for="denomination">Nom<span class='obl'>*</span></label>
 <p class='form_commentaire'>128 caractères maximum</p>
@@ -43,6 +50,7 @@
 <td>
     <input class="form-control col-md-4" type="text" maxlength="9" name="siren" id="siren" value='<?php echo $infoEntite['siren']?>'/></td>
 </tr>
+    <?php if ($cdg_feature): ?>
 
 <tr>
     <th><label for="cdg">Centre de gestion</label></th>
@@ -50,6 +58,7 @@
         <?php $this->render("CDGSelect"); ?>
     </td>
 </tr>
+    <?php endif; ?>
 
 </table>
 
