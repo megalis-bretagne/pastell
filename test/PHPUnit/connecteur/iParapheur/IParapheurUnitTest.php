@@ -1,6 +1,6 @@
 <?php
 
-class IParapheurTest extends PastellTestCase
+class IParapheurUnitTest extends PastellTestCase
 {
     public const REPONSE_ARCHIVE_OK = '{"MessageRetour":{"codeRetour":"OK","message":"Dossier 201806111713 TESTA supprim\u00e9 du Parapheur.","severite":"INFO"}}';
 

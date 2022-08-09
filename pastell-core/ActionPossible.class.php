@@ -407,7 +407,7 @@ class ActionPossible
             case 'document_is_valide':
                 return $this->verifDocumentIsValide();
             break;
-            case 'automatique':
+            case 'internal-action':
                 return false;
         }
         throw new InternalServerException("Règle d'action inconnue : $ruleName");

@@ -6,6 +6,7 @@ namespace Pastell\Viewer;
 
 use ConnecteurFactory;
 use DonneesFormulaireFactory;
+use Exception;
 use ObjectInstancier;
 use RecoverableException;
 
@@ -17,7 +18,7 @@ final class ViewerFactory
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function display(string $id_d, string $field, int $num = 0): void
     {
@@ -33,7 +34,7 @@ final class ViewerFactory
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function displayConnecteur(int $id_ce, string $field, int $num = 0): void
     {
@@ -56,7 +57,7 @@ final class ViewerFactory
 
     /**
      * @throws RecoverableException
-     * @throws \Exception
+     * @throws Exception
      */
     private function getViewer(string $viewerClassName): Viewer
     {

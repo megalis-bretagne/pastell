@@ -2,6 +2,9 @@
 
 namespace Pastell\Configuration;
 
+use ActionExecutor;
+use Entite;
+use Pastell\Viewer\Viewer;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -34,23 +37,29 @@ class ConnectorConfiguration implements ConfigurationInterface
     public const ELEMENT_CONTENT_TYPE = 'content-type';
     public const ELEMENT_REQUIS = 'requis';
     public const ELEMENT_VISIONNEUSE = 'visionneuse';
-    public const ELEMENT_SCRIPT = 'script';
     public const ELEMENT_PREG_MATCH = 'preg_match';
     public const ELEMENT_PREG_MATCH_ERROR = 'preg_match_error';
 
     public const ACTION = 'action';
     public const ACTION_ID = 'action_id';
     public const ACTION_NAME = 'name';
-    public const ACTION_CLASS = 'action_class';
+    public const ACTION_CLASS = 'action-class';
     public const ACTION_RULE = 'rule';
     public const ACTION_RULE_USER_PERMISSION = 'droit_id_u';
     public const ACTION_RULE_ENTITY_ROLE = 'role_id_e';
-    public const ACTION_AUTOMATIQUE = 'action_automatique';
-    public const ACTION_CONNECTEUR_TYPE = 'connecteur_type';
-    public const ACTION_CONNECTEUR_TYPE_ACTION = 'connecteur_type_action';
-    public const ACTION_CONNECTEUR_TYPE_MAPPING = 'connecteur_type_mapping';
-    public const ACTION_NO_WORKFLOW = 'no_workflow';
+    public const ACTION_RULE_INTERNAL_ACTION = 'internal-action';
+
+    public const ACTION_AUTOMATIQUE = 'action-automatique';
+    public const ACTION_CONNECTEUR_TYPE = 'connecteur-type';
+    public const ACTION_CONNECTEUR_TYPE_ACTION = 'connecteur-type-action';
+    public const ACTION_CONNECTEUR_TYPE_MAPPING = 'connecteur-type-mapping';
+    public const ACTION_NO_SHOW = 'no_show';
     public const ACTION_CONNECTEUR_TYPE_ELEMENT_ID = 'element_id';
+
+    public function __construct(
+        private readonly \RoleDroit $roleDroit,
+    ) {
+    }
 
     /**
      * @return TreeBuilder
@@ -85,6 +94,7 @@ class ConnectorConfiguration implements ConfigurationInterface
                 ->append($this->addActionNode())
             ->end()
         ;
+
         return $treeBuilder;
     }
 
@@ -95,7 +105,8 @@ class ConnectorConfiguration implements ConfigurationInterface
             ->useAttributeAsKey(self::PAGE_NAME)
             ->arrayPrototype()
                 ->useAttributeAsKey(self::ELEMENT_ID)
-                    ->arrayPrototype()            ->normalizeKeys(false)
+                    ->arrayPrototype()
+                        ->normalizeKeys(false)
                         ->children()
                             ->scalarNode(self::ELEMENT_NAME)
                             ->end()
@@ -124,7 +135,7 @@ class ConnectorConfiguration implements ConfigurationInterface
                             ->end()
                             ->booleanNode(self::ELEMENT_EDIT_ONLY)
                             ->end()
-                            ->scalarNode(self::ELEMENT_CHOICE_ACTION) //TODO à vérifier
+                            ->scalarNode(self::ELEMENT_CHOICE_ACTION)
                             ->end()
                             ->scalarNode(self::ELEMENT_LINK_NAME)
                             ->end()
@@ -132,11 +143,21 @@ class ConnectorConfiguration implements ConfigurationInterface
                             ->end()
                             ->scalarNode(self::ELEMENT_REQUIS)
                             ->end()
-                            ->scalarNode(self::ELEMENT_VISIONNEUSE) //TODO à vérifier
+                            ->scalarNode(self::ELEMENT_VISIONNEUSE)
+                                ->validate()
+                                    ->ifTrue(function (string $className) {
+                                        return ! class_exists($className) || ! is_subclass_of($className, Viewer::class);
+                                    })
+                                    ->thenInvalid('Invalid element choice action class %s')
+                                ->end()
                             ->end()
-                            ->scalarNode(self::ELEMENT_SCRIPT) //TODO à vérifier (WTF ?)
-                            ->end()
-                            ->scalarNode(self::ELEMENT_PREG_MATCH) //TODO à vérifier
+                            ->scalarNode(self::ELEMENT_PREG_MATCH)
+                                ->validate()
+                                    ->ifTrue(function (string $pattern) {
+                                        return preg_match($pattern, "") === false;
+                                    })
+                                    ->thenInvalid('Invalid regexp %s')
+                                ->end()
                             ->end()
                             ->scalarNode(self::ELEMENT_PREG_MATCH_ERROR)
                             ->end()
@@ -149,23 +170,44 @@ class ConnectorConfiguration implements ConfigurationInterface
 
     private function addActionNode(): NodeDefinition
     {
+        $droitList = $this->roleDroit->getAllDroit();
         $treeBuilder = new TreeBuilder(self::ACTION);
         $treeBuilder->getRootNode()
+            ->normalizeKeys(false)
             ->useAttributeAsKey(self::ACTION_ID)
                 ->arrayPrototype()
+                ->normalizeKeys(false)
                     ->children()
                         ->scalarNode(self::ACTION_NAME)
                         ->end()
-                        ->scalarNode(self::ACTION_CLASS) //TODO test if action exists
+                        ->scalarNode(self::ACTION_CLASS)
+                            ->validate()
+                                ->ifTrue(function (string $className) {
+                                    return ! class_exists($className) || ! is_subclass_of($className, ActionExecutor::class);
+                                })
+                                ->thenInvalid('Invalid connecteur action class %s')
+                            ->end()
                         ->end()
                         ->arrayNode(self::ACTION_RULE)
+                                ->normalizeKeys(false)
                                 ->children()
-                                    ->scalarNode(self::ACTION_RULE_USER_PERMISSION) //TODO vérifier
+                                    ->scalarNode(self::ACTION_RULE_USER_PERMISSION)
+                                        ->validate()
+                                            ->ifNotInArray($droitList)
+                                            ->thenInvalid('Invalid user permission %s')
+                                        ->end()
                                     ->end()
-                                    ->scalarNode(self::ACTION_RULE_ENTITY_ROLE) //TODO à vérifier
+                                    ->scalarNode(self::ACTION_RULE_ENTITY_ROLE)
+                                        ->validate()
+                                            ->ifNotInArray(Entite::getAllType())
+                                            ->thenInvalid('Invalid entity type %s')
+                                        ->end()
+                                        ->setDeprecated('libriciel/pastell', '4.0.0')
+                                    ->end()
+                                    ->booleanNode(self::ACTION_RULE_INTERNAL_ACTION)
+                                        ->info("Permet de créer des actions qui se déclenchent automatiquement sur une mise à jour d'un élément. L'action n'est pas disponible ni sur la console ni via l'API")
                                     ->end()
                                 ->end()
-
                         ->end()
                         ->scalarNode(self::ACTION_AUTOMATIQUE)
                         ->end()
@@ -173,7 +215,7 @@ class ConnectorConfiguration implements ConfigurationInterface
                         ->end()
                         ->scalarNode(self::ACTION_CONNECTEUR_TYPE_ACTION)
                         ->end()
-                        ->booleanNode(self::ACTION_NO_WORKFLOW)
+                        ->booleanNode(self::ACTION_NO_SHOW)
                         ->end()
                         ->arrayNode(self::ACTION_CONNECTEUR_TYPE_MAPPING)
                             ->useAttributeAsKey(self::ACTION_CONNECTEUR_TYPE_ELEMENT_ID)

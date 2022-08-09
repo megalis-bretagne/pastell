@@ -1,8 +1,6 @@
 <?php
 
-use Pastell\Configuration\ConnectorConfiguration;
-use Symfony\Component\Config\Definition\Processor;
-use Symfony\Component\Yaml\Yaml;
+use Pastell\Configuration\ConnectorValidation;
 
 class ConnecteurFileTest extends PastellTestCase
 {
@@ -12,17 +10,8 @@ class ConnecteurFileTest extends PastellTestCase
      */
     public function testAllConnecteur(string $filePath): void
     {
-        $processor = new Processor();
-        $connectorConfiguration = new ConnectorConfiguration();
-
-        $config = Yaml::parse(
-            file_get_contents($filePath)
-        );
-        $processedConfiguration = $processor->processConfiguration(
-            $connectorConfiguration,
-            [$config]
-        );
-        self::assertNotEmpty($processedConfiguration);
+        $connectorValidation = $this->getObjectInstancier()->getInstance(ConnectorValidation::class);
+        self::assertNotEmpty($connectorValidation->getConfiguration($filePath));
     }
 
     public function filesEntitiesProvider(): array

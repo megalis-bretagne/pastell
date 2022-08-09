@@ -103,5 +103,5 @@ action:
     choix-service:
         name: 'Choix du service'
         rule:
-            role_id_e: no-role
+            internal-action: true
         action-class: CPPChoixService

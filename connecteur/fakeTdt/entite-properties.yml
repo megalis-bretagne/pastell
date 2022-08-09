@@ -24,4 +24,4 @@ action:
         name: 'Liste des fichiers de nomemclature'
         action-class: FakeNomemclatureListe
         rule:
-            role_id_e: no-role
+            internal-action: true

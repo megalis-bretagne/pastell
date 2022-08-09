@@ -88,6 +88,7 @@
 - Suppression du script script/plateform-update/database-update.php, remplacer par un script console app:database:update
 - Suppression du script installation/filedbupdate.php, remplacer par un script console dev:database:update-definition
 - Suppression de la constante DATABASE_FILE
+- Suppression de la possibilité de mettre la règle 'role_id_e: no-role' sur les connecteurs. Il faut remplacer par la règle 'automatique: true' pour obtenir le même comportement
 
 
 # [3.1.16] - 2022-07-18
