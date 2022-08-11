@@ -8,6 +8,7 @@
 /** @var $nbCollectivite */
 /** @var array $liste_collectivite */
 /** @var array $id_e */
+/** @var bool $cdg_feature */
 
 $search = hecho($search);
 ?>
@@ -38,7 +39,9 @@ $this->SuivantPrecedent($offset, 20, $nbCollectivite, "Entite/detail?search=$sea
     <tr>
         <th class='w200'>Dénomination</th>
         <th>Siren</th>
-        <th>Type</th>
+        <?php if ($cdg_feature) : ?>
+            <th>Type</th>
+        <?php endif; ?>
         <th>État</th>
     </tr>
 <?php foreach ($liste_collectivite as $i => $info) : ?>
@@ -46,9 +49,11 @@ $this->SuivantPrecedent($offset, 20, $nbCollectivite, "Entite/detail?search=$sea
         <td><a href='<?php $this->url("Entite/detail?id_e={$info['id_e']}") ?>'><?php hecho($info['denomination']) ?></a></td>
         <td><?php
         echo $info['siren'] ?></td>
+        <?php if ($cdg_feature) : ?>
         <td>
             <?php echo Entite::getNom($info['type']) ?>
         </td>
+        <?php endif; ?>
         <td>
             <?php if ($info['is_active']) :?>
                 <p class="badge badge-info">

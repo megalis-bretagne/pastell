@@ -95,13 +95,6 @@ class EntiteAPIControllerTest extends PastellTestCase
         $this->getInternalAPI()->post("/entite");
     }
 
-    public function testCreateWithoutType()
-    {
-        $this->expectException("Exception");
-        $this->expectExceptionMessage("Le type d'entité doit être renseigné");
-        $this->getInternalAPI()->post("/entite", ["denomination" => "toto"]);
-    }
-
     public function testCreateWithoutSiren()
     {
         $info = $this->getInternalAPI()->post(

@@ -1,8 +1,10 @@
 <?php
 
 use Pastell\Service\Crypto;
+use Pastell\Service\FeatureToggleService;
 use Pastell\Service\ImportExportConfig\ExportConfigService;
 use Pastell\Service\ImportExportConfig\ImportConfigService;
+use Pastell\Service\FeatureToggle\CDGFeature;
 
 class EntiteControler extends PastellControler
 {
@@ -18,6 +20,9 @@ class EntiteControler extends PastellControler
         $this->setViewParameter('menu_gauche_select', "Entite/detail");
         $this->setDroitLectureOnConnecteur($id_e);
         $this->setDroitImportExportConfig($id_e);
+        $this->setViewParameter('cdg_feature', $this->getObjectInstancier()
+            ->getInstance(FeatureToggleService::class)
+            ->isEnabled(CDGFeature::class));
     }
 
     private function getAgentSQL()
@@ -144,6 +149,8 @@ class EntiteControler extends PastellControler
         $this->setViewParameter('menu_gauche_select', "Entite/detail");
 
         $this->setViewParameter('template_milieu', "EntiteDetail");
+        $this->setViewParameter('id_e', $id_e);
+
         $this->renderDefault();
     }
 
