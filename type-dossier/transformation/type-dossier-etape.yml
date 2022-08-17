@@ -1,6 +1,20 @@
 libelle: Transformation
 connecteur_type:
     - transformation
+formulaire:
+    Transformation:
+        has_transformation:
+            no-show: true
+            read-only: true
+        transformation_file:
+            name: 'Transformations'
+            type: file
+            visionneuse: Pastell\Viewer\TransformationViewer
+            read-only: true
+            visionneuse-no-link: true
+page-condition:
+    Transformation:
+        has_transformation: true
 action:
     preparation-transformation:
         name: 'Préparation à la transformation'
@@ -18,6 +32,9 @@ action:
         action-automatique: orientation
         connecteur-type: transformation
         connecteur-type-action: TransformationTransform
+        connecteur-type-mapping:
+            transformation_file: transformation_file
+            has_transformation: has_transformation
     transformation-error:
         name: 'Erreur lors de la transformation du dossier'
         rule:

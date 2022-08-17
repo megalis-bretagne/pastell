@@ -18,6 +18,26 @@ formulaire:
             onchange: cheminement-change
             default: ''
             read-only: false
+    'Transformation #1':
+        has_transformation_1:
+            no-show: true
+            read-only: true
+        transformation_file_1:
+            name: Transformations
+            type: file
+            visionneuse: Pastell\Viewer\TransformationViewer
+            read-only: true
+            visionneuse-no-link: true
+    'Transformation #2':
+        has_transformation_2:
+            no-show: true
+            read-only: true
+        transformation_file_2:
+            name: Transformations
+            type: file
+            visionneuse: Pastell\Viewer\TransformationViewer
+            read-only: true
+            visionneuse-no-link: true
 champs-affiches:
     - titre
     - dernier_etat
@@ -30,6 +50,11 @@ champs-recherche-avancee:
     - etatTransit
     - state_begin
     - search
+page-condition:
+    'Transformation #1':
+        has_transformation_1: true
+    'Transformation #2':
+        has_transformation_2: true
 action:
     creation:
         name-action: Créer
@@ -107,6 +132,9 @@ action:
         action-class: StandardAction
         connecteur-type: transformation
         connecteur-type-action: TransformationTransform
+        connecteur-type-mapping:
+            transformation_file: transformation_file_1
+            has_transformation: has_transformation_1
         num-same-connecteur: '0'
         editable-content:
             - envoi_transformation_2
@@ -132,6 +160,9 @@ action:
         action-class: StandardAction
         connecteur-type: transformation
         connecteur-type-action: TransformationTransform
+        connecteur-type-mapping:
+            transformation_file: transformation_file_2
+            has_transformation: has_transformation_2
         num-same-connecteur: '1'
     transformation-error_2:
         name: 'Erreur lors de la transformation du dossier #2'

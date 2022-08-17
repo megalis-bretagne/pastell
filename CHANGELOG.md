@@ -6,6 +6,8 @@
 
 - Permettre d'utiliser des jetons d'authentification pour utiliser l'API #1572
 - Connecteur Vitam #1251
+- Contrôle sur les identifiants du connecteur Transformation #1426
+- Onglet de visualisation des transformations après l'étape #1426
 
 ## Évolutions
 

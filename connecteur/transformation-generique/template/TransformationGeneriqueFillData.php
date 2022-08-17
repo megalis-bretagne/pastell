@@ -25,7 +25,16 @@
                 <tr>
                     <th class="w500">
                         <label for="id_element_<?php echo $i; ?>">Identifiant de l'élément</label>
-                        <input name='id_element[]' id='id_element_<?php echo $i; ?>' class="form-control col-md-12" type="text" value="<?php hecho($element_id) ?>" />
+                        <p class="form_commentaire">64 caractères maximum (chiffres, lettres en minuscules ou _).</p>
+                        <input
+                                class="form-control col-md-12"
+                                type="text"
+                                maxlength="<?php echo TransformationConnecteur::ELEMENT_ID_MAX_LENGTH; ?>"
+                                pattern="<?php echo TransformationConnecteur::ELEMENT_ID_REGEXP; ?>"
+                                name="id_element[]"
+                                id="id_element_<?php echo $i; ?>"
+                                value="<?php hecho($element_id) ?>"
+                        />
                     </th>
                     <td>
                         <label for="defintion_<?php echo $i; ?>">Transformation</label>

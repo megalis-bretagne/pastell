@@ -20,6 +20,9 @@ class TransformationTransform extends ConnecteurTypeActionExecutor
         /** @var TransformationConnecteur $transformationConnecteur */
         $transformationConnecteur = $this->getConnecteur("transformation");
 
+        $transformation_file_element = $this->getMappingValue('transformation_file');
+        $has_transformation_element = $this->getMappingValue('has_transformation');
+
         $modified_fields = $transformationConnecteur->transform($donneesFormulaire);
 
         try {
@@ -37,6 +40,15 @@ class TransformationTransform extends ConnecteurTypeActionExecutor
 
         $documentTitre = $this->objectInstancier->getInstance(DocumentTitre::class);
         $documentTitre->update($this->id_d);
+
+        if (!empty($modified_fields)) {
+            $donneesFormulaire->setData($has_transformation_element, true);
+            $donneesFormulaire->addFileFromData(
+                $transformation_file_element,
+                'transformation_file.json',
+                json_encode($modified_fields)
+            );
+        }
 
         $message = "Transformation terminée";
         $this->addActionOK($message);
