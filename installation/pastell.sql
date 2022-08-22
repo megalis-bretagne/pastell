@@ -169,7 +169,6 @@ CREATE TABLE `entite` (
 	`denomination` varchar(128) NOT NULL,
 	`siren` char(9) NOT NULL,
 	`date_inscription` datetime NOT NULL,
-	`etat` int(11) NOT NULL,
 	`entite_mere` varchar(9),
 	`centre_de_gestion` int(11) NOT NULL,
 	`is_active` tinyint(1) NOT NULL DEFAULT '1',

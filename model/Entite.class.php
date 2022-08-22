@@ -1,6 +1,7 @@
 <?php
 
-//DEPRECATED : Voir EntiteSQL.class.php
+/** @deprecated 4.0.0 */
+//Voir EntiteSQL.class.php
 
 class Entite extends SQL
 {
@@ -9,13 +10,6 @@ class Entite extends SQL
     public const TYPE_CENTRE_DE_GESTION = "centre_de_gestion";
     public const TYPE_SERVICE = "service";
     public const TYPE_CITOYEN = "citoyen";
-
-    public const ETAT_INITIE = 0;
-    public const ETAT_EN_COURS_VALIDATION = 1;
-    public const ETAT_VALIDE = 2;
-    public const ETAT_REFUSER = 3;
-    public const ETAT_SUSPENDU = 4;
-
 
     private $id_e;
 
@@ -30,7 +24,6 @@ class Entite extends SQL
         return $type_nom[$type];
     }
 
-    /** @deprecated 4.0.0 */
     public static function getAllType()
     {
         return [
@@ -40,12 +33,6 @@ class Entite extends SQL
             self::TYPE_SERVICE => 'Service',
             self::TYPE_CITOYEN => 'Citoyen'
         ];
-    }
-
-    public static function getChaineEtat($etat)
-    {
-        $strEtat = ["Initié","En cours de validation","Validé", "Refusé","Suspendu"];
-        return $strEtat[$etat];
     }
 
     public function __construct(SQLQuery $sqlQuery, $id_e)
@@ -121,17 +108,6 @@ class Entite extends SQL
             }
         }
         return false;
-    }
-
-
-    public function desinscription()
-    {
-        $info = $this->getInfo();
-        if ($info['etat'] != self::ETAT_INITIE) {
-            return false;
-        }
-        // WTF ??? $this->delete();
-        return true;
     }
 
     public function getFille()
