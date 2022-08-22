@@ -1,6 +1,6 @@
 <?php
 
-namespace Service;
+namespace Pastell\Tests;
 
 use Libriciel\Password\Service\PasswordStrengthMeterAnssi;
 use Pastell\Service\PasswordEntropy;
