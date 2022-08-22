@@ -6,7 +6,7 @@
 
 ## Ajouts
 
-- CPP: Permettre de choisir les factures à synchroniser selon leur état "Téléchargé" sur Chorus #1438
+- CPP: Permettre de choisir les factures à récupérer et synchroniser selon leur état "Téléchargé" sur Chorus #1438
 
 # [3.1.16] - 2022-07-18
 
