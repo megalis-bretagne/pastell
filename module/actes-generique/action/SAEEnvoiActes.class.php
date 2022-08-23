@@ -59,7 +59,7 @@ class SAEEnvoiActes extends ActionExecutor
 
         $donneesFormulaire->addFileFromCopy('sae_archive', "archive.tar.gz", $archive_path);
 
-        $result = $sae->sendArchive($bordereau, $archive_path);
+        $result = $sae->sendSIP($bordereau, $archive_path);
 
         if (!$result) {
             $this->setLastMessage("L'envoi du bordereau a échoué : " . $sae->getLastError());

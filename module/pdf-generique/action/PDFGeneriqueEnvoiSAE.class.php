@@ -68,7 +68,7 @@ class PDFGeneriqueEnvoiSAE extends ActionExecutor
         $this->getDonneesFormulaire()->addFileFromData('sae_bordereau', "bordereau.xml", $bordereau);
         $this->getDonneesFormulaire()->addFileFromCopy('sae_archive', "archive.tar.gz", $archive_path);
 
-        $result = $sae->sendArchive($bordereau, $archive_path);
+        $result = $sae->sendSIP($bordereau, $archive_path);
 
         if (! $result) {
             $this->setLastMessage("L'envoi du bordereau a échoué : " . $sae->getLastError());

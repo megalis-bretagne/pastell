@@ -90,7 +90,7 @@ class SAEEnvoyer extends ConnecteurTypeActionExecutor
 
         $donneesFormulaire->addFileFromCopy($sae_archive, "archive.tar.gz", $archive_path);
         try {
-            $transferId = $sae->sendArchive($bordereau, $archive_path);
+            $transferId = $sae->sendSIP($bordereau, $archive_path);
         } catch (\Exception $exception) {
             throw new \UnrecoverableException($exception->getMessage() . " - L'envoi du bordereau a échoué : " . $sae->getLastError());
         }

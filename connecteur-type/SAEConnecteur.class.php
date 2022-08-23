@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 abstract class SAEConnecteur extends Connecteur
 {
-    abstract public function sendArchive(string $bordereau, string $archivePath): string;
+    /**
+     * @return string The id of the SIP on the SAE
+     */
+    abstract public function sendSIP(string $bordereau, string $archivePath): string;
 
     abstract public function provideAcknowledgment(): bool;
 

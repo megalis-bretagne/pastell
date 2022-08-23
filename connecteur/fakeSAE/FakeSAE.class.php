@@ -39,7 +39,7 @@ class FakeSAE extends SAEConnecteur
      * @throws UnrecoverableException
      * @throws Exception
      */
-    public function sendArchive(string $bordereau, string $archivePath): string
+    public function sendSIP(string $bordereau, string $archivePath): string
     {
         $this->collectiviteProperties->addFileFromData('last_bordereau', 'bordereau_seda.xml', $bordereau);
         $this->collectiviteProperties->addFileFromData('last_file', 'donnes.zip', file_get_contents($archivePath));

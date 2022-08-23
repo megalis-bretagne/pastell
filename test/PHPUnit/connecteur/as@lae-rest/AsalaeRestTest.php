@@ -96,7 +96,7 @@ class AsalaeRestTest extends PastellTestCase
         $asalaeRest = $this->getAsalaeRest('"ok"');
         $this->assertSame(
             '2020-05-12-ACTES-18',
-            $asalaeRest->sendArchive(
+            $asalaeRest->sendSIP(
                 file_get_contents(__DIR__ . '/../../connecteur-type/fixtures/bordereau_seda_2.1.xml'),
                 __FILE__
             )
@@ -122,7 +122,7 @@ class AsalaeRestTest extends PastellTestCase
         );
         $this->assertSame(
             '2020-05-12-ACTES-18',
-            $asalaeRest->sendArchive(
+            $asalaeRest->sendSIP(
                 file_get_contents(__DIR__ . '/../../connecteur-type/fixtures/bordereau_seda_2.1.xml'),
                 $tmp_folder . '/archive.tar.gz'
             )
@@ -145,7 +145,7 @@ class AsalaeRestTest extends PastellTestCase
 
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("Cette version d'as@lae ne permet pas l'envoi d'archive par morceaux");
-        $asalaeRest->sendArchive('test bordereau SEDA', $tmp_folder . '/archive.tar.gz');
+        $asalaeRest->sendSIP('test bordereau SEDA', $tmp_folder . '/archive.tar.gz');
     }
 
     /**
@@ -156,6 +156,6 @@ class AsalaeRestTest extends PastellTestCase
         $asalaeRest = $this->getAsalaeRest('');
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("");
-        $asalaeRest->sendArchive('test bordereau SEDA', __FILE__);
+        $asalaeRest->sendSIP('test bordereau SEDA', __FILE__);
     }
 }

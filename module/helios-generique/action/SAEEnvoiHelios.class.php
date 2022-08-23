@@ -62,7 +62,7 @@ class SAEEnvoiHelios extends ActionExecutor
         $donneesFormulaire->addFileFromData('sae_bordereau', "bordereau.xml", $bordereau);
         $donneesFormulaire->addFileFromCopy('sae_archive', "archive.tar.gz", $archive_path);
 
-        $result = $sae->sendArchive($bordereau, $archive_path);
+        $result = $sae->sendSIP($bordereau, $archive_path);
 
         if (! $result) {
             $this->setLastMessage("L'envoi du bordereau a échoué : " . $sae->getLastError());

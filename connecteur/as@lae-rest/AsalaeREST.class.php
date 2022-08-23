@@ -25,7 +25,7 @@ class AsalaeREST extends SAEConnecteur
         $this->chunk_size_in_bytes = (int)$donneesFormulaire->get('chunk_size_in_bytes');
     }
 
-    public function sendArchive(string $bordereau, string $archivePath): string
+    public function sendSIP(string $bordereau, string $archivePath): string
     {
         $tmpFile = new TmpFile();
         $bordereau_file = $tmpFile->create();
