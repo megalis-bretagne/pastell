@@ -334,7 +334,7 @@ CREATE TABLE `users_token` (
 	`id` int(11) NOT NULL AUTO_INCREMENT,
 	`id_u` int(11) NOT NULL,
 	`name` varchar(64) NOT NULL,
-	`token` varchar(64) NOT NULL,
+	`token` varchar(250) NOT NULL,
 	`created_at` datetime NOT NULL,
 	`expired_at` datetime,
 	PRIMARY KEY (`id`),

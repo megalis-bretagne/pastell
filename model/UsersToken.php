@@ -4,16 +4,19 @@ declare(strict_types=1);
 
 final class UsersToken extends SQL
 {
+    private const TOKEN_HASH_ALGORITHM = 'sha256';
+
     public function create(int $userId, string $name, string $token, ?string $expirationDate = null): void
     {
         $now = \date(Date::DATE_ISO);
 
+        $hashedToken = hash(self::TOKEN_HASH_ALGORITHM, $token);
         $query = <<<EOT
 INSERT INTO users_token(id_u, name, token, created_at, expired_at)
 VALUES(?,?,?,?,?);
 EOT;
 
-        $this->query($query, $userId, $name, $token, $now, $expirationDate);
+        $this->query($query, $userId, $name, $hashedToken, $now, $expirationDate);
     }
 
     public function getTokensOfUser(int $userId): array
@@ -45,6 +48,8 @@ EOT;
 
     public function getUserFromToken(string $token): ?array
     {
+        $hashedToken = hash(self::TOKEN_HASH_ALGORITHM, $token);
+
         $query = <<<EOT
 SELECT user.id_u, user.login, expired_at
 FROM users_token
@@ -52,7 +57,7 @@ JOIN utilisateur user on users_token.id_u = user.id_u
 WHERE token=?;
 EOT;
 
-        $output = $this->queryOne($query, $token);
+        $output = $this->queryOne($query, $hashedToken);
         if ($output === false) {
             return null;
         }
@@ -64,5 +69,11 @@ EOT;
     {
         $query = 'DELETE FROM users_token WHERE id=?;';
         $this->query($query, $tokenId);
+    }
+
+    public function getTokenInfo(int $tokenId): array
+    {
+        $query = 'SELECT * FROM users_token WHERE id=?';
+        return $this->queryOne($query, $tokenId);
     }
 }

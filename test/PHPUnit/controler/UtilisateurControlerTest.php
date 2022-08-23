@@ -165,7 +165,7 @@ class UtilisateurControlerTest extends ControlerTestCase
         try {
             $this->getUtilisateurControler()->doAddTokenAction();
         } catch (Exception $e) {
-            static::assertMatchesRegularExpression('/Votre token est <strong>(.*)<\/strong>/', $e->getMessage());
+            static::assertMatchesRegularExpression('/Votre jeton est <strong>(.*)<\/strong>/', $e->getMessage());
         }
     }
 
@@ -183,5 +183,24 @@ class UtilisateurControlerTest extends ControlerTestCase
             );
         }
         static::assertNull($userTokenService->getUserFromToken($token));
+    }
+
+    public function testRenewToken(): void
+    {
+        $userTokenService = $this->getObjectInstancier()->getInstance(UserTokenService::class);
+        $tokenBefore = $userTokenService->createToken(self::ID_U_ADMIN, 'token');
+        $this->setPostInfo(['id' => 1]);
+        try {
+            $this->getUtilisateurControler()->renewTokenAction();
+        } catch (Exception $e) {
+            self::assertMatchesRegularExpression(
+                "/Le jeton a été renouvelé/",
+                $e->getMessage()
+            );
+        }
+        $allTokens = $userTokenService->getTokens(self::ID_U_ADMIN);
+        self::assertCount(1, $allTokens);
+        self::assertNotContains($tokenBefore, $allTokens);
+        self::assertEquals('token', $allTokens[0]['name']);
     }
 }

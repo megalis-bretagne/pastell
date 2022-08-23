@@ -59,4 +59,11 @@ final class UserTokenService
     {
         $this->usersToken->deleteToken($tokenId);
     }
+
+    public function renewToken(int $tokenId): string
+    {
+        $tokenInfo = $this->usersToken->getTokenInfo($tokenId);
+        $this->usersToken->deleteToken($tokenId);
+        return $this->createToken($tokenInfo['id_u'], $tokenInfo['name'], $tokenInfo['expired_at']);
+    }
 }

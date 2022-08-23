@@ -931,7 +931,7 @@ class UtilisateurControler extends PastellControler
             ->createToken($this->getId_u(), $recuperateur->get('name'), $recuperateur->get('expiration') ?: null);
 
         $message = <<<EOT
-Votre token est <strong>$token</strong><br />
+Votre jeton est <strong>$token</strong><br />
 Assurez-vous de le sauvegarder, il ne sera plus affiché.
 EOT;
 
@@ -949,14 +949,35 @@ EOT;
         $recuperateur = $this->getPostInfo();
         $id = $recuperateur->get('id');
         $userTokenService = $this->getObjectInstancier()->getInstance(UserTokenService::class);
-        $user = $userTokenService->getUser($id);
+        $this->verifIsMyToken($id);
+        $userTokenService->deleteToken($id);
+        $this->setLastMessage('Le jeton a été supprimé');
+        $this->redirect('/Utilisateur/moi');
+    }
+
+    public function renewTokenAction(): void
+    {
+        $recuperateur = $this->getPostInfo();
+        $id = $recuperateur->get('id');
+        $userTokenService = $this->getObjectInstancier()->getInstance(UserTokenService::class);
+        $this->verifIsMyToken($id);
+        $token = $userTokenService->renewToken($id);
+        $message = <<<EOT
+Le jeton a été renouvelé. Sa valeur est <strong>$token</strong><br />
+Assurez-vous de le sauvegarder, il ne sera plus affiché.
+EOT;
+        $this->setLastMessage($message);
+        $this->redirect('/Utilisateur/moi');
+    }
+
+    private function verifIsMyToken(string $tokenId)
+    {
+        $userTokenService = $this->getObjectInstancier()->getInstance(UserTokenService::class);
+        $user = $userTokenService->getUser($tokenId);
 
         if ($user !== $this->getId_u()) {
             $this->setLastError('Impossible de supprimer ce jeton');
             $this->redirect('/Utilisateur/moi');
         }
-        $userTokenService->deleteToken($id);
-        $this->setLastMessage('Le jeton a été supprimé');
-        $this->redirect('/Utilisateur/moi');
     }
 }

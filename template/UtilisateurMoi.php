@@ -228,8 +228,18 @@ use Pastell\Utilities\Certificate;
                     <?php endif; ?>
                 </td>
                 <td>
-
-                    <a class='btn btn-danger' href='Utilisateur/deleteToken?id=<?php echo $token['id']; ?>'>
+                    <a
+                            class='btn btn-warning'
+                            href='Utilisateur/renewToken?id=<?php echo $token['id']; ?>'
+                            onclick="return confirm('Êtes-vous certain de vouloir renouveler ce jeton (l\'ancien token sera perdu) ?')"
+                    >
+                        <i class="fa fa-refresh"></i>&nbsp;Renouveller
+                    </a>
+                    <a
+                            class='btn btn-danger'
+                            href='Utilisateur/deleteToken?id=<?php echo $token['id']; ?>'
+                            onclick="return confirm('Êtes-vous certain de vouloir supprimer définitivement ce jeton ?')"
+                    >
                         <i class="fa fa-trash"></i>&nbsp;Supprimer
                     </a>
 
