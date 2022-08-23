@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 class SAEVerifierTest extends PastellTestCase
 {
     use CurlUtilitiesTestTrait;
 
-    private const MESSAGE_ACK = '/sedaMessages/sequence:ArchiveTransfer/message:Acknowledgement/originOrganizationIdentification:LS_PA/originMessageIdentifier:15ef78ef665a8777c33d1125783707f8dfb190f82869dc9248e46c5ed396d70b_1542893421';
+    private const MESSAGE_ACK = 'https://sae/sedaMessages/sequence:ArchiveTransfer/message:Acknowledgement/originOrganizationIdentification:LS_PA/originMessageIdentifier:15ef78ef665a8777c33d1125783707f8dfb190f82869dc9248e46c5ed396d70b_1542893421';
 
     /**
      * @throws NotFoundException
      */
-    public function testVerifierSEDAV0_2()
+    public function testVerifierSEDAV0_2(): void
     {
         $this->mockCurlWithAckResponse(__DIR__ . "/fixtures/ACK-SEDA-0.2.xml");
 
@@ -30,7 +32,7 @@ class SAEVerifierTest extends PastellTestCase
     /**
      * @throws NotFoundException
      */
-    public function testVerifierSEDAv1_0()
+    public function testVerifierSEDAv1_0(): void
     {
 
         $this->mockCurlWithAckResponse(__DIR__ . "/fixtures/ACK-SEDA-1.0.xml");
@@ -50,7 +52,7 @@ class SAEVerifierTest extends PastellTestCase
     /**
      * @throws NotFoundException
      */
-    public function testVerifierSEDAv2_1()
+    public function testVerifierSEDAv2_1(): void
     {
 
         $this->mockCurlWithAckResponse(__DIR__ . "/fixtures/ACK-SEDA-2.1.xml");
@@ -69,38 +71,38 @@ class SAEVerifierTest extends PastellTestCase
         );
     }
 
-    private function mockCurlWithAckResponse($ack_response_filename)
+    private function mockCurlWithAckResponse(string $ack_response_filename): void
     {
         $this->mockCurl([
-            self::MESSAGE_ACK
-            => file_get_contents($ack_response_filename)
+            self::MESSAGE_ACK => file_get_contents($ack_response_filename),
         ]);
     }
 
-    /**
-     * @return string
-     * @throws NotFoundException
-     */
     private function retrieveAck(): string
     {
-        $id_ce = $this->createConnector('as@lae-rest', "Asalae")['id_ce'];
-        $this->associateFluxWithConnector($id_ce, "actes-generique", "SAE");
+        $id_ce = $this->createConnector('as@lae-rest', 'Asalae')['id_ce'];
+        $this->associateFluxWithConnector($id_ce, 'actes-generique', 'SAE');
+        $this->configureConnector($id_ce, [
+            'url' => 'https://sae',
+            'login' => 'login',
+            'password' => 'password',
+        ]);
 
         $id_d = $this->createDocument('actes-generique')['id_d'];
         $donnesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
         $donnesFormulaire->setTabData([
-            'sae_transfert_id' => '15ef78ef665a8777c33d1125783707f8dfb190f82869dc9248e46c5ed396d70b_1542893421'
+            'sae_transfert_id' => '15ef78ef665a8777c33d1125783707f8dfb190f82869dc9248e46c5ed396d70b_1542893421',
         ]);
 
         $donnesFormulaire->addFileFromCopy(
             'sae_bordereau',
             'bordereau.xml',
-            __DIR__ . "/fixtures/bordereau.xml"
+            __DIR__ . '/fixtures/bordereau.xml'
         );
 
         $actionChange = $this->getObjectInstancier()->getInstance(ActionChange::class);
 
-        $actionChange->addAction($id_d, self::ID_E_COL, 0, "send-archive", "test");
+        $actionChange->addAction($id_d, self::ID_E_COL, 0, 'send-archive', 'test');
 
         $this->triggerActionOnDocument($id_d, 'verif-sae');
         return $id_d;

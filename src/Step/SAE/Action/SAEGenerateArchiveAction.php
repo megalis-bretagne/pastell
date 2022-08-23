@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pastell\Step\SAE\Action;
 
 use ConnecteurTypeActionExecutor;
@@ -50,7 +52,6 @@ final class SAEGenerateArchiveAction extends ConnecteurTypeActionExecutor
         $sae_show = $this->getMappingValue(SAEFieldsEnum::SAE_SHOW->value);
         $sae_bordereau = $this->getMappingValue(SAEFieldsEnum::SAE_BORDEREAU->value);
         $sae_archive = $this->getMappingValue(SAEFieldsEnum::SAE_ARCHIVE->value);
-        $sae_transfert_id = $this->getMappingValue(SAEFieldsEnum::SAE_TRANSFERT_ID->value);
         $sae_config = $this->getMappingValue(SAEFieldsEnum::SAE_CONFIG->value);
         $donneesFormulaire = $this->getDonneesFormulaire();
         $donneesFormulaire->setData($sae_show, true);
@@ -62,7 +63,6 @@ final class SAEGenerateArchiveAction extends ConnecteurTypeActionExecutor
 
         /** @var FluxData $fluxData */
         $fluxData = new $fluxDataClassName($donneesFormulaire);
-
 
         if (\method_exists($fluxData, 'setMetadata') && $donneesFormulaire->get($sae_config)) {
             try {
@@ -80,8 +80,6 @@ final class SAEGenerateArchiveAction extends ConnecteurTypeActionExecutor
 
         $bordereau = $seda->getBordereau($fluxData);
         $donneesFormulaire->addFileFromData($sae_bordereau, 'bordereau.xml', $bordereau);
-        $transferId = $seda->getTransferId($bordereau);
-        $donneesFormulaire->setData($sae_transfert_id, $transferId);
 
         try {
             $seda->validateBordereau($bordereau);

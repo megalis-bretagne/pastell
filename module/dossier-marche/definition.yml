@@ -109,9 +109,6 @@ formulaire:
         reply_sae:
             type: file
             name: 'Réponse du SAE'
-        url_archive:
-            name: "URL sur le système d'archive"
-            type: url
 page-condition:
     SAE:
         sae_transfert_id: true
@@ -192,12 +189,18 @@ action:
         rule:
             role_id_e: no-role
         action-automatique: validation-sae
+    ack-not-provided:
+        name: 'En attente de la validation par le SAE'
+        rule:
+            role_id_e: no-role
+        action-automatique: validation-sae
     validation-sae:
         name-action: "Vérifier l'acceptation par le SAE"
         name: "Vérification de l'acceptation par le SAE"
         rule:
             last-action:
                 - ar-recu-sae
+                - ack-not-provided
                 - validation-sae-erreur
         action-class: StandardAction
         connecteur-type: SAE

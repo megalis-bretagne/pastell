@@ -9,6 +9,8 @@ class SAEVerifier extends ConnecteurTypeActionExecutor
     public const ACTION_NAME_RECU = 'ar-recu-sae';
     public const ACTION_NAME_ERROR = 'verif-sae-erreur';
     public const SAE_ACK_COMMENT = 'sae_ack_comment';
+    public const SAE_BORDEREAU = 'sae_bordereau';
+    public const ACK_NOT_PROVIDED = 'ack_not_provided';
 
     public const COMMENT = 'Comment';
 
@@ -27,7 +29,13 @@ class SAEVerifier extends ConnecteurTypeActionExecutor
         $action_name_error = $this->getMappingValue(self::ACTION_NAME_ERROR);
         $action_name_recu = $this->getMappingValue(self::ACTION_NAME_RECU);
         $sae_ack_comment_element = $this->getMappingValue(self::SAE_ACK_COMMENT);
-        $sae_bordereau = $this->getMappingValue('sae_bordereau');
+        $sae_bordereau = $this->getMappingValue(self::SAE_BORDEREAU);
+        $ackNotProvided = $this->getMappingValue(self::ACK_NOT_PROVIDED);
+
+        if (!$sae->provideAcknowledgment()) {
+            $this->changeAction($ackNotProvided, "L'ACK n'est pas fourni par ce SAE");
+            return true;
+        }
 
         $sedaHelper = new SedaHelper();
 
@@ -42,7 +50,7 @@ class SAEVerifier extends ConnecteurTypeActionExecutor
         try {
             $aknowledgement_content = $sae->getAck($id_transfert, $originating_agency_id);
         } catch (UnrecoverableException $e) {
-            $this->changeAction($action_name_error, "Erreur irrécupérable : " . $e->getMessage());
+            $this->changeAction($action_name_error, 'Erreur irrécupérable : ' . $e->getMessage());
             throw $e;
         }
 
@@ -66,7 +74,7 @@ class SAEVerifier extends ConnecteurTypeActionExecutor
 
         $ack_id = $sedaHelper->getAckID($xml);
 
-        $ack_name = sprintf("%s.xml", $ack_id);
+        $ack_name = sprintf('%s.xml', $ack_id);
         $donneesFormulaire->addFileFromData($ar_sae, $ack_name, $aknowledgement_content);
 
         if ($xml->{self::COMMENT}) {
@@ -75,7 +83,7 @@ class SAEVerifier extends ConnecteurTypeActionExecutor
 
         $message = "Récupération de l'accusé de réception : " .
             $xml->getName() .
-            " - " .
+            ' - ' .
             $xml->{'Comment'};
 
         $this->changeAction($action_name_recu, $message);

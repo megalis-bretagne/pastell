@@ -73,8 +73,6 @@ class SAEEnvoyer extends ConnecteurTypeActionExecutor
 
         $bordereau = $sedaNG->getBordereau($fluxData);
         $donneesFormulaire->addFileFromData($sae_bordereau, "bordereau.xml", $bordereau);
-        $transferId = $sae->getTransferId($bordereau);
-        $donneesFormulaire->setData($sae_transfert_id, $transferId);
 
         try {
             $sedaNG->validateBordereau($bordereau);
@@ -92,11 +90,11 @@ class SAEEnvoyer extends ConnecteurTypeActionExecutor
 
         $donneesFormulaire->addFileFromCopy($sae_archive, "archive.tar.gz", $archive_path);
         try {
-            $sae->sendArchive($bordereau, $archive_path);
+            $transferId = $sae->sendSIP($bordereau, $archive_path);
         } catch (\Exception $exception) {
             throw new \UnrecoverableException($exception->getMessage() . " - L'envoi du bordereau a échoué : " . $sae->getLastError());
         }
-
+        $donneesFormulaire->setData($sae_transfert_id, $transferId);
         $this->addActionOK("Le document a été envoyé au SAE");
         $this->notify($this->action, $this->type, "Le document a été envoyé au SAE");
         return true;

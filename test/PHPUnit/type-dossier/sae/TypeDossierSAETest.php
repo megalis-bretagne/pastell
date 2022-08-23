@@ -139,21 +139,26 @@ class TypeDossierSAETest extends PastellTestCase
         $this->associateFluxWithConnector($connector['id_ce'], self::SAE_ONLY, 'Bordereau SEDA');
         $connector = $this->createConnector('as@lae-rest', 'SAE');
         $this->associateFluxWithConnector($connector['id_ce'], self::SAE_ONLY, 'SAE');
+        $this->configureConnector($connector['id_ce'], [
+            'url' => 'https://sae',
+            'login' => 'login',
+            'password' => 'password',
+        ]);
 
         $document = $this->createDocument(self::SAE_ONLY);
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($document['id_d']);
         $donneesFormulaire->setTabData([
             'titre' => 'Foo',
             'date' => '1977-02-18',
-            'select' => 'B'
+            'select' => 'B',
         ]);
         $donneesFormulaire->addFileFromData('fichier', 'fichier.txt', 'bar');
         $donneesFormulaire->addFileFromData('annexe', 'annexe1.txt', 'foo1', 0);
         $donneesFormulaire->addFileFromCopy('annexe', 'annexe2.xml', __DIR__ . '/fixtures/test_sae.xml', 1);
         $donneesFormulaire->addFileFromData(
             'sae_config',
-            "sae_config.json",
-            json_encode(['metadonne1' => 'Ma métadonnées'])
+            'sae_config.json',
+            json_encode(['metadonne1' => 'Ma métadonnées'], \JSON_THROW_ON_ERROR)
         );
 
         $this->assertTrue(
@@ -161,10 +166,15 @@ class TypeDossierSAETest extends PastellTestCase
         );
         $this->assertLastMessage("sélection automatique de l'action suivante");
 
+        $this->assertTrue(
+            $this->triggerActionOnDocument($document['id_d'], 'generate-sip')
+        );
         $this->assertFalse(
             $this->triggerActionOnDocument($document['id_d'], 'send-archive')
         );
         $this->assertLastDocumentAction('erreur-envoie-sae', $document['id_d']);
-        $this->assertLastMessage("Erreur de connexion au serveur : Curl errno 3 - L'envoi du bordereau a échoué : ");
+        $this->assertLastMessage(
+            "Erreur de connexion au serveur : Could not resolve host: sae - L'envoi du bordereau a échoué : "
+        );
     }
 }

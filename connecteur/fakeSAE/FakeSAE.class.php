@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 class FakeSAE extends SAEConnecteur
 {
     public const CONNECTEUR_ID = 'fakeSAE';
@@ -11,24 +13,20 @@ class FakeSAE extends SAEConnecteur
     private const FILENAME = [
         'ACK' => 'ACK.xml',
         'ATR' => 'ATR.xml',
-        'ATR_refused' => 'ATR_refused.xml'
+        'ATR_refused' => 'ATR_refused.xml',
     ];
 
-    private $tmpFile;
-
-    /** @var DonneesFormulaire */
-    private $collectiviteProperties;
-    private $sedaVersion;
-
-    public function __construct(TmpFile $tmpFile)
-    {
-        $this->tmpFile = $tmpFile;
-    }
+    private DonneesFormulaire $collectiviteProperties;
+    private int $sedaVersion;
+    private int $ackResult;
+    private int $sendResult;
 
     public function setConnecteurConfig(DonneesFormulaire $collectiviteProperties)
     {
         $this->collectiviteProperties = $collectiviteProperties;
-        $this->sedaVersion = $this->collectiviteProperties->get('seda_version') ?: 1;
+        $this->sedaVersion = (int)$this->collectiviteProperties->get('seda_version') ?: 1;
+        $this->ackResult = (int)$this->collectiviteProperties->get('result_ack') ?: 1;
+        $this->sendResult = (int)$this->collectiviteProperties->get('result_send') ?: 1;
     }
 
     private function getFixture(string $name): string
@@ -38,126 +36,98 @@ class FakeSAE extends SAEConnecteur
     }
 
     /**
-     * @param $bordereauSEDA
-     * @param $archivePath
-     * @param string $file_type
-     * @param string $archive_file_name
-     * @return bool
+     * @throws UnrecoverableException
      * @throws Exception
      */
-    public function sendArchive($bordereauSEDA, $archivePath, $file_type = "TARGZ", $archive_file_name = "archive.tar.gz")
+    public function sendSIP(string $bordereau, string $archivePath): string
     {
-        $this->collectiviteProperties->addFileFromData('last_bordereau', 'bordereau_seda.xml', $bordereauSEDA);
+        $this->collectiviteProperties->addFileFromData('last_bordereau', 'bordereau_seda.xml', $bordereau);
         $this->collectiviteProperties->addFileFromData('last_file', 'donnes.zip', file_get_contents($archivePath));
-        if ((int)$this->collectiviteProperties->get('result_send') === 2) {
-            throw new UnrecoverableException("Ce connecteur bouchon est configuré pour renvoyer une erreur");
+        if ($this->sendResult === 2) {
+            throw new UnrecoverableException('Ce connecteur bouchon est configuré pour renvoyer une erreur');
         }
-        if ((int)$this->collectiviteProperties->get('result_send') === 3) {
-            header("Content-type: text/xml");
-            echo $bordereauSEDA;
+        if ($this->sendResult === 3) {
+            header('Content-type: text/xml');
+            echo $bordereau;
             exit;
         }
-        return true;
+        return '<transfert identifier>';
     }
 
-    public function getAck(string $transfert_id, string $originating_agency_id): string
+    public function provideAcknowledgment(): bool
     {
-        return $this->getAcuseReception($transfert_id);
+        return $this->ackResult !== 3;
     }
 
-    public function getAcuseReception($transfert_id)
+    /**
+     * @throws SimpleXMLWrapperException
+     */
+    public function getAck(string $transfertId, string $originatingAgencyId): string
     {
+        return $this->getAcuseReception($transfertId);
+    }
 
-        $result_ack = (int)$this->collectiviteProperties->get('result_ack') ?: 1;
-        if ($result_ack === 2) {
+    /**
+     * @throws SimpleXMLWrapperException
+     * @throws Exception
+     */
+    public function getAcuseReception(string $transfertId): string
+    {
+        if ($this->ackResult === 2) {
             throw new Exception("Erreur provoquer par le bouchon SAE - code d'erreur HTTP : 500");
         }
 
         $simpleXMLWrapper = new SimpleXMLWrapper();
         $xml = $simpleXMLWrapper->loadFile($this->getFixture('ACK'));
-        $xml->{'Date'} = date("c");
-        $xml->{'MessageReceivedIdentifier'} = "$transfert_id";
-        if ($this->sedaVersion == 1) {
-            $xml->{'AcknowledgementIdentifier'}  = "ACK_" . mt_rand(0, mt_getrandmax());
+        $xml->Date = date('c');
+        $xml->MessageReceivedIdentifier = $transfertId;
+        if ($this->sedaVersion === 1) {
+            $xml->AcknowledgementIdentifier = 'ACK_' . random_int(0, mt_getrandmax());
         } else {
-            $xml->{'MessageIdentifier'}  = "ACK_" . mt_rand(0, mt_getrandmax());
+            $xml->MessageIdentifier = 'ACK_' . random_int(0, mt_getrandmax());
         }
 
         return $xml->asXML();
     }
 
-    public function getAtr(string $transfert_id, string $originating_agency_id): string
+    /**
+     * @throws UnrecoverableException
+     * @throws SimpleXMLWrapperException
+     */
+    public function getAtr(string $transfertId, string $originatingAgencyId): string
     {
         $result_verif = (int)$this->collectiviteProperties->get('result_verif') ?: 1;
 
         if ($result_verif === 1) {
-            return $this->getATRintern($transfert_id, $this->getFixture('ATR'));
+            return $this->getATRintern($transfertId, $this->getFixture('ATR'));
         }
         if ($result_verif === 2) {
-            return $this->getATRintern($transfert_id, $this->getFixture('ATR_refused'));
+            return $this->getATRintern($transfertId, $this->getFixture('ATR_refused'));
         }
 
-        throw new UnrecoverableException("Impossible de lire le message");
+        throw new UnrecoverableException('Impossible de lire le message');
     }
 
     /**
-     * @param $id_transfert
-     * @param $atr_filepath
-     * @return mixed
      * @throws SimpleXMLWrapperException
+     * @throws Exception
      */
-    protected function getATRintern($id_transfert, $atr_filepath)
+    protected function getATRintern(string $transfertId, string $atrFilepath): string
     {
         $simpleXMLWrapper = new SimpleXMLWrapper();
-        $xml = $simpleXMLWrapper->loadFile($atr_filepath);
-        $xml->{'Date'} = date("c");
-        if ($this->sedaVersion == 1) {
-            $xml->{'TransferIdentifier'} = "$id_transfert";
-            $xml->{'TransferReplyIdentifier'}  = "ATR_" . mt_rand(0, mt_getrandmax());
-            $xml->{'Archive'}->{'ArchivalAgencyArchiveIdentifier'} = mt_rand(0, mt_getrandmax());
+        $xml = $simpleXMLWrapper->loadFile($atrFilepath);
+        $xml->Date = date('c');
+        if ($this->sedaVersion === 1) {
+            $xml->TransferIdentifier = $transfertId;
+            $xml->TransferReplyIdentifier = 'ATR_' . random_int(0, mt_getrandmax());
+            $xml->Archive->ArchivalAgencyArchiveIdentifier = random_int(0, mt_getrandmax());
         } else {
-            $xml->{'MessageIdentifier'} = "$id_transfert";
-            $xml->{'MessageRequestIdentifier'}  = "ATR_" . mt_rand(0, mt_getrandmax());
-            $xml->{'DataObjectPackage'}->{'DescriptiveMetadata'}->{'ArchiveUnit'}
-                ->{'Content'}->{'ArchivalAgencyArchiveUnitIdentifier'}
-                = mt_rand(0, mt_getrandmax());
+            $xml->MessageIdentifier = $transfertId;
+            $xml->MessageRequestIdentifier = 'ATR_' . random_int(0, mt_getrandmax());
+            $xml->DataObjectPackage->DescriptiveMetadata->ArchiveUnit
+                ->Content->ArchivalAgencyArchiveUnitIdentifier = random_int(0, mt_getrandmax());
         }
 
         return $xml->asXML();
-    }
-
-    public function getURL($cote)
-    {
-        return "http://www.libriciel.fr";
-    }
-
-    public function generateArchive($bordereau, $tmp_folder)
-    {
-
-        $fileName = $this->tmpFile->create() . ".zip";
-
-        $zip = new ZipArchive();
-
-        if (! $zip->open($fileName, ZIPARCHIVE::CREATE)) {
-            throw new UnrecoverableException("Impossible de créer le fichier d'archive : $fileName");
-        }
-        $has_file = false;
-        foreach (scandir($tmp_folder) as $fileToAdd) {
-            if (is_file("$tmp_folder/$fileToAdd")) {
-                $zip->addFile("$tmp_folder/$fileToAdd", $fileToAdd);
-                $has_file = true;
-            }
-        }
-
-        if (! $has_file) {
-            file_put_contents("$tmp_folder/empty", "");
-            $zip->addFile("$tmp_folder/empty", "empty");
-        }
-        $zip->close();
-        return $fileName;
-    }
-
-    public function getErrorString($number)
-    {
     }
 }

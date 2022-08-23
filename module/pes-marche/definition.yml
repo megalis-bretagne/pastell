@@ -105,9 +105,6 @@ formulaire:
         reply_sae:
             type: file
             name: 'Réponse du SAE'
-        url_archive:
-            name: "URL sur le système d'archive"
-            type: url
     'Informations complémentaires':
         has_information_complementaire:
             no-show: true

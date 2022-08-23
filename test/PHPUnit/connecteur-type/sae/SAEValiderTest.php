@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 class SAEValiderTest extends PastellTestCase
 {
     use CurlUtilitiesTestTrait;
@@ -7,7 +9,7 @@ class SAEValiderTest extends PastellTestCase
     /**
      * @throws NotFoundException
      */
-    public function testValiderSEDAV0_2()
+    public function testValiderSEDAV0_2(): void
     {
         $id_d = $this->prepareValidation(__DIR__ . "/fixtures/ATR-SEDA-0.2.xml");
 
@@ -28,7 +30,7 @@ class SAEValiderTest extends PastellTestCase
     /**
      * @throws NotFoundException
      */
-    public function testValiderSEDAV1_0()
+    public function testValiderSEDAV1_0(): void
     {
         $id_d = $this->prepareValidation(__DIR__ . "/fixtures/ATR-SEDA-1.0.xml");
 
@@ -47,7 +49,7 @@ class SAEValiderTest extends PastellTestCase
     /**
      * @throws NotFoundException
      */
-    public function testValiderSEDAV2_1()
+    public function testValiderSEDAV2_1(): void
     {
         $id_d = $this->prepareValidation(__DIR__ . "/fixtures/ATR-SEDA-2.1.xml");
 
@@ -68,7 +70,7 @@ class SAEValiderTest extends PastellTestCase
     /**
      * @throws NotFoundException
      */
-    public function testWhenArchiveIsRejected()
+    public function testWhenArchiveIsRejected(): void
     {
         $id_d = $this->prepareValidation(__DIR__ . "/fixtures/atr-rejet.xml");
         $this->triggerActionOnDocument($id_d, 'validation-sae');
@@ -84,36 +86,36 @@ class SAEValiderTest extends PastellTestCase
         );
     }
 
-    /**
-     * @param $sae_reponse_file
-     * @return mixed
-     * @throws NotFoundException
-     */
-    private function prepareValidation($sae_reponse_file)
+    private function prepareValidation(string $sae_reponse_file): string
     {
         $this->mockCurl([
-            '/sedaMessages/sequence:ArchiveTransfer/message:ArchiveTransferReply/originOrganizationIdentification:LS_PA/originMessageIdentifier:15ef78ef665a8777c33d1125783707f8dfb190f82869dc9248e46c5ed396d70b_1542893421'
-            => file_get_contents($sae_reponse_file)
+            'https://sae/sedaMessages/sequence:ArchiveTransfer/message:ArchiveTransferReply/originOrganizationIdentification:LS_PA/originMessageIdentifier:15ef78ef665a8777c33d1125783707f8dfb190f82869dc9248e46c5ed396d70b_1542893421'
+            => file_get_contents($sae_reponse_file),
         ]);
 
-        $id_ce = $this->createConnector('as@lae-rest', "Asalae")['id_ce'];
-        $this->associateFluxWithConnector($id_ce, "actes-generique", "SAE");
+        $id_ce = $this->createConnector('as@lae-rest', 'Asalae')['id_ce'];
+        $this->associateFluxWithConnector($id_ce, 'actes-generique', 'SAE');
+        $this->configureConnector($id_ce, [
+            'url' => 'https://sae',
+            'login' => 'login',
+            'password' => 'password',
+        ]);
 
         $id_d = $this->createDocument('actes-generique')['id_d'];
         $donnesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
         $donnesFormulaire->setTabData([
-            'sae_transfert_id' => '15ef78ef665a8777c33d1125783707f8dfb190f82869dc9248e46c5ed396d70b_1542893421'
+            'sae_transfert_id' => '15ef78ef665a8777c33d1125783707f8dfb190f82869dc9248e46c5ed396d70b_1542893421',
         ]);
 
         $donnesFormulaire->addFileFromCopy(
             'sae_bordereau',
             'bordereau.xml',
-            __DIR__ . "/fixtures/bordereau.xml"
+            __DIR__ . '/fixtures/bordereau.xml'
         );
 
         $this->getObjectInstancier()
             ->getInstance(ActionChange::class)
-            ->addAction($id_d, self::ID_E_COL, 0, "verif-sae", "test");
+            ->addAction($id_d, self::ID_E_COL, 0, 'verif-sae', 'test');
         return $id_d;
     }
 }
