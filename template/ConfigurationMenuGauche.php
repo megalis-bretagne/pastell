@@ -39,6 +39,7 @@ $menu = [
             <?php endforeach; ?>
         </ul>
     </div>
-    <?php $i++; endforeach ?>
+        <?php $i++;
+    endforeach ?>
 
 </div>

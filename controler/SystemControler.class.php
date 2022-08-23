@@ -237,7 +237,6 @@ class SystemControler extends PastellControler
         $connectorValidation = $this->getObjectInstancier()->getInstance(ConnectorValidation::class);
 
         foreach ($this->getConnecteurDefinitionFiles()->getAllGlobal() as $id_connecteur => $connecteur) {
-
             $documentType = $this->getDocumentTypeFactory()->getGlobalDocumentType($id_connecteur);
             $all_connecteur_globaux[$id_connecteur]['nom'] = $documentType->getName();
             $all_connecteur_globaux[$id_connecteur]['description'] = $documentType->getDescription();
