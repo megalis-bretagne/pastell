@@ -1,5 +1,6 @@
 <?php
 
+use Pastell\Configuration\ConnectorValidation;
 use Pastell\Mailer\Mailer;
 use Pastell\Service\Connecteur\MissingConnecteurService;
 use Pastell\Service\Droit\DroitService;
@@ -233,11 +234,17 @@ class SystemControler extends PastellControler
         $all_connecteur_entite = [];
         $all_connecteur_entite_restricted = [];
 
+        $connectorValidation = $this->getObjectInstancier()->getInstance(ConnectorValidation::class);
+
         foreach ($this->getConnecteurDefinitionFiles()->getAllGlobal() as $id_connecteur => $connecteur) {
+
             $documentType = $this->getDocumentTypeFactory()->getGlobalDocumentType($id_connecteur);
             $all_connecteur_globaux[$id_connecteur]['nom'] = $documentType->getName();
             $all_connecteur_globaux[$id_connecteur]['description'] = $documentType->getDescription();
             $all_connecteur_globaux[$id_connecteur]['list_restriction_pack'] = $documentType->getListRestrictionPack();
+            $definitionFile = $this->getConnecteurDefinitionFiles()->getDefinitionPath($id_connecteur, true);
+            // TODO faire un truc dans connectorValidation pour dire si ok ou pas et récup l'erreur
+            $all_connecteur_globaux[$id_connecteur]['validation'] = $connectorValidation->getConfiguration($definitionFile);
         }
         $this->setViewParameter('all_connecteur_globaux', $all_connecteur_globaux);
 
