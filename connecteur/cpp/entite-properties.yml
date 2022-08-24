@@ -115,6 +115,14 @@ formulaire:
             name: Ne pas récuperer les factures sur Chorus Pro
             commentaire: Doit-être mis à oui dans le cas ou le connecteur est utilisé pour le mode envoi.
             type: checkbox
+        fetch_invoices_option:
+            name: Choix de synchronisation des factures
+            commentaire: Choix de la synchronisation des factures selon leur état Téléchargé sur Chorus.
+            type: select
+            value:
+                1: Toutes les factures
+                2: Uniquement les factures non téléchargées
+                3: Uniquement les factures téléchargées
 
 action:
     test-cpp:
