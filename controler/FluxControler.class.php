@@ -4,8 +4,6 @@ use Pastell\Service\Connecteur\ConnecteurAssociationService;
 
 class FluxControler extends PastellControler
 {
-    public const FLUX_NUM_ONGLET = 4;
-
     public function _beforeAction()
     {
         parent::_beforeAction();
@@ -51,7 +49,7 @@ class FluxControler extends PastellControler
             $fluxEntiteHeritageSQL = $this->getInstance(FluxEntiteHeritageSQL::class);
             $this->setViewParameter('id_e_mere', $this->getEntiteSQL()->getEntiteMere($id_e));
             $this->setViewParameter('all_herited', $fluxEntiteHeritageSQL->hasInheritanceAllFlux($id_e));
-            $this->setViewParameter('flux_connecteur_list', $this->getListFlux($id_e));
+            $this->setViewParameter('flux_list', $this->getFluxDefinitionFiles()->getAll());
             $this->setViewParameter('template_milieu', "FluxList");
         } else {
             $all_connecteur_type = $this->getConnecteurDefinitionFiles()->getAllGlobalType();
@@ -78,6 +76,49 @@ class FluxControler extends PastellControler
         $this->setViewParameter('menu_gauche_select', "Flux/index");
         $this->setViewParameter('entite_denomination', $this->getEntiteSQL()->getDenomination($this->getViewParameterOrObject('id_e')));
         $this->setViewParameter('page_title', "{$this->getViewParameterOrObject('entite_denomination')} : " . ($id_e ? 'Liste des types de dossier' : 'Associations connecteurs globaux'));
+
+        $this->renderDefault();
+    }
+
+    public function detailAction(): void
+    {
+        $id_e = $this->getGetInfo()->getInt('id_e', 0);
+        if ($id_e === 0) {
+            $this->redirect("/Flux/index?id_e=0");
+        }
+        $this->hasDroitLecture($id_e);
+        $this->setViewParameter('id_e', $id_e);
+
+        $flux = $this->getGetInfo()->get('flux', '');
+        if ($flux === '') {
+            $this->redirect("/Flux/index?id_e=$id_e");
+        }
+
+        /** @var FluxEntiteHeritageSQL $fluxEntiteHeritageSQL */
+        $fluxEntiteHeritageSQL = $this->getInstance(FluxEntiteHeritageSQL::class);
+        $this->setViewParameter('id_e_mere', $this->getEntiteSQL()->getEntiteMere($id_e));
+        $this->setViewParameter('all_herited', $fluxEntiteHeritageSQL->hasInheritanceAllFlux($id_e));
+        $this->setViewParameter('flux_connecteur_list', $this->getConnectorForFlux($id_e, $flux));
+        $this->setViewParameter('template_milieu', "FluxList");
+
+        $this->setViewParameter('template_milieu', "FluxDetail");
+
+        $this->setNavigationInfo($id_e, "Flux/index?");
+        $this->setViewParameter('menu_gauche_select', "Flux/index");
+        $this->setViewParameter('entite_denomination', $this->getEntiteSQL()->getDenomination($id_e));
+
+        $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($flux);
+
+        $this->setViewParameter('subtitle', sprintf("Type de dossier « %s » (%s)", $documentType->getName(), $documentType->getModuleId()));
+
+        $this->setViewParameter(
+            'page_title',
+            sprintf(
+                '%s : Association pour le type de dossier %s',
+                $this->getViewParameterByKey('entite_denomination'),
+                $documentType->getName()
+            )
+        );
 
         $this->renderDefault();
     }
@@ -179,43 +220,42 @@ class FluxControler extends PastellControler
         } catch (Exception $ex) {
             $this->setLastError($ex->getMessage());
         }
-        $this->redirect("/Flux/index?id_e=$id_e");
+        if ($id_e) {
+            $this->redirect("/Flux/detail?id_e=$id_e&flux=$flux");
+        } else {
+            $this->redirect("/Flux/index?id_e=$id_e");
+        }
     }
 
-    public function getListFlux($id_e)
+    public function getConnectorForFlux($id_e, $id_flux)
     {
-        $result = [];
-
         $fluxEntiteHeritageSQL = $this->getObjectInstancier()->getInstance(FluxEntiteHeritageSQL::class);
-
         $all_flux_entite = $fluxEntiteHeritageSQL->getAllWithSameType($id_e);
 
-        foreach ($this->getFluxDefinitionFiles()->getAll() as $id_flux => $flux_definition) {
-            $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($id_flux);
-            foreach ($documentType->getConnecteurAllInfo() as $j => $connecteur_type_info) {
-                $connecteur_id = $connecteur_type_info[DocumentType::CONNECTEUR_ID];
-                $line = [];
-                $line['nb_connecteur'] = count($documentType->getConnecteur());
-                $line['num_connecteur'] = $j;
-                $line['id_flux'] = $id_flux;
-                $line['nom_flux'] = $documentType->getName();
-                $line['connecteur_type'] = $connecteur_id;
-                $line[DocumentType::CONNECTEUR_WITH_SAME_TYPE] = $connecteur_type_info[DocumentType::CONNECTEUR_WITH_SAME_TYPE];
-                $line[DocumentType::NUM_SAME_TYPE] = $connecteur_type_info[DocumentType::NUM_SAME_TYPE];
-                $line['inherited_flux'] = false;
-                if (isset($all_flux_entite[$id_flux][$connecteur_id][$line[DocumentType::NUM_SAME_TYPE]])) {
-                    $line['connecteur_info'] = $all_flux_entite[$id_flux][$connecteur_id][$line[DocumentType::NUM_SAME_TYPE]];
-                } else {
-                    $line['connecteur_info'] = false;
-                }
-                if (isset($all_flux_entite[$id_flux]['inherited_flux'])) {
-                    $line['inherited_flux'] = $all_flux_entite[$id_flux]['inherited_flux'];
-                }
-
-                $result[] = $line;
+        $result = [];
+        $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($id_flux);
+        foreach ($documentType->getConnecteurAllInfo() as $j => $connecteur_type_info) {
+            $connecteur_id = $connecteur_type_info[DocumentType::CONNECTEUR_ID];
+            $line = [];
+            $line['nb_connecteur'] = count($documentType->getConnecteur());
+            $line['num_connecteur'] = $j;
+            $line['id_flux'] = $id_flux;
+            $line['nom_flux'] = $documentType->getName();
+            $line['connecteur_type'] = $connecteur_id;
+            $line[DocumentType::CONNECTEUR_WITH_SAME_TYPE] = $connecteur_type_info[DocumentType::CONNECTEUR_WITH_SAME_TYPE];
+            $line[DocumentType::NUM_SAME_TYPE] = $connecteur_type_info[DocumentType::NUM_SAME_TYPE];
+            $line['inherited_flux'] = false;
+            if (isset($all_flux_entite[$id_flux][$connecteur_id][$line[DocumentType::NUM_SAME_TYPE]])) {
+                $line['connecteur_info'] = $all_flux_entite[$id_flux][$connecteur_id][$line[DocumentType::NUM_SAME_TYPE]];
+            } else {
+                $line['connecteur_info'] = false;
             }
-        }
+            if (isset($all_flux_entite[$id_flux]['inherited_flux'])) {
+                $line['inherited_flux'] = $all_flux_entite[$id_flux]['inherited_flux'];
+            }
 
+            $result[] = $line;
+        }
         return $result;
     }
 
@@ -229,6 +269,9 @@ class FluxControler extends PastellControler
         $this->hasDroitEdition($id_e);
         $fluxEntiteHeritageSQL->toogleInheritance($id_e, $flux);
         $this->setLastMessage("L'héritage a été modifié");
-        $this->redirect("/Flux/index?id_e=$id_e");
+        if ($flux === FluxEntiteHeritageSQL::ALL_FLUX) {
+            $this->redirect("/Flux/index?id_e=$id_e");
+        }
+        $this->redirect("/Flux/detail?id_e=$id_e&flux=$flux");
     }
 }
