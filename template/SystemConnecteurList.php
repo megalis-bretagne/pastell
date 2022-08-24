@@ -11,6 +11,7 @@
             <th class="w200">Libellé</th>
             <th>Description</th>
             <th>Restriction</th>
+            <th>Validation</th>
         </tr>
         <?php foreach ($all_connecteur_globaux as $id_connecteur => $connecteur) : ?>
             <tr>
@@ -21,6 +22,19 @@
                     <?php if ($connecteur['list_restriction_pack']) : ?>
                         <?php hecho(implode(", ", $connecteur['list_restriction_pack'])); ?>
                     <?php endif;?>
+                </td>
+                <td>
+                    <?php if ($connecteur['is_valid']) : ?>
+                        <p class="badge badge-success">
+                            Valide
+                        </p>
+                    <?php else : ?>
+                        <a href="<?php $this->url("/System/connecteurDetail?id_connecteur=$id_connecteur&scope=global")?>">
+                            <p class="badge badge-danger">
+                                    Erreur
+                            </p>
+                        </a>
+                    <?php endif ?>
                 </td>
             </tr>
         <?php endforeach;?>
@@ -36,6 +50,7 @@
             <th class="w200">Libellé</th>
             <th>Description</th>
             <th>Restriction</th>
+            <th>Validation</th>
         </tr>
         <?php foreach ($all_connecteur_entite as $id_connecteur => $connecteur) : ?>
             <tr>
@@ -46,6 +61,19 @@
                     <?php if ($connecteur['list_restriction_pack']) : ?>
                         <?php hecho(implode(", ", $connecteur['list_restriction_pack'])); ?>
                     <?php endif;?>
+                </td>
+                <td>
+                    <?php if ($connecteur['is_valid']) : ?>
+                        <p class="badge badge-success">
+                            Valide
+                        </p>
+                    <?php else : ?>
+                        <a href="<?php $this->url("/System/connecteurDetail?id_connecteur=$id_connecteur&scope=global")?>">
+                            <p class="badge badge-danger">
+                                Erreur
+                            </p>
+                        </a>
+                    <?php endif ?>
                 </td>
             </tr>
         <?php endforeach;?>

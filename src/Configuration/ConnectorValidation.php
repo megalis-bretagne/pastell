@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Pastell\Configuration;
 
+use Exception;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Yaml\Yaml;
 use UnrecoverableException;
@@ -28,6 +29,26 @@ class ConnectorValidation
         $this->checkChoiceAction($configuration);
 
         return $configuration;
+    }
+
+    public function isDefinitionFileValid(string $filePath): bool
+    {
+        try {
+            $this->getConfiguration($filePath);
+        } catch (Exception) {
+            return false;
+        }
+        return true;
+    }
+
+    public function getError(string $filePath): string
+    {
+        try {
+            $this->getConfiguration($filePath);
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+        return '';
     }
 
     /**

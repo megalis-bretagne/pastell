@@ -17,7 +17,7 @@ $menu = [
         'Extension/index' => 'Extensions'
     ],
     'Type de dossier' => [
-        'System/flux' => 'Types de dossier disponible',
+        'System/flux' => 'Types de dossier disponibles',
         'TypeDossier/list' => 'Types de dossier personnalisé (studio)',
         'System/definition' => 'Définition des types de dossier'
     ],
