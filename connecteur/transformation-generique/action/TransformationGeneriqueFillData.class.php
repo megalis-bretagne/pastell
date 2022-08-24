@@ -11,18 +11,19 @@ class TransformationGeneriqueFillData extends ChoiceActionExecutor
         $definition_array = $this->getRecuperateur()->get('definition');
         $id_element_array = $this->getRecuperateur()->get('id_element');
 
+        $transformationGeneriqueDefinition = $this->objectInstancier->getInstance(
+            TransformationGeneriqueDefinition::class
+        );
+
         $data = [];
         foreach ($id_element_array as $i => $id_element) {
             $id_element = trim($id_element);
+            $transformationGeneriqueDefinition->checkElementId($id_element);
             if (! $id_element) {
                 continue;
             }
             $data[$id_element] = $definition_array[$i] ?? "";
         }
-
-        $transformationGeneriqueDefinition = $this->objectInstancier->getInstance(
-            TransformationGeneriqueDefinition::class
-        );
 
         $transformationGeneriqueDefinition->setTransformation(
             $this->getConnecteurConfig($this->id_ce),
