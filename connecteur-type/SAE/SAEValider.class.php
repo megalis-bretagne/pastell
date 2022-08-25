@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 use Pastell\Helpers\SedaHelper;
 
 class SAEValider extends ConnecteurTypeActionExecutor
 {
     public const ARCHIVE_TRANSFER_REPLY = 'ArchiveTransferReply';
-    public const COMMENT = 'Comment';
 
     /**
      * @return bool
@@ -63,9 +64,8 @@ class SAEValider extends ConnecteurTypeActionExecutor
         $atr_name = sprintf('%s.xml', $atr_id);
         $donneesFormulaire->addFileFromData($reply_sae_element, $atr_name, $atr_content);
 
-        if ($xml->{self::COMMENT}) {
-            $donneesFormulaire->setData($sae_atr_comment_element, $xml->{self::COMMENT});
-        }
+        $donneesFormulaire->setData($sae_atr_comment_element, $sedaHelper->getComment($xml));
+
         if (! $this->isArchiveAccepted($xml)) {
             $replyCode = (string)($xml->ReplyCode);
             $commentaire = $donneesFormulaire->get($sae_atr_comment_element);
@@ -105,7 +105,7 @@ class SAEValider extends ConnecteurTypeActionExecutor
 
         if ($nodeName === self::ARCHIVE_TRANSFER_REPLY) {
             $replyCode  = (string)($xml->ReplyCode);
-            if ($replyCode === '000') {
+            if ($replyCode === '000'  || $replyCode === 'OK') {
                 return true;
             }
         }

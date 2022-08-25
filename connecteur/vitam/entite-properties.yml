@@ -1,0 +1,39 @@
+nom: Vitam
+type: SAE
+description: 'Connecteur vers le SAE Vitam'
+formulaire:
+    page:
+        url:
+            name: URL
+        certificate:
+            name: 'Certificat utilisateur (format P12)'
+            type: file
+            content-type: application/octet-stream
+            onchange: update-certificate
+        certificate_password:
+            name: 'Mot de passe du certificat utilisateur'
+            type: password
+            onchange: update-certificate
+        certificate_pem:
+            type: file
+            no-show: true
+        certificate_key:
+            type: file
+            no-show: true
+        tenant:
+            name: Tenant
+        workflow:
+            name: Workflow
+action:
+    update-certificate:
+        name: 'Mettre à jour les certificats'
+        rule:
+            internal-action: true
+        action-class: StandardAction
+        connecteur-type: utilities
+        connecteur-type-action: UpdateCertificate
+        connecteur-type-mapping:
+            certificat_connexion: certificate
+            certificat_password: certificate_password
+            certificat_connexion_cert_pem: certificate_pem
+            certificat_connexion_key_pem: certificate_key

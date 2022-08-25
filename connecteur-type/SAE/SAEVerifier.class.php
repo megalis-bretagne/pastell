@@ -10,7 +10,7 @@ class SAEVerifier extends ConnecteurTypeActionExecutor
     public const ACTION_NAME_ERROR = 'verif-sae-erreur';
     public const SAE_ACK_COMMENT = 'sae_ack_comment';
     public const SAE_BORDEREAU = 'sae_bordereau';
-    public const ACK_NOT_PROVIDED = 'ack_not_provided';
+    public const ACK_NOT_PROVIDED = 'ack-not-provided';
 
     public const COMMENT = 'Comment';
 

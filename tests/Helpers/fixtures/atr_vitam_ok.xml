@@ -1,0 +1,45 @@
+<ArchiveTransferReply xmlns="fr:gouv:culture:archivesdefrance:seda:v2.1" xmlns:ns2="http://www.w3.org/1999/xlink"
+                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                      xsi:schemaLocation="fr:gouv:culture:archivesdefrance:seda:v2.1 seda-vitam-2.1-main.xsd">
+    <Date>2022-08-24T16:27:16.916+02:00</Date>
+    <MessageIdentifier>aeeaaaaaacfdatmhaahbiamc2a76zpyaaaaq</MessageIdentifier>
+    <ArchivalAgreement>CE-000039</ArchivalAgreement>
+    <CodeListVersions>
+        <ReplyCodeListVersion></ReplyCodeListVersion>
+        <MessageDigestAlgorithmCodeListVersion></MessageDigestAlgorithmCodeListVersion>
+        <FileFormatCodeListVersion></FileFormatCodeListVersion>
+    </CodeListVersions>
+    <DataObjectPackage>
+        <DataObjectGroup id="DOG_id_cb1d9872-ab04-4908-b9a8-fb1ea17f471f">
+            <BinaryDataObject id="BDO_id_cb1d9872-ab04-4908-b9a8-fb1ea17f471f">
+                <DataObjectSystemId>aeaaaaaaaafdat3yadroqamc2a77c4qaaaaq</DataObjectSystemId>
+                <DataObjectGroupSystemId>aebaaaaaaafdat3yadroqamc2a77c4yaaaaq</DataObjectGroupSystemId>
+                <DataObjectVersion>BinaryMaster_1</DataObjectVersion>
+            </BinaryDataObject>
+        </DataObjectGroup>
+        <DescriptiveMetadata>
+            <ArchiveUnit id="idef311f05-2a6f-40fe-b015-00b8ebeafcbd">
+                <Content>
+                    <SystemId>aeaqaaaaaafdat3yadroqamc2a77c6yaaaba</SystemId>
+                </Content>
+            </ArchiveUnit>
+            <ArchiveUnit id="archive_file_id_cb1d9872-ab04-4908-b9a8-fb1ea17f471f">
+                <Content>
+                    <SystemId>aeaqaaaaaafdat3yadroqamc2a77c5iaaaaq</SystemId>
+                </Content>
+            </ArchiveUnit>
+        </DescriptiveMetadata>
+        <ManagementMetadata>
+            <ArchivalProfile>PA-TEST-v2</ArchivalProfile>
+        </ManagementMetadata>
+    </DataObjectPackage>
+    <ReplyCode>OK</ReplyCode>
+    <MessageRequestIdentifier>ef311f05-2a6f-40fe-b015-00b8ebeafcbd</MessageRequestIdentifier>
+    <GrantDate>2022-08-24T16:27:16.916+02:00</GrantDate>
+    <ArchivalAgency>
+        <Identifier>SA-000001</Identifier>
+    </ArchivalAgency>
+    <TransferringAgency>
+        <Identifier>SA-200000</Identifier>
+    </TransferringAgency>
+</ArchiveTransferReply>

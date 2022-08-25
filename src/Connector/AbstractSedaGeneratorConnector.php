@@ -220,6 +220,7 @@ abstract class AbstractSedaGeneratorConnector extends SEDAConnecteur
                 \file_put_contents($tmp_folder . '/data.json', \json_encode($message, \JSON_THROW_ON_ERROR));
                 $curlWrapper->addPostFile('json_data', $tmp_folder . '/data.json');
                 $url = $this->getURLEndpoint(self::SEDA_GENERATOR_GENERATE_PATH_WITH_TEMPLATE);
+                $result = $curlWrapper->get($url);
             } finally {
                 $this->tmpFolder->delete($tmp_folder);
             }
@@ -229,9 +230,9 @@ abstract class AbstractSedaGeneratorConnector extends SEDAConnecteur
                 0
             );
             $url = $this->getURLEndpoint(self::SEDA_GENERATOR_GENERATE_PATH);
+            $result = $curlWrapper->get($url);
         }
 
-        $result = $curlWrapper->get($url);
         if ($curlWrapper->getLastHttpCode() !== 200) {
             throw new UnrecoverableException(
                 'SedaGenerator did not return a 200 response. ' . $curlWrapper->getFullMessage()
