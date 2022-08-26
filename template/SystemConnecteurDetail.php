@@ -1,11 +1,30 @@
 <?php
 
-/** @var Gabarit $this */
+/**
+ * @var Gabarit $this
+ * @var bool $isConnectorValid
+ * @var string $connectorError
+ * @var string $description
+ * @var array $list_restriction_pack
+ * @var array $formulaire_fields
+ * @var array $all_action
+ */
 ?>
-<a class='btn btn-link' href='<?php $this->url("System/connecteur")?>'>
+<a class='btn btn-link' href='<?php $this->url('System/connecteur')?>'>
     <i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des connecteurs
 </a>
 
+
+<div class="box">
+    <h2>Validation du connecteur</h2>
+    <?php if ($isConnectorValid) : ?>
+        <div class='alert alert-success'>Le fichier définissant ce connecteur est valide</div>
+    <?php else :?>
+        <div class='alert alert-danger'>
+            Le fichier définissant ce connecteur contient des erreurs : <?php echo $connectorError ?>
+        </div>
+    <?php endif;?>
+</div>
 
 <div class="box">
     <h2>Description</h2>
@@ -31,7 +50,7 @@
 
 
 <div class="box">
-    <h2>Élements du formulaire</h2>
+    <h2>Éléments du formulaire</h2>
     <table class='table table-striped'>
         <tr>
             <th>Id</th>
@@ -42,7 +61,7 @@
             <tr>
                 <td><?php hecho($field_id)?></td>
                 <td><?php hecho($fields_properties['name'])?></td>
-                <td><?php hecho(isset($fields_properties['commentaire']) ? $fields_properties['commentaire'] : "")?></td>
+                <td><?php hecho($fields_properties['commentaire'] ?? "")?></td>
             </tr>
         <?php endforeach;?>
     </table>

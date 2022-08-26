@@ -1,5 +1,6 @@
 <?php
 
+use Pastell\Configuration\ConnectorValidation;
 use Pastell\Mailer\Mailer;
 use Pastell\Service\Connecteur\MissingConnecteurService;
 use Pastell\Service\Droit\DroitService;
@@ -233,11 +234,16 @@ class SystemControler extends PastellControler
         $all_connecteur_entite = [];
         $all_connecteur_entite_restricted = [];
 
+        $connectorValidation = $this->getObjectInstancier()->getInstance(ConnectorValidation::class);
+
         foreach ($this->getConnecteurDefinitionFiles()->getAllGlobal() as $id_connecteur => $connecteur) {
             $documentType = $this->getDocumentTypeFactory()->getGlobalDocumentType($id_connecteur);
             $all_connecteur_globaux[$id_connecteur]['nom'] = $documentType->getName();
             $all_connecteur_globaux[$id_connecteur]['description'] = $documentType->getDescription();
             $all_connecteur_globaux[$id_connecteur]['list_restriction_pack'] = $documentType->getListRestrictionPack();
+            $definitionFile = $this->getConnecteurDefinitionFiles()->getDefinitionPath($id_connecteur, true);
+            $all_connecteur_globaux[$id_connecteur]['is_valid'] =
+                $connectorValidation->isDefinitionFileValid($definitionFile);
         }
         $this->setViewParameter('all_connecteur_globaux', $all_connecteur_globaux);
 
@@ -246,6 +252,9 @@ class SystemControler extends PastellControler
             $all_connecteur_entite[$id_connecteur]['nom'] = $documentType->getName();
             $all_connecteur_entite[$id_connecteur]['description'] = $documentType->getDescription();
             $all_connecteur_entite[$id_connecteur]['list_restriction_pack'] = $documentType->getListRestrictionPack();
+            $definitionFile = $this->getConnecteurDefinitionFiles()->getDefinitionPath($id_connecteur, false);
+            $all_connecteur_entite[$id_connecteur]['is_valid'] =
+                $connectorValidation->isDefinitionFileValid($definitionFile);
         }
         $this->setViewParameter('all_connecteur_entite', $all_connecteur_entite);
 
@@ -340,18 +349,27 @@ class SystemControler extends PastellControler
     {
         $id_connecteur = $this->getGetInfo()->get('id_connecteur');
         $scope = $this->getGetInfo()->get('scope');
-        if ($scope == 'global') {
+
+        $connectorValidation = $this->getObjectInstancier()->getInstance(ConnectorValidation::class);
+
+        if ($scope === 'global') {
             $documentType = $this->getDocumentTypeFactory()->getGlobalDocumentType($id_connecteur);
+            $definitionFile = $this->getConnecteurDefinitionFiles()->getDefinitionPath($id_connecteur, true);
         } else {
             $documentType = $this->getDocumentTypeFactory()->getEntiteDocumentType($id_connecteur);
+            $definitionFile = $this->getConnecteurDefinitionFiles()->getDefinitionPath($id_connecteur, false);
         }
+
         $name = $documentType->getName();
         $this->setViewParameter('description', $documentType->getDescription());
         $this->setViewParameter('list_restriction_pack', $documentType->getListRestrictionPack());
         $this->setViewParameter('all_action', $this->getAllActionInfo($documentType, 'connecteur'));
         $this->setViewParameter('formulaire_fields', $this->getFormsElement($documentType));
 
-        $this->setViewParameter('page_title', "Détail du connecteur " . ($scope == 'global' ? 'global' : "d'entité") . " « $name » ($id_connecteur)");
+        $this->setViewParameter('isConnectorValid', $connectorValidation->isDefinitionFileValid($definitionFile));
+        $this->setViewParameter('connectorError', $connectorValidation->getError($definitionFile));
+
+        $this->setViewParameter('page_title', "Détail du connecteur " . ($scope === 'global' ? 'global' : "d'entité") . " « $name » ($id_connecteur)");
         $this->setViewParameter('menu_gauche_select', "System/connecteur");
         $this->setViewParameter('template_milieu', "SystemConnecteurDetail");
         $this->renderDefault();

@@ -129,7 +129,7 @@ $css_files_list = [
                     <a href="<?php $this->url("Entite/detail?id_e={$id_e_menu}") ?>" class="new_picto"><i class="fa fa-wrench"></i>&nbsp;Administration</a>
                     <?php endif;?>
                     <?php if ($roleUtilisateur->hasDroit($authentification->getId(), "system:lecture", 0)) : ?>
-                        <a href="<?php $this->url('System/loginPageConfiguration') ?>" class="new_picto" style="float: right;">
+                        <a href="<?php $this->url('System/index') ?>" class="new_picto" style="float: right;">
                             <i class="fa fa-puzzle-piece"></i>
                             <span>
                             Administration avancée

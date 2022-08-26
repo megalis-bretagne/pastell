@@ -197,4 +197,13 @@ class ConnecteurDefinitionFiles
         $restriction_pack = $connecteur_definition[ConnectorConfiguration::RESTRICTION_PACK] ?? [];
         return (! $this->packService->hasOneOrMorePackEnabled($restriction_pack));
     }
+
+    public function getDefinitionPath(string $connectorId, bool $isGlobal = false): string
+    {
+        $connectorPath = $this->extensions->getConnecteurPath($connectorId);
+        if ($isGlobal) {
+            return $connectorPath . '/' . self::GLOBAL_PROPERTIES_FILENAME;
+        }
+        return $connectorPath . '/' . self::ENTITE_PROPERTIES_FILENAME;
+    }
 }
