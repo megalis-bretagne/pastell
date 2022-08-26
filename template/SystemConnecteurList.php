@@ -68,7 +68,7 @@
                             Valide
                         </p>
                     <?php else : ?>
-                        <a href="<?php $this->url("/System/connecteurDetail?id_connecteur=$id_connecteur&scope=global")?>">
+                        <a href="<?php $this->url("/System/connecteurDetail?id_connecteur=$id_connecteur&scope=entite")?>">
                             <p class="badge badge-danger">
                                 Erreur
                             </p>

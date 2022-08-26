@@ -16,7 +16,7 @@
 
 
 <div class="box">
-    <h2>Validation du type de dossier </h2>
+    <h2>Validation du connecteur</h2>
     <?php if ($isConnectorValid) : ?>
         <div class='alert alert-success'>Le fichier définissant ce connecteur est valide</div>
     <?php else :?>
