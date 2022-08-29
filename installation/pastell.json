@@ -2334,7 +2334,7 @@
       },
       "token": {
         "Field": "token",
-        "Type": "varchar(64)",
+        "Type": "varchar(250)",
         "Null": "NO",
         "Key": "UNI",
         "Default": null,
