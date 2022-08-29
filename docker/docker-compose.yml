@@ -9,6 +9,8 @@ services:
             args:
                 GITHUB_API_TOKEN: ${GITHUB_API_TOKEN:-}
         read_only: true
+        stop_grace_period: 60s
+        stop_signal: SIGTERM
         links:
             - db
             - redis
