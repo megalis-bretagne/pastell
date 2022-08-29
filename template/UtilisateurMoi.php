@@ -233,7 +233,7 @@ use Pastell\Utilities\Certificate;
                             href='Utilisateur/renewToken?id=<?php echo $token['id']; ?>'
                             onclick="return confirm('Êtes-vous certain de vouloir renouveler ce jeton (l\'ancien token sera perdu) ?')"
                     >
-                        <i class="fa fa-refresh"></i>&nbsp;Renouveller
+                        <i class="fa fa-refresh"></i>&nbsp;Renouveler
                     </a>
                     <a
                             class='btn btn-danger'

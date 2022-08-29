@@ -970,7 +970,7 @@ EOT;
         $this->redirect('/Utilisateur/moi');
     }
 
-    private function verifIsMyToken(string $tokenId)
+    private function verifIsMyToken(string $tokenId): void
     {
         $userTokenService = $this->getObjectInstancier()->getInstance(UserTokenService::class);
         $user = $userTokenService->getUser($tokenId);
