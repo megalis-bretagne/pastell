@@ -11,7 +11,7 @@
 
 <div class="box">
     <h2><?php hecho($subtitle); ?></h2>
-    <table class="table table-striped">
+    <table class="table table-striped" aria-label="Liste des connecteurs">
         <tr>
             <th>Type de connecteur</th>
             <th>Connecteur</th>

@@ -27,7 +27,7 @@
 </tr>
 </table>
 
-<table class="table table-striped">
+<table class="table table-striped" aria-label="Liste des types de dossier">
         <tr>
             <th>Type de dossier</th>
             <th>#Id du type de dossier</th>

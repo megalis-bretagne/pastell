@@ -94,13 +94,10 @@ class FluxControler extends PastellControler
             $this->redirect("/Flux/index?id_e=$id_e");
         }
 
-        /** @var FluxEntiteHeritageSQL $fluxEntiteHeritageSQL */
         $fluxEntiteHeritageSQL = $this->getInstance(FluxEntiteHeritageSQL::class);
         $this->setViewParameter('id_e_mere', $this->getEntiteSQL()->getEntiteMere($id_e));
         $this->setViewParameter('all_herited', $fluxEntiteHeritageSQL->hasInheritanceAllFlux($id_e));
         $this->setViewParameter('flux_connecteur_list', $this->getConnectorForFlux($id_e, $flux));
-        $this->setViewParameter('template_milieu', "FluxList");
-
         $this->setViewParameter('template_milieu', "FluxDetail");
 
         $this->setNavigationInfo($id_e, "Flux/index?");
@@ -227,7 +224,7 @@ class FluxControler extends PastellControler
         }
     }
 
-    public function getConnectorForFlux($id_e, $id_flux)
+    public function getConnectorForFlux(int $id_e, string $id_flux): array
     {
         $fluxEntiteHeritageSQL = $this->getObjectInstancier()->getInstance(FluxEntiteHeritageSQL::class);
         $all_flux_entite = $fluxEntiteHeritageSQL->getAllWithSameType($id_e);
