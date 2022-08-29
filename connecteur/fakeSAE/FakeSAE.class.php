@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use Pastell\Helpers\SedaHelper;
+use Pastell\Seda\AsalaeSedaHelper;
+
 class FakeSAE extends SAEConnecteur
 {
     public const CONNECTEUR_ID = 'fakeSAE';
@@ -20,6 +23,7 @@ class FakeSAE extends SAEConnecteur
     private int $sedaVersion;
     private int $ackResult;
     private int $sendResult;
+    private SedaHelper $sedaHelper;
 
     public function setConnecteurConfig(DonneesFormulaire $collectiviteProperties)
     {
@@ -27,6 +31,7 @@ class FakeSAE extends SAEConnecteur
         $this->sedaVersion = (int)$this->collectiviteProperties->get('seda_version') ?: 1;
         $this->ackResult = (int)$this->collectiviteProperties->get('result_ack') ?: 1;
         $this->sendResult = (int)$this->collectiviteProperties->get('result_send') ?: 1;
+        $this->sedaHelper = new AsalaeSedaHelper();
     }
 
     private function getFixture(string $name): string
@@ -129,5 +134,10 @@ class FakeSAE extends SAEConnecteur
         }
 
         return $xml->asXML();
+    }
+
+    public function getSedaHelper(): SedaHelper
+    {
+        return $this->sedaHelper;
     }
 }

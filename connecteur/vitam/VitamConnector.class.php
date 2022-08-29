@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Pastell\Helpers\SedaHelper;
+use Pastell\Seda\VitamSedaHelper;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpClient\Psr18Client;
 use VitamClient\Client;
@@ -11,6 +13,7 @@ final class VitamConnector extends SAEConnecteur
     private Client $client;
     private int $tenant;
     private string $context;
+    private VitamSedaHelper $sedaHelper;
 
     public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire)
     {
@@ -34,6 +37,7 @@ final class VitamConnector extends SAEConnecteur
             )
         );
         $this->client = Client::createWithHttpClient($psr18Client, $url);
+        $this->sedaHelper = new VitamSedaHelper();
     }
 
     /**
@@ -67,5 +71,19 @@ final class VitamConnector extends SAEConnecteur
     public function getAtr(string $transfertId, string $originatingAgencyId): string
     {
         return $this->client->ingest()->getAtr($this->tenant, $transfertId);
+    }
+
+    /**
+     * @throws \Http\Client\Exception
+     */
+    public function testConnection(): bool
+    {
+        $this->client->ingest()->options($this->tenant);
+        return true;
+    }
+
+    public function getSedaHelper(): SedaHelper
+    {
+        return $this->sedaHelper;
     }
 }

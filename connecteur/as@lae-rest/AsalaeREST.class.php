@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use Monolog\Logger;
+use Pastell\Helpers\SedaHelper;
+use Pastell\Seda\AsalaeSedaHelper;
 
 class AsalaeREST extends SAEConnecteur
 {
@@ -10,6 +12,7 @@ class AsalaeREST extends SAEConnecteur
     private string $login;
     private string $password;
     private int $chunk_size_in_bytes;
+    private AsalaeSedaHelper $sedaHelper;
 
     public function __construct(
         private readonly CurlWrapperFactory $curlWrapperFactory,
@@ -23,6 +26,7 @@ class AsalaeREST extends SAEConnecteur
         $this->login = $donneesFormulaire->get('login');
         $this->password = $donneesFormulaire->get('password');
         $this->chunk_size_in_bytes = (int)$donneesFormulaire->get('chunk_size_in_bytes');
+        $this->sedaHelper = new AsalaeSedaHelper();
     }
 
     public function sendSIP(string $bordereau, string $archivePath): string
@@ -221,5 +225,10 @@ class AsalaeREST extends SAEConnecteur
     public function ping()
     {
         return $this->getWS('/ping');
+    }
+
+    public function getSedaHelper(): SedaHelper
+    {
+        return $this->sedaHelper;
     }
 }

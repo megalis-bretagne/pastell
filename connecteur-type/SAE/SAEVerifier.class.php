@@ -37,7 +37,7 @@ class SAEVerifier extends ConnecteurTypeActionExecutor
             return true;
         }
 
-        $sedaHelper = new SedaHelper();
+        $sedaHelper = $sae->getSedaHelper();
 
         $simpleXMLWrapper = new SimpleXMLWrapper();
         $bordereau_content = $donneesFormulaire->getFileContent($sae_bordereau);

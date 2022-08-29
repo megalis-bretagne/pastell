@@ -7,11 +7,15 @@ namespace Pastell\Helpers;
 use SimpleXMLElement;
 use UnrecoverableException;
 
-class SedaHelper
+abstract class SedaHelper
 {
     public const SEDA_0_2_NS = 'fr:gouv:ae:archive:draft:standard_echange_v0.2';
     public const SEDA_1_0_NS = 'fr:gouv:culture:archivesdefrance:seda:v1.0';
     public const SEDA_2_1_NS = 'fr:gouv:culture:archivesdefrance:seda:v2.1';
+
+    abstract public function getSAEArchivalIdentifierFromAtrXpath(): array;
+    abstract public function getComment(SimpleXMLElement $xml): string;
+    abstract public function isSIPAccepted(SimpleXMLElement $xml): bool;
 
     private function getSedaNamespace(SimpleXMLElement $xml): string
     {
@@ -21,7 +25,7 @@ class SedaHelper
     /**
      * @throws UnrecoverableException
      */
-    private function getElement(SimpleXMLElement $xml, array $xpath, string $type): string
+    protected function getElement(SimpleXMLElement $xml, array $xpath, string $type): string
     {
         $ns = $this->getSedaNamespace($xml);
         if (empty($xpath[$ns])) {
@@ -105,16 +109,7 @@ class SedaHelper
      */
     public function getSAEArchivalIdentifierFromAtr(SimpleXMLElement $xml): string
     {
-        $xpath = [
-            self::SEDA_0_2_NS => ['/seda:ArchiveTransferAcceptance/seda:Archive/seda:ArchivalAgencyArchiveIdentifier'],
-            self::SEDA_1_0_NS => ['/seda:ArchiveTransferReply/seda:Archive/seda:ArchivalAgencyArchiveIdentifier'],
-            self::SEDA_2_1_NS => [
-                '/seda:ArchiveTransferReply/seda:DataObjectPackage/seda:DescriptiveMetadata' .
-                '/seda:ArchiveUnit/seda:Content/seda:ArchivalAgencyArchiveUnitIdentifier',
-                '(/seda:ArchiveTransferReply/seda:DataObjectPackage/seda:DescriptiveMetadata' .
-                '/seda:ArchiveUnit/seda:Content/seda:SystemId)[1]',
-            ],
-        ];
+        $xpath = $this->getSAEArchivalIdentifierFromAtrXpath();
         return $this->getElement($xml, $xpath, "Identifiant de l'archive sur le SAE");
     }
 
@@ -131,25 +126,11 @@ class SedaHelper
         return $this->getElement($xml, $xpath, 'Identifiant du service versant');
     }
 
-    /**
-     * @throws UnrecoverableException
-     */
-    public function getComment(SimpleXMLElement $xml): string
+    public function getReplyCode(SimpleXMLElement $xml): string
     {
-        if ($xml->Comment) {
-            return (string)$xml->Comment;
+        if ($xml->ReplyCode) {
+            return (string)$xml->ReplyCode;
         }
-        if ($xml->Operation) {
-            $expression = ['//seda:Operation/seda:Event[last()]/seda:OutcomeDetailMessage'];
-            $xpath = [
-                self::SEDA_0_2_NS => $expression,
-                self::SEDA_1_0_NS => $expression,
-                self::SEDA_2_1_NS => $expression,
-            ];
-
-            return $this->getElement($xml, $xpath, 'Commentaire');
-        }
-
         return '';
     }
 }

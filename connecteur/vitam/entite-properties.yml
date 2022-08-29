@@ -25,6 +25,12 @@ formulaire:
         workflow:
             name: Workflow
 action:
+    test-connection:
+        name: 'Tester la connexion'
+        action-class: VitamTestAction
+        rule:
+            droit_id_u: 'entite:edition'
+
     update-certificate:
         name: 'Mettre à jour les certificats'
         rule:
