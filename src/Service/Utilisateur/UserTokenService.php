@@ -11,13 +11,25 @@ final class UserTokenService
 {
     public function __construct(
         private readonly UsersToken $usersToken,
+        private readonly \Journal $journal,
     ) {
     }
 
     public function createToken(int $userId, string $name, string $expiration = null): string
     {
-        $token = (new UriSafeTokenGenerator())->generateToken();
+        $token = $this->generateToken();
         $this->usersToken->create($userId, $name, $token, $expiration);
+        $message = "L'utilisateur $userId a créer le token « $name »";
+        if ($expiration) {
+            $message .= " (date d'expiration : $expiration)";
+        }
+        $this->journal->add(
+            \Journal::MODIFICATION_UTILISATEUR,
+            0,
+            '',
+            'create-token',
+            $message
+        );
         return $token;
     }
 
@@ -57,6 +69,35 @@ final class UserTokenService
 
     public function deleteToken(int $tokenId): void
     {
+        $tokenInfo = $this->usersToken->getTokenInfo($tokenId);
         $this->usersToken->deleteToken($tokenId);
+        $this->journal->add(
+            \Journal::MODIFICATION_UTILISATEUR,
+            0,
+            '',
+            'delete-token',
+            "L'utilisateur {$tokenInfo['id_u']} a supprimé son jeton « {$tokenInfo['name']} »"
+        );
+    }
+
+
+    public function renewToken(int $tokenId): string
+    {
+        $token = $this->generateToken();
+        $tokenInfo = $this->usersToken->getTokenInfo($tokenId);
+        $this->usersToken->updateToken($tokenInfo['id'], $token);
+        $this->journal->add(
+            \Journal::MODIFICATION_UTILISATEUR,
+            0,
+            '',
+            'delete-token',
+            "L'utilisateur {$tokenInfo['id_u']} a renouvelé son jeton « {$tokenInfo['name']} »"
+        );
+        return $token;
+    }
+
+    private function generateToken(): string
+    {
+        return (new UriSafeTokenGenerator())->generateToken();
     }
 }
