@@ -28,9 +28,9 @@ class FluxControlerTest extends ControlerTestCase
      */
     public function testIndexActionFluxWithTwoSameConnecteurType()
     {
-        $this->setGetInfo(['id_e' => PastellTestCase::ID_E_COL]);
+        $this->setGetInfo(['id_e' => PastellTestCase::ID_E_COL, 'flux' => 'test']);
         $this->expectOutputRegex("#/Flux/edition\?id_e=1&flux=test&type=test&num_same_type=1#");
-        $this->fluxControler->indexAction();
+        $this->fluxControler->detailAction();
     }
 
     /**
@@ -157,9 +157,9 @@ class FluxControlerTest extends ControlerTestCase
         );
     }
 
-    public function testGetListFlux()
+    public function testGetConnectorForFlux()
     {
-        $result = $this->fluxControler->getListFlux(1);
+        $result = $this->fluxControler->getConnectorForFlux(1, 'test');
         $this->assertEquals('test', end($result)['connecteur_type']);
         $this->assertEquals(1, end($result)[DocumentType::NUM_SAME_TYPE]);
         $this->assertTrue(end($result)[DocumentType::CONNECTEUR_WITH_SAME_TYPE]);

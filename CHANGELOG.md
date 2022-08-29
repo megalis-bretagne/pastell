@@ -22,6 +22,7 @@
 - Possibilité de revenir en arrière sur les flux studio sur les étapes non réalisés #1539
 - Possibilité de retamponner les actes et les annexes (flux studio, actes generique et automatique ) #627
 - SAEConnecteur::sendArchive() devient SAEConnecteur:sendSIP()
+- Amélioration de la présentation de l'association des connecteurs
 
 ## Suppressions
 
