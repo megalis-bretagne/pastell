@@ -30,7 +30,10 @@ class DatabaseUpdaterTest extends PastellTestCase
         );
     }
 
-    public function testCantUpdatePastellTables()
+    /**
+     * @throws \JsonException
+     */
+    public function testCantUpdatePastellTables(): void
     {
         $extensionLoader = $this->getObjectInstancier()->getInstance(\ExtensionLoader::class);
         $extensionLoader->loadExtension([ __DIR__ . '/fixtures/bad-extension']);
