@@ -4,6 +4,7 @@ namespace Pastell\Tests\Database;
 
 use Pastell\Database\DatabaseUpdater;
 use PastellTestCase;
+use UnrecoverableException;
 
 class DatabaseUpdaterTest extends PastellTestCase
 {
@@ -27,5 +28,17 @@ class DatabaseUpdaterTest extends PastellTestCase
             ],
             $databaseUpdater->getQueries()
         );
+    }
+
+    public function testCantUpdatePastellTables()
+    {
+        $extensionLoader = $this->getObjectInstancier()->getInstance(\ExtensionLoader::class);
+        $extensionLoader->loadExtension([ __DIR__ . '/fixtures/bad-extension']);
+        $databaseUpdater = $this->getObjectInstancier()->getInstance(DatabaseUpdater::class);
+        $this->expectException(UnrecoverableException::class);
+        $this->expectExceptionMessageMatches(
+            '#Le fichier .*/bad-extension/database.json contient la définition de la table utilisateur déjà présente dans Pastell !#'
+        );
+        $databaseUpdater->getQueries();
     }
 }
