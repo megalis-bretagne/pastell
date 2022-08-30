@@ -1,0 +1,80 @@
+<ArchiveTransferReply xmlns="fr:gouv:culture:archivesdefrance:seda:v2.1">
+    <Comment>Versement flux test pastell dev</Comment>
+    <Date>2022-05-02T14:48:34+02:00</Date>
+    <MessageIdentifier>15ef78ef665a8777c33d1125783707f8dfb190f82869dc9248e46c5ed396d70b_1542893421</MessageIdentifier>
+    <CodeListVersions/>
+    <DataObjectPackage xmlns="fr:gouv:culture:archivesdefrance:seda:v2.1">
+        <BinaryDataObject id="id_edcec601-cc7a-4988-844c-86d1afa480c8">
+            <Uri>Delib Libriciel.pdf</Uri>
+            <MessageDigest algorithm="http://www.w3.org/2001/04/xmlenc#sha256">
+                c5aef15320444b5a0a4a9e7f0c8dbfd8be6f6624265a7b0de81ff4375fb5bd28
+            </MessageDigest>
+            <Size>23221</Size>
+            <FormatIdentification>
+                <MimeType>application/pdf</MimeType>
+            </FormatIdentification>
+            <FileInfo>
+                <Filename>Delib Libriciel.pdf</Filename>
+            </FileInfo>
+        </BinaryDataObject>
+        <DescriptiveMetadata>
+            <ArchiveUnit xmlns:default="fr:gouv:culture:archivesdefrance:seda:v1.0"
+                         id="id2ee68b10-59fb-46f4-92ad-c8c0040375e9">
+                <Management>
+                    <AppraisalRule>
+                        <Rule>P1Y</Rule>
+                        <StartDate>2022-05-02</StartDate>
+                        <FinalAction>Keep</FinalAction>
+                    </AppraisalRule>
+                    <AccessRule>
+                        <Rule>AR038</Rule>
+                        <StartDate>2022-05-01</StartDate>
+                    </AccessRule>
+                </Management>
+                <Content>
+                    <DescriptionLevel>Item</DescriptionLevel>
+                    <Title>1-Une délibération pour tester le SEDA 2.1 depuis pastell</Title>
+                    <ArchivalAgencyArchiveUnitIdentifier>AE_2022_15</ArchivalAgencyArchiveUnitIdentifier>
+                    <Description>1-Une délibération pour tester le SEDA 2.1 depuis pastell</Description>
+                    <Language>fra</Language>
+                    <DescriptionLanguage>fra</DescriptionLanguage>
+                    <Keyword>
+                        <KeywordContent>4.1 Personnel titulaires et stagiaires de la F.P.T.</KeywordContent>
+                    </Keyword>
+                    <Keyword>
+                        <KeywordContent>DEL_20220501</KeywordContent>
+                    </Keyword>
+                    <OriginatingAgency>
+                        <Identifier>ASSEMBLEES</Identifier>
+                        <OrganizationDescriptiveMetadata>
+                            <default:Name xmlns="fr:gouv:culture:archivesdefrance:seda:v1.0">Service des Assemblées
+                            </default:Name>
+                        </OrganizationDescriptiveMetadata>
+                    </OriginatingAgency>
+                    <StartDate>2022-05-01</StartDate>
+                    <EndDate>2022-05-01</EndDate>
+                </Content>
+                <ArchiveUnit id="archive_file_id_edcec601-cc7a-4988-844c-86d1afa480c8">
+                    <Content>
+                        <DescriptionLevel>File</DescriptionLevel>
+                        <Title>#FILENAME#</Title>
+                        <ArchivalAgencyArchiveUnitIdentifier>AE_2022_15_0001</ArchivalAgencyArchiveUnitIdentifier>
+                    </Content>ArchivalAgencyArchiveUnitIdentifier
+                    <DataObjectReference>
+                        <DataObjectReferenceId>id_edcec601-cc7a-4988-844c-86d1afa480c8</DataObjectReferenceId>
+                    </DataObjectReference>
+                </ArchiveUnit>
+            </ArchiveUnit>
+        </DescriptiveMetadata>
+        <ManagementMetadata/>
+    </DataObjectPackage>
+    <ReplyCode>000</ReplyCode>
+    <MessageRequestIdentifier>FRLSADC_ATR_27</MessageRequestIdentifier>
+    <GrantDate>2022-05-02T14:48:34+02:00</GrantDate>
+    <ArchivalAgency>
+        <Identifier>FRLSADC</Identifier>
+    </ArchivalAgency>
+    <TransferringAgency>
+        <Identifier>ASSEMBLEES</Identifier>
+    </TransferringAgency>
+</ArchiveTransferReply>

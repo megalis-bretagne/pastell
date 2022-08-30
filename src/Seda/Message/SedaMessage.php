@@ -25,6 +25,7 @@ class SedaMessage implements \JsonSerializable
     public ?string $startDate;
     public ?string $endDate;
     public ?string $description;
+    public ?string $descriptionLevel;
     public ?string $serviceLevel;
     public ?string $originatingAgencyIdentifier;
     public ?string $submissionAgencyIdentifier;
@@ -137,6 +138,7 @@ class SedaMessage implements \JsonSerializable
             'Language' => $this->language,
             'Description' => $this->description,
             'DescriptionLanguage' => $this->descriptionLanguage,
+            'DescriptionLevel' => $this->descriptionLevel,
             'StartDate' => $this->startDate,
             'EndDate' => $this->endDate,
             'AccessRule' => $this->accessRule,

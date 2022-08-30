@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Pastell\Helpers\SedaHelper;
+
 abstract class SAEConnecteur extends Connecteur
 {
     /**
@@ -20,4 +22,6 @@ abstract class SAEConnecteur extends Connecteur
      * @throws UnrecoverableException
      */
     abstract public function getAtr(string $transfertId, string $originatingAgencyId): string;
+
+    abstract public function getSedaHelper(): SedaHelper;
 }

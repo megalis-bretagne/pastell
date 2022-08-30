@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 use Pastell\Helpers\SedaHelper;
 
 class SAEValider extends ConnecteurTypeActionExecutor
 {
     public const ARCHIVE_TRANSFER_REPLY = 'ArchiveTransferReply';
-    public const COMMENT = 'Comment';
 
     /**
      * @return bool
@@ -28,7 +29,7 @@ class SAEValider extends ConnecteurTypeActionExecutor
 
         $donneesFormulaire = $this->getDonneesFormulaire();
 
-        $sedaHelper = new SedaHelper();
+        $sedaHelper = $sae->getSedaHelper();
 
         $simpleXMLWrapper = new SimpleXMLWrapper();
         $xml = $simpleXMLWrapper->loadString($donneesFormulaire->getFileContent($sae_bordereau));
@@ -56,21 +57,18 @@ class SAEValider extends ConnecteurTypeActionExecutor
         $simpleXMLWrapper = new SimpleXMLWrapper();
         $xml = $simpleXMLWrapper->loadString($atr_content);
 
-        $sedaHelper = new SedaHelper();
-
         $atr_id = $sedaHelper->getAtrID($xml);
 
         $atr_name = sprintf('%s.xml', $atr_id);
         $donneesFormulaire->addFileFromData($reply_sae_element, $atr_name, $atr_content);
 
-        if ($xml->{self::COMMENT}) {
-            $donneesFormulaire->setData($sae_atr_comment_element, $xml->{self::COMMENT});
-        }
-        if (! $this->isArchiveAccepted($xml)) {
-            $replyCode = (string)($xml->ReplyCode);
+        $donneesFormulaire->setData($sae_atr_comment_element, $sedaHelper->getComment($xml));
+
+        if (! $sedaHelper->isSIPAccepted($xml)) {
+            $replyCode = $sedaHelper->getReplyCode($xml);
             $commentaire = $donneesFormulaire->get($sae_atr_comment_element);
 
-            if ($replyCode) {
+            if ($replyCode !== '') {
                 $commentaire .= " (Archive refusée - code de retour : $replyCode)";
             } else {
                 $commentaire .= ' (Archive refusée)';
@@ -92,23 +90,5 @@ class SAEValider extends ConnecteurTypeActionExecutor
         $this->getActionCreator()->addAction($this->id_e, $this->id_u, $nextAction, $message);
         $this->notify($nextAction, $this->type, $message);
         $this->setLastMessage($message);
-    }
-
-    private function isArchiveAccepted(SimpleXMLElement $xml): bool
-    {
-        $nodeName = $xml->getName();
-
-        if ($nodeName === 'ArchiveTransferAcceptance') {
-            //For SEDA V1
-            return true;
-        }
-
-        if ($nodeName === self::ARCHIVE_TRANSFER_REPLY) {
-            $replyCode  = (string)($xml->ReplyCode);
-            if ($replyCode === '000') {
-                return true;
-            }
-        }
-        return false;
     }
 }

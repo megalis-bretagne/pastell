@@ -5,6 +5,7 @@
 ## Ajouts
 
 - Permettre d'utiliser des jetons d'authentification pour utiliser l'API #1572
+- Connecteur Vitam #1251
 
 ## Évolutions
 

@@ -104,6 +104,7 @@ class SedaMessageBuilder
         $this->message->archivalProfile = $dataFromBordereau['ArchivalProfile'] ?? null;
         $this->message->language = $dataFromBordereau['Language'] ?? null;
         $this->message->descriptionLanguage = $dataFromBordereau['DescriptionLanguage'] ?? null;
+        $this->message->descriptionLevel = $dataFromBordereau['DescriptionLevel'] ?? null;
         $this->message->description = $dataFromBordereau['archiveunits_title'] ?? null;
         $this->message->serviceLevel = $dataFromBordereau['ServiceLevel'] ?? null;
         $this->message->startDate = $dataFromBordereau['StartDate'] ?? null;
