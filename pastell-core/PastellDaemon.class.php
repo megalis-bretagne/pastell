@@ -169,7 +169,7 @@ class PastellDaemon
 
     public function stop(): never
     {
-        $this->logger->addInfo("SIGTERM catched !");
+        $this->logger->addInfo("SIGTERM caught !");
         while (true) {
             $nb_running = count($this->workerSQL->getAllRunningWorker());
             if ($nb_running === 0) {
