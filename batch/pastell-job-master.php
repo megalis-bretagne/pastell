@@ -1,13 +1,11 @@
 <?php
 
-/**
- * @var ObjectInstancier $objectInstancier
- */
-
 $logger_system = "DAEMON";
 
 require_once __DIR__ . '/../init.php';
 
-/** @var PastellDaemon $pastellDaemon */
-$pastellDaemon = $objectInstancier->getInstance(PastellDaemon::class);
+$pastellDaemon = ObjectInstancierFactory::getObjetInstancier()->getInstance(PastellDaemon::class);
+
+pcntl_signal(SIGTERM, fn() => $pastellDaemon->stop());
+
 $pastellDaemon->jobMaster();

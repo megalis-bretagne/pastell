@@ -1,5 +1,6 @@
 <?php
 
+use JetBrains\PhpStorm\NoReturn;
 use Monolog\Logger;
 
 class PastellDaemon
@@ -32,7 +33,9 @@ class PastellDaemon
 
         while (true) {
             $this->jobMasterOneRun();
+            pcntl_signal_dispatch();
             sleep(1);
+            pcntl_signal_dispatch();
         }
     }
 
@@ -84,7 +87,7 @@ class PastellDaemon
         $this->jobQueueSQL->lock($id_job);
 
         $script = realpath(__DIR__ . "/../batch/pastell-job-worker.php");
-        $command = "nohup " . PHP_PATH . " $script $id_job";
+        $command = "nohup " . PHP_PATH . " $script $id_job >/dev/null 2>&1 &";
         $this->logger->addInfo("Daemon starts worker for job #$id_job : " . json_encode($job));
         exec($command);
     }
@@ -162,5 +165,19 @@ class PastellDaemon
         }
 
         $workerSQL->success($id_worker);
+    }
+
+    public function stop(): never
+    {
+        $this->logger->addInfo("SIGTERM caught !");
+        while (true) {
+            $nb_running = count($this->workerSQL->getAllRunningWorker());
+            if ($nb_running === 0) {
+                $this->logger->addInfo("No more running worker : exited");
+                exit(0);
+            }
+            $this->logger->addInfo("$nb_running running workers left, wait 5s...");
+            sleep(5);
+        }
     }
 }

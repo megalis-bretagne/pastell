@@ -29,6 +29,7 @@ class VerifEnvironnementTest extends PHPUnit\Framework\TestCase
                 'phar' => true,
                 'simplexml' => true,
                 'intl' => true,
+                'pcntl' => true,
             ],
             $verifEnvironnement->checkExtension()
         );
