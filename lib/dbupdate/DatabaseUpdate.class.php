@@ -37,9 +37,12 @@ class DatabaseUpdate
         return $this->databaseDiff->getDiff($this->fileContent, $this->databaseDefinition);
     }
 
+    /**
+     * @throws JsonException
+     */
     public function getDatabaseDefinition()
     {
-        return json_encode($this->databaseDefinition);
+        return json_encode($this->databaseDefinition, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT);
     }
 
     public function setDatabaseDefinition(array $databaseDefinition)

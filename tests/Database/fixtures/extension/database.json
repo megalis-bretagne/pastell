@@ -1,0 +1,24 @@
+{
+  "table_test": {
+    "Engine": "MyISAM",
+    "Column": {
+      "id": {
+        "Field": "id",
+        "Type": "int(11)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      },
+      "column_test": {
+        "Field": "column_test",
+        "Type": "varchar(16)",
+        "Null": "NO",
+        "Key": "",
+        "Default": null,
+        "Extra": ""
+      }
+    },
+    "Index": []
+  }
+}

@@ -6,6 +6,8 @@ class Extensions
     public const CONNECTEUR_FOLDER_NAME = "connecteur";
     public const CONNECTEUR_TYPE_FOLDER_NAME = "connecteur-type";
     public const TYPE_DOSSIER_FOLDER_NAME = "type-dossier";
+    public const DATABASE_FILENAME = "database.json";
+
 
     public const PASTELL_ALL_MODULE_CACHE_KEY = "pastell_all_module";
     public const PASTELL_ALL_CONNECTEUR_CACHE_KEY = "pastell_all_connecteur";
@@ -48,6 +50,18 @@ class Extensions
         }
         uasort($extensions_list, [$this,"compareExtension"]);
         return $extensions_list;
+    }
+
+    public function getAllDatabaseFile(): array
+    {
+        $result = [];
+        foreach ($this->getAllExtensionsPath() as $extensionPath) {
+            $databaseFilePath = sprintf("%s/%s", $extensionPath, self::DATABASE_FILENAME);
+            if (file_exists($databaseFilePath)) {
+                $result[] = $databaseFilePath;
+            }
+        }
+        return $result;
     }
 
     private function compareExtension($a, $b)

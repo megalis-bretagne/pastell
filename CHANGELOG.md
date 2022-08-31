@@ -24,6 +24,7 @@
 - Possibilité de retamponner les actes et les annexes (flux studio, actes generique et automatique ) #627
 - SAEConnecteur::sendArchive() devient SAEConnecteur:sendSIP()
 - Amélioration de la présentation de l'association des connecteurs
+- Possibilité d'ajouter un fichier database.json dans les extensions pour ajouter des tables sur la base de données Pastell (voir le format sur installation/pastell.json). #1557 
 
 ## Suppressions
 

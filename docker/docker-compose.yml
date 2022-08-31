@@ -20,7 +20,7 @@ services:
             - /var/run:mode=770,uid=${UID:-33},gid=${GID:-33}
             - /var/www/pastell/var:mode=770,uid=${UID:-33},gid=${GID:-33}
         volumes:
-            - ${PASTELL_EXTENSION_PATH:-../}:/data/extensions/
+            - ${PASTELL_EXTENSION_PATH:-../../}:/data/extensions/
             - ${WORKSPACE_VOLUME:-app_workspace}:/data/workspace
             - ${PASTELL_SSL_CERTIFICAT:-app_certificate}:/data/certificate
             - ${PASTELL_SESSION:-app_session}:/var/lib/php/session
