@@ -20,7 +20,13 @@ class DatabaseSchemaCheck implements CheckInterface
 
     private function checkDatabaseSchema(): HealthCheckItem
     {
-        $databaseSqlCommand = $this->databaseUpdater->getQueries();
+        try {
+            $databaseSqlCommand = $this->databaseUpdater->getQueries();
+        } catch (\UnrecoverableException $e) {
+            $databaseSchemaResult = $e->getMessage();
+            return (new HealthCheckItem('Schéma de la base de données', $databaseSchemaResult))
+                ->setSuccess(false);
+        }
         $databaseSchemaResult = 'Le schéma de la base est conforme au schéma attendu par le code.';
 
         if ($databaseSqlCommand) {
