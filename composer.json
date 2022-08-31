@@ -67,7 +67,6 @@
     "codeception/codeception": "^5.0",
     "codeception/module-phpbrowser": "^3.0",
     "codeception/module-rest": "^3.1",
-    "jetbrains/phpstorm-attributes": "^1.0",
     "mikey179/vfsstream": "^1.6",
     "mustangostang/spyc": "^0.6.3",
     "pdepend/pdepend": "^2.10",

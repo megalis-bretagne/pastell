@@ -167,7 +167,7 @@ class PastellDaemon
         $workerSQL->success($id_worker);
     }
 
-    #[NoReturn] public function stop(): void
+    public function stop(): never
     {
         $this->logger->addInfo("SIGTERM catched !");
         while (true) {
