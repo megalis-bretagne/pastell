@@ -41,6 +41,9 @@ class FluxAPIController extends BaseAPIController
                 }
             }
         }
+        uasort($allType, static function ($a, $b) {
+            return strcmp($a['nom'], $b['nom']);
+        });
         return $allType;
     }
 
