@@ -11,7 +11,7 @@
 ?>
 <div class="box">
     <h2>Type de dossier configurés</h2>
-        <table style='width:100%;'>
+        <table style='width:100%;' aria-label="Modifier les propriétés de l'héritage global">
             <tr>
                 <td class='align_right'>
                 <?php if ($id_e_mere) : ?>
