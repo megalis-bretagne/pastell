@@ -63,12 +63,12 @@ class FluxControler extends PastellControler
 
             $possibleFluxList = $this->apiGet('/flux');
             foreach ($possibleFluxList as $fluxId => $fluxInfo) {
-                if (empty($fluxInfo['connecteur'])) {
+                if (empty($fluxList[$fluxId]['connecteur'])) {
                     unset($possibleFluxList[$fluxId]);
                 }
             }
             foreach ($fluxList as $fluxId => $fluxInfo) {
-                if ($fluxList[$fluxId]['nb_connector'] === 0) {
+                if ($fluxInfo['nb_connector'] === 0) {
                     unset($fluxList[$fluxId]);
                 }
             }

@@ -34,7 +34,7 @@
         <table class="table table-striped" aria-label="Liste des types de dossier">
             <tr>
                 <th>Type de dossier</th>
-                <th>#Id du type de dossier</th>
+                <th>Identifiant du type de dossier</th>
                 <th>Nombre de connecteurs associés</th>
             </tr>
 
