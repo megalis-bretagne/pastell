@@ -8,6 +8,10 @@
 
 - CPP: Permettre de choisir les factures à récupérer et synchroniser selon leur état "Téléchargé" sur Chorus #1438
 
+## Évolutions
+
+- Le composant PES viewer passe en version 1.5.1 et les PJ sont enregistrées dans le répertoire `/data/pesPJ`
+
 # [3.1.16] - 2022-07-18
 
 ***Cette version nécessite une mise à jour du générateur SEDA en 0.8.3***

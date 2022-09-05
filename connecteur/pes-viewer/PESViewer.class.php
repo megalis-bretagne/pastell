@@ -52,6 +52,10 @@ class PESViewer extends Connecteur
             $location = $matches[1];
         }
 
+        if (strpos($location, '/bl-xemwebviewer/') !== 0) {
+            $location = '/bl-xemwebviewer/' . $location;
+        }
+
         preg_match_all('/^Set-Cookie:\s*([^;]*)/mi', $result, $matches);
         $cookies = array();
         foreach ($matches[1] as $item) {
