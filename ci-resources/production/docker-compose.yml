@@ -34,7 +34,7 @@ services:
         limits:
           memory: 1536M
     volumes:
-      - /data/pesPJ:/pesPJ/
+      - ${PES_PJ_PATH:-/data/pesPJ}:/pesPJ/
 
   crypto:
     networks:

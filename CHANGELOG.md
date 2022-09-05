@@ -10,7 +10,7 @@
 
 ## Évolutions
 
-- Le composant PES viewer passe en version 1.5.1 et les PJ sont enregistrées dans le répertoire `/data/pesPJ`
+- Le composant PES viewer passe en version 1.5.1 et les PJ sont enregistrées dans le répertoire `/data/pesPJ` #1551
 
 # [3.1.16] - 2022-07-18
 
