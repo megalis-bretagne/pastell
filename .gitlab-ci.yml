@@ -112,6 +112,8 @@ acceptance_test:
 
 security_scan:
   allow_failure: true
+  before_script:
+    - cp .trivyignore /
 
 deploy_master:
     stage: staging
