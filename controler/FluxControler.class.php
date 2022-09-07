@@ -49,7 +49,32 @@ class FluxControler extends PastellControler
             $fluxEntiteHeritageSQL = $this->getInstance(FluxEntiteHeritageSQL::class);
             $this->setViewParameter('id_e_mere', $this->getEntiteSQL()->getEntiteMere($id_e));
             $this->setViewParameter('all_herited', $fluxEntiteHeritageSQL->hasInheritanceAllFlux($id_e));
-            $this->setViewParameter('flux_list', $this->getFluxDefinitionFiles()->getAll());
+
+            $fluxList = $this->getFluxDefinitionFiles()->getAll();
+            foreach ($fluxList as $fluxId => $fluxInfo) {
+                $fluxList[$fluxId]['nb_connector'] = 0;
+                foreach ($this->getConnectorForFlux($id_e, $fluxId) as $connectorInfo) {
+                    if ($connectorInfo['connecteur_info']) {
+                        $fluxList[$fluxId]['nb_connector']++;
+                    }
+                }
+                unset($fluxList[$fluxId]['formulaire'], $fluxList[$fluxId]['action']);
+            }
+
+            $possibleFluxList = $this->apiGet('/flux');
+            foreach ($possibleFluxList as $fluxId => $fluxInfo) {
+                if (empty($fluxList[$fluxId]['connecteur'])) {
+                    unset($possibleFluxList[$fluxId]);
+                }
+            }
+            foreach ($fluxList as $fluxId => $fluxInfo) {
+                if ($fluxInfo['nb_connector'] === 0) {
+                    unset($fluxList[$fluxId]);
+                }
+            }
+            $this->setViewParameter('flux_list', $fluxList);
+
+            $this->setViewParameter('possible_flux_list', $possibleFluxList);
             $this->setViewParameter('template_milieu', "FluxList");
         } else {
             $all_connecteur_type = $this->getConnecteurDefinitionFiles()->getAllGlobalType();
@@ -250,7 +275,6 @@ class FluxControler extends PastellControler
             if (isset($all_flux_entite[$id_flux]['inherited_flux'])) {
                 $line['inherited_flux'] = $all_flux_entite[$id_flux]['inherited_flux'];
             }
-
             $result[] = $line;
         }
         return $result;
