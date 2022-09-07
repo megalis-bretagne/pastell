@@ -17,7 +17,7 @@ class SedaGeneriqueFillData extends ChoiceActionExecutor
         $pastell_to_seda = $connector->getPastellToSeda();
 
         $data = $this->getConnecteurConfig($this->id_ce)->getFileContent('data');
-        $json = json_decode($data ?? "{}", true, 512, JSON_THROW_ON_ERROR);
+        $json = json_decode($data ?: '{}', true, 512, JSON_THROW_ON_ERROR);
 
         foreach ($pastell_to_seda as $pastell_id => $element_info) {
             $json[$pastell_id] = $this->getRecuperateur()->get($pastell_id);
