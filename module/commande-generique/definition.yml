@@ -15,6 +15,7 @@ formulaire:
             requis: true
             content-type: application/pdf
             type: file
+            commentaire: 'format PDF'
         autre_document_attache:
             name: 'Autre document attaché'
             type: file
