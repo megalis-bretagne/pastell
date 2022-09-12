@@ -204,12 +204,12 @@ abstract class AbstractSedaGeneratorConnector extends SEDAConnecteur
         $curlWrapper = $this->curlWrapperFactory->getInstance();
 
         $dataFromBordereau = \json_decode(
-            $this->connecteurConfig->getFileContent('data'),
+            $this->connecteurConfig->getFileContent('data') ?: '{}',
             true,
             512,
             \JSON_THROW_ON_ERROR
         );
-        $dataFromFiles = $this->connecteurConfig->getFileContent('files');
+        $dataFromFiles = $this->connecteurConfig->getFileContent('files') ?: '';
 
         $message = $this->getMessage($fluxData, $dataFromBordereau, $dataFromFiles);
 

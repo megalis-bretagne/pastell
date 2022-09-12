@@ -16,12 +16,12 @@ class SedaGeneriqueFillFiles extends ChoiceActionExecutor
     {
         $node_id = $this->getRecuperateur()->get('node_id');
 
-        $files_content = $this->getConnecteurConfig($this->id_ce)->getFileContent('files');
+        $files_content = $this->getConnecteurConfig($this->id_ce)->getFileContent('files') ?: '';
 
         $generateurSedaFillFiles = new GenerateurSedaFillFiles($files_content);
 
         foreach ($generateurSedaFillFiles->getFiles($node_id) as $files) {
-            $generateurSedaFillFiles->setNodeDoNotPutMineType($files['id'], false);
+            $generateurSedaFillFiles->setNodeDoNotPutMineType((string)$files['id'], false);
         }
 
         foreach ($this->getRecuperateur()->getAll() as $key => $value) {
