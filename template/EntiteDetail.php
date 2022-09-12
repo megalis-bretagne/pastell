@@ -38,6 +38,10 @@ $id_e = $entiteExtendedInfo['id_e'];
         <th>Date de création</th>
         <td><?php echo time_iso_to_fr($entiteExtendedInfo['date_inscription']) ?></td>
     </tr>
+    <tr>
+        <th>Identifiant</th>
+        <td><?php echo ($entiteExtendedInfo['id_e']) ?></td>
+    </tr>
     <?php if ($entiteExtendedInfo['entite_mere']) : ?>
     <tr>
         <th>Entité mère</th>
