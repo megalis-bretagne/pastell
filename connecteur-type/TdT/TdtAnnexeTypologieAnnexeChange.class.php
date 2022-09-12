@@ -45,7 +45,7 @@ class TdtAnnexeTypologieAnnexeChange extends ConnecteurTypeActionExecutor
         $this->getDonneesFormulaire()->deleteField($type_piece_element);
         $this->getDonneesFormulaire()->setData($type_pj_element, json_encode($type_pj));
 
-        $this->setLastMessage("Modification des fichiers ou de la nature: merci de revoir la typologie");
+        $this->setLastMessage("Modification des fichiers ou de la nature : merci de revoir la typologie");
         return false;
     }
 }
