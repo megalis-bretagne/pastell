@@ -761,7 +761,7 @@ class DonneesFormulaire
                 foreach ($file_list as $file_num => $file_name) {
                     $ctype = $this->getContentType($field->getName(), $file_num);
                     if ($ctype && !in_array($ctype, $field->getContentType(), true)) {
-                        $this->lastError = "Le type $ctype du fichier « $file_name » du champs « {$field->getLibelle()} » n'est pas conforme à : {$field->getProperties('content-type')} ";
+                        $this->lastError = "Le type $ctype du fichier « $file_name » du champ « {$field->getLibelle()} » n'est pas conforme à : {$field->getProperties('content-type')} ";
                         return false;
                     }
                 }
