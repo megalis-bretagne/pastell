@@ -1,2 +1,2 @@
 Suppression de l'entité id_e=2
-Information : {"id_e":2,"type":"service","denomination":"CCAS","siren":"123456788","date_inscription":"0000-00-00 00:00:00","entite_mere":"1","centre_de_gestion":0,"is_active":1}
+Information : {"id_e":2,"type":"collectivite","denomination":"CCAS","siren":"123456788","date_inscription":"0000-00-00 00:00:00","entite_mere":"1","centre_de_gestion":0,"is_active":1}
