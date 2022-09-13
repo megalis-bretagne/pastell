@@ -13,6 +13,7 @@ class TransformationTransform extends ConnecteurTypeActionExecutor
      * @return bool
      * @throws NotFoundException
      * @throws UnrecoverableException
+     * @throws JsonException
      */
     public function go(): bool
     {
@@ -46,7 +47,7 @@ class TransformationTransform extends ConnecteurTypeActionExecutor
             $donneesFormulaire->addFileFromData(
                 $transformation_file_element,
                 'transformation_file.json',
-                json_encode($modified_fields)
+                json_encode($modified_fields, JSON_THROW_ON_ERROR)
             );
         }
 

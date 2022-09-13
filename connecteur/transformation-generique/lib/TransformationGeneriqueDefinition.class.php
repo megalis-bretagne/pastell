@@ -31,20 +31,20 @@ class TransformationGeneriqueDefinition
     }
 
     /**
-     * @param $element_id
+     * @param string $element_id
      * @throws Exception
      */
-    public function checkElementId($element_id)
+    public function checkElementId(string $element_id)
     {
         if (!preg_match("#" . self::ELEMENT_ID_REGEXP . "#", $element_id)) {
-            throw new Exception(
+            throw new UnrecoverableException(
                 "L'identifiant de l'élément « " . get_hecho(
                     $element_id
                 ) . " » ne respecte pas l'expression rationnelle : " . self::ELEMENT_ID_REGEXP
             );
         }
         if (strlen($element_id) > self::ELEMENT_ID_MAX_LENGTH) {
-            throw new Exception(
+            throw new UnrecoverableException(
                 "L'identifiant de l'élément « " . get_hecho(
                     $element_id
                 ) . " » ne doit pas dépasser " . self::ELEMENT_ID_MAX_LENGTH . " caractères"
