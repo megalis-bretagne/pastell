@@ -25,6 +25,10 @@ $id_e = $entiteExtendedInfo['id_e'];
     <?php endif; ?>
 
     <tr>
+        <th>Identifiant</th>
+        <td><?php echo ($entiteExtendedInfo['id_e']) ?></td>
+    </tr>
+    <tr>
         <th>Dénomination</th>
         <td><?php hecho($entiteExtendedInfo['denomination']); ?></td>
     </tr>
@@ -37,10 +41,6 @@ $id_e = $entiteExtendedInfo['id_e'];
     <tr>
         <th>Date de création</th>
         <td><?php echo time_iso_to_fr($entiteExtendedInfo['date_inscription']) ?></td>
-    </tr>
-    <tr>
-        <th>Identifiant</th>
-        <td><?php echo ($entiteExtendedInfo['id_e']) ?></td>
     </tr>
     <?php if ($entiteExtendedInfo['entite_mere']) : ?>
     <tr>
