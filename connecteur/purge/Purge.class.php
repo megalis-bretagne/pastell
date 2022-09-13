@@ -84,7 +84,7 @@ class Purge extends Connecteur
     public function listDocumentGlobal()
     {
         return $this->documentEntite->getDocumentLastActionOlderThanInDays(
-            $this->connecteurConfig->get('nb_days') ?: 365,
+            $this->connecteurConfig->get('nb_days') ?: 5000,
             $this->connecteurConfig->get('document_type')
         );
     }
