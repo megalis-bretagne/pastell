@@ -17,8 +17,8 @@ use Pastell\Utilities\Certificate;
 
 ?>
 
-<a class='btn btn-link' href='Entite/utilisateur?id_e=<?php echo $info['id_e'] ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour
-    à la liste des utilisateurs</a>
+<a class='btn btn-link' href='Entite/utilisateur?id_e=<?php echo $info['id_e'] ?>'>
+    <i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des utilisateurs</a>
 
 <?php if (!$info['is_enabled']) : ?>
     <div class="alert alert-danger">Cet utilisateur est désactivé</div>
@@ -85,8 +85,9 @@ use Pastell\Utilities\Certificate;
             <tr>
                 <th>Dernières actions</th>
                 <td>
-                    <a href='Journal/index?id_u=<?php echo $id_u ?>'>Dernières actions
-                        de <?php hecho($info['prenom'] . " " . $info['nom']); ?></a>
+                    <a href='Journal/index?id_u=<?php echo $id_u ?>'>
+                        Dernières actions de <?php hecho($info['prenom'] . " " . $info['nom']); ?>
+                    </a>
                 </td>
             </tr>
         <?php endif; ?>
@@ -192,8 +193,8 @@ use Pastell\Utilities\Certificate;
 
         <br/><br/>
 
-        <div class="alert-info alert">Note : Vous ne pouvez attribuer un rôle que si vous en possédez déjà tous les
-            droits
+        <div class="alert-info alert">
+            Note : Vous ne pouvez attribuer un rôle que si vous en possédez déjà tous les droits
         </div>
 
 
