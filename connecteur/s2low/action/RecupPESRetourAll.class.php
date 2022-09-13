@@ -8,7 +8,6 @@ class RecupPESRetourAll extends ActionExecutor
 
         $all_col = $entiteListe->getAll(Entite::TYPE_COLLECTIVITE);
         $all_col = array_merge($all_col, $entiteListe->getAll(Entite::TYPE_CENTRE_DE_GESTION));
-        $all_col = array_merge($all_col, $entiteListe->getAll(Entite::TYPE_SERVICE));
 
         $envoye = [];
         foreach ($all_col as $infoCollectivite) {

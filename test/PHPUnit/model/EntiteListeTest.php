@@ -13,7 +13,7 @@ class EntiteListeTest extends PastellTestCase
 
     public function testCountCollectivite()
     {
-        $this->assertEquals(1, $this->entiteListe->countCollectivite());
+        $this->assertEquals(2, $this->entiteListe->countCollectivite());
     }
 
     public function testGetAllCollectivite()

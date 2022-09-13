@@ -332,7 +332,6 @@ action:
             no-last-action: ''
             droit_id_u: 'actes-automatique:edition'
             type_id_e:
-                - service
                 - collectivite
     modification:
         name-action: Modifier

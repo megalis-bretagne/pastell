@@ -3,7 +3,6 @@
 class EntiteSQL extends SQL
 {
     public const ENTITE_RACINE_DENOMINATION = "Entité racine";
-
     public const ID_E_ENTITE_RACINE = 0;
 
     public function getInfo($id_e)
@@ -69,6 +68,7 @@ class EntiteSQL extends SQL
         ) {
             return $id_e;
         }
+        /** @deprecated 4.0.0 - Cas Entite::TYPE_SERVICE */
         foreach ($this->getAncetre($id_e) as $ancetre) {
             if ($ancetre['type'] == Entite::TYPE_COLLECTIVITE) {
                 return $ancetre['id_e'];
@@ -139,7 +139,7 @@ class EntiteSQL extends SQL
         if ($id_e != 0 || ! $liste_collectivite || ($liste_collectivite[0] == 0)) {
             return $this->getNavigationFilleWithType(
                 $id_e,
-                [Entite::TYPE_COLLECTIVITE,Entite::TYPE_CENTRE_DE_GESTION,Entite::TYPE_SERVICE]
+                [Entite::TYPE_COLLECTIVITE,Entite::TYPE_CENTRE_DE_GESTION]
             );
         }
         $liste_fille = [];

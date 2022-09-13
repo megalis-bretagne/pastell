@@ -6,10 +6,7 @@
 class Entite extends SQL
 {
     public const TYPE_COLLECTIVITE = "collectivite";
-    public const TYPE_FOURNISSEUR = "fournisseur";
     public const TYPE_CENTRE_DE_GESTION = "centre_de_gestion";
-    public const TYPE_SERVICE = "service";
-    public const TYPE_CITOYEN = "citoyen";
 
     private $id_e;
 
@@ -28,10 +25,7 @@ class Entite extends SQL
     {
         return [
             self::TYPE_COLLECTIVITE => "Collectivité",
-            self::TYPE_FOURNISSEUR => "Fournisseur",
-            self::TYPE_CENTRE_DE_GESTION => "Centre de gestion",
-            self::TYPE_SERVICE => 'Service',
-            self::TYPE_CITOYEN => 'Citoyen'
+            self::TYPE_CENTRE_DE_GESTION => "Centre de gestion"
         ];
     }
 

@@ -49,7 +49,7 @@ TRUNCATE TABLE `droit`;
 TRUNCATE TABLE `entite`;
 INSERT INTO `entite` (`id_e`, `type`, `denomination`, `siren`, `date_inscription`, `entite_mere`, `centre_de_gestion`, `is_active`) VALUES
 (1, 'collectivite', 'Bourg-en-Bresse', '123456789', '0000-00-00 00:00:00', '0', 0, 1),
-(2, 'service', 'CCAS', '123456788', '0000-00-00 00:00:00', '1', 0, 1);
+(2, 'collectivite', 'CCAS', '123456788', '0000-00-00 00:00:00', '1', 0, 1);
 
 TRUNCATE TABLE `entite_ancetre`;
 INSERT INTO `entite_ancetre` (`id_e_ancetre`, `id_e`, `niveau`) VALUES

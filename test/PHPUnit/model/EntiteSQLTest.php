@@ -99,11 +99,6 @@ class EntiteSQLTest extends PastellTestCase
         $this->assertEquals(1, $this->entiteSQL->getCollectiviteAncetre(1));
     }
 
-    public function testGetCollectiviteAncetreService()
-    {
-        $this->assertEquals(1, $this->entiteSQL->getCollectiviteAncetre(2));
-    }
-
     public function testGetFilleInfoNavigation()
     {
         $this->assertEquals(

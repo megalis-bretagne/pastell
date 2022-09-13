@@ -76,7 +76,7 @@ class DocumentCountTest extends PastellTestCase
                         'info' =>
                              [
                                 'id_e' => '2',
-                                'type' => 'service',
+                                'type' => 'collectivite',
                                 'denomination' => 'CCAS',
                                 'siren' => '123456788',
                                 'date_inscription' => '0000-00-00 00:00:00',
