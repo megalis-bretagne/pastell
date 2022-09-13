@@ -17,6 +17,22 @@ abstract class SedaHelper
     abstract public function getComment(SimpleXMLElement $xml): string;
     abstract public function isSIPAccepted(SimpleXMLElement $xml): bool;
 
+    /**
+     * @param SimpleXMLElement $xml
+     * @return string
+     * @throws UnrecoverableException
+     */
+    public function getSAEArchivalIdentifierFromAtr(SimpleXMLElement $xml): string
+    {
+        $xpath = [
+            self::SEDA_0_2_NS =>  '/seda:ArchiveTransferAcceptance/seda:Archive/seda:ArchivalAgencyArchiveIdentifier',
+            self::SEDA_1_0_NS =>  '/seda:ArchiveTransferReply/seda:Archive/seda:ArchivalAgencyArchiveIdentifier',
+            self::SEDA_2_1_NS =>  '/seda:ArchiveTransferReply/seda:DataObjectPackage/seda:DescriptiveMetadata' .
+                '/seda:ArchiveUnit/seda:Content/seda:ArchivalAgencyArchiveUnitIdentifier',
+        ];
+        return $this->getElement($xml, $xpath, "Identifiant de l'archive sur le SAE");
+    }
+
     private function getSedaNamespace(SimpleXMLElement $xml): string
     {
         return $xml->getNamespaces()[''];

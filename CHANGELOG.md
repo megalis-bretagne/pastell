@@ -102,6 +102,19 @@
 - Suppression des élements relatifs au centre de gestions sur la version standard. Il est possible de les remettre avec la feature flag CDGFeature.
 - Suppression de l'URL dans l'onglet de retour du SAE
 
+# [3.1.17] - 2022-09-12
+
+## Corrections
+
+- Le glaneur pouvait se verrouiller et bloquer sur le même fichier lorsque le fichier n'est pas valide #1568
+
+## Ajouts
+
+- CPP: Permettre de choisir les factures à récupérer et synchroniser selon leur état "Téléchargé" sur Chorus #1438
+
+## Évolutions
+
+- Le composant PES viewer passe en version 1.5.1 et les PJ sont enregistrées dans le répertoire `/data/pesPJ` #1551
 
 # [3.1.16] - 2022-07-18
 
