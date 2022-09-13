@@ -65,6 +65,14 @@ class CPP extends PortailFactureConnecteur
         $cppWrapperConfig->user_role = $donneesFormulaire->get('user_role');
         $cppWrapperConfig->identifiant_structure_cpp = $donneesFormulaire->get('identifiant_structure_cpp');
         $cppWrapperConfig->service_destinataire = $donneesFormulaire->get('service_destinataire');
+        $fetchInvoicesChoice = (int)$donneesFormulaire->get('fetch_invoices_option');
+        if ($fetchInvoicesChoice === 2) {
+            $cppWrapperConfig->fetchDownloadedInvoices = false;
+        } elseif ($fetchInvoicesChoice === 3) {
+            $cppWrapperConfig->fetchDownloadedInvoices = true;
+        } else {
+            $cppWrapperConfig->fetchDownloadedInvoices = null;
+        }
         $this->setDeposeNbJours($donneesFormulaire);
 
         $this->cppWrapper = $this->cppWrapperFactory->newInstance();

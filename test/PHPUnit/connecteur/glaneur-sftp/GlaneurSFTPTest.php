@@ -333,4 +333,55 @@ class GlaneurSFTPTest extends PastellTestCase
             $donneesFormulaire->getFileName('fichier_reponse')
         );
     }
+
+    /**
+     * @throws NotFoundException
+     * @throws DonneesFormulaireException
+     * @throws Exception
+     */
+    public function testEmptyHeliosFile(): void
+    {
+        $zipLocation = $this->tmp_folder . '/zip.zip';
+        $zip = new ZipArchive();
+        if ($zip->open($zipLocation, ZipArchive::CREATE)) {
+            $zip->addFromString('empty.xml', '');
+            $zip->close();
+        }
+
+        $glaneurSFTP = $this->getObjectInstancier()->getInstance(GlaneurSFTP::class);
+        $glaneurSFTP->setLogger($this->getLogger());
+        $glaneurSFTP->setConnecteurInfo(['id_e' => 1]);
+        $collectiviteProperties = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
+        $collectiviteProperties->setTabData([
+            GlaneurConnecteur::TRAITEMENT_ACTIF => '1',
+            GlaneurConnecteur::TYPE_DEPOT => GlaneurConnecteur::TYPE_DEPOT_ZIP,
+            GlaneurConnecteur::FILE_PREG_MATCH => 'fichier_pes: /^(.*)\.xml$/',
+            GlaneurConnecteur::METADATA_STATIC => 'envoi_tdt: true',
+            GlaneurConnecteur::FLUX_NAME => 'helios-automatique',
+            GlaneurConnecteur::ACTION_OK => 'importation',
+            GlaneurConnecteur::DIRECTORY => $this->tmp_folder,
+            GlaneurConnecteur::DIRECTORY_SEND => $this->directory_send,
+            GlaneurConnecteur::DIRECTORY_ERROR => $this->directory_error,
+        ]);
+        $collectiviteProperties->addFileFromCopy(
+            GlaneurConnecteur::FICHER_EXEMPLE,
+            'pes.zip',
+            $zipLocation
+        );
+        $glaneurSFTP->setConnecteurConfig($collectiviteProperties);
+
+        $glaneurSFTP->setSFTPFactory($this->getSFTPFactory());
+
+        $id_d = $glaneurSFTP->glanerFicExemple();
+        $this->assertSame("Création du document $id_d", $glaneurSFTP->getLastMessage()[0]);
+
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
+
+        $this->assertSame(
+            'empty.xml',
+            $donneesFormulaire->getFileName('fichier_pes')
+        );
+
+        $this->assertLastDocumentAction('fatal-error', $id_d);
+    }
 }

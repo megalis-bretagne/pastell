@@ -23,4 +23,7 @@ class CPPWrapperConfig
 
     public $identifiant_structure_cpp;
     public $service_destinataire;
+
+    /** @var ?bool $fetchDownloadedInvoices */
+    public $fetchDownloadedInvoices;
 }

@@ -287,6 +287,9 @@ class CPPWrapper
                         'nbResultatsMaximum' => self::MAX_FACTURE_LIST
                     ]
                 ];
+                if ($this->cppWrapperConfig->fetchDownloadedInvoices !== null) {
+                    $data['factureTelechargeeParDestinataire'] = $this->cppWrapperConfig->fetchDownloadedInvoices;
+                }
                 if (intval($idFournisseur)) {
                     $data['listeFournisseurs'][0] = ['idFournisseur' => intval($idFournisseur)];
                 }
@@ -380,8 +383,6 @@ class CPPWrapper
     }
 
     /**
-     * @param string $periodeDateHeureEtatCourantDu
-     * @param string $periodeDateHeureEtatCourantAu
      * @return array
      * @throws CPPWrapperExceptionRechercheFactureTravaux
      * @throws Exception
@@ -408,17 +409,21 @@ class CPPWrapper
                 ]
             ];
 
-            if (intval($this->cppWrapperConfig->identifiant_structure_cpp)) {
-                $data['idDestinataire'] = intval($this->cppWrapperConfig->identifiant_structure_cpp);
+            if ((int)$this->cppWrapperConfig->identifiant_structure_cpp) {
+                $data['idDestinataire'] = (int)$this->cppWrapperConfig->identifiant_structure_cpp;
             }
-            if (intval($this->cppWrapperConfig->service_destinataire)) {
-                $data['idServiceExecutant'] = intval($this->cppWrapperConfig->service_destinataire);
+            if ((int)$this->cppWrapperConfig->service_destinataire) {
+                $data['idServiceExecutant'] = (int)$this->cppWrapperConfig->service_destinataire;
             }
             if ($periodeDateHeureEtatCourantDu) {
                 $data['periodeDateHeureEtatCourantDu'] = $periodeDateHeureEtatCourantDu;
             }
             if ($periodeDateHeureEtatCourantAu) { // 2022-01-07T10:11:47.823Z
                 $data['periodeDateHeureEtatCourantAu'] = $periodeDateHeureEtatCourantAu . "T23:59:59";
+            }
+
+            if ($this->cppWrapperConfig->fetchDownloadedInvoices !== null) {
+                $data['flagTelecharge'] = $this->cppWrapperConfig->fetchDownloadedInvoices;
             }
 
             $call_result = $this->call(self::RECHERCHE_FACTURE_TRAVAUX, $data);

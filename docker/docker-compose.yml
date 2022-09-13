@@ -83,11 +83,21 @@ services:
 
     pes-viewer:
         restart: unless-stopped
-        image: 'registry.libriciel.fr/public/signature/pes-viewer:1.4.0'
+        image: 'registry.libriciel.fr/public/signature/pes-viewer:1.5.1'
+        deploy:
+            resources:
+                limits:
+                    memory: 1536M
+        volumes:
+            - ${PES_PJ_PATH:-/data/pesPJ}:/pesPJ/
 
     crypto:
         restart: unless-stopped
         image: 'registry.libriciel.fr:443/public/signature/crypto:2.3.1'
+        deploy:
+            resources:
+                limits:
+                    memory: 1G
 
     libersign:
         restart: unless-stopped
