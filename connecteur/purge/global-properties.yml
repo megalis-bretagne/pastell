@@ -16,8 +16,8 @@ formulaire:
             no-show: true
         nb_days:
             name: 'Nombre de jours minimum passés dans le dernier état du document'
-            commentaire: '365 par défaut'
-            default: 365
+            commentaire: '5000 par défaut'
+            default: 5000
 action:
     test:
         name: 'Lister les dossiers à supprimer'
