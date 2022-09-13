@@ -13,6 +13,7 @@ class DroitService
     public const DROIT_CONNECTEUR = "connecteur";
     public const DROIT_SYSTEM = "system";
     public const DROIT_ENTITE = "entite";
+    public const DROIT_UTILISATEUR = "utilisateur";
 
     public static function getDroitLecture(string $part): string
     {
@@ -128,6 +129,16 @@ class DroitService
     public function hasDroitConnecteurEdition(int $id_e, int $id_u): bool
     {
         return $this->hasDroit($id_u, self::getDroitEdition(self::DROIT_CONNECTEUR), $id_e);
+    }
+
+    /**
+     * @param int $id_e
+     * @param int $id_u
+     * @return bool
+     */
+    public function hasDroitUtilisateurLecture(int $id_e, int $id_u): bool
+    {
+        return $this->hasDroit($id_u, self::getDroitLecture(self::DROIT_UTILISATEUR), $id_e);
     }
 
     /**

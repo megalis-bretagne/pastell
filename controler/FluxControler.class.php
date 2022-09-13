@@ -15,6 +15,7 @@ class FluxControler extends PastellControler
         $this->setViewParameter('menu_gauche_select', "Flux/index");
         $this->setDroitLectureOnConnecteur($id_e);
         $this->setDroitImportExportConfig($id_e);
+        $this->setDroitLectureOnUtilisateur($id_e);
     }
 
     public function hasDroitEdition($id_e): void

@@ -23,6 +23,7 @@ class EntiteControler extends PastellControler
         $this->setViewParameter('cdg_feature', $this->getObjectInstancier()
             ->getInstance(FeatureToggleService::class)
             ->isEnabled(CDGFeature::class));
+        $this->setDroitLectureOnUtilisateur($id_e);
     }
 
     private function getAgentSQL()

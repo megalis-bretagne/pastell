@@ -33,6 +33,14 @@ class PastellControler extends Controler
         ));
     }
 
+    protected function setDroitLectureOnUtilisateur(int $id_e): void
+    {
+        $this->setViewParameter('droitLectureOnUtilisateur', $this->getDroitService()->hasDroitUtilisateurLecture(
+            $id_e,
+            $this->getId_u()
+        ));
+    }
+
     protected function setDroitImportExportConfig(int $id_e): void
     {
         $this->setViewParameter(
