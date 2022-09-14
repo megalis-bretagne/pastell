@@ -242,7 +242,7 @@ class EntiteControler extends PastellControler
         $this->setViewParameter('page_title', "Importer (fichier CSV)");
 
         if ($page === 0) {
-            $this->setViewParameter('allCDG', $this->getEntiteListe()->getAll(Entite::TYPE_CENTRE_DE_GESTION));
+            $this->setViewParameter('allCDG', $this->getEntiteListe()->getAll(EntiteSQL::TYPE_CENTRE_DE_GESTION));
             $this->setViewParameter('cdg_selected', false);
         }
 
@@ -284,7 +284,7 @@ class EntiteControler extends PastellControler
         }
         $this->setViewParameter('infoEntite', $infoEntite);
         $this->setViewParameter('cdg_selected', $infoEntite['centre_de_gestion']);
-        $this->setViewParameter('allCDG', $this->getEntiteListe()->getAll(Entite::TYPE_CENTRE_DE_GESTION));
+        $this->setViewParameter('allCDG', $this->getEntiteListe()->getAll(EntiteSQL::TYPE_CENTRE_DE_GESTION));
         $this->setViewParameter('template_milieu', "EntiteEdition");
         $this->setViewParameter('id_e', $id_e);
         $this->setViewParameter('entite_mere', $entite_mere);
@@ -303,23 +303,28 @@ class EntiteControler extends PastellControler
     }
 
 
+    /**
+     * @throws UnrecoverableException
+     * @throws NotFoundException
+     * @throws LastMessageException
+     * @throws LastErrorException
+     */
     public function choixAction()
     {
         $recuperateur = new Recuperateur($_GET);
         $this->setViewParameter('id_d', $recuperateur->get('id_d'));
         $this->setViewParameter('id_e', $recuperateur->get('id_e'));
         $this->setViewParameter('action', $recuperateur->get('action'));
-        $this->setViewParameter('type', $recuperateur->get('type', Entite::TYPE_COLLECTIVITE));
+        $this->setViewParameter('type', $recuperateur->get('type', EntiteSQL::TYPE_COLLECTIVITE));
+        $this->setViewParameter('liste', $this->getEntiteListe()->getAll($this->getViewParameterByKey('type')));
 
-        if ($this->getViewParameterOrObject('type') == 'service') {
-            $this->setViewParameter('liste', $this->getEntiteListe()->getAllDescendant($this->getViewParameterOrObject('id_e')));
-        } else {
-            $this->setViewParameter('liste', $this->getEntiteListe()->getAll($this->getViewParameterOrObject('type')));
-        }
-
-        if (! $this->getViewParameterOrObject('liste')) {
-            $this->setLastError("Aucune entité ({$this->getViewParameterOrObject('type')}) n'est disponible pour cette action");
-            $this->redirect("/Document/detail?id_e={$this->getViewParameterOrObject('id_e')}&id_d={$this->getViewParameterOrObject('id_d')}");
+        if (! $this->getViewParameterByKey('liste')) {
+            $this->setLastError(
+                "Aucune entité ({$this->getViewParameterByKey('type')}) n'est disponible pour cette action"
+            );
+            $this->redirect(
+                "/Document/detail?id_e={$this->getViewParameterByKey('id_e')}&id_d={$this->getViewParameterByKey('id_d')}"
+            );
         }
         $this->setViewParameter('page_title', "Veuillez choisir le ou les destinataires du document ");
         $this->setViewParameter('template_milieu', "EntiteChoix");
@@ -538,7 +543,7 @@ class EntiteControler extends PastellControler
         $entiteCreator = new EntiteCreator($this->getSQLQuery(), $this->getJournal());
         $nb_col = 0;
         foreach ($colList as $col) {
-            $entiteCreator->edit(0, $col[1], $col[0], Entite::TYPE_COLLECTIVITE, $id_e, $centre_de_gestion);
+            $entiteCreator->edit(0, $col[1], $col[0], EntiteSQL::TYPE_COLLECTIVITE, $id_e, $centre_de_gestion);
             $nb_col++;
         }
 

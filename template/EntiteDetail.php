@@ -20,7 +20,7 @@ $id_e = $entiteExtendedInfo['id_e'];
     <?php if ($cdg_feature) : ?>
     <tr>
         <th class='w200'>Type</th>
-        <td><?php echo Entite::getNom($entiteExtendedInfo['type']) ?></td>
+        <td><?php echo EntiteSQL::getNom($entiteExtendedInfo['type']) ?></td>
     </tr>
     <?php endif; ?>
 

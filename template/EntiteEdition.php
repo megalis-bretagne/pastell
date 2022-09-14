@@ -28,10 +28,10 @@
         <th class='w300'>Type d'entité</th>
 
     <td><select name='type' class="form-control col-md-4">
-        <?php foreach ([Entite::TYPE_COLLECTIVITE, Entite::TYPE_CENTRE_DE_GESTION] as $type) :?>
+        <?php foreach ([EntiteSQL::TYPE_COLLECTIVITE, EntiteSQL::TYPE_CENTRE_DE_GESTION] as $type) :?>
         <option value='<?php echo $type?>'
              <?php echo $infoEntite['type'] == $type ? 'selected="selected"' : ''?>> 
-            <?php echo Entite::getNom($type) ?> </option>   
+            <?php echo EntiteSQL::getNom($type) ?> </option>   
         <?php endforeach;?>
 
     </select></td>

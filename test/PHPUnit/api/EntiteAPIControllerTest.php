@@ -101,7 +101,7 @@ class EntiteAPIControllerTest extends PastellTestCase
             "/entite",
             [
                 "denomination" => "toto",
-                'type' => Entite::TYPE_COLLECTIVITE
+                'type' => EntiteSQL::TYPE_COLLECTIVITE
             ]
         );
         $this->assertSame("", $info['siren']);
@@ -115,7 +115,7 @@ class EntiteAPIControllerTest extends PastellTestCase
             "/entite",
             [
                 "denomination" => "toto",
-                'type' => Entite::TYPE_COLLECTIVITE,
+                'type' => EntiteSQL::TYPE_COLLECTIVITE,
                 'siren' => '123456789'
             ]
         );

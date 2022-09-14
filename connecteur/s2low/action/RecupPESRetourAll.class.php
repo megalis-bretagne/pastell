@@ -6,8 +6,8 @@ class RecupPESRetourAll extends ActionExecutor
     {
         $entiteListe = new EntiteListe($this->getSQLQuery());
 
-        $all_col = $entiteListe->getAll(Entite::TYPE_COLLECTIVITE);
-        $all_col = array_merge($all_col, $entiteListe->getAll(Entite::TYPE_CENTRE_DE_GESTION));
+        $all_col = $entiteListe->getAll(EntiteSQL::TYPE_COLLECTIVITE);
+        $all_col = array_merge($all_col, $entiteListe->getAll(EntiteSQL::TYPE_CENTRE_DE_GESTION));
 
         $envoye = [];
         foreach ($all_col as $infoCollectivite) {

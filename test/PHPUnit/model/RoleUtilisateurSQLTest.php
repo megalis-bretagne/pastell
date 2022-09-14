@@ -152,7 +152,7 @@ class RoleUtilisateurSQLTest extends PastellTestCase
         $entiteCreator = $this->getObjectInstancier()->getInstance(EntiteCreator::class);
         $id_e_1 = $entiteCreator->edit(0, "000000000", "Entité 1");
         $id_e_2 = $entiteCreator->edit(0, "000000000", "Entité 2");
-        $id_e_3 = $entiteCreator->edit(0, "000000000", "Entité 3", Entite::TYPE_COLLECTIVITE, $id_e_2);
+        $id_e_3 = $entiteCreator->edit(0, "000000000", "Entité 3", EntiteSQL::TYPE_COLLECTIVITE, $id_e_2);
 
         $utilisateurCreator = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class);
         $id_u = $utilisateurCreator->create('test_get_arbre_fille', 'aa', 'aa', 'aa@aa.fr');
@@ -187,7 +187,7 @@ class RoleUtilisateurSQLTest extends PastellTestCase
         $entiteCreator = $this->getObjectInstancier()->getInstance(EntiteCreator::class);
         $id_e_1 = $entiteCreator->edit(0, "000000000", "Entité 1");
         $id_e_2 = $entiteCreator->edit(0, "000000000", "Entité 2");
-        $id_e_3 = $entiteCreator->edit(0, "000000000", "Entité 3", Entite::TYPE_COLLECTIVITE, $id_e_2);
+        $id_e_3 = $entiteCreator->edit(0, "000000000", "Entité 3", EntiteSQL::TYPE_COLLECTIVITE, $id_e_2);
 
         $utilisateurCreator = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class);
         $id_u = $utilisateurCreator->create('test_get_arbre_fille', 'aa', 'aa', 'aa@aa.fr');
@@ -237,7 +237,7 @@ class RoleUtilisateurSQLTest extends PastellTestCase
     {
         $entiteCreator = $this->getObjectInstancier()->getInstance(EntiteCreator::class);
         $id_e_2 = $entiteCreator->edit(0, "000000000", "Entité 2");
-        $id_e_3 = $entiteCreator->edit(0, "000000000", "Entité 3", Entite::TYPE_COLLECTIVITE, $id_e_2);
+        $id_e_3 = $entiteCreator->edit(0, "000000000", "Entité 3", EntiteSQL::TYPE_COLLECTIVITE, $id_e_2);
 
         $utilisateurCreator = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class);
         $id_u = $utilisateurCreator->create('test', 'aa', 'aa', 'aa@aa.fr');

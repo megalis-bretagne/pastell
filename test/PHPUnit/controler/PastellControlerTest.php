@@ -68,14 +68,14 @@ class PastellControlerTest extends ControlerTestCase
             0,
             "000000000",
             "Nouvelle entité",
-            Entite::TYPE_COLLECTIVITE,
+            EntiteSQL::TYPE_COLLECTIVITE,
             2
         );
         $id_e_fille2 = $entiteCreator->edit(
             0,
             "000000000",
             "Nouvelle entité 2",
-            Entite::TYPE_COLLECTIVITE,
+            EntiteSQL::TYPE_COLLECTIVITE,
             2
         );
 

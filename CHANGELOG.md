@@ -65,6 +65,7 @@
   d'initialisation du conteneur.
 - Suppression du modèle `Document`, remplacé par `DocumentSQL`
 - Suppression du modèle `Utilisateur`, remplacé par `UtilisateurSQL`
+- Suppression du modèle `Entite`, remplacé par `EntiteSQL` (et suppression du type d'entité "service")
 - Suppression des fonctions :
   - SAEConnecteur::getAcuseReception
   - SAEConnecteur::getReply

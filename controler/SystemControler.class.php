@@ -123,7 +123,7 @@ class SystemControler extends PastellControler
 
         $list_pack = $this->getInstance(PackService::class)->getListPack();
         $all_connecteur_type = $this->getConnecteurDefinitionFiles()->getAllType();
-        $all_type_entite = array_keys(Entite::getAllType());
+        $all_type_entite = array_keys(EntiteSQL::getAllType());
 
 
         $connecteur_type_action_class_list = $this->getViewParameterOrObject('ConnecteurTypeFactory')->getAllActionExecutor();

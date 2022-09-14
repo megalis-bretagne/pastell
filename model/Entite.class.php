@@ -5,29 +5,9 @@
 
 class Entite extends SQL
 {
-    public const TYPE_COLLECTIVITE = "collectivite";
-    public const TYPE_CENTRE_DE_GESTION = "centre_de_gestion";
-
     private $id_e;
 
     private $info;
-
-    public static function getNom($type)
-    {
-        $type_nom = self::getAllType();
-        if (empty($type_nom[$type])) {
-            return $type;
-        }
-        return $type_nom[$type];
-    }
-
-    public static function getAllType()
-    {
-        return [
-            self::TYPE_COLLECTIVITE => "Collectivité",
-            self::TYPE_CENTRE_DE_GESTION => "Centre de gestion"
-        ];
-    }
 
     public function __construct(SQLQuery $sqlQuery, $id_e)
     {
@@ -154,20 +134,5 @@ class Entite extends SQL
             $result[] = $entite['id_e'];
         }
         return $result;
-    }
-
-    public function getCollectiviteAncetre()
-    {
-        $info = $this->getInfo();
-
-        if ($info['type'] == self::TYPE_COLLECTIVITE || $info['type'] == self::TYPE_CENTRE_DE_GESTION) {
-            return $this->id_e;
-        }
-        foreach ($this->getAncetre() as $ancetre) {
-            if ($ancetre['type'] == self::TYPE_COLLECTIVITE) {
-                return $ancetre['id_e'];
-            }
-        }
-        return false;
     }
 }
