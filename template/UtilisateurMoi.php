@@ -139,7 +139,7 @@ use Pastell\Utilities\Certificate;
                     <?php endif; ?>
                 </td>
                 <td>
-                    <ul>
+                    <ul id='ulNotification'>
                         <?php foreach ($infoNotification['action'] as $action) : ?>
                             <li><?php echo $action ?: 'Toutes' ?></li>
                         <?php endforeach; ?>
