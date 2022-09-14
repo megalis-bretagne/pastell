@@ -326,7 +326,7 @@ class UtilisateurControler extends PastellControler
         }
 
         if (!$this->getRoleUtilisateur()->hasDroit($this->getId_u(), "utilisateur:lecture", $info['id_e'])) {
-            $this->setLastError("Vous n'avez pas le droit de lecture (" . $info['id_e'] . ")");
+            $this->setLastError("Vous n'avez pas les droits nécessaires (" . $info['id_e'] . ":utilisateur:lecture) pour accéder à cette page");
             $this->redirect();
         }
         $this->setViewParameter(
@@ -538,7 +538,7 @@ class UtilisateurControler extends PastellControler
             return true;
         }
 
-        $this->setLastError("Vous n'avez pas les droits nécessaires pour faire cela");
+        $this->setLastError("Vous n'avez pas les droits nécessaires ($id_e:utilisateur:edition) pour accéder à cette page");
         $this->redirectToPageUtilisateur($id_u, $page_moi);
         return false;
     }
