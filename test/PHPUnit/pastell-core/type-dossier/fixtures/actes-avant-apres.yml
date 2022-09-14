@@ -46,6 +46,16 @@ formulaire:
             onchange: cheminement-change
             default: checked
             read-only: true
+    Transformation:
+        has_transformation:
+            no-show: true
+            read-only: true
+        transformation_file:
+            name: Transformations
+            type: file
+            visionneuse: Pastell\Viewer\TransformationViewer
+            read-only: true
+            visionneuse-no-link: true
     Acte:
         acte_nature:
             name: "Nature de l'acte"
@@ -170,6 +180,8 @@ champs-recherche-avancee:
     - state_begin
     - search
 page-condition:
+    Transformation:
+        has_transformation: true
     Acte:
         envoi_tdt_actes: true
     'Retour Tdt':
@@ -264,6 +276,9 @@ action:
         action-automatique: orientation
         connecteur-type: transformation
         connecteur-type-action: TransformationTransform
+        connecteur-type-mapping:
+            transformation_file: transformation_file
+            has_transformation: has_transformation
         editable-content:
             - envoi_tdt_actes
             - envoi_depot

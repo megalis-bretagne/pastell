@@ -2,7 +2,9 @@
 
 class TransformationGeneriqueDefinition
 {
-    private const ELEMENT_ID = 'definition';
+    private const FILE_FIELD_ID = 'definition';
+    public const ELEMENT_ID_MAX_LENGTH = 64;
+    public const ELEMENT_ID_REGEXP = "^[0-9a-z_]+$";
 
     /**
      * @param DonneesFormulaire $donneesFormulaire
@@ -10,7 +12,7 @@ class TransformationGeneriqueDefinition
      */
     public function getData(DonneesFormulaire $donneesFormulaire): array
     {
-        $file_content = $donneesFormulaire->getFileContent(self::ELEMENT_ID);
+        $file_content = $donneesFormulaire->getFileContent(self::FILE_FIELD_ID);
         if (! $file_content) {
             return [];
         }
@@ -25,6 +27,28 @@ class TransformationGeneriqueDefinition
     public function setTransformation(DonneesFormulaire $donneesFormulaire, array $data_definition): void
     {
         $file_content = json_encode($data_definition);
-        $donneesFormulaire->addFileFromData(self::ELEMENT_ID, "definition.json", $file_content);
+        $donneesFormulaire->addFileFromData(self::FILE_FIELD_ID, "definition.json", $file_content);
+    }
+
+    /**
+     * @param string $element_id
+     * @throws Exception
+     */
+    public function checkElementId(string $element_id): void
+    {
+        if (!preg_match("#" . self::ELEMENT_ID_REGEXP . "#", $element_id)) {
+            throw new UnrecoverableException(
+                "L'identifiant de l'élément « " . get_hecho(
+                    $element_id
+                ) . " » ne respecte pas l'expression rationnelle : " . self::ELEMENT_ID_REGEXP
+            );
+        }
+        if (strlen($element_id) > self::ELEMENT_ID_MAX_LENGTH) {
+            throw new UnrecoverableException(
+                "L'identifiant de l'élément « " . get_hecho(
+                    $element_id
+                ) . " » ne doit pas dépasser " . self::ELEMENT_ID_MAX_LENGTH . " caractères"
+            );
+        }
     }
 }
