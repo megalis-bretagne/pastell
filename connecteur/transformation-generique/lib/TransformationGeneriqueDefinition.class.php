@@ -34,7 +34,7 @@ class TransformationGeneriqueDefinition
      * @param string $element_id
      * @throws Exception
      */
-    public function checkElementId(string $element_id)
+    public function checkElementId(string $element_id): void
     {
         if (!preg_match("#" . self::ELEMENT_ID_REGEXP . "#", $element_id)) {
             throw new UnrecoverableException(
