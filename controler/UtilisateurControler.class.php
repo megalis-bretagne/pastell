@@ -481,19 +481,24 @@ class UtilisateurControler extends PastellControler
      * @throws LastErrorException
      * @throws LastMessageException
      */
-    public function supprimeRoleAction()
+    public function supprimeRoleAction(): never
     {
-        $recuperateur = new Recuperateur($_POST);
+        $recuperateur = $this->getPostInfo();
         $id_u = $recuperateur->get('id_u');
         $role = $recuperateur->get('role');
         $id_e = $recuperateur->getInt('id_e', 0);
-        $this->verifDroit($id_e, "entite:edition");
+        $this->verifDroit($id_e, 'entite:edition');
         $this->getRoleUtilisateur()->removeRole($id_u, $role, $id_e);
         $role_info = $this->getRoleSQL()->getInfo($role);
         $utilisateur_info = $this->getUtilisateur()->getInfo($id_u);
 
         $this->setLastMessage(
-            "Le rôle <i>{$role_info['libelle']}</i> a été retiré de l'utilisateur <i>{$utilisateur_info['prenom']} {$utilisateur_info['nom']}</i>"
+            \sprintf(
+                "Le rôle <i>%s</i> a été retiré de l'utilisateur <i>%s %s</i>",
+                $role_info['libelle'] ?? $role,
+                $utilisateur_info['prenom'],
+                $utilisateur_info['nom']
+            )
         );
         $this->redirect("/Utilisateur/detail?id_u=$id_u");
     }

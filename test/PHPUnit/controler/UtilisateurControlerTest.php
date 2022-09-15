@@ -203,4 +203,21 @@ class UtilisateurControlerTest extends ControlerTestCase
         self::assertNotContains($tokenBefore, $allTokens);
         self::assertEquals('token', $allTokens[0]['name']);
     }
+
+    public function testDeleteRole(): void
+    {
+        $this->setPostInfo([
+            'id_u' => 2,
+            'role' => 'aucun droit',
+            'id_e' => 1,
+        ]);
+        try {
+            $this->getUtilisateurControler()->supprimeRoleAction();
+        } catch (LastMessageException $e) {
+            self::assertMatchesRegularExpression(
+                '/Le rôle <i>aucun droit<\/i> a été retiré/',
+                $e->getMessage()
+            );
+        }
+    }
 }
