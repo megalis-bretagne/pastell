@@ -11,6 +11,7 @@
  * @var string $etatTransit
  * @var string $state_begin_iso
  * @var string $state_end_iso
+ * @var string $notEtatTransit
  * @var string $tri
  * @var string $sens_tri
  * @var array $indexedFieldValue
@@ -65,7 +66,7 @@
         var type = $('select[name="type"]');
         $(type.get(0)).on('change', function () {
             var selectedType = $(this).val();
-            var fields = ['lastetat', 'etatTransit'];
+            var fields = ['lastetat', 'etatTransit', 'notEtatTransit'];
             for(var i = 0; i < fields.length; ++i) {
                 var field = $('[name=' + fields[i] + ']');
                 var optionGroups = field.find('optgroup');
@@ -78,7 +79,8 @@
 
 <?php
 
-$url = "id_e=$id_e&search=$search&type=$type&lastetat=$lastEtat&last_state_begin=$last_state_begin_iso&last_state_end=$last_state_end_iso&etatTransit=$etatTransit&state_begin=$state_begin_iso&state_end=$state_end_iso&tri=$tri&sens_tri=$sens_tri&date_in_fr=true&";
+$url = "id_e=$id_e&search=$search&type=$type&lastetat=$lastEtat&last_state_begin=$last_state_begin_iso&last_state_end=$last_state_end_iso&etatTransit=$etatTransit
+            &state_begin=$state_begin_iso&state_end=$state_end_iso&notEtatTransit=$notEtatTransit&tri=$tri&sens_tri=$sens_tri&date_in_fr=true";
 
 if ($type) {
     foreach ($indexedFieldValue as $indexName => $indexValue) {
@@ -88,8 +90,8 @@ if ($type) {
 
 
 if ($go = 'go') {
-    $listDocument = $documentActionEntite->getListBySearch($id_e, $type, $offset, $limit, $search, $lastEtat, $last_state_begin_iso, $last_state_end_iso, $tri, $allDroitEntite, $etatTransit, $state_begin_iso, $state_end_iso);
-    $count = $documentActionEntite->getNbDocumentBySearch($id_e, $type, $search, $lastEtat, $last_state_begin_iso, $last_state_end_iso, $allDroitEntite, $etatTransit, $state_begin_iso, $state_end_iso, $indexedFieldValue);
+    $listDocument = $documentActionEntite->getListBySearch($id_e, $type, $offset, $limit, $search, $lastEtat, $last_state_begin_iso, $last_state_end_iso, $tri, $allDroitEntite, $etatTransit, $state_begin_iso, $state_end_iso, $notEtatTransit);
+    $count = $documentActionEntite->getNbDocumentBySearch($id_e, $type, $search, $lastEtat, $last_state_begin_iso, $last_state_end_iso, $allDroitEntite, $etatTransit, $state_begin_iso, $state_end_iso, $notEtatTransit, $indexedFieldValue);
     if ($count) {
         $this->suivantPrecedent($offset, $limit, $count, "Document/search?$url");
         $this->setViewParameter('url', $url);

@@ -61,6 +61,7 @@ class DocumentAPIController extends BaseAPIController
         $etatTransit = $this->getFromRequest('etatTransit');
         $state_begin = $this->getFromRequest('state_begin');
         $state_end = $this->getFromRequest('state_end');
+        $notEtatTransit = $this->getFromRequest('notEtatTransit');
         $sens_tri = $this->getFromRequest('sens_tri', 'DESC');
 
         $date_in_fr = $this->getFromRequest('date_in_fr', false);
@@ -107,6 +108,7 @@ class DocumentAPIController extends BaseAPIController
             $etatTransit,
             $state_begin,
             $state_end,
+            $notEtatTransit,
             $indexedFieldValue,
             $sens_tri
         );

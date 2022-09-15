@@ -195,7 +195,7 @@ class DocumentType
         if (isset($this->module_definition[self::CHAMPS_RECHERCHE_AFFICHE])) {
             return $this->module_definition[self::CHAMPS_RECHERCHE_AFFICHE];
         }
-        $default_field = ['type','id_e','lastetat','last_state_begin','etatTransit','state_begin','search'];
+        $default_field = ['type','id_e','lastetat','last_state_begin','etatTransit','state_begin','notEtatTransit','search'];
 
         foreach ($this->getFormulaire()->getIndexedFields() as $indexField => $indexLibelle) {
             $default_field[] = $indexField;

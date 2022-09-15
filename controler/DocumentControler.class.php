@@ -489,6 +489,7 @@ class DocumentControler extends PastellControler
             false,
             false,
             false,
+            false,
             $indexedFieldValue,
             $this->getViewParameterOrObject('sens_tri')
         ));
@@ -529,7 +530,7 @@ class DocumentControler extends PastellControler
         $this->setViewParameter('allDroitEntite', $this->getDroitService()->getAllDocumentLecture($this->getId_u(), $this->getViewParameterOrObject('id_e')));
 
         $this->setViewParameter('etatTransit', $recuperateur->get('etatTransit'));
-
+        $this->setViewParameter('notEtatTransit', $recuperateur->get('notEtatTransit'));
 
         $this->setViewParameter('tri', $recuperateur->get('tri', 'date_dernier_etat'));
         $this->setViewParameter('sens_tri', $recuperateur->get('sens_tri', 'DESC'));
@@ -610,6 +611,7 @@ class DocumentControler extends PastellControler
         $etatTransit = $recuperateur->get('etatTransit');
         $state_begin =  $recuperateur->get('state_begin');
         $state_end =  $recuperateur->get('state_end');
+        $notEtatTransit = $recuperateur->get('notEtatTransit');
         $tri =  $recuperateur->get('tri');
         $sens_tri = $recuperateur->get('sens_tri');
 
@@ -632,8 +634,9 @@ class DocumentControler extends PastellControler
         }
 
 
-        $limit = $this->getDocumentActionEntite()->getNbDocumentBySearch($id_e, $type, $search, $lastEtat, $last_state_begin_iso, $last_state_end_iso, $allDroitEntite, $etatTransit, $state_begin, $state_end, $indexedFieldValue);
-        $listDocument = $this->getDocumentActionEntite()->getListBySearch($id_e, $type, $offset, $limit, $search, $lastEtat, $last_state_begin_iso, $last_state_end_iso, $tri, $allDroitEntite, $etatTransit, $state_begin, $state_end, $indexedFieldValue, $sens_tri);
+        $limit = $this->getDocumentActionEntite()->getNbDocumentBySearch($id_e, $type, $search, $lastEtat, $last_state_begin_iso, $last_state_end_iso, $allDroitEntite, $etatTransit, $state_begin, $state_end, $notEtatTransit, $indexedFieldValue);
+        $listDocument = $this->getDocumentActionEntite()->
+            getListBySearch($id_e, $type, $offset, $limit, $search, $lastEtat, $last_state_begin_iso, $last_state_end_iso, $tri, $allDroitEntite, $etatTransit, $state_begin, $state_end, $notEtatTransit, $indexedFieldValue, $sens_tri);
 
         $line = ["ENTITE","ID_D","TYPE","TITRE","DERNIERE ACTION","DATE DERNIERE ACTION"];
         foreach ($indexedFieldsList as $indexField => $indexLibelle) {
