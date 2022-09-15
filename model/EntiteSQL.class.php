@@ -82,7 +82,7 @@ class EntiteSQL extends SQL
 
     public function getCDG($id_e)
     {
-        return $this->getHeritedInfo($id_e, 'centre_de_gestion');
+        return $this->getHeritedInfo($id_e, self::TYPE_CENTRE_DE_GESTION);
     }
 
     private function getHeritedInfo($id_e, $colname)
