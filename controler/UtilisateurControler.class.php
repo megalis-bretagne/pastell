@@ -538,7 +538,7 @@ class UtilisateurControler extends PastellControler
             return true;
         }
 
-        $this->setLastError("Vous n'avez pas les droits nécessaires ($id_e:utilisateur:edition) pour accéder à cette page");
+        $this->setLastError("Vous n'avez pas les droits nécessaires pour accéder à cette page");
         $this->redirectToPageUtilisateur($id_u, $page_moi);
         return false;
     }
