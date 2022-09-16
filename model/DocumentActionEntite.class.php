@@ -323,7 +323,7 @@ class DocumentActionEntite extends SQL
                 " JOIN document ON document_entite.id_d = document.id_d" .
                 " JOIN entite ON document_entite.id_e = entite.id_e";
 
-        if ($etatTransit || $notEtatTransit) {
+        if ($etatTransit) {
             $sql .= " JOIN document_action ON document_action.id_d=document.id_d AND document_action.id_e=entite.id_e ";
         }
 
@@ -390,11 +390,8 @@ class DocumentActionEntite extends SQL
         }
         if ($notEtatTransit) {
             $sql .= " AND document_entite.id_d NOT IN (
-                SELECT document_entite.id_d
-                FROM document_entite
-                JOIN document ON document_entite.id_d = document.id_d
-                JOIN entite ON document_entite.id_e = entite.id_e
-                JOIN document_action ON document_action.id_d = document.id_d AND document_action.id_e = entite.id_e
+                SELECT document_action.id_d
+                FROM document_action
                 WHERE document_action.action = ?) ";
             $binding[] = $notEtatTransit;
         }
