@@ -151,10 +151,9 @@ class JournalControler extends PastellControler
         }
 
         if ($this->getViewParameterByKey('id_u')) {
-            $usernameDisplayer = $this->getObjectInstancier()->getInstance(UsernameDisplayer::class);
             $id_u = $this->getViewParameterByKey('id_u');
             $infoUtilisateur = $this->getUtilisateur()->getInfo($id_u);
-            $page_title .= " - " . $usernameDisplayer->getUsername($infoUtilisateur);
+            $page_title .= ' - ' . $infoUtilisateur['login'];
         }
 
         $this->setViewParameter('limit', 20);
