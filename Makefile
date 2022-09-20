@@ -95,3 +95,5 @@ build: ## Build the container
 bash: docker-compose-up ## Get a bash console
 	$(DOCKER_COMPOSE) exec web bash
 
+logs: docker-compose-up ## Display last application logs (in follow mode)
+	$(DOCKER_COMPOSE) logs -t 50 -f web

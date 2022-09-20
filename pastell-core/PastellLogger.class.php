@@ -1,5 +1,8 @@
 <?php
 
+use Symfony\Bridge\Monolog\Handler\ConsoleHandler;
+use Symfony\Component\Console\Output\OutputInterface;
+
 class PastellLogger
 {
     public const MESSAGE = 'message';
@@ -70,6 +73,7 @@ class PastellLogger
         }
     }
 
+
     private $name;
 
     public function setName($name)
@@ -88,5 +92,11 @@ class PastellLogger
             }
         }
         return $this->logger->withName($this->name);
+    }
+
+    public function enableConsoleHandler(OutputInterface $output): void
+    {
+        $consoleHandler = new ConsoleHandler($output);
+        $this->logger->pushHandler($consoleHandler);
     }
 }
