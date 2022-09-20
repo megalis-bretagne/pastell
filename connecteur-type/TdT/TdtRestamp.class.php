@@ -14,7 +14,6 @@ class TdTRestamp extends ConnecteurTypeActionExecutor
         $acte_tamponne_element = $this->getMappingValue('acte_tamponne');
         $autre_document_attache_element = $this->getMappingValue('autre_document_attache');
         $annexes_tamponnees_element = $this->getMappingValue('annexes_tamponnees');
-        $acte_use_publication_date = $this->getMappingValue('acte_use_publication_date');
         $acte_publication_date = $this->getMappingValue('acte_publication_date');
 
         /** @var TdtConnecteur $tdT */
@@ -36,10 +35,8 @@ class TdTRestamp extends ConnecteurTypeActionExecutor
         }
 
         $donneesFormulaire = $this->getDonneesFormulaire();
-        $date_publication = null;
-        if ($donneesFormulaire->get($acte_use_publication_date)) {
-            $date_publication = $donneesFormulaire->get($acte_publication_date);
-        }
+        $date_publication = $donneesFormulaire->get($acte_publication_date);
+
 
         $actes_tamponne = $tdT->getActeTamponne($tedetis_transaction_id, $date_publication);
         $annexes_tamponnees_list = $tdT->getAnnexesTamponnees($tedetis_transaction_id, $date_publication);
@@ -83,9 +80,6 @@ class TdTRestamp extends ConnecteurTypeActionExecutor
     {
         foreach ($all_id_d as $id_d) {
             $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
-            if (! $donneesFormulaire->get('acte_use_publication_date')) {
-                $donneesFormulaire->setData('acte_use_publication_date', true);
-            }
             if (! $donneesFormulaire->get('acte_publication_date')) {
                 $donneesFormulaire->setData('acte_publication_date', date("Y-m-d"));
             }
