@@ -1,9 +1,6 @@
 #!/bin/bash
 
-
 VERSION=$1
-
-
 
 if [ -z ${VERSION} ]
 then
@@ -12,10 +9,9 @@ echo "Create a production package in ./build/ directory"
 exit;
 fi
 
-TARGET=build/package/
+TARGET=build/pastell-${VERSION}/
 
 rm -rf ${TARGET}
 mkdir -p ${TARGET}
 sed -e "s/canary$/${VERSION}/" docker/docker-compose.yml >  ${TARGET}/docker-compose.yml
-
-
+cp docker/.env.dist ${TARGET}/.env.dist
