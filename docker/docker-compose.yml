@@ -3,11 +3,6 @@ version: '3.7'
 services:
     web:
         image: registry.libriciel.fr:443/public/plateforme/pastell:canary
-        build:
-            context: ..
-            target: pastell_prod
-            args:
-                GITHUB_API_TOKEN: ${GITHUB_API_TOKEN:-}
         read_only: true
         stop_grace_period: 60s
         stop_signal: SIGTERM
