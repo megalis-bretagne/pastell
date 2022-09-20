@@ -2,16 +2,14 @@
 
 namespace Pastell\Tests\Command;
 
-use ConnecteurEntiteSQL;
 use ConnecteurFactory;
-use DocumentSQL;
 use DonneesFormulaireFactory;
 use Exception;
 use InvalidArgumentException;
 use Journal;
 use NotFoundException;
 use Pastell\Command\ForceUpdateField;
-use Pastell\Service\SimpleTwigRenderer;
+use Pastell\Service\UpdateFieldService;
 use PastellTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 use UnrecoverableException;
@@ -25,11 +23,7 @@ final class ForceUpdateFieldTest extends PastellTestCase
         parent::setUp();
 
         $command = new ForceUpdateField(
-            $this->getObjectInstancier()->getInstance(DocumentSQL::class),
-            $this->getObjectInstancier()->getInstance(DonneesFormulaireFactory::class),
-            $this->getObjectInstancier()->getInstance(ConnecteurEntiteSQL::class),
-            $this->getObjectInstancier()->getInstance(ConnecteurFactory::class),
-            $this->getObjectInstancier()->getInstance(SimpleTwigRenderer::class),
+            $this->getObjectInstancier()->getInstance(UpdateFieldService::class),
             $this->getObjectInstancier()->getInstance(Journal::class)
         );
         $this->commandTester = new CommandTester($command);
@@ -103,7 +97,7 @@ final class ForceUpdateFieldTest extends PastellTestCase
         int $documentsNumber
     ): void {
 
-        if ($scope === ForceUpdateField::SCOPE_MODULE) {
+        if ($scope === UpdateFieldService::SCOPE_MODULE) {
             $document = $this->createDocument('test');
             $this->configureDocument($document['id_d'], ['nom' => 'UnNom']);
         } else {
@@ -119,7 +113,7 @@ final class ForceUpdateFieldTest extends PastellTestCase
         $this->assertStringContainsString('0/' . $documentsNumber, $output);
         $this->assertStringContainsString($documentsNumber . '/' . $documentsNumber, $output);
 
-        if ($scope === ForceUpdateField::SCOPE_MODULE) {
+        if ($scope === UpdateFieldService::SCOPE_MODULE) {
             $donneesFormulaire = $this->getObjectInstancier()
                 ->getInstance(DonneesFormulaireFactory::class)
                 ->get($document['id_d']);
