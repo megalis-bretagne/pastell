@@ -84,12 +84,6 @@ class EntiteCreator extends SQL
         $this->query($sql_insert, 0, $id_e, $niveau);
     }
 
-    public function setEtat($id_e, $etat)
-    {
-        $sql = "UPDATE entite SET etat=? WHERE id_e=?";
-        $this->query($sql, $etat, $id_e);
-    }
-
     public function updateAllEntiteAncetre()
     {
         $sql = "DELETE FROM entite_ancetre";

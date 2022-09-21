@@ -39,8 +39,7 @@
 - Suppression de la constante NB_ENTITE_BEFORE_COLLAPSE
 - Suppression de l'authentification par certificat au services Chorus Pro #1453
 - Suppression de la constante CONNECTEUR_DROIT. Il faut maintenant ajouter les droits 'connecteur:lecture' et 'connecteur:edition'
-  afin de gérer les connecteurs et les associations de types de documents!!
-  Il faut lancer la commande `app:connector:add-connector-permission` pour reporter les droits (entite:) existants aux nouveaux droits (connecteur:) #1136
+  afin de gérer les connecteurs et les associations de types de documents!! #1136
 - Suppression de l'authentification OASIS/OPENID #1459
 - Suppression de LastUpstart UPSTART_TIME_SEND_WARNING - Suppression de `batch/action-automatique.php` et `installation/pastell-upstart.conf` #1461
 - Suppression de la classe SSH2 et de la dépendance à l'extension php ssh2
