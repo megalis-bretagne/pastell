@@ -368,13 +368,7 @@ class EntiteControler extends PastellControler
 
         $this->hasDroitLecture($id_e);
         $info = $this->getEntiteSQL()->getInfo($id_e);
-        $id_ancetre = $this->getEntiteSQL()->getCollectiviteAncetre($id_e);
-        if ($id_ancetre == $id_e) {
-            $siren = $info['siren'];
-        } else {
-            $this->setViewParameter('infoAncetre', $this->getEntiteSQL()->getInfo($id_ancetre));
-            $siren = $this->getViewParameterOrObject('infoAncetre')['siren'];
-        }
+        $siren = $info['siren'];
 
         /** @var AgentSQL $agentSQL */
         $agentSQL = $this->getInstance(AgentSQL::class);
@@ -388,7 +382,6 @@ class EntiteControler extends PastellControler
         }
         $this->setViewParameter('offset', $offset);
         $this->setViewParameter('page', $page);
-        $this->setViewParameter('id_ancetre', $id_ancetre);
         $this->setViewParameter('droit_edition', $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "entite:edition", $id_e));
         $this->setViewParameter('id_e', $id_e);
         $this->setViewParameter('search', $search);

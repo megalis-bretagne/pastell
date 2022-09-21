@@ -5,8 +5,6 @@
  * @var int $page
  * @var bool $droit_edition
  * @var int $nbAgent
- * @var int $id_ancetre
- * @var array $infoAncetre
  * @var array $listAgent
  */
 ?>
@@ -27,11 +25,7 @@
 <?php endif;?>
 
 <?php $this->SuivantPrecedent($offset, AgentSQL::NB_MAX, $nbAgent, "Entite/agents?id_e=$id_e&page=$page&search=$search"); ?>
-<?php if ($id_ancetre != $id_e) : ?>
-<div class='alert'>
-    Informations héritées de <a href='Entite/detail?id_e=<?php echo $id_ancetre?>'><?php hecho($infoAncetre['denomination']); ?></a>
-</div>
-<?php endif;?>
+
 <table class="table table-striped">
         <tr>
             <th>Matricule</th>

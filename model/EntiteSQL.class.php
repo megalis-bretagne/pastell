@@ -57,29 +57,6 @@ class EntiteSQL extends SQL
         return $this->query($sql, $id_e);
     }
 
-    /**
-     * @param $id_e
-     * @return bool
-     */
-    public function getCollectiviteAncetre($id_e)
-    {
-        $info = $this->getInfo($id_e);
-
-        if (
-                $info['type'] == self::TYPE_COLLECTIVITE ||
-                $info['type'] == self::TYPE_CENTRE_DE_GESTION
-        ) {
-            return $id_e;
-        }
-        /** @deprecated 4.0.0 - Cas Entite::TYPE_SERVICE */
-        foreach ($this->getAncetre($id_e) as $ancetre) {
-            if ($ancetre['type'] == self::TYPE_COLLECTIVITE) {
-                return $ancetre['id_e'];
-            }
-        }
-        return false;
-    }
-
     public function getCDG($id_e)
     {
         return $this->getHeritedInfo($id_e, self::TYPE_CENTRE_DE_GESTION);
