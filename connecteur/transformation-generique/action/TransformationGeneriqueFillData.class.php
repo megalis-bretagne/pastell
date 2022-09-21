@@ -18,10 +18,10 @@ class TransformationGeneriqueFillData extends ChoiceActionExecutor
         $data = [];
         foreach ($id_element_array as $i => $id_element) {
             $id_element = trim($id_element);
-            $transformationGeneriqueDefinition->checkElementId($id_element);
             if (! $id_element) {
                 continue;
             }
+            $transformationGeneriqueDefinition->checkElementId($id_element);
             $data[$id_element] = $definition_array[$i] ?? "";
         }
 
