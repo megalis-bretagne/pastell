@@ -27,7 +27,7 @@ $internalAPI->setUtilisateurId(1);
 $info = $internalAPI->post(
     "/Entite",
     [
-        "type" => Entite::TYPE_COLLECTIVITE,
+        "type" => EntiteSQL::TYPE_COLLECTIVITE,
         "denomination" => "Bourg-en-Bresse",
         "siren" => '000000000'
     ]

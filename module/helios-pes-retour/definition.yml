@@ -43,7 +43,6 @@ action:
             no-last-action: ''
             droit_id_u: 'helios-pes-retour:edition'
             type_id_e:
-                - service
                 - collectivite
     modification:
         name-action: Modifier

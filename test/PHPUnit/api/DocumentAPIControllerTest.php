@@ -247,7 +247,6 @@ class DocumentAPIControllerTest extends PastellTestCase
                             'denomination' => 'Bourg-en-Bresse',
                             'siren' => '123456789',
                             'date_inscription' => '0000-00-00 00:00:00',
-                            'etat' => '0',
                             'entite_mere' => '0',
                             'centre_de_gestion' => '0',
                             'is_active' => '1',

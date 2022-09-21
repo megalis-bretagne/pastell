@@ -3,7 +3,7 @@
 namespace Pastell\Configuration;
 
 use ActionExecutor;
-use Entite;
+use EntiteSQL;
 use Pastell\Viewer\Viewer;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -199,7 +199,7 @@ class ConnectorConfiguration implements ConfigurationInterface
                                     ->end()
                                     ->scalarNode(self::ACTION_RULE_ENTITY_ROLE)
                                         ->validate()
-                                            ->ifNotInArray(Entite::getAllType())
+                                            ->ifNotInArray(EntiteSQL::getAllType())
                                             ->thenInvalid('Invalid entity type %s')
                                         ->end()
                                         ->setDeprecated('libriciel/pastell', '4.0.0')

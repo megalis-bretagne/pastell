@@ -155,14 +155,10 @@ class EntiteAPIController extends BaseAPIController
             throw new Exception("Le nom (denomination) est obligatoire");
         }
         if (! $type) {
-            $type = Entite::TYPE_COLLECTIVITE;
+            $type = EntiteSQL::TYPE_COLLECTIVITE;
         }
-        if (! in_array($type, [Entite::TYPE_SERVICE,Entite::TYPE_CENTRE_DE_GESTION,Entite::TYPE_COLLECTIVITE])) {
-            throw new Exception("Le type d'entité doit être renseigné. Les valeurs possibles sont collectivite, service ou centre_de_gestion.");
-        }
-
-        if ($type == Entite::TYPE_SERVICE && ! $entite_mere) {
-            throw new Exception("Un service doit être ataché à une entité mère (collectivité, centre de gestion ou service)");
+        if (! in_array($type, [EntiteSQL::TYPE_CENTRE_DE_GESTION,EntiteSQL::TYPE_COLLECTIVITE])) {
+            throw new Exception("Le type d'entité doit être renseigné. Les valeurs possibles sont collectivite ou centre_de_gestion.");
         }
 
         if ($siren !== '' && ! $this->siren->isValid($siren)) {

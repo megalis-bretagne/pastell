@@ -1190,14 +1190,6 @@
                 "Default": null,
                 "Extra": ""
             },
-            "etat": {
-                "Field": "etat",
-                "Type": "int(11)",
-                "Null": "NO",
-                "Key": "",
-                "Default": null,
-                "Extra": ""
-            },
             "entite_mere": {
                 "Field": "entite_mere",
                 "Type": "varchar(9)",

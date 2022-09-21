@@ -31,7 +31,7 @@ class EntiteListe extends SQL
     public function countCollectivite()
     {
         $sql = "SELECT count(*) FROM entite WHERE type=? OR type=?" ;
-        return $this->queryOne($sql, Entite::TYPE_COLLECTIVITE, Entite::TYPE_CENTRE_DE_GESTION);
+        return $this->queryOne($sql, EntiteSQL::TYPE_COLLECTIVITE, EntiteSQL::TYPE_CENTRE_DE_GESTION);
     }
 
     public function getAllCollectivite($offset, $denomination)

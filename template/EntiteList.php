@@ -51,7 +51,7 @@ $this->SuivantPrecedent($offset, 20, $nbCollectivite, "Entite/detail?search=$sea
         echo $info['siren'] ?></td>
         <?php if ($cdg_feature) : ?>
         <td>
-            <?php echo Entite::getNom($info['type']) ?>
+            <?php echo EntiteSQL::getNom($info['type']) ?>
         </td>
         <?php endif; ?>
         <td>

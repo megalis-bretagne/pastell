@@ -2,8 +2,10 @@
 
 class EntiteSQL extends SQL
 {
-    public const ENTITE_RACINE_DENOMINATION = "Entité racine";
+    public const TYPE_COLLECTIVITE = "collectivite";
+    public const TYPE_CENTRE_DE_GESTION = "centre_de_gestion";
 
+    public const ENTITE_RACINE_DENOMINATION = "Entité racine";
     public const ID_E_ENTITE_RACINE = 0;
 
     public function getInfo($id_e)
@@ -55,31 +57,9 @@ class EntiteSQL extends SQL
         return $this->query($sql, $id_e);
     }
 
-    /**
-     * @param $id_e
-     * @return bool
-     */
-    public function getCollectiviteAncetre($id_e)
-    {
-        $info = $this->getInfo($id_e);
-
-        if (
-                $info['type'] == Entite::TYPE_COLLECTIVITE ||
-                $info['type'] == Entite::TYPE_CENTRE_DE_GESTION
-        ) {
-            return $id_e;
-        }
-        foreach ($this->getAncetre($id_e) as $ancetre) {
-            if ($ancetre['type'] == Entite::TYPE_COLLECTIVITE) {
-                return $ancetre['id_e'];
-            }
-        }
-        return false;
-    }
-
     public function getCDG($id_e)
     {
-        return $this->getHeritedInfo($id_e, 'centre_de_gestion');
+        return $this->getHeritedInfo($id_e, self::TYPE_CENTRE_DE_GESTION);
     }
 
     private function getHeritedInfo($id_e, $colname)
@@ -139,7 +119,7 @@ class EntiteSQL extends SQL
         if ($id_e != 0 || ! $liste_collectivite || ($liste_collectivite[0] == 0)) {
             return $this->getNavigationFilleWithType(
                 $id_e,
-                [Entite::TYPE_COLLECTIVITE,Entite::TYPE_CENTRE_DE_GESTION,Entite::TYPE_SERVICE]
+                [self::TYPE_COLLECTIVITE,self::TYPE_CENTRE_DE_GESTION]
             );
         }
         $liste_fille = [];
@@ -329,5 +309,22 @@ class EntiteSQL extends SQL
         }
 
         throw new Exception("Aucun paramètre permettant la recherche de l'entité n'a été renseigné");
+    }
+
+    public static function getAllType()
+    {
+        return [
+            self::TYPE_COLLECTIVITE => "Collectivité",
+            self::TYPE_CENTRE_DE_GESTION => "Centre de gestion"
+        ];
+    }
+
+    public static function getNom($type)
+    {
+        $type_nom = self::getAllType();
+        if (empty($type_nom[$type])) {
+            return $type;
+        }
+        return $type_nom[$type];
     }
 }

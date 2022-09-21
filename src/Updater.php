@@ -10,6 +10,7 @@ class Updater
 {
     private static $classes = [
         '3.0.2' => Updater\Major3\Minor0\Patch2::class,
+        '4.0.0' => Updater\Major4\Minor0\Patch0::class,
     ];
 
     /**

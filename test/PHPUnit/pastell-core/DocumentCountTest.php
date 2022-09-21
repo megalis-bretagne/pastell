@@ -43,7 +43,6 @@ class DocumentCountTest extends PastellTestCase
                                 'denomination' => 'Bourg-en-Bresse',
                                 'siren' => '123456789',
                                 'date_inscription' => '0000-00-00 00:00:00',
-                                'etat' => '0',
                                 'entite_mere' => '0',
                                 'centre_de_gestion' => '0',
                                 'is_active' => '1',
@@ -77,11 +76,10 @@ class DocumentCountTest extends PastellTestCase
                         'info' =>
                              [
                                 'id_e' => '2',
-                                'type' => 'service',
+                                'type' => 'collectivite',
                                 'denomination' => 'CCAS',
                                 'siren' => '123456788',
                                 'date_inscription' => '0000-00-00 00:00:00',
-                                'etat' => '0',
                                 'entite_mere' => '1',
                                 'centre_de_gestion' => '0',
                                 'is_active' => '1',
@@ -115,7 +113,6 @@ class DocumentCountTest extends PastellTestCase
                                 'denomination' => 'Bourg-en-Bresse',
                                 'siren' => '123456789',
                                 'date_inscription' => '0000-00-00 00:00:00',
-                                'etat' => '0',
                                 'entite_mere' => '0',
                                 'centre_de_gestion' => '0',
                                 'is_active' => '1',

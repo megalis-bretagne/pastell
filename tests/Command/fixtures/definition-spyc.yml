@@ -400,8 +400,7 @@ action:
             no-last-action:
             droit_id_u: 'actes-generique:edition'
             type_id_e:
-                service
-                collectivite
+                - collectivite
 
     modification:
         name-action: Modifier

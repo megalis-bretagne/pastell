@@ -101,7 +101,7 @@ class EntiteAPIControllerTest extends PastellTestCase
             "/entite",
             [
                 "denomination" => "toto",
-                'type' => Entite::TYPE_COLLECTIVITE
+                'type' => EntiteSQL::TYPE_COLLECTIVITE
             ]
         );
         $this->assertSame("", $info['siren']);
@@ -115,21 +115,7 @@ class EntiteAPIControllerTest extends PastellTestCase
             "/entite",
             [
                 "denomination" => "toto",
-                'type' => Entite::TYPE_COLLECTIVITE,
-                'siren' => '123456789'
-            ]
-        );
-    }
-
-    public function testCreateServiceInRootEntite()
-    {
-        $this->expectException("Exception");
-        $this->expectExceptionMessage("Un service doit être ataché à une entité mère");
-        $this->getInternalAPI()->post(
-            "/entite",
-            [
-                "denomination" => "toto",
-                'type' => Entite::TYPE_SERVICE,
+                'type' => EntiteSQL::TYPE_COLLECTIVITE,
                 'siren' => '123456789'
             ]
         );

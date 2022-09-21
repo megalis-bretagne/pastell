@@ -14,7 +14,7 @@ class EntiteCreator extends SQL
         $id_e,
         $siren,
         $denomination,
-        $type = Entite::TYPE_COLLECTIVITE,
+        $type = EntiteSQL::TYPE_COLLECTIVITE,
         $entite_mere = 0,
         $id_e_centre_de_gestion = 0
     ) {
