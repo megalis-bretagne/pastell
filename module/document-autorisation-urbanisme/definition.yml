@@ -251,9 +251,6 @@ formulaire:
             name: "Date de l'accusé de réception"
             type: date
             read-only: true
-        acte_use_publication_date:
-            name: 'Utiliser la date de publication sur le tampon'
-            type: checkbox
         acte_publication_date:
             name: "Date de publication de l'acte"
             type: date
@@ -462,7 +459,6 @@ action:
         rule:
             role_id_e: no-role
         editable-content:
-            - acte_use_publication_date
             - acte_publication_date
         modification-no-change-etat: true
     reouverture:
@@ -519,7 +515,6 @@ action:
             - type_piece
             - type_acte
             - type_pj
-            - acte_use_publication_date
             - acte_publication_date
             - to
             - cc
@@ -635,7 +630,6 @@ action:
             - type_piece
             - type_acte
             - type_pj
-            - acte_use_publication_date
             - acte_publication_date
             - to
             - cc
@@ -792,7 +786,6 @@ action:
             - reply_sae
             - sae_archival_identifier
             - sae_atr_comment
-            - acte_use_publication_date
             - acte_publication_date
         modification-no-change-etat: true
     annulation-tdt:
@@ -826,7 +819,6 @@ action:
             acte_tamponne: acte_tamponne
             annexes_tamponnees: annexes_tamponnees
             date_ar: date_ar
-            acte_use_publication_date: acte_use_publication_date
             acte_publication_date: acte_publication_date
             arrete: document
             autre_document_attache: annexe
@@ -968,7 +960,6 @@ action:
             - reply_sae
             - sae_archival_identifier
             - sae_atr_comment
-            - acte_use_publication_date
             - acte_publication_date
         modification-no-change-etat: true
     reception-partielle:
@@ -1011,7 +1002,6 @@ action:
             - reply_sae
             - sae_archival_identifier
             - sae_atr_comment
-            - acte_use_publication_date
             - acte_publication_date
         modification-no-change-etat: true
     reponse:
@@ -1070,7 +1060,6 @@ action:
             - reply_sae
             - sae_archival_identifier
             - sae_atr_comment
-            - acte_use_publication_date
             - acte_publication_date
         modification-no-change-etat: true
     error-ged:
@@ -1159,7 +1148,6 @@ action:
             role_id_e: no-role
         action-automatique: orientation
         editable-content:
-            - acte_use_publication_date
             - acte_publication_date
         modification-no-change-etat: true
     rejet-sae:

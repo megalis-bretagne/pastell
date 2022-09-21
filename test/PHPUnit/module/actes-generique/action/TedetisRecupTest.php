@@ -278,7 +278,6 @@ class TedetisRecupTest extends PastellTestCase
         $id_d = $this->createDocument('actes-generique')['id_d'];
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
         $donneesFormulaire->setData('tedetis_transaction_id', 42);
-        $donneesFormulaire->setData('acte_use_publication_date', true);
         $donneesFormulaire->setData('acte_publication_date', '2022-02-18');
 
         $donneesFormulaire->addFileFromData('arrete', 'mon_acte.pdf', '');
@@ -308,7 +307,6 @@ class TedetisRecupTest extends PastellTestCase
 
         $id_d = $this->createDocument('actes-generique')['id_d'];
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
-        $donneesFormulaire->setData('acte_use_publication_date', true);
         $donneesFormulaire->setData('acte_publication_date', '2022-02-18');
 
         $actionCreator = $this->getObjectInstancier()->getInstance(ActionCreatorSQL::class);
@@ -318,7 +316,6 @@ class TedetisRecupTest extends PastellTestCase
         $actionExecutorFactory->executeLotDocument(1, 1, [$id_d], "tamponner-tdt");
 
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
-        self::assertEquals(1, $donneesFormulaire->get('acte_use_publication_date'));
         self::assertEquals('2022-02-18', $donneesFormulaire->get('acte_publication_date'));
     }
 }

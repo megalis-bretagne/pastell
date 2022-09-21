@@ -249,9 +249,6 @@ formulaire:
             name: "Date de l'accusé de réception"
             type: date
             read-only: true
-        acte_use_publication_date:
-            name: Utiliser la date de publication sur le tampon
-            type: checkbox
         acte_publication_date:
             name: Date de publication de l'acte
             type: date
@@ -414,7 +411,6 @@ action:
             role_id_e: no-role
         editable-content:
             - envoi_sae
-            - acte_use_publication_date
             - acte_publication_date
         modification-no-change-etat: true
     send-signature-local:
@@ -619,7 +615,6 @@ action:
         editable-content:
             - envoi_ged
             - envoi_sae
-            - acte_use_publication_date
             - acte_publication_date
         action-automatique: orientation
     tamponner-tdt:
@@ -697,7 +692,6 @@ action:
                         - error-ged
         editable-content:
             - envoi_sae
-            - acte_use_publication_date
             - acte_publication_date
         modification-no-change-etat: true
         action-automatique: orientation
@@ -808,7 +802,6 @@ action:
         rule:
             role_id_e: no-role
         editable-content:
-            - acte_use_publication_date
             - acte_publication_date
         modification-no-change-etat: true
     rejet-sae:
