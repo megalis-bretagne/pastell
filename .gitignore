@@ -33,4 +33,4 @@ phpcs.xml
 /public/bundles/
 /var/
 /vendor/
-/build/
+/build-package/

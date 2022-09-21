@@ -9,7 +9,7 @@ echo "Create a production package in ./build/ directory"
 exit;
 fi
 
-TARGET=build/pastell-${VERSION}/
+TARGET=build-package/pastell-${VERSION}/
 
 rm -rf ${TARGET}
 mkdir -p ${TARGET}
