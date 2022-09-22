@@ -76,6 +76,7 @@ return [
     'exclude-namespaces' => [
         '~^$~',                        // The root namespace only
         'Pastell', // Pastell namespace
+        'Composer', // Makes cache:clear command crash
         // 'Acme\Foo'                     // The Acme\Foo namespace (and sub-namespaces)
         // '~^PHPUnit\\\\Framework$~',    // The whole namespace PHPUnit\Framework (but not sub-namespaces)
         // '',                            // Any namespace
