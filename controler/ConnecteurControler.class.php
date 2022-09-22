@@ -409,7 +409,7 @@ class ConnecteurControler extends PastellControler
         $this->verifDroitOnConnecteur($this->getViewParameterOrObject('id_ce'));
         $connecteur_entite_info = $this->getConnecteurEntiteSQL()->getInfo($this->getViewParameterOrObject('id_ce'));
         $id_e = $connecteur_entite_info['id_e'];
-        $entite_info = $this->getEntiteSQL()->getInfo($id_e);
+        $entite_info = $this->getEntiteSQL()->getInfo($id_e) ?: [];
         if (! $id_e) {
             $entite_info['denomination'] = "Entité racine";
         }
