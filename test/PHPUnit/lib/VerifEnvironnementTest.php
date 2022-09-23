@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 class VerifEnvironnementTest extends PHPUnit\Framework\TestCase
 {
-    public function testCheckExtension()
+    public function testCheckExtension(): void
     {
         $verifEnvironnement = new VerifEnvironnement();
 
@@ -30,6 +32,7 @@ class VerifEnvironnementTest extends PHPUnit\Framework\TestCase
                 'simplexml' => true,
                 'intl' => true,
                 'pcntl' => true,
+                'uuid' => true,
             ],
             $verifEnvironnement->checkExtension()
         );

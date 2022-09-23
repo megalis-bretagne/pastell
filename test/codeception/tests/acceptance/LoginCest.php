@@ -20,13 +20,12 @@ class LoginCest
 
     public function deconnexion(AcceptanceTester $I)
     {
-        $I->wantTo("me déconnecter du site");
+        $I->wantTo('me déconnecter du site');
         $I->amAnonymous();
-        $I->amOnPage("/");
-        $I->click("Se déconnecter");
-        $I->dontSee("Liste des dossiers");
-        $I->see("Veuillez saisir vos identifiants de connexion");
-        $I->seeInCurrentUrl("/Connexion/connexion");
+        $I->amOnPage('/');
+        $I->click('Se déconnecter');
+        $I->dontSee('Liste des dossiers');
+        $I->see('Veuillez saisir vos identifiants de connexion');
     }
 
     public function dontSeeOldName(AcceptanceTester $I)
@@ -40,10 +39,10 @@ class LoginCest
 
     public function redirectToInternPage(AcceptanceTester $I)
     {
-        $I->wantTo("être redirigé vers la page que je demandais après une authentification réussie");
+        $I->wantTo('être redirigé vers la page que je demandais après une authentification réussie');
         $I->amAnonymous();
-        $I->amOnPage("/System/index");
-        $I->see("Veuillez saisir vos identifiants de connexion");
+        $I->amOnPage('/System/index');
+        $I->see('Veuillez saisir vos identifiants de connexion');
         $I->fillField('Identifiant *', 'admin');
         $I->fillField('Mot de passe *', 'admin');
         $I->click('Se connecter');

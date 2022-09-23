@@ -39,6 +39,7 @@ class ActesGeneriqueCest
         $ob = ObjectInstancierFactory::getObjetInstancier();
         $internalAPI = $ob->getInstance(InternalAPI::class);
         $internalAPI->setUtilisateurId(0);
+        $ob->getInstance(DaemonManager::class)->stop();
 
         $internalAPI->post(
             "/entite/1/document/$id_d/file/arrete",

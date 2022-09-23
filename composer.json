@@ -23,6 +23,7 @@
     "ext-redis": "^5.3",
     "ext-simplexml": "*",
     "ext-soap": "*",
+    "ext-uuid": "^1.2",
     "ext-xsl": "*",
     "ext-zend-opcache": "*",
     "ext-zip": "^1.19",
