@@ -30,6 +30,7 @@ fi
 
 if [ -z "$DONT_INIT_DATABASE" ] ; then
   php /var/www/pastell/docker/init-docker.php
+  /var/www/pastell/bin/console app:bootstrap -vv
 fi
 
 exec "$@"
