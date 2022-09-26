@@ -3,7 +3,7 @@ PASTELL_PATH=/var/www/pastell
 EXEC_NODE=$(DOCKER) run --rm --volume ${PWD}:$(PASTELL_PATH) -it node:14-slim
 EXEC_COMPOSER=$(DOCKER) run --rm --volume ${PWD}:/app --volume ${HOME}/.composer:/tmp -it composer:2
 MAKE_MODULE=$(DOCKER_COMPOSE_EXEC) php ./bin/console app:studio:make-module
-DOCKER_COMPOSE=docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml
+DOCKER_COMPOSE=docker compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml
 EXEC_TRIVY=$(DOCKER) run -it --rm -v /var/run/docker.sock:/var/run/docker.sock -v ~/.cache:/root/.cache -v ${PWD}/.trivyignore:/.trivyignore aquasec/trivy image --severity HIGH,CRITICAL pastell-local-dev
 
 .DEFAULT_GOAL := help
