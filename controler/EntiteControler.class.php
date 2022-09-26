@@ -367,13 +367,12 @@ class EntiteControler extends PastellControler
         $search = $recuperateur->get('search');
 
         $this->hasDroitLecture($id_e);
-        $info = $this->getEntiteSQL()->getInfo($id_e);
-        $siren = $info['siren'];
 
         /** @var AgentSQL $agentSQL */
         $agentSQL = $this->getInstance(AgentSQL::class);
 
         if ($id_e) {
+            $siren = $this->getEntiteSQL()->getInfo($id_e)['siren'];
             $this->setViewParameter('nbAgent', $agentSQL->getNbAgent($siren, $search));
             $this->setViewParameter('listAgent', $agentSQL->getBySiren($siren, $offset, $search));
         } else {
