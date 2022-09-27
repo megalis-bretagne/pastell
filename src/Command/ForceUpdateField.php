@@ -2,36 +2,24 @@
 
 namespace Pastell\Command;
 
-use ConnecteurEntiteSQL;
-use ConnecteurFactory;
-use DocumentSQL;
-use DonneesFormulaireFactory;
+use Pastell\Service\UpdateFieldService;
 use Exception;
 use InvalidArgumentException;
 use Journal;
-use NotFoundException;
-use Pastell\Service\SimpleTwigRenderer;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use UnrecoverableException;
 
 use function implode;
 use function in_array;
 
 class ForceUpdateField extends BaseCommand
 {
-    public const SCOPE_MODULE = 'module';
-    public const SCOPE_CONNECTOR = 'connector';
-    private const SCOPE_LIST = [self::SCOPE_MODULE, self::SCOPE_CONNECTOR];
+    private const SCOPE_LIST = [UpdateFieldService::SCOPE_MODULE, UpdateFieldService::SCOPE_CONNECTOR];
 
     public function __construct(
-        private DocumentSQL $documentSQL,
-        private DonneesFormulaireFactory $donneesFormulaireFactory,
-        private ConnecteurEntiteSQL $connecteurEntiteSql,
-        private ConnecteurFactory $connecteurFactory,
-        private SimpleTwigRenderer $simpleTwigRenderer,
+        private UpdateFieldService $updateFieldService,
         private Journal $journal,
     ) {
         parent::__construct();
@@ -84,13 +72,8 @@ class ForceUpdateField extends BaseCommand
             )
         );
 
-        if ($scope === self::SCOPE_MODULE) {
-            $scopeType = 'dossiers';
-            $documents = $this->documentSQL->getAllIdByType($type);
-        } else {
-            $scopeType = 'configuration';
-            $documents = $this->connecteurEntiteSql->getAllByConnecteurId($type);
-        }
+        $scopeType = ($scope === UpdateFieldService::SCOPE_MODULE) ? 'dossiers' : 'configuration';
+        $documents = $this->updateFieldService->getAllDocuments($scope, $type);
         $documentsNumber = count($documents);
         if ($documentsNumber === 0) {
             $this->getIO()->success(
@@ -113,7 +96,8 @@ class ForceUpdateField extends BaseCommand
         $this->getIO()->newLine();
 
         foreach ($documents as $document) {
-            $this->updateField($document, $scope, $field, $twigExpression, $dryRun);
+            $message = $this->updateFieldService->updateField($document, $scope, $field, $twigExpression, $dryRun);
+            $this->getIO()->writeln($message);
             $this->getIO()->progressAdvance();
         }
 
@@ -140,48 +124,5 @@ class ForceUpdateField extends BaseCommand
         $this->getIO()->success('Done');
 
         return 0;
-    }
-
-    /**
-     * @throws UnrecoverableException
-     * @throws NotFoundException
-     * @throws Exception
-     */
-    private function updateField(
-        array $document,
-        string $scope,
-        string $field,
-        string $twigExpression,
-        string $dryRun
-    ): void {
-        if ($scope === self::SCOPE_MODULE) {
-            $scopeId = 'id_d';
-            $documentId = $document[$scopeId];
-            $donneesFormulaire = $this->donneesFormulaireFactory->get($documentId);
-        } else {
-            $scopeId = 'id_ce';
-            $documentId = $document[$scopeId];
-            $donneesFormulaire = $this->connecteurFactory->getConnecteurConfig($documentId);
-        }
-
-        $old_value = $donneesFormulaire->get($field);
-        $new_value = $this->simpleTwigRenderer->render(
-            $twigExpression,
-            $donneesFormulaire
-        );
-        $this->getIO()->writeln(
-            sprintf(
-                'Update %s=%s - id_e=%s. Replace field %s value `%s` by `%s`',
-                $scopeId,
-                $documentId,
-                $document['id_e'],
-                $field,
-                $old_value,
-                $new_value
-            )
-        );
-        if (!$dryRun) {
-            $donneesFormulaire->setData($field, $new_value);
-        }
     }
 }
