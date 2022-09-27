@@ -97,8 +97,8 @@ class Patch0 implements Version
         $roleDroitEntite = [];
         foreach ($this->roleSQL->getAllRole() as $role) {
             $droit = $this->roleSQL->getDroit($this->roleDroit->getAllDroit(), $role['role']);
-            $this->RoleDroitFilter($role['role'], $droit, DroitService::DROIT_CONNECTEUR, $roleDroitConnecteur);
-            $this->RoleDroitFilter($role['role'], $droit, DroitService::DROIT_ENTITE, $roleDroitEntite);
+            $this->roleDroitFilter($role['role'], $droit, DroitService::DROIT_CONNECTEUR, $roleDroitConnecteur);
+            $this->roleDroitFilter($role['role'], $droit, DroitService::DROIT_ENTITE, $roleDroitEntite);
         }
 
         if (! empty($roleDroitConnecteur)) {
