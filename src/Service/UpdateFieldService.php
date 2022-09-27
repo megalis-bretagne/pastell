@@ -8,7 +8,6 @@ use DocumentSQL;
 use DonneesFormulaireFactory;
 use Exception;
 use NotFoundException;
-use Pastell\Service\SimpleTwigRenderer;
 use UnrecoverableException;
 
 class UpdateFieldService

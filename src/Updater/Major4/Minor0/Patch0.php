@@ -33,11 +33,9 @@ class Patch0 implements Version
     }
 
     /**
+     * Suppression du modèle `Entite`, remplacé par `EntiteSQL` (et suppression du type d'entité "service") #1589
      * @throws Exception
      */
-    /*
-        Suppression du modèle `Entite`, remplacé par `EntiteSQL` (et suppression du type d'entité "service") #1589
-    */
     private function updateEntiteServiceByCollectivite(): void
     {
         $sql = "UPDATE entite " .
@@ -48,16 +46,14 @@ class Patch0 implements Version
     }
 
     /**
+     * Suppression de la constante MODE_MUTUALISE.
+     * Lors de l'envoi d'un mail sécurisé, mailsec_from prend la valeur de PLATEFORME_MAIL.
+     * Il faut lancer la commande:
+     * `app:force-update-field connector mailsec mailsec_reply_to
+     * "{% if mailsec_reply_to == '' %}{{mailsec_from}}{% else %}{{mailsec_reply_to}}{% endif %}"`
+     * pour reporter l'ancien mailsec_from à mailsec_reply_to (s'il n'est pas déjà renseigné) #1465
      * @throws Exception
      */
-    /*
-        Suppression de la constante MODE_MUTUALISE.
-        Lors de l'envoi d'un mail sécurisé, mailsec_from prend la valeur de PLATEFORME_MAIL.
-        Il faut lancer la commande:
-        `app:force-update-field connector mailsec mailsec_reply_to
-        "{% if mailsec_reply_to == '' %}{{mailsec_from}}{% else %}{{mailsec_reply_to}}{% endif %}"`
-        pour reporter l'ancien mailsec_from à mailsec_reply_to (s'il n'est pas déjà renseigné) #1465
-    */
     private function forceUpdateFieldMailsec(): void
     {
         $scope = UpdateFieldService::SCOPE_CONNECTOR;
@@ -89,22 +85,20 @@ class Patch0 implements Version
     }
 
     /**
+     * Suppression de la constante CONNECTEUR_DROIT.
+     * Il faut maintenant ajouter les droits 'connecteur:lecture' et 'connecteur:edition'
+     * afin de gérer les connecteurs et les associations de types de documents.
+     * Il faut reporter les droits (entite:) existants aux nouveaux droits (connecteur:) #1136
      * @throws Exception
      */
-    /*
-        Suppression de la constante CONNECTEUR_DROIT.
-        Il faut maintenant ajouter les droits 'connecteur:lecture' et 'connecteur:edition'
-        afin de gérer les connecteurs et les associations de types de documents.
-        Il faut reporter les droits (entite:) existants aux nouveaux droits (connecteur:) #1136
-    */
     private function addConnectorPermission(): void
     {
         $roleDroitConnecteur = [];
         $roleDroitEntite = [];
         foreach ($this->roleSQL->getAllRole() as $role) {
             $droit = $this->roleSQL->getDroit($this->roleDroit->getAllDroit(), $role['role']);
-            $this->RoleDroitfilter($role['role'], $droit, DroitService::DROIT_CONNECTEUR, $roleDroitConnecteur);
-            $this->RoleDroitfilter($role['role'], $droit, DroitService::DROIT_ENTITE, $roleDroitEntite);
+            $this->RoleDroitFilter($role['role'], $droit, DroitService::DROIT_CONNECTEUR, $roleDroitConnecteur);
+            $this->RoleDroitFilter($role['role'], $droit, DroitService::DROIT_ENTITE, $roleDroitEntite);
         }
 
         if (! empty($roleDroitConnecteur)) {

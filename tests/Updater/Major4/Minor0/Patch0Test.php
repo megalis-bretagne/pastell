@@ -3,20 +3,14 @@
 namespace Pastell\Tests\Updater\Major4\Minor0;
 
 use Exception;
-use NotFoundException;
 use Pastell\Updater\Major4\Minor0\Patch0;
 use PastellTestCase;
 use RoleDroit;
 use RoleSQL;
-use UnrecoverableException;
-
-use function PHPUnit\Framework\assertTrue;
 
 class Patch0Test extends PastellTestCase
 {
     /**
-     * @throws NotFoundException
-     * @throws UnrecoverableException
      * @throws Exception
      */
     public function testAddConnectorPermission()
