@@ -16,7 +16,7 @@ class ConnexionControler extends PastellControler
     }
 
     /**
-     * @return bool
+     * @return bool|never
      * @throws LastErrorException
      * @throws LastMessageException
      */
@@ -38,8 +38,6 @@ class ConnexionControler extends PastellControler
         if (!$this->getAuthentification()->isConnected()) {
             $this->redirect("/Connexion/connexion");
         }
-
-        return false;
     }
 
     /**
@@ -456,7 +454,6 @@ class ConnexionControler extends PastellControler
             /* Note : on ne peut pas mettre de message d'erreur personnalisé pour le moment */
             $this->setLastError("Les mots de passe ne correspondent pas");
             $this->redirect("/Connexion/changementMdp?mail_verif=$mail_verif_password");
-            exit;
         }
 
         $passwordEntropy = $this->getObjectInstancier()->getInstance(PasswordEntropy::class);

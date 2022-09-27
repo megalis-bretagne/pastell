@@ -94,11 +94,6 @@ class JournalAPIController extends BaseAPIController
         $tmpFolder->delete($tmp_folder);
 
         exit_wrapper(0);
-
-        //Never reached...
-        // @codeCoverageIgnoreStart
-        return true;
-        // @codeCoverageIgnoreEnd
     }
 
     public function detail()
@@ -126,11 +121,6 @@ class JournalAPIController extends BaseAPIController
         echo $info['preuve'];
 
         exit_wrapper(0);
-
-        //Never reached...
-        // @codeCoverageIgnoreStart
-        return true;
-        // @codeCoverageIgnoreEnd
     }
 
     private function getInfo($id_j)

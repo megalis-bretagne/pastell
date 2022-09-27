@@ -89,6 +89,5 @@ class SedaGeneriqueDisplayTestBordereau extends ActionExecutor
             SendFileToBrowser::CONTENT_DISPOSITION_INLINE
         );
         exit_wrapper();
-        return true;
     }
 }

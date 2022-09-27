@@ -100,7 +100,6 @@ class DepotFTP extends DepotConnecteur
                 return $carry;
             }
         );
-        die;
     }
 
     public function directoryExists(string $directory_name)
