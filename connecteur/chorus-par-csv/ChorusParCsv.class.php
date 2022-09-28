@@ -99,7 +99,6 @@ class ChorusParCsv extends PortailFactureConnecteur
         if ($this->globalConfig) {
             return $this->globalConfig->get($element_name);
         }
-        return false;
     }
 
     private function setConfigFromGlobalConnecteur()

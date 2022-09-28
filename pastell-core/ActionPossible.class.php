@@ -382,31 +382,22 @@ class ActionPossible
         switch ($ruleName) {
             case 'no-last-action':
                 return $this->verifLastAction(false);
-            break;
             case 'last-action':
                 return $this->verifLastAction($ruleValue);
-            break;
             case 'has-action':
                 return ! $this->verifNoAction($ruleValue);
-            break;
             case 'no-action':
                 return $this->verifNoAction($ruleValue);
-            break;
             case 'role_id_e':
                 return $this->verifRoleEntite($ruleValue);
-            break;
             case 'droit_id_u':
                 return $this->verifDroitUtilisateur($id_u, $ruleValue);
-            break;
             case 'content':
                 return $this->verifContent($ruleValue);
-            break;
             case 'type_id_e':
                 return $this->veriTypeEntite($ruleValue);
-            break;
             case 'document_is_valide':
                 return $this->verifDocumentIsValide();
-            break;
             case 'internal-action':
                 return false;
         }

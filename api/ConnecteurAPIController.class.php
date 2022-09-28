@@ -221,10 +221,6 @@ class ConnecteurAPIController extends BaseAPIController
         readfile($file_path);
 
         exit_wrapper(0);
-        //Never reached...
-        // @codeCoverageIgnoreStart
-        return true;
-        // @codeCoverageIgnoreEnd
     }
 
     /**
