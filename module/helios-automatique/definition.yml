@@ -319,6 +319,7 @@ action:
             role_id_e: no-role
         editable-content:
             - envoi_sae
+        modification-no-change-etat: true
     send-signature-local:
         name-action: Signer
         name: 'Document à faire signer'
