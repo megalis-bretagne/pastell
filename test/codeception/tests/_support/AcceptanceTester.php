@@ -21,6 +21,10 @@ class AcceptanceTester extends \Codeception\Actor
         amOnPage as amOnPageTrait;
     }
 
+    public const PHPSESSID = 'PHPSESSID';
+
+    protected static $session_cookie = [];
+    protected static $session_information = [];
 
     public function amOnPage(string $page)
     {
@@ -35,13 +39,8 @@ class AcceptanceTester extends \Codeception\Actor
         $I->fillField('Mot de passe *', $password);
         $I->click('Se connecter');
         $I->see('Liste des dossiers');
-        $I->dontseeInCurrentUrl("/Connexion/connexion");
+        $I->dontSeeInCurrentUrl('/Connexion/connexion');
     }
-
-    public const PHPSESSID = "PHPSESSID";
-
-    protected static $session_cookie = [];
-    protected static $session_information = [];
 
     public function loadSessionSnapshot($key)
     {

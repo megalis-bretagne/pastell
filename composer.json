@@ -23,6 +23,7 @@
     "ext-redis": "^5.3",
     "ext-simplexml": "*",
     "ext-soap": "*",
+    "ext-uuid": "^1.2",
     "ext-xsl": "*",
     "ext-zend-opcache": "*",
     "ext-zip": "^1.19",
@@ -51,6 +52,7 @@
     "symfony/console": "^6.1",
     "symfony/dotenv": "^6.1",
     "symfony/filesystem": "^6.1",
+    "symfony/flex": "^2.2",
     "symfony/framework-bundle": "^6.1",
     "symfony/http-client": "^6.1",
     "symfony/lock": "^6.1",
@@ -60,6 +62,7 @@
     "symfony/runtime": "^6.1",
     "symfony/security-csrf": "^6.1",
     "symfony/twig-bridge": "^6.1",
+    "symfony/twig-bundle": "^6.1",
     "symfony/yaml": "^6.1",
     "twig/twig": "^3.3"
   },
@@ -77,12 +80,15 @@
     "phpunit/phpunit": "^9.5",
     "rector/rector": "^0.12.17",
     "squizlabs/php_codesniffer": "3.*",
-    "symfony/maker-bundle": "^1.43"
+    "symfony/debug-bundle": "^6.1",
+    "symfony/maker-bundle": "^1.43",
+    "symfony/web-profiler-bundle": "^6.1"
   },
   "config": {
     "sort-packages": true,
     "allow-plugins": {
-      "symfony/runtime": true
+      "symfony/runtime": true,
+      "symfony/flex": true
     }
   },
   "scripts": {
@@ -99,7 +105,11 @@
     "codecept": "codecept -c test/codeception/codeception.yml run",
     "phpcs": "phpcs",
     "phpcbf": "phpcbf",
-    "phpstan": "phpstan"
+    "phpstan": "phpstan",
+    "auto-scripts": {
+      "cache:clear": "symfony-cmd",
+      "assets:install %PUBLIC_DIR%": "symfony-cmd"
+    }
   },
   "autoload": {
     "psr-4": {
@@ -133,5 +143,10 @@
     "exclude-from-classmap": [
       "test/PHPUnit/fixtures/extensions"
     ]
+  },
+  "extra": {
+    "symfony": {
+      "docker": false
+    }
   }
 }

@@ -19,7 +19,6 @@ phpcs.xml
 **/tests/output/*
 **/tests/_data/scenarios/
 
-/.phpunit.result.cache
 /coverage
 
 /node_modules
@@ -34,3 +33,8 @@ phpcs.xml
 /var/
 /vendor/
 /build-package/
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
