@@ -144,7 +144,7 @@ deploy_dev:
         - ssh -tt gitlab@pastell-4-0.dev.libriciel.net "docker login -u gitlab-ci-token -p '$CI_JOB_TOKEN' $CI_REGISTRY && cd /data/docker-file/ && docker-compose pull && docker-compose up -d"
         - curl -i -X POST -d "$PAYLOAD" $MATTERMOST_WEBHOOK
 
-publish:
+publish_to_nexus:
   stage: deploy
   only:
     - tags
@@ -154,7 +154,7 @@ publish:
     DONT_INIT_DATABASE: "true"
     DONT_RETRIEVE_VALIDCA: "true"
   script:
-    - ./docker/make-package.sh ${CI_COMMIT_REF_NAME} && cd build-package/package && tar cvzf /tmp/${TARBALL_NAME} *
+    - ./docker/make-package.sh ${CI_COMMIT_REF_NAME} && cd build-package/pastell-${CI_COMMIT_REF_NAME}/package && tar cvzf /tmp/${TARBALL_NAME} *
     - cp /tmp/${TARBALL_NAME} ${CI_PROJECT_DIR}
     - curl -v -u ${REGISTRY_CONTAINER_USER}:${REGISTRY_CONTAINER_PASSWORD} --upload-file /tmp/${TARBALL_NAME} https://nexus.libriciel.fr/repository/ls-raw/public/plateforme/pastell/${TARBALL_NAME}
     - curl -i -X POST -d "$PAYLOAD" $MATTERMOST_WEBHOOK
