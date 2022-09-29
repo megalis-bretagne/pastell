@@ -338,18 +338,6 @@ class DocumentAPIController extends BaseAPIController
         return $theField->getProperties('choice-action');
     }
 
-
-    public function needChangeEtatToModification($id_e, $id_d, DocumentType $documentType)
-    {
-        //FIXME : il y a une dépendance dans un script à plat qui devrait normalement utilisé la fonction de l'API...
-        $action_name = $this->documentActionEntite->getLastAction($id_e, $id_d);
-
-        $actionObject = $documentType->getAction();
-        $modification_no_change_etat = $actionObject->getProperties($action_name, Action::MODIFICATION_NO_CHANGE_ETAT);
-
-        return !$modification_no_change_etat;
-    }
-
     public function getFichier($id_e, $id_d)
     {
         $field = $this->getFromQueryArgs(4);

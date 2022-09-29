@@ -1,7 +1,5 @@
 <?php
 
-use Pastell\Service\Document\DocumentTitre;
-
 class ModificationAction extends ActionExecutor
 {
     public const ACTION_ID = "modification";
@@ -52,12 +50,21 @@ class ModificationAction extends ActionExecutor
         }
         $this->getDocument()->setTitre($this->id_d, $titre);
 
-        if (
-            $this->getDonneesFormulaire()->isModified()
-            && $this->needChangeEtatToModification($this->id_e, $this->id_d, $this->getDocumentType())
-        ) {
-                $actionChange = $this->objectInstancier->getInstance(ActionChange::class);
-                $actionChange->updateModification($this->id_d, $this->id_e, $this->id_u, self::ACTION_ID);
+        if ($this->getDonneesFormulaire()->isModified()) {
+            $action_name = $this->getDocumentActionEntite()->getLastAction($this->id_e, $this->id_d);
+            if ($this->needChangeEtatToModification($action_name)) {
+                $this->objectInstancier->getInstance(ActionChange::class)
+                    ->updateModification($this->id_d, $this->id_e, $this->id_u, self::ACTION_ID);
+            } else {
+                $this->getJournal()->addSQL(
+                    Journal::DOCUMENT_ACTION,
+                    $this->id_e,
+                    $this->id_u,
+                    $this->id_d,
+                    $action_name,
+                    "Modification du document"
+                );
+            }
         }
 
         //Traitement du ONCHANGE
@@ -88,13 +95,10 @@ class ModificationAction extends ActionExecutor
         return $result;
     }
 
-    public function needChangeEtatToModification($id_e, $id_d, DocumentType $documentType)
+    public function needChangeEtatToModification($action_name)
     {
-        $action_name = $this->getDocumentActionEntite()->getLastAction($id_e, $id_d);
-
-        $actionObject = $documentType->getAction();
+        $actionObject = $this->getDocumentType()->getAction();
         $modification_no_change_etat = $actionObject->getProperties($action_name, Action::MODIFICATION_NO_CHANGE_ETAT);
-
         return !$modification_no_change_etat;
     }
 
@@ -106,11 +110,14 @@ class ModificationAction extends ActionExecutor
      */
     private function getEditableContent($id_e, $id_d)
     {
-        //creation/modification => si editable_content, on prend editable_content, sinon, pas de editable_content (et tout est permis)
-        //autre action => on prends editable_content, sinon, rien n'est editable (et on lance une erreur)
+        //creation/modification => si editable_content, on prend editable_content,
+        // sinon, pas de editable_content (et tout est permis)
+        //autre action => on prends editable_content,
+        // sinon, rien n'est editable (et on lance une erreur)
         $type_document = $this->getDocument()->getInfo($id_d)['type'];
         $last_action = $this->getDocumentActionEntite()->getLastActionNotModif($id_e, $id_d);
-        $editable_content = $this->getDocumentTypeFactory()->getFluxDocumentType($type_document)->getAction()->getEditableContent($last_action);
+        $editable_content = $this->getDocumentTypeFactory()
+            ->getFluxDocumentType($type_document)->getAction()->getEditableContent($last_action);
 
         if ((! in_array($last_action, ["creation","modification"])) && ! $editable_content) {
             throw new ForbiddenException("Ce document n'est pas modifiable");
