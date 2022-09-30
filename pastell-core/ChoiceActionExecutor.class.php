@@ -82,14 +82,18 @@ abstract class ChoiceActionExecutor extends ActionExecutor
         exit_wrapper();
     }
 
+    /**
+     * @throws Exception
+     */
     public function redirectToConnecteurFormulaire(): void
     {
         $url = sprintf(
-            "%sConnecteur/editionModif?id_ce=%s",
+            '%sConnecteur/editionModif?id_ce=%s',
             rtrim(SITE_BASE, '/') . '/',
             $this->id_ce
         );
         header_wrapper("Location: $url");
+        exit_wrapper();
     }
 
 
