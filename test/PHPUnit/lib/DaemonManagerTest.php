@@ -12,6 +12,7 @@ class DaemonManagerTest extends PHPUnit\Framework\TestCase
 
     public function testStatus()
     {
+        $this->daemonManager->stop();
         $this->assertEquals(DaemonManager::IS_STOPPED, $this->daemonManager->status());
     }
 }

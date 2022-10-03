@@ -31,6 +31,14 @@ if (!defined("ADMIN_EMAIL")) {
     define("ADMIN_EMAIL", "test@libriciel.net");
 }
 
+if (!defined("PASTELL_ADMIN_EMAIL")) {
+    define("PASTELL_ADMIN_EMAIL", "test@libriciel.net");
+}
+
+if (!defined("PASTELL_ADMIN_LOGIN")) {
+    define("PASTELL_ADMIN_LOGIN", "admin");
+}
+
 //Emplacement du répertoire pour sauvegarder les fichiers temporaires
 //ATTENTION : CE RÉPERTOIRE DOIT ÊTRE ACCESSIBLE EN ECRITURE
 if (!defined("WORKSPACE_PATH")) {

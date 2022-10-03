@@ -27,6 +27,7 @@
 - SAEConnecteur::sendArchive() devient SAEConnecteur:sendSIP()
 - Amélioration de la présentation de l'association des connecteurs
 - Possibilité d'ajouter un fichier database.json dans les extensions pour ajouter des tables sur la base de données Pastell (voir le format sur installation/pastell.json). #1557 
+- Lors de la création d'un administrateur, le mot de passe est directement généré par Pastell ce qui garanti un mot de passe fort
 
 ## Suppressions
 

@@ -22,18 +22,10 @@ try {
     $databaseUpdater = new DatabaseUpdater($sqlQuery, $logger);
     $databaseUpdater->update();
 
-# Deuxième étape : initialisation normal de Pastell
-    require_once __DIR__ . "/../init.php";
-
-    /** @var PastellBootstrap $pastellBootstrap */
+# Deuxième étape : initialisation normale de Pastell
+    require_once __DIR__ . '/../init.php';
     $pastellBootstrap = ObjectInstancierFactory::getObjetInstancier()->getInstance(PastellBootstrap::class);
-
-    $envWrapper = new EnvWrapper();
-    $utilisateurObject = new UtilisateurObject();
-    $utilisateurObject->login = $envWrapper->get('PASTELL_ADMIN_LOGIN', 'admin');
-    $utilisateurObject->password = $envWrapper->get('PASTELL_ADMIN_PASSWORD', 'admin');
-    $utilisateurObject->email = $envWrapper->get('PASTELL_ADMIN_EMAIL', 'test@libriciel.net');
-    $pastellBootstrap->bootstrap($utilisateurObject);
+    $pastellBootstrap->bootstrap();
 } catch (Exception $e) {
     echo $e->getMessage();
 }
