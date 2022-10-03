@@ -15,7 +15,13 @@ $sqlQuery = new SQLQuery(BD_DSN_TEST, BD_USER_TEST, BD_PASS_TEST);
 
 $sqlQuery->query(file_get_contents(__DIR__ . '/truncate_all.sql'));
 
+
+
 require_once __DIR__ . '/../../../docker/init-docker.php';
+
+$utilisateurSQL = $objectInstancier->getInstance(UtilisateurSQL::class);
+$utilisateurSQL->setPassword(1, 'admin');
+
 
 
 /** @var InternalAPI $internalAPI */
