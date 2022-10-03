@@ -20,4 +20,15 @@ class AdminControlerTest extends ControlerTestCase
     {
         $this->assertFalse($this->adminControler->createAdmin('admin', 'admin', 'admin@sigmalis.com'));
     }
+
+    public function testCreateOrUpdateAdmin(): void
+    {
+        $email = "foo@bar.com";
+        $login = "foo";
+        $this->adminControler->createOrUpdateAdmin($login, $email);
+        $utilisateurSQL = $this->getObjectInstancier()->getInstance(UtilisateurSQL::class);
+        $id_u = $utilisateurSQL->getIdFromLogin("foo");
+        self::assertEquals('foo', $utilisateurSQL->getInfo($id_u)['login']);
+        self::assertEquals("Création de l'utilisateur foo OK", $this->getLogRecords()[2]['message']);
+    }
 }

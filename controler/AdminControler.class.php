@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\TokenGenerator;
+
 class AdminControler extends Controler
 {
     /** @return UtilisateurCreator */
@@ -40,7 +42,6 @@ class AdminControler extends Controler
     public function createAdmin($login, $password, $email)
     {
         $this->fixDroit();
-
         $id_u = $this->getUtilisateurCreator()->create($login, $password, $password, $email);
         if (!$id_u) {
             $this->setLastError($this->getUtilisateurCreator()->getLastError());
@@ -64,28 +65,32 @@ class AdminControler extends Controler
         $this->getEntiteCreator()->updateAllEntiteAncetre();
     }
 
-    public function createOrUpdateAdmin(UtilisateurObject $utilisateurObject, Closure $function_log)
+    public function createOrUpdateAdmin(string $login, string $email): void
     {
+        $pastellLogger = $this->getObjectInstancier()->getInstance(PastellLogger::class);
         $utilisateur = $this->getUtilisateur();
-        $utilisateur_info = $utilisateur->getInfoByLogin($utilisateurObject->login);
-        if (! $utilisateur_info) {
-            $function_log("L'utilisateur {$utilisateurObject->login} n'existe pas.");
-            $create_admin_result = $this->createAdmin(
-                $utilisateurObject->login,
-                $utilisateurObject->password,
-                $utilisateurObject->email
+        $utilisateurInfo = $utilisateur->getInfoByLogin($login);
+        if (! $utilisateurInfo) {
+            $tokenGenerator = $this->getObjectInstancier()->getInstance(TokenGenerator::class);
+            $pastellLogger->info("L'utilisateur {$login} n'existe pas.");
+            $password = $tokenGenerator->generate();
+            $createAdminResult = $this->createAdmin(
+                $login,
+                $password,
+                $email
             );
-            if (! $create_admin_result) {
-                $function_log("Erreur lors de la création de l'utilisateur :  " . $this->getLastError()->getLastError());
+            $pastellLogger->info("Mot de passe de l'administrateur : " . $password);
+            if (! $createAdminResult) {
+                $pastellLogger->error(
+                    "Erreur lors de la création de l'utilisateur :  " . $this->getLastError()->getLastError()
+                );
                 return;
             }
-            $function_log("Création de l'utilisateur {$utilisateurObject->login} OK");
+            $pastellLogger->info("Création de l'utilisateur {$login} OK");
             return;
         }
-        $function_log("L'utilisateur {$utilisateurObject->login} existe déjà");
-        $this->getUtilisateur()->setPassword($utilisateur_info['id_u'], $utilisateurObject->password);
-        $this->getUtilisateur()->setEmail($utilisateur_info['id_u'], $utilisateurObject->email);
-        $function_log("Mise à jour de l'utilisateur {$utilisateurObject->login}.");
-        return;
+        $pastellLogger->info("L'utilisateur {$login} existe déjà");
+        $this->getUtilisateur()->setEmail($utilisateurInfo['id_u'], $email);
+        $pastellLogger->info("Mise à jour de l'utilisateur $login.");
     }
 }

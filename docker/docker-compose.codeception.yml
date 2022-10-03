@@ -2,7 +2,6 @@ version: '3.7'
 
 services:
   web:
-    image: pastell-local-codeception
     volumes:
       - tmp_app_workspace:/data/workspace
     environment:

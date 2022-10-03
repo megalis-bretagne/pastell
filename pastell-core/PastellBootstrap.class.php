@@ -14,10 +14,9 @@ class PastellBootstrap
         $this->pastellLogger = $objectInstancier->getInstance(PastellLogger::class);
     }
 
-    public function bootstrap(UtilisateurObject $utilisateurObject)
+    public function bootstrap(): void
     {
         try {
-            $this->createOrUpdateAdmin($utilisateurObject);
             $this->installCertificate();
             $this->installHorodateur();
             $this->installCloudooo();
@@ -29,18 +28,6 @@ class PastellBootstrap
             $this->pastellLogger->emergency("Erreur : " . $e->getMessage());
             $this->pastellLogger->emergency($e->getTraceAsString());
         }
-    }
-
-    private function createOrUpdateAdmin($utilisateurObject)
-    {
-        $this->pastellLogger->info("Création ou mise à jour de l'admin");
-        $adminControler = $this->objectInstancier->getInstance(AdminControler::class);
-        $adminControler->createOrUpdateAdmin(
-            $utilisateurObject,
-            function ($message) {
-                $this->pastellLogger->info($message);
-            }
-        );
     }
 
     private function getHostname()
