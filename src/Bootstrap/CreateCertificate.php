@@ -57,7 +57,7 @@ class CreateCertificate implements InstallableBootstrap
 
         $this->pastellLogger->info($process->getOutput());
 
-        return $process->isSuccessful() ? InstallResult::InstallOk: InstallResult::InstallFailed;
+        return $process->isSuccessful() ? InstallResult::InstallOk : InstallResult::InstallFailed;
     }
 
     private function getPath(string $file_or_directory): string
