@@ -17,7 +17,6 @@ class PastellBootstrap
     public function bootstrap(): void
     {
         try {
-            $this->installCertificate();
             $this->installHorodateur();
             $this->installCloudooo();
             $this->installPESViewerConnecteur();
@@ -36,36 +35,6 @@ class PastellBootstrap
             $this->objectInstancier->getInstance('site_base'),
             PHP_URL_HOST
         );
-    }
-
-    /**
-     * @throws Exception
-     */
-    private function installCertificate()
-    {
-        if (file_exists("/data/certificate/privkey.pem")) {
-            $this->pastellLogger->info("Le certificat du site est déjà présent.");
-            return;
-        }
-        $hostname = $this->getHostname();
-
-        $letsencrypt_cert_path = "/etc/letsencrypt/live/$hostname";
-        $privkey_path  = "$letsencrypt_cert_path/privkey.pem";
-        $cert_path  = "$letsencrypt_cert_path/fullchain.pem";
-        if (file_exists($privkey_path)) {
-            $this->pastellLogger->info("Certificat letsencrypt trouvé !");
-            symlink($privkey_path, "/data/certificate/privkey.pem");
-            symlink($cert_path, "/data/certificate/fullchain.pem");
-            return;
-        }
-
-        $script = __DIR__ . "/../docker/generate-key-pair.sh";
-
-        exec("$script $hostname /data/certificate", $output, $return_var);
-        $this->pastellLogger->info(implode("\n", $output));
-        if ($return_var != 0) {
-            throw new UnrecoverableException("Impossible de générer ou de trouver le certificat du site !");
-        }
     }
 
     /**

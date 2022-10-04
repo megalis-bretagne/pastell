@@ -95,6 +95,7 @@ abstract class PastellTestCase extends TestCase
 
         $this->objectInstancier->setInstance('pastell_admin_login', 'admin');
         $this->objectInstancier->setInstance('pastell_admin_email', 'test@libriciel.net');
+        $this->objectInstancier->setInstance('certificate_path', '/data/certificate/');
 
         $this->setListPack(["pack_chorus_pro" => true, "pack_marche" => true, "pack_test" => true]);
     }

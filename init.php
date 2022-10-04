@@ -105,6 +105,9 @@ $objectInstancier->setInstance('admin_email', ADMIN_EMAIL);
 $objectInstancier->setInstance('pastell_admin_login', PASTELL_ADMIN_LOGIN);
 $objectInstancier->setInstance('pastell_admin_email', PASTELL_ADMIN_EMAIL);
 
+$objectInstancier->setInstance('certificate_path', '/data/certificate/');
+
+
 $featureToggleService = $objectInstancier->getInstance(FeatureToggleService::class);
 
 /**
