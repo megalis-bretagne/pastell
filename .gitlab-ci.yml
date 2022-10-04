@@ -118,7 +118,6 @@ acceptance_test:
         when: on_failure
         paths:
             - /var/www/pastell/test/codeception/tests/output/
-    allow_failure: true
 
 security_scan:
   allow_failure: true

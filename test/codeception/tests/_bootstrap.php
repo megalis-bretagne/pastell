@@ -4,25 +4,24 @@
  * @var ObjectInstancier $objectInstancier
  */
 
+use Pastell\Bootstrap\Bootstrap;
+
 require_once __DIR__ . '/../../../docker/define-from-environnement.php';
 
 /** TODO réinitialiser la base de données... */
 
 require_once __DIR__ . '/../../../init.php';
 
-
-$sqlQuery = new SQLQuery(BD_DSN_TEST, BD_USER_TEST, BD_PASS_TEST);
-
+$sqlQuery = $objectInstancier->getInstance(SQLQuery::class);
 $sqlQuery->query(file_get_contents(__DIR__ . '/truncate_all.sql'));
-
-
 
 require_once __DIR__ . '/../../../docker/init-docker.php';
 
+$bootstrap = $objectInstancier->getInstance(Bootstrap::class);
+$bootstrap->bootstrap();
+
 $utilisateurSQL = $objectInstancier->getInstance(UtilisateurSQL::class);
 $utilisateurSQL->setPassword(1, 'admin');
-
-
 
 /** @var InternalAPI $internalAPI */
 $internalAPI = $objectInstancier->getInstance(InternalAPI::class);

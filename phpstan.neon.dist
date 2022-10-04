@@ -24,6 +24,8 @@ parameters:
     - test
     - tests
     - type-dossier
+  excludePaths:
+    - test/codeception/tests/_support/_generated/ApiTesterActions.php
   ignoreErrors:
     -
       # Le mécanisme d'extension empêche d'analyser le contenu du build de chaque extension.
