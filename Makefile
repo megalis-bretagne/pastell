@@ -87,7 +87,7 @@ all-module: module-pack-gfc module-pack-urbanisme module-pack-publication module
 
 build-extensions: ## Build extensions
 	$(EXEC_COMPOSER) composer install --ignore-platform-reqs --working-dir=./extensions/pastell-depot-cmis/
-	docker-compose -f ./extensions/pastell-depot-cmis/docker-compose.yml run app bash -c "php-scoper add-prefix --force && composer dump-autoload --working-dir=build"
+	docker compose -f ./extensions/pastell-depot-cmis/docker-compose.yml run app bash -c "php-scoper add-prefix --force && composer dump-autoload --working-dir=build"
 
 build: ## Build the container
 	$(DOCKER_COMPOSE) build web
