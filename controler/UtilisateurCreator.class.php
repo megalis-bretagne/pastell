@@ -40,13 +40,13 @@ class UtilisateurCreator
             return false;
         }
 
-/*        if (! $this->passwordEntropy->isPasswordStrongEnough($password)) {
+        if (! $this->passwordEntropy->isPasswordStrongEnough($password)) {
             $this->lastError =
-                "Le mot de passe n'a pas été changé car le nouveau mot de passe n'est pas assez fort. " .
-                "Essayez de l'allonger ou de mettre des caractères de différents types.";
+                "Le mot mot de passe n'est pas assez fort. " .
+                "(trop court ou pas assez de caractères différents)";
             return false;
         }
-*/
+
         if ($this->utilisateurSQL->getIdFromLogin($login)) {
             $this->lastError = "Ce login existe déjà";
             return false;

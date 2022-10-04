@@ -28,32 +28,6 @@ use Pastell\Utilities\Certificate;
      <td> <input class="form-control col-md-4" type='text' name='login' value='<?php hecho($infoUtilisateur['login']); ?>' /></td>
 </tr>
 <tr>
-    <th><label for='password'>
-    Mot de passe
-    <span class='obl'>*</span></label> </th>
-     <td>
-         <div class="input-group">
-          <input id="user_password" type="password" class="form-control col-md-4 ls-box-input" name="password" value='' autocomplete="new-password"/>
-          <div class="input-group-append">
-            <span class="input-group-text"><i class="fa fa-eye-slash" onclick="switchInputType('user_password',this)"></i></span>
-          </div>
-        </div>
-     </td>
-</tr>
-<tr>
-    <th><label for='password2'>
-    Mot de passe (vérification)
-    <span class='obl'>*</span></label> </th>
-     <td>
-         <div class="input-group">
-          <input id="user_password_verif" type="password" class="form-control col-md-4 ls-box-input" name="password2" value=''/>
-          <div class="input-group-append">
-            <span class="input-group-text"><i class="fa fa-eye-slash" onclick="switchInputType('user_password_verif',this)"></i></span>
-          </div>
-        </div>
-     </td>
-</tr>
-<tr>
     <th><label for='email'>Email<span class='obl'>*</span></label> </th>
     <td><input class="form-control col-md-4" type='text' name='email' value='<?php hecho($infoUtilisateur['email']); ?>'/></td>
 </tr>
