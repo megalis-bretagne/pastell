@@ -32,6 +32,7 @@
 - Passage du jeu de caractère par défaut de la base de données à utf8mb4 (possibilité de mettre des caractères UTF8 étendus)
 - Actes et Helios automatique: Lorsque le traitement est terminé, il est possible de modifier le document pour cocher la case envoi_sae et faire l'action "Verser au SAE" (c'était déjà possible via le connecteur de purge) #1627
 - Vérification de la force du mot de passe sur les requêtes API de type POST ou PATCH
+- Vérification de la force du mot de passe sur les requêtes API de type POST ou PATCH
 
 ## Suppressions
 
@@ -110,6 +111,7 @@
 - Suppression des élements relatifs au centre de gestions sur la version standard. Il est possible de les remettre avec la feature flag CDGFeature.
 - Suppression de l'URL dans l'onglet de retour du SAE
 - Suppression du support MySQL. La seule base supportée est MariaDB.
+- Suppression de la possibilité de mettre un mot de passe via l'interface graphique pour un administrateur
 - Suppression de la possibilité de mettre un mot de passe via l'interface graphique pour un administrateur
 
 
