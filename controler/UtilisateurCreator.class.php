@@ -1,15 +1,16 @@
 <?php
 
+use Pastell\Service\PasswordEntropy;
+
 class UtilisateurCreator
 {
-    private $passwordGenerator;
-    private $utilisateurSQL;
     private $lastError;
 
-    public function __construct(PasswordGenerator $passwordGenerator, UtilisateurSQL $utilisateurSQL)
-    {
-        $this->passwordGenerator = $passwordGenerator;
-        $this->utilisateurSQL = $utilisateurSQL;
+    public function __construct(
+        private readonly PasswordGenerator $passwordGenerator,
+        private readonly UtilisateurSQL $utilisateurSQL,
+        private readonly PasswordEntropy $passwordEntropy,
+    ) {
     }
 
     public function getLastError()
@@ -39,6 +40,13 @@ class UtilisateurCreator
             return false;
         }
 
+/*        if (! $this->passwordEntropy->isPasswordStrongEnough($password)) {
+            $this->lastError =
+                "Le mot de passe n'a pas été changé car le nouveau mot de passe n'est pas assez fort. " .
+                "Essayez de l'allonger ou de mettre des caractères de différents types.";
+            return false;
+        }
+*/
         if ($this->utilisateurSQL->getIdFromLogin($login)) {
             $this->lastError = "Ce login existe déjà";
             return false;
