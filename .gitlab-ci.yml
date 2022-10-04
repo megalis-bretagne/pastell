@@ -145,6 +145,13 @@ deploy_dev:
         - ssh -tt gitlab@pastell-4-0.dev.libriciel.net "docker login -u gitlab-ci-token -p '$CI_JOB_TOKEN' $CI_REGISTRY && cd /data/docker-file/ && docker-compose pull && docker-compose up -d"
         - curl -i -X POST -d "$PAYLOAD" $MATTERMOST_WEBHOOK
 
+publish_container_to_registry:
+  before_script:
+    - date=$(date)
+    - sed -i "s/%CI_BUILD_ID%/${CI_PIPELINE_ID}/" ./manifest.yml
+    - sed -i "s/%BUILD_DATE%/$date/" ./manifest.yml
+    - sed -i "s/%VERSION%/${CI_COMMIT_REF_NAME}/" ./manifest.yml
+
 publish_to_nexus:
   stage: deploy
   only:
