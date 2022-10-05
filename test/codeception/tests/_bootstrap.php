@@ -117,4 +117,3 @@ $info = $internalAPI->post(
     "/Entite/$id_e/Flux/actes-generique/connecteur/$id_ce",
     ["type" => "SAE"]
 );
-
