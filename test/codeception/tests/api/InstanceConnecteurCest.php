@@ -38,7 +38,9 @@ class InstanceConnecteurCest
     {
         $I->wantTo("avoir le détail d'un connecteur");
         $I->amHttpAuthenticatedAsAdmin();
-        $I->sendGET("/entite/1/connecteur/4");
+        $I->sendGET("/entite/1/connecteur/");
+        $id_ce = $I->grabDataFromResponseByJsonPath("$.[0].id_ce")[0];
+        $I->sendGET("/entite/1/connecteur/$id_ce");
         $I->verifyJsonResponseOK(['libelle' => 'Bouchon de signature']);
     }
 
@@ -46,7 +48,9 @@ class InstanceConnecteurCest
     {
         $I->wantTo("avoir le détail d'un connecteur [V1]");
         $I->amHttpAuthenticatedAsAdmin();
-        $I->sendGETV1("detail-connecteur-entite.php?id_e=1&id_ce=4");
+        $I->sendGET("/entite/1/connecteur/");
+        $id_ce = $I->grabDataFromResponseByJsonPath("$.[0].id_ce")[0];
+        $I->sendGETV1("detail-connecteur-entite.php?id_e=1&id_ce=$id_ce");
         $I->verifyJsonResponseOK(['libelle' => 'Bouchon de signature']);
     }
 

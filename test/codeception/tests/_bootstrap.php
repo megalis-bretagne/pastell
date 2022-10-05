@@ -4,25 +4,27 @@
  * @var ObjectInstancier $objectInstancier
  */
 
+use Pastell\Bootstrap\Bootstrap;
+
 require_once __DIR__ . '/../../../docker/define-from-environnement.php';
 
 /** TODO réinitialiser la base de données... */
 
 require_once __DIR__ . '/../../../init.php';
 
-
-$sqlQuery = new SQLQuery(BD_DSN_TEST, BD_USER_TEST, BD_PASS_TEST);
-
+$sqlQuery = $objectInstancier->getInstance(SQLQuery::class);
 $sqlQuery->query(file_get_contents(__DIR__ . '/truncate_all.sql'));
-
-
 
 require_once __DIR__ . '/../../../docker/init-docker.php';
 
+$objectInstancier->setInstance('pastell_admin_login', 'admin');
+$objectInstancier->setInstance('pastell_admin_email', 'test@libriciel.net');
+
+$bootstrap = $objectInstancier->getInstance(Bootstrap::class);
+$bootstrap->bootstrap();
+
 $utilisateurSQL = $objectInstancier->getInstance(UtilisateurSQL::class);
 $utilisateurSQL->setPassword(1, 'admin');
-
-
 
 /** @var InternalAPI $internalAPI */
 $internalAPI = $objectInstancier->getInstance(InternalAPI::class);
@@ -60,7 +62,7 @@ $internalAPI->patch(
     ]
 );
 
-$info = $internalAPI->post(
+$internalAPI->post(
     "/Entite/$id_e/Flux/actes-generique/connecteur/$id_ce",
     ["type" => "signature"]
 );
@@ -83,7 +85,7 @@ $internalAPI->post(
     ]
 );
 
-$info = $internalAPI->post(
+$internalAPI->post(
     "/Entite/$id_e/Flux/actes-generique/connecteur/$id_ce",
     ["type" => "TdT"]
 );
@@ -97,7 +99,7 @@ $info = $internalAPI->post(
     ]
 );
 $id_ce = $info['id_ce'];
-$info = $internalAPI->post(
+$internalAPI->post(
     "/Entite/$id_e/Flux/actes-generique/connecteur/$id_ce",
     ["type" => "GED"]
 );
@@ -115,22 +117,3 @@ $info = $internalAPI->post(
     "/Entite/$id_e/Flux/actes-generique/connecteur/$id_ce",
     ["type" => "SAE"]
 );
-
-chown("/data/log/pastell.log", "www-data");
-chown("/data/workspace/", "www-data");
-
-//chmod("/data/log/pastell.log","a+rw");
-
-/* Créationd d'un connecteur SEDA */
-/*$info = $internalAPI->post(
-    "/Entite/$id_e/Connecteur",
-    array (
-        'libelle'=>'Actes SEDA standard',
-        'id_connecteur'=>'actes-seda-standard'
-    )
-);
-$id_ce = $info['id_ce'];
-$info = $internalAPI->post(
-    "/Entite/$id_e/Flux/actes-generique/connecteur/$id_ce",
-    array("type"=>"Bordereau SEDA")
-);*/
