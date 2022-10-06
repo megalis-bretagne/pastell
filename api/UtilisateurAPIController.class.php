@@ -1,6 +1,7 @@
 <?php
 
 use Pastell\Service\PasswordEntropy;
+use Pastell\Service\TokenGenerator;
 use Pastell\Service\Utilisateur\UtilisateurDeletionService;
 use Pastell\Utilities\Certificate;
 
@@ -21,6 +22,8 @@ class UtilisateurAPIController extends BaseAPIController
 
     private $passwordEntropy;
 
+    private $tokenGenerator;
+
     public function __construct(
         UtilisateurSQL $utilisateur,
         UtilisateurListe $utilisateurListe,
@@ -29,7 +32,7 @@ class UtilisateurAPIController extends BaseAPIController
         Journal $journal,
         UtilisateurDeletionService $utilisateurDeletionService,
         PasswordEntropy $passwordEntropy,
-        \Pastell\Service\TokenGenerator $tokenGenerator,
+        TokenGenerator $tokenGenerator,
     ) {
         $this->utilisateur = $utilisateur;
         $this->utilisateurListe = $utilisateurListe;

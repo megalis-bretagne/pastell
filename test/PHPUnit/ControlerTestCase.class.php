@@ -46,7 +46,12 @@ class ControlerTestCase extends PastellTestCase
         $roleSql = $this->getObjectInstancier()->getInstance(RoleSQL::class);
         $roleSql->updateDroit("my_role", $permission);
         $id_u = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class)
-            ->create('my_login', 'test', 'test', 'foo@example.com');
+            ->create(
+                'my_login',
+                'D@iw3DDf41Nl$DXzMJL!Uc2Yo',
+                'D@iw3DDf41Nl$DXzMJL!Uc2Yo',
+                'foo@example.com'
+            );
 
         $roleUtilisateur = $this->getObjectInstancier()->getInstance(RoleUtilisateur::class);
         $roleUtilisateur->addRole($id_u, "my_role", $id_e);

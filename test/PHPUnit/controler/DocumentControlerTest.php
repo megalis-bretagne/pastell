@@ -199,7 +199,12 @@ class DocumentControlerTest extends ControlerTestCase
     public function testIndexWithoutRight()
     {
         $utilisateurSQL = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class);
-        $id_u = $utilisateurSQL->create("badguy", "foo", "foo", "test@bar.baz");
+        $id_u = $utilisateurSQL->create(
+            "badguy",
+            'D@iw3DDf41Nl$DXzMJL!Uc2Yo',
+            'D@iw3DDf41Nl$DXzMJL!Uc2Yo',
+            "test@bar.baz"
+        );
 
         $roleUtilisateur = $this->getObjectInstancier()->getInstance(RoleUtilisateur::class);
         $roleUtilisateur->addRole($id_u, "admin", 2);
