@@ -1,5 +1,10 @@
 <?php
 
+use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
+
 class Controler
 {
     private $objectInstancier;
@@ -12,6 +17,7 @@ class Controler
     private $getInfo;
     /** @var  Recuperateur */
     private $postInfo;
+    private Environment $twig;
 
     public function __construct(ObjectInstancier $objectInstancier)
     {
@@ -116,9 +122,9 @@ class Controler
     }
 
     /**
-     * @deprecated Use getInstance() or getViewParameterByKey() instead
      * @param $key
      * @return mixed|object|ObjectInstancier|null
+     * @deprecated Use getInstance() or getViewParameterByKey() instead
      */
     public function getViewParameterOrObject($key)
     {
@@ -225,5 +231,10 @@ class Controler
     {
         $this->getGabarit()->setParameters($this->getViewParameter());
         $this->getGabarit()->render($template);
+    }
+
+    public function setTwigEnvrionment(Environment $twig): void
+    {
+        $this->twig = $twig;
     }
 }

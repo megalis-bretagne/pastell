@@ -1,5 +1,7 @@
 <?php
 
+use Twig\Environment;
+
 class FrontController
 {
     public const PAGE_REQUEST = 'page_request';
@@ -13,6 +15,7 @@ class FrontController
     private $server_info;
 
     private $objectInstancier;
+    private Environment $twig;
 
     public function __construct(ObjectInstancier $objectInstancier)
     {
@@ -62,7 +65,7 @@ class FrontController
     }
 
 
-    private function getController($controller)
+    private function getController(string $controller)
     {
         $controller_name = "{$controller}Controler";
         if (! class_exists($controller_name)) {
@@ -73,6 +76,10 @@ class FrontController
         $theController->setServerInfo($this->server_info);
         $theController->setGetInfo($this->getParameter);
         $theController->setPostInfo($this->postParameter);
+        //FIXME: web-mailsec entry is not in symfony context
+        if ($controller !== 'MailSecDestinataire') {
+            $theController->setTwigEnvrionment($this->twig);
+        }
         return $theController;
     }
 
@@ -117,5 +124,10 @@ class FrontController
             return null;
         }
         return $controller;
+    }
+
+    public function setTwigEnvrionment(Environment $twig): void
+    {
+        $this->twig = $twig;
     }
 }
