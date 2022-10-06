@@ -24,10 +24,13 @@ class DocumentControler extends PastellControler
         $this->setNavigationInfo($id_e, "Document/list?type=$type");
     }
 
-    public function renderDefault()
+    public function renderDefault(): void
     {
-        $this->setViewParameter('show_choice_entity_message', !(bool)$this->getPostOrGetInfo()->getInt('id_e')
-        && $this->getViewParameterOrObject('id_e') === 0);
+        $this->setViewParameter(
+            'show_choice_entity_message',
+            !(bool)$this->getPostOrGetInfo()->getInt('id_e')
+            && $this->getViewParameterByKey('id_e') === 0
+        );
         parent::renderDefault();
     }
 
@@ -446,7 +449,7 @@ class DocumentControler extends PastellControler
         }
 
         if ($this->getActionPossible()->isCreationPossible($id_e, $this->getId_u(), $type)) {
-            $this->setViewParameter('nouveau_bouton_url', "Document/new?type=$type&id_e=$id_e");
+            $this->setViewParameter('nouveau_bouton_url', ["Créer" => "Document/new?type=$type&id_e=$id_e"]);
         }
         $this->setViewParameter('id_e', $id_e);
         $this->setViewParameter('search', $search);

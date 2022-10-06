@@ -151,7 +151,7 @@ class Controler
      */
     public function getViewParameterByKey($key): mixed
     {
-        if (! $this->isViewParameter($key)) {
+        if (!$this->isViewParameter($key)) {
             throw new UnrecoverableException("Impossible de récupérer la valeur du paramètre $key");
         }
         return $this->viewParameter[$key];
@@ -183,7 +183,7 @@ class Controler
      */
     public function redirect(string $to = ''): never
     {
-        $url = rtrim(SITE_BASE, "/") . "/" . ltrim($to, "/");
+        $url = rtrim(SITE_BASE, '/') . '/' . ltrim($to, '/');
         $this->doRedirect($url);
     }
 
@@ -221,13 +221,37 @@ class Controler
         return $this->getInstance(Gabarit::class);
     }
 
-    public function renderDefault()
+    /**
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws UnrecoverableException
+     */
+    public function renderDefault(): void
     {
-        $this->getGabarit()->setParameters($this->getViewParameter());
-        $this->getGabarit()->render("Page");
+        if ($this->isViewParameter('twigTemplate')) {
+            $this->render($this->getViewParameterByKey('twigTemplate'));
+        } else {
+            $this->render('base.html.twig');
+        }
     }
 
-    public function render($template)
+    /**
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
+    public function render(string $template): void
+    {
+        $this->getGabarit()->setParameters($this->getViewParameter());
+        $this->setViewParameter('gabarit', $this->getGabarit());
+        $this->twig->display($template, $this->getViewParameter());
+    }
+
+    /**
+     * @deprecated Used only for web-mailsec entrypoint
+     */
+    public function renderLegacy(string $template): void
     {
         $this->getGabarit()->setParameters($this->getViewParameter());
         $this->getGabarit()->render($template);
