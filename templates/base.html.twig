@@ -1,19 +1,152 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+<html lang="fr">
+<head>
+    <title>{{ page_title }} - Pastell</title>
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+    <meta name="description"
+          content="Pastell est un logiciel de gestion de flux de documents. Les documents peuvent être crées via un système de formulaires configurables. Chaque document suit alors un workflow prédéfini, également configurable."/>
+    <meta name="keywords"
+          content="Pastell, collectivité territoriale, flux, document, données, logiciel, logiciel libre, open source"/>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <base href="{{ constant('SITE_BASE') }}"/>
+
+    <link rel="shortcut icon" type="images/x-icon" href="{{ asset('favicon.ico') }}"/>
+
+    {% set cssFiles = [
+        'node_modules/bootstrap/dist/css/bootstrap.min.css',
+        'node_modules/fork-awesome/css/fork-awesome.min.css',
+        'node_modules/select2/dist/css/select2.min.css',
+        'node_modules/components-jqueryui/themes/cupertino/jquery-ui.min.css',
+        'img/commun.css',
+        'node_modules/@libriciel/ls-bootstrap-4/dist/pa-bootstrap-4.css',
+        'img/bs_surcharge.css',
+        'img/jquery.autocomplete.css',
+        'img/jquery.treeview.css',
+        'node_modules/@libriciel/ls-jquery-password/dist/css/ls-jquery-password.css',
+    ] %}
+    {% block stylesheets %}
+        {% for cssFile in cssFiles %}
+            <link rel="stylesheet" href="{{ cssFile }}" type="text/css"/>
+        {% endfor %}
+    {% endblock %}
+
+    {% set jsFiles = [
+        'node_modules/jquery/dist/jquery.min.js',
+        'node_modules/select2/dist/js/select2.min.js',
+        'node_modules/select2/dist/js/i18n/fr.js',
+        'node_modules/bootstrap/dist/js/bootstrap.bundle.min.js',
+        'node_modules/components-jqueryui/jquery-ui.js',
+        'node_modules/components-jqueryui/ui/widgets/datepicker.js',
+        'node_modules/components-jqueryui/ui/i18n/datepicker-fr.js',
+
+        'node_modules/@libriciel/ls-composants/ls-elements.js',
+        'node_modules/@libriciel/ls-jquery-password/dist/js/ls-jquery-password.min.js',
+
+        'js/flow.js',
+        'js/jquery.treeview.js',
+        'js/pastell.js',
+        'js/css-vars-ponyfill.min.js',
+        'js/search.js',
+        'js/ie-ponyfill.js',
+        'js/top.js',
+        'js/mdp.js',
+    ] %}
+    {% block javascript %}
+    {% for jsFile in jsFiles %}
+        <script type="text/javascript" src="{{ jsFile }}"></script>
+    {% endfor %}
+{% endblock %}
+</head>
+
+<body>
+<div id="global">
+
+    {% include '_includes/header.html.twig' %}
+
+    {% if authentification.isConnected %}
+        <div id="main_menu">
+            <a href="{{ path('app.legacy.document_list', {'id_e': id_e_menu}) }}"
+               class="new_picto"
+            >
+                <i class="fa fa-folder-open"></i>&nbsp;Dossiers
+            </a>
+            <a href="{{ path('app.legacy.journal_index', {'type': type_e_menu, 'id_e': id_e_menu}) }}"
+               class="new_picto"
+               id="journal_link"
+            >
+                <i class="fa fa-list-alt"></i>&nbsp;Journal des évènements
+            </a>
+            {% if roleUtilisateur.hasOneDroit(authentification.getId, 'entite:edition')
+                or roleUtilisateur.hasOneDroit(authentification.getId, 'annuaire:edition') %}
+                <a href="{{ path('app.legacy.entite_detail', {'id_e': id_e_menu}) }}"
+                   class="new_picto"
+                >
+                    <i class="fa fa-wrench"></i>&nbsp;Administration
+                </a>
+            {% endif %}
+            {% if roleUtilisateur.hasDroit(authentification.getId, 'system:lecture', 0) %}
+                <a href="{{ path('app.legacy.system_index') }}" class="new_picto" style="float: right;">
+                    <i class="fa fa-puzzle-piece"></i><span>Administration avancée</span>
+                </a>
+            {% endif %}
+            {% if roleUtilisateur.hasDroit(authentification.getId, 'system:lecture', 0) %}
+                <a href="{{ path('app.legacy.daemon_index') }}" class='new_picto' style="float: right;">
+                    {% if daemon_stopped_warning %}
+                        <p class="badge badge-daemon">!</p>
+                    {% endif %}
+                    {% if nb_job_lock %}
+                        <p class="badge badge-job-lock">{{ nb_job_lock }}</p>
+                    {% endif %}
+                    <i class="fa fa-clock-o"></i>Tâches automatiques</a>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {% if dont_display_breacrumbs is not defined %}
+        {{ gabarit.render('Breadcrumb') }}
+    {% endif %}
+
+    <div id="main">
+        {% if authentification.isConnected and pages_without_left_menu is not defined %}
+            {{ gabarit.render(menu_gauche_template) }}
+        {% endif %}
+        <div id="main_droite" class="{{ pages_without_left_menu is defined ? '' : 'pa-one-block' }}">
+            <div id="bloc_titre_bouton">
+                <div id="bloc_h1">
+                    <h1>{{ page_title }}</h1>
+                    {{ gabarit.render('InfoSelectionnerEntite') }}
+                </div>
+                {% if nouveau_bouton_url is defined %}
+                    <div id="bloc_boutons">
+                        {% for label,url in nouveau_bouton_url %}
+                            <a class="btn btn-primary grow" href="{{ url }}">
+                                <i class="fa {{ label == 'Ajouter' ?  'fa-plus-circle' : 'fa-plus' }}"></i>
+                                {{ label }}
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div><!-- fin bloc_titre_bouton -->
+
+            {{ gabarit.render('LastMessage') }}
+            {% block main %}{% endblock %}
+            {% if twigTemplate is not defined %}
+                {{ gabarit.render(template_milieu) }}
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('.dropdown-toggle').dropdown()
+    });
+</script>
+
+{{ gabarit.render('ToTheTop') }}
+
+{% include '_includes/footer.html.twig' %}
+
+</body>
 </html>

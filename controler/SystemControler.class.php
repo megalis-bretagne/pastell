@@ -33,9 +33,12 @@ class SystemControler extends PastellControler
      * @throws NotFoundException
      * @throws UnrecoverableException
      */
-    public function indexAction()
+    public function indexAction(): void
     {
-        $this->setViewParameter('droitEdition', $this->hasDroit(0, DroitService::getDroitEdition(DroitService::DROIT_SYSTEM)));
+        $this->setViewParameter(
+            'droitEdition',
+            $this->hasDroit(0, DroitService::getDroitEdition(DroitService::DROIT_SYSTEM))
+        );
 
         /** @var HealthCheck $healthCheck */
         $healthCheck = $this->getInstance(HealthCheck::class);
@@ -50,7 +53,10 @@ class SystemControler extends PastellControler
         $this->setViewParameter('checkDatabaseSchema', $healthCheck->check(HealthCheck::DATABASE_SCHEMA_CHECK)[0]);
         $this->setViewParameter('checkDatabaseEncoding', $healthCheck->check(HealthCheck::DATABASE_ENCODING_CHECK)[0]);
         $this->setViewParameter('checkCrashedTables', $healthCheck->check(HealthCheck::CRASHED_TABLES_CHECK)[0]);
-        $this->setViewParameter('checkMissingConnectors', $healthCheck->check(HealthCheck::MISSING_CONNECTORS_CHECK)[0]);
+        $this->setViewParameter(
+            'checkMissingConnectors',
+            $healthCheck->check(HealthCheck::MISSING_CONNECTORS_CHECK)[0]
+        );
         $this->setViewParameter('checkMissingModules', $healthCheck->check(HealthCheck::MISSING_MODULES_CHECK)[0]);
 
         $packService = $this->getInstance(PackService::class);
@@ -64,9 +70,9 @@ class SystemControler extends PastellControler
         $this->setViewParameter('display_feature_toggle_in_test_page', $this->getObjectInstancier()
             ->getInstance(FeatureToggleService::class)
             ->isEnabled(DisplayFeatureToggleInTestPage::class));
-        $this->setViewParameter('template_milieu', "SystemEnvironnement");
-        $this->setViewParameter('page_title', "Test du système");
+        $this->setViewParameter('page_title', 'Test du système');
         $this->setViewParameter('menu_gauche_select', self::SYSTEM_INDEX_PAGE);
+        $this->setViewParameter('twigTemplate', 'system/index.html.twig');
         $this->renderDefault();
     }
 

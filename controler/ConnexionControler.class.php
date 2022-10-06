@@ -5,7 +5,11 @@ use Pastell\Service\TokenGenerator;
 use Pastell\Service\LoginAttemptLimit;
 use Pastell\Service\PasswordEntropy;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\UriSafeTokenGenerator;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class ConnexionControler extends PastellControler
 {
@@ -36,7 +40,7 @@ class ConnexionControler extends PastellControler
         }
 
         if (!$this->getAuthentification()->isConnected()) {
-            $this->redirect("/Connexion/connexion");
+            $this->redirect('/Connexion/connexion');
         }
     }
 
@@ -98,7 +102,7 @@ class ConnexionControler extends PastellControler
         $redirectUrl = false;
         if ($redirect) {
             $redirectUrl = sprintf(
-                "%s/%s?request_uri=%s",
+                '%s/%s?request_uri=%s',
                 SITE_BASE,
                 $this->getGetInfo()->get('page_request'),
                 urlencode($this->getGetInfo()->get('request_uri'))
@@ -119,7 +123,7 @@ class ConnexionControler extends PastellControler
         if (!$id_u) {
             throw new Exception(
                 sprintf(
-                    "Votre login %s est inconnu sur Pastell (%s) ",
+                    'Votre login %s est inconnu sur Pastell (%s) ',
                     $externalSystem,
                     $login
                 )
@@ -161,17 +165,17 @@ class ConnexionControler extends PastellControler
         return $id_u;
     }
 
-    private function setConnexion($id_u, $external_system = "UNKNOWN_SYSTEM")
+    private function setConnexion($id_u, $external_system = 'UNKNOWN_SYSTEM')
     {
         $infoUtilisateur = $this->getUtilisateur()->getInfo($id_u);
         $login = $infoUtilisateur['login'];
         $this->getJournal()->setId($id_u);
-        $nom = $infoUtilisateur['prenom'] . " " . $infoUtilisateur['nom'];
+        $nom = $infoUtilisateur['prenom'] . ' ' . $infoUtilisateur['nom'];
         $this->getJournal()->add(
             Journal::CONNEXION,
             $infoUtilisateur['id_e'],
             0,
-            "Connecté",
+            'Connecté',
             "$nom s'est connecté via $external_system depuis l'adresse " . $_SERVER['REMOTE_ADDR']
         );
         $this->setSessionInfo($login, $id_u);
@@ -182,25 +186,34 @@ class ConnexionControler extends PastellControler
         $this->getAuthentification()->connexion($login, $id_u);
     }
 
-    public function adminAction()
+    /**
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
+    public function adminAction(): void
     {
         $this->setViewParameter('message_connexion', false);
 
-        $this->setViewParameter('login_page_configuration', file_exists(LOGIN_PAGE_CONFIGURATION_LOCATION)
-            ? file_get_contents(LOGIN_PAGE_CONFIGURATION_LOCATION)
-            : '');
-        $this->setViewParameter('page', "connexion");
-        $this->setViewParameter('page_title', "Connexion");
-        $this->setViewParameter('template_milieu', "ConnexionIndex");
+        $this->setViewParameter(
+            'login_page_configuration',
+            file_exists(LOGIN_PAGE_CONFIGURATION_LOCATION) ?
+                file_get_contents(LOGIN_PAGE_CONFIGURATION_LOCATION) : ''
+        );
+        $this->setViewParameter('page', 'connexion');
+        $this->setViewParameter('page_title', 'Connexion');
         $this->setViewParameter('request_uri', $this->getGetInfo()->get('request_uri'));
-        $this->render('PageConnexion');
+        $this->render('connexion/index.html.twig');
     }
 
     /**
      * @throws LastErrorException
      * @throws LastMessageException
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
-    public function connexionAction()
+    public function connexionAction(): void
     {
         /** @var AuthenticationConnecteur $authentificationConnecteur */
         $authentificationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur('Authentification');
@@ -208,60 +221,78 @@ class ConnexionControler extends PastellControler
             $this->setLastError('');
             $this->redirect($this->getGetInfo()->get('request_uri'));
         }
+        $certificatConnexion = $this->getObjectInstancier()->getInstance(CertificatConnexion::class);
+        $userId = $certificatConnexion->autoConnect();
+        if ($userId) {
+            $utilisateurInfo = $this->getObjectInstancier()->getInstance(UtilisateurSQL::class)->getInfo($userId);
+            $this->setViewParameter('login', $utilisateurInfo['login']);
+        }
 
-        $this->setViewParameter('login_page_configuration', file_exists(LOGIN_PAGE_CONFIGURATION_LOCATION)
-            ? file_get_contents(LOGIN_PAGE_CONFIGURATION_LOCATION)
-            : '');
-        $this->setViewParameter('page', "connexion");
-        $this->setViewParameter('page_title', "Connexion");
-        $this->setViewParameter('template_milieu', "ConnexionIndex");
+        $this->setViewParameter(
+            'login_page_configuration',
+            file_exists(LOGIN_PAGE_CONFIGURATION_LOCATION) ?
+                file_get_contents(LOGIN_PAGE_CONFIGURATION_LOCATION) : ''
+        );
+        $this->setViewParameter('page', 'connexion');
+        $this->setViewParameter('page_title', 'Connexion');
         $this->setViewParameter('request_uri', $this->getGetInfo()->get('request_uri'));
-        /** @var LastMessage $lastMessage */
         $lastMessage = $this->getObjectInstancier()->getInstance(LastError::class);
         $lastMessage->setCssClass('alert-connexion');
-        $this->render('PageConnexion');
+        $this->render('connexion/index.html.twig');
     }
 
-    public function oublieIdentifiantAction()
+    /**
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
+    public function oublieIdentifiantAction(): void
     {
         $config = false;
         try {
             $config = $this->getConnecteurFactory()->getGlobalConnecteurConfig('message-oublie-identifiant');
-        } catch (Exception $e) {
+        } catch (Exception) {
             /* Nothing to do */
         }
 
-
         $this->setViewParameter('config', $config);
-        $this->setViewParameter('login_page_configuration', file_exists(LOGIN_PAGE_CONFIGURATION_LOCATION)
-            ? file_get_contents(LOGIN_PAGE_CONFIGURATION_LOCATION)
-            : '');
-        $this->setViewParameter('page', "oublie_identifiant");
-        $this->setViewParameter('page_title', "Oubli des identifiants");
-        $this->setViewParameter('template_milieu', "ConnexionOublieIdentifiant");
-        $this->render("PageConnexion");
+        $this->setViewParameter(
+            'login_page_configuration',
+            file_exists(LOGIN_PAGE_CONFIGURATION_LOCATION) ?
+                file_get_contents(LOGIN_PAGE_CONFIGURATION_LOCATION) : ''
+        );
+        $this->setViewParameter('page', 'oublie_identifiant');
+        $this->setViewParameter('page_title', 'Oubli des identifiants');
+        $this->render('connexion/password_reset.html.twig');
     }
 
-    public function changementMdpAction()
+    /**
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws UnrecoverableException
+     */
+    public function changementMdpAction(): void
     {
-        $recuperateur = new Recuperateur($_GET);
+        $recuperateur = $this->getGetInfo();
         $passwordEntropy = $this->getObjectInstancier()->getInstance(PasswordEntropy::class);
         $this->setViewParameter('password_min_entropy', $passwordEntropy->getEntropyForDisplay());
-        $this->setViewParameter('login_page_configuration', file_exists(LOGIN_PAGE_CONFIGURATION_LOCATION)
-            ? file_get_contents(LOGIN_PAGE_CONFIGURATION_LOCATION)
-            : '');
+        $this->setViewParameter(
+            'login_page_configuration',
+            file_exists(LOGIN_PAGE_CONFIGURATION_LOCATION) ?
+                file_get_contents(LOGIN_PAGE_CONFIGURATION_LOCATION) : ''
+        );
         $this->setViewParameter('mail_verif_password', $recuperateur->get('mail_verif'));
-        $this->setViewParameter('page', "oublie_identifiant");
-        $this->setViewParameter('page_title', "Oubli des identifiants");
-        $this->setViewParameter('template_milieu', "ConnexionChangementMdp");
-        $this->getId_uFromTokenOrFailed($this->getViewParameterOrObject('mail_verif_password'));
-        $this->render("PageConnexion");
+        $this->setViewParameter('page', 'oublie_identifiant');
+        $this->setViewParameter('page_title', 'Oubli des identifiants');
+        $this->getId_uFromTokenOrFailed($this->getViewParameterByKey('mail_verif_password'));
+        $this->render('connexion/password_update.html.twig');
     }
 
     public function noDroitAction()
     {
-        $this->setViewParameter('page_title', "Pas de droit");
-        $this->setViewParameter('template_milieu', "ConnexionNoDroit");
+        $this->setViewParameter('page_title', 'Pas de droit');
+        $this->setViewParameter('template_milieu', 'ConnexionNoDroit');
         $this->renderDefault();
     }
 
@@ -274,7 +305,7 @@ class ConnexionControler extends PastellControler
         $authenticationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur('Authentification');
 
         $this->setViewParameter('page_title', "Erreur lors de l'authentification");
-        $this->setViewParameter('template_milieu', "ExternalError");
+        $this->setViewParameter('template_milieu', 'ExternalError');
         $this->setViewParameter('externalSystem', "système d'authentification inconnu");
 
         if ($authenticationConnecteur) {
@@ -300,7 +331,7 @@ class ConnexionControler extends PastellControler
             $authentificationConnecteur->logout($authentificationConnecteur->getLogoutRedirectUrl());
         }
 
-        $this->redirect("/Connexion/connexion");
+        $this->redirect('/Connexion/connexion');
     }
 
     public function sessionLogoutAction()
@@ -337,26 +368,26 @@ class ConnexionControler extends PastellControler
         $id_u = $this->getUtilisateurListe()->getUtilisateurByLogin($login);
 
         if (!$id_u) {
-            $this->setLastError("Identifiant ou mot de passe incorrect.");
+            $this->setLastError('Identifiant ou mot de passe incorrect.');
             $this->redirect($redirect_fail);
         }
         /** @var LDAPVerification $verificationConnecteur */
-        $verificationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur("Vérification");
+        $verificationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur('Vérification');
 
         if ($verificationConnecteur && $login != 'admin') {
             if (!$verificationConnecteur->verifLogin($login, $password)) {
-                $this->getLastError()->setLastError("Login ou mot de passe incorrect. (LDAP)");
+                $this->getLastError()->setLastError('Login ou mot de passe incorrect. (LDAP)');
                 $this->redirect($redirect_fail);
             }
         } else {
             $loginAttemptLimit = $this->getObjectInstancier()->getInstance(LoginAttemptLimit::class);
 
             if (false === $loginAttemptLimit->isLoginAttemptAuthorized($login)) {
-                $this->getLastError()->setLastError("Trop de tentatives de connexion, veuillez réessayer plus tard.");
+                $this->getLastError()->setLastError('Trop de tentatives de connexion, veuillez réessayer plus tard.');
                 $this->redirect($redirect_fail);
             }
             if (!$this->getUtilisateur()->verifPassword($id_u, $password)) {
-                $this->getLastError()->setLastError("Login ou mot de passe incorrect.");
+                $this->getLastError()->setLastError('Login ou mot de passe incorrect.');
                 $this->redirect($redirect_fail);
             }
             $loginAttemptLimit->resetLoginAttempt($login);
@@ -365,18 +396,18 @@ class ConnexionControler extends PastellControler
         $certificatConnexion = $this->getInstance(CertificatConnexion::class);
 
         if (!$certificatConnexion->connexionGranted($id_u)) {
-            $this->setLastError("Vous devez avoir un certificat valide pour ce compte");
+            $this->setLastError('Vous devez avoir un certificat valide pour ce compte');
             $this->redirect($redirect_fail);
         }
 
         $this->getJournal()->setId($id_u);
         $infoUtilisateur = $this->getUtilisateur()->getInfo($id_u);
-        $nom = $infoUtilisateur['prenom'] . " " . $infoUtilisateur['nom'];
+        $nom = $infoUtilisateur['prenom'] . ' ' . $infoUtilisateur['nom'];
         $this->getJournal()->add(
             Journal::CONNEXION,
             $infoUtilisateur['id_e'],
             0,
-            "Connecté",
+            'Connecté',
             "$nom s'est connecté depuis l'adresse " . $_SERVER['REMOTE_ADDR']
         );
         $this->setSessionInfo($login, $id_u);
@@ -385,7 +416,7 @@ class ConnexionControler extends PastellControler
 
     public function doConnexionAction()
     {
-        $this->connexionActionRedirect("Connexion/connexion");
+        $this->connexionActionRedirect('Connexion/connexion');
         $request_uri = $this->getPostInfo()->get('request_uri');
 
         $this->redirect(urldecode($request_uri));
@@ -397,19 +428,19 @@ class ConnexionControler extends PastellControler
         $id_u = $certificatConnexion->autoConnect();
 
         if (!$id_u) {
-            $this->redirect("/Connexion/index");
+            $this->redirect('/Connexion/index');
         }
 
         $utilisateur = new UtilisateurSQL($this->getSQLQuery());
         $utilisateurInfo = $utilisateur->getInfo($id_u);
 
         $this->getJournal()->setId($id_u);
-        $nom = $utilisateurInfo['prenom'] . " " . $utilisateurInfo['nom'];
+        $nom = $utilisateurInfo['prenom'] . ' ' . $utilisateurInfo['nom'];
         $this->getJournal()->add(
             Journal::CONNEXION,
             $utilisateurInfo['id_e'],
             0,
-            "Connecté",
+            'Connecté',
             "$nom s'est connecté automatiquement depuis l'adresse " . $_SERVER['REMOTE_ADDR']
         );
 
@@ -427,7 +458,7 @@ class ConnexionControler extends PastellControler
 
         if (!$id_u) {
             /* Note : on ne peut pas mettre de message d'erreur personnalisé pour le moment */
-            echo "Le lien du mail a expiré. Veuillez recommencer la procédure";
+            echo 'Le lien du mail a expiré. Veuillez recommencer la procédure';
             exit_wrapper();
         }
         return $id_u;
@@ -447,12 +478,12 @@ class ConnexionControler extends PastellControler
         /* Cf également MR #883 */
         if (! $password) {
             /* Note : on ne peut pas mettre de message d'erreur personnalisé pour le moment */
-            $this->setLastError("Le mot de passe est obligatoire");
+            $this->setLastError('Le mot de passe est obligatoire');
             $this->redirect("/Connexion/changementMdp?mail_verif=$mail_verif_password");
         }
         if ($password != $password2) {
             /* Note : on ne peut pas mettre de message d'erreur personnalisé pour le moment */
-            $this->setLastError("Les mots de passe ne correspondent pas");
+            $this->setLastError('Les mots de passe ne correspondent pas');
             $this->redirect("/Connexion/changementMdp?mail_verif=$mail_verif_password");
         }
 
@@ -462,7 +493,7 @@ class ConnexionControler extends PastellControler
             $this->setLastError(
                 "Le mot de passe n'a pas été changé car le nouveau mot de passe n'est pas assez fort. " .
                 "Essayez de l'allonger ou de mettre des caractères de différents types. " .
-                "La barre de vérification doit être entièrement remplie."
+                'La barre de vérification doit être entièrement remplie.'
             );
             $this->redirect("/Connexion/changementMdp?mail_verif=$mail_verif_password");
         }
@@ -477,20 +508,20 @@ class ConnexionControler extends PastellControler
             Journal::MODIFICATION_UTILISATEUR,
             $infoUtilisateur['id_e'],
             0,
-            "mot de passe modifié",
+            'mot de passe modifié',
             "{$infoUtilisateur['login']} ({$infoUtilisateur['id_u']}) a modifié son mot de passe"
         );
 
         /* Note : on ne peut pas mettre de message personnalisé pour le moment */
-        $this->setLastMessage("Votre mot de passe a été modifié");
-        $this->redirect("/Connexion/index");
+        $this->setLastMessage('Votre mot de passe a été modifié');
+        $this->redirect('/Connexion/index');
     }
 
     /**
      * @throws LastErrorException
      * @throws LastMessageException
      * @throws Exception
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function doOublieIdentifiantAction()
     {
@@ -503,7 +534,7 @@ class ConnexionControler extends PastellControler
 
         if (!$id_u) {
             $this->setLastError("Aucun compte n'a été trouvé avec ces informations");
-            $this->redirect("/Connexion/oublieIdentifiant");
+            $this->redirect('/Connexion/oublieIdentifiant');
         }
         $tokenGenerator = new TokenGenerator();
         $mailVerifPassword = $tokenGenerator->generate();
@@ -534,8 +565,8 @@ class ConnexionControler extends PastellControler
             "Procédure initiée pour {$info['email']}"
         );
 
-        $this->setLastMessage("Un email vous a été envoyé avec la suite de la procédure");
-        $this->redirect("/Connexion/oublieIdentifiant");
+        $this->setLastMessage('Un email vous a été envoyé avec la suite de la procédure');
+        $this->redirect('/Connexion/oublieIdentifiant');
     }
 
     public function indexAction()

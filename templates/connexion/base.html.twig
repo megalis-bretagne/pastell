@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Connexion - Pastell</title>
+
+    <meta name="description"
+          content="Pastell est un logiciel de gestion de flux de documents. Les documents peuvent être crées via un système de formulaires configurables. Chaque document suit alors un workflow prédéfini, également configurable."/>
+    <meta name="keywords"
+          content="Pastell, collectivité territoriale, flux, document, données, logiciel, logiciel libre, open source"/>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <base href='{{ constant('SITE_BASE') }}'/>
+
+    <link rel="shortcut icon" type="images/x-icon" href="{{ asset('favicon.ico') }}"/>
+
+    {% set cssFiles = [
+        'node_modules/fork-awesome/css/fork-awesome.min.css',
+        'node_modules/@libriciel/ls-bootstrap-4/dist/pa-bootstrap-4.css',
+        'node_modules/@libriciel/ls-jquery-password/dist/css/ls-jquery-password.css',
+    ] %}
+    {% block stylesheets %}
+        {% for cssFile in cssFiles %}
+            <link rel="stylesheet" href="{{ cssFile }}" type="text/css"/>
+        {% endfor %}
+    {% endblock %}
+</head>
+
+<body>
+
+{% block main %}{% endblock %}
+
+<ls-lib-footer
+        class="ls-login-footer"
+        application_name="Pastell {{ manifest_info.version }}"
+        active="pastell"
+>
+</ls-lib-footer>
+
+{% set jsFiles = [
+    'node_modules/@libriciel/ls-composants/ls-elements.js',
+] %}
+{% block javascript %}
+{% for jsFile in jsFiles %}
+    <script type="text/javascript" src="{{ jsFile }}"></script>
+{% endfor %}
+{% endblock %}
+
+</body>
+</html>

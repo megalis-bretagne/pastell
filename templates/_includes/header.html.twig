@@ -1,0 +1,41 @@
+<div id="header">
+
+    <div id="bloc_logo">
+        <a href="{{ path('app_homepage') }}">
+            <div class="logo"></div>
+        </a>
+    </div>
+
+    {% if authentification.isConnected %}
+        <div id="bloc_login">
+            <a href="{{ path('app.legacy.utilisateur_moi') }}">{{ authentification.getLogin }}</a>
+            <div class="dropdown">
+                <button
+                        class="btn burger-menu dropdown-toggle"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                >
+                    <i class="fa fa-bars"></i>
+                </button>
+
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a href="/Aide" class="new_picto dropdown-item">
+                        <i class="fa fa-question"></i>&nbsp;<span>Aide</span>
+                    </a>
+                    <a href="{{ path('app.legacy.aide_APropos') }}" class="new_picto dropdown-item">
+                        <i class="fa fa-info"></i>&nbsp;<span>À propos</span>
+                    </a>
+                    <a href="{{ path('app.legacy.aide_RGPD') }}" class="new_picto dropdown-item">
+                        <i class="fa fa-user-secret"></i>&nbsp;<span>RGPD</span>
+                    </a>
+                    <a href="{{ path('app.legacy.connexion_logout') }}" class="dropdown-item separator">
+                        <i class="fa fa-sign-out"></i>&nbsp;<span>Se déconnecter</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
