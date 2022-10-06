@@ -43,7 +43,7 @@ class SQLQuery
         if (! $this->pdo) {
             $this->pdo = new PDO($this->dsn, $this->user, $this->password);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $this->query('SET SQL_MODE="STRICT_ALL_TABLES";');
+            $this->query('SET SQL_MODE="NO_ENGINE_SUBSTITUTION";');
             $this->query("SET time_zone = ?", TIMEZONE);
         }
         return $this->pdo;
