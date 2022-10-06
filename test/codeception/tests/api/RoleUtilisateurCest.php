@@ -26,7 +26,7 @@ class RoleUtilisateurCest
             'prenom' => 'baz',
             'email' => 'toto@toto.fr',
         ];
-        $user_info['password'] = 'password';
+        $user_info['password'] = '*D71m@!lzHZCCfJw7Qc&G8b3b';
         $I->sendPOST(
             "/utilisateur",
             $user_info
