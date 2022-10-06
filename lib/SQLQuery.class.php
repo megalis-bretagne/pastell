@@ -4,8 +4,6 @@ use Monolog\Handler\NullHandler;
 
 class SQLQuery
 {
-    public const DATABASE_TYPE = "mysql";
-    public const DEFAULT_HOST = "localhost";
     public const SLOW_QUERY_IN_MS = 2000;
     public const PREFERRED_TABLE_COLLATION = "utf8mb4_unicode_ci";
 
@@ -45,9 +43,6 @@ class SQLQuery
         if (! $this->pdo) {
             $this->pdo = new PDO($this->dsn, $this->user, $this->password);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            //TODO
-            $this->query('SET SQL_MODE="NO_ENGINE_SUBSTITUTION";');
-
             $this->query("SET time_zone = ?", TIMEZONE);
         }
         return $this->pdo;
@@ -55,8 +50,6 @@ class SQLQuery
 
     public function query($query, $param = false)
     {
-
-
         $start = microtime(true);
         if (! is_array($param)) {
             $param = func_get_args();

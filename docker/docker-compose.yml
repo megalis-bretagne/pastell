@@ -52,15 +52,17 @@ services:
         user: "${UID:-33}:${GID:-33}"
 
     db:
-        image: mysql:5.7
-        command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+        image: hubdocker.libriciel.fr/mariadb:10.9.3-jammy
+        command:
+            - "--character-set-server=utf8mb4"
+            - "--collation-server=utf8mb4_unicode_ci"
         environment:
           MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-123456}
           MYSQL_USER: ${MYSQL_USER:-user}
           MYSQL_PASSWORD: ${MYSQL_PASSWORD:-user}
           MYSQL_DATABASE: ${MYSQL_DATABASE:-pastell}
         volumes:
-            - ${MYSQL_DATADIR:-db_datadir}:/var/lib/mysql/
+            - ${MARIADB_DATADIR:-mariadb_datadir}:/var/lib/mysql/
 
     redis:
         image: redis:6.2.6
@@ -99,11 +101,10 @@ services:
 
 
 volumes:
-    db_datadir:
+    mariadb_datadir:
     app_workspace:
     app_certificate:
     app_session:
-    db_datadir_test:
     letsencrypt_datadir:
     logs_datadir:
     tmp_datadir:

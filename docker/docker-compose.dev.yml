@@ -25,14 +25,17 @@ services:
       - "${DATABASE_PORT:-8306}:3306"
 
   db_test:
-    image: mysql:5.7
+    image: hubdocker.libriciel.fr/mariadb:10.9.3-jammy
+    command:
+      - "--character-set-server=utf8mb4"
+      - "--collation-server=utf8mb4_unicode_ci"
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-123456}
       MYSQL_USER: ${MYSQL_USER_TEST:-user}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD_TEST:-user}
       MYSQL_DATABASE: ${MYSQL_DATABASE_TEST:-pastell_test}
     volumes:
-      - ${MYSQL_DATADIR_TEST:-db_datadir_test}:/var/lib/mysql/
+      - ${MARIADB_DATADIR_TEST:-mariadb_datadir_test}:/var/lib/mysql/
     ports:
       - "${DATABASE_TEST_PORT:-13306}:3306"
 
@@ -76,3 +79,4 @@ services:
 
 volumes:
   pastell_glaneur:
+  mariadb_datadir_test:
