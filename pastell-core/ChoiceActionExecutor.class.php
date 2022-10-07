@@ -1,6 +1,7 @@
 <?php
 
 use Pastell\Service\Droit\DroitService;
+use Twig\Environment;
 
 abstract class ChoiceActionExecutor extends ActionExecutor
 {
@@ -54,16 +55,19 @@ abstract class ChoiceActionExecutor extends ActionExecutor
         return $this->viewParameter;
     }
 
-    public function renderPage($page_title, $template)
+    /**
+     * @throws NotFoundException
+     */
+    public function renderPage(string $pageTitle, string $template): void
     {
         $this->displayMenuGauche();
-        $this->setViewParameter('page_title', $page_title);
+        $this->setViewParameter('page_title', $pageTitle);
         $this->setViewParameter('template_milieu', $template);
-        $this->objectInstancier->getInstance(PastellControler::class)->setAllViewParameter($this->getViewParameter());
-        $this->objectInstancier
-            ->getInstance(PastellControler::class)
-            ->setNavigationInfo($this->id_e, "/Entite/connecteur");
-        $this->objectInstancier->getInstance(PastellControler::class)->renderDefault();
+        $pastellController = $this->objectInstancier->getInstance(PastellControler::class);
+        $pastellController->setAllViewParameter($this->getViewParameter());
+        $pastellController->setNavigationInfo($this->id_e, '/Entite/connecteur');
+        $pastellController->setTwigEnvrionment($this->objectInstancier->getInstance(Environment::class));
+        $pastellController->renderDefault();
     }
 
     /**

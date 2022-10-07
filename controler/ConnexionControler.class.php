@@ -569,8 +569,8 @@ class ConnexionControler extends PastellControler
         $this->redirect('/Connexion/oublieIdentifiant');
     }
 
-    public function indexAction()
+    public function indexAction(): void
     {
-        return $this->connexionAction();
+        $this->connexionAction();
     }
 }

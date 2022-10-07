@@ -22,9 +22,11 @@
                 </button>
 
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a href="/Aide" class="new_picto dropdown-item">
-                        <i class="fa fa-question"></i>&nbsp;<span>Aide</span>
-                    </a>
+                    {% if helpURL %}
+                        <a href="{{ helpURL }}" class="new_picto dropdown-item" target="_blank">
+                            <i class="fa fa-question"></i>&nbsp;<span>Aide</span>
+                        </a>
+                    {% endif %}
                     <a href="{{ path('app.legacy.aide_APropos') }}" class="new_picto dropdown-item">
                         <i class="fa fa-info"></i>&nbsp;<span>À propos</span>
                     </a>

@@ -8,6 +8,7 @@ use FrontController;
 use ObjectInstancierFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Twig\Environment;
 
 final class LegacyController extends AbstractController
 {
@@ -30,12 +31,14 @@ final class LegacyController extends AbstractController
 
         \chdir(\dirname($legacyScript));
 
-        $frontController = new FrontController(ObjectInstancierFactory::getObjetInstancier());
+        $objectInstancier = ObjectInstancierFactory::getObjetInstancier();
+        $frontController = new FrontController($objectInstancier);
 
         $frontController->setGetParameter($_GET);
         $frontController->setPostParameter($_POST);
         $frontController->setServerInfo($_SERVER);
         $frontController->setTwigEnvrionment($this->container->get('twig'));
+        $objectInstancier->setInstance(Environment::class, $this->container->get('twig'));
 
         \ob_start();
         $frontController->dispatch();

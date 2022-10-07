@@ -1,15 +1,17 @@
 <?php
 
+use Twig\Environment;
+
 class FrontControllerTest extends PastellTestCase
 {
-    /** @var  FrontController */
-    private $frontController;
+    private FrontController $frontController;
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->getObjectInstancier()->getInstance(Authentification::class)->connexion('admin', 1);
         $this->frontController = $this->getObjectInstancier()->getInstance(FrontController::class);
+        $this->frontController->setTwigEnvrionment($this->getObjectInstancier()->getInstance(Environment::class));
     }
 
     public function testDispatch()
