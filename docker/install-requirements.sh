@@ -47,6 +47,7 @@ apt-get install -y --no-install-recommends \
 rm -r /var/lib/apt/lists/*
 
 a2enmod \
+    headers \
     proxy \
     proxy_http \
     rewrite \
