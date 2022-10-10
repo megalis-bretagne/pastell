@@ -65,7 +65,7 @@ services:
             - ${MARIADB_DATADIR:-mariadb_datadir}:/var/lib/mysql/
 
     redis:
-        image: redis:6.2.6
+        image: hubdocker.libriciel.fr/redis:7.0.5
 
     seda-generator:
         image: 'registry.libriciel.fr:443/public/plateforme/seda-generator:0.8.3'
