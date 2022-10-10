@@ -84,16 +84,6 @@ class DatabaseDiff
     {
         foreach ($colDefinition1 as $type => $value) {
             if ($colDefinition2[$type] != $value) {
-                /**
-                 * Case when we have a longtext field and the definition requires a json type
-                 * In MariaDB, json is an alias for longtext
-                 * @see https://mariadb.com/kb/en/library/json-data-type/
-                 *
-                 * With this operation, we CANNOT change a json type to a longtext (mysql only)
-                 */
-                if ($value === 'json' && $colDefinition2[$type] === 'longtext') {
-                    continue;
-                }
                 $this->databaseEvent->onChangeColumn($tableName, $colName, $colDefinition1, $colDefinition2);
                 return;
             }

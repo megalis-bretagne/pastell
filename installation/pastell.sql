@@ -314,7 +314,7 @@ CREATE TABLE `role_droit` (
 CREATE TABLE `type_dossier` (
 	`id_t` int(11) NOT NULL AUTO_INCREMENT,
 	`id_type_dossier` varchar(64) NOT NULL,
-	`definition` json NOT NULL,
+	`definition` longtext NOT NULL,
 	PRIMARY KEY (`id_t`)
 )  ENGINE=MyISAM  ;
 CREATE TABLE `type_dossier_action` (
@@ -325,7 +325,7 @@ CREATE TABLE `type_dossier_action` (
 	`date` datetime NOT NULL,
 	`empreinte_sha256` varchar(128) NOT NULL,
 	`message` mediumtext NOT NULL,
-	`export_json` json NOT NULL,
+	`export_json` longtext NOT NULL,
 	PRIMARY KEY (`id_a`),
 	KEY `id_t` (`id_t`)
 )  ENGINE=MyISAM  ;
