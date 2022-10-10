@@ -24,8 +24,8 @@ variables:
     MYSQL_USER: user
     MYSQL_PASSWORD: user
     MYSQL_RANDOM_ROOT_PASSWORD: "yes"
-    MYSQL_HOST_TEST: 'mysql'
-    MYSQL_HOST: 'mysql'
+    MYSQL_HOST_TEST: 'mariadb'
+    MYSQL_HOST: 'mariadb'
     MYSQL_PORT: '3306'
     PASTELL_SITE_BASE: 'https://localhost/'
 
@@ -77,7 +77,8 @@ unit_test:
       COMPOSER_PROCESS_TIMEOUT: 1200
       DONT_RETRIEVE_VALIDCA: "true"
     services:
-        - mysql:5.7.23
+        - name: hubdocker.libriciel.fr/mariadb:10.9.3-jammy
+          alias: mariadb
     script:
         - cd /var/www/pastell
         - php -dpcov.enabled=1 -dpcov.directory=. vendor/bin/phpunit --coverage-text --colors=never --coverage-clover coverage/coverage.xml --log-junit coverage/logfile.xml
@@ -107,8 +108,10 @@ acceptance_test:
         PASTELL_SITE_BASE: https://localhost:4443/
     image :  "$CONTAINER_IMAGE"
     services:
-        - mysql:5.7.23
-        - redis:latest
+        - name: hubdocker.libriciel.fr/mariadb:10.9.3-jammy
+          alias: mariadb
+        - name: hubdocker.libriciel.fr/redis:7.0.5
+          alias: redis
     script:
         - cd /var/www/pastell
         - echo "" > .env

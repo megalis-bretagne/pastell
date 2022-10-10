@@ -45,7 +45,7 @@ class ExpectedElementsCheck implements CheckInterface
                 $curlVersion
             ],
             'La base de données est accédée en UTF-8' => [
-                "#^utf8$#",
+                "#^utf8mb4#",
                 $this->sqlQuery->getClientEncoding()
             ]
         ];

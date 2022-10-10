@@ -21,7 +21,7 @@ class SQLQueryTest extends PastellTestCase
 
     public function testGetClientEncoding()
     {
-        $this->assertEquals('utf8', $this->getSQLQuery()->getClientEncoding());
+        $this->assertEquals('utf8mb4', $this->getSQLQuery()->getClientEncoding());
     }
 
 

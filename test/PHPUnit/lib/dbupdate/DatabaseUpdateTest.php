@@ -57,22 +57,4 @@ class DatabaseUpdateTest extends PastellTestCase
 
         $this->assertEmpty($databaseUpdate->getDiff());
     }
-
-    public function testUpdateFromJsonToLongtextIsDone()
-    {
-        $databaseSchema = file_get_contents(DatabaseUpdater::DATABASE_FILE);
-        $pastellSchema = json_decode($databaseSchema, true);
-
-        $pastellSchema['type_dossier']['Column']['definition']['Type'] = 'longtext';
-        $databaseUpdate = new DatabaseUpdate(json_encode($pastellSchema), $this->getSQLQuery());
-
-        $databaseUpdate->setDatabaseDefinition(json_decode($databaseSchema, true));
-
-        $this->assertSame(
-            [
-                'ALTER TABLE `type_dossier` CHANGE `definition` `definition` longtext NOT NULL;'
-            ],
-            $databaseUpdate->getDiff()
-        );
-    }
 }

@@ -2195,7 +2195,7 @@
             },
             "definition": {
                 "Field": "definition",
-                "Type": "json",
+                "Type": "longtext",
                 "Null": "NO",
                 "Key": "",
                 "Default": null,
@@ -2273,7 +2273,7 @@
             },
             "export_json": {
                 "Field": "export_json",
-                "Type": "json",
+                "Type": "longtext",
                 "Null": "NO",
                 "Key": "",
                 "Default": null,
