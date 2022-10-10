@@ -1,9 +1,9 @@
 {% block main %}
-    {{ render(controller(
-        'Pastell\\Controller\\LegacyController::legacy',
-        {
-            'requestPath': requestPath,
-            'legacyScript': legacyScript
-        }
-    )) }}
+{{ render(controller(
+    'Pastell\\Controller\\LegacyController::legacy',
+    {
+        'requestPath': requestPath,
+        'legacyScript': legacyScript
+    }
+)) }}
 {% endblock %}
