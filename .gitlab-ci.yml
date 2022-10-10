@@ -24,8 +24,8 @@ variables:
     MYSQL_USER: user
     MYSQL_PASSWORD: user
     MYSQL_RANDOM_ROOT_PASSWORD: "yes"
-    MYSQL_HOST_TEST: 'mysql'
-    MYSQL_HOST: 'mysql'
+    MYSQL_HOST_TEST: 'mariadb'
+    MYSQL_HOST: 'mariadb'
     MYSQL_PORT: '3306'
     PASTELL_SITE_BASE: 'https://localhost/'
 
