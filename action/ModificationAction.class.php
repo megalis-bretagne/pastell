@@ -95,7 +95,7 @@ class ModificationAction extends ActionExecutor
         return $result;
     }
 
-    public function needChangeEtatToModification($action_name)
+    public function needChangeEtatToModification($action_name): bool
     {
         $actionObject = $this->getDocumentType()->getAction();
         $modification_no_change_etat = $actionObject->getProperties($action_name, Action::MODIFICATION_NO_CHANGE_ETAT);
