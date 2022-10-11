@@ -14,7 +14,7 @@ services:
         GROUPNAME: ${GROUPNAME:-www-data}
     environment:
       XDEBUG_MODE: "develop, coverage, debug"
-      MAILER_DSN: "smtp://maildev:25?verify_peer=0"
+      MAILER_DSN: "smtp://maildev:1025?verify_peer=0"
     volumes:
       - ..:/var/www/pastell:cached
 
@@ -75,7 +75,7 @@ services:
   maildev:
     image: maildev/maildev
     ports:
-      - "1080:80"
+      - "1080:1080"
 
 volumes:
   pastell_glaneur:

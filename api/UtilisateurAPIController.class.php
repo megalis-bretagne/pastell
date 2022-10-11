@@ -20,9 +20,9 @@ class UtilisateurAPIController extends BaseAPIController
 
     private $utilisateurDeletionService;
 
-    private $passwordEntropy;
+    private PasswordEntropy $passwordEntropy;
 
-    private $tokenGenerator;
+    private TokenGenerator $tokenGenerator;
 
     public function __construct(
         UtilisateurSQL $utilisateur,
