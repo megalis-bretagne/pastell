@@ -13,7 +13,7 @@ class AdminControlerTest extends ControlerTestCase
 
     public function testCreateAdmin()
     {
-        $this->assertTrue($this->adminControler->createAdmin('admin2', 'admin', 'admin@sigmalis.com'));
+        $this->assertTrue($this->adminControler->createAdmin('admin2', 'D@iw3DDf41Nl$DXzMJL!Uc2Yo', 'admin@sigmalis.com'));
     }
 
     public function testCreateAdminFail()

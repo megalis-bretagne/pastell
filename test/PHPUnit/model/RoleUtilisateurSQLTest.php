@@ -240,7 +240,12 @@ class RoleUtilisateurSQLTest extends PastellTestCase
         $id_e_3 = $entiteCreator->edit(0, "000000000", "Entité 3", EntiteSQL::TYPE_COLLECTIVITE, $id_e_2);
 
         $utilisateurCreator = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class);
-        $id_u = $utilisateurCreator->create('test', 'aa', 'aa', 'aa@aa.fr');
+        $id_u = $utilisateurCreator->create(
+            'test',
+            'D@iw3DDf41Nl$DXzMJL!Uc2Yo',
+            'D@iw3DDf41Nl$DXzMJL!Uc2Yo',
+            'aa@aa.fr'
+        );
 
         $this->roleUtilisateurSQL->addRole($id_u, "admin", $id_e_2);
         $this->roleUtilisateurSQL->addRole($id_u, "admin", $id_e_3);

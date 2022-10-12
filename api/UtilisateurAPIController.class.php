@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\PasswordEntropy;
+use Pastell\Service\TokenGenerator;
 use Pastell\Service\Utilisateur\UtilisateurDeletionService;
 use Pastell\Utilities\Certificate;
 
@@ -18,13 +20,19 @@ class UtilisateurAPIController extends BaseAPIController
 
     private $utilisateurDeletionService;
 
+    private PasswordEntropy $passwordEntropy;
+
+    private TokenGenerator $tokenGenerator;
+
     public function __construct(
         UtilisateurSQL $utilisateur,
         UtilisateurListe $utilisateurListe,
         UtilisateurCreator $utilisateurCreator,
         RoleUtilisateur $roleUtilisateur,
         Journal $journal,
-        UtilisateurDeletionService $utilisateurDeletionService
+        UtilisateurDeletionService $utilisateurDeletionService,
+        PasswordEntropy $passwordEntropy,
+        TokenGenerator $tokenGenerator,
     ) {
         $this->utilisateur = $utilisateur;
         $this->utilisateurListe = $utilisateurListe;
@@ -32,6 +40,8 @@ class UtilisateurAPIController extends BaseAPIController
         $this->roleUtilisateur = $roleUtilisateur;
         $this->journal = $journal;
         $this->utilisateurDeletionService = $utilisateurDeletionService;
+        $this->passwordEntropy = $passwordEntropy;
+        $this->tokenGenerator = $tokenGenerator;
     }
 
     /**
@@ -123,12 +133,14 @@ class UtilisateurAPIController extends BaseAPIController
         $id_e = $this->getFromRequest('id_e', 0);
         $this->checkDroit($id_e, "utilisateur:edition");
 
+
+
         $id_u = $this->editionUtilisateur(
             $id_e,
             null,
             $this->getFromRequest('email'),
             $this->getFromRequest('login'),
-            $this->getFromRequest('password'),
+            $this->getFromRequest('password') ?: $this->tokenGenerator->generate(),
             $this->getFromRequest('nom'),
             $this->getFromRequest('prenom'),
             $this->getFileUploader()->getFileContent('certificat')
@@ -186,6 +198,12 @@ class UtilisateurAPIController extends BaseAPIController
             }
         }
         if ($password) {
+            if (! $this->passwordEntropy->isPasswordStrongEnough($password)) {
+                throw new Exception(
+                    "Le mot mot de passe n'est pas assez fort. " .
+                    "(trop court ou pas assez de caractères différents)"
+                );
+            }
             $this->utilisateur->setPassword($id_u, $password);
         }
         $oldInfo = $this->utilisateur->getInfo($id_u);

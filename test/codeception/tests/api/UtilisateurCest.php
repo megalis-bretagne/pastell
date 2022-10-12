@@ -62,7 +62,7 @@ class UtilisateurCest
         $I->wantTo("créer un utilisateur");
         $I->amHttpAuthenticatedAsAdmin();
         $user_info = $this->getCreatedUser();
-        $user_info['password'] = 'password';
+        $user_info['password'] = '*D71m@!lzHZCCfJw7Qc&G8b3b';
         $I->sendPOST(
             "/utilisateur",
             $user_info
@@ -78,7 +78,7 @@ class UtilisateurCest
         $I->wantTo("créer un utilisateur [V1]");
         $I->amHttpAuthenticatedAsAdmin();
         $user_info = $this->getCreatedUser('barv1');
-        $user_info['password'] = 'password';
+        $user_info['password'] = '*D71m@!lzHZCCfJw7Qc&G8b3b';
         $I->sendPOSTV1(
             "create-utilisateur.php",
             $user_info
@@ -92,7 +92,7 @@ class UtilisateurCest
     private function createUser(NoGuy $I, $login = 'bar')
     {
         $user_info = $this->getCreatedUser($login);
-        $user_info['password'] = 'password';
+        $user_info['password'] = '*D71m@!lzHZCCfJw7Qc&G8b3b';
         $I->sendPOST(
             "/utilisateur",
             $user_info

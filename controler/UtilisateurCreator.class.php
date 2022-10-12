@@ -1,15 +1,16 @@
 <?php
 
+use Pastell\Service\PasswordEntropy;
+
 class UtilisateurCreator
 {
-    private $passwordGenerator;
-    private $utilisateurSQL;
     private $lastError;
 
-    public function __construct(PasswordGenerator $passwordGenerator, UtilisateurSQL $utilisateurSQL)
-    {
-        $this->passwordGenerator = $passwordGenerator;
-        $this->utilisateurSQL = $utilisateurSQL;
+    public function __construct(
+        private readonly PasswordGenerator $passwordGenerator,
+        private readonly UtilisateurSQL $utilisateurSQL,
+        private readonly PasswordEntropy $passwordEntropy,
+    ) {
     }
 
     public function getLastError()
@@ -36,6 +37,13 @@ class UtilisateurCreator
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $this->lastError = "Votre adresse email \"$email\" ne semble pas valide";
+            return false;
+        }
+
+        if (! $this->passwordEntropy->isPasswordStrongEnough($password)) {
+            $this->lastError =
+                "Le mot mot de passe n'est pas assez fort. " .
+                "(trop court ou pas assez de caractères différents)";
             return false;
         }
 

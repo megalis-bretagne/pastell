@@ -436,14 +436,7 @@ class UtilisateurControler extends PastellControler
         $id_e = $recuperateur->getInt('id_e');
         $id_u = $recuperateur->get('id_u');
 
-        $password = $recuperateur->get('password');
-        $password2 = $recuperateur->get('password2');
-
         try {
-            if ($password && ($password != $password2)) {
-                //La vérification du mot de passe ne concerne que la partie web et n'est pas vérifié par l'API
-                throw new BadRequestException("Les mots de passe ne correspondent pas");
-            }
             if ($id_u) {
                 $this->apiPatch("/utilisateur/$id_u");
             } else {

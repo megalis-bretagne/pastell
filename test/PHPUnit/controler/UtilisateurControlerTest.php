@@ -19,8 +19,8 @@ class UtilisateurControlerTest extends ControlerTestCase
     {
         $this->setPostInfo([
             'login' => 'foo',
-            'password' => 'bar',
-            'password2' => 'bar',
+            'password' => 'D@iw3DDf41Nl$DXzMJL!Uc2Yo',
+            'password2' => 'D@iw3DDf41Nl$DXzMJL!Uc2Yo',
             'nom' => 'baz',
             'prenom' => 'buz',
             'email' => 'boz@byz.fr'
@@ -34,29 +34,8 @@ class UtilisateurControlerTest extends ControlerTestCase
 
         $utilisateurSQL = $this->getObjectInstancier()->getInstance(UtilisateurSQL::class);
         $this->assertEquals('boz@byz.fr', $utilisateurSQL->getInfo(3)['email']);
-        $this->assertTrue($utilisateurSQL->verifPassword(3, "bar"));
+        $this->assertTrue($utilisateurSQL->verifPassword(3, 'D@iw3DDf41Nl$DXzMJL!Uc2Yo'));
     }
-
-    /**
-     * @throws LastErrorException
-     * @throws LastMessageException
-     */
-    public function testWhenPassword2IsNotSet()
-    {
-        $this->setPostInfo([
-            'login' => 'foo',
-            'password' => 'bar',
-            'password2' => '',
-            'nom' => 'baz',
-            'prenom' => 'buz',
-            'email' => 'boz@byz.fr'
-        ]);
-
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage("Les mots de passe ne correspondent pas");
-        $this->getUtilisateurControler()->doEditionAction();
-    }
-
 
     /**
      * @throws LastErrorException

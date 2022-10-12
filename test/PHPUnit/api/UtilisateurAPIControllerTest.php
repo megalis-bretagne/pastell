@@ -9,7 +9,7 @@ class UtilisateurAPIControllerTest extends PastellTestCase
             [
                 'email' => 'foo@bar.baz',
                 'login' => 'foo',
-                'password' => 'bar',
+                'password' => 'D@iw3DDf41Nl$DXzMJL!Uc2Yo',
                 'nom' => 'foo',
                 'prenom' => 'bar',
             ]
@@ -82,7 +82,7 @@ class UtilisateurAPIControllerTest extends PastellTestCase
         $info =  [
             'login' => 'foo',
             'prenom' => 'foo',
-            'password' => 'bar',
+            'password' => 'D@iw3DDf41Nl$DXzMJL!Uc2Yo',
             'nom' => 'bar',
             'email' => 'foo@bar.baz',
         ];
@@ -170,7 +170,7 @@ class UtilisateurAPIControllerTest extends PastellTestCase
             [
                 'email' => 'foo@bar.baz',
                 'login' => 'foo',
-                'password' => 'bar',
+                'password' => 'D@iw3DDf41Nl$DXzMJL!Uc2Yo',
                 'nom' => 'foo',
                 'prenom' => 'bar',
                 'create' => true
