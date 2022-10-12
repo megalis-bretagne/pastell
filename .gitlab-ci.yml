@@ -114,13 +114,14 @@ acceptance_test:
           alias: redis
     script:
         - cd /var/www/pastell
-        - echo "" > .env
+        - mkdir -p test/codeception/tests/output
         - /bin/bash -c "source /etc/apache2/envvars && exec /usr/sbin/apache2"
-        - composer codecept
+        - composer codecept || { cp -rf test/codeception/tests/output $CI_PROJECT_DIR; cp -rf /data/log $CI_PROJECT_DIR; exit 1; }
     artifacts:
         when: on_failure
         paths:
-            - /var/www/pastell/test/codeception/tests/output/
+            - $CI_PROJECT_DIR
+        expire_in: 1h
 
 security_scan:
   allow_failure: true
