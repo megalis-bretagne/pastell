@@ -136,6 +136,7 @@ action:
             last-action:
                 - preparation-send-ged_1
                 - error-ged_1
+        action-automatique: orientation
         action-class: StandardAction
         connecteur-type: GED
         connecteur-type-action: GEDEnvoyer
@@ -163,6 +164,7 @@ action:
             last-action:
                 - preparation-send-ged_2
                 - error-ged_2
+        action-automatique: orientation
         action-class: StandardAction
         connecteur-type: GED
         connecteur-type-action: GEDEnvoyer

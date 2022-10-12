@@ -14,4 +14,9 @@ class Reopen extends ActionExecutor
         $this->setLastMessage("Le dossier a été rouvert, l'état terminé a été supprimé.");
         return true;
     }
+
+    public function updateJobQueueAfterExecution(): bool
+    {
+        return false;
+    }
 }

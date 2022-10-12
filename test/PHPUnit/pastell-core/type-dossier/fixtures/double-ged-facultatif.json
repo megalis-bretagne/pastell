@@ -10,7 +10,7 @@
         "type": "depot",
         "requis": "",
         "num_etape": 0,
-        "automatique": "",
+        "automatique": "on",
         "specific_type_info": [],
         "num_etape_same_type": 0,
         "etape_with_same_type_exists": false
@@ -19,7 +19,7 @@
         "type": "depot",
         "requis": "",
         "num_etape": 1,
-        "automatique": "",
+        "automatique": "on",
         "specific_type_info": [],
         "num_etape_same_type": 0,
         "etape_with_same_type_exists": false

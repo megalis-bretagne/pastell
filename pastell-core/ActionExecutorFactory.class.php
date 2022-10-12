@@ -15,6 +15,7 @@ class ActionExecutorFactory
     private $lastMessage;
     private $lastMessageString;
     private $lastException;
+    private ActionExecutor $lastActionClass;
 
     public function __construct(Extensions $extensions, ObjectInstancier $objectInstancier)
     {
@@ -185,7 +186,9 @@ class ActionExecutorFactory
             $result = false;
             $this->lastException = $e;
         }
-        $this->getJobManager()->setJobForDocument($id_e, $id_d, $this->getLastMessageString(), $action_name);
+        if (isset($this->lastActionClass) && $this->lastActionClass->updateJobQueueAfterExecution()) {
+            $this->getJobManager()->setJobForDocument($id_e, $id_d, $this->getLastMessageString(), $action_name);
+        }
         $this->getLogger()->addInfo(
             "executeOnDocument - fin - id_e=$id_e,id_d=$id_d,id_u=$id_u,action_name=$action_name - " .
             ($result ? "OK" : "KO") . " - " .
@@ -356,6 +359,7 @@ class ActionExecutorFactory
     {
         $actionClass = $this->getActionClass($id_d, $id_e, $id_u, $action_name, $id_destinataire, $from_api, $action_params, $id_worker);
         $result = $actionClass->go();
+        $this->lastActionClass = $actionClass;
         $this->lastMessageString = $actionClass->getLastMessageString();
         $this->lastMessage = $actionClass->getLastMessage();
         return $result;
