@@ -81,7 +81,8 @@ class ModificationAction extends ActionExecutor
                 $this->id_destinataire,
                 $this->from_api,
                 $this->action_params,
-                $this->id_worker
+                $this->id_worker,
+                false,
             );
             $last_message = $actionExecutorFactory->getLastMessage();
             if ($last_message) {
@@ -141,5 +142,10 @@ class ModificationAction extends ActionExecutor
         if (! in_array($field_name, $editable_content)) {
             throw new ForbiddenException("Le contenu de $field_name n'est pas éditable");
         }
+    }
+
+    public function updateJobQueueAfterExecution(): bool
+    {
+        return false;
     }
 }

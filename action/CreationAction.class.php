@@ -23,7 +23,17 @@ class CreationAction extends ActionExecutor
                 $this->getDonneesFormulaire()->setData($field->getName(), $field->getDefault());
                 if ($field->getOnChange()) {
                     $actionExecutorFactory = $this->objectInstancier->getInstance(ActionExecutorFactory::class);
-                    $actionExecutorFactory->executeOnDocumentCritical($this->id_e, $this->id_u, $this->id_d, $field->getOnChange());
+                    $actionExecutorFactory->executeOnDocumentCritical(
+                        $this->id_e,
+                        $this->id_u,
+                        $this->id_d,
+                        $field->getOnChange(),
+                        [],
+                        false,
+                        [],
+                        0,
+                        false
+                    );
                 }
             }
         }

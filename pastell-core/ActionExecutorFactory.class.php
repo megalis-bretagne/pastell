@@ -149,7 +149,8 @@ class ActionExecutorFactory
         $id_destinataire = [],
         $from_api = false,
         $action_params = [],
-        $id_worker = 0
+        $id_worker = 0,
+        $updateJobQueueAfterExecution = true,
     ): ?bool {
         try {
             $this->getLogger()->addInfo("executeOnDocument - appel - id_e=$id_e,id_d=$id_d,id_u=$id_u,action_name=$action_name");
@@ -186,7 +187,7 @@ class ActionExecutorFactory
             $result = false;
             $this->lastException = $e;
         }
-        if (isset($this->lastActionClass) && $this->lastActionClass->updateJobQueueAfterExecution()) {
+        if ($updateJobQueueAfterExecution && (isset($this->lastActionClass) && $this->lastActionClass->updateJobQueueAfterExecution())) {
             $this->getJobManager()->setJobForDocument($id_e, $id_d, $this->getLastMessageString(), $action_name);
         }
         $this->getLogger()->addInfo(
