@@ -137,9 +137,8 @@ class SystemControler extends PastellControler
         return $documentTypeValidation;
     }
 
-    private function getAllActionInfo(DocumentType $documentType, $type = 'flux'): array
+    private function getAllActionInfo(DocumentType $documentType): array
     {
-        $id = $documentType->getModuleId();
         $all_action = [];
         $action = $documentType->getAction();
         $action_list = $action->getAll();
@@ -151,15 +150,9 @@ class SystemControler extends PastellControler
                 'name' => $action->getActionName($action_name),
                 'do_name' => $action->getDoActionName($action_name),
                 'class' => $class_name,
-
-                'action_auto' => $action->getActionAutomatique($action_name)
+                'action_auto' => $action->getActionAutomatique($action_name),
+                'path' => $this->getClassLocation($class_name),
             ];
-
-            if ($type == 'connecteur') {
-                $element['path'] = $this->getActionExecutorFactory()->getConnecteurActionPath($id, $class_name);
-            } else {
-                $element['path'] = $this->getActionExecutorFactory()->getFluxActionPath($id, $class_name);
-            }
 
             $all_action[] = $element;
         }
@@ -345,7 +338,7 @@ class SystemControler extends PastellControler
     /**
      * @throws Exception
      */
-    public function connecteurDetailAction()
+    public function connecteurDetailAction(): void
     {
         $id_connecteur = $this->getGetInfo()->get('id_connecteur');
         $scope = $this->getGetInfo()->get('scope');
@@ -363,13 +356,16 @@ class SystemControler extends PastellControler
         $name = $documentType->getName();
         $this->setViewParameter('description', $documentType->getDescription());
         $this->setViewParameter('list_restriction_pack', $documentType->getListRestrictionPack());
-        $this->setViewParameter('all_action', $this->getAllActionInfo($documentType, 'connecteur'));
+        $this->setViewParameter('all_action', $this->getAllActionInfo($documentType));
         $this->setViewParameter('formulaire_fields', $this->getFormsElement($documentType));
 
         $this->setViewParameter('isConnectorValid', $connectorValidation->isDefinitionFileValid($definitionFile));
         $this->setViewParameter('connectorError', $connectorValidation->getError($definitionFile));
 
-        $this->setViewParameter('page_title', "Détail du connecteur " . ($scope === 'global' ? 'global' : "d'entité") . " « $name » ($id_connecteur)");
+        $this->setViewParameter(
+            'page_title',
+            "Détail du connecteur " . ($scope === 'global' ? 'global' : "d'entité") . " « $name » ($id_connecteur)"
+        );
         $this->setViewParameter('menu_gauche_select', "System/connecteur");
         $this->setViewParameter('template_milieu', "SystemConnecteurDetail");
         $this->renderDefault();
@@ -482,5 +478,23 @@ class SystemControler extends PastellControler
         $redisWrapper->flushAll();
         $this->setLastMessage("Le cache Redis a été vidé");
         $this->redirect(self::SYSTEM_INDEX_PAGE);
+    }
+
+    private function getClassLocation(string $className): string
+    {
+        if ($className === '') {
+            return '';
+        }
+        if (class_exists($className)) {
+            if (is_subclass_of($className, ActionExecutor::class)) {
+                $message = (new ReflectionClass($className))->getFileName();
+            } else {
+                $message = $className . ' does not extends ' . ActionExecutor::class;
+            }
+        } else {
+            $message = 'Unable to find class : ' . $className;
+        }
+
+        return $message;
     }
 }
