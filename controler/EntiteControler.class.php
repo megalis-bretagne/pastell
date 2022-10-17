@@ -13,7 +13,7 @@ class EntiteControler extends PastellControler
         parent::_beforeAction();
         $id_e = $this->getPostOrGetInfo()->getInt('id_e', 0);
         if ($id_e != 0) {
-            $this->hasDroitLecture($id_e);
+            $this->hasEntiteDroitLecture($id_e);
         }
         $this->setNavigationInfo($id_e, "Entite/detail?");
         $this->setViewParameter('menu_gauche_template', "EntiteMenuGauche");
@@ -69,7 +69,7 @@ class EntiteControler extends PastellControler
         $role = $recuperateur->get('role');
         $search = $recuperateur->get('search');
         $offset = $recuperateur->getInt('offset');
-        $this->hasDroitLecture($id_e);
+        $this->hasUtilisateurDroitLecture($id_e);
 
         $all_role = $this->getRoleSQL()->getAllRole();
         $all_role[] = ['role' => RoleUtilisateur::AUCUN_DROIT,'libelle' => RoleUtilisateur::AUCUN_DROIT];
@@ -99,7 +99,7 @@ class EntiteControler extends PastellControler
         $the_role = $recuperateur->get('role_selected');
         $search = $recuperateur->get('search');
 
-        $this->hasDroitLecture($id_e);
+        $this->hasUtilisateurDroitLecture($id_e);
 
         $result = [];
         $result[] = ["id_u","login","prénom","nom","email","collectivité de base","id_e","rôles"];
@@ -133,7 +133,7 @@ class EntiteControler extends PastellControler
         if (! $id_e) {
             throw new Exception("L'entité 0 n'existe pas");
         }
-        $this->hasDroitLecture($id_e);
+        $this->hasEntiteDroitLecture($id_e);
         $info = $this->getEntiteSQL()->getInfo($id_e);
         if (! $info) {
             $this->setLastError("Cette entité n'existe pas ou n'existe plus.");
@@ -204,7 +204,7 @@ class EntiteControler extends PastellControler
     public function exportAction()
     {
         $id_e = $this->getGetInfo()->getInt('id_e', 0);
-        $this->hasDroitLecture($id_e);
+        $this->hasEntiteDroitLecture($id_e);
 
         $entite_list = $this->getEntiteListe()->getAllFille($id_e);
         $result = [
@@ -367,7 +367,7 @@ class EntiteControler extends PastellControler
         $page = $recuperateur->getInt('page', 0);
         $search = $recuperateur->get('search');
 
-        $this->hasDroitLecture($id_e);
+        $this->hasEntiteDroitLecture($id_e);
 
         /** @var AgentSQL $agentSQL */
         $agentSQL = $this->getInstance(AgentSQL::class);
@@ -397,7 +397,7 @@ class EntiteControler extends PastellControler
         $recuperateur = new Recuperateur($_GET);
         $id_e = $recuperateur->getInt('id_e', 0);
         $this->hasConnecteurDroitLecture($id_e);
-        $this->hasDroitLecture($id_e);
+        $this->hasEntiteDroitLecture($id_e);
         $this->setViewParameter('droit_edition', $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "entite:edition", $id_e));
         $this->setViewParameter('id_e', $id_e);
         $this->setViewParameter('all_connecteur', $this->getConnecteurEntiteSQL()->getAll($id_e));

@@ -14,6 +14,7 @@ class DroitService
     public const DROIT_SYSTEM = "system";
     public const DROIT_ENTITE = "entite";
     public const DROIT_UTILISATEUR = "utilisateur";
+    public const DROIT_MAILSEC = "mailSec";
 
     public static function getDroitLecture(string $part): string
     {

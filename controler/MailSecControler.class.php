@@ -9,7 +9,7 @@ class MailSecControler extends PastellControler
         parent::_beforeAction();
         $id_e = $this->getPostOrGetInfo()->getInt('id_e');
         $this->setViewParameter('id_e', $id_e);
-        $this->hasDroitLecture($id_e);
+        $this->hasMailSecDroitLecture($id_e);
         $this->setNavigationInfo($id_e, "MailSec/annuaire?");
         $this->setViewParameter('menu_gauche_select', 'MailSec/annuaire');
         $this->setViewParameter('menu_gauche_template', "EntiteMenuGauche");
