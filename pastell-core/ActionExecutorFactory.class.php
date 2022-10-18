@@ -451,27 +451,6 @@ class ActionExecutorFactory
         return $actionClass;
     }
 
-    public function getConnecteurActionPath($id_connecteur, $action_class_name)
-    {
-        $connecteur_path = $this->extensions->getConnecteurPath($id_connecteur);
-        $action_class_file = "$connecteur_path/" . self::ACTION_FOLDERNAME . "/$action_class_name.class.php";
-        if (file_exists($action_class_file)) {
-            return $action_class_file;
-        }
-        $action_class_file = PASTELL_PATH . "/" . self::ACTION_FOLDERNAME . "/$action_class_name.class.php";
-        if (file_exists($action_class_file)) {
-            return $action_class_file;
-        }
-        foreach ($this->extensions->getAllConnecteur() as $connecteur_id => $connecteur_path) {
-            $action_path = "$connecteur_path/" . self::ACTION_FOLDERNAME . "/$action_class_name.class.php";
-            if (file_exists($action_path)) {
-                return $action_path;
-            }
-        }
-        return $action_class_file;
-    }
-
-
     private function loadDocumentActionFile($flux, $action_class_name)
     {
         $action_class_file = $this->getFluxActionPath($flux, $action_class_name);
