@@ -1,4 +1,4 @@
-version: '3.7'
+name: pastell
 
 services:
     web:
@@ -98,7 +98,6 @@ services:
     libersign:
         restart: unless-stopped
         image: 'registry.libriciel.fr:443/public/signature/libersign:1.11.4'
-
 
 volumes:
     mariadb_datadir:
