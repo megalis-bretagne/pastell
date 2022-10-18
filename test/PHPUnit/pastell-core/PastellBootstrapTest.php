@@ -49,6 +49,7 @@ class PastellBootstrapTest extends PastellTestCase
 
         $result = $connecteurFrequenceSQL->getAll();
 
+        // file_put_contents(__DIR__ . "/fixtures/connecteur-frequence.json", json_encode($result));
         $this->assertJsonStringEqualsJsonString(
             file_get_contents(__DIR__ . "/fixtures/connecteur-frequence.json"),
             json_encode($result)
