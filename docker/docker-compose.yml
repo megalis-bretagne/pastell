@@ -1,4 +1,4 @@
-name: pastell
+name: docker
 
 services:
     web:
