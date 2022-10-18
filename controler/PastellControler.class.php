@@ -89,15 +89,6 @@ class PastellControler extends Controler
      * @throws LastMessageException
      * @throws LastErrorException
      */
-    public function hasMailSecDroitLecture(int $id_e): void
-    {
-        $this->verifDroit($id_e, DroitService::getDroitLecture(DroitService::DROIT_MAILSEC));
-    }
-
-    /**
-     * @throws LastMessageException
-     * @throws LastErrorException
-     */
     public function hasDroitEdition($id_e)
     {
         $this->verifDroit($id_e, "entite:edition");
