@@ -275,15 +275,15 @@ class DocumentActionEntite extends SQL
     }
 
 
-    public function getNbDocumentBySearch($id_e, $type, $search, $state, $last_state_begin, $last_state_end, $allDroitEntite, $etatTransit, $state_begin, $state_end, $indexedFieldValue = [])
+    public function getNbDocumentBySearch($id_e, $type, $search, $state, $last_state_begin, $last_state_end, $allDroitEntite, $etatTransit, $state_begin, $state_end, $notEtatTransit, $indexedFieldValue = [])
     {
         $col = "count(*) as nb";
         $order = "";
-        $result = $this->getSearchSQL($col, $order, $id_e, $type, $search, $state, $last_state_begin, $last_state_end, $allDroitEntite, $etatTransit, $state_begin, $state_end, $indexedFieldValue);
+        $result = $this->getSearchSQL($col, $order, $id_e, $type, $search, $state, $last_state_begin, $last_state_end, $allDroitEntite, $etatTransit, $state_begin, $state_end, $notEtatTransit, $indexedFieldValue);
         return $result[0]['nb'];
     }
 
-    public function getListBySearch($id_e, $type, $offset, $limit, $search, $state, $last_state_begin, $last_state_end, $tri, $allDroitEntite, $etatTransit, $state_begin, $state_end, $indexedFieldValue = [], $sens_tri = 'DESC')
+    public function getListBySearch($id_e, $type, $offset, $limit, $search, $state, $last_state_begin, $last_state_end, $tri, $allDroitEntite, $etatTransit, $state_begin, $state_end, $notEtatTransit, $indexedFieldValue = [], $sens_tri = 'DESC')
     {
         $col = "*,document.type as type,document_entite.last_action as last_action,document_entite.last_action_date as last_action_date, entite.denomination as entite_base";
 
@@ -308,11 +308,11 @@ class DocumentActionEntite extends SQL
             $order = " ORDER BY document_index.field_value $sens_tri LIMIT $offset,$limit ";
         }
 
-        $list = $this->getSearchSQL($col, $order, $id_e, $type, $search, $state, $last_state_begin, $last_state_end, $allDroitEntite, $etatTransit, $state_begin, $state_end, $indexedFieldValue, $tri);
+        $list = $this->getSearchSQL($col, $order, $id_e, $type, $search, $state, $last_state_begin, $last_state_end, $allDroitEntite, $etatTransit, $state_begin, $state_end, $notEtatTransit, $indexedFieldValue, $tri);
         return $this->addEntiteToList($id_e, $list);
     }
 
-    private function getSearchSQL($col, $order, $id_e, $type, $search, $state, $last_state_begin, $last_state_end, $allDroitEntite, $etatTransit, $state_begin, $state_end, $indexedFieldValue = [], $triIndexColName = false)
+    private function getSearchSQL($col, $order, $id_e, $type, $search, $state, $last_state_begin, $last_state_end, $allDroitEntite, $etatTransit, $state_begin, $state_end, $notEtatTransit, $indexedFieldValue = [], $triIndexColName = false)
     {
 
         $type_list = "'" . implode("','", $allDroitEntite) . "'";
@@ -388,7 +388,13 @@ class DocumentActionEntite extends SQL
                 $binding[] = $state_end;
             }
         }
-
+        if ($notEtatTransit) {
+            $sql .= " AND document_entite.id_d NOT IN (
+                SELECT document_action.id_d
+                FROM document_action
+                WHERE document_action.action = ?) ";
+            $binding[] = $notEtatTransit;
+        }
 
         $sql .= $order;
         $list = $this->query($sql, $binding);

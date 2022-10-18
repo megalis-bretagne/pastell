@@ -66,6 +66,9 @@ class RechercheAvanceFormulaireHTML extends PastellControler
             case 'state_begin':
                 $this->displayStateBegin();
                 break;
+            case 'notEtatTransit':
+                $this->displayNotEtatTransit();
+                break;
             case 'search':
                 $this->displayInputText('search');
                 break;
@@ -203,7 +206,6 @@ class RechercheAvanceFormulaireHTML extends PastellControler
                     <?php endforeach; ?>
                 </optgroup>
             <?php endforeach; ?>
-
         </select>
         <?php
     }
@@ -215,6 +217,28 @@ class RechercheAvanceFormulaireHTML extends PastellControler
         ?>
         Début:    <?php $this->dateInput('state_begin', $state_begin); ?>
         Fin : <?php $this->dateInput('state_end', $state_end); ?>
+        <?php
+    }
+
+    private function displayNotEtatTransit()
+    {
+        $allDroit = $this->getInstance(RoleUtilisateur::class)->getAllDroit($this->getId_u());
+        $listeEtat = $this->getInstance(DocumentTypeFactory::class)->getActionByRole($allDroit);
+        $notEtatTransit = $this->getParameter('notEtatTransit');
+        ?>
+        <select name='notEtatTransit' class="form-control col-md-8">
+            <option value=''>----</option>
+            <?php foreach ($listeEtat as $typeDocument => $allEtat) : ?>
+                <optgroup label="<?php hecho($typeDocument) ?>">
+                    <?php foreach ($allEtat as $nameEtat => $libelle) : ?>
+                        <option value='<?php echo $nameEtat ?>' <?php echo $notEtatTransit == $nameEtat ? "selected='selected'" : ""; ?>>
+                            <?php echo $libelle ?>
+                        </option>
+                    <?php endforeach; ?>
+                </optgroup>
+            <?php endforeach; ?>
+
+        </select>
         <?php
     }
 
@@ -291,6 +315,7 @@ class RechercheAvanceFormulaireHTML extends PastellControler
             'last_state_begin' => 'Date de passage dans le dernier état',
             'etatTransit' => "Passé par l'état",
             'state_begin' => 'Date de passage dans cet état',
+            'notEtatTransit' => "Non passé par l'état",
             'search' => 'Dont le titre contient',
             'type' => 'Type de dossier',
             'id_e' => 'Collectivité'
