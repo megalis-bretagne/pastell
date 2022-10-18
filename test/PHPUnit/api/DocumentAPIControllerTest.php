@@ -70,6 +70,21 @@ class DocumentAPIControllerTest extends PastellTestCase
         $this->assertEquals($id_d, $list[0]['id_d']);
     }
 
+    public function testRechercheNotEtatTransitField(): void
+    {
+        $id_d1 = $this->createTestDocument();
+        $this->triggerActionOnDocument($id_d1, 'no-way');
+        $id_d2 = $this->createTestDocument();
+        $this->triggerActionOnDocument($id_d2, 'no-way');
+        $list = $this->getInternalAPI()->get('entite/1/document?type=test&notEtatTransit=editable');
+
+        self::assertCount(2, $list);
+
+        $this->triggerActionOnDocument($id_d1, 'editable');
+        $list = $this->getInternalAPI()->get('entite/1/document?type=test&notEtatTransit=editable');
+        self::assertCount(1, $list);
+    }
+
     public function testExternalData()
     {
         $id_d = $this->createTestDocument();
