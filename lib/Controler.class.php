@@ -257,7 +257,7 @@ class Controler
         $this->getGabarit()->render($template);
     }
 
-    public function setTwigEnvrionment(Environment $twig): void
+    public function setTwigEnvironment(Environment $twig): void
     {
         $this->twig = $twig;
     }

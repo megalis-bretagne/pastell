@@ -66,7 +66,7 @@ abstract class ChoiceActionExecutor extends ActionExecutor
         $pastellController = $this->objectInstancier->getInstance(PastellControler::class);
         $pastellController->setAllViewParameter($this->getViewParameter());
         $pastellController->setNavigationInfo($this->id_e, '/Entite/connecteur');
-        $pastellController->setTwigEnvrionment($this->objectInstancier->getInstance(Environment::class));
+        $pastellController->setTwigEnvironment($this->objectInstancier->getInstance(Environment::class));
         $pastellController->renderDefault();
     }
 

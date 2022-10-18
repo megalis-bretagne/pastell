@@ -22,7 +22,7 @@ final class ErrorController extends AbstractController
         $frontController->setGetParameter($_GET);
         $frontController->setPostParameter($_POST);
         $frontController->setServerInfo($_SERVER);
-        $frontController->setTwigEnvrionment($this->container->get('twig'));
+        $frontController->setTwigEnvironment($this->container->get('twig'));
 
         \ob_start();
         $frontController->dispatch();

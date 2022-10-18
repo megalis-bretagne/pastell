@@ -11,7 +11,7 @@ class FrontControllerTest extends PastellTestCase
         parent::setUp();
         $this->getObjectInstancier()->getInstance(Authentification::class)->connexion('admin', 1);
         $this->frontController = $this->getObjectInstancier()->getInstance(FrontController::class);
-        $this->frontController->setTwigEnvrionment($this->getObjectInstancier()->getInstance(Environment::class));
+        $this->frontController->setTwigEnvironment($this->getObjectInstancier()->getInstance(Environment::class));
     }
 
     public function testDispatch()

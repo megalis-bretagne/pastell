@@ -78,7 +78,7 @@ class FrontController
         $theController->setPostInfo($this->postParameter);
         //FIXME: web-mailsec entry is not in symfony context
         if ($controller !== 'MailSecDestinataire') {
-            $theController->setTwigEnvrionment($this->twig);
+            $theController->setTwigEnvironment($this->twig);
         }
         return $theController;
     }
@@ -126,7 +126,7 @@ class FrontController
         return $controller;
     }
 
-    public function setTwigEnvrionment(Environment $twig): void
+    public function setTwigEnvironment(Environment $twig): void
     {
         $this->twig = $twig;
     }
