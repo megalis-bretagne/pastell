@@ -123,22 +123,16 @@ class SystemControler extends PastellControler
 
     private function getDocumentTypeValidation(): DocumentTypeValidation
     {
-        /** @var ActionExecutorFactory $actionExecutorFactory */
-        $actionExecutorFactory = $this->getViewParameterOrObject('ActionExecutorFactory');
-        $all_action_class = $actionExecutorFactory->getAllActionClass();
-
         $list_pack = $this->getInstance(PackService::class)->getListPack();
         $all_connecteur_type = $this->getConnecteurDefinitionFiles()->getAllType();
         $all_type_entite = array_keys(EntiteSQL::getAllType());
 
-
-        $connecteur_type_action_class_list = $this->getViewParameterOrObject('ConnecteurTypeFactory')->getAllActionExecutor();
+        $connecteur_type_action_class_list = $this->getInstance(ConnecteurTypeFactory::class)->getAllActionExecutor();
 
         $documentTypeValidation = $this->getObjectInstancier()->getInstance(DocumentTypeValidation::class);
         $documentTypeValidation->setListPack($list_pack);
         $documentTypeValidation->setConnecteurTypeList($all_connecteur_type);
         $documentTypeValidation->setEntiteTypeList($all_type_entite);
-        $documentTypeValidation->setActionClassList($all_action_class);
         $documentTypeValidation->setConnecteurTypeActionClassList($connecteur_type_action_class_list);
         return $documentTypeValidation;
     }

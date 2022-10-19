@@ -448,23 +448,6 @@ class ActionExecutorFactory
         return $actionClass;
     }
 
-    public function getAllActionClass()
-    {
-        $action_class_file = PASTELL_PATH . "/" . self::ACTION_FOLDERNAME;
-        $result = [];
-        foreach (glob($action_class_file . "/*.class.php") as $action_class_path) {
-            preg_match("#/([^/]+).class.php$#", $action_class_path, $matches);
-            $result[] = $matches[1];
-        }
-        foreach ($this->extensions->getAllModule() as $module_id => $module_path) {
-            foreach (glob($module_path . "/" . self::ACTION_FOLDERNAME . "/*.class.php") as $action_class_path) {
-                preg_match("#/([^/]+).class.php$#", $action_class_path, $matches);
-                $result[] = $matches[1];
-            }
-        }
-        return $result;
-    }
-
     public function executeLotDocument($id_e, $id_u, array $all_id_d, $action_name, $id_destinataire = [], $from_api = false, $action_params = [], $id_worker = 0)
     {
         $actionClass = $this->getActionClass($all_id_d[0], $id_e, $id_u, $action_name, $id_destinataire, $from_api, $action_params, $id_worker);

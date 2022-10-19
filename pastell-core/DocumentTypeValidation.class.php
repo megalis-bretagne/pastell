@@ -11,9 +11,7 @@ class DocumentTypeValidation
     private $list_pack = [];
     private $connecteur_type_list = [];
     private $entite_type_list = [];
-    private $action_class_list = [];
     private $connecteur_type_action_class_list = [];
-
 
     public function __construct(YMLLoader $yml_loader)
     {
@@ -57,11 +55,6 @@ class DocumentTypeValidation
         $this->entite_type_list = $entite_type_list;
     }
 
-    public function setActionClassList(array $action_class_list)
-    {
-        $this->action_class_list = $action_class_list;
-    }
-
     public function setConnecteurTypeActionClassList(array $connecteur_type_action_class_list)
     {
         $this->connecteur_type_action_class_list = $connecteur_type_action_class_list;
@@ -95,7 +88,7 @@ class DocumentTypeValidation
         $result &= $this->validateRuleContent($typeDefinition);
         $result &= $this->validateActionSelection($typeDefinition, $this->entite_type_list);
         $result &= $this->validateRuleTypeIdE($typeDefinition, $this->entite_type_list);
-        $result &= $this->validateActionClass($typeDefinition, $this->action_class_list);
+        $result &= $this->validateActionClass($typeDefinition);
         $result &= $this->validateChampsAffiche($typeDefinition);
         $result &= $this->validateChampsRechercheAvancee($typeDefinition);
         $result &= $this->validateActionConnecteurType($typeDefinition);
@@ -138,19 +131,28 @@ class DocumentTypeValidation
         return $result;
     }
 
-
-
-
-    private function validateActionClass($typeDefinition, array $all_action_class)
+    private function validateActionClass(array $typeDefinition): bool
     {
-        $all_action = $this->getList($typeDefinition, 'action');
+        $actions = $this->getList($typeDefinition, 'action');
         $result = true;
-        foreach ($all_action as $action_name => $action) {
+        foreach ($actions as $action_name => $action) {
             if (empty($action['action-class'])) {
                 continue;
             }
-            if (! in_array($action['action-class'], $all_action_class)) {
-                $this->last_error[] = "action:$action_name:action-class:<b>{$action['action-class']}</b> n'est pas disponible sur le système";
+            if (!\class_exists($action['action-class'])) {
+                $this->last_error[] = \sprintf(
+                    "action:%s:action-class:<b>%s</b> n'est pas disponible sur le système",
+                    $action_name,
+                    $action['action-class']
+                );
+                $result = false;
+            } elseif (!\is_subclass_of($action['action-class'], ActionExecutor::class)) {
+                $this->last_error[] = \sprintf(
+                    "action:%s:action-class:<b>%s</b> n'étends pas %s",
+                    $action_name,
+                    $action['action-class'],
+                    ActionExecutor::class,
+                );
                 $result = false;
             }
         }
