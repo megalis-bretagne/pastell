@@ -4,7 +4,7 @@
 
 ## Corrections
 
-- Pour voir les utilisateurs d'une entité, besoin du droit "utilisateur:lecture" à la place du droit "entite:lecture"
+- Pour voir les utilisateurs d'une entité, le droit "utilisateur:lecture" est désormais nécessaire #1528
 
 ## Ajouts
 
