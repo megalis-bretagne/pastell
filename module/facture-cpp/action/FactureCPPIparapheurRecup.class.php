@@ -1,6 +1,6 @@
 <?php
 
-class FactureCPPIParapheurRecup extends SignatureRecuperation
+class FactureCPPIparapheurRecup extends SignatureRecuperation
 {
     public function go()
     {

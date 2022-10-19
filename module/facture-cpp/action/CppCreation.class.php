@@ -1,6 +1,6 @@
 <?php
 
-class CPPCreation extends ActionExecutor
+class CppCreation extends ActionExecutor
 {
     /**
      * @return array
