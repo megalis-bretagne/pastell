@@ -125,11 +125,10 @@ class ConnecteurControlerTest extends ControlerTestCase
     {
         $this->setPostInfo([
             'id_ce' => 11,
-            'password' => '12345678',
-            'password_check' => '12345678',
+            'password' => '12345678'
         ]);
 
-        $this->expectOutputRegex("/Content-type: application\/json;*/");
+        $this->expectOutputRegex('/Content-type: application\/json;*/');
         $this->connecteurControler->doExportAction();
     }
 
