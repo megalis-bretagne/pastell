@@ -42,7 +42,7 @@ class UtilisateurControler extends PastellControler
             $this->setViewParameter('id_e', $info['id_e']);
             $this->setViewParameter('id_e_menu', $info['id_e']);
             $this->setViewParameter('type_e_menu', "");
-            $this->hasDroitLecture($info['id_e']);
+            $this->hasUtilisateurDroitLecture($info['id_e']);
             $this->setNavigationInfo($info['id_e'], "Entite/utilisateur?");
         } elseif ($this->getGetInfo()->get('id_e')) {
             $this->setViewParameter('type_e_menu', "");
@@ -56,6 +56,7 @@ class UtilisateurControler extends PastellControler
         $this->setViewParameter('menu_gauche_template', "EntiteMenuGauche");
         $this->setViewParameter('menu_gauche_select', "Entite/utilisateur");
         $this->setDroitLectureOnConnecteur($this->getViewParameterOrObject('id_e'));
+        $this->setDroitLectureOnUtilisateur($this->getViewParameterByKey('id_e'));
     }
 
     /**

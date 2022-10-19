@@ -2,6 +2,10 @@
 
 **Cette version nécessite une modification de la base de données**
 
+## Corrections
+
+- Pour voir les utilisateurs d'une entité, le droit "utilisateur:lecture" est désormais nécessaire #1528
+
 ## Ajouts
 
 - Permettre d'utiliser des jetons d'authentification pour utiliser l'API #1572

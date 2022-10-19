@@ -4,15 +4,16 @@
  * @var Gabarit $this
  * @var $menu_gauche_select
  * @var $droit_lecture_on_connecteur
+ * @var $droitLectureOnUtilisateur
  * @var int $id_e
  * @var bool $permission_on_import_export;
  */
 
-$admninistration_menu = [
-    "Entite/detail" => "Informations (entités)",
-    "Entite/utilisateur" => "Utilisateurs",
-];
+$admninistration_menu["Entite/detail"] = "Informations (entités)";
 
+if ($droitLectureOnUtilisateur) {
+    $admninistration_menu["Entite/utilisateur"] = "Utilisateurs";
+}
 
 if ($droit_lecture_on_connecteur) {
     $admninistration_menu["Entite/connecteur"] = "Connecteurs" . ($id_e ? "" : " globaux");

@@ -58,6 +58,7 @@ class ConnecteurControler extends PastellControler
         $this->setViewParameter('menu_gauche_select', "Entite/connecteur");
         $this->setDroitLectureOnConnecteur($id_e);
         $this->setDroitImportExportConfig($id_e);
+        $this->setDroitLectureOnUtilisateur($id_e);
     }
 
     public function hasDroitEdition($id_e): void
@@ -628,6 +629,7 @@ class ConnecteurControler extends PastellControler
 
         $connecteur_info = $this->getConnecteurEntiteSQL()->getInfo($id_ce);
         $id_e = $connecteur_info['id_e'];
+        $this->setDroitLectureOnUtilisateur($id_e);
 
         $this->verifDroit($id_e, "entite:edition", "/Connecteur/editionModif?id_ce=$id_ce");
 

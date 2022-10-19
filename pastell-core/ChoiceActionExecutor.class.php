@@ -109,6 +109,9 @@ abstract class ChoiceActionExecutor extends ActionExecutor
         $this->viewParameter['droit_lecture_on_connecteur'] = $this->objectInstancier
             ->getInstance(DroitService::class)
             ->hasDroitConnecteurLecture($this->id_e, $this->id_u);
+        $this->viewParameter['droitLectureOnUtilisateur'] = $this->objectInstancier
+            ->getInstance(DroitService::class)
+            ->hasDroitUtilisateurLecture($this->id_e, $this->id_u);
     }
 
     public function isEnabled()

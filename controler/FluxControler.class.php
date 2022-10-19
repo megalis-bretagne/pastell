@@ -9,22 +9,18 @@ class FluxControler extends PastellControler
         parent::_beforeAction();
         $id_e = $this->getPostOrGetInfo()->getInt('id_e');
 
-        $this->hasDroitLecture($id_e);
+        $this->hasConnecteurDroitLecture($id_e);
         $this->setNavigationInfo($id_e, "Flux/index?");
         $this->setViewParameter('menu_gauche_template', "EntiteMenuGauche");
         $this->setViewParameter('menu_gauche_select', "Flux/index");
         $this->setDroitLectureOnConnecteur($id_e);
         $this->setDroitImportExportConfig($id_e);
+        $this->setDroitLectureOnUtilisateur($id_e);
     }
 
     public function hasDroitEdition($id_e): void
     {
         $this->hasConnecteurDroitEdition($id_e);
-    }
-
-    public function hasDroitLecture($id_e): void
-    {
-        $this->hasConnecteurDroitLecture($id_e);
     }
 
     /**
@@ -41,7 +37,7 @@ class FluxControler extends PastellControler
     public function indexAction()
     {
         $id_e = $this->getGetInfo()->getInt('id_e', 0);
-        $this->hasDroitLecture($id_e);
+        $this->hasConnecteurDroitLecture($id_e);
         $this->setViewParameter('id_e', $id_e);
 
         if ($id_e) {
@@ -111,7 +107,7 @@ class FluxControler extends PastellControler
         if ($id_e === 0) {
             $this->redirect("/Flux/index?id_e=0");
         }
-        $this->hasDroitLecture($id_e);
+        $this->hasConnecteurDroitLecture($id_e);
         $this->setViewParameter('id_e', $id_e);
 
         $flux = $this->getGetInfo()->get('flux', '');

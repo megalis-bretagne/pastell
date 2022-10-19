@@ -19,10 +19,17 @@ class DroitServiceTest extends PastellTestCase
         $this->assertTrue($droitService->hasDroitConnecteurLecture(1, 1));
     }
 
+    public function testHasDroitUtilisateur()
+    {
+        $droitService = $this->getObjectInstancier()->getInstance(DroitService::class);
+        $this->assertTrue($droitService->hasDroitUtilisateurLecture(1, 1));
+    }
+
     public function testHasDroitNoUser()
     {
         $droitService = $this->getObjectInstancier()->getInstance(DroitService::class);
         $this->assertTrue($droitService->hasDroitConnecteurEdition(1, 0));
+        $this->assertTrue($droitService->hasDroitUtilisateurLecture(1, 0));
     }
 
     public function testPackEnableDroit()
