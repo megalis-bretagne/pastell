@@ -220,7 +220,7 @@ class PastellBootstrap
     public function getDefaultFrequencies(): iterable
     {
         yield 'base' => [
-            'expression' => '1',
+            'expression' => '10',
         ];
         yield 'iparapheur' => [
             'expression' => '10',
@@ -235,11 +235,6 @@ class PastellBootstrap
             'famille_connecteur' => 'Purge',
             'id_connecteur' => 'purge',
             'id_verrou' => "PURGE",
-        ];
-        yield 'SAE' => [
-            'expression' => '10',
-            'type_connecteur' => ConnecteurFrequence::TYPE_ENTITE,
-            'famille_connecteur' => 'SAE',
         ];
         yield 'SAE actes-generique (validation)' => [
             'expression' => "60 X 24\n1440",
@@ -272,11 +267,6 @@ class PastellBootstrap
             'action_type' => ConnecteurFrequence::TYPE_ACTION_DOCUMENT,
             'type_document' => 'helios-generique',
             'action' => 'verif-sae',
-        ];
-        yield 'tdt entité' => [
-            'expression' => '10',
-            'type_connecteur' => ConnecteurFrequence::TYPE_ENTITE,
-            'famille_connecteur' => 'TdT',
         ];
         yield 'tdt global' => [
             'expression' => '1440',
