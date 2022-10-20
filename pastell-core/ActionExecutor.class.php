@@ -512,4 +512,9 @@ abstract class ActionExecutor
     {
         return is_null($this->id_d) && $this->id_ce;
     }
+
+    public function updateJobQueueAfterExecution(): bool
+    {
+        return true;
+    }
 }
