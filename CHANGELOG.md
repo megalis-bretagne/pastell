@@ -36,7 +36,7 @@
 - Passage du jeu de caractère par défaut de la base de données à utf8mb4 (possibilité de mettre des caractères UTF8 étendus)
 - Actes et Helios automatique: Lorsque le traitement est terminé, il est possible de modifier le document pour cocher la case envoi_sae et faire l'action "Verser au SAE" (c'était déjà possible via le connecteur de purge) #1627
 - Vérification de la force du mot de passe sur les requêtes API de type POST ou PATCH
-- La fréquence des connecteurs passe à 10 minutes par défaut # 1633
+- La fréquence des connecteurs passe à 10 minutes par défaut #1633
 
 ## Suppressions
 
