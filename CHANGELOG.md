@@ -117,6 +117,7 @@
 - Suppression des élements relatifs au centre de gestions sur la version standard. Il est possible de les remettre avec la feature flag CDGFeature.
 - Suppression de l'URL dans l'onglet de retour du SAE
 - Suppression du support MySQL. La seule base supportée est MariaDB.
+- Suppression de la création d'une entité par API via PATCH avec le paramètre 'create' et suppression du test 'testCreateWithEditAction()'
 
 # [3.1.17] - 2022-09-12
 

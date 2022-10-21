@@ -44,21 +44,6 @@ class EntiteAPIControllerTest extends PastellTestCase
         $this->assertEquals('Bourg-en-Bresse', $info['denomination']);
     }
 
-    public function testCreateWithEditAction()
-    {
-        $info = $this->getInternalAPI()->patch(
-            "/entite/1",
-            [
-                'denomination' => 'Métropolis',
-                'type' => 'collectivite',
-                'siren' => '677203002',
-                'create' => true
-            ]
-        );
-        $this->assertNotEmpty($info['id_e']);
-        $this->assertNotEquals(1, $info['id_e']);
-    }
-
     public function testCreateFilleCDG()
     {
         $info = $this->getInternalAPI()->patch(
