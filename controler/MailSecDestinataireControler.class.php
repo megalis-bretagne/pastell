@@ -116,11 +116,14 @@ class MailSecDestinataireControler extends PastellControler
         $this->setViewParameter('mailSecInfo', $mailSecInfo);
         $this->setViewParameter('manifest_info', $this->getManifestFactory()->getPastellManifest()->getInfo());
         $this->setViewParameter('recuperation_fichier_url', "recuperation-fichier.php?key={$mailSecInfo->key}");
-        $this->setViewParameter('reponse_recuperation_fichier_url', "recuperation-fichier.php?key={$mailSecInfo->key}&fichier_reponse=true");
+        $this->setViewParameter(
+            'reponse_recuperation_fichier_url',
+            "recuperation-fichier.php?key={$mailSecInfo->key}&fichier_reponse=true"
+        );
         $this->setViewParameter('id_e', $mailSecInfo->id_e);
-        $this->setViewParameter('my_role', "");
+        $this->setViewParameter('my_role', '');
 
-        $this->render("PageWebSec");
+        $this->renderLegacy('PageWebSec');
     }
 
     /**
@@ -345,7 +348,7 @@ class MailSecDestinataireControler extends PastellControler
         $this->setViewParameter('the_key', $key);
         $this->setViewParameter('template_milieu', "MailSecPassword");
         $this->setViewParameter('manifest_info', $this->getManifestFactory()->getPastellManifest()->getInfo());
-        $this->render("PageWebSec");
+        $this->renderLegacy('PageWebSec');
     }
 
     public function invalidAction()
@@ -354,7 +357,7 @@ class MailSecDestinataireControler extends PastellControler
         $this->setViewParameter('page_title', " Mail sécurisé");
         $this->setViewParameter('template_milieu', "MailSecInvalid");
         $this->setViewParameter('manifest_info', $this->getManifestFactory()->getPastellManifest()->getInfo());
-        $this->render("PageWebSec");
+        $this->renderLegacy('PageWebSec');
     }
 
     /**
@@ -378,7 +381,10 @@ class MailSecDestinataireControler extends PastellControler
         $field = $this->getPostOrGetInfo()->get('field');
         $num = $this->getPostOrGetInfo()->getInt('num');
 
-        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($mailSecInfo->id_d_reponse, $mailSecInfo->flux_reponse);
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get(
+            $mailSecInfo->id_d_reponse,
+            $mailSecInfo->flux_reponse
+        );
         $donneesFormulaire->removeFile($field, $num);
 
         $this->redirectWebMailsec("repondre.php?key={$mailSecInfo->key}");

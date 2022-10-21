@@ -188,7 +188,7 @@ class PastellControler extends Controler
 
 
 
-    public function render($template)
+    public function render(string $template): void
     {
         $this->setViewParameter('sqlQuery', $this->getSQLQuery());
         $this->setViewParameter('objectInstancier', $this->getObjectInstancier());
@@ -201,7 +201,7 @@ class PastellControler extends Controler
     /**
      * @throws NotFoundException
      */
-    public function renderDefault()
+    public function renderDefault(): void
     {
         $this->setBreadcrumbs();
         $this->setViewParameter('all_module', $this->getAllModule());
@@ -212,18 +212,24 @@ class PastellControler extends Controler
         $this->setViewParameter('manifest_info', $this->getManifestFactory()->getPastellManifest()->getInfo());
 
         $this->setViewParameter('timer', $this->getInstance(PastellTimer::class));
-        if (! $this->isViewParameter('menu_gauche_template')) {
+        if (!$this->isViewParameter('menu_gauche_template')) {
             $this->setViewParameter('menu_gauche_template', "DocumentMenuGauche");
             $this->setViewParameter('menu_gauche_select', "");
-            if ($this->getViewParameterOrObject('id_e_menu')) {
-                $this->setViewParameter('menu_gauche_link', "Document/list?id_e=" . $this->getViewParameterOrObject('id_e_menu'));
+            if ($this->getViewParameterByKey('id_e_menu')) {
+                $this->setViewParameter(
+                    'menu_gauche_link',
+                    "Document/list?id_e=" . $this->getViewParameterByKey('id_e_menu')
+                );
             } elseif (isset($this->getViewParameter()['id_e'])) {
-                    $this->setViewParameter('menu_gauche_link', "Document/list?id_e=" . $this->getViewParameterOrObject('id_e'));
+                $this->setViewParameter(
+                    'menu_gauche_link',
+                    "Document/list?id_e=" . $this->getViewParameterByKey('id_e')
+                );
             } else {
                 $this->setViewParameter('menu_gauche_link', "Document/list?id_e=0");
             }
         }
-        if (! $this->isViewParameter('navigation_url')) {
+        if (!$this->isViewParameter('navigation_url')) {
             $this->setViewParameter('navigation_url', "Document/index");
         }
 
@@ -231,11 +237,14 @@ class PastellControler extends Controler
         $daemonManager = $this->getInstance(DaemonManager::class);
 
         if (
-                $this->getRoleUtilisateur()->hasDroit($this->getId_u(), 'system:lecture', 0)
+            $this->getRoleUtilisateur()->hasDroit($this->getId_u(), 'system:lecture', 0)
         ) {
-            $this->setViewParameter('nb_job_lock', $this->getObjectInstancier()
-                ->getInstance(JobQueueSQL::class)
-                ->getNbLockSinceOneHour());
+            $this->setViewParameter(
+                'nb_job_lock',
+                $this->getObjectInstancier()
+                    ->getInstance(JobQueueSQL::class)
+                    ->getNbLockSinceOneHour()
+            );
 
             if ($daemonManager->status() == DaemonManager::IS_STOPPED) {
                 $this->setViewParameter('daemon_stopped_warning', true);

@@ -33,11 +33,11 @@ class ControlerTest extends PHPUnit\Framework\TestCase
         $this->controler->redirect("foo");
     }
 
-    public function testRender()
+    public function testRender(): void
     {
-        $this->objectInstancier->setInstance('template_path', __DIR__ . "/fixtures/");
+        $this->objectInstancier->setInstance('template_path', __DIR__ . '/fixtures/');
         $this->expectOutputString("OK\n");
-        $this->controler->render("template");
+        $this->controler->renderLegacy('template');
     }
 
     public function testRenderDefault()

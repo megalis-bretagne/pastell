@@ -23,7 +23,7 @@ class LoginCest
         $I->wantTo('me déconnecter du site');
         $I->amAnonymous();
         $I->amOnPage('/');
-        $I->click('Se déconnecter');
+        $I->click(['xpath' => '//a[@href="/Connexion/logout"]']);
         $I->dontSee('Liste des dossiers');
         $I->see('Veuillez saisir vos identifiants de connexion');
     }

@@ -1,0 +1,400 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <div class="box">
+        <h2 id="desc-version-info-table">Information de version</h2>
+        <table class='table table-striped' aria-labelledby="desc-version-info-table">
+            <tr>
+                <th class="w140" scope="row">Version</th>
+                <td>{{ manifest_info.version }}</td>
+            </tr>
+            <tr>
+                <th class="w140" scope="row">Révision</th>
+                <td>{{ manifest_info.revision }}</td>
+            </tr>
+            <tr>
+                <th class="w140" scope="row">Date du commit</th>
+                <td>{{ manifest_info.last_changed_date }}</td>
+            </tr>
+            <tr>
+                <th class="w140" scope="row">Versions compatibles pour les modules</th>
+                <td>
+                    <ul>
+                        {% for versionModule in manifest_info.extensions_versions_accepted %}
+                            <li>{{ versionModule }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="box">
+        <h2 id="desc-pack-list-table">Liste des Packs</h2>
+        <table class='table table-striped' aria-labelledby="desc-pack-list-table">
+            {% for pack,enabled in listPack %}
+                <tr>
+                    <th class="w140" scope="row">{{ pack }}</th>
+                    <td>
+                        {% if enabled %}
+                            <p class="alert alert-success">
+                                <strong>Activé</strong>
+                            </p>
+                        {% else %}
+                            <p class="alert alert-warning">
+                                <strong>Inactif</strong>
+                            </p>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="box">
+        <h2 id="desc-workspace-table">Workspace</h2>
+        <table class='table table-striped' aria-labelledby="desc-workspace-table">
+            {% for workspace in checkWorkspace %}
+                <tr>
+                    <th class='w400' scope="row">{{ workspace.label }}</th>
+                    <td>
+                        {% if workspace.isInfo() %}
+                            {{ workspace.result }}
+                        {% elseif workspace.isSuccess() %}
+                            <strong style='color:green'>{{ workspace.result }}</strong>
+                        {% else %}
+                            <strong style='color:red'>{{ workspace.result }}</strong>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="box">
+        <h2 id="desc-journal-table">Journal</h2>
+        <table class='table table-striped' aria-labelledby="desc-journal-table">
+            {% for journal in checkJournal %}
+                <tr>
+                    <th class='w400' scope="row">{{ journal.label }}</th>
+                    <td>
+                        {% if journal.isInfo() %}
+                            {{ journal.result }}
+                        {% elseif journal.isSuccess() %}
+                            <strong style='color:green'>{{ journal.result }}</strong>
+                        {% else %}
+                            <strong style='color:red'>{{ journal.result }}</strong>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="box">
+        <h2 id="desc-redis-table">Redis</h2>
+        <table class='table table-striped' aria-labelledby="desc-redis-table">
+            {% for redis in checkRedis %}
+                <tr>
+                    <th class='w400' scope="row">{{ redis.label }}</th>
+                    <td>
+                        {% if redis.isInfo() %}
+                            {{ redis.result }}
+                        {% elseif redis.isSuccess() %}
+                            <strong style='color:green'>{{ redis.result }}</strong>
+                        {% else %}
+                            <strong style='color:red'>{{ redis.result }}</strong>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <form action='{{ path('app.legacy.system_emptyCache') }}' method='post'>
+            {{ gabarit.displayCSRFInput() }}
+            <button type="submit" class="btn btn-warning">
+                <em class="fa fa-trash"></em>&nbsp;Vider le cache
+            </button>
+        </form>
+    </div>
+
+    <div class="box">
+        <h2 id="desc-php-conf-table">Configuration PHP</h2>
+        <table class='table table-striped' aria-labelledby="desc-php-conf-table">
+            <tr>
+                <th class="w300" scope="col">clé</th>
+                <th class="w300" scope="col">Valeurs minimums attendues</th>
+                <th scope="col">Valeurs présentes</th>
+            </tr>
+            {% for phpConf in checkPhpConfiguration %}
+                <tr>
+                    <td>{{ phpConf.label }}</td>
+                    <td>{{ phpConf.expectedValue }}</td>
+                    <td>
+                        <strong style='color:{{ phpConf.isSuccess() ? 'green' : 'red' }}'>
+                            {{ phpConf.result }}
+                        </strong>
+                    </td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <th scope="col">phpinfo()</th>
+                <td><a href="{{ path('app.legacy.system_phpinfo') }}">Voir le phpinfo()</a></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="box">
+        <h2>Extensions PHP</h2>
+        {% for extension in checkPhpExtensions %}
+            {% if extension.isSuccess() %}
+                <p class="badge badge-success">{{ extension.result }}</p>
+            {% else %}
+                <p class="badge badge-danger">{{ extension.result }}</p>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="box">
+        <h2 id="desc-expected-elements-table">Éléments attendus</h2>
+
+        <table class='table table-striped' aria-labelledby="desc-version-info-table">
+            <tr>
+                <th class="w300" scope="col">Élément</th>
+                <th class="w300" scope="col">Attendu</th>
+                <th scope="col">Trouvé</th>
+            </tr>
+            {% for expectedElement in checkExpectedElements %}
+                <tr>
+                    <th scope="row">{{ expectedElement.label }}</th>
+                    <td>{{ expectedElement.expectedValue }}</td>
+                    <td>
+                        <strong style='color:{{ expectedElement.isSuccess() ? 'green' : 'red' }}'>
+                            {{ expectedElement.result }}
+                        </strong>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="box">
+        <h2 id="desc-existing-commands-table">Commande présente</h2>
+
+        <table class='table table-striped' aria-labelledby="desc-existing-commands-table">
+            <tr>
+                <th class="w140" scope="col">Commande</th>
+                <th scope="col">Résultat</th>
+            </tr>
+            {% for command in checkCommands %}
+                <tr>
+                    <th scope="row">{{ command.label }}</th>
+                    <td>
+                        {% if command.isSuccess() %}
+                            {{ command.result }}
+                        {% else %}
+                            <strong style='color:red'> {{ command.result }}</strong>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+
+    <div class="box">
+        <h2 id="desc-constants-table">Constante</h2>
+        <table class='table table-striped' aria-labelledby="desc-constants-table">
+            <tr>
+                <th class="w140" scope="col">Élément</th>
+                <th scope="col">Valeur</th>
+            </tr>
+            {% for constant in checkConstants %}
+                <tr>
+                    <th scope="row">{{ constant.label }}</th>
+                    <td>{{ constant.result }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    {% if display_feature_toggle_in_test_page %}
+        <div class="box">
+            <h2 id="desc-constants-table">Fonctionnalités activables</h2>
+            <table class='table table-striped' aria-labelledby="desc-constants-table">
+                <tr>
+                    <th class="w140" scope="col">Nom de la fonctionnalité</th>
+                    <th class="w300" scope="col">Description de la fonctionnalité</th>
+                    <th scope="col">Activé</th>
+                    <th scope="col">Activé (valeur par défaut)</th>
+                </tr>
+                {% for featureName, featureProperties in feature_toggle %}
+                    <tr>
+                        <th scope="row">{{ featureName }}</th>
+                        <td>{{ featureProperties.description }}</td>
+                        <td>
+                            {% if featureProperties.is_enabled %}
+                                <p class="badge badge-success">Activé</p>
+                            {% else %}
+                                <p class="badge badge-info">Désactivé</p>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if featureProperties.is_enabled_by_default %}
+
+                                <p class="badge badge-success">Activé</p>
+                            {% else %}
+                                <p class="badge badge-info">Désactivé</p>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% endif %}
+
+    <div class="box">
+        <h2 id="desc-auto-test-table">Auto test</h2>
+        <table class='table table-striped' aria-labelledby="desc-auto-test-table">
+            <tr>
+                <th scope="row">{{ checkDatabaseSchema.label }}</th>
+                <td>
+                    {% if checkDatabaseSchema.isSuccess() %}
+                        <strong style='color:green'>
+                            {{ checkDatabaseSchema.result }}
+                        </strong>
+                    {% else %}
+                        <strong style='color:red'>
+                            {{ checkDatabaseSchema.result }}
+                        </strong>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">{{ checkDatabaseEncoding.label }}</th>
+                <td>
+                    {% if checkDatabaseEncoding.isSuccess() %}
+                        <strong style='color:green'>
+                            {{ checkDatabaseEncoding.result }}
+                        </strong>
+                    {% else %}
+                        <strong style='color:red'>
+                            {{ checkDatabaseEncoding.result }}
+                        </strong>
+                        <table aria-label="Liste des tables avec leur encodage">
+                            {% for detail in checkDatabaseEncoding.getDetails() %}
+                                <tr>
+                                    <th scope="row">{{ detail.label }}</th>
+                                    <td>
+                                        {{ detail.result }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">{{ checkCrashedTables.label }}</th>
+                <td>
+                    {% if checkCrashedTables.isSuccess() %}
+                        <strong style='color:green'>
+                            {{ checkCrashedTables.result }}
+                        </strong>
+                    {% else %}
+                        <table aria-label="Liste des tables avec leurs erreurs">
+                            <tr>
+                                <th scope="col">Nom de la table</th>
+                                <th scope="col">Erreur(s) détectée(s)</th>
+                            </tr>
+                            {% for detail in checkCrashedTables.getDetails() %}
+                                <tr>
+                                    <td>{{ detail.label }}</td>
+                                    <td><strong style="color:red">{{ detail.result }}</strong></td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">{{ checkMissingConnectors.label }}</th>
+                <td>
+                    {% if checkMissingConnectors.isSuccess() %}
+                        <strong style='color:green'>{{ checkMissingConnectors.result }}</strong>
+                    {% else %}
+                        <strong style='color:red'>{{ checkMissingConnectors.result }}</strong>
+                        <br/>
+                        <a
+                                href="{{ path('app.legacy.system_missingConnecteur') }}"
+                                class="btn btn-primary"
+                        >
+                            <i class="fa fa-eye"></i>&nbsp;Voir
+                        </a>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">{{ checkMissingModules.label }}</th>
+                <td>
+                    {% if checkMissingModules.isSuccess() %}
+                        <strong style='color:green'>{{ checkMissingModules.result }}</strong>
+                    {% else %}
+                        <strong style='color:red'>{{ checkMissingModules.result }}</strong>
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class='box'>
+        <h2 id="desc-send-mail-table">Envoi de mail</h2>
+        <div class='alert alert-info'>Permet d'envoyer un <strong>email de test</strong></div>
+        <form action='{{ path('app.legacy.system_mailTest') }}' method='post'>
+            {{ gabarit.displayCSRFInput() }}
+            <table class='table table-striped' aria-labelledby="desc-send-mail-table">
+                <tr>
+                    <th class="w200" scope="row">ADMIN_EMAIL</th>
+                    <td>{{ constant('ADMIN_EMAIL') }}</td>
+                </tr>
+                <tr>
+                    <th class="w200" scope="row">PLATEFORME_MAIL</th>
+                    <td>{{ constant('PLATEFORME_MAIL') }}</td>
+                </tr>
+                <tr>
+                    <th class="w200" scope="row">
+                        <label for='email'>Email</label>
+                    </th>
+                    <td>
+                        <input
+                                class="form-control col-md-4"
+                                style='width:200px'
+                                type='text'
+                                name='email'
+                                id="email"
+                                value=''
+                        />
+                    </td>
+                </tr>
+            </table>
+            <button type="submit" class="btn btn-primary">
+                <i class="fa fa-paper-plane"></i>&nbsp;Envoyer
+            </button>
+        </form>
+    </div>
+
+    <div class='box'>
+        <h2>Gestion des erreurs</h2>
+        <a
+                href="{{ path('app.legacy.system_sendWarning') }}"
+                class="btn btn-warning"
+        >
+            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;Provoquer un warning
+        </a>
+        <a
+                href="{{ path('app.legacy.system_sendFatalError') }}"
+                class="btn btn-danger"
+        >
+            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;Provoquer une erreur fatale
+        </a>
+    </div>
+{% endblock %}

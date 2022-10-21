@@ -1,0 +1,7 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    {{ gabarit.SuivantPrecedent(offset,limit,count, path('app.legacy.daemon_job', {'filtre': filtre})) }}
+    {% include 'daemon/job_list.html.twig' %}
+    {{ gabarit.SuivantPrecedent(offset,limit,count, path('app.legacy.daemon_job', {'filtre': filtre})) }}
+{% endblock %}

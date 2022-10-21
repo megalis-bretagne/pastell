@@ -42,12 +42,17 @@ class DaemonControler extends PastellControler
         return $this->getObjectInstancier()->getInstance(ConnecteurFrequenceSQL::class);
     }
 
-    public function indexAction()
+    /**
+     * @throws LastErrorException
+     * @throws LastMessageException
+     * @throws NotFoundException
+     */
+    public function indexAction(): void
     {
         $this->indexData();
-        $this->setViewParameter('page_url', "index");
-        $this->setViewParameter('template_milieu', "DaemonIndex");
-        $this->setViewParameter('page_title', "Gestionnaire de tâches");
+        $this->setViewParameter('page_url', 'index');
+        $this->setViewParameter('twigTemplate', 'daemon/index.html.twig');
+        $this->setViewParameter('page_title', 'Gestionnaire de tâches');
         $this->renderDefault();
     }
 
@@ -63,22 +68,33 @@ class DaemonControler extends PastellControler
         $this->renderDefault();
     }
 
-    public function indexContentAction()
+    /**
+     * @throws LastErrorException
+     * @throws LastMessageException
+     * @throws NotFoundException
+     */
+    public function indexContentAction(): void
     {
         $this->indexData();
-        header("Content-type: text/html; charset=utf-8;");
-        $this->render("DaemonIndexContent");
+        $this->setViewParameter('twigTemplate', 'daemon/index_content.html.twig');
+        header('Content-type: text/html; charset=utf-8;');
+        $this->renderDefault();
     }
 
-    private function indexData()
+    /**
+     * @throws LastMessageException
+     * @throws LastErrorException
+     */
+    private function indexData(): void
     {
-        $this->verifDroit(0, "system:lecture");
+        $this->verifDroit(0, 'system:lecture');
         $this->setViewParameter('nb_worker_actif', $this->getWorkerSQL()->getNbActif());
         $this->setViewParameter('job_stat_info', $this->getJobQueueSQL()->getStatInfo());
         $this->setViewParameter('daemon_pid', $this->getDaemonManager()->getDaemonPID());
-        $this->setViewParameter('sub_title', "Liste de tous les travaux");
-        $this->setViewParameter('return_url', urlencode("Daemon/index"));
+        $this->setViewParameter('sub_title', 'Liste de tous les travaux');
+        $this->setViewParameter('return_url', urlencode('Daemon/index'));
         $this->setViewParameter('job_list', $this->getWorkerSQL()->getJobListWithWorker());
+        $this->setViewParameter('daemonManager', $this->getObjectInstancier()->getInstance(DaemonManager::class));
     }
 
     public function daemonStartAction()
@@ -183,38 +199,54 @@ class DaemonControler extends PastellControler
         $this->redirect("$return_url");
     }
 
-    public function jobAction()
+    /**
+     * @throws LastErrorException
+     * @throws LastMessageException
+     * @throws NotFoundException
+     * @throws UnrecoverableException
+     */
+    public function jobAction(): void
     {
-        $this->setViewParameter('menu_gauche_select', "Daemon/job");
+        $recuperateur = $this->getGetInfo();
+        $this->setViewParameter('menu_gauche_select', 'Daemon/job');
 
-        $this->verifDroit(0, "system:edition");
-        $this->setViewParameter('template_milieu', "DaemonJob");
-        $this->setViewParameter('page_title', "Gestionnaire de tâches");
-        $recuperateur = new Recuperateur($_GET);
+        $this->verifDroit(0, 'system:edition');
+        $this->setViewParameter('twigTemplate', 'daemon/job.html.twig');
+        $this->setViewParameter('page_title', 'Gestionnaire de tâches');
         $filtre = $recuperateur->get('filtre', '');
         if ($filtre) {
             $this->setViewParameter('page_url', "job?filtre=$filtre");
             $this->setViewParameter('menu_gauche_select', "Daemon/job?filtre=$filtre");
         } else {
-            $this->setViewParameter('page_url', "job");
+            $this->setViewParameter('page_url', 'job');
         }
 
         $sub_title_array = [
-                'actif' => 'Liste des travaux actifs',
-                'lock' => 'Liste des travaux suspendus',
-                'wait' => 'Liste des travaux en retard'
-            ];
+            'actif' => 'Liste des travaux actifs',
+            'lock' => 'Liste des travaux suspendus',
+            'wait' => 'Liste des travaux en retard',
+        ];
 
-        $this->setViewParameter('sub_title', $sub_title_array[$filtre] ?? "Liste de tous les travaux");
+        $this->setViewParameter('sub_title', $sub_title_array[$filtre] ?? 'Liste de tous les travaux');
 
         $this->setViewParameter('offset', $recuperateur->getInt('offset', 0));
         $this->setViewParameter('limit', self::NB_JOB_DISPLAYING);
         $this->setViewParameter('filtre', $filtre);
 
-        $this->setViewParameter('return_url', urlencode("Daemon/job?filtre=$filtre&offset=" . $this->getViewParameterOrObject('offset')));
+        $this->setViewParameter(
+            'return_url',
+            urlencode("Daemon/job?filtre=$filtre&offset=" . $this->getViewParameterByKey('offset'))
+        );
 
         $this->setViewParameter('count', $this->getWorkerSQL()->getNbJob($filtre));
-        $this->setViewParameter('job_list', $this->getWorkerSQL()->getJobListWithWorker($this->getViewParameterOrObject('offset'), $this->getViewParameterOrObject('limit'), $filtre));
+        $this->setViewParameter(
+            'job_list',
+            $this->getWorkerSQL()->getJobListWithWorker(
+                $this->getViewParameterByKey('offset'),
+                $this->getViewParameterByKey('limit'),
+                $filtre
+            )
+        );
 
         $this->renderDefault();
     }

@@ -175,25 +175,21 @@ class DocumentControlerTest extends ControlerTestCase
         $this->assertDoesNotMatchRegularExpression("#test_edit_only#", $result);
     }
 
-    /**
-     * @throws LastErrorException
-     * @throws LastMessageException
-     * @throws NotFoundException
-     */
-    public function testIndexActionAsNotSuperadmin()
+    public function testIndexActionAsNotSuperadmin(): void
     {
         $authentification = $this->getObjectInstancier()->getInstance(Authentification::class);
-        $authentification->connexion('eric', 2);
 
-        /** @var DocumentControler $documentController */
-        $documentController = $this->getObjectInstancier()->getInstance(DocumentControler::class);
+        $documentController = $this->getControlerInstance(DocumentControler::class);
+        $authentification->connexion('eric', 2);
 
         ob_start();
         $documentController->indexAction();
-        $result = ob_get_contents();
-        ob_end_clean();
+        $result = ob_get_clean();
 
-        $this->assertDoesNotMatchRegularExpression('/Veuillez sélectionner une entité afin de pouvoir visualiser ses dossiers/', $result);
+        $this->assertDoesNotMatchRegularExpression(
+            '/Veuillez sélectionner une entité afin de pouvoir visualiser ses dossiers/',
+            $result
+        );
     }
 
     public function testIndexWithoutRight()
@@ -226,24 +222,22 @@ class DocumentControlerTest extends ControlerTestCase
         );
     }
 
-    public function testIndexWithTwoRoleOnTwoEntities()
+    public function testIndexWithTwoRoleOnTwoEntities(): void
     {
         $utilisateurSQL = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class);
-        $id_u = $utilisateurSQL->create("badguy", "foo", "foo", "test@bar.baz");
+        $id_u = $utilisateurSQL->create('badguy', 'foo', 'foo', 'test@bar.baz');
 
+        $documentController = $this->getControlerInstance(DocumentControler::class);
         $roleUtilisateur = $this->getObjectInstancier()->getInstance(RoleUtilisateur::class);
-        $roleUtilisateur->addRole($id_u, "admin", 2);
-        $roleUtilisateur->addRole($id_u, "admin", 1);
+        $roleUtilisateur->addRole($id_u, 'admin', 2);
+        $roleUtilisateur->addRole($id_u, 'admin', 1);
         $this->getObjectInstancier()->getInstance(Authentification::class)->connexion('admin', $id_u);
-
-        $documentController = $this->getObjectInstancier()->getInstance(DocumentControler::class);
 
         ob_start();
         $documentController->indexAction();
-        $result = ob_get_contents();
-        ob_end_clean();
-        $this->assertStringContainsString("Bourg-en-Bresse", $result);
-        $this->assertStringContainsString("CCAS", $result);
+        $result = ob_get_clean();
+        $this->assertStringContainsString('Bourg-en-Bresse', $result);
+        $this->assertStringContainsString('CCAS', $result);
     }
 
     public function testIndexWithTwoDifferentRoleOnTwoEntities()
@@ -259,7 +253,7 @@ class DocumentControlerTest extends ControlerTestCase
         $roleUtilisateur->addRole($id_u, "utilisateur", 1);
         $this->getObjectInstancier()->getInstance(Authentification::class)->connexion('admin', $id_u);
 
-        $documentController = $this->getObjectInstancier()->getInstance(DocumentControler::class);
+        $documentController = $this->getControlerInstance(DocumentControler::class);
         $documentController->setGetInfo(new Recuperateur(['id_e' => 1]));
 
         ob_start();

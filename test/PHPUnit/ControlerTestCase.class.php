@@ -1,5 +1,7 @@
 <?php
 
+use Twig\Environment;
+
 class ControlerTestCase extends PastellTestCase
 {
     /**
@@ -33,6 +35,7 @@ class ControlerTestCase extends PastellTestCase
         $this->controler->setDontRedirect(true);
         $this->controler->setGetInfo(new Recuperateur($this->get_info));
         $this->controler->setPostInfo(new Recuperateur($this->post_info));
+        $this->controler->setTwigEnvironment($this->getObjectInstancier()->getInstance(Environment::class));
         return $this->controler;
     }
 

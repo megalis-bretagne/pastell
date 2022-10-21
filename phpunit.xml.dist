@@ -4,6 +4,11 @@ PHPUnit essaye de sauver les variables global, dont PDO qui ne peut être séria
 cf : http://blogs.kent.ac.uk/webdev/2011/07/14/phpunit-and-unserialized-pdo-instances/
 -->
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" backupGlobals="false" bootstrap="test/PHPUnit/init.php" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+
+  <php>
+    <server name="KERNEL_CLASS" value="Pastell\Kernel" />
+  </php>
+
   <coverage>
     <include>
       <directory suffix=".php">action</directory>

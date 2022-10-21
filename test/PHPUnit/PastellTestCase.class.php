@@ -5,10 +5,12 @@ use Monolog\Logger;
 use org\bovigo\vfs\vfsStream;
 use Pastell\Service\Connecteur\ConnecteurAssociationService;
 use Pastell\Service\Pack\PackService;
+use Pastell\Tests\SymfonyContainerFactory;
 use PHPUnit\Framework\TestCase;
 use Pastell\Service\TypeDossier\TypeDossierImportService;
 use Symfony\Component\Lock\LockFactory;
 use Symfony\Component\Lock\Store\InMemoryStore;
+use Twig\Environment;
 
 define("FIXTURES_PATH", __DIR__ . "/fixtures/");
 define("FIXTURES_TYPE_DOSSIER_PATH", __DIR__ . "/pastell-core/type-dossier/fixtures/");
@@ -97,6 +99,12 @@ abstract class PastellTestCase extends TestCase
         $this->objectInstancier->setInstance('pastell_admin_email', 'test@libriciel.net');
         $this->objectInstancier->setInstance('password_min_entropy', 80);
 
+        $symfonyContainer = SymfonyContainerFactory::getSymfonyContainer();
+        $environment = $symfonyContainer->get('twig');
+        $this->objectInstancier->setInstance(
+            Environment::class,
+            $environment
+        );
         $this->setListPack(["pack_chorus_pro" => true, "pack_marche" => true, "pack_test" => true]);
     }
 

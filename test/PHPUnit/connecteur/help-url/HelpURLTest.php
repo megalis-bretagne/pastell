@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-class HelpURLTest extends PastellTestCase
+class HelpURLTest extends ControlerTestCase
 {
     /**
      * @throws NotFoundException
@@ -13,7 +13,7 @@ class HelpURLTest extends PastellTestCase
         $this->configureConnector($id_ce, ['help_url' => 'https://foo.bar/baz'], 0);
         $this->associateGlobalConnector($id_ce);
         $this->getObjectInstancier()->getInstance(Authentification::class)->connexion('admin', 1);
-        $aideController = $this->getObjectInstancier()->getInstance(AideControler::class);
+        $aideController = $this->getControlerInstance(AideControler::class);
         $this->expectOutputRegex('#https://foo.bar/baz#');
         $aideController->RGPDAction();
     }
@@ -25,7 +25,7 @@ class HelpURLTest extends PastellTestCase
     public function testWithoutHelpURL(): void
     {
         $this->getObjectInstancier()->getInstance(Authentification::class)->connexion('admin', 1);
-        $aideController = $this->getObjectInstancier()->getInstance(AideControler::class);
+        $aideController = $this->getControlerInstance(AideControler::class);
         ob_start();
         $aideController->RGPDAction();
         $result = ob_get_clean();
