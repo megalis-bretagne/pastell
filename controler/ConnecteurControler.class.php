@@ -474,12 +474,8 @@ class ConnecteurControler extends PastellControler
 
         $generator = new UriSafeTokenGenerator();
         $password = $generator->generateToken();
-        $message = <<<EOT
-        Votre mot de passe pour ce fichier est <strong>$password</strong><br />
-        Assurez-vous de le sauvegarder, il ne sera plus affiché.
-        EOT;
+        $this->getObjectInstancier()->getInstance(MemoryCache::class)->store($id_ce . '_' . $this->getId_u(), $password, 60);
 
-        $this->setLastMessage($message);
         $this->setViewParameter('id_ce', $id_ce);
         $this->setViewParameter('password', $password);
         $this->setViewParameter('page_title', 'Connecteur - Export');
@@ -501,7 +497,7 @@ class ConnecteurControler extends PastellControler
     {
         $id_ce = $this->getPostInfo()->getInt('id_ce');
         $this->verifDroitOnConnecteur($id_ce);
-        $password = $this->getPostInfo()->get('password');
+        $password = $this->getObjectInstancier()->getInstance(MemoryCache::class)->fetch($id_ce . '_' . $this->getId_u());
         try {
             $connecteurConfig = $this->getConnecteurFactory()->getConnecteurConfig($id_ce);
         } catch (Exception $e) {

@@ -7,6 +7,8 @@
  */
 ?>
 <div class="alert alert-info">
+    Votre mot de passe pour ce fichier est <strong><?php hecho($password);?></strong><br>
+    Assurez-vous de le sauvegarder, il ne sera plus affiché.<br>
     Le mot de passe généré permet de protéger le contenu du connecteur.
     Il sera nécessaire pour importer à nouveau le connecteur sur un Pastell en version 3.1 ou ultérieur.
 </div>
@@ -15,7 +17,6 @@
     <form action='Connecteur/doExport' method='post'>
         <?php $this->displayCSRFInput() ?>
         <input type='hidden' name='id_ce' value='<?php hecho($id_ce)?>'>
-        <input type='hidden' name='password' value='<?php hecho($password)?>'>
 
         <a class='btn btn-outline-primary' href='Connecteur/edition?id_ce=<?php hecho($id_ce); ?>'>
             <i class="fa fa-times-circle"></i>&nbsp;Annuler
