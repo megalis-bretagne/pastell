@@ -474,7 +474,11 @@ class ConnecteurControler extends PastellControler
 
         $generator = new UriSafeTokenGenerator();
         $password = $generator->generateToken();
-        $this->getObjectInstancier()->getInstance(MemoryCache::class)->store($id_ce . '_' . $this->getId_u(), $password, 60);
+        $this->getObjectInstancier()->getInstance(MemoryCache::class)->store(
+            "export_connector_password_$id_ce",
+            $password,
+            1
+        );
 
         $this->setViewParameter('id_ce', $id_ce);
         $this->setViewParameter('password', $password);
@@ -497,7 +501,14 @@ class ConnecteurControler extends PastellControler
     {
         $id_ce = $this->getPostInfo()->getInt('id_ce');
         $this->verifDroitOnConnecteur($id_ce);
-        $password = $this->getObjectInstancier()->getInstance(MemoryCache::class)->fetch($id_ce . '_' . $this->getId_u());
+        $password = $this->getObjectInstancier()
+            ->getInstance(MemoryCache::class)
+            ->fetch("export_connector_password_$id_ce");
+        if (empty($password)) {
+            $this->setLastError('Export impossible : Expiration du mot de passe généré');
+            $this->redirect("/Connecteur/edition?id_ce=$id_ce");
+        }
+
         try {
             $connecteurConfig = $this->getConnecteurFactory()->getConnecteurConfig($id_ce);
         } catch (Exception $e) {

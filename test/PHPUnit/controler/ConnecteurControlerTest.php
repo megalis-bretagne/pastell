@@ -130,7 +130,11 @@ class ConnecteurControlerTest extends ControlerTestCase
         ]);
         $generator = new UriSafeTokenGenerator();
         $password = $generator->generateToken();
-        $this->getObjectInstancier()->getInstance(MemoryCache::class)->store($id_ce . '_' . $this->connecteurControler->getId_u(), $password, 60);
+        $this->getObjectInstancier()->getInstance(MemoryCache::class)->store(
+            "export_connector_password_$id_ce",
+            $password,
+            60
+        );
 
         $this->expectOutputRegex('/Content-type: application\/json;*/');
         $this->connecteurControler->doExportAction();
