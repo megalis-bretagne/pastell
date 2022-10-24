@@ -275,8 +275,8 @@ class EntiteSQL extends SQL
 
 
     /**
-     * @param array $data Données en vrac dans un tableau contenant ou un id_e ou une dénomination
-     * @return mixed Toutes les informations de l'entité trouvée
+     * @param array $data Données en vrac dans un tableau contenant ou un id_e ou une dénomination ou un is_active
+     * @return mixed Toutes les informations de la ou les entités trouvées
      * @throws Exception
      */
     public function getEntiteFromData(array $data)
@@ -304,8 +304,11 @@ class EntiteSQL extends SQL
                 throw new Exception("Plusieurs entités portent le même nom, préférez utiliser son identifiant");
             }
 
-
             return $this->getInfoByDenomination($denomination);
+        }
+
+        if (isset($data['is_active'])) {
+            return $this->getByIsActive($data['is_active']);
         }
 
         throw new Exception("Aucun paramètre permettant la recherche de l'entité n'a été renseigné");
@@ -326,5 +329,11 @@ class EntiteSQL extends SQL
             return $type;
         }
         return $type_nom[$type];
+    }
+
+    private function getByIsActive(bool $is_active): array
+    {
+        $sql = "SELECT * FROM entite WHERE is_active = ?";
+        return $this->query($sql, $is_active);
     }
 }

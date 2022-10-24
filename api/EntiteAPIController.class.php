@@ -27,10 +27,18 @@ class EntiteAPIController extends BaseAPIController
         $this->entiteDeletionService = $entiteDeletionService;
     }
 
+    /**
+     * @throws NotFoundException
+     * @throws Exception
+     */
     public function get()
     {
         if ($this->getFromQueryArgs(0)) {
             return $this->getInfo($this->getFromQueryArgs(0));
+        }
+        $data['is_active'] = $this->getFromRequest('is_active', null);
+        if ($data['is_active'] !== null) {
+            return $this->entiteSQL->getEntiteFromData($data);
         }
         return $this->getRoleUtilisateur()->getAllEntiteWithFille($this->getUtilisateurId(), 'entite:lecture');
     }
@@ -63,6 +71,7 @@ class EntiteAPIController extends BaseAPIController
         $result['entite_mere'] = $infoEntite['entite_mere'];
         $result['entite_fille'] = $resultFille;
         $result['centre_de_gestion'] = $infoEntite['centre_de_gestion'];
+        $result['is_active'] = (bool)$infoEntite['is_active'];
 
         return $result;
     }

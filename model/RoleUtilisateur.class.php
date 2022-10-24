@@ -229,7 +229,7 @@ class RoleUtilisateur extends SQL
 
     public function getAllEntiteWithFille($id_u, $droit)
     {
-        $sql = "SELECT DISTINCT entite.id_e,entite.denomination,entite.siren,entite.type,entite.centre_de_gestion,entite.entite_mere FROM entite_ancetre " .
+        $sql = "SELECT DISTINCT entite.id_e,entite.denomination,entite.siren,entite.type,entite.centre_de_gestion,entite.entite_mere,entite.is_active FROM entite_ancetre " .
                 " JOIN utilisateur_role ON entite_ancetre.id_e_ancetre = utilisateur_role.id_e " .
                 " JOIN role_droit ON utilisateur_role.role=role_droit.role " .
                 " JOIN entite ON entite_ancetre.id_e=entite.id_e " .
