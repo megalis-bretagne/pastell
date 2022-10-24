@@ -77,7 +77,7 @@ class EntiteSQLTest extends PastellTestCase
         $this->entiteSQL->getEntiteFromData(['denomination' => "Bourg-en-Bresse"]);
     }
 
-    public function testGetEntiteFromDataIsActive()
+    public function testGetEntiteFromDataIsActive(): void
     {
         $data['is_active'] = 1;
         $this->assertCount(2, $this->entiteSQL->getEntiteFromData($data));

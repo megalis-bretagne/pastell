@@ -71,11 +71,7 @@ class EntiteAPIController extends BaseAPIController
         $result['entite_mere'] = $infoEntite['entite_mere'];
         $result['entite_fille'] = $resultFille;
         $result['centre_de_gestion'] = $infoEntite['centre_de_gestion'];
-        if ($infoEntite['is_active'] == 1) {
-            $result['active'] = 'oui';
-        } else {
-            $result['active'] = 'non';
-        }
+        $result['is_active'] = (bool)$infoEntite['is_active'];
 
         return $result;
     }

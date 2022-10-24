@@ -331,7 +331,7 @@ class EntiteSQL extends SQL
         return $type_nom[$type];
     }
 
-    private function getByIsActive(bool $is_active): bool|array
+    private function getByIsActive(bool $is_active): array
     {
         $sql = "SELECT * FROM entite WHERE is_active = ?";
         return $this->query($sql, $is_active);
