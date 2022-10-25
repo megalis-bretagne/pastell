@@ -106,11 +106,11 @@ class EntiteAPIControllerTest extends PastellTestCase
         );
     }
 
-    public function testActivateDesactivate()
+    public function testActivateDeactivate(): void
     {
         $entiteActivated = $this->getInternalAPI()->get('/entite/1');
-        $entiteDesactivated = $this->getInternalAPI()->post('/entite/1/desactivate');
-        $this->assertNotEquals($entiteActivated, $entiteDesactivated);
+        $entiteDeactivated = $this->getInternalAPI()->post('/entite/1/deactivate');
+        $this->assertNotEquals($entiteActivated, $entiteDeactivated);
 
         $entiteReactivated = $this->getInternalAPI()->post('/entite/1/activate');
         $this->assertEquals($entiteActivated, $entiteReactivated);
