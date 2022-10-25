@@ -7,6 +7,7 @@ use Pastell\Service\PasswordEntropy;
 class ConnexionControler extends PastellControler
 {
     private const CHANGE_PASSWORD_TOKEN_TTL_IN_SECONDS = 1800;
+    private const OIDC_URI_REDIRECT_COOKIE = 'oidcUriRedirect';
 
     public function _beforeAction()
     {
@@ -113,7 +114,15 @@ class ConnexionControler extends PastellControler
                 $this->getGetInfo()->get('page_request'),
                 urlencode($this->getGetInfo()->get('request_uri'))
             );
+            if (!isset($_COOKIE[self::OIDC_URI_REDIRECT_COOKIE])) {
+                \setcookie_wrapper(
+                    self::OIDC_URI_REDIRECT_COOKIE,
+                    $this->getGetInfo()->get('request_uri'),
+                    \time() + 30
+                );
+            }
         }
+
         $login = $authenticationConnecteur->authenticate($redirectUrl);
         $externalSystem = $authenticationConnecteur->getExternalSystemName();
 
@@ -219,6 +228,27 @@ class ConnexionControler extends PastellControler
         $lastMessage = $this->getObjectInstancier()->getInstance(LastError::class);
         $lastMessage->setCssClass('alert-connexion');
         $this->render('PageConnexion');
+    }
+
+    /**
+     * @throws LastMessageException
+     * @throws LastErrorException
+     */
+    public function oidcAction(): void
+    {
+        /** @var AuthenticationConnecteur $authentificationConnecteur */
+        $authentificationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur('Authentification');
+        if ($authentificationConnecteur && $this->externalConnexion($authentificationConnecteur)) {
+            $this->setLastError('');
+            $redirect = '/';
+            if (isset($_COOKIE[self::OIDC_URI_REDIRECT_COOKIE])) {
+                $redirect = $_COOKIE[self::OIDC_URI_REDIRECT_COOKIE];
+                \setcookie_wrapper(self::OIDC_URI_REDIRECT_COOKIE, '', \time() - 3600);
+                unset($_COOKIE[self::OIDC_URI_REDIRECT_COOKIE]);
+            }
+            $this->redirect($redirect);
+        }
+        $this->connexionAction();
     }
 
     public function oublieIdentifiantAction()

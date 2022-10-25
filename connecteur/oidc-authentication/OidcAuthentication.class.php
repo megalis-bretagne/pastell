@@ -17,6 +17,15 @@ class OidcAuthentication extends AuthenticationConnecteur
      * @var string
      */
     private $redirectUrl;
+    /**
+     * @var string
+     */
+    private $site_base;
+
+    public function __construct(string $site_base)
+    {
+        $this->site_base = $site_base;
+    }
 
     public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire)
     {
@@ -44,10 +53,7 @@ class OidcAuthentication extends AuthenticationConnecteur
      */
     public function authenticate($redirectUrl = false)
     {
-        if ($redirectUrl) {
-            $this->oidc->setRedirectURL($redirectUrl);
-        }
-
+        $this->oidc->setRedirectURL(\rtrim($this->site_base, '/') . '/Connexion/oidc');
         $this->oidc->authenticate();
         return $this->oidc->requestUserInfo($this->loginAttribute);
     }
