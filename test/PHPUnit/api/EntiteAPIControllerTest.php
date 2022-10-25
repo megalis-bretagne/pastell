@@ -115,4 +115,19 @@ class EntiteAPIControllerTest extends PastellTestCase
         $entiteReactivated = $this->getInternalAPI()->post('/entite/1/activate');
         $this->assertEquals($entiteActivated, $entiteReactivated);
     }
+
+    public function testDeActivateFailDroit(): void
+    {
+        $this->getObjectInstancier()->getInstance(UtilisateurCreator::class)
+            ->create('tester', 'tester', 'tester', 'tester@mail');
+        $this->getObjectInstancier()->getInstance(RoleSQL::class)
+            ->edit('entite:lecture', 'entiteLectureEdition');
+        $this->getObjectInstancier()->getInstance(RoleSQL::class)
+            ->edit('entite:edition', 'entiteLectureEdition');
+        $this->getObjectInstancier()->getInstance(RoleUtilisateur::class)
+            ->addRole('3', 'entiteLectureEdition', '1');
+        $this->expectException(ForbiddenException::class);
+        $this->expectExceptionMessage('Acces interdit id_e=1, droit=entite:edition,id_u=3');
+        $this->getInternalAPIAsUser('3')->post('/entite/1/deactivate');
+    }
 }
