@@ -78,7 +78,12 @@ class UtilisateurAPIController extends BaseAPIController
         if ($listUtilisateur) {
             // Création d'un nouveau tableau pour ne retourner que les valeurs retenues
             foreach ($listUtilisateur as $id_u => $utilisateur) {
-                $result[$id_u] = ['id_u' => $utilisateur['id_u'], 'login' => $utilisateur['login'], 'email' => $utilisateur['email']];
+                $result[$id_u] = [
+                    'id_u' => $utilisateur['id_u'],
+                    'login' => $utilisateur['login'],
+                    'email' => $utilisateur['email'],
+                    'active' => (bool)$utilisateur['is_enabled']
+                ];
             }
         }
         return $result;
@@ -117,6 +122,7 @@ class UtilisateurAPIController extends BaseAPIController
         $result['email'] = $infoUtilisateur['email'];
         $result['certificat'] = $infoUtilisateur['certificat'];
         $result['id_e'] = $infoUtilisateur['id_e'];
+        $result['is_active'] = (bool)$infoUtilisateur['is_enabled'];
 
         return $result;
     }
@@ -131,9 +137,24 @@ class UtilisateurAPIController extends BaseAPIController
     public function post()
     {
         $id_e = $this->getFromRequest('id_e', 0);
-        $this->checkDroit($id_e, "utilisateur:edition");
+        $this->checkDroit($id_e, 'utilisateur:edition');
 
-
+        $id_u = $this->getFromQueryArgs(0);
+        if ($id_u !== false && $this->verifExists($id_u)) {
+            $action = $this->getFromQueryArgs(1);
+            if ($action === 'activate') {
+                $this->utilisateur->enable($id_u);
+            } elseif ($action === 'deactivate') {
+                if ($id_u == $this->getUtilisateurId()) {
+                    throw new UnrecoverableException('Vous ne pouvez pas désactiver votre compte utilisateur.');
+                } else {
+                    $this->utilisateur->disable($id_u);
+                }
+            } else {
+                throw new UnrecoverableException('Cette action n\'existe pas.');
+            }
+            return $this->detail();
+        }
 
         $id_u = $this->editionUtilisateur(
             $id_e,
