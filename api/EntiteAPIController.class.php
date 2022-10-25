@@ -83,7 +83,7 @@ class EntiteAPIController extends BaseAPIController
     public function post()
     {
         $id_e = $this->getFromQueryArgs(0);
-        if ($id_e !== false) {
+        if ($id_e !== false && $this->checkDroit($id_e, 'entite:edition')) {
             $action = $this->getFromQueryArgs(1);
             if ($action === 'activate') {
                 $this->entiteSQL->setActive($id_e, 1);
