@@ -477,7 +477,7 @@ class ConnecteurControler extends PastellControler
         $this->getObjectInstancier()->getInstance(MemoryCache::class)->store(
             "export_connector_password_$id_ce",
             $password,
-            1
+            60
         );
 
         $this->setViewParameter('id_ce', $id_ce);
