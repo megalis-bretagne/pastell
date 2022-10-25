@@ -85,14 +85,14 @@ class EntiteAPIController extends BaseAPIController
         $id_e = $this->getFromQueryArgs(0);
         if ($id_e !== false) {
             $action = $this->getFromQueryArgs(1);
-            if ($action == 'activate') {
+            if ($action === 'activate') {
                 $this->entiteSQL->setActive($id_e, 1);
-            } elseif ($action == 'desactivate') {
+            } elseif ($action === 'deactivate') {
                 $this->entiteSQL->setActive($id_e, 0);
             } else {
-                throw new Exception('Cette action n\'existe pas.');
+                throw new UnrecoverableException('Cette action n\'existe pas.');
             }
-            return $this->get();
+            return $this->getInfo($id_e);
         }
         $entite_mere = $this->getFromRequest('entite_mere', 0);
         $type = $this->getFromRequest('type');
