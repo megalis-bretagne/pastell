@@ -10,6 +10,7 @@ use Pastell\Service\Crypto;
 use Pastell\Service\Connecteur\ConnecteurHashService;
 use Pastell\Service\Connecteur\ConnecteurActionService;
 use Pastell\Service\Connecteur\ConnecteurModificationService;
+use Symfony\Component\Security\Csrf\TokenGenerator\UriSafeTokenGenerator;
 
 class ConnecteurControler extends PastellControler
 {
@@ -471,9 +472,18 @@ class ConnecteurControler extends PastellControler
         $id_ce = $this->getGetInfo()->getInt('id_ce');
         $this->verifDroitOnConnecteur($id_ce);
 
+        $generator = new UriSafeTokenGenerator();
+        $password = $generator->generateToken();
+        $this->getObjectInstancier()->getInstance(MemoryCache::class)->store(
+            "export_connector_password_$id_ce",
+            $password,
+            60
+        );
+
         $this->setViewParameter('id_ce', $id_ce);
-        $this->setViewParameter('page_title', "Connecteur - Export");
-        $this->setViewParameter('template_milieu', "ConnecteurExport");
+        $this->setViewParameter('password', $password);
+        $this->setViewParameter('page_title', 'Connecteur - Export');
+        $this->setViewParameter('template_milieu', 'ConnecteurExport');
         $this->renderDefault();
     }
 
@@ -491,21 +501,18 @@ class ConnecteurControler extends PastellControler
     {
         $id_ce = $this->getPostInfo()->getInt('id_ce');
         $this->verifDroitOnConnecteur($id_ce);
-        $password = $this->getPostInfo()->get('password');
-        $password_check = $this->getPostInfo()->get('password_check');
-
-        if ($password !== $password_check) {
-            $this->setLastError('Les mots de passe ne correspondent pas.');
-            $this->redirect("/Connecteur/export?id_ce=" . $id_ce);
-        } elseif (mb_strlen($password) < Crypto::PASSWORD_MINIMUM_LENGTH) {
-            $this->setLastError('Le mot de passe fait moins de ' . Crypto::PASSWORD_MINIMUM_LENGTH . ' caractères.');
-            $this->redirect("/Connecteur/export?id_ce=" . $id_ce);
+        $password = $this->getObjectInstancier()
+            ->getInstance(MemoryCache::class)
+            ->fetch("export_connector_password_$id_ce");
+        if (empty($password)) {
+            $this->setLastError('Export impossible : Expiration du mot de passe généré');
+            $this->redirect("/Connecteur/edition?id_ce=$id_ce");
         }
 
         try {
             $connecteurConfig = $this->getConnecteurFactory()->getConnecteurConfig($id_ce);
         } catch (Exception $e) {
-            $this->setLastError("Export impossible : Impossible de trouver la définition de ce connecteur");
+            $this->setLastError('Export impossible : Impossible de trouver la définition de ce connecteur');
             $this->redirect("/Connecteur/edition?id_ce=$id_ce");
         }
 
@@ -515,10 +522,9 @@ class ConnecteurControler extends PastellControler
         $connecteurEntite = $this->getConnecteurEntiteSQL();
         $info = $connecteurEntite->getInfo($id_ce);
 
+        $filename = strtr($info['libelle'], ' ', '_') . '.json';
 
-        $filename = strtr($info['libelle'], " ", "_") . ".json";
-
-        $this->getInstance(SendFileToBrowser::class)
+        $this->getObjectInstancier()->getInstance(SendFileToBrowser::class)
             ->sendData($encryptedConnector, $filename, 'application/json');
     }
 

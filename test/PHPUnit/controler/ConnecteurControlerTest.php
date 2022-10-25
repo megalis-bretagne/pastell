@@ -7,6 +7,7 @@ use ParagonIE\Halite\Alerts\InvalidMessage;
 use ParagonIE\Halite\Alerts\InvalidSalt;
 use ParagonIE\Halite\Alerts\InvalidType;
 use Pastell\Service\Connecteur\ConnecteurActionService;
+use Symfony\Component\Security\Csrf\TokenGenerator\UriSafeTokenGenerator;
 
 class ConnecteurControlerTest extends ControlerTestCase
 {
@@ -123,13 +124,19 @@ class ConnecteurControlerTest extends ControlerTestCase
      */
     public function testDoExport(): void
     {
+        $id_ce = 11;
         $this->setPostInfo([
-            'id_ce' => 11,
-            'password' => '12345678',
-            'password_check' => '12345678',
+            'id_ce' => $id_ce
         ]);
+        $generator = new UriSafeTokenGenerator();
+        $password = $generator->generateToken();
+        $this->getObjectInstancier()->getInstance(MemoryCache::class)->store(
+            "export_connector_password_$id_ce",
+            $password,
+            60
+        );
 
-        $this->expectOutputRegex("/Content-type: application\/json;*/");
+        $this->expectOutputRegex('/Content-type: application\/json;*/');
         $this->connecteurControler->doExportAction();
     }
 
