@@ -76,8 +76,24 @@ class EntiteAPIController extends BaseAPIController
         return $result;
     }
 
+    /**
+     * @throws NotFoundException
+     * @throws Exception
+     */
     public function post()
     {
+        $id_e = $this->getFromQueryArgs(0);
+        if ($id_e !== false && $this->checkDroit($id_e, 'entite:edition')) {
+            $action = $this->getFromQueryArgs(1);
+            if ($action === 'activate') {
+                $this->entiteSQL->setActive($id_e, 1);
+            } elseif ($action === 'deactivate') {
+                $this->entiteSQL->setActive($id_e, 0);
+            } else {
+                throw new UnrecoverableException('Cette action n\'existe pas.');
+            }
+            return $this->getInfo($id_e);
+        }
         $entite_mere = $this->getFromRequest('entite_mere', 0);
         $type = $this->getFromRequest('type');
         $siren = $this->getFromRequest('siren', "");
@@ -110,12 +126,6 @@ class EntiteAPIController extends BaseAPIController
 
     public function patch()
     {
-        $createEntite = $this->getFromRequest('create');
-
-        if ($createEntite) {
-            return $this->post();
-        }
-
         $data = $this->getRequest();
         $data['id_e'] = $this->getFromQueryArgs(0);
 

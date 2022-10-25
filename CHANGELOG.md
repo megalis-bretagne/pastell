@@ -39,6 +39,7 @@
 - Un mot de passe est généré automatiquement pour l'exportation d'un connecteur #1597
 - La fréquence des connecteurs passe à 10 minutes par défaut #1633
 - Possibilité de mettre un filtre sur 'is_active' dans la recherche des entités sur l'API #1648
+- Possibilité d'activer et de désactiver une entité par API #1624
 
 ## Suppressions
 
@@ -117,6 +118,7 @@
 - Suppression des élements relatifs au centre de gestions sur la version standard. Il est possible de les remettre avec la feature flag CDGFeature.
 - Suppression de l'URL dans l'onglet de retour du SAE
 - Suppression du support MySQL. La seule base supportée est MariaDB.
+- Suppression de la création d'une entité par API via PATCH avec le paramètre 'create' et suppression du test 'testCreateWithEditAction()'
 
 # [3.1.17] - 2022-09-12
 

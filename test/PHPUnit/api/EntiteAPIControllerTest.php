@@ -44,21 +44,6 @@ class EntiteAPIControllerTest extends PastellTestCase
         $this->assertEquals('Bourg-en-Bresse', $info['denomination']);
     }
 
-    public function testCreateWithEditAction()
-    {
-        $info = $this->getInternalAPI()->patch(
-            "/entite/1",
-            [
-                'denomination' => 'Métropolis',
-                'type' => 'collectivite',
-                'siren' => '677203002',
-                'create' => true
-            ]
-        );
-        $this->assertNotEmpty($info['id_e']);
-        $this->assertNotEquals(1, $info['id_e']);
-    }
-
     public function testCreateFilleCDG()
     {
         $info = $this->getInternalAPI()->patch(
@@ -119,5 +104,30 @@ class EntiteAPIControllerTest extends PastellTestCase
                 'siren' => '123456789'
             ]
         );
+    }
+
+    public function testActivateDeactivate(): void
+    {
+        $entiteActivated = $this->getInternalAPI()->get('/entite/1');
+        $entiteDeactivated = $this->getInternalAPI()->post('/entite/1/deactivate');
+        $this->assertNotEquals($entiteActivated, $entiteDeactivated);
+
+        $entiteReactivated = $this->getInternalAPI()->post('/entite/1/activate');
+        $this->assertEquals($entiteActivated, $entiteReactivated);
+    }
+
+    public function testDeActivateFailDroit(): void
+    {
+        $this->getObjectInstancier()->getInstance(UtilisateurCreator::class)
+            ->create('tester', 'tester', 'tester', 'tester@mail');
+        $this->getObjectInstancier()->getInstance(RoleSQL::class)
+            ->edit('entite:lecture', 'entiteLectureEdition');
+        $this->getObjectInstancier()->getInstance(RoleSQL::class)
+            ->edit('entite:edition', 'entiteLectureEdition');
+        $this->getObjectInstancier()->getInstance(RoleUtilisateur::class)
+            ->addRole('3', 'entiteLectureEdition', '1');
+        $this->expectException(ForbiddenException::class);
+        $this->expectExceptionMessage('Acces interdit id_e=1, droit=entite:edition,id_u=3');
+        $this->getInternalAPIAsUser('3')->post('/entite/1/deactivate');
     }
 }
