@@ -617,7 +617,6 @@ class TypeDossierControler extends PastellControler
     public function doSetFileAction()
     {
         $id_type_dossier = $this->getPostInfo()->get('id_type_dossier');
-//        $id_type_dossier = 'acte-personnalise';
         $this->verifDroit(0, "$id_type_dossier:edition");
 
         $dossierFetched = $this->getObjectInstancier()->getInstance(TypeDossierSQL::class)
