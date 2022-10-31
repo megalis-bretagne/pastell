@@ -199,4 +199,19 @@ class UtilisateurControlerTest extends ControlerTestCase
             );
         }
     }
+
+    public function testEditionActionCreationFail(): void
+    {
+        $this->expectException(LastErrorException::class);
+        $this->expectExceptionMessage("Vous n'avez pas les droits nécessaires (0:utilisateur:creation) pour accéder à cette page");
+        $this->getUtilisateurControler()->editionAction();
+    }
+
+    public function testEditionActionCreation(): void
+    {
+        $this->getObjectInstancier()->getInstance(RoleSQL::class)->addDroit('admin', 'utilisateur:creation');
+        $this->getUtilisateurControler()->editionAction();
+        $pageTitle = $this->getUtilisateurControler()->getViewParameterByKey('page_title');
+        $this->assertEquals($pageTitle, 'Nouvel utilisateur ');
+    }
 }
