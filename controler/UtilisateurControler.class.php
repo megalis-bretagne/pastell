@@ -271,27 +271,28 @@ class UtilisateurControler extends PastellControler
             }
         }
 
-        $this->verifDroit($infoUtilisateur['id_e'], "utilisateur:edition");
+        $this->verifDroit($infoUtilisateur['id_e'], 'utilisateur:edition');
 
         $this->setViewParameter('infoEntite', $this->getEntiteSQL()->getInfo($infoUtilisateur['id_e']));
         $this->setViewParameter('certificat', new Certificate($infoUtilisateur['certificat']));
         $this->setViewParameter(
             'arbre',
-            $this->getRoleUtilisateur()->getArbreFille($this->getId_u(), "entite:edition")
+            $this->getRoleUtilisateur()->getArbreFille($this->getId_u(), 'entite:edition')
         );
 
         if ($id_u) {
             $this->setViewParameter(
                 'page_title',
-                "Modification de " . $infoUtilisateur['prenom'] . " " . $infoUtilisateur['nom']
+                'Modification de ' . $infoUtilisateur['prenom'] . ' ' . $infoUtilisateur['nom']
             );
         } else {
-            $this->setViewParameter('page_title', "Nouvel utilisateur ");
+            $this->verifDroit($infoUtilisateur['id_e'], 'utilisateur:creation');
+            $this->setViewParameter('page_title', 'Nouvel utilisateur ');
         }
         $this->setViewParameter('id_u', $id_u);
         $this->setViewParameter('id_e', $id_e);
         $this->setViewParameter('infoUtilisateur', $infoUtilisateur);
-        $this->setViewParameter('template_milieu', "UtilisateurEdition");
+        $this->setViewParameter('template_milieu', 'UtilisateurEdition');
         $this->renderDefault();
     }
 
