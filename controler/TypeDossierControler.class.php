@@ -598,4 +598,42 @@ class TypeDossierControler extends PastellControler
         );
         $this->redirect($redirectTo);
     }
+
+    /**
+     * @throws NotFoundException
+     */
+    public function setFileAction(): void
+    {
+        $this->commonEdition();
+
+        $this->setViewParameter('template_milieu', 'TypeDossierSetFile');
+        $this->renderDefault();
+    }
+
+    /**
+     * @throws LastMessageException
+     * @throws LastErrorException
+     */
+    public function doSetFileAction()
+    {
+        $id_type_dossier = $this->getPostInfo()->get('id_type_dossier');
+//        $id_type_dossier = 'acte-personnalise';
+        $this->verifDroit(0, "$id_type_dossier:edition");
+
+        $dossierFetched = $this->getObjectInstancier()->getInstance(TypeDossierSQL::class)
+            ->getToFatalError($id_type_dossier);
+
+        foreach ($dossierFetched as $dossier) {
+            $this->getObjectInstancier()->getInstance(ActionChange::class)->addAction(
+                $dossier['id_d'],
+                $dossier['id_e'],
+                $this->getId_u(),
+                'fatal-error',
+                "Passage forcé vers l'état 'Fatal error'"
+            );
+        }
+
+        $this->setLastMessage("Tous les dossiers <b>{$id_type_dossier}</b> ont été mis dans l'état 'Fatal error'");
+        $this->redirect('/TypeDossier/list');
+    }
 }
