@@ -75,7 +75,7 @@ class EntiteControler extends PastellControler
         $all_role[] = ['role' => RoleUtilisateur::AUCUN_DROIT,'libelle' => RoleUtilisateur::AUCUN_DROIT];
 
         $this->setViewParameter('all_role', $all_role);
-        $this->setViewParameter('droitEdition', $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "utilisateur:edition", $id_e));
+        $this->setViewParameter('droitCreation', $this->getRoleUtilisateur()->hasDroit($this->getId_u(), 'utilisateur:creation', $id_e));
 
         $this->setViewParameter('nb_utilisateur', $this->getUtilisateurListe()->getNbUtilisateur($id_e, $descendance, $role, $search));
         $this->setViewParameter('liste_utilisateur', $this->getUtilisateurListe()->getAllUtilisateur($id_e, $descendance, $role, $search, $offset));
@@ -85,9 +85,9 @@ class EntiteControler extends PastellControler
         $this->setViewParameter('search', $search);
         $this->setViewParameter('descendance', $descendance);
 
-        $this->setViewParameter('template_milieu', "UtilisateurList");
-        $this->setViewParameter('menu_gauche_select', "Entite/utilisateur");
-        $this->setPageTitle("Liste des utilisateurs");
+        $this->setViewParameter('template_milieu', 'UtilisateurList');
+        $this->setViewParameter('menu_gauche_select', 'Entite/utilisateur');
+        $this->setPageTitle('Liste des utilisateurs');
         $this->renderDefault();
     }
 
