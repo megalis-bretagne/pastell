@@ -97,3 +97,7 @@ bash: docker-compose-up ## Get a bash console
 
 logs: docker-compose-up ## Display last application logs (in follow mode)
 	$(DOCKER_COMPOSE) logs -t 50 -f web
+
+update: ## Update requirements
+	$(DOCKER) run --rm --volume ${PWD}:/app registry.libriciel.fr:443/public/libriciel/apt-pin:0.1.0-alpha.2 -f /app/docker/requirements.txt -u
+	$(DOCKER) run --rm --volume ${PWD}:/app registry.libriciel.fr:443/public/libriciel/apt-pin:0.1.0-alpha.2 -f /app/docker/requirements-dev.txt -u

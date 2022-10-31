@@ -39,6 +39,10 @@ EXPOSE 4443 8080
 WORKDIR /var/www/pastell/
 ENV PATH="${PATH}:/var/www/pastell/vendor/bin/"
 
+COPY --from=registry.libriciel.fr:443/public/libriciel/apt-pin:0.1.0-alpha.2 /usr/local/bin/apt-pin.sh /usr/local/bin/apt-pin.sh
+COPY docker/requirements.* /var/www/pastell/docker/
+RUN apt-pin.sh -f docker/requirements.txt
+
 # Install requirements
 COPY ./docker/install-requirements.sh /var/www/pastell/docker/
 RUN /bin/bash /var/www/pastell/docker/install-requirements.sh
@@ -82,6 +86,7 @@ ARG USERNAME=www-data
 ARG GROUPNAME=www-data
 
 USER root
+RUN apt-pin.sh -f docker/requirements-dev.txt
 RUN /bin/bash /var/www/pastell/docker/install-dev-requirements.sh
 USER "${USERNAME}"
 FROM pastell_base as pastell_prod
