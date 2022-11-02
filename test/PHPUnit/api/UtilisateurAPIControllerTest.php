@@ -208,12 +208,8 @@ class UtilisateurAPIControllerTest extends PastellTestCase
     {
         $this->getObjectInstancier()->getInstance(UtilisateurCreator::class)
             ->create('tester', 'tester', 'tester', 'tester@mail');
-        $this->getObjectInstancier()->getInstance(RoleSQL::class)
-            ->edit('utilisateur:lecture', 'lectureUser');
-        $this->getObjectInstancier()->getInstance(RoleUtilisateur::class)
-            ->addRole('3', 'lectureUser', '1');
         $this->expectException(ForbiddenException::class);
-        $this->expectExceptionMessage('Acces interdit id_e=0, droit=utilisateur:edition,id_u=3');
-        $this->getInternalAPIAsUser('3')->post('/utilisateur/1/deactivate');
+        $this->expectExceptionMessage('Acces interdit id_e=1, droit=utilisateur:edition,id_u=3');
+        $this->getInternalAPIAsUser('3')->post('/utilisateur/1/deactivate', ['id_e' => 1]);
     }
 }
