@@ -251,7 +251,7 @@ class UtilisateurControler extends PastellControler
      */
     public function editionAction()
     {
-        $recuperateur = new Recuperateur($_GET);
+        $recuperateur = $this->getGetInfo();
         $id_u = $recuperateur->get('id_u');
         $id_e = $recuperateur->getInt('id_e');
 
