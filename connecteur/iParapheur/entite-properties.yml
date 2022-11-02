@@ -41,13 +41,6 @@ formulaire:
         iparapheur_metadata:
             name: 'Métadonnées à envoyer au i-Parapheur'
             commentaire: "De la forme : nom_element_pastell_1:nom_metadonne_parapheur_1, nom_element_pastell_2:nom_metadonne_parapheur_2, ..\nAttention, il faut que le flux le supporte !"
-        iparapheur_archivage_action:
-            name: 'Action à réaliser suite à la récupération du dossier'
-            type: select
-            value:
-                EFFACER: 'Effacer le dossier du parapheur'
-                ARCHIVER: 'Archiver le dossier sur le parapheur'
-            commentaire: "L'action par défaut est l'effacement"
         iparapheur_multi_doc:
             name: 'Appliquer le multi-document'
             type: checkbox
