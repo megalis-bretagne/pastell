@@ -25,7 +25,10 @@ class UtilisateurControlerTest extends ControlerTestCase
             'prenom' => 'buz',
             'email' => 'boz@byz.fr'
         ]);
-
+        $this->getObjectInstancier()->getInstance(RoleSQL::class)->addDroit(
+            'admin',
+            'utilisateur:creation'
+        );
         try {
             $this->getUtilisateurControler()->doEditionAction();
         } catch (LastMessageException $e) {
@@ -200,14 +203,14 @@ class UtilisateurControlerTest extends ControlerTestCase
         }
     }
 
-    public function testEditionActionCreationFail(): void
+    public function testAccesPageCreationFail(): void
     {
         $this->expectException(LastErrorException::class);
         $this->expectExceptionMessage("Vous n'avez pas les droits nécessaires (0:utilisateur:creation) pour accéder à cette page");
         $this->getUtilisateurControler()->editionAction();
     }
 
-    public function testEditionActionCreation(): void
+    public function testAccesPageCreation(): void
     {
         $this->getObjectInstancier()->getInstance(RoleSQL::class)->addDroit('admin', 'utilisateur:creation');
         $this->getUtilisateurControler()->editionAction();
