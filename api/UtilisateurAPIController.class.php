@@ -212,6 +212,7 @@ class UtilisateurAPIController extends BaseAPIController
         $is_creation = false;
 
         if (! $id_u) {
+            $this->checkDroit($id_e, 'utilisateur:creation');
             $is_creation = true;
             $id_u = $this->utilisateurCreator->create($login, $password, $password, $email);
             if (! $id_u) {
