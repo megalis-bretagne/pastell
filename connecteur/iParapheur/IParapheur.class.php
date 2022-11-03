@@ -5,9 +5,6 @@ class IParapheur extends SignatureConnecteur
     public const IPARAPHEUR_NB_JOUR_MAX_DEFAULT = SignatureConnecteur::PARAPHEUR_NB_JOUR_MAX_DEFAULT;
 
     public const ARCHIVAGE_ACTION_EFFACER = "EFFACER";
-    public const ARCHIVAGE_ACTION_ARCHIVER = "ARCHIVER";
-
-    public const ARCHIVAGE_ACTION_DEFAULT = self::ARCHIVAGE_ACTION_EFFACER;
 
     private const REJECTED_STATE = ['RejetVisa', 'RejetSignataire','RejetCachet', 'RejetMailSecPastell'];
 
@@ -27,7 +24,6 @@ class IParapheur extends SignatureConnecteur
 
     private $iparapheur_metadata;
     private $sending_metadata;
-    private $iparapheur_archivage_action;
     private $iparapheur_multi_doc;
 
     /** @var DonneesFormulaire */
@@ -54,16 +50,6 @@ class IParapheur extends SignatureConnecteur
 
         $this->xPathPourSignatureXML =  $collectiviteProperties->get('XPathPourSignatureXML');
         $this->iparapheur_metadata =  $collectiviteProperties->get('iparapheur_metadata');
-        $iparapheur_archivage_action = $collectiviteProperties->get('iparapheur_archivage_action');
-        if (
-            ! in_array(
-                $iparapheur_archivage_action,
-                [self::ARCHIVAGE_ACTION_EFFACER,self::ARCHIVAGE_ACTION_ARCHIVER]
-            )
-        ) {
-            $iparapheur_archivage_action = self::ARCHIVAGE_ACTION_DEFAULT;
-        }
-        $this->iparapheur_archivage_action = $iparapheur_archivage_action;
 
         $this->iparapheur_multi_doc =  $collectiviteProperties->get('iparapheur_multi_doc');
     }
@@ -286,12 +272,12 @@ class IParapheur extends SignatureConnecteur
     {
         try {
             $this->getLogger()->debug(
-                "Archivage  ( $this->iparapheur_archivage_action) du dossier $dossierID sur le i-parapheur"
+                "Archivage" . self::ARCHIVAGE_ACTION_EFFACER . " du dossier $dossierID sur le i-parapheur"
             );
 
             $result = $this->getClient()->ArchiverDossier([
                 "DossierID" => $dossierID,
-                "ArchivageAction" => $this->iparapheur_archivage_action
+                "ArchivageAction" => self::ARCHIVAGE_ACTION_EFFACER
             ]);
             $this->getLogger()->debug("Réponse de l'archivage du dossier $dossierID: " . json_encode($result));
             if (empty($result->MessageRetour->codeRetour) || $result->MessageRetour->codeRetour != 'OK') {
