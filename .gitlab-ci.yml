@@ -106,6 +106,7 @@ acceptance_test:
         REDIS_SERVER: redis
         REDIS_PORT: 6379
         PASTELL_SITE_BASE: https://localhost:4443/
+        PACK_TEST: "true"
     image :  "$CONTAINER_IMAGE"
     services:
         - name: hubdocker.libriciel.fr/mariadb:10.9.3-jammy
