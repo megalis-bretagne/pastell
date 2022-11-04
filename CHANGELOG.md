@@ -121,6 +121,8 @@
 - Suppression de la création d'une entité par API via PATCH avec le paramètre 'create' et suppression du test 'testCreateWithEditAction()'
 - Suppression de l'archivage des dossiers sur le parapheur, après récupération, ils sont automatiquement effacés #1498
 - Suppression de la méthode ActionExecutorFactory::getFluxActionPath()
+- Suppression de la méthode ActionExecutorFactory::getAllActionClass()
+- Suppression de la méthode DocumentTypeValidation::setActionClassList()
 
 # [3.1.17] - 2022-09-12
 
