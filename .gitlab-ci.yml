@@ -9,9 +9,8 @@ include:
     file: '/security-check.yml'
 
   - project: "libriciel/integration-continue/templates"
-    ref: security-slscan-1.0.0
+    ref: master
     file: '/jobs/security-slscan/security-slscan.yml'
-
 
 stages:
     - build
