@@ -126,6 +126,10 @@
 - Suppression de la méthode DocumentTypeValidation::setActionClassList()
 - Suppression de la constante LOG_ACTION_EXECUTOR_FACTORY_ERROR
 
+## Dépréciations
+
+- Le connecteur Libersign est déprécié, il sera supprimé dans la prochaine version majeure. Par défaut il est nécessaire de l'activer via le pack libersign et d'installer deux dockers supplémenaires.
+
 # [3.1.17] - 2022-09-12
 
 ## Corrections

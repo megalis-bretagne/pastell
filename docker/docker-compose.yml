@@ -46,6 +46,11 @@ services:
             SENTRY_ENVIRONMENT: ${SENTRY_ENVIRONMENT:-dev}
             MAILER_DSN: ${MAILER_DSN:-null://null}
             ADMIN_EMAIL: ${ADMIN_EMAIL:-test@libriciel.net}
+            PACK_CHORUS_PRO: ${PACK_CHORUS_PRO:-false}
+            PACK_MARCHE: ${PACK_MARCHE:-false}
+            PACK_URBANISME: ${PACK_URBANISME:-false}
+            PACK_TEST: ${PACK_TEST:-false}
+            PACK_LIBERSIGN: ${PACK_LIBERSIGN:-false}
         ports:
             - "${WEB_HTTP_PORT:-8000}:8080"
             - "${WEB_HTTPS_PORT:-8443}:4443"
@@ -86,18 +91,6 @@ services:
                     memory: 1536M
         volumes:
             - ${PES_PJ_PATH:-/data/pesPJ}:/pesPJ/
-
-    crypto:
-        restart: unless-stopped
-        image: 'registry.libriciel.fr:443/public/signature/crypto:2.3.1'
-        deploy:
-            resources:
-                limits:
-                    memory: 1G
-
-    libersign:
-        restart: unless-stopped
-        image: 'registry.libriciel.fr:443/public/signature/libersign:1.11.4'
 
 volumes:
     mariadb_datadir:

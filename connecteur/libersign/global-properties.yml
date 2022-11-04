@@ -1,5 +1,8 @@
+# deprecated 4.0.0
 nom: Libersign
 type: signature
+restriction_pack:
+    - pack_libersign
 description: "Connecteur permettant d'inclure l'applet de signature Libersign dans un type de dossier Pastell\nLe connecteur global permet de spécifier l'URL du service crypto"
 formulaire:
     page:
