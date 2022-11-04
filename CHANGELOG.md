@@ -120,6 +120,7 @@
 - Suppression du support MySQL. La seule base supportée est MariaDB.
 - Suppression de la création d'une entité par API via PATCH avec le paramètre 'create' et suppression du test 'testCreateWithEditAction()'
 - Suppression de l'archivage des dossiers sur le parapheur, après récupération, ils sont automatiquement effacés #1498
+- Suppression de la méthode ActionExecutorFactory::getFluxActionPath()
 
 # [3.1.17] - 2022-09-12
 

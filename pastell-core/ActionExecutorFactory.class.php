@@ -212,7 +212,6 @@ class ActionExecutorFactory
 
         $action_class_name = $this->getActionClassName($documentType, $action_name);
 
-        $this->loadDocumentActionFile($infoDocument['type'], $action_class_name);
         /** @var ChoiceActionExecutor $actionClass */
         $actionClass = $this->getInstance($action_class_name, $id_e, $id_u, $action_name);
         $actionClass->setDocumentId($infoDocument['type'], $id_d);
@@ -233,7 +232,6 @@ class ActionExecutorFactory
     {
         $documentType = $this->objectInstancier->getInstance(DocumentTypeFactory::class)->getFluxDocumentType($type);
         $action_class_name = $this->getActionClassName($documentType, $action_name);
-        $this->loadDocumentActionFile($type, $action_class_name);
         /** @var ChoiceActionExecutor $actionClass */
         $actionClass = $this->getInstance($action_class_name, $id_e, $id_u, $action_name);
         $actionClass->setField($field);
@@ -244,9 +242,7 @@ class ActionExecutorFactory
 
     public function isChoiceEnabled($id_e, $id_u, $id_d, $action_name)
     {
-
         $infoDocument = $this->objectInstancier->getInstance(DocumentSQL::class)->getInfo($id_d);
-
 
         $documentType = $this->objectInstancier
             ->getInstance(DocumentTypeFactory::class)
@@ -254,14 +250,11 @@ class ActionExecutorFactory
 
         $action_class_name = $this->getActionClassName($documentType, $action_name);
 
-
-        $this->loadDocumentActionFile($infoDocument['type'], $action_class_name);
         /** @var ChoiceActionExecutor $actionClass */
         $actionClass = $this->getInstance($action_class_name, $id_e, $id_u, $action_name);
         $actionClass->setDocumentId($infoDocument['type'], $id_d);
         return $actionClass->isEnabled();
     }
-
 
     //TODO simplifier le action_name peut être déduit du field
     public function displayChoiceOnConnecteur($id_ce, $id_u, $action_name, $field, $is_api = false)
@@ -304,7 +297,6 @@ class ActionExecutorFactory
             ->getFluxDocumentType($infoDocument['type']);
 
         $action_class_name = $this->getActionClassName($documentType, $action_name);
-        $this->loadDocumentActionFile($infoDocument['type'], $action_class_name);
         /** @var ChoiceActionExecutor $actionClass */
         $actionClass = $this->getInstance($action_class_name, $id_e, $id_u, $action_name);
         $actionClass->setDocumentId($infoDocument['type'], $id_d);
@@ -377,7 +369,6 @@ class ActionExecutorFactory
             ->getFluxDocumentType($infoDocument['type']);
 
         $action_class_name = $this->getActionClassName($documentType, $action_name);
-        $this->loadDocumentActionFile($infoDocument['type'], $action_class_name);
 
         $actionClass = $this->getInstance($action_class_name, $id_e, $id_u, $action_name);
         $actionClass->setDocumentId($infoDocument['type'], $id_d);
@@ -385,8 +376,6 @@ class ActionExecutorFactory
         $actionClass->setActionParams($action_params);
         $actionClass->setFromAPI($from_api);
         $actionClass->setIdWorker($id_worker);
-
-
 
         return $actionClass;
     }
@@ -457,36 +446,6 @@ class ActionExecutorFactory
         $actionClass->setAction($action_name);
         $actionClass->setLogger($this->getLogger());
         return $actionClass;
-    }
-
-    private function loadDocumentActionFile($flux, $action_class_name)
-    {
-        $action_class_file = $this->getFluxActionPath($flux, $action_class_name);
-        if (! $action_class_file) {
-            throw new Exception("Le fichier $action_class_name est manquant");
-        }
-        require_once($action_class_file);
-    }
-
-
-    public function getFluxActionPath($flux, $action_class_name)
-    {
-        $module_path = $this->extensions->getModulePath($flux);
-        $action_class_file = "$module_path/" . self::ACTION_FOLDERNAME . "/$action_class_name.class.php";
-        if (file_exists($action_class_file)) {
-            return $action_class_file;
-        }
-        $action_class_file = PASTELL_PATH . "/" . self::ACTION_FOLDERNAME . "/$action_class_name.class.php";
-        if (file_exists($action_class_file)) {
-            return $action_class_file;
-        }
-        foreach ($this->extensions->getAllModule() as $module_id => $module_path) {
-            $action_path = "$module_path/" . self::ACTION_FOLDERNAME . "/$action_class_name.class.php";
-            if (file_exists($action_path)) {
-                return $action_path;
-            }
-        }
-        return false;
     }
 
     public function getAllActionClass()
