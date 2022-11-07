@@ -23,6 +23,8 @@ abstract class ActionExecutor
     private $lastMessage;
     private $lastMessageString;
 
+    private InternalAPI $internalAPI;
+
     public function __construct(ObjectInstancier $objectInstancier)
     {
         $this->objectInstancier = $objectInstancier;
@@ -422,8 +424,6 @@ abstract class ActionExecutor
             $jobManager->setJobForDocument($this->id_e, $id_d, "suite traitement par lot");
         }
     }
-
-    private InternalAPI $internalAPI;
 
     public function apiCall($method, $ressource, $data)
     {
