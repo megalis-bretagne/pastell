@@ -13,6 +13,7 @@ services:
     environment:
       XDEBUG_MODE: "develop, coverage, debug"
       MAILER_DSN: "smtp://maildev:1025?verify_peer=0"
+      PHP_OPCACHE_VALIDATE_TIMESTAMPS: "1"
     volumes:
       - ..:/var/www/pastell:cached
 
