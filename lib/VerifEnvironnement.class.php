@@ -38,8 +38,11 @@ class VerifEnvironnement
             $extensionNeeded[$key] = "Zend OPcache";
         }
         // pcntl is never loaded outside cli mode
-        if (PHP_SAPI !== 'cli' && $key = array_search('pcntl', $extensionNeeded, true)) {
-            unset($extensionNeeded[$key]);
+        if (PHP_SAPI !== 'cli') {
+            $key = array_search('pcntl', $extensionNeeded, true);
+            if ($key) {
+                unset($extensionNeeded[$key]);
+            }
         }
         $result = [];
         foreach ($extensionNeeded as $extension) {
