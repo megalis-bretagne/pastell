@@ -34,9 +34,15 @@ class VerifEnvironnement
     public function checkExtension()
     {
         $extensionNeeded = $this->getExtensionsNedeed();
-
         if (($key = array_search("zend-opcache", $extensionNeeded, true)) !== false) {
             $extensionNeeded[$key] = "Zend OPcache";
+        }
+        // pcntl is never loaded outside cli mode
+        if (PHP_SAPI !== 'cli') {
+            $key = array_search('pcntl', $extensionNeeded, true);
+            if ($key) {
+                unset($extensionNeeded[$key]);
+            }
         }
         $result = [];
         foreach ($extensionNeeded as $extension) {
