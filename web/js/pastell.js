@@ -107,10 +107,9 @@ function addFlowControl(query_param, pastell_flow_upload) {
 
 
 	button_libelle = query_param.single_file?"Ajouter un fichier":"Ajouter un (ou des) fichier(s)";
-
 	pastell_flow_upload.html(
 		"        <div class=\"flow-error\">\n" +
-		"            <input type='file' class='btn btn-outline-primary' id='" + query_param.field + "'  name='" + query_param.field + "' />\n" +
+		"            <input type='file' class='btn btn-outline-primary' id='" + query_param.field + "'  name='" + query_param.field + "' accept='" + query_param.accept + "'/>\n" +
 		"        </div>\n" +
 		"\n" +
 		"         <div>\n " +
@@ -178,9 +177,12 @@ function addFlowControl(query_param, pastell_flow_upload) {
 		return false;
 	});
 
-
-	r.assignBrowse(pastell_flow_upload);
-
+	r.assignBrowse(
+		pastell_flow_upload,
+		false,
+		query_param.single_file,
+		{'accept': query_param.accept}
+	);
 
 	// Handle file add event
 	r.on('fileAdded', function (file, event) {

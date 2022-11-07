@@ -121,7 +121,8 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1) {
                                                 field: '<?php echo $field->getName() ?>',
                                                 key: '<?php echo $mailsec_key ?>',
                                                 token_value: '<?php  echo $this->getCSRFToken()->getCSRFToken(); ?>',
-                                                single_file: false
+                                                single_file: false,
+                                                accept: '<?php echo implode(',', $field->getContentType()) ?>'
                                             };
                                             addFlowControl(query_param,$("#pastell-flow-upload-<?php echo $field->getName(); ?>"));
                                         });
@@ -140,7 +141,8 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1) {
                                                     field: '<?php echo $field->getName() ?>',
                                                     key: '<?php echo $mailsec_key ?>',
                                                     token_value: '<?php  echo $this->getCSRFToken()->getCSRFToken(); ?>',
-                                                    single_file: true
+                                                    single_file: true,
+                                                    accept: '<?php echo implode(',', $field->getContentType())?>'
                                                 };
                                                 addFlowControl(query_param,$("#pastell-flow-upload-<?php echo $field->getName(); ?>"));
                                             });
