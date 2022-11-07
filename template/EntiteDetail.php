@@ -25,12 +25,12 @@ $id_e = $entiteExtendedInfo['id_e'];
     <?php endif; ?>
 
     <tr>
-        <th>Identifiant</th>
-        <td><?php echo ($entiteExtendedInfo['id_e']) ?></td>
-    </tr>
-    <tr>
         <th>Dénomination</th>
         <td><?php hecho($entiteExtendedInfo['denomination']); ?></td>
+    </tr>
+    <tr>
+        <th>Identifiant (id_e)</th>
+        <td><?php echo ($entiteExtendedInfo['id_e']) ?></td>
     </tr>
     <?php if ($entiteExtendedInfo['siren']) : ?>
         <tr>
