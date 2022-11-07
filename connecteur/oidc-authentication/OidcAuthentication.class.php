@@ -3,8 +3,10 @@
 use Jumbojett\OpenIDConnectClient;
 use Jumbojett\OpenIDConnectClientException;
 
-class OidcAuthentication extends AuthenticationConnecteur
+final class OidcAuthentication extends AuthenticationConnecteur
 {
+    private const OIDC_REDIRECT_URI = '/Connexion/oidc';
+
     private $providerUrl;
     private $clientId;
     private $clientSecret;
@@ -53,14 +55,14 @@ class OidcAuthentication extends AuthenticationConnecteur
      */
     public function authenticate($redirectUrl = false)
     {
-        $this->oidc->setRedirectURL(\rtrim($this->site_base, '/') . '/Connexion/oidc');
+        $this->oidc->setRedirectURL(\rtrim($this->site_base, '/') . self::OIDC_REDIRECT_URI);
         $this->oidc->authenticate();
         return $this->oidc->requestUserInfo($this->loginAttribute);
     }
 
     public function logout($redirectUrl = false)
     {
-        $this->oidc->signOut($this->oidc->getIdToken(), $redirectUrl ?: SITE_BASE);
+        $this->oidc->signOut($this->oidc->getIdToken(), $redirectUrl ?: $this->site_base);
     }
 
     public function getExternalSystemName(): string

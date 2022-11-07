@@ -7,7 +7,8 @@ use Pastell\Service\PasswordEntropy;
 class ConnexionControler extends PastellControler
 {
     private const CHANGE_PASSWORD_TOKEN_TTL_IN_SECONDS = 1800;
-    private const OIDC_URI_REDIRECT_COOKIE = 'oidcUriRedirect';
+    public const OIDC_URI_REDIRECT_SESSION = 'oidcUriRedirect';
+    public const TEST_LOGIN_SESSION = 'oidcTestLogin';
 
     public function _beforeAction()
     {
@@ -50,7 +51,14 @@ class ConnexionControler extends PastellControler
         $id_ce = $recuperateur->getInt('id_ce');
         /** @var AuthenticationConnecteur $authenticationConnecteur */
         $authenticationConnecteur = $this->getConnecteurFactory()->getConnecteurById($id_ce);
-        $login = $authenticationConnecteur->authenticate(SITE_BASE . "/Connexion/externalAuthentication?id_ce=$id_ce");
+        $redirectUri = "/Connexion/externalAuthentication?id_ce=$id_ce";
+        $_SESSION[self::OIDC_URI_REDIRECT_SESSION] = $redirectUri;
+        if (isset($_SESSION[self::TEST_LOGIN_SESSION])) {
+            $login = $_SESSION[self::TEST_LOGIN_SESSION];
+            unset($_SESSION[self::TEST_LOGIN_SESSION]);
+        } else {
+            $login = $authenticationConnecteur->authenticate(SITE_BASE . $redirectUri);
+        }
         $this->setLastMessage("Authentification avec le login : $login");
         $this->redirect("/Connecteur/edition?id_ce=$id_ce");
     }
@@ -114,12 +122,8 @@ class ConnexionControler extends PastellControler
                 $this->getGetInfo()->get('page_request'),
                 urlencode($this->getGetInfo()->get('request_uri'))
             );
-            if (!isset($_COOKIE[self::OIDC_URI_REDIRECT_COOKIE])) {
-                \setcookie_wrapper(
-                    self::OIDC_URI_REDIRECT_COOKIE,
-                    $this->getGetInfo()->get('request_uri'),
-                    \time() + 30
-                );
+            if (!isset($_SESSION[self::OIDC_URI_REDIRECT_SESSION])) {
+                $_SESSION[self::OIDC_URI_REDIRECT_SESSION] = $this->getGetInfo()->get('request_uri');
             }
         }
 
@@ -144,6 +148,7 @@ class ConnexionControler extends PastellControler
                 )
             );
         }
+        $_SESSION[self::TEST_LOGIN_SESSION] = $login;
 
         /** @var LDAPVerification $verificationConnecteur */
         $verificationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur('Vérification');
@@ -241,10 +246,9 @@ class ConnexionControler extends PastellControler
         if ($authentificationConnecteur && $this->externalConnexion($authentificationConnecteur)) {
             $this->setLastError('');
             $redirect = '/';
-            if (isset($_COOKIE[self::OIDC_URI_REDIRECT_COOKIE])) {
-                $redirect = $_COOKIE[self::OIDC_URI_REDIRECT_COOKIE];
-                \setcookie_wrapper(self::OIDC_URI_REDIRECT_COOKIE, '', \time() - 3600);
-                unset($_COOKIE[self::OIDC_URI_REDIRECT_COOKIE]);
+            if (isset($_SESSION[self::OIDC_URI_REDIRECT_SESSION])) {
+                $redirect = $_SESSION[self::OIDC_URI_REDIRECT_SESSION];
+                unset($_SESSION[self::OIDC_URI_REDIRECT_SESSION]);
             }
             $this->redirect($redirect);
         }
