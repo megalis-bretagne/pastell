@@ -25,7 +25,8 @@ class JournalTest extends PastellTestCase
             $this->getObjectInstancier()->getInstance(UtilisateurSQL::class),
             $this->getObjectInstancier()->getInstance(DocumentSQL::class),
             $this->getObjectInstancier()->getInstance(DocumentTypeFactory::class),
-            $this->getLogger()
+            $this->getLogger(),
+            false
         );
         $journal->setId(1);
         return $journal;

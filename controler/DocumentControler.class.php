@@ -249,7 +249,7 @@ class DocumentControler extends PastellControler
         if ($action) {
             $info = $document->getInfo($id_d);
             $type = $info['type'];
-        } elseif ($id_d) {
+        } else {
             $info = $document->getInfo($id_d);
             $type = $info['type'];
             $action = 'modification';

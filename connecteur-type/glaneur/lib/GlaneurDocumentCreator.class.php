@@ -2,38 +2,14 @@
 
 class GlaneurDocumentCreator
 {
-    private $document;
-    private $documentEntite;
-    private $actionCreatorSQL;
-    private $donneesFormulaireFactory;
-    private $actionExecutorFactory;
-
-    private $jobManager;
-    private $documentCreationService;
-    private $documentModificationService;
-
-    private $notificationMail;
-
     public function __construct(
-        DocumentSQL $document,
-        DocumentEntite $documentEntite,
-        ActionCreatorSQL $actionCreatorSQL,
-        DonneesFormulaireFactory $donneesFormulaireFactory,
-        ActionExecutorFactory $actionExecutorFactory,
-        JobManager $jobManager,
-        DocumentCreationService $documentCreationService,
-        DocumentModificationService $documentModificationService,
-        NotificationMail $notificationMail
+        private readonly ActionCreatorSQL $actionCreatorSQL,
+        private readonly DonneesFormulaireFactory $donneesFormulaireFactory,
+        private readonly JobManager $jobManager,
+        private readonly DocumentCreationService $documentCreationService,
+        private readonly DocumentModificationService $documentModificationService,
+        private readonly NotificationMail $notificationMail
     ) {
-        $this->document = $document;
-        $this->documentEntite = $documentEntite;
-        $this->actionCreatorSQL = $actionCreatorSQL;
-        $this->donneesFormulaireFactory = $donneesFormulaireFactory;
-        $this->actionExecutorFactory = $actionExecutorFactory;
-        $this->jobManager = $jobManager;
-        $this->documentCreationService = $documentCreationService;
-        $this->notificationMail = $notificationMail;
-        $this->documentModificationService = $documentModificationService;
     }
 
     /**

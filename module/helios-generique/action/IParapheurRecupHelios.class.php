@@ -56,11 +56,11 @@ class IParapheurRecupHelios extends ActionExecutor
             $this->getJournal()->add(Journal::DOCUMENT_ACTION, $this->id_e, $this->id_d, 'verif-iparapheur', "Vérification du retour iparapheur");
         }
 
-        /** @var SignatureConnecteur $signature */
         $signature = $this->getConnecteur('signature');
         if (!$signature) {
             throw new Exception("Il n'y a pas de connecteur de signature défini");
         }
+        /** @var SignatureConnecteur $signature */
 
         $helios = $this->getDonneesFormulaire();
         $filename = $helios->getFileName('fichier_pes');

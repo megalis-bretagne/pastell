@@ -9,9 +9,6 @@ class SedaNG extends SEDAConnecteur
 
     private $last_validation_error;
 
-    /** @var  FluxData */
-    private $fluxData;
-
     /**
      * @param DonneesFormulaire $connecteurConfig
      */
@@ -63,14 +60,6 @@ class SedaNG extends SEDAConnecteur
         $fluxDataTest = new FluxDataTest($data);
 
         return $this->getBordereau($fluxDataTest);
-    }
-
-    /**
-     * @param FluxData $fluxData
-     */
-    public function setFluxData(FluxData $fluxData)
-    {
-        $this->fluxData = $fluxData;
     }
 
     /**

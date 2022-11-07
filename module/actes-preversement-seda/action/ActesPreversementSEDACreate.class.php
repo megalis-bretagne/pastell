@@ -203,7 +203,6 @@ class ActesPreversementSEDACreate extends ActionExecutor
             return $matches[1];
         }
 
-        /** @var TdtConnecteur $connecteur */
         $connecteur = $this->objectInstancier
             ->getInstance(ConnecteurFactory::class)
             ->getConnecteurByType($this->id_e, self::FLUX_NAME, 'TdT');
@@ -211,6 +210,7 @@ class ActesPreversementSEDACreate extends ActionExecutor
         if (! $connecteur) {
             return "99_AU";
         }
+        /** @var TdtConnecteur $connecteur */
         return $connecteur->getDefaultTypology($code_nature, $connecteurData->getFilePath('classification_file'));
     }
 }

@@ -10,9 +10,6 @@ class DocumentTypeValidationTest extends PHPUnit\Framework\TestCase
         $this->documentTypeValidation->setListPack(["pack_chorus_pro" => false, "pack_marche" => false]);
         $this->documentTypeValidation->setConnecteurTypeList(['mailsec']);
         $this->documentTypeValidation->setEntiteTypeList([]);
-        $this->documentTypeValidation->setConnecteurTypeActionClassList(
-            ['MailsecEnvoyer', 'MailsecRenvoyer', 'MailsecComputeReadMail', 'MailsecNotReceived']
-        );
     }
 
     public function testValidate()
@@ -59,7 +56,6 @@ class DocumentTypeValidationTest extends PHPUnit\Framework\TestCase
     public function testConnecteurTypeMappingFailed()
     {
         $this->documentTypeValidation->setConnecteurTypeList(["signature"]);
-        $this->documentTypeValidation->setConnecteurTypeActionClassList(["SignatureEnvoie"]);
         $this->assertFalse($this->documentTypeValidation->validate(__DIR__ . "/fixtures/definition-with-connecteur-type-failed.yml"));
         $this->assertEquals("action:<b>test</b>:connecteur-type-mapping:document:<b>toto</b> n'est pas un élément du formulaire", $this->documentTypeValidation->getLastError()[0]);
     }

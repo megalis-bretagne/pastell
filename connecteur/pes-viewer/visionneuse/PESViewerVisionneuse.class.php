@@ -12,9 +12,9 @@ class PESViewerVisionneuse extends ConnectorViewer
      */
     public function display(string $filename, string $filepath): void
     {
-        /** @var PESViewer $visionneusePES */
         $visionneusePES = $this->getConnector();
         if ($visionneusePES) {
+            /** @var PESViewer $visionneusePES */
             $result = $visionneusePES->getURL($filepath);
             ?>
             <iframe title="Contenu du PES ALLER" src="<?php echo $result ?>" height="600" width="100%"></iframe>

@@ -138,7 +138,8 @@ class DocumentControlerTest extends ControlerTestCase
     public function testListDocumentRootEntity(): void
     {
         $this->expectException(LastMessageException::class);
-        $this->expectExceptionMessage("Redirection vers " . SITE_BASE ?? '/' . "Document/index?id_e=0&type=actes-generique");
+        $site_base = $this->getObjectInstancier()->getInstance('site_base');
+        $this->expectExceptionMessage("Redirection vers " .  "{$site_base}Document/index?id_e=0&type=actes-generique");
         $documentController = $this->getControlerInstance(DocumentControler::class);
         $this->setGetInfo([
             'type' => 'actes-generique',

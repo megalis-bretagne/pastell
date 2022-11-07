@@ -16,10 +16,7 @@ class MailsecRelance extends ConnecteurTypeActionExecutor
 
 
         /** @var PdfGeneriqueRelanceConnecteur $pdfGeneriqueRelanceConnecteur */
-        $pdfGeneriqueRelanceConnecteur = $this->getConnecteur('pdf-relance');
-        if (! $pdfGeneriqueRelanceConnecteur) {
-            throw new UnrecoverableException("Aucun connecteur pdf-relance");
-        }
+        $pdfGeneriqueRelanceConnecteur = $this->getConnecteurOrFail('pdf-relance');
 
         $last_action = $this->getDocumentActionEntite()->getLastAction($this->id_e, $this->id_d);
         $action_list = $this->getDocumentActionEntite()->getAction($this->id_e, $this->id_d);

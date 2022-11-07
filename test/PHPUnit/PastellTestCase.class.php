@@ -40,7 +40,7 @@ abstract class PastellTestCase extends TestCase
         $this->objectInstancier = new ObjectInstancier();
         ObjectInstancierFactory::setObjectInstancier($this->objectInstancier);
 
-        $this->objectInstancier->setInstance('site_base', SITE_BASE ?: 'https://localhost');
+        $this->objectInstancier->setInstance('site_base', 'https://localhost:8443/');
         $this->objectInstancier->setInstance('websec_base', 'https://localhost:8443');
 
         $this->objectInstancier->setInstance('daemon_command', "/bin/date");
@@ -59,6 +59,9 @@ abstract class PastellTestCase extends TestCase
 
         $this->objectInstancier->setInstance(MemoryCache::class, new StaticWrapper());
         $this->objectInstancier->setInstance(RedisWrapper::class, $this->createMock(RedisWrapper::class));
+        $this->objectInstancier->setInstance('redis_server', '');
+        $this->objectInstancier->setInstance('redis_port', '');
+        $this->objectInstancier->setInstance('disable_journal_horodatage', false);
 
         $this->objectInstancier->setInstance(LockFactory::class, new LockFactory(new InMemoryStore()));
 
@@ -98,6 +101,8 @@ abstract class PastellTestCase extends TestCase
         $this->objectInstancier->setInstance('pastell_admin_login', 'admin');
         $this->objectInstancier->setInstance('pastell_admin_email', 'test@libriciel.net');
         $this->objectInstancier->setInstance('password_min_entropy', 80);
+
+        $this->objectInstancier->setInstance('unlock_job_error_at_startup', false);
 
         $symfonyContainer = SymfonyContainerFactory::getSymfonyContainer();
         $environment = $symfonyContainer->get('twig');

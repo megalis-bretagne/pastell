@@ -11,7 +11,6 @@ class DocumentTypeValidation
     private $list_pack = [];
     private $connecteur_type_list = [];
     private $entite_type_list = [];
-    private $connecteur_type_action_class_list = [];
 
     public function __construct(YMLLoader $yml_loader)
     {
@@ -53,11 +52,6 @@ class DocumentTypeValidation
     public function setEntiteTypeList(array $entite_type_list)
     {
         $this->entite_type_list = $entite_type_list;
-    }
-
-    public function setConnecteurTypeActionClassList(array $connecteur_type_action_class_list)
-    {
-        $this->connecteur_type_action_class_list = $connecteur_type_action_class_list;
     }
 
     public function validate($definition_file_path)

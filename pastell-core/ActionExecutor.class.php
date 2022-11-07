@@ -238,11 +238,11 @@ abstract class ActionExecutor
     /**
      * @param $type_connecteur
      * @param int $num_same_connecteur
-     * @return Connecteur
+     * @return Connecteur|false
      * @throws NotFoundException
      * @throws UnrecoverableException
      */
-    public function getConnecteur($type_connecteur, $num_same_connecteur = 0)
+    public function getConnecteur($type_connecteur, $num_same_connecteur = 0): Connecteur|false
     {
         $num_same_connecteur = $this->getDocumentType()
             ->getAction()
@@ -262,6 +262,18 @@ abstract class ActionExecutor
         return $connecteur;
     }
 
+    /**
+     * @throws UnrecoverableException
+     * @throws NotFoundException
+     */
+    public function getConnecteurOrFail(string $type_connecteur, int $num_same_connecteur = 0): Connecteur
+    {
+        $connecteur = $this->getConnecteur($type_connecteur, $num_same_connecteur);
+        if (!$connecteur) {
+            throw new UnrecoverableException("Aucun connecteur $type_connecteur disponible");
+        }
+        return $connecteur;
+    }
 
     /**
      *
@@ -411,12 +423,11 @@ abstract class ActionExecutor
         }
     }
 
-    /** @var  InternalAPI */
-    private $internalAPI;
+    private InternalAPI $internalAPI;
 
     public function apiCall($method, $ressource, $data)
     {
-        if (! $this->internalAPI) {
+        if (! isset($this->internalAPI)) {
             $this->internalAPI = $this->objectInstancier->getInstance(InternalAPI::class);
             $this->internalAPI->setCallerType(InternalAPI::CALLER_TYPE_CONSOLE);
             $this->internalAPI->setFileUploader($this->objectInstancier->getInstance(FileUploader::class));

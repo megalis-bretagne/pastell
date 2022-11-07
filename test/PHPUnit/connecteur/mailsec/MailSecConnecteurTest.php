@@ -8,9 +8,6 @@ class MailSecConnecteurTest extends PastellTestCase
 
     public const FLUX_ID =  'mailsec';
     private const EMAIL = 'foo@test.com';
-    private const DESTINATAIRE = 'destinataire';
-    private const CONTENU = 'contenu';
-    private const ENTETE = 'entete';
 
     private DonneesFormulaire $connecteurConfig;
 

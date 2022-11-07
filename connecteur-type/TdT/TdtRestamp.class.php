@@ -17,11 +17,7 @@ class TdTRestamp extends ConnecteurTypeActionExecutor
         $acte_publication_date = $this->getMappingValue('acte_publication_date');
 
         /** @var TdtConnecteur $tdT */
-        $tdT = $this->getConnecteur("TdT");
-
-        if (!$tdT) {
-            throw new UnrecoverableException("Aucun Tdt disponible");
-        }
+        $tdT = $this->getConnecteurOrFail('Tdt');
 
         $tedetis_transaction_id = $this->getDonneesFormulaire()->get($tedetis_transaction_id_element);
 

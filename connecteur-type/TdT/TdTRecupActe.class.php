@@ -26,14 +26,8 @@ class TdTRecupActe extends ConnecteurTypeActionExecutor
         $annexes_tamponnees_element = $this->getMappingValue('annexes_tamponnees');
         $date_ar_element = $this->getMappingValue('date_ar');
 
-
         /** @var TdtConnecteur $tdT */
-        $tdT = $this->getConnecteur("TdT");
-
-        if (!$tdT) {
-            throw new UnrecoverableException("Aucun Tdt disponible");
-        }
-
+        $tdT = $this->getConnecteurOrFail('Tdt');
         $tedetis_transaction_id = $this->getDonneesFormulaire()->get($tedetis_transaction_id_element);
 
         $actionCreator = $this->getActionCreator();

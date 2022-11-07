@@ -323,12 +323,11 @@ class PastellControler extends Controler
         return $instance;
     }
 
-    /** @var  InternalAPI */
-    private $internalAPI;
+    private InternalAPI $internalAPI;
 
     public function apiCall($method, $ressource, $data)
     {
-        if (! $this->internalAPI) {
+        if (! isset($this->internalAPI)) {
             $this->internalAPI = $this->getObjectInstancier()->getInstance(InternalAPI::class);
             $this->internalAPI->setCallerType(InternalAPI::CALLER_TYPE_CONSOLE);
             $this->internalAPI->setFileUploader($this->getObjectInstancier()->getInstance(FileUploader::class));

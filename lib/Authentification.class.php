@@ -8,6 +8,7 @@ class Authentification
         $_SESSION['connexion']['id_u'] = $id_u;
     }
 
+    /** @phpstan-impure  */
     public function isConnected()
     {
         return isset($_SESSION['connexion']);

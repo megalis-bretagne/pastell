@@ -47,7 +47,7 @@ class FtpClientWrapper extends \FtpClient\FtpClient
         $result = call_user_func($function);
         restore_error_handler();
         if ($result === false) {
-            throw new Exception("Erreur FTP : " . $this->last_error);
+            throw new Exception(sprintf("Erreur FTP #%d: %s", $this->last_errno, $this->last_error));
         }
         return $result;
     }

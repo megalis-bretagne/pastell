@@ -25,6 +25,11 @@ class XMLCleaningEmptyNode
         }
     }
 
+    /**
+     * @phpstan-impure TODO il faudrait récupérer et assigner le tableau nodeToRemove
+     * @param DOMElement $domElement
+     * @return void
+     */
     private function cleanElement(DOMElement $domElement)
     {
         /** @var DOMElement $child */

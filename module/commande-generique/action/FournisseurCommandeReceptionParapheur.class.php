@@ -11,10 +11,7 @@ class FournisseurCommandeReceptionParapheur extends ActionExecutor
     {
 
         /** @var SignatureConnecteur $signature */
-        $signature = $this->getConnecteur('signature');
-        if (!$signature) {
-            throw new Exception("Il n'y a pas de connecteur de signature défini");
-        }
+        $signature = $this->getConnecteurOrFail('signature');
 
         $donneesFormulaire = $this->getDonneesFormulaire();
 

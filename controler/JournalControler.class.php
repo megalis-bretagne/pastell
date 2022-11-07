@@ -69,9 +69,9 @@ class JournalControler extends PastellControler
 
         $this->setViewParameter('preuve_txt', $opensslTSWrapper->getTimestampReplyString($this->getViewParameterOrObject('info')['preuve']));
 
-        /** @var HorodateurPastell $horodateur */
         $horodateur = $this->getConnecteurFactory()->getGlobalConnecteur('horodateur');
         if ($horodateur) {
+            /** @var HorodateurPastell $horodateur */
             try {
                     $horodateur->verify($this->getViewParameterOrObject('info')['message_horodate'], $this->getViewParameterOrObject('info')['preuve']);
                     $this->setViewParameter('preuve_is_ok', true);

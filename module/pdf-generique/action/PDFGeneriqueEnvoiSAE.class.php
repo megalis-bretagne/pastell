@@ -33,12 +33,11 @@ class PDFGeneriqueEnvoiSAE extends ActionExecutor
 
         $this->createJournal();
 
-        /** @var SEDAConnecteur $sedaNG */
         $sedaNG = $this->getConnecteur('Bordereau SEDA');
         if (! $sedaNG) {
             throw new Exception("Connnecteur SEDA NG non trouvé");
         }
-
+        /** @var SEDAConnecteur $sedaNG */
         /** @var SAEConnecteur $sae */
         $sae = $this->getConnecteur('SAE');
 

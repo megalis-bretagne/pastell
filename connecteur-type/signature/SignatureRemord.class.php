@@ -11,10 +11,7 @@ class SignatureRemord extends ConnecteurTypeActionExecutor
     public function go(): bool
     {
         /** @var SignatureConnecteur $signature */
-        $signature = $this->getConnecteur('signature');
-        if (!$signature) {
-            throw new UnrecoverableException("Il n'y a pas de connecteur de signature défini");
-        }
+        $signature = $this->getConnecteurOrFail('signature');
 
         $donneesFormulaire = $this->getDonneesFormulaire();
 

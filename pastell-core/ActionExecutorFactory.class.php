@@ -9,18 +9,14 @@ class ActionExecutorFactory
     public const ACTION_FOLDERNAME = "action";
     private const LOCK_TTL_IN_SECONDS = 60 * 60; /* One hour */
 
-    private $extensions;
-    private $objectInstancier;
-
     private $lastMessage;
     private $lastMessageString;
     private $lastException;
     private ActionExecutor $lastActionClass;
 
-    public function __construct(Extensions $extensions, ObjectInstancier $objectInstancier)
-    {
-        $this->extensions = $extensions;
-        $this->objectInstancier = $objectInstancier;
+    public function __construct(
+        private readonly ObjectInstancier $objectInstancier
+    ) {
     }
 
     public function getLastMessage()
@@ -169,20 +165,10 @@ class ActionExecutorFactory
             if ($id_job) {
                 $jobQueue->lock($id_job);
             }
-            if (LOG_ACTION_EXECUTOR_FACTORY_ERROR) {
-                $this->objectInstancier
-                    ->getInstance(Journal::class)
-                    ->add(Journal::DOCUMENT_ACTION_ERROR, $id_e, $id_d, $action_name, $e->getMessage());
-            }
             $this->lastMessage = $e->getMessage();
             $result = false;
             $this->lastException = $e;
         } catch (Exception $e) {
-            if (LOG_ACTION_EXECUTOR_FACTORY_ERROR) {
-                $this->objectInstancier
-                    ->getInstance(Journal::class)
-                    ->add(Journal::DOCUMENT_ACTION_ERROR, $id_e, $id_d, $action_name, $e->getMessage());
-            }
             $this->lastMessage = $e->getMessage();
             $result = false;
             $this->lastException = $e;

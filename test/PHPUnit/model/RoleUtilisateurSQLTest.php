@@ -35,10 +35,11 @@ class RoleUtilisateurSQLTest extends PastellTestCase
     {
         $this->roleUtilisateurSQL->removeAllRole(2);
         $role_list = $this->roleUtilisateurSQL->getAuthorizedRoleToDelegate(2);
+        $result = [];
         foreach ($role_list as $role_info) {
             $result[] = $role_info['role'];
         }
-        $this->assertFalse(isset($result['admin']));
+        $this->assertNotContains('admin', $result);
     }
 
     public function testgetAllDroitEntite()

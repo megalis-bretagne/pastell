@@ -9,7 +9,6 @@ class TypeDossierLoader
     private $memoryCache;
     private $extensionLoader;
     private $roleSQL;
-    private $roleUtilisateur;
 
     private $tmp_folder;
     private $typeDossierImportService;
@@ -19,14 +18,12 @@ class TypeDossierLoader
         MemoryCache $memoryCache,
         ExtensionLoader $extensionLoader,
         RoleSQL $roleSQL,
-        RoleUtilisateur $roleUtilisateur,
         TypeDossierImportService $typeDossierImportService
     ) {
         $this->workspacePath = $workspacePath;
         $this->memoryCache = $memoryCache;
         $this->extensionLoader = $extensionLoader;
         $this->roleSQL = $roleSQL;
-        $this->roleUtilisateur = $roleUtilisateur;
         $this->typeDossierImportService = $typeDossierImportService;
     }
 

@@ -4,17 +4,14 @@ use Twig\Environment;
 
 class ControlerTestCase extends PastellTestCase
 {
-    /**
-     * @var PastellControler
-     */
-    private $controler = null;
+    private Controler $controler;
 
     private $get_info = [];
     private $post_info = [];
 
     protected function setGetInfo(array $info)
     {
-        if ($this->controler) {
+        if (isset($this->controler)) {
             $this->controler->setGetInfo(new Recuperateur($info));
         }
         $this->get_info = $info;
@@ -22,7 +19,7 @@ class ControlerTestCase extends PastellTestCase
 
     protected function setPostInfo(array $info)
     {
-        if ($this->controler) {
+        if (isset($this->controler)) {
             $this->controler->setPostInfo(new Recuperateur($info));
         }
         $this->post_info = $info;

@@ -4,14 +4,12 @@ class FieldData
 {
     private $field;
     private $value;
-    private $orig_value;
 
     private $lastError;
 
     public function __construct(Field $field, $value)
     {
         $this->field = $field;
-        $this->orig_value = $value;
         $this->setValue($value);
     }
 

@@ -48,9 +48,9 @@ class CppIntegrationParGlaneurPivot extends ActionExecutor
         $classCreationFactureCPP->historiser($this->id_d, $docInfo) ;
 
         // Valorisation du cheminement d'après les valeurs par défaut définit dans le connecteur PortailFacture associé au flux Facture CPP
-        /** @var ParametrageFluxFactureCPP $parametrageFluxFactureCPP */
         $parametrageFluxFactureCPP = $this->objectInstancier->getInstance(ConnecteurFactory::class)->getConnecteurByType($this->id_e, $this->type, 'ParametrageFlux');
         if ($parametrageFluxFactureCPP) {
+            /** @var ParametrageFluxFactureCPP $parametrageFluxFactureCPP */
             $classCreationFactureCPP->parametrer($this->id_d, $parametrageFluxFactureCPP);
         }
 

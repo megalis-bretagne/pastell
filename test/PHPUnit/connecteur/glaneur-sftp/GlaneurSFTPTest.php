@@ -8,9 +8,6 @@ class GlaneurSFTPTest extends PastellTestCase
     private $directory_send;
     private $directory_error;
 
-    private $last_message;
-    private $created_id_d;
-
     private $workspace_path;
 
     /** @throws Exception */
@@ -56,10 +53,7 @@ class GlaneurSFTPTest extends PastellTestCase
         }
         $glaneurSFTP = $this->getGlaneurSFTP($collectivite_properties);
         $glaneurSFTP->setSFTPFactory($sftpFactory);
-        $result = $glaneurSFTP->glaner();
-        $this->last_message = $glaneurSFTP->getLastMessage();
-        $this->created_id_d = $result;
-        return $result;
+        return $glaneurSFTP->glaner();
     }
 
 

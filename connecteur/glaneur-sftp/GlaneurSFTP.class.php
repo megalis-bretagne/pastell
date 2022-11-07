@@ -30,7 +30,7 @@ class GlaneurSFTP extends GlaneurConnecteur
      */
     private function getSFTP()
     {
-        if (! $this->sftp) {
+        if ($this->sftp === null) {
             $sftpProperties = new SFTPProperties();
             $sftpProperties->fingerprint = $this->connecteurConfig->get(self::GLANEUR_SFTP_FINGERPRINT);
             $sftpProperties->host = $this->connecteurConfig->get(self::GLANEUR_SFTP_HOST);

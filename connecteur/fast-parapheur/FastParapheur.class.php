@@ -11,7 +11,6 @@ class FastParapheur extends SignatureConnecteur
     private $subscriberNumber;
     private $circuits;
 
-    private $connectionCertificatePath;
     private $connectionCertificatePassword;
 
     private $connectionCertificateCertOnly;
@@ -67,7 +66,6 @@ class FastParapheur extends SignatureConnecteur
         $this->maxNumberOfDaysInParapheur = $donneesFormulaire->get("parapheur_nb_jour_max");
         $this->doNotDeleteAfterRejection = (bool)$donneesFormulaire->get('parapheur_do_not_delete_on_rejection');
 
-        $this->connectionCertificatePath = $donneesFormulaire->getFilePath('certificat_connexion');
         $this->connectionCertificatePassword = $donneesFormulaire->get('certificat_password');
 
         $this->connectionCertificateCertOnly = $donneesFormulaire->getFilePath('certificat_connexion_cert_pem');
@@ -123,8 +121,7 @@ class FastParapheur extends SignatureConnecteur
                 'userKeyOnly' => $this->connectionCertificateKeyOnly,
                 'userCertOnly' => $this->connectionCertificateCertOnly,
                 'stream_context' => $stream_context
-            ],
-            true
+            ]
         );
 
         return new DocapostParapheurSoapClient($client);

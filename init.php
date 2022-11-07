@@ -52,6 +52,7 @@ if (REDIS_SERVER && !TESTING_ENVIRONNEMENT) {
 
 $objectInstancier->setInstance('cache_ttl_in_seconds', CACHE_TTL_IN_SECONDS);
 $objectInstancier->setInstance('disable_job_queue', DISABLE_JOB_QUEUE);
+$objectInstancier->setInstance('disable_journal_horodatage', DISABLE_JOURNAL_HORODATAGE);
 
 $id_u_journal = 0;
 if ($objectInstancier->getInstance(Authentification::class)->isConnected()) {
@@ -75,6 +76,8 @@ $sqlQuery = $objectInstancier->getInstance(SQLQuery::class);
 $sqlQuery->setLogger($logger);
 
 $authentification = $objectInstancier->getInstance(Authentification::class);
+
+
 $journal = $objectInstancier->getInstance(Journal::class);
 $documentTypeFactory = $objectInstancier->getInstance(DocumentTypeFactory::class);
 $donneesFormulaireFactory = $objectInstancier->getInstance(DonneesFormulaireFactory::class);
@@ -104,6 +107,8 @@ $objectInstancier->setInstance('admin_email', ADMIN_EMAIL);
 
 $objectInstancier->setInstance('pastell_admin_login', PASTELL_ADMIN_LOGIN);
 $objectInstancier->setInstance('pastell_admin_email', PASTELL_ADMIN_EMAIL);
+
+$objectInstancier->setInstance('unlock_job_error_at_startup', UNLOK_JOB_ERROR_AT_STARTUP);
 
 $featureToggleService = $objectInstancier->getInstance(FeatureToggleService::class);
 

@@ -8,7 +8,7 @@ class ChorusParCsv extends PortailFactureConnecteur
 
     private $user_login;
 
-    /** @var DonneesFormulaire $globalConfig */
+    /** @var DonneesFormulaire|false $globalConfig */
     private $globalConfig;
 
     /** @var  DonneesFormulaire $connecteurConfig */
@@ -89,7 +89,7 @@ class ChorusParCsv extends PortailFactureConnecteur
      * @param $element_name
      * @return array|bool|string
      */
-    protected function getFromLocalOrGlobalConfig($element_name)
+    protected function getFromLocalOrGlobalConfig($element_name): array|bool|string
     {
         $value = $this->connecteurConfig->get($element_name);
 
@@ -99,6 +99,7 @@ class ChorusParCsv extends PortailFactureConnecteur
         if ($this->globalConfig) {
             return $this->globalConfig->get($element_name);
         }
+        return false;
     }
 
     private function setConfigFromGlobalConnecteur()

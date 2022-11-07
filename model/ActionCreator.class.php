@@ -12,9 +12,6 @@ class ActionCreator extends SQL
     private $lastAction;
     private $id_a;
 
-    private $action;
-    private $date;
-
     public function __construct(SQLQuery $sqlQuery, Journal $journal, $id_d)
     {
         parent::__construct($sqlQuery);
@@ -54,9 +51,6 @@ class ActionCreator extends SQL
 
         $sql = "UPDATE document_entite SET last_action=? , last_action_date=? WHERE id_d=? AND id_e=?";
         $this->query($sql, $action, $now, $this->id_d, $id_e);
-
-        $this->action = $action;
-        $this->date = $now;
 
         $this->addToSQL($id_e, $id_u, $message_journal);
     }

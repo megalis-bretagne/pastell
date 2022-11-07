@@ -38,7 +38,7 @@ class DepotPastell extends GEDConnecteur
         if (empty($last_call['formulaire_ok'])) {
             throw new UnrecoverableException(
                 "Impossible d'appeller l'action sur le document Pastell car le formulaire n'est pas valide : " .
-                $last_call['message'] ?? ""
+                ($last_call['message'] ?? '')
             );
         }
 
@@ -50,7 +50,7 @@ class DepotPastell extends GEDConnecteur
         if (empty($action_call_result['result'])) {
             throw new UnrecoverableException(
                 "Erreur lors de l'appel à l'action sur le document : " .
-                $action_call_result['error-message'] ?? ""
+                ($action_call_result['error-message'] ?? '')
             );
         }
         return $this->getGedDocumentsId();

@@ -621,8 +621,7 @@ class IParapheur extends SignatureConnecteur
                     'exceptions' => 1,
                     'use_curl' => 1,
                     "stream_context" => $stream_context
-                ],
-            true
+                ]
         );
 
 // echo '<pre>';

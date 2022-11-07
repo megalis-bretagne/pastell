@@ -4,6 +4,12 @@ class VerifEnvironnement
 {
     private $last_error;
 
+    public function __construct(
+        private readonly string $redis_server,
+        private readonly string $redis_port,
+    ) {
+    }
+
     public function getLastError()
     {
         return $this->last_error;
@@ -83,13 +89,13 @@ class VerifEnvironnement
             $this->last_error = "L'extension Redis n'est pas installée";
             return false;
         }
-        if (! defined("REDIS_SERVER") || empty(REDIS_SERVER)) {
+        if ($this->redis_server === '') {
             $this->last_error = "Pastell n'est pas configuré pour utiliser REDIS";
             return false;
         }
 
         $redis = new Redis();
-        if (!$redis->connect(REDIS_SERVER, REDIS_PORT)) {
+        if (!$redis->connect($this->redis_server, $this->redis_port)) {
             $this->last_error = "Erreur lors de la connexion au serveur Redis : " . $redis->getLastError();
             return false;
         }

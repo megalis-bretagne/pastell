@@ -12,6 +12,7 @@ class PastellDaemon
         private DocumentSQL $document,
         private NotificationMail $notificationMail,
         private Logger $logger,
+        private readonly string $unlock_job_error_at_startup,
     ) {
     }
 
@@ -19,7 +20,7 @@ class PastellDaemon
     {
         $this->logger->addInfo("Daemon starting");
 
-        if (UNLOK_JOB_ERROR_AT_STARTUP) {
+        if ($this->unlock_job_error_at_startup) {
             //ajout d'un flag "UNLOK_JOB_ERROR_AT_STARTUP" pour ne pas verrouiller les jobs qui ne se sont pas terminés correctement.
             //suite à un arrêt brutal du serveur (ex: restart apache sans avoir arrêté le daemon avec des worker actifs). (r1992)
             $workerSQL = $this->workerSQL;
@@ -31,6 +32,7 @@ class PastellDaemon
             }
         }
 
+        /** @phpstan-ignore-next-line */
         while (true) {
             $this->jobMasterOneRun();
             pcntl_signal_dispatch();
@@ -92,6 +94,10 @@ class PastellDaemon
         exec($command);
     }
 
+    /**
+     * @return void
+     * @throws Exception
+     */
     private function jobMasterOneRun()
     {
         $workerSQL = $this->workerSQL;
