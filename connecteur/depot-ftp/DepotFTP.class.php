@@ -36,7 +36,7 @@ class DepotFTP extends DepotConnecteur
         if ($this->isLoggued) {
             return $this->ftpClient;
         }
-        if (! $this->ftpClient) {
+        if ($this->ftpClient === null) {
             $this->ftpClient = new FtpClientWrapper();
         }
         $this->ftpClient->close();

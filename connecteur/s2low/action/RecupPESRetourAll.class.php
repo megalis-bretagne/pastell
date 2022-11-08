@@ -12,7 +12,6 @@ class RecupPESRetourAll extends ActionExecutor
         $envoye = [];
         foreach ($all_col as $infoCollectivite) {
             try {
-                /** @var S2low $tdT */
                 $tdT = $this->objectInstancier->getInstance(DonneesFormulaireFactory::class)->getConnecteurByType(
                     $infoCollectivite['id_e'],
                     'helios-pes-retour',
@@ -21,6 +20,7 @@ class RecupPESRetourAll extends ActionExecutor
                 if (!$tdT) {
                     continue;
                 }
+                /** @var S2low $tdT */
                 $tdT->getPESRetourListe();
                 $envoye[] = "{$infoCollectivite['denomination']}  : Les fichiers Hélios PES Retour ont été récupérés";
             } catch (Exception $e) {

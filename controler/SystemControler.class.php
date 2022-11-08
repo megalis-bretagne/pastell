@@ -127,13 +127,10 @@ class SystemControler extends PastellControler
         $all_connecteur_type = $this->getConnecteurDefinitionFiles()->getAllType();
         $all_type_entite = array_keys(EntiteSQL::getAllType());
 
-        $connecteur_type_action_class_list = $this->getInstance(ConnecteurTypeFactory::class)->getAllActionExecutor();
-
         $documentTypeValidation = $this->getObjectInstancier()->getInstance(DocumentTypeValidation::class);
         $documentTypeValidation->setListPack($list_pack);
         $documentTypeValidation->setConnecteurTypeList($all_connecteur_type);
         $documentTypeValidation->setEntiteTypeList($all_type_entite);
-        $documentTypeValidation->setConnecteurTypeActionClassList($connecteur_type_action_class_list);
         return $documentTypeValidation;
     }
 

@@ -183,7 +183,8 @@ class Controler
      */
     public function redirect(string $to = ''): never
     {
-        $url = rtrim(SITE_BASE, '/') . '/' . ltrim($to, '/');
+        $site_base = $this->objectInstancier->getInstance('site_base');
+        $url = rtrim($site_base, '/') . '/' . ltrim($to, '/');
         $this->doRedirect($url);
     }
 

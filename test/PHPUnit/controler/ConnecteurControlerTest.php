@@ -160,10 +160,11 @@ class ConnecteurControlerTest extends ControlerTestCase
         try {
             $this->connecteurControler->doImportAction();
         } catch (LastMessageException $exception) {
+            $site_base = $this->getObjectInstancier()->getInstance('site_base');
             $this->assertSame(
                 sprintf(
                     "Redirection vers %s/Connecteur/edition?id_ce=11: Les données du connecteur ont été importées",
-                    rtrim(SITE_BASE, '/')
+                    rtrim($site_base, '/')
                 ),
                 $exception->getMessage()
             );

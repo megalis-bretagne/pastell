@@ -3,12 +3,10 @@
 class FamilleConnecteurAPIController extends BaseAPIController
 {
     private $connecteurDefinitionFiles;
-    private $connecteurEntiteSQL;
 
-    public function __construct(ConnecteurDefinitionFiles $connecteurDefinitionFiles, ConnecteurEntiteSQL $connecteurEntiteSQL)
+    public function __construct(ConnecteurDefinitionFiles $connecteurDefinitionFiles)
     {
         $this->connecteurDefinitionFiles = $connecteurDefinitionFiles;
-        $this->connecteurEntiteSQL = $connecteurEntiteSQL;
     }
 
     public function get()

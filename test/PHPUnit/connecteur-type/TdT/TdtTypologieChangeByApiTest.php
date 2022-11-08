@@ -80,7 +80,6 @@ class TdtTypologieChangeByApiTest extends PastellTestCase
     {
         $connecteur_info = $this->createConnector("fakeTdt", "Bouchon tdt");
 
-        $connecteur_info['id_ce'];
         $connecteurDonneesFormulaire = $this->getDonneesFormulaireFactory()
             ->getConnecteurEntiteFormulaire($connecteur_info['id_ce']);
 

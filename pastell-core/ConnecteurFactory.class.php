@@ -49,7 +49,7 @@ class ConnecteurFactory
         return $this->getConnecteurById($id_ce);
     }
 
-    public function getConnecteurConfigByType($id_e, $id_flux, $type_connecteur, $num_same_type = 0)
+    public function getConnecteurConfigByType($id_e, $id_flux, $type_connecteur, $num_same_type = 0): DonneesFormulaire|false
     {
         $id_ce = $this->getConnecteurId($id_e, $id_flux, $type_connecteur, $num_same_type);
         if (! $id_ce) {
@@ -78,12 +78,12 @@ class ConnecteurFactory
         return $connecteurObject;
     }
 
-    public function getGlobalConnecteur($type)
+    public function getGlobalConnecteur($type): Connecteur|false
     {
         return $this->getConnecteurByType(0, 'global', $type);
     }
 
-    public function getGlobalConnecteurConfig($type)
+    public function getGlobalConnecteurConfig($type): DonneesFormulaire|false
     {
         return $this->getConnecteurConfigByType(0, 'global', $type);
     }

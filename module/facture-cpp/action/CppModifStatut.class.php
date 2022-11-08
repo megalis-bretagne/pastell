@@ -170,10 +170,10 @@ class CppModifStatut extends ActionExecutor
      * @param $statut_cible_liste
      * @param $statut_cpp
      * @param bool $historiser_statut_consomme
-     * @return false|string
+     * @return string
      * @throws NotFoundException
      */
-    private function consommerStatutCibleListe($statut_cible_liste, $statut_cpp, $historiser_statut_consomme = true)
+    private function consommerStatutCibleListe($statut_cible_liste, $statut_cpp, $historiser_statut_consomme = true): string
     {
         $doc = $this->getDonneesFormulaire();
 

@@ -17,7 +17,7 @@ abstract class Connecteur
     }
 
     /**
-     * @return DonneesFormulaire
+     * @return ?DonneesFormulaire
      * Retourne les données du flux en cours de traitement.
      * Le connecteur ne doit accéder qu'aux seuls attributs à sa portée :
      * - attributs publics : déclarés dans le flux

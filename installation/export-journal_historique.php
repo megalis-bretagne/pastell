@@ -8,7 +8,7 @@
 require_once __DIR__ . '/../init.php';
 
 
-if ($argc < 1 || ! preg_match("#\d{4}-\d{2}-\d{2}#", $argv[1])) {
+if (($argc < 2) || ! preg_match("#\d{4}-\d{2}-\d{2}#", $argv[1])) {
     echo "Usage: {$argv[0]} date_debut\n";
     echo "\tAvec date_debut au format ISO (exemple : 2015-03-31)\n";
     exit;

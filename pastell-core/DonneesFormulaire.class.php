@@ -23,8 +23,7 @@ class DonneesFormulaire
 
     private $fieldDataList;
 
-    /** @var  DocumentIndexor */
-    private $documentIndexor;
+    private DocumentIndexor $documentIndexor;
 
     /**
      * DonneesFormulaire constructor.
@@ -590,7 +589,7 @@ class DonneesFormulaire
 
     private function updateAllIndexedField()
     {
-        if (! $this->documentIndexor) {
+        if (! isset($this->documentIndexor)) {
             return;
         }
         if (empty($this->fieldDataList)) {
@@ -1022,10 +1021,10 @@ class DonneesFormulaire
 
     /**
      * @param Field $field
-     * @return false|int
+     * @return int
      * @throws DonneesFormulaireException
      */
-    private function validateAndReturnFieldSize(Field $field)
+    private function validateAndReturnFieldSize(Field $field): int
     {
         $fieldSize = 0;
         for ($fileNumber = 0; $fileNumber < $this->getFileNumber($field->getName()); ++$fileNumber) {

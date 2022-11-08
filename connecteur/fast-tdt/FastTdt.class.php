@@ -33,7 +33,6 @@ class FastTdt extends TdtConnecteur
     private $classificationDate;
     private $circuit;
 
-    private $connectionCertificatePath;
     private $connectionCertificatePassword;
 
     private $connectionCertificateCertOnly;
@@ -67,7 +66,6 @@ class FastTdt extends TdtConnecteur
         $this->classificationDate = $donneesFormulaire->get('classification_date');
         $this->circuit = $donneesFormulaire->get('circuit');
 
-        $this->connectionCertificatePath = $donneesFormulaire->getFilePath('certificat_connexion');
         $this->connectionCertificatePassword = $donneesFormulaire->get('certificat_password');
 
         $this->connectionCertificateCertOnly = $donneesFormulaire->getFilePath('certificat_connexion_cert_pem');
@@ -126,8 +124,7 @@ class FastTdt extends TdtConnecteur
                 'userCertOnly' => $this->connectionCertificateCertOnly,
                 'stream_context' => $stream_context,
                 'location' => $this->getSoapUrl(),
-            ],
-            true
+            ]
         );
     }
 
@@ -156,8 +153,7 @@ class FastTdt extends TdtConnecteur
                 'userKeyOnly' => $this->connectionCertificateKeyOnly,
                 'userCertOnly' => $this->connectionCertificateCertOnly,
                 'stream_context' => $stream_context
-            ],
-            true
+            ]
         );
 
         return new DocapostParapheurSoapClient($client);

@@ -124,6 +124,7 @@
 - Suppression de la méthode ActionExecutorFactory::getFluxActionPath()
 - Suppression de la méthode ActionExecutorFactory::getAllActionClass()
 - Suppression de la méthode DocumentTypeValidation::setActionClassList()
+- Suppression de la constante LOG_ACTION_EXECUTOR_FACTORY_ERROR
 
 # [3.1.17] - 2022-09-12
 

@@ -6,7 +6,7 @@
 
 function get_hecho(?string $message = '', int $quote_style = ENT_QUOTES): string
 {
-    return htmlentities($message ?? '', $quote_style, "utf-8") ?? '';
+    return htmlentities($message ?? '', $quote_style, "utf-8") ?: '';
 }
 
 function hecho(?string $message = '', int $quot_style = ENT_QUOTES): void
@@ -106,6 +106,7 @@ function throwLastError($message = false)
 
 function header_wrapper($str)
 {
+    /** @phpstan-ignore-next-line */
     if (TESTING_ENVIRONNEMENT) {
         echo "$str\n";
     } else {
@@ -118,15 +119,17 @@ function header_wrapper($str)
  */
 function exit_wrapper(int $code = 0): never
 {
+    /** @phpstan-ignore-next-line */
     if (TESTING_ENVIRONNEMENT) {
         throw new Exception("Exit called with code $code");
-    } else {
-        exit($code);
     }
+    /** @phpstan-ignore-next-line */
+    exit($code);
 }
 
 function setcookie_wrapper($name, $value = "", $expire = 0, $path = "", $domain = "", $secure = false, $httponly = false)
 {
+    /** @phpstan-ignore-next-line */
     if (TESTING_ENVIRONNEMENT) {
         $logger = ObjectInstancierFactory::getObjetInstancier()->getInstance(PastellLogger::class);
         $logger->info("Call setcookie($name,$value,$expire,$path,$domain,$secure,$httponly)");
@@ -138,11 +141,12 @@ function setcookie_wrapper($name, $value = "", $expire = 0, $path = "", $domain 
 
 function move_uploaded_file_wrapper($filename, $destination)
 {
+    /** @phpstan-ignore-next-line */
     if (TESTING_ENVIRONNEMENT) {
         return rename($filename, $destination);
-    } else {
-        return move_uploaded_file($filename, $destination);
     }
+    /** @phpstan-ignore-next-line */
+    return move_uploaded_file($filename, $destination);
 }
 
 function wl_basename($file)

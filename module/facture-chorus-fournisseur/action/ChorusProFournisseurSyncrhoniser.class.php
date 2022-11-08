@@ -65,7 +65,7 @@ class ChorusProFournisseurSyncrhoniser extends ActionExecutor
         $statut_courant = $histoStatutFactureCPP['statut_courant'];
 
         /** @var ParamChorusFournisseur $parametrageFluxFactureChorusFournisseur */
-        $parametrageFluxFactureChorusFournisseur = $this->getConnecteur("ParamChorusFournisseur");
+        $parametrageFluxFactureChorusFournisseur = $this->getConnecteurOrFail("ParamChorusFournisseur");
 
         $action = 'termine';
         if (($this->getDonneesFormulaire()->get('envoi_sae')) && !($this->getDonneesFormulaire()->get('sae_transfert_id'))) {
@@ -88,8 +88,8 @@ class ChorusProFournisseurSyncrhoniser extends ActionExecutor
             return true;
         }
 
-        $recup_status = ($parametrageFluxFactureChorusFournisseur && $parametrageFluxFactureChorusFournisseur->recupStatutFacture());
-        $en_etat_termine = ($this->getDocumentActionEntite()->getLastAction($this->id_e, $this->id_d) == 'termine');
+        $recup_status = $parametrageFluxFactureChorusFournisseur->recupStatutFacture();
+        $en_etat_termine = ($this->getDocumentActionEntite()->getLastAction($this->id_e, $this->id_d) === 'termine');
 
         if (! $recup_status && ! $en_etat_termine) {
             $message = "La facture est en statut $statut_courant : pas de récupération de statut : fin de synchronisation";

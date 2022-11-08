@@ -65,7 +65,7 @@ class FakeCPP extends PortailFactureConnecteur
         list($id_e,$numFacture) = explode("-", $idFacture);
 
         $PathFichierFactureCPP = __DIR__ . "/fixtures/facture_{$numFacture}.xml";
-        if (!$PathFichierFactureCPP) {
+        if (! file_exists($PathFichierFactureCPP)) {
             throw new CPPException("Problème lors de la récuperation du fichier de la facture cpp " . $idFacture);
         }
         return file_get_contents($PathFichierFactureCPP);

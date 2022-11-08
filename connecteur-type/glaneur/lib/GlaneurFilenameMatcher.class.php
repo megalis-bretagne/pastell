@@ -21,10 +21,10 @@ class GlaneurFilenameMatcher
                 $regexp = preg_replace_callback(
                     '#\$matches\[(\d+)]\[(\d+)]#',
                     function ($m) use ($matches) {
-                        if (empty($matches[$m[1]]) || empty($matches[(int)$m[1]][(int)$m[2]])) {
+                        if (empty($matches[(int)$m[1]]) || empty($matches[(int)$m[1]][(int)$m[2]])) {
                             return false;
                         }
-                        return $matches[$m[1]][$m[2]];
+                        return $matches[(int)$m[1]][(int)$m[2]];
                     },
                     $regexp
                 );

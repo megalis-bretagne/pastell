@@ -4,7 +4,6 @@ class PieceMarcheParEtapeTypePieceTest extends PastellMarcheTestCase
 {
     private const FILENAME_PIECE1 = "2018BPU.pdf";
     private const FILENAME_PIECE2 = "2018CCAP.pdf";
-    private const ACTION_NAME = "creer-piece-marche";
 
     private $id_d;
 

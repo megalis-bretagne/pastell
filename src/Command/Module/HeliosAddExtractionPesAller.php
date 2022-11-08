@@ -91,9 +91,6 @@ class HeliosAddExtractionPesAller extends BaseCommand
                 )
             );
         }
-        if (!$source) {
-            throw new InvalidArgumentException("Missing source module helios");
-        }
         $this->getIO()->title(
             "Start extract informations fichier_pes for `$source`"
         );

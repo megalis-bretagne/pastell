@@ -38,10 +38,10 @@ class ConnexionControler extends PastellControler
             }
         } catch (Exception $e) {
         }
-
         if (!$this->getAuthentification()->isConnected()) {
             $this->redirect('/Connexion/connexion');
         }
+        return false;
     }
 
     /**
@@ -92,13 +92,12 @@ class ConnexionControler extends PastellControler
         bool $redirect = true
     ) {
         if (is_null($authenticationConnecteur)) {
-            /** @var AuthenticationConnecteur $authenticationConnecteur */
             $authenticationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur('Authentification');
         }
         if (!$authenticationConnecteur) {
             return false;
         }
-
+        /** @var AuthenticationConnecteur $authenticationConnecteur */
         $redirectUrl = false;
         if ($redirect) {
             $redirectUrl = sprintf(
@@ -130,12 +129,12 @@ class ConnexionControler extends PastellControler
             );
         }
 
-        /** @var LDAPVerification $verificationConnecteur */
         $verificationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur('Vérification');
 
         if (!$verificationConnecteur) {
             return $id_u;
         }
+        /** @var LDAPVerification $verificationConnecteur */
 
         if (!$verificationConnecteur->getEntry($login)) {
             throw new Exception("Vous ne pouvez pas vous connecter car vous êtes inconnu sur l'annuaire LDAP");
@@ -215,11 +214,14 @@ class ConnexionControler extends PastellControler
      */
     public function connexionAction(): void
     {
-        /** @var AuthenticationConnecteur $authentificationConnecteur */
         $authentificationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur('Authentification');
-        if ($authentificationConnecteur && $this->externalConnexion($authentificationConnecteur)) {
-            $this->setLastError('');
-            $this->redirect($this->getGetInfo()->get('request_uri'));
+
+        if ($authentificationConnecteur) {
+            /** @var AuthenticationConnecteur $authentificationConnecteur */
+            if ($this->externalConnexion($authentificationConnecteur)) {
+                $this->setLastError('');
+                $this->redirect($this->getGetInfo()->get('request_uri'));
+            }
         }
         $certificatConnexion = $this->getObjectInstancier()->getInstance(CertificatConnexion::class);
         $userId = $certificatConnexion->autoConnect();
@@ -301,7 +303,6 @@ class ConnexionControler extends PastellControler
      */
     public function externalErrorAction()
     {
-        /** @var AuthenticationConnecteur $authenticationConnecteur */
         $authenticationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur('Authentification');
 
         $this->setViewParameter('page_title', "Erreur lors de l'authentification");
@@ -309,6 +310,7 @@ class ConnexionControler extends PastellControler
         $this->setViewParameter('externalSystem', "système d'authentification inconnu");
 
         if ($authenticationConnecteur) {
+            /** @var AuthenticationConnecteur $authenticationConnecteur */
             $this->setViewParameter('externalSystem', $authenticationConnecteur->getExternalSystemName());
         }
         $this->renderDefault();
@@ -325,9 +327,9 @@ class ConnexionControler extends PastellControler
         $csrfToken = $this->getInstance(CSRFToken::class);
         $csrfToken->deleteToken();
 
-        /** @var AuthenticationConnecteur $authentificationConnecteur */
         $authentificationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur('Authentification');
         if ($authentificationConnecteur) {
+            /** @var AuthenticationConnecteur $authentificationConnecteur */
             $authentificationConnecteur->logout($authentificationConnecteur->getLogoutRedirectUrl());
         }
 
@@ -353,10 +355,10 @@ class ConnexionControler extends PastellControler
         $login = $recuperateur->get('login');
         $password = $recuperateur->get('password');
 
-        /** @var AuthenticationConnecteur $authenticationConnecteur */
         $authenticationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur('Authentification');
 
         if ($authenticationConnecteur && $login != 'admin') {
+            /** @var AuthenticationConnecteur $authenticationConnecteur */
             $this->setLastError(
                 sprintf(
                     "Veuillez utiliser le serveur %s pour l'authentification",
@@ -371,10 +373,10 @@ class ConnexionControler extends PastellControler
             $this->setLastError('Identifiant ou mot de passe incorrect.');
             $this->redirect($redirect_fail);
         }
-        /** @var LDAPVerification $verificationConnecteur */
         $verificationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur('Vérification');
 
         if ($verificationConnecteur && $login != 'admin') {
+            /** @var LDAPVerification $verificationConnecteur */
             if (!$verificationConnecteur->verifLogin($login, $password)) {
                 $this->getLastError()->setLastError('Login ou mot de passe incorrect. (LDAP)');
                 $this->redirect($redirect_fail);

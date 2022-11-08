@@ -15,7 +15,7 @@ abstract class ConnectorViewer implements Viewer
         $this->connector = $connector;
     }
 
-    public function getConnector(): Connecteur
+    public function getConnector(): ?Connecteur
     {
         return $this->connector;
     }

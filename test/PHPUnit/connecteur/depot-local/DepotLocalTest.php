@@ -46,7 +46,7 @@ class DepotLocalTest extends PastellTestCase
         );
         $this->expectException("Exception");
         $this->expectExceptionMessage(
-            "Erreur lors de l'accès au répertoire : scandir(): (errno 2): No such file or directory"
+            "Erreur #2 lors de l'accès au répertoire : scandir(): (errno 2): No such file or directory"
         );
         $this->depotLocal->listDirectory();
     }

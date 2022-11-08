@@ -9,7 +9,6 @@ class RecupReponsePrefectureAll extends ActionExecutor
         $envoye = [];
         foreach ($all_col as $infoCollectivite) {
             try {
-                /** @var S2low $tdT */
                 $tdT = $this->getConnecteurFactory()->getConnecteurByType(
                     $infoCollectivite['id_e'],
                     'actes-reponse-prefecture',
@@ -18,6 +17,7 @@ class RecupReponsePrefectureAll extends ActionExecutor
                 if (!$tdT) {
                     continue;
                 }
+                /** @var S2low $tdT */
                 $numberOfResponses = $tdT->getListDocumentPrefecture();
                 $message = $numberOfResponses > 1 ?
                     "$numberOfResponses réponses de la préfecture ont été récupérées."

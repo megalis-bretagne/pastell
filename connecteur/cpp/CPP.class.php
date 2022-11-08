@@ -18,7 +18,7 @@ class CPP extends PortailFactureConnecteur
     private $depose_depuis_nb_jours;
     private $depose_avant_nb_jours;
 
-    /** @var DonneesFormulaire $globalConfig */
+    /** @var DonneesFormulaire|false $globalConfig */
     private $globalConfig;
 
     /** @var  DonneesFormulaire $connecteurConfig */
@@ -149,6 +149,7 @@ class CPP extends PortailFactureConnecteur
         if ($this->globalConfig) {
             return $this->globalConfig->get($element_name);
         }
+        return false;
     }
 
     private function setConfigFromGlobalConnecteur()

@@ -65,9 +65,9 @@ class CppCreation extends ActionExecutor
         $donneesFormulaire->setData('facture_cadre', strval($donnees_facture['facture_cadre']));
 
         // Valorisation du cheminement d'après les valeurs par défaut définit dans le connecteur PortailFacture associé au flux Facture CPP
-        /** @var ParametrageFluxFactureCPP $parametrageFluxFactureCPP */
         $parametrageFluxFactureCPP = $this->objectInstancier->getInstance(ConnecteurFactory::class)->getConnecteurByType($this->id_e, $this->type, 'ParametrageFlux');
         if ($parametrageFluxFactureCPP) {
+            /** @var ParametrageFluxFactureCPP $parametrageFluxFactureCPP */
             $this->objectInstancier->getInstance(CreationFactureCPP::class)->parametrer($this->id_d, $parametrageFluxFactureCPP);
         }
 

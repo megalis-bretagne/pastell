@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-class VerifEnvironnementTest extends PHPUnit\Framework\TestCase
+class VerifEnvironnementTest extends PastellTestCase
 {
     public function testCheckExtension(): void
     {
-        $verifEnvironnement = new VerifEnvironnement();
-
+        $verifEnvironnement = $this->getObjectInstancier()->getInstance(VerifEnvironnement::class);
         $this->assertEquals(
             [
                 'bcmath' => true,

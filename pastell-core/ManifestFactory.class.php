@@ -16,7 +16,7 @@ class ManifestFactory
     public function getManifest($extension_path)
     {
         $manifest_file_path  = $extension_path . "/" . self::MANIFEST_FILENAME;
-        if (! $manifest_file_path) {
+        if (! file_exists($manifest_file_path)) {
             throw new Exception("Le fichier $manifest_file_path n'existe pas");
         }
         $manifest_info = $this->ymlLoader->getArray($manifest_file_path);

@@ -5,8 +5,7 @@ class Iconv
     public const ISO_8850_15 = 'ISO-8859-15';
     public const UTF_8 = 'UTF-8';
 
-    /** @var  callable */
-    private $loging_function;
+    private Closure $loging_function;
 
     public function setLogingFunction(callable $loging_function)
     {
@@ -15,7 +14,7 @@ class Iconv
 
     private function log($message)
     {
-        if ($this->loging_function) {
+        if (isset($this->loging_function)) {
             call_user_func_array($this->loging_function, [$message]);
         }
     }

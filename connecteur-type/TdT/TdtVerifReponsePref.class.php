@@ -18,11 +18,7 @@ class TdtVerifReponsePref extends ConnecteurTypeActionExecutor
         $termine = $this->getMappingValue('termine');
 
         /** @var TdtConnecteur $tdT */
-        $tdT = $this->getConnecteur("TdT");
-
-        if (!$tdT) {
-            throw new UnrecoverableException("Aucun Tdt disponible");
-        }
+        $tdT = $this->getConnecteurOrFail('Tdt');
 
         $acte_transaction_id_element = $this->getDonneesFormulaire()->get($acte_transaction_id);
         $reponse_transaction_id_element = $this->getDonneesFormulaire()->get($reponse_transaction_id);

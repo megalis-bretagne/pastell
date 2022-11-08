@@ -2,16 +2,14 @@
 
 class NotBuggySoapClient extends SoapClient
 {
-    private $is_jax_ws;
     private $option;
     private $http_proxy_url;
     private $no_proxy;
     private ?string $soapErrorException = null;
 
 //PHP SUCKS : https://bugs.php.net/bug.php?id=47584
-    public function __construct($wsdl, array $options = [], $is_jax_ws = false)
+    public function __construct($wsdl, array $options = [])
     {
-        $this->is_jax_ws = $is_jax_ws;
         $this->option = $options;
         $options['exceptions'] = 1;
         $options['trace'] = 1;
@@ -24,9 +22,6 @@ class NotBuggySoapClient extends SoapClient
         } catch (SoapFault $soapFault) {
             $exEtCauses = $this->soapErrorAdd($soapFault->getMessage());
             throw new SoapFault($soapFault->faultcode, $exEtCauses);
-        } catch (Exception $ex) {
-            $exEtCauses = $this->soapErrorAdd($ex->getMessage());
-            throw new Exception($exEtCauses, $ex->getCode(), $ex);
         } finally {
             restore_error_handler();
             if (function_exists('xdebug_enable')) {

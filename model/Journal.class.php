@@ -27,17 +27,15 @@ class Journal extends SQL
     public const ACTION_AJOUTE = 'Ajouté';
 
     private $id_u;
-    /**
-     * @var Horodateur
-     */
-    private $horodateur;
+    private Horodateur $horodateur;
 
     public function __construct(
         SQLQuery $sqlQuery,
-        private UtilisateurSQL $utilisateurSQL,
-        private DocumentSQL $documentSQL,
-        private DocumentTypeFactory $documentTypeFactory,
-        private Logger $logger,
+        private readonly UtilisateurSQL $utilisateurSQL,
+        private readonly DocumentSQL $documentSQL,
+        private readonly DocumentTypeFactory $documentTypeFactory,
+        private readonly Logger $logger,
+        private readonly string $disable_journal_horodatage,
     ) {
         parent::__construct($sqlQuery);
     }
@@ -96,7 +94,10 @@ class Journal extends SQL
         $preuve = "";
         $date_horodatage = "";
 
-        if (($this->horodateur)  && (! DISABLE_JOURNAL_HORODATAGE)) {
+        if (
+            (isset($this->horodateur))  &&
+            (! $this->disable_journal_horodatage)
+        ) {
             $preuve = $this->horodateur->getTimestampReply($message_horodate);
         }
         if ($preuve) {
@@ -114,7 +115,10 @@ class Journal extends SQL
 
         $id_j = $this->lastInsertId();
 
-        if ((! $preuve) && (! DISABLE_JOURNAL_HORODATAGE)) {
+        if (
+            (! $preuve) &&
+            (! $this->disable_journal_horodatage)
+        ) {
             $sql = "INSERT INTO journal_attente_preuve (id_j) VALUES (?)";
             $this->query($sql, $id_j);
         }
@@ -298,7 +302,7 @@ class Journal extends SQL
 
     public function horodateAll()
     {
-        if (! $this->horodateur) {
+        if (! isset($this->horodateur)) {
             throw new Exception("Aucun horodateur configuré\n");
         }
 

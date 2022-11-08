@@ -8,7 +8,6 @@ class DocumentAPIController extends BaseAPIController
         private DonneesFormulaireFactory $donneesFormulaireFactory,
         private ActionPossible $actionPossible,
         private DocumentEntite $documentEntite,
-        private ActionCreatorSQL $actionCreatorSQL,
         private DocumentTypeFactory $documentTypeFactory,
         private ActionExecutorFactory $actionExecutorFactory,
         private Journal $journal,

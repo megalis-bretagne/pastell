@@ -30,7 +30,6 @@ class ConnecteurTypeFactory
             throw new RecoverableException("La classe $action_class_name n'a pas été trouvée.");
         }
 
-        /** @var ConnecteurTypeActionExecutor|ConnecteurTypeChoiceActionExecutor $action_class */
         $action_class = new $action_class_name($this->objectInstancier);
 
         if (
@@ -45,7 +44,7 @@ class ConnecteurTypeFactory
                 )
             );
         }
-
+        /** @var ConnecteurTypeActionExecutor|ConnecteurTypeChoiceActionExecutor $action_class */
         return $action_class;
     }
 

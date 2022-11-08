@@ -27,9 +27,9 @@ class CreationFactureCPP
         $this->historiser($new_id_d, $docInfo) ;
 
         // Valorisation du cheminement d'après les valeurs par défaut définies dans le connecteur ParametrageFlux associé au flux Facture CPP
-        /** @var ParametrageFluxFactureCPP $parametrageFluxFactureCPP */
         $parametrageFluxFactureCPP = $this->objectInstancier->getInstance(ConnecteurFactory::class)->getConnecteurByType($id_e, $nom_flux_cpp, 'ParametrageFlux');
         if ($parametrageFluxFactureCPP) {
+            /** @var ParametrageFluxFactureCPP $parametrageFluxFactureCPP */
             $this->parametrer($new_id_d, $parametrageFluxFactureCPP);
         }
 

@@ -76,7 +76,11 @@ class DepotLocal extends DepotConnecteur
         $result = call_user_func($function);
         restore_error_handler();
         if ($result === false) {
-            throw new Exception("Erreur lors de l'accès au répertoire : " . $this->last_error);
+            throw new Exception(sprintf(
+                "Erreur #%s lors de l'accès au répertoire : %s",
+                $this->last_errno,
+                $this->last_error
+            ));
         }
         return $result;
     }

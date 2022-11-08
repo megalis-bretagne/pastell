@@ -15,8 +15,6 @@ use Sabre\HTTP\Request;
 
 class WebdavWrapper
 {
-    private $lastError;
-
     /** @var Client */
     private $dav;
 
@@ -42,11 +40,6 @@ class WebdavWrapper
         ];
         // Creation d'un nouveau client SabreDAV
         $this->dav = $this->webdavClientFactory->getInstance($settings);
-    }
-
-    public function getLastError()
-    {
-        return $this->lastError;
     }
 
     /**
