@@ -110,7 +110,7 @@ abstract class PastellTestCase extends TestCase
             Environment::class,
             $environment
         );
-        $this->setListPack(["pack_chorus_pro" => true, "pack_marche" => true, "pack_test" => true]);
+        $this->setListPack(["pack_chorus_pro" => true, "pack_marche" => true, "pack_test" => true, "pack_libersign" => true]);
     }
 
     public function getObjectInstancier(): ObjectInstancier

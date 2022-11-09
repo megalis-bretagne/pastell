@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @deprecated 4.0.0
+ */
 final class SignedFile
 {
     /** @var string */

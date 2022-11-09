@@ -3,6 +3,9 @@
 use Pastell\Client\Crypto\CryptoClientException;
 use Psr\Http\Client\ClientExceptionInterface;
 
+/**
+ * @deprecated 4.0.0
+ */
 class LibersignTestV2 extends ChoiceActionExecutor
 {
     /**

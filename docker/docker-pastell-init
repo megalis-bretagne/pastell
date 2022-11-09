@@ -46,10 +46,11 @@ define("PASTELL_ADMIN_EMAIL", "${PASTELL_ADMIN_EMAIL:-test@libriciel.net}");
 define("PASTELL_ADMIN_LOGIN", "${PASTELL_ADMIN_LOGIN:-admin}");
 
 define("LIST_PACK", [
-  "pack_chorus_pro" => ${PACK_CHORUS_PRO:-true},
-  "pack_marche" => ${PACK_MARCHE:-true},
-  "pack_urbanisme" => ${PACK_URBANISME:-true},
-  "pack_test" => ${PACK_TEST:-true},
+  "pack_chorus_pro" => ${PACK_CHORUS_PRO:-false},
+  "pack_marche" => ${PACK_MARCHE:-false},
+  "pack_urbanisme" => ${PACK_URBANISME:-false},
+  "pack_test" => ${PACK_TEST:-false},
+  "pack_libersign" => ${PACK_LIBERSIGN:-false},
 ]);
 EOF
 

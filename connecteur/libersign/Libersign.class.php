@@ -5,6 +5,9 @@ use Pastell\Client\Crypto\CryptoClientException;
 use Pastell\Client\Crypto\CryptoClientFactory;
 use Psr\Http\Client\ClientExceptionInterface;
 
+/**
+ * @deprecated 4.0.0
+ */
 class Libersign extends SignatureConnecteur
 {
     public const LIBERSIGN_SIGNATURE_CADES = 'CADES';

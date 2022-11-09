@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @deprecated 4.0.0
+ */
 class LibersignTestButton extends ActionExecutor
 {
     public function go()
