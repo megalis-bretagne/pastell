@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Pastell\Seda\Message\SedaMessageBuilder;
 use Pastell\Tests\Connector\AbstractSedaGeneratorConnectorTestCase;
 
-class SedaGeneriqueTest extends AbstractSedaGeneratorConnectorTestCase
+final class SedaGeneratorAsalae10Test extends AbstractSedaGeneratorConnectorTestCase
 {
     public function getSedaMessageBuilder(): SedaMessageBuilder
     {
@@ -14,7 +14,7 @@ class SedaGeneriqueTest extends AbstractSedaGeneratorConnectorTestCase
 
     public function getSedaConnectorId(): string
     {
-        return 'generateur-seda';
+        return 'generateur-seda-asalae-1.0';
     }
 
     public function getExpectedCallDirectory(): string

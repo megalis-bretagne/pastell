@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Pastell\Connector\AbstractSedaGeneratorConnector;
 use Pastell\Viewer\ConnectorViewer;
 
 class SedaGeneriqueVisionneuse extends ConnectorViewer
@@ -16,7 +17,7 @@ class SedaGeneriqueVisionneuse extends ConnectorViewer
             return;
         }
 
-        /** @var SedaGenerique $connector */
+        /** @var AbstractSedaGeneratorConnector $connector */
         $connector = $this->getConnector();
         $pastell2Seda = $connector->getPastellToSeda();
         $content = \json_decode(\file_get_contents($filepath), true, 512, \JSON_THROW_ON_ERROR);

@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pastell\Updater\Major4\Minor0;
 
+use DonneesFormulaireFactory;
 use Exception;
 use Pastell\Service\Droit\DroitService;
 use Pastell\Service\UpdateFieldService;
@@ -11,12 +14,13 @@ use RoleDroit;
 use RoleSQL;
 use SQLQuery;
 
-class Patch0 implements Version
+final class Patch0 implements Version
 {
     public function __construct(
         private readonly SQLQuery $sqlQuery,
         private readonly RoleSQL $roleSQL,
         private readonly RoleDroit $roleDroit,
+        private readonly DonneesFormulaireFactory $donneesFormulaireFactory,
         private readonly UpdateFieldService $updateFieldService,
         private readonly ?Logger $logger = null,
     ) {
@@ -27,22 +31,27 @@ class Patch0 implements Version
      */
     public function update(): void
     {
-        $this->updateEntiteServiceByCollectivite();
-        $this->forceUpdateFieldMailsec();
-        $this->addConnectorPermission();
+        $this
+            ->updateEntiteServiceByCollectivite()
+            ->forceUpdateFieldMailsec()
+            ->addConnectorPermission()
+            ->replaceSedaGenerator()
+        ;
     }
 
     /**
      * Suppression du modèle `Entite`, remplacé par `EntiteSQL` (et suppression du type d'entité "service") #1589
      * @throws Exception
      */
-    private function updateEntiteServiceByCollectivite(): void
+    private function updateEntiteServiceByCollectivite(): self
     {
         $sql = "UPDATE entite " .
             " SET type = 'collectivite' " .
             " WHERE type = 'service' ";
         $this->sqlQuery->query($sql);
         $this->logger?->info("[UPDATER]-updateEntiteServiceByCollectivite: $sql");
+
+        return $this;
     }
 
     /**
@@ -54,7 +63,7 @@ class Patch0 implements Version
      * pour reporter l'ancien mailsec_from à mailsec_reply_to (s'il n'est pas déjà renseigné) #1465
      * @throws Exception
      */
-    private function forceUpdateFieldMailsec(): void
+    private function forceUpdateFieldMailsec(): self
     {
         $scope = UpdateFieldService::SCOPE_CONNECTOR;
         $scopeType = 'configuration';
@@ -75,13 +84,15 @@ class Patch0 implements Version
             )
         );
         if ($documentsNumber === 0) {
-            return;
+            return $this;
         }
 
         foreach ($documents as $document) {
             $message = $this->updateFieldService->updateField($document, $scope, $field, $twigExpression);
             $this->logger?->info("[UPDATER]-forceUpdateFieldMailsec: $message");
         }
+
+        return $this;
     }
 
     /**
@@ -91,7 +102,7 @@ class Patch0 implements Version
      * Il faut reporter les droits (entite:) existants aux nouveaux droits (connecteur:) #1136
      * @throws Exception
      */
-    private function addConnectorPermission(): void
+    private function addConnectorPermission(): self
     {
         $roleDroitConnecteur = [];
         $roleDroitEntite = [];
@@ -101,7 +112,7 @@ class Patch0 implements Version
             $this->roleDroitFilter($role['role'], $droit, DroitService::DROIT_ENTITE, $roleDroitEntite);
         }
 
-        if (! empty($roleDroitConnecteur)) {
+        if (!empty($roleDroitConnecteur)) {
             $this->logger?->info(
                 sprintf(
                     "[UPDATER]-addConnectorPermission: " .
@@ -109,7 +120,8 @@ class Patch0 implements Version
                     json_encode($roleDroitConnecteur)
                 )
             );
-            return;
+
+            return $this;
         }
 
         $numberOfRole = count($roleDroitEntite);
@@ -136,23 +148,57 @@ class Patch0 implements Version
                 );
             }
         }
+
+        return $this;
     }
 
-    /**
-     * @param string $role
-     * @param array $droit
-     * @param string $familleDroit
-     * @param array $roleDroit
-     * @return void
-     */
     private function roleDroitFilter(string $role, array $droit, string $familleDroit, array &$roleDroit): void
     {
         $droitFilter = array_filter($droit, static function ($value, $key) use ($familleDroit) {
             list($part) = explode(":", $key);
             return $value == 1 && $part === $familleDroit;
         }, ARRAY_FILTER_USE_BOTH);
-        if (! empty($droitFilter)) {
+        if (!empty($droitFilter)) {
             $roleDroit[$role] = array_keys($droitFilter);
         }
+    }
+
+
+    /**
+     * @throws \JsonException
+     * @throws Exception
+     */
+    private function replaceSedaGenerator(): self
+    {
+        $selectConnectorsQuery = <<<EOT
+SELECT id_ce
+FROM connecteur_entite
+WHERE id_e != ?
+AND id_connecteur= ?;
+EOT;
+        $connectors = $this->sqlQuery->query($selectConnectorsQuery, 0, 'generateur-seda');
+        foreach ($connectors as $connector) {
+            $connectorId = $connector['id_ce'];
+            $form = $this->donneesFormulaireFactory->getConnecteurEntiteFormulaire($connectorId);
+            $fileContent = $form->getFileContent('data');
+            if ($fileContent !== false) {
+                $content = \json_decode($fileContent, true, 512, JSON_THROW_ON_ERROR);
+                $version = $content['version'];
+            } else {
+                $version = '1.0';
+            }
+            $connectorName = $version === '2.1' ? 'generateur-seda-asalae-2.1' : 'generateur-seda-asalae-1.0';
+
+            $updateConnectorQuery = <<<EOT
+UPDATE connecteur_entite
+SET id_connecteur = ?
+WHERE id_ce = ?;
+EOT;
+
+            $this->sqlQuery->query($updateConnectorQuery, $connectorName, $connectorId);
+            $this->logger?->info("Update connector '$connectorId' to '$connectorName'");
+        }
+
+        return $this;
     }
 }

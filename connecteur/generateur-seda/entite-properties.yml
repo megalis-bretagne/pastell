@@ -1,4 +1,0 @@
-nom: 'Générateur SEDA'
-description: "Permet de générer des bordereaux SEDA via l'outil générateur SEDA"
-type: 'Bordereau SEDA'
-heritage: seda-generator-common

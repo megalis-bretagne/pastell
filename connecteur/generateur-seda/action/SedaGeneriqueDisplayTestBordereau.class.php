@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Connector\AbstractSedaGeneratorConnector;
+
 class SedaGeneriqueDisplayTestBordereau extends ActionExecutor
 {
     /**
@@ -9,7 +11,7 @@ class SedaGeneriqueDisplayTestBordereau extends ActionExecutor
      */
     public function go()
     {
-        /** @var SedaGenerique $sedaGenerique */
+        /** @var AbstractSedaGeneratorConnector $sedaGenerique */
         $sedaGenerique = $this->getMyConnecteur();
 
         $fluxDataTest = new FluxDataTestSedaGenerique();
