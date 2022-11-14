@@ -8,7 +8,6 @@ class ConnexionControler extends PastellControler
 {
     private const CHANGE_PASSWORD_TOKEN_TTL_IN_SECONDS = 1800;
     public const OIDC_URI_REDIRECT_SESSION = 'oidcUriRedirect';
-    public const TEST_LOGIN_SESSION = 'oidcTestLogin';
 
     public function _beforeAction()
     {
@@ -52,13 +51,7 @@ class ConnexionControler extends PastellControler
         /** @var AuthenticationConnecteur $authenticationConnecteur */
         $authenticationConnecteur = $this->getConnecteurFactory()->getConnecteurById($id_ce);
         $redirectUri = "/Connexion/externalAuthentication?id_ce=$id_ce";
-        $_SESSION[self::OIDC_URI_REDIRECT_SESSION] = $redirectUri;
-        if (isset($_SESSION[self::TEST_LOGIN_SESSION])) {
-            $login = $_SESSION[self::TEST_LOGIN_SESSION];
-            unset($_SESSION[self::TEST_LOGIN_SESSION]);
-        } else {
-            $login = $authenticationConnecteur->authenticate(SITE_BASE . $redirectUri);
-        }
+        $login = $authenticationConnecteur->testAuthenticate(SITE_BASE . $redirectUri);
         $this->setLastMessage("Authentification avec le login : $login");
         $this->redirect("/Connecteur/edition?id_ce=$id_ce");
     }
@@ -148,7 +141,6 @@ class ConnexionControler extends PastellControler
                 )
             );
         }
-        $_SESSION[self::TEST_LOGIN_SESSION] = $login;
 
         /** @var LDAPVerification $verificationConnecteur */
         $verificationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur('Vérification');

@@ -12,8 +12,7 @@ final class OidcTestAuthentication extends ActionExecutor
         $oidc = $this->getMyConnecteur();
 
         $uri = '/Connexion/externalAuthentication?id_ce=' . $this->id_ce;
-        $_SESSION[ConnexionControler::OIDC_URI_REDIRECT_SESSION] = $uri;
-        $login = $oidc->authenticate(SITE_BASE . $uri);
+        $login = $oidc->testAuthenticate(SITE_BASE . $uri);
 
         if (!$login) {
             $this->setLastMessage('Aucune session en cours');

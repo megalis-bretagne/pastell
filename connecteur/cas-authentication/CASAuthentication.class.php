@@ -50,6 +50,11 @@ final class CASAuthentication extends AuthenticationConnecteur
         return false;
     }
 
+    public function testAuthenticate(string $redirectUrl)
+    {
+        return $this->authenticate($redirectUrl);
+    }
+
     public function authenticate($url = false)
     {
         $this->setClient();

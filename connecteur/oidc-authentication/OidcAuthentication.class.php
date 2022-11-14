@@ -49,13 +49,19 @@ final class OidcAuthentication extends AuthenticationConnecteur
     }
 
     /**
-     * @param $redirectUrl
-     * @return mixed
      * @throws OpenIDConnectClientException
      */
     public function authenticate($redirectUrl = false)
     {
-        $this->oidc->setRedirectURL(\rtrim($this->site_base, '/') . self::OIDC_REDIRECT_URI);
+        return $this->testAuthenticate(\rtrim($this->site_base, '/') . self::OIDC_REDIRECT_URI);
+    }
+
+    /**
+     * @throws OpenIDConnectClientException
+     */
+    public function testAuthenticate(string $redirectUrl)
+    {
+        $this->oidc->setRedirectURL($redirectUrl);
         $this->oidc->authenticate();
         return $this->oidc->requestUserInfo($this->loginAttribute);
     }
