@@ -1,6 +1,6 @@
 <?php
 
-class OidcTestAuthentication extends ActionExecutor
+final class OidcTestAuthentication extends ActionExecutor
 {
     /**
      * @return bool
@@ -8,8 +8,11 @@ class OidcTestAuthentication extends ActionExecutor
      */
     public function go()
     {
+        /** @var OidcAuthentication $oidc */
         $oidc = $this->getMyConnecteur();
-        $login = $oidc->authenticate(SITE_BASE . "/Connexion/externalAuthentication?id_ce={$this->id_ce}");
+
+        $uri = '/Connexion/externalAuthentication?id_ce=' . $this->id_ce;
+        $login = $oidc->testAuthenticate(SITE_BASE . $uri);
 
         if (!$login) {
             $this->setLastMessage('Aucune session en cours');

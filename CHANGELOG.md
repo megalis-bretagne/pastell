@@ -1,3 +1,9 @@
+# [3.1.18]
+
+## Corrections
+
+- Authentification OpenID Connect: L'URL de redirection après connexion est désormais fixe : https://pastell.tld/Connexion/oidc #1653
+
 # [3.1.17] - 2022-09-12
 
 ## Corrections

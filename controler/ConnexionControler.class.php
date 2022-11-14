@@ -7,6 +7,7 @@ use Pastell\Service\PasswordEntropy;
 class ConnexionControler extends PastellControler
 {
     private const CHANGE_PASSWORD_TOKEN_TTL_IN_SECONDS = 1800;
+    public const OIDC_URI_REDIRECT_SESSION = 'oidcUriRedirect';
 
     public function _beforeAction()
     {
@@ -49,7 +50,8 @@ class ConnexionControler extends PastellControler
         $id_ce = $recuperateur->getInt('id_ce');
         /** @var AuthenticationConnecteur $authenticationConnecteur */
         $authenticationConnecteur = $this->getConnecteurFactory()->getConnecteurById($id_ce);
-        $login = $authenticationConnecteur->authenticate(SITE_BASE . "/Connexion/externalAuthentication?id_ce=$id_ce");
+        $redirectUri = "/Connexion/externalAuthentication?id_ce=$id_ce";
+        $login = $authenticationConnecteur->testAuthenticate(SITE_BASE . $redirectUri);
         $this->setLastMessage("Authentification avec le login : $login");
         $this->redirect("/Connecteur/edition?id_ce=$id_ce");
     }
@@ -113,7 +115,11 @@ class ConnexionControler extends PastellControler
                 $this->getGetInfo()->get('page_request'),
                 urlencode($this->getGetInfo()->get('request_uri'))
             );
+            if (!isset($_SESSION[self::OIDC_URI_REDIRECT_SESSION])) {
+                $_SESSION[self::OIDC_URI_REDIRECT_SESSION] = $this->getGetInfo()->get('request_uri');
+            }
         }
+
         $login = $authenticationConnecteur->authenticate($redirectUrl);
         $externalSystem = $authenticationConnecteur->getExternalSystemName();
 
@@ -219,6 +225,26 @@ class ConnexionControler extends PastellControler
         $lastMessage = $this->getObjectInstancier()->getInstance(LastError::class);
         $lastMessage->setCssClass('alert-connexion');
         $this->render('PageConnexion');
+    }
+
+    /**
+     * @throws LastMessageException
+     * @throws LastErrorException
+     */
+    public function oidcAction(): void
+    {
+        /** @var AuthenticationConnecteur $authentificationConnecteur */
+        $authentificationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur('Authentification');
+        if ($authentificationConnecteur && $this->externalConnexion($authentificationConnecteur)) {
+            $this->setLastError('');
+            $redirect = '/';
+            if (isset($_SESSION[self::OIDC_URI_REDIRECT_SESSION])) {
+                $redirect = $_SESSION[self::OIDC_URI_REDIRECT_SESSION];
+                unset($_SESSION[self::OIDC_URI_REDIRECT_SESSION]);
+            }
+            $this->redirect($redirect);
+        }
+        $this->connexionAction();
     }
 
     public function oublieIdentifiantAction()
