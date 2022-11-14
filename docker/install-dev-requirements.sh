@@ -7,6 +7,7 @@ export DEBIAN_FRONTEND=noninteractive
 apt-get update
 
 apt-get install -y --no-install-recommends \
+    bash-completion \
     php-pcov \
     php-xdebug
 
@@ -19,3 +20,5 @@ phpenmod xdebug pcov
 composer install
 
 rm -rf /root/.composer/
+
+cp /var/www/pastell/docker/bash_completion.d/* /etc/bash_completion.d/
