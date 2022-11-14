@@ -1,12 +1,21 @@
 <?php
 
-class CASAuthentication extends AuthenticationConnecteur
+final class CASAuthentication extends AuthenticationConnecteur
 {
     private $host;
     private $port;
     private $context;
     private $ca_file;
     private $proxy;
+    /**
+     * @var string
+     */
+    private $site_base;
+
+    public function __construct(string $site_base)
+    {
+        $this->site_base = $site_base;
+    }
 
     public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire)
     {
@@ -21,9 +30,9 @@ class CASAuthentication extends AuthenticationConnecteur
         }
     }
 
-    private function setClient()
+    private function setClient(): void
     {
-        phpCAS::client(CAS_VERSION_2_0, $this->host, intval($this->port), $this->context);
+        phpCAS::client(CAS_VERSION_2_0, $this->host, (int)$this->port, $this->context, $this->site_base);
         phpCAS::setCasServerCACert($this->ca_file);
         if ($this->proxy) {
             phpCAS::allowProxyChain(new CAS_ProxyChain(array($this->proxy)));
