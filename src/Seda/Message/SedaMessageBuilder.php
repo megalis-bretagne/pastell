@@ -292,7 +292,12 @@ class SedaMessageBuilder
                     $archiveUnit
                 );
                 if ($archiveFromZip !== null && $archiveFromZip !== $archiveUnit) {
-                    $archiveUnits[] = $archiveFromZip;
+                    foreach ($archiveFromZip->getFiles() as $file) {
+                        $this->message->addFile($file);
+                    }
+                    foreach ($archiveFromZip->getArchiveUnits() as $unit) {
+                        $archiveUnits[] = $unit;
+                    }
                 }
             }
         }

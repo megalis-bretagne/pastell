@@ -23,6 +23,22 @@ final class ArchiveUnit implements \JsonSerializable
     }
 
     /**
+     * @return ArchiveUnit[]
+     */
+    public function getArchiveUnits(): array
+    {
+        return $this->archiveUnits;
+    }
+
+    /**
+     * @return File[]
+     */
+    public function getFiles(): array
+    {
+        return $this->files;
+    }
+
+    /**
      * @param Keyword[] $keywords
      */
     public function setContentDescription(

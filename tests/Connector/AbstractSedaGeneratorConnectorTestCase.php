@@ -12,7 +12,6 @@ use NotFoundException;
 use Pastell\Connector\AbstractSedaGeneratorConnector;
 use Pastell\Seda\Message\SedaMessageBuilder;
 use PastellTestCase;
-use SedaGenerique;
 use TmpFolder;
 use UnrecoverableException;
 
@@ -216,7 +215,7 @@ abstract class AbstractSedaGeneratorConnectorTestCase extends PastellTestCase
         );
         $connecteurConfig->addFileFromCopy('files', 'file.xml', __DIR__ . '/fixtures/seda-test-cases/empty/files.xml');
 
-        /** @var SedaGenerique $sedaGeneriqueConnector */
+        /** @var AbstractSedaGeneratorConnector $sedaGeneriqueConnector */
         $sedaGeneriqueConnector = $this->getConnecteurFactory()->getConnecteurById($id_ce);
         $id_d = $this->createDossier();
         $docDonneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
@@ -239,7 +238,7 @@ abstract class AbstractSedaGeneratorConnectorTestCase extends PastellTestCase
     {
         $this->mockCurl(['http://seda-generator:8080/generate' => 'KO'], 503);
         $id_ce = $this->createSedaGeneriqueConnector();
-        /** @var SedaGenerique $sedaGeneriqueConnector */
+        /** @var AbstractSedaGeneratorConnector $sedaGeneriqueConnector */
         $sedaGeneriqueConnector = $this->getConnecteurFactory()->getConnecteurById($id_ce);
         $id_d = $this->createDossier();
         $docDonneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
@@ -262,7 +261,7 @@ abstract class AbstractSedaGeneratorConnectorTestCase extends PastellTestCase
     {
         $this->mockCurl(['http://seda-generator:8080/version' => '{"version":"0.3.1"}']);
         $id_ce = $this->createSedaGeneriqueConnector();
-        /** @var SedaGenerique $sedaGeneriqueConnector */
+        /** @var AbstractSedaGeneratorConnector $sedaGeneriqueConnector */
         $sedaGeneriqueConnector = $this->getConnecteurFactory()->getConnecteurById($id_ce);
         $this->assertSame('{"version":"0.3.1"}', $sedaGeneriqueConnector->testConnexion());
     }
@@ -275,7 +274,7 @@ abstract class AbstractSedaGeneratorConnectorTestCase extends PastellTestCase
     {
         $this->mockCurl(['http://seda-generator:8080/version' => 'KO'], 404);
         $id_ce = $this->createSedaGeneriqueConnector();
-        /** @var SedaGenerique $sedaGeneriqueConnector */
+        /** @var AbstractSedaGeneratorConnector $sedaGeneriqueConnector */
         $sedaGeneriqueConnector = $this->getConnecteurFactory()->getConnecteurById($id_ce);
         $this->expectException(UnrecoverableException::class);
         $this->expectExceptionMessage('SedaGenerator did not return a 200 response. Code HTTP: 404.');
@@ -303,7 +302,7 @@ abstract class AbstractSedaGeneratorConnectorTestCase extends PastellTestCase
         $id_ce = $this->createSedaGeneriqueConnector();
         $this->configureConnector($id_ce, ['seda_generator_url' => '']);
 
-        /** @var SedaGenerique $sedaGeneriqueConnector */
+        /** @var AbstractSedaGeneratorConnector $sedaGeneriqueConnector */
         $sedaGeneriqueConnector = $this->getConnecteurFactory()->getConnecteurById($id_ce);
         $this->assertSame('{"version":"0.6.1"}', $sedaGeneriqueConnector->testConnexion());
     }
@@ -317,7 +316,7 @@ abstract class AbstractSedaGeneratorConnectorTestCase extends PastellTestCase
         $id_ce = $this->createSedaGeneriqueConnector();
         $this->configureConnector($id_ce, ['seda_generator_url' => '']);
 
-        /** @var SedaGenerique $sedaGeneriqueConnector */
+        /** @var AbstractSedaGeneratorConnector $sedaGeneriqueConnector */
         $sedaGeneriqueConnector = $this->getConnecteurFactory()->getConnecteurById($id_ce);
 
         $this->expectException(UnrecoverableException::class);

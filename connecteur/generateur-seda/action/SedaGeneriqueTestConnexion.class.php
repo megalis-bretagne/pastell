@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Connector\AbstractSedaGeneratorConnector;
+
 class SedaGeneriqueTestConnexion extends ActionExecutor
 {
     /**
@@ -8,7 +10,7 @@ class SedaGeneriqueTestConnexion extends ActionExecutor
      */
     public function go(): bool
     {
-        /** @var SedaGenerique $sedaGenerique */
+        /** @var AbstractSedaGeneratorConnector $sedaGenerique */
         $sedaGenerique = $this->getMyConnecteur();
         try {
             $result = $sedaGenerique->testConnexion();
