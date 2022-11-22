@@ -3,12 +3,12 @@
 namespace Pastell\Tests\Updater\Major4\Minor0;
 
 use Exception;
-use Pastell\Updater\Major4\Minor0\Patch0;
+use Pastell\Updater\Major4\Minor0\AddConnectorPermission;
 use PastellTestCase;
 use RoleDroit;
 use RoleSQL;
 
-class Patch0Test extends PastellTestCase
+class AddConnectorPermissionTest extends PastellTestCase
 {
     /**
      * @throws Exception
@@ -30,7 +30,7 @@ class Patch0Test extends PastellTestCase
         $this->assertFalse($droit['connecteur:lecture']);
         $this->assertFalse($droit['connecteur:edition']);
 
-        $this->getObjectInstancier()->getInstance(Patch0::class)->update();
+        $this->getObjectInstancier()->getInstance(AddConnectorPermission::class)->update();
         $droit = $roleSQL->getDroit($roleDroit->getAllDroit(), 'admin');
         $this->assertTrue($droit['connecteur:lecture']);
         $this->assertTrue($droit['connecteur:edition']);
