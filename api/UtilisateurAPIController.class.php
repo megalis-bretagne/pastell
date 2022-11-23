@@ -122,7 +122,7 @@ class UtilisateurAPIController extends BaseAPIController
         $result['email'] = $infoUtilisateur['email'];
         $result['certificat'] = $infoUtilisateur['certificat'];
         $result['id_e'] = $infoUtilisateur['id_e'];
-        $result['is_active'] = (bool)$infoUtilisateur['is_enabled'];
+        $result['active'] = (bool)$infoUtilisateur['is_enabled'];
 
         return $result;
     }
