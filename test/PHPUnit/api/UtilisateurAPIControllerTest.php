@@ -186,4 +186,30 @@ class UtilisateurAPIControllerTest extends PastellTestCase
         $this->expectExceptionMessage("L'utilisateur n'existe pas : {id_u=1}");
         $this->getInternalAPI()->get("utilisateur/1");
     }
+
+    public function testPostActivateDeactivate(): void
+    {
+        $utilisateurActivated = $this->getInternalAPI()->get('utilisateur/2');
+        $utilisateurDeactivated = $this->getInternalAPI()->post('/utilisateur/2/deactivate');
+        $this->assertNotEquals($utilisateurActivated, $utilisateurDeactivated);
+
+        $utilisateurReactivated = $this->getInternalAPI()->post('/utilisateur/2/activate');
+        $this->assertEquals($utilisateurActivated, $utilisateurReactivated);
+    }
+
+    public function testPostDeactivateMyselfFail(): void
+    {
+        $this->expectException(UnrecoverableException::class);
+        $this->expectExceptionMessage('Vous ne pouvez pas désactiver votre compte utilisateur.');
+        $this->getInternalAPI()->post('/utilisateur/1/deactivate');
+    }
+
+    public function testPostDeactivateFailDroit(): void
+    {
+        $this->getObjectInstancier()->getInstance(UtilisateurCreator::class)
+            ->create('tester', 'tester', 'tester', 'tester@mail');
+        $this->expectException(ForbiddenException::class);
+        $this->expectExceptionMessage('Acces interdit id_e=1, droit=utilisateur:edition,id_u=3');
+        $this->getInternalAPIAsUser('3')->post('/utilisateur/1/deactivate', ['id_e' => 1]);
+    }
 }
