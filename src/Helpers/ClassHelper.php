@@ -59,7 +59,7 @@ class ClassHelper
                 $classes[] = $class;
             }
         }
-
+        sort($classes);
         return $classes;
     }
 }
