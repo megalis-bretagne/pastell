@@ -111,12 +111,20 @@ class FieldData
 
     public function getURL($recuperation_fichier_url, $num, $id_e)
     {
+        $hasQuery = \parse_url($recuperation_fichier_url, \PHP_URL_QUERY);
+        $separator = empty($hasQuery) ? '?' : '&';
+
         if ($this->field->getType() == 'file') {
-            return "$recuperation_fichier_url&field=" . $this->field->getName() . "&num=$num";
-        } elseif ($this->field->getType() == 'url') {
+            return $recuperation_fichier_url . $separator . \http_build_query([
+                    'field' => $this->field->getName(),
+                    'num' => $num,
+                ]);
+        }
+        if ($this->field->getType() == 'url') {
             return $this->value;
-        } elseif ($this->field->getType() == 'link') {
-            return SITE_BASE . $this->field->getProperties('script') . "?id_e=$id_e" ;
+        }
+        if ($this->field->getType() == 'link') {
+            return SITE_BASE . $this->field->getProperties('script') . $separator . "id_e=$id_e";
         }
     }
 
