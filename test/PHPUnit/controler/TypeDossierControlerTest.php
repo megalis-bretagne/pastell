@@ -89,7 +89,8 @@ class TypeDossierControlerTest extends ControlerTestCase
             $this->getTypeDossierController()->doDeleteAction();
             $this->assertFalse(true);
         } catch (Exception $e) {
-            $this->assertMatchesRegularExpression("#Le type de dossier cas-nominal est utilisé par des dossiers qui ne sont pas dans l'état <i>terminé</i>#", $e->getMessage());
+            $this->assertMatchesRegularExpression("#Le type de dossier cas-nominal est utilisé par des dossiers qui
+                ne sont pas dans l'état <i>terminé</i> ou <i>erreur fatale</i>#", $e->getMessage());
             $this->assertMatchesRegularExpression("#Bourg-en-Bresse</a>\s*</td>\s*<td>1</td>#", $e->getMessage());
         }
         $this->assertTrue($typeDossierSQL->exists($id_t));
@@ -273,5 +274,26 @@ class TypeDossierControlerTest extends ControlerTestCase
             );
         }
         $this->assertTrue($typeDossierSQL->exists($id_t));
+    }
+
+    public function testSetAllFatalError(): void
+    {
+        $this->createTypeDossier('fluxstudio');
+        $this->getObjectInstancier()->getInstance(RoleSQL::class)->addDroit('admin', 'fluxstudio:lecture');
+        $this->getObjectInstancier()->getInstance(RoleSQL::class)->addDroit('admin', 'fluxstudio:edition');
+        $this->createDocument('fluxstudio');
+        $docInfo = $this->getObjectInstancier()->getInstance(DocumentSQL::class)->getAllIdByType('fluxstudio');
+        $lastActionDoc = $this->getObjectInstancier()->getInstance(DocumentActionEntite::class)->getLastAction($docInfo[0]['id_e'], $docInfo[0]['id_d']);
+        $this->assertEquals('creation', $lastActionDoc, '');
+
+        $this->setPostInfo(['id_type_dossier' => 'fluxstudio']);
+        try {
+            $this->getTypeDossierController()->doPutInFatalErrorAction();
+        } catch (Exception $e) {
+        }
+
+        $lastActionDoc = $this->getObjectInstancier()->getInstance(DocumentActionEntite::class)
+            ->getLastAction($docInfo[0]['id_e'], $docInfo[0]['id_d']);
+        $this->assertEquals('fatal-error', $lastActionDoc, '');
     }
 }

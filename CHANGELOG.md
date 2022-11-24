@@ -41,6 +41,7 @@
 - Possibilité de mettre un filtre sur 'is_active' dans la recherche des entités sur l'API #1648
 - Possibilité d'activer et de désactiver un compte utilisateur par API #1536
 - Possibilité d'activer et de désactiver une entité par API #1624
+- Possibilité de modifier un flux studio en paramétrant l'état des dossiers associés en erreur fatale #1007
 - Filtre sur les types de fichiers lors de l'upload directement dans le formulaire #1654
 
 ## Suppressions
@@ -121,16 +122,6 @@
 - Suppression de l'URL dans l'onglet de retour du SAE
 - Suppression du support MySQL. La seule base supportée est MariaDB.
 - Suppression de la création d'une entité par API via PATCH avec le paramètre 'create' et suppression du test 'testCreateWithEditAction()'
-- Suppression de l'archivage des dossiers sur le parapheur, après récupération, ils sont automatiquement effacés #1498
-- Suppression de la méthode ActionExecutorFactory::getFluxActionPath()
-- Suppression de la méthode ActionExecutorFactory::getAllActionClass()
-- Suppression de la méthode DocumentTypeValidation::setActionClassList()
-- Suppression de la constante LOG_ACTION_EXECUTOR_FACTORY_ERROR
-- Suppression du connecteur `generateur-seda`, remplacé par les nouveaux connecteurs `generateur-seda-asalae-2.1` et
-  `generateur-seda-asalae-1.0`
-## Dépréciations
-
-- Le connecteur Libersign est déprécié, il sera supprimé dans la prochaine version majeure. Par défaut il est nécessaire de l'activer via le pack libersign et d'installer deux dockers supplémenaires.
 
 # [3.1.17] - 2022-09-12
 

@@ -56,4 +56,13 @@ class TypeDossierSQL extends SQL
         $sql = "SELECT id_t FROM type_dossier WHERE id_type_dossier = ?";
         return $this->queryOne($sql, $id_type_dossier);
     }
+
+    public function getNotFinished($flux): array
+    {
+        $sql = "SELECT document.id_d, id_e FROM document_entite " .
+            " JOIN document ON document_entite.id_d=document.id_d " .
+            " WHERE last_action NOT IN ('fatal-error', 'termine') " .
+            " AND document.type = ? " ;
+        return $this->query($sql, $flux);
+    }
 }
