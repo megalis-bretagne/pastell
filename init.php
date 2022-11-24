@@ -83,7 +83,9 @@ $documentTypeFactory = $objectInstancier->getInstance(DocumentTypeFactory::class
 $donneesFormulaireFactory = $objectInstancier->getInstance(DonneesFormulaireFactory::class);
 $roleUtilisateur = $objectInstancier->getInstance(RoleUtilisateur::class);
 
-$objectInstancier->getInstance(Extensions::class)->autoloadExtensions();
+if (PHP_SAPI !== 'cli' || $objectInstancier->getInstance(SQLQuery::class)->isConnected()) {
+    $objectInstancier->getInstance(Extensions::class)->autoloadExtensions();
+}
 
 
 $objectInstancier->setInstance('journal_max_age_in_months', JOURNAL_MAX_AGE_IN_MONTHS);
