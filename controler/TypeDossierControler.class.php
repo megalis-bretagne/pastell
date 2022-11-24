@@ -595,7 +595,7 @@ class TypeDossierControler extends PastellControler
         $content = $gabarit->getRender("TypeDossierCountByEntiteBox");
 
         $this->setLastError(
-            "La modification n'est pas possible. Le type de dossier {$id_type_dossier}, $id_t est utilisé par des dossiers qui
+            "La modification n'est pas possible. Le type de dossier {$id_type_dossier} est utilisé par des dossiers qui
                 ne sont pas dans l'état <i>terminé</i> ou <i>erreur fatale</i>: $content<br/>
                 
                 <a href='TypeDossier/putInFatalError?id_t=$id_t&id_type_dossier={$id_type_dossier}' class='btn btn-danger'>
