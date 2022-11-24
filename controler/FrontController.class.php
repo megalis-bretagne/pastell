@@ -72,14 +72,11 @@ class FrontController
             throw new PastellNotFoundException("Impossible de trouver le controller $controller_name");
         }
         /** @var Controler $theController */
-        $theController =  $this->objectInstancier->getInstance($controller_name);
+        $theController = $this->objectInstancier->getInstance($controller_name);
         $theController->setServerInfo($this->server_info);
         $theController->setGetInfo($this->getParameter);
         $theController->setPostInfo($this->postParameter);
-        //FIXME: web-mailsec entry is not in symfony context
-        if ($controller !== 'MailSecDestinataire') {
-            $theController->setTwigEnvironment($this->twig);
-        }
+        $theController->setTwigEnvironment($this->twig);
         return $theController;
     }
 
@@ -107,23 +104,6 @@ class FrontController
         /** @var CSRFToken $csrfToken */
         $csrfToken = $this->objectInstancier->getInstance(CSRFToken::class);
         return $csrfToken->verifToken();
-    }
-
-    public function getMailSecDestinataireControler(): ?MailSecDestinataireControler
-    {
-        /* pour le mail sécurisé on a pas de système propre de dispatch... */
-        $this->setGetParameter($_GET);
-        $this->setPostParameter($_POST);
-        $this->setServerInfo($_SERVER);
-        try {
-            /** @var MailSecDestinataireControler $controller */
-            $controller = $this->getController("MailSecDestinataire");
-        } catch (Exception $e) {
-            print_r($e->getMessage());
-            echo "Le controleur MailSecDestinataireControler n'a pas été trouvé";
-            return null;
-        }
-        return $controller;
     }
 
     public function setTwigEnvironment(Environment $twig): void
