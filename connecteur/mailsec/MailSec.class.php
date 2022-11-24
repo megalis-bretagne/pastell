@@ -143,7 +143,11 @@ class MailSec extends MailsecConnecteur
 
     private function send(string $to, $mailPastellId = ''): void
     {
-        $link = sprintf('%sindex.php?key=%s', $this->websec_base, $mailPastellId);
+        $link = \sprintf(
+            '%s/mail/%s',
+            \rtrim($this->websec_base, '/'),
+            $mailPastellId
+        );
         $sujet = $this->processMessageItem($this->connecteurConfig->getWithDefault('mailsec_subject'), $link);
         $message = $this->processMessageItem($this->connecteurConfig->getWithDefault('mailsec_content'), $link);
         $content_html = $this->processMessageItem($this->connecteurConfig->getFileContent("content_html"), $link);
