@@ -1,5 +1,8 @@
 <?php
 
+use Mailsec\MailsecManager;
+use Symfony\Component\HttpFoundation\Request;
+
 class DocumentControlerTest extends ControlerTestCase
 {
     use MailsecTestTrait;
@@ -324,39 +327,23 @@ class DocumentControlerTest extends ControlerTestCase
     /**
      * @throws Exception
      */
-    public function testRecuperationFichierAction()
+    public function testRecuperationFichierAction(): void
     {
         $mail_sec_info = $this->createMailSec('mailsec-bidir', 'envoi-mail');
         $key = $mail_sec_info['key'];
 
-        /** @var MailSecDestinataireControler $mailsecController */
-        $mailsecController = $this->getControlerInstance(MailSecDestinataireControler::class);
-        $this->setPostInfo(['reponse' => 'ceci est ma réponse', 'key' => $key]);
-        $mailsecController->setServerInfo(['REMOTE_ADDR' => '127.0.0.1', 'REQUEST_METHOD' => 'POST']);
+        $mailsecManager = $this->getObjectInstancier()->getInstance(MailsecManager::class);
+        $mailsecInfo = $mailsecManager->getMailsecInfo($key, new Request());
+        $mailsecInfo  = $mailsecManager->createDocumentResponse($mailsecInfo);
 
-        ob_start();
-        $mailsecController->repondreAction();
-        try {
-            $mailsecController->reponseEditionAction();
-        } catch (Exception $e) {
-        }
-        ob_end_clean();
-
-        $documentEmail = $this->getObjectInstancier()->getInstance(DocumentEmail::class);
-        $info = $documentEmail->getInfoFromKey($key);
-        $id_de = $info['id_de'];
-
-        $documentEmailReponseSQL = $this->getObjectInstancier()->getInstance(DocumentEmailReponseSQL::class);
-        $id_d_reponse = $documentEmailReponseSQL->getInfo($id_de)['id_d_reponse'];
-
-        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d_reponse);
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($mailsecInfo->id_d_reponse);
         $donneesFormulaire->addFileFromData('document_attache', 'foo.txt', 'bar');
 
         $documentController = $this->getControlerInstance(DocumentControler::class);
 
         $this->setGetInfo([
             'id_e' => 1,
-            'id_d' => $id_d_reponse,
+            'id_d' => $mailsecInfo->id_d_reponse,
             'field' => 'document_attache',
         ]);
 
