@@ -582,6 +582,7 @@ class TypeDossierControler extends PastellControler
     private function verifyNoDocumentIsUsingTypeDossier($id_type_dossier, $redirectTo = '/TypeDossier/list'): void
     {
         $entite_list = $this->getDocumentSQL()->getEntiteWhichUsedDocument($id_type_dossier);
+        $id_t = $this->getTypeDossierSQL()->getByIdTypeDossier($id_type_dossier);
 
         if (! $entite_list) {
             return;
@@ -594,7 +595,12 @@ class TypeDossierControler extends PastellControler
         $content = $gabarit->getRender("TypeDossierCountByEntiteBox");
 
         $this->setLastError(
-            "La modification n'est pas possible. Le type de dossier {$id_type_dossier} est utilisé par des dossiers qui ne sont pas dans l'état <i>terminé</i> ou <i>erreur fatale</i>: $content<br/>"
+            "La modification n'est pas possible. Le type de dossier {$id_type_dossier}, $id_t est utilisé par des dossiers qui
+                ne sont pas dans l'état <i>terminé</i> ou <i>erreur fatale</i>: $content<br/>
+                
+                <a href='TypeDossier/putInFatalError?id_t=$id_t&id_type_dossier={$id_type_dossier}' class='btn btn-danger'>
+                    <i class='fa fa-folder'></i>&nbsp;Mettre tous les dossiers en erreur fatale
+                </a><br>"
         );
         $this->redirect($redirectTo);
     }
@@ -602,11 +608,20 @@ class TypeDossierControler extends PastellControler
     /**
      * @throws NotFoundException
      */
-    public function setFileAction(): void
+    public function putInFatalErrorAction(): void
     {
         $this->commonEdition();
+        $id_type_dossier = $this->getGetInfo()->get('id_type_dossier');
+        $entite_list = $this->getDocumentSQL()->getEntiteWhichUsedDocument($id_type_dossier);
+        $gabarit = $this->getObjectInstancier()->getInstance(Gabarit::class);
+        $gabarit->setParameters([
+            'entite_list' => $entite_list,
+            'id_type_dossier' => $id_type_dossier
+        ]);
+        $content = $gabarit->getRender("TypeDossierCountByEntiteBox");
+        $this->setViewParameter('content', $content);
+        $this->setViewParameter('template_milieu', 'TypeDossierPutInFatalError');
 
-        $this->setViewParameter('template_milieu', 'TypeDossierSetFile');
         $this->renderDefault();
     }
 
@@ -614,13 +629,13 @@ class TypeDossierControler extends PastellControler
      * @throws LastMessageException
      * @throws LastErrorException
      */
-    public function doSetFileAction()
+    public function doPutInFatalErrorAction()
     {
         $id_type_dossier = $this->getPostInfo()->get('id_type_dossier');
         $this->verifDroit(0, "$id_type_dossier:edition");
 
         $dossierFetched = $this->getObjectInstancier()->getInstance(TypeDossierSQL::class)
-            ->getToFatalError($id_type_dossier);
+            ->getNotFinished($id_type_dossier);
 
         foreach ($dossierFetched as $dossier) {
             $this->getObjectInstancier()->getInstance(ActionChange::class)->addAction(
@@ -628,11 +643,11 @@ class TypeDossierControler extends PastellControler
                 $dossier['id_e'],
                 $this->getId_u(),
                 'fatal-error',
-                "Passage forcé vers l'état 'Fatal error'"
+                "Passage en erreur fatale via le studio"
             );
         }
 
-        $this->setLastMessage("Tous les dossiers <b>{$id_type_dossier}</b> ont été mis dans l'état 'Fatal error'");
+        $this->setLastMessage("Tous les dossiers <b>{$id_type_dossier}</b> ont été mis dans l'état erreur fatale");
         $this->redirect('/TypeDossier/list');
     }
 }

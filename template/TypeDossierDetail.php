@@ -11,12 +11,6 @@
 
 ?>
 
-<?php if ($this->getLastError()->getLastError()) : ?>
-        <a href="<?php $this->url("TypeDossier/setFile?id_t={$type_de_dossier_info['id_t']}") ?>" class="btn btn-danger">
-            <i class="fa fa-folder"></i>&nbsp;Mettre tous les dossiers en erreur fatale
-        </a><br>
-<?php endif;?>
-
 <a class='btn btn-link' href='<?php $this->url("TypeDossier/list")?>'>
     <i class="fa fa-arrow-left"></i>&nbsp;Liste des types de dossier
 </a>

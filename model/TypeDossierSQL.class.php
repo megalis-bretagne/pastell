@@ -57,7 +57,7 @@ class TypeDossierSQL extends SQL
         return $this->queryOne($sql, $id_type_dossier);
     }
 
-    public function getToFatalError($flux): array
+    public function getNotFinished($flux): array
     {
         $sql = "SELECT document.id_d, id_e FROM document_entite " .
             " JOIN document ON document_entite.id_d=document.id_d " .

@@ -41,7 +41,7 @@
 - Possibilité de mettre un filtre sur 'is_active' dans la recherche des entités sur l'API #1648
 - Possibilité d'activer et de désactiver un compte utilisateur par API #1536
 - Possibilité d'activer et de désactiver une entité par API #1624
-- Possibilité de modifier un flux studio en paramétrant l'état des dossiers associés en 'Fatal error' #1007
+- Possibilité de modifier un flux studio en paramétrant l'état des dossiers associés en erreur fatale #1007
 - Filtre sur les types de fichiers lors de l'upload directement dans le formulaire #1654
 
 ## Suppressions

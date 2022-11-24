@@ -287,13 +287,12 @@ class TypeDossierControlerTest extends ControlerTestCase
 
         $this->setPostInfo(['id_type_dossier' => 'fluxstudio']);
         try {
-            $this->getTypeDossierController()->doSetFileAction();
+            $this->getTypeDossierController()->doPutInFatalErrorAction();
         } catch (Exception $e) {
         }
 
         $lastActionDoc = $this->getObjectInstancier()->getInstance(DocumentActionEntite::class)
             ->getLastAction($docInfo[0]['id_e'], $docInfo[0]['id_d']);
-        echo $lastActionDoc;
         $this->assertEquals('fatal-error', $lastActionDoc, '');
     }
 }
