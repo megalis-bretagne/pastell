@@ -18,6 +18,7 @@
     <file>./extensions</file>
     <file>./installation</file>
     <file>./lib</file>
+    <file>./mailsec</file>
     <file>./model</file>
     <file>./module</file>
     <file>./pastell-core</file>

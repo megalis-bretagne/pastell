@@ -1,0 +1,7 @@
+controllers:
+  resource: ../mailsec/Controller/
+  type: annotation
+
+kernel:
+  resource: ../mailsec/Kernel.php
+  type: annotation
