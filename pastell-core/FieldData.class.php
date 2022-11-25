@@ -21,7 +21,7 @@ class FieldData
 
             foreach ($value as $filename => $value) {
                 if ($field->getType() == 'checkbox') {
-                    $new_value[] = "$filename : " . ($value ? "OUI" : "NON");
+                    $new_value[] = "$filename : " . ($value ? 'OUI' : 'NON');
                 } elseif ($field->getType() == 'select') {
                     $select = $field->getSelect();
                     if (isset($select[$value])) {
@@ -40,16 +40,16 @@ class FieldData
         } elseif ($field->getType() == 'checkbox') {
             //TODO... ca pue
             if ($field->getProperties('read-only') && $field->getDefault()) {
-                $value = "OUI";
+                $value = 'OUI';
             } else {
-                $value = $value ? "OUI" : "NON";
+                $value = $value ? 'OUI' : 'NON';
             }
         }
         if ($field->getType() == 'password') {
             if ($field->getProperties('may_be_null') && ! $value) {
-                $value = "(aucun)";
+                $value = '(aucun)';
             } else {
-                $value = "*********";
+                $value = '*********';
             }
         }
         if ($field->getType() == 'date') {
@@ -58,10 +58,6 @@ class FieldData
 
         if ($field->getType() == 'link') {
             $value = $field->getProperties('link_name');
-        }
-
-        if ($value == '' && $field->getType() != 'date') {
-            $value = $field->getDefault();
         }
 
         $this->value = $value;

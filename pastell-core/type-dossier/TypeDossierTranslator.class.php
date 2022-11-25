@@ -65,6 +65,12 @@ class TypeDossierTranslator
                 'multiple' => boolval($typeDossierFormulaireElement->type == 'multi_file'),
                 'commentaire' => $typeDossierFormulaireElement->commentaire,
             ];
+            if ($this->getType($typeDossierFormulaireElement) === 'text') {
+                if ($typeDossierFormulaireElement->default_value !== false && $typeDossierFormulaireElement->default_value !== '') {
+                    $result[DocumentType::FORMULAIRE][$onglet_name][$element_id]['default']
+                        = $typeDossierFormulaireElement->default_value;
+                }
+            }
             if ($typeDossierFormulaireElement->type == TypeDossierFormulaireElementManager::TYPE_SELECT) {
                 $values = explode("\n", trim($typeDossierFormulaireElement->select_value, "\n"));
                 $res = [];

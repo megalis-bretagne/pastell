@@ -91,6 +91,15 @@
                            value="<?php echo get_hecho($formulaireElement->preg_match_error); ?>"/>
                 </td>
             </tr>
+            <tr id="default_value">
+                <th class="w400">
+                    <label for="default_value">Valeur par défaut</label>
+                </th>
+                <td>
+                    <input class="form-control col-md-8" id="default_value" name="default_value"
+                           value="<?php echo get_hecho($formulaireElement->default_value); ?>"
+                </td>
+            </tr>
             <tr id="content_type_tr">
                 <th class="w400">
                     <label for="content_type">Type de contenu des fichiers</label>
@@ -172,9 +181,11 @@
             if (option === 'text') {
                 $("#preg_match_tr").show();
                 $("#preg_match_error_tr").show();
+                $("#default_value").show();
             } else {
                 $("#preg_match_tr").hide();
                 $("#preg_match_error_tr").hide();
+                $("#default_value").hide();
             }
             if (option === "file" || option === "multi_file"){
                 $("#content_type_tr").show();
