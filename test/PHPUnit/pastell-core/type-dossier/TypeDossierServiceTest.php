@@ -62,6 +62,7 @@ class TypeDossierServiceTest extends PastellTestCase
                                 'preg_match' => '',
                                 'preg_match_error' => '',
                                 'content_type' => '',
+                                'default_value' => '',
 
                             ],
                     ],

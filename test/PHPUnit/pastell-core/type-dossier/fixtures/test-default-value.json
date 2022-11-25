@@ -1,0 +1,46 @@
+{
+  "id_type_dossier": "testdefaultvalue",
+  "pastell-version": "%VERSION%",
+  "timestamp": 1667579493,
+  "raw_data": {
+    "id_type_dossier": "testdefaultvalue",
+    "nom": "testdefaultvalue",
+    "type": "Types de dossier personnalis\u00e9s",
+    "description": "",
+    "nom_onglet": "onglet1",
+    "restriction_pack": "",
+    "formulaireElement": [
+      {
+        "element_id": "nomtest",
+        "name": "Nom test",
+        "type": "text",
+        "commentaire": "",
+        "requis": "",
+        "champs_affiches": "",
+        "champs_recherche_avancee": "",
+        "titre": "",
+        "select_value": "",
+        "preg_match": "",
+        "default_value": "Ma valeur par d\u00e9faut !",
+        "preg_match_error": "",
+        "content_type": ""
+      },
+      {
+        "element_id": "prenomtest",
+        "name": "Pr\u00e9nom test",
+        "type": "text",
+        "commentaire": "",
+        "requis": "",
+        "champs_affiches": "",
+        "champs_recherche_avancee": "",
+        "titre": "",
+        "select_value": "",
+        "preg_match": "",
+        "default_value": "",
+        "preg_match_error": "",
+        "content_type": ""
+      }
+    ],
+    "etape": []
+  }
+}

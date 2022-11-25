@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 class DocumentControlerTest extends ControlerTestCase
 {
     use MailsecTestTrait;
+    use TypeDossierLoaderTestTrait;
 
     /**
      * @throws Exception
@@ -356,5 +357,18 @@ Expires: 0
 Cache-Control: must-revalidate, post-check=0,pre-check=0
 Pragma: public
 bar', $output);
+    }
+
+    public function testEditionWithDefaultValue()
+    {
+        $typeDossier = 'testdefaultvalue';
+        $this->loadTypeDossier(__DIR__ . "/../pastell-core/type-dossier/fixtures/test-default-value.json");
+        $this->getObjectInstancier()->getInstance(RoleSQL::class)->addDroit('admin', "$typeDossier:lecture");
+        $this->getObjectInstancier()->getInstance(RoleSQL::class)->addDroit('admin', "$typeDossier:edition");
+        $documentID = $this->createDocument($typeDossier)['id_d'];
+        echo $documentID;
+        $data = $this->getDonneesFormulaireFactory()->get($documentID, $typeDossier)->getRawDataWithoutPassword();
+        var_dump($data);
+        $this->assertEquals('Ma valeur par défaut !', $data['nomtest'], '');
     }
 }

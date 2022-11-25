@@ -110,4 +110,17 @@ class TypeDossierFormulaireElementManagerTest extends \PHPUnit\Framework\TestCas
         $this->assertEquals("foo", $typeDossierFormulaireElement->element_id);
         $this->assertEquals("foo", $typeDossierFormulaireElement->name);
     }
+
+    public function testEditionElementTextWithDefault(): void
+    {
+        $typeDossierFormulaireElement = new TypeDossierFormulaireElementProperties();
+        $typeDossierFormulaireElementManager = new TypeDossierFormulaireElementManager();
+        $typeDossierFormulaireElementManager->edition($typeDossierFormulaireElement, new Recuperateur([
+            'element_id' => 'elementtest',
+            'name' => 'nomtest',
+            'type' => 'text',
+            'default_value' => 'monnom',
+        ]));
+        $this->assertEquals("monnom", $typeDossierFormulaireElement->default_value);
+    }
 }
