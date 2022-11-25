@@ -19,6 +19,7 @@
 - Création d'un connecteur de générateur SEDA 2.2 pour Asalae #1634
 - Ajout d'un droit de création d'utilisateurs pour différencier de l'édition #1156
 - Ajout de la commande ```app:module:force-send-ged-and-delete [-i|--includeSubEntities] [--dry-run] [--] [<sourceModule> [<entityId>]]``` #1562
+- Valeur par défaut disponible pour une ligne de texte dans les flux studio #960
 
 ## Évolutions
 
