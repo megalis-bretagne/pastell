@@ -361,14 +361,12 @@ bar', $output);
 
     public function testEditionWithDefaultValue()
     {
+        $this->loadTypeDossier(__DIR__ . '/../pastell-core/type-dossier/fixtures/test-default-value.json');
         $typeDossier = 'testdefaultvalue';
-        $this->loadTypeDossier(__DIR__ . "/../pastell-core/type-dossier/fixtures/test-default-value.json");
         $this->getObjectInstancier()->getInstance(RoleSQL::class)->addDroit('admin', "$typeDossier:lecture");
         $this->getObjectInstancier()->getInstance(RoleSQL::class)->addDroit('admin', "$typeDossier:edition");
         $documentID = $this->createDocument($typeDossier)['id_d'];
-        echo $documentID;
         $data = $this->getDonneesFormulaireFactory()->get($documentID, $typeDossier)->getRawDataWithoutPassword();
-        var_dump($data);
         $this->assertEquals('Ma valeur par défaut !', $data['nomtest'], '');
     }
 }
