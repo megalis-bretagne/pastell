@@ -39,6 +39,21 @@
         "default_value": "",
         "preg_match_error": "",
         "content_type": ""
+      },
+      {
+        "element_id": "airedetexte",
+        "name": "Aire de texte",
+        "type": "textarea",
+        "commentaire": "",
+        "requis": "",
+        "champs_affiches": "",
+        "champs_recherche_avancee": "",
+        "titre": "",
+        "select_value": "",
+        "preg_match": "",
+        "default_value": "Sur\nPlusieurs\nLignes",
+        "preg_match_error": "",
+        "content_type": ""
       }
     ],
     "etape": []

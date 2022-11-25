@@ -367,6 +367,12 @@ bar', $output);
         $this->getObjectInstancier()->getInstance(RoleSQL::class)->addDroit('admin', "$typeDossier:edition");
         $documentID = $this->createDocument($typeDossier)['id_d'];
         $data = $this->getDonneesFormulaireFactory()->get($documentID, $typeDossier)->getRawDataWithoutPassword();
-        $this->assertEquals('Ma valeur par défaut !', $data['nomtest'], '');
+        $this->assertEquals('Ma valeur par défaut !', $data['nomtest']);
+        $this->assertEquals(
+            'Sur
+Plusieurs
+Lignes',
+            $data['airedetexte']
+        );
     }
 }

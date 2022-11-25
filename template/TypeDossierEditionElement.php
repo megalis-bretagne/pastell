@@ -95,9 +95,12 @@
                 <th class="w400">
                     <label for="default_value">Valeur par défaut</label>
                 </th>
-                <td>
-                    <input class="form-control col-md-8" id="default_value" name="default_value"
-                           value="<?php echo get_hecho($formulaireElement->default_value); ?>"
+                <td id="default_value_text">
+                    <input class="form-control col-md-8" id="default_value" name="default_value" value="<?php echo get_hecho($formulaireElement->default_value); ?>"
+                </td>
+                <td id="default_value_textarea">
+                    <textarea style="  height: 150px;" class="form-control col-md-8" id="default_value"
+                              name="default_value"><?php echo get_hecho($formulaireElement->default_value); ?></textarea>
                 </td>
             </tr>
             <tr id="content_type_tr">
@@ -178,15 +181,27 @@
                 $("#select_value_tr").hide();
             }
 
+            if (option === 'text' || option === 'textarea'){
+                $("#default_value").show();
+            } else {
+                $("#default_value").hide();
+            }
             if (option === 'text') {
                 $("#preg_match_tr").show();
                 $("#preg_match_error_tr").show();
-                $("#default_value").show();
+                $("#default_value_text").show();
             } else {
                 $("#preg_match_tr").hide();
                 $("#preg_match_error_tr").hide();
-                $("#default_value").hide();
+                $("#default_value_text").hide();
             }
+
+            if (option === 'textarea') {
+                $("#default_value_textarea").show();
+            } else {
+                $("#default_value_textarea").hide();
+            }
+
             if (option === "file" || option === "multi_file"){
                 $("#content_type_tr").show();
             } else {
