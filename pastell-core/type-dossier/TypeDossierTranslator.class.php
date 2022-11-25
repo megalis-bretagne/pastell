@@ -65,7 +65,8 @@ class TypeDossierTranslator
                 'multiple' => boolval($typeDossierFormulaireElement->type == 'multi_file'),
                 'commentaire' => $typeDossierFormulaireElement->commentaire,
             ];
-            if ($this->getType($typeDossierFormulaireElement) === 'text'
+            if (
+                $this->getType($typeDossierFormulaireElement) === 'text'
                 || $this->getType($typeDossierFormulaireElement) === 'textarea'
                 || $this->getType($typeDossierFormulaireElement) === 'checkbox'
             ) {
