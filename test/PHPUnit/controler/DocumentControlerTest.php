@@ -374,5 +374,6 @@ Plusieurs
 Lignes',
             $data['airedetexte']
         );
+        $this->assertEquals(true, $data['macheckbox']);
     }
 }

@@ -26,21 +26,6 @@
         "content_type": ""
       },
       {
-        "element_id": "prenomtest",
-        "name": "Pr\u00e9nom test",
-        "type": "text",
-        "commentaire": "",
-        "requis": "",
-        "champs_affiches": "",
-        "champs_recherche_avancee": "",
-        "titre": "",
-        "select_value": "",
-        "preg_match": "",
-        "default_value": "",
-        "preg_match_error": "",
-        "content_type": ""
-      },
-      {
         "element_id": "airedetexte",
         "name": "Aire de texte",
         "type": "textarea",
@@ -52,6 +37,21 @@
         "select_value": "",
         "preg_match": "",
         "default_value": "Sur\nPlusieurs\nLignes",
+        "preg_match_error": "",
+        "content_type": ""
+      },
+      {
+        "element_id": "macheckbox",
+        "name": "Ma checkbox coché",
+        "type": "checkbox",
+        "commentaire": "",
+        "requis": "",
+        "champs_affiches": "",
+        "champs_recherche_avancee": "",
+        "titre": "",
+        "select_value": "",
+        "preg_match": "",
+        "default_value": "on",
         "preg_match_error": "",
         "content_type": ""
       }

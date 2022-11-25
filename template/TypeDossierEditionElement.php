@@ -102,6 +102,9 @@
                     <textarea style="  height: 150px;" class="form-control col-md-8" id="default_value"
                               name="default_value"><?php echo get_hecho($formulaireElement->default_value); ?></textarea>
                 </td>
+                <td id="default_value_checkbox">
+                    <input name='default_value' id='default_value' class="" type="checkbox" <?php echo $formulaireElement->default_value ? "checked='checked'" : ""?>/>
+                </td>
             </tr>
             <tr id="content_type_tr">
                 <th class="w400">
@@ -181,7 +184,7 @@
                 $("#select_value_tr").hide();
             }
 
-            if (option === 'text' || option === 'textarea'){
+            if (option === 'text' || option === 'textarea' || option === 'checkbox'){
                 $("#default_value").show();
             } else {
                 $("#default_value").hide();
@@ -200,6 +203,12 @@
                 $("#default_value_textarea").show();
             } else {
                 $("#default_value_textarea").hide();
+            }
+
+            if (option === 'checkbox') {
+                $("#default_value_checkbox").show();
+            } else {
+                $("#default_value_checkbox").hide();
             }
 
             if (option === "file" || option === "multi_file"){
