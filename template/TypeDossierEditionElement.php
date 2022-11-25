@@ -180,7 +180,7 @@
             } else {
                 $("#default_value_tr").hide();
             }
-            
+
             if (option === 'text') {
                 $("#preg_match_tr").show();
                 $("#preg_match_error_tr").show();
