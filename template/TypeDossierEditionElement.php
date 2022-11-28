@@ -49,7 +49,7 @@
                     <label for="type" >Type d'élément</label>
                 </th>
                 <td>
-                    <select id="type" name="type" class="form-control col-md-8">
+                    <select onchange="getDefaultFieldByType(this.value)" id="type" name="type" class="form-control col-md-8">
                         <?php foreach (TypeDossierFormulaireElementManager::getAllTypeElement() as $type => $type_libelle) : ?>
                             <option value="<?php echo $type; ?>" <?php echo $type == $formulaireElement->type ? 'selected="selected"' : ''; ?>><?php echo $type_libelle; ?></option>
                         <?php endforeach; ?>
@@ -91,20 +91,11 @@
                            value="<?php echo get_hecho($formulaireElement->preg_match_error); ?>"/>
                 </td>
             </tr>
-            <tr id="default_value">
+            <tr id="default_value_tr">
                 <th class="w400">
-                    <label for="default_value">Valeur par défaut</label>
+                    <label for="default_value_tr">Valeur par défaut</label>
                 </th>
-                <td id="default_value_text">
-                    <input class="form-control col-md-8" id="default_value" name="default_value" value="<?php echo get_hecho($formulaireElement->default_value); ?>"
-                </td>
-                <td id="default_value_textarea">
-                    <textarea style="  height: 150px;" class="form-control col-md-8" id="default_value"
-                              name="default_value"><?php echo get_hecho($formulaireElement->default_value); ?></textarea>
-                </td>
-                <td id="default_value_checkbox">
-                    <input name='default_value' id='default_value' class="" type="checkbox" <?php echo $formulaireElement->default_value ? "checked='checked'" : ""?>/>
-                </td>
+                <td id="default_value_td"></td>
             </tr>
             <tr id="content_type_tr">
                 <th class="w400">
@@ -185,30 +176,16 @@
             }
 
             if (option === 'text' || option === 'textarea' || option === 'checkbox'){
-                $("#default_value").show();
+                $("#default_value_tr").show();
             } else {
-                $("#default_value").hide();
+                $("#default_value_tr").hide();
             }
             if (option === 'text') {
                 $("#preg_match_tr").show();
                 $("#preg_match_error_tr").show();
-                $("#default_value_text").show();
             } else {
                 $("#preg_match_tr").hide();
                 $("#preg_match_error_tr").hide();
-                $("#default_value_text").hide();
-            }
-
-            if (option === 'textarea') {
-                $("#default_value_textarea").show();
-            } else {
-                $("#default_value_textarea").hide();
-            }
-
-            if (option === 'checkbox') {
-                $("#default_value_checkbox").show();
-            } else {
-                $("#default_value_checkbox").hide();
             }
 
             if (option === "file" || option === "multi_file"){
@@ -222,5 +199,17 @@
             });
         }).trigger("change");
     });
+
+    function getDefaultFieldByType(typeElement) {
+        let td = document.getElementById('default_value_td');
+        if (typeElement === 'text') {
+            td.innerHTML = "<input class='form-control col-md-8' id='default_value' name='default_value' value='<?php echo get_hecho($formulaireElement->default_value); ?>'/>";
+        } else if (typeElement === 'textarea') {
+            td.innerHTML = "<textarea style='  height: 150px;' class='form-control col-md-8' id='default_value' name='default_value'><?php echo get_hecho($formulaireElement->default_value); ?></textarea>";
+        } else if ((typeElement === 'checkbox')) {
+            td.innerHTML = "<input name='default_value' id='default_value' class='' type='checkbox' <?php echo $formulaireElement->default_value ? 'checked=\'checked\'' : ''; ?> />";
+        }
+    }
+
 </script>
 

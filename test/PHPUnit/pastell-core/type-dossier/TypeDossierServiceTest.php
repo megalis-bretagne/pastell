@@ -35,7 +35,8 @@ class TypeDossierServiceTest extends PastellTestCase
             'requis' => true,
             'champs_affiches' => true,
             'champs_recherche_avancee' => true,
-            'titre' => true
+            'titre' => true,
+            'default_value' => 'Anderson'
         ]);
         $this->getTypeDossierService()->editionElement($id_t, $recuperateur);
         $file_content = $typeDossierManager->getRawData($id_t);
@@ -62,7 +63,7 @@ class TypeDossierServiceTest extends PastellTestCase
                                 'preg_match' => '',
                                 'preg_match_error' => '',
                                 'content_type' => '',
-                                'default_value' => '',
+                                'default_value' => 'Anderson',
 
                             ],
                     ],
