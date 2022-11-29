@@ -54,6 +54,21 @@
         "default_value": "on",
         "preg_match_error": "",
         "content_type": ""
+      },
+      {
+        "element_id": "maselection",
+        "name": "Ma selection",
+        "type": "select",
+        "commentaire": "",
+        "requis": "",
+        "champs_affiches": "",
+        "champs_recherche_avancee": "",
+        "titre": "",
+        "select_value": "rouge\njaune\nvert",
+        "preg_match": "",
+        "default_value": "vert",
+        "preg_match_error": "",
+        "content_type": ""
       }
     ],
     "etape": []

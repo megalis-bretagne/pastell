@@ -375,5 +375,6 @@ Lignes',
             $data['airedetexte']
         );
         $this->assertEquals(true, $data['macheckbox']);
+        $this->assertEquals('vert', $data['maselection']);
     }
 }
