@@ -25,7 +25,7 @@ class Updater
             $this->pastellLogger->debug("Start Migrate $updaterClassName");
             $this->pastellLogger->setName($updaterClassName);
             $updater->update();
-            $this->pastellLogger->setName(__CLASS__);
+            $this->pastellLogger->setName(self::class);
             $this->pastellLogger->debug("End Migrate $updaterClassName");
         }
     }

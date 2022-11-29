@@ -3,17 +3,13 @@
 namespace Pastell\Command;
 
 use Exception;
-use JournalHistoriqueSQL;
-use Pastell\Service\Journal\JournalHistoriqueService;
 use Pastell\Updater;
 use PastellLogger;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
-class Update extends Command
+class Update extends BaseCommand
 {
     public function __construct(
         private readonly Updater $updater,
@@ -35,13 +31,12 @@ class Update extends Command
      * @return int
      * @throws Exception
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->pastellLogger->enableConsoleHandler($output);
-        $io = new SymfonyStyle($input, $output);
-        $io->title($this->getDescription());
+        $this->getIO()->title($this->getDescription());
         $this->updater->update();
-        $io->success("Updated");
-        return 0;
+        $this->getIO()->success("Updated");
+        return Command::SUCCESS;
     }
 }
