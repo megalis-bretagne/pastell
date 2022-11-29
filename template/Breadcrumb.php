@@ -21,7 +21,6 @@
     <?php if (isset($navigation)) : ?>
         <?php
         $parentEntityId = 0;
-
         foreach ($navigation as $nav) :
             $formId = 'bc_form_' . $nav['id_e'];
             $idSelect = 'select2_id_e_bc_' . $nav['id_e'];
@@ -68,7 +67,7 @@
                         e.preventDefault();
                         let currentEntityId = e.params.args.data.id;
                         if (currentEntityId == <?php hecho($nav['id_e']); ?>) {
-                            let parentEntityFormId = 'bc_form_' + <?php hecho($parentEntityId); ?>;
+                            let parentEntityFormId = 'bc_form_' + '<?php hecho($parentEntityId); ?>';
                             console.log(parentEntityFormId);
                             if (parentEntityFormId in document.forms) {
                                 document.forms[parentEntityFormId].submit();
