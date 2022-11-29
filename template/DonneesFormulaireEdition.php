@@ -181,7 +181,10 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1) {
                                 <option value=''>...</option>
                                 <?php foreach ($field->getSelect() as $value => $name) : ?>
                                     <option <?php
-                                    if ($this->donneesFormulaire->geth($field->getName()) == get_hecho($value)) {
+                                    if (
+                                            $this->donneesFormulaire->geth($field->getName()) == get_hecho($value)
+                                            || $this->donneesFormulaire->geth($field->getName()) === $field->getDefault()
+                                    ) {
                                         echo "selected='selected'";
                                     }
                                     ?> value='<?php hecho($value) ?>'><?php hecho($name); ?></option>

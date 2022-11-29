@@ -13,7 +13,7 @@
         <h2>Ajout d'un élément au formulaire</h2>
     <?php endif; ?>
 
-    <form action='<?php $this->url("TypeDossier/doEditionElement"); ?>' method='post' >
+    <form action='<?php $this->url("TypeDossier/doEditionElement"); ?>' method='post' onSubmit="return checkDefaultValueOnSelect()">
         <?php $this->displayCSRFInput() ?>
         <input type='hidden' name='id_t' value='<?php hecho($type_de_dossier_info['id_t'])?>' />
         <input type='hidden' name='orig_element_id' value='<?php hecho($formulaireElement->element_id)?>' />
@@ -175,11 +175,12 @@
                 $("#select_value_tr").hide();
             }
 
-            if (option === 'text' || option === 'textarea' || option === 'checkbox'){
+            if (option === 'text' || option === 'textarea' || option === 'checkbox' || option === 'select'){
                 $("#default_value_tr").show();
             } else {
                 $("#default_value_tr").hide();
             }
+            
             if (option === 'text') {
                 $("#preg_match_tr").show();
                 $("#preg_match_error_tr").show();
@@ -202,12 +203,27 @@
 
     function getDefaultFieldByType(typeElement) {
         let td = document.getElementById('default_value_td');
-        if (typeElement === 'text') {
-            td.innerHTML = "<input class='form-control col-md-8' id='default_value' name='default_value' value='<?php echo get_hecho($formulaireElement->default_value); ?>'/>";
-        } else if (typeElement === 'textarea') {
-            td.innerHTML = "<textarea style='  height: 150px;' class='form-control col-md-8' id='default_value' name='default_value'><?php echo get_hecho($formulaireElement->default_value); ?></textarea>";
-        } else if ((typeElement === 'checkbox')) {
+        if (typeElement === 'checkbox') {
             td.innerHTML = "<input name='default_value' id='default_value' class='' type='checkbox' <?php echo $formulaireElement->default_value ? 'checked=\'checked\'' : ''; ?> />";
+        } else {
+            td.innerHTML = "<input class='form-control col-md-8' id='default_value' name='default_value' value='<?php echo get_hecho($formulaireElement->default_value); ?>'/>";
+        }
+    }
+
+    function checkDefaultValueOnSelect() {
+        let selection = document.getElementById('select_value').value;
+        let value = document.getElementById('default_value').value;
+        if (document.getElementById('type').value === 'select' && value !== '') {
+            if (
+                (selection.endsWith(value) && selection.includes("\n"+value))
+                || (selection.startsWith(value) && selection.includes(value+"\n"))
+                || selection.includes("\n"+value+"\n")
+            ) {
+                return true;
+            } else {
+                alert('La valeur par défaut ne fait pas partie des valeurs de la liste déroulante');
+                return false;
+            }
         }
     }
 
