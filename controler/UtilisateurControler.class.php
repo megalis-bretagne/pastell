@@ -271,8 +271,6 @@ class UtilisateurControler extends PastellControler
             }
         }
 
-        $this->verifDroit($infoUtilisateur['id_e'], 'utilisateur:edition');
-
         $this->setViewParameter('infoEntite', $this->getEntiteSQL()->getInfo($infoUtilisateur['id_e']));
         $this->setViewParameter('certificat', new Certificate($infoUtilisateur['certificat']));
         $this->setViewParameter(
@@ -281,6 +279,7 @@ class UtilisateurControler extends PastellControler
         );
 
         if ($id_u) {
+            $this->verifDroit($infoUtilisateur['id_e'], 'utilisateur:edition');
             $this->setViewParameter(
                 'page_title',
                 'Modification de ' . $infoUtilisateur['prenom'] . ' ' . $infoUtilisateur['nom']

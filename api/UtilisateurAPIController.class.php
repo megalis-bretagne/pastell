@@ -137,7 +137,7 @@ class UtilisateurAPIController extends BaseAPIController
     public function post()
     {
         $id_e = $this->getFromRequest('id_e', 0);
-        $this->checkDroit($id_e, 'utilisateur:edition');
+        $this->checkDroit($id_e, 'utilisateur:creation');
 
         $id_u = $this->getFromQueryArgs(0);
         if ($id_u !== false && $this->verifExists($id_u)) {
