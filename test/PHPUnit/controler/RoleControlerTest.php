@@ -56,7 +56,8 @@ class RoleControlerTest extends ControlerTestCase
         $this->roleControler->doDetailAction();
     }
 
-    public function testDoEditionActionNewRole() {
+    public function testDoEditionActionNewRole(): void
+    {
         $this->setPostInfo(
             [
                 'role' => 'test',
