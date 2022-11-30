@@ -42,7 +42,7 @@
 <p class='form_commentaire'>128 caractères maximum</p>
 </th>
 
-<td><input class="form-control col-md-4" type="text" maxlength="128" name="denomination" id="denomination" value='<?php hecho($infoEntite['denomination']) ?>'/></td>
+<td><input class="form-control col-md-4" type="text" maxlength="128" name="denomination" id="denomination" value='<?php echo $infoEntite['denomination'] ?>'/></td>
 </tr>
 <tr>
 <th><label for="siren">SIREN</label>

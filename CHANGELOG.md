@@ -5,6 +5,7 @@
 ## Corrections
 
 - Pour voir les utilisateurs d'une entité, le droit "utilisateur:lecture" est désormais nécessaire #1528
+- Les accents sont pris en compte à la création d'une entité si une erreur survient à la validation du formulaire #1103
 
 ## Ajouts
 
