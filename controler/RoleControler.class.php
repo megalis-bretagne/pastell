@@ -49,9 +49,11 @@ class RoleControler extends PastellControler
         $role = $this->getGetInfo()->get('role');
 
         if ($role) {
+            $this->setViewParameter('nouveau', false);
             $this->setViewParameter('page_title', "Modification du rôle $role ");
             $this->setViewParameter('role_info', $this->getRoleSQL()->getInfo($role));
         } else {
+            $this->setViewParameter('nouveau', true);
             $this->setViewParameter('page_title', "Ajout d'un rôle");
             $this->setViewParameter('role_info', ['libelle' => '','role' => '']);
         }
@@ -66,6 +68,10 @@ class RoleControler extends PastellControler
         $role = preg_replace("/\s+/", "_", $role);
         $libelle = $this->getPostInfo()->get('libelle');
         $this->getRoleSQL()->edit($role, $libelle);
+        if ($this->getPostInfo()->get('nouveau')) {
+            $this->getRoleSQL()->addDroit($role, 'journal:lecture');
+            $this->getRoleSQL()->addDroit($role, 'entite:lecture');
+        }
         $this->redirect("/Role/detail?role=$role");
     }
 
