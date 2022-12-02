@@ -255,7 +255,7 @@ class ConnexionControler extends PastellControler
      */
     public function oidcAction(): void
     {
-        /** @var AuthenticationConnecteur $authentificationConnecteur */
+        /** @var AuthenticationConnecteur|false $authentificationConnecteur */
         $authentificationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur('Authentification');
         if ($authentificationConnecteur && $this->externalConnexion($authentificationConnecteur)) {
             $this->setLastError('');
