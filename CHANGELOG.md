@@ -124,6 +124,12 @@
 - Suppression du support MySQL. La seule base supportée est MariaDB.
 - Suppression de la création d'une entité par API via PATCH avec le paramètre 'create' et suppression du test 'testCreateWithEditAction()'
 
+# [3.1.18] - 2022-11-21
+
+## Corrections
+
+- Authentification OpenID Connect: L'URL de redirection après connexion est désormais fixe : https://pastell.tld/Connexion/oidc #1653
+
 # [3.1.17] - 2022-09-12
 
 ## Corrections

@@ -1,12 +1,29 @@
 version: '3.5'
 services:
-    cas:
-        build:
-            context: .
-            args:
-                cas_version: 6.3
-        volumes:
-            - './etc/cas:/etc/cas'
-        ports:
-            - '9091:8080'
-            - '9092:8443'
+  cas:
+    image: apereo/cas:6.6.2
+    environment:
+      SPRING_APPLICATION_JSON: '{
+  "logging": {
+    "level": {
+      "org.apereo.cas": "debug"
+    }
+  },
+  "cas": {
+    "tgc": {
+      "name": "SSO_COOKIE"
+    },
+    "service-registry": {
+      "core": {
+        "init-from-json": true
+      },
+      "schedule": {
+        "enabled": false
+      }
+    }
+  }
+}'
+    volumes:
+      - ./etc/cas:/etc/cas
+    ports:
+      - "9092:8443"

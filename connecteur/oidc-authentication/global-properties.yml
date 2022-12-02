@@ -30,6 +30,10 @@ formulaire:
             commentaire: ''
         redirect_url:
             name: 'URL de redirection après déconnexion'
+            commentaire: |
+              Par défaut il s'agit de l'URL du Pastell. <br />
+              Pour ce qui est de l'URL de redirection après connexion, il s'agit de l'URL de Pastell suivie de "/Connexion/oidc" <br />
+              Exemple: https://pastell.tld/Connexion/oidc
         user_creation:
             name: 'Créer automatiquement les utilisateurs reconnus sur Pastell'
             type: checkbox
