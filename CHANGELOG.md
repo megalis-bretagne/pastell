@@ -43,6 +43,7 @@
 - Possibilité d'activer et de désactiver une entité par API #1624
 - Possibilité de modifier un flux studio en paramétrant l'état des dossiers associés en erreur fatale #1007
 - Filtre sur les types de fichiers lors de l'upload directement dans le formulaire #1654
+- Le dernier message des travaux programmés est visible et leur ID mène vers leur détail #1676
 
 ## Suppressions
 

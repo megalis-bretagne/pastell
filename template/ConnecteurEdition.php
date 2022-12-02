@@ -130,6 +130,7 @@ if ($has_definition) {
         <th>Premier essai</th>
         <th>Dernier essai</th>
         <th>Nombre d'essais</th>
+        <th>Dernier message</th>
         <th>Prochain essai</th>
         <th>Verrou</th>
         <th>#ID processus</th>
@@ -139,7 +140,12 @@ if ($has_definition) {
     </tr>
     <?php foreach ($job_list as $job_info) : ?>
         <tr>
-            <td><?php echo $job_info['id_job']?></td>
+            <td>
+                <a href='<?php $this->url("Daemon/detail?id_job={$job_info['id_job']}"); ?>'>
+                    <?php echo $job_info['id_job']; ?>
+                </a>
+
+            </td>
             <td>
                 <?php if ($job_info['is_lock']) : ?>
                     <p class='alert alert-danger'>OUI  <br/>Depuis le <?php echo $this->FancyDate->getDateFr($job_info['lock_since']);?>
@@ -154,6 +160,7 @@ if ($has_definition) {
             <td><?php echo $this->FancyDate->getDateFr($job_info['first_try']) ?></td>
             <td><?php echo $this->FancyDate->getDateFr($job_info['last_try']) ?></td>
             <td><?php echo $job_info['nb_try'] ?></td>
+            <td><?php echo $job_info['last_message'] ?></td>
             <td>
                 <?php echo $this->FancyDate->getDateFr($job_info['next_try']) ?><br/>
                 <?php echo $this->FancyDate->getTimeElapsed($job_info['next_try'])?>

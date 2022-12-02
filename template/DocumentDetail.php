@@ -266,7 +266,11 @@ if ($infoDocumentEmail) :
             </tr>
                 <?php foreach ($job_list as $job_info) : ?>
                 <tr>
-                    <td><?php echo $job_info['id_job']?></td>
+                    <td>
+                        <a href='<?php $this->url("Daemon/detail?id_job={$job_info['id_job']}"); ?>'>
+                            <?php echo $job_info['id_job']; ?>
+                        </a>
+                    </td>
                     <td>
                         <?php if ($job_info['is_lock']) : ?>
                             <p class='alert alert-danger'>OUI  <br/>Depuis le <?php echo $this->FancyDate->getDateFr($job_info['lock_since']);?><br/>
