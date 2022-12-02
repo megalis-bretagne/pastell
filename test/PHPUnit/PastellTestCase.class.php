@@ -161,6 +161,7 @@ iparapheur_retour: Archive',
         $this->reinitFileSystem();
         $_POST = [];
         $_GET = [];
+        ObjectInstancierFactory::setObjectInstancier($this->getObjectInstancier());
     }
 
     /**
@@ -252,8 +253,9 @@ iparapheur_retour: Archive',
 
     public function getLogRecords()
     {
-        $testHandler = $this->getObjectInstancier()->getInstance(TestHandler::class);
-        return $testHandler->getRecords();
+        return $this->getObjectInstancier()
+            ->getInstance(TestHandler::class)
+            ->getRecords();
     }
 
     public function assertLastLog($expected)

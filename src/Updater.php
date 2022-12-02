@@ -3,56 +3,30 @@
 namespace Pastell;
 
 use ObjectInstancier;
-use Pastell\Updater\Version;
+use Pastell\Helpers\ClassHelper;
 use PastellLogger;
 
 class Updater
 {
-    private static $classes = [
-        '3.0.2' => Updater\Major3\Minor0\Patch2::class,
-        '4.0.0' => Updater\Major4\Minor0\Patch0::class,
-    ];
-
-    /**
-     * @var PastellLogger
-     */
-    private $pastellLogger;
-
-    /**
-     * @var ObjectInstancier
-     */
-    private $objectInstancier;
-
-    public function __construct(PastellLogger $pastellLogger, ObjectInstancier $objectInstancier)
-    {
-        $this->pastellLogger = $pastellLogger;
-        $this->objectInstancier = $objectInstancier;
+    public function __construct(
+        private readonly PastellLogger $pastellLogger,
+        private readonly ObjectInstancier $objectInstancier
+    ) {
     }
 
     public function update(): void
     {
-        foreach (self::$classes as $version => $class) {
-            $this->executeUpdate($version);
-        }
-    }
+        $all_command = ClassHelper::findRecursive("Pastell\Updater");
 
-    /**
-     * @throws UpdaterException
-     */
-    public function to(string $version): void
-    {
-        if (!isset(self::$classes[$version])) {
-            throw new UpdaterException("The update to version \"$version\" does not exist");
+        $this->pastellLogger->debug('Migration class : ' . implode(", ", $all_command));
+        foreach ($all_command as $updaterClassName) {
+            /** @var Updater $updater */
+            $updater = $this->objectInstancier->getInstance($updaterClassName);
+            $this->pastellLogger->debug("Start Migrate $updaterClassName");
+            $this->pastellLogger->setName($updaterClassName);
+            $updater->update();
+            $this->pastellLogger->setName(self::class);
+            $this->pastellLogger->debug("End Migrate $updaterClassName");
         }
-        $this->executeUpdate($version);
-    }
-
-    private function executeUpdate(string $version): void
-    {
-        /** @var Version $versionUpdater */
-        $versionUpdater = $this->objectInstancier->getInstance(self::$classes[$version]);
-        $this->pastellLogger->info("Start script to $version");
-        $versionUpdater->update();
-        $this->pastellLogger->info("End script to $version");
     }
 }

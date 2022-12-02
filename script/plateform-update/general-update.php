@@ -7,7 +7,6 @@
  * @var ObjectInstancier $objectInstancier
  */
 
-use Pastell\Updater;
 
 require_once __DIR__ . '/../../init.php';
 
@@ -16,12 +15,9 @@ $scriptname = basename($argv[0] ?? 'general-update');
 
 $pastellLogger = $objectInstancier->getInstance(PastellLogger::class);
 $pastellLogger->setName($scriptname);
-$pastellLogger->enableStdOut(true);
+$pastellLogger->enableStdOut();
 
 $pastellLogger->info("Démarrage du script");
-
-$pastellUpdater = $objectInstancier->getInstance(Updater::class);
-$pastellUpdater->update();
 
 $pastellBootstap = $objectInstancier->getInstance(PastellBootstrap::class);
 
