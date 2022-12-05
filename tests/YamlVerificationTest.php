@@ -14,11 +14,14 @@ class YamlVerificationTest extends TestCase
     public function testYaml(): void
     {
         $finder = new Finder();
-        $finder->in([
+        $finder
+            ->in([
             __DIR__ . '/../module',
             __DIR__ . '/../connecteur/',
             __DIR__ . '/../type-dossier/',
-        ])->name('*.yml');
+        ])
+            ->exclude('docker')
+            ->name('*.yml');
         foreach ($finder as $file) {
             try {
                 Yaml::parseFile($file->getPathname());

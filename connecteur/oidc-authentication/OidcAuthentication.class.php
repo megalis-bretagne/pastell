@@ -4,8 +4,10 @@ use Jumbojett\OpenIDConnectClient;
 use Jumbojett\OpenIDConnectClientException;
 use Pastell\Security\Authentication\OpenIDConnectClientFactory;
 
-class OidcAuthentication extends AuthenticationConnecteur
+final class OidcAuthentication extends AuthenticationConnecteur
 {
+    private const OIDC_REDIRECT_URI = '/Connexion/oidc';
+
     private string $loginAttribute;
     private string $givenNameAttribute;
     private string $familyNameAttribute;
@@ -20,6 +22,7 @@ class OidcAuthentication extends AuthenticationConnecteur
     public function __construct(
         private readonly UtilisateurSQL $utilisateurSQL,
         private readonly RoleUtilisateur $roleUtilisateur,
+        private readonly string $site_base,
     ) {
         $this->setOpenIDConnectClientFactory(new OpenIDConnectClientFactory());
     }
@@ -52,14 +55,13 @@ class OidcAuthentication extends AuthenticationConnecteur
     }
 
     /**
-     * @param $redirectUrl
      * @return mixed
      * @throws UnrecoverableException
      * @throws Exception
      */
     public function authenticate($redirectUrl = false)
     {
-        $userInfo = $this->getConnectedUserInfo($redirectUrl);
+        $userInfo = $this->getConnectedUserInfo(\rtrim($this->site_base, '/') . self::OIDC_REDIRECT_URI);
         if (empty($userInfo[$this->loginAttribute])) {
             throw new UnrecoverableException(sprintf(
                 "L'attribut %s utilisé pour le login n'a pas été trouvé " .
@@ -75,6 +77,16 @@ class OidcAuthentication extends AuthenticationConnecteur
             $this->createUserIfNeeded($userInfo);
         }
         return $userInfo[$this->loginAttribute];
+    }
+
+    /**
+     * @throws OpenIDConnectClientException
+     */
+    public function testAuthenticate(string $redirectUrl)
+    {
+        $this->oidc->setRedirectURL($redirectUrl);
+        $this->oidc->authenticate();
+        return $this->oidc->requestUserInfo($this->loginAttribute);
     }
 
     /**
@@ -119,7 +131,7 @@ class OidcAuthentication extends AuthenticationConnecteur
 
     public function logout($redirectUrl = false)
     {
-        $this->oidc->signOut($this->oidc->getIdToken(), $redirectUrl ?: SITE_BASE);
+        $this->oidc->signOut($this->oidc->getIdToken(), $redirectUrl ?: $this->site_base);
     }
 
     public function getExternalSystemName(): string

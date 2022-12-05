@@ -1,6 +1,6 @@
 <?php
 
-class OidcTestAuthentication extends ActionExecutor
+final class OidcTestAuthentication extends ActionExecutor
 {
     /**
      * @return bool
