@@ -37,8 +37,7 @@ class ActionExecutorFactory
         return $this->lastException;
     }
 
-    /** @return Logger */
-    public function getLogger()
+    public function getLogger(): Logger
     {
         return $this->objectInstancier->getInstance(Logger::class);
     }
@@ -61,7 +60,14 @@ class ActionExecutorFactory
     {
         $lock = $this->getLock("connecteur-$id_ce");
         if (! $lock->acquire()) {
-            $this->getLogger()->addNotice("executeOnConnecteur : unable to lock action on connecteur (id_ce=$id_ce, id_u=$id_u, action_name=$action_name)");
+            $this->getLogger()->notice(
+                \sprintf(
+                    'executeOnConnecteur : unable to lock action on connecteur (id_ce=%s, id_u=%s, action_name=%s)',
+                    $id_ce,
+                    $id_u,
+                    $action_name
+                )
+            );
             $this->lastMessage = "Une action est déjà en cours de réalisation sur ce connecteur";
             return false;
         }
@@ -76,7 +82,7 @@ class ActionExecutorFactory
     private function executeOnConnecteurCritical($id_ce, $id_u, $action_name, $from_api = false, $action_params = [], $id_worker = 0): ?bool
     {
         try {
-            $this->getLogger()->addInfo("executeOnConnecteur - appel - id_ce=$id_ce,id_u=$id_u,action_name=$action_name");
+            $this->getLogger()->info("executeOnConnecteur - appel - id_ce=$id_ce,id_u=$id_u,action_name=$action_name");
             $this->getLogger()->pushProcessor(function ($record) use ($id_ce, $id_u, $action_name) {
                 $record['extra']['id_ce'] = $id_ce;
                 $record['extra']['id_u'] = $id_u;
@@ -103,10 +109,10 @@ class ActionExecutorFactory
             $result =  false;
         }
 
-        $this->getLogger()->addInfo(
+        $this->getLogger()->info(
             "executeOnConnecteur - fin - id_ce=$id_ce,id_u=$id_u,action_name=$action_name : " .
-            ($result ? "OK" : "KO") . " - " .
-            json_encode($this->lastMessage)
+            ($result ? 'OK' : 'KO') . ' - ' .
+            \json_encode($this->lastMessage, \JSON_THROW_ON_ERROR)
         );
         $this->getLogger()->popProcessor();
         return $result;
@@ -124,7 +130,15 @@ class ActionExecutorFactory
     ): ?bool {
         $lock = $this->getLock("document-$id_d");
         if (! $lock->acquire()) {
-            $this->getLogger()->addNotice("executeOnDocument : unable to lock action on document (id_e=$id_e, id_u=$id_u, id_d=$id_d, action_name=$action_name)");
+            $this->getLogger()->notice(
+                \sprintf(
+                    'executeOnDocument : unable to lock action on document (id_e=%s, id_u=%s, id_d=%s, action_name=%s)',
+                    $id_e,
+                    $id_u,
+                    $id_d,
+                    $action_name
+                )
+            );
             $this->lastMessage = "Une action est déjà en cours de réalisation sur ce document";
             return false;
         }
@@ -149,7 +163,9 @@ class ActionExecutorFactory
         bool $updateJobQueueAfterExecution = true,
     ): ?bool {
         try {
-            $this->getLogger()->addInfo("executeOnDocument - appel - id_e=$id_e,id_d=$id_d,id_u=$id_u,action_name=$action_name");
+            $this->getLogger()->info(
+                "executeOnDocument - appel - id_e=$id_e,id_d=$id_d,id_u=$id_u,action_name=$action_name"
+            );
             $this->getLogger()->pushProcessor(function ($record) use ($id_e, $id_d, $id_u, $action_name) {
                 $record['extra']['id_e'] = $id_e;
                 $record['extra']['id_d'] = $id_d;
@@ -179,10 +195,10 @@ class ActionExecutorFactory
         ) {
             $this->getJobManager()->setJobForDocument($id_e, $id_d, $this->getLastMessageString(), $action_name);
         }
-        $this->getLogger()->addInfo(
+        $this->getLogger()->info(
             "executeOnDocument - fin - id_e=$id_e,id_d=$id_d,id_u=$id_u,action_name=$action_name - " .
-            ($result ? "OK" : "KO") . " - " .
-            json_encode($this->lastMessage)
+            ($result ? 'OK' : 'KO') . ' - ' .
+            \json_encode($this->lastMessage, \JSON_THROW_ON_ERROR)
         );
         $this->getLogger()->popProcessor();
         return $result;

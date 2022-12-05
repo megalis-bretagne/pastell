@@ -102,18 +102,20 @@ class DaemonControler extends PastellControler
         $this->verifDroit(0, "system:edition");
         try {
             $this->getDaemonManager()->start();
-            $this->getLogger()->addInfo("Daemon start manually");
+            $this->getLogger()->info('Daemon start manually');
         } catch (Exception $e) {
-            $this->getLogger()->addCritical("Started daemon ");
+            $this->getLogger()->critical('Started daemon ');
             $this->setLastError($e->getMessage());
             $this->redirect("Daemon/index");
         }
         if ($this->getDaemonManager()->status() == DaemonManager::IS_RUNNING) {
             $this->setLastMessage("Le gestionnaire de tâche a été démarré");
-            $this->getLogger()->addInfo("Daemon is up");
+            $this->getLogger()->info('Daemon is up');
         } else {
-            $this->setLastError("Une erreur s'est produite lors de la tentative de démarrage du gestionnaire de tâches");
-            $this->getLogger()->addCritical("Daemon is down after manually started");
+            $this->setLastError(
+                "Une erreur s'est produite lors de la tentative de démarrage du gestionnaire de tâches"
+            );
+            $this->getLogger()->critical('Daemon is down after manually started');
         }
         $this->redirect("Daemon/index");
     }

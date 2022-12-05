@@ -18,7 +18,7 @@ class PastellDaemon
 
     public function jobMaster()
     {
-        $this->logger->addInfo("Daemon starting");
+        $this->logger->info('Daemon starting');
 
         if ($this->unlock_job_error_at_startup) {
             //ajout d'un flag "UNLOK_JOB_ERROR_AT_STARTUP" pour ne pas verrouiller les jobs qui ne se sont pas terminés correctement.
@@ -90,7 +90,7 @@ class PastellDaemon
 
         $script = realpath(__DIR__ . "/../batch/pastell-job-worker.php");
         $command = "nohup " . PHP_PATH . " $script $id_job >/dev/null 2>&1 &";
-        $this->logger->addInfo("Daemon starts worker for job #$id_job : " . json_encode($job));
+        $this->logger->info("Daemon starts worker for job #$id_job : " . json_encode($job));
         exec($command);
     }
 
@@ -106,12 +106,15 @@ class PastellDaemon
             if (! posix_getpgid($info['pid'])) {
                 $workerInfo = $workerSQL->getInfo($info['id_worker']);
                 if (!$workerInfo || $workerInfo['termine'] === '1') {
-                    $this->logger->addWarning("Worker has already finished his job, Skipping...", $info);
+                    $this->logger->warning('Worker has already finished his job, Skipping...', $info);
                     continue;
                 }
                 $this->jobQueueSQL->lock($info['id_job']);
-                $workerSQL->error($info['id_worker'], "Message du job master : ce worker ne s'est pas terminé correctement");
-                $this->logger->addError("Daemon detects a dead worker", $info);
+                $workerSQL->error(
+                    $info['id_worker'],
+                    "Message du job master : ce worker ne s'est pas terminé correctement"
+                );
+                $this->logger->error('Daemon detects a dead worker', $info);
             }
         }
         $nb_worker_alive = count($workerSQL->getAllRunningWorker());
@@ -160,8 +163,9 @@ class PastellDaemon
             $result = $this->actionExecutorFactory->executeOnDocument($job->id_e, $job->id_u, $job->id_d, $job->etat_cible, [], true, [], $id_worker);
             if (!$result) {
                 $info = $this->document->getInfo($job->id_d);
-                $message = "Echec de l'execution de l'action dans la cadre d'un traitement par lot : " . $this->actionExecutorFactory->getLastMessage();
-                $this->logger->addError($message . ' ' . $job->asString());
+                $message = "Echec de l'execution de l'action dans la cadre d'un traitement par lot : " .
+                    $this->actionExecutorFactory->getLastMessage();
+                $this->logger->error($message . ' ' . $job->asString());
                 $this->notificationMail->notify($job->id_e, $job->id_d, $job->etat_cible, $info['type'], $message);
             }
         } elseif ($job->type == Job::TYPE_CONNECTEUR) {
@@ -175,14 +179,14 @@ class PastellDaemon
 
     public function stop(): never
     {
-        $this->logger->addInfo("SIGTERM caught !");
+        $this->logger->info('SIGTERM caught !');
         while (true) {
             $nb_running = count($this->workerSQL->getAllRunningWorker());
             if ($nb_running === 0) {
-                $this->logger->addInfo("No more running worker : exited");
+                $this->logger->info('No more running worker : exited');
                 exit(0);
             }
-            $this->logger->addInfo("$nb_running running workers left, wait 5s...");
+            $this->logger->info("$nb_running running workers left, wait 5s...");
             sleep(5);
         }
     }

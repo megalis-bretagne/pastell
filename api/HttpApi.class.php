@@ -24,8 +24,7 @@ class HttpApi
 
     private $is_legacy = false;
 
-    /** @var  Monolog\Logger */
-    private $logger;
+    private Logger $logger;
 
     public function __construct(ObjectInstancier $objectInstancier)
     {
@@ -80,12 +79,12 @@ class HttpApi
                 $result['status'] = 'error';
                 $result['error-message'] = $e->getMessage();
                 $this->jsonOutput->sendJson($result);
-                $this->logger->addWarning(
+                $this->logger->warning(
                     "API call error  : {$result['error-message']}"
                 );
             } else {
-                $this->logger->addWarning(
-                    "API call success"
+                $this->logger->warning(
+                    'API call success'
                 );
             }
         }
@@ -105,7 +104,7 @@ class HttpApi
         $api_function = $this->get[self::PARAM_API_FUNCTION];
         $api_function = ltrim($api_function, "/");
 
-        $this->logger->addInfo(
+        $this->logger->info(
             "Call $request_method $api_function",
             ['GET' => $this->get,'FILES' => $_FILES]
         );
@@ -119,7 +118,7 @@ class HttpApi
             $request_method = $old_info[1];
             $is_legacy = true;
             $this->is_legacy = true;
-            $this->logger->addInfo(
+            $this->logger->info(
                 "Call legacy API corresponding to > $request_method $api_function"
             );
         }
@@ -182,7 +181,7 @@ class HttpApi
         }
 
         $this->jsonOutput->sendJson($result, $is_legacy ? false : true);
-        $this->logger->addDebug(
+        $this->logger->debug(
             "API result : " . json_encode($result)
         );
     }
