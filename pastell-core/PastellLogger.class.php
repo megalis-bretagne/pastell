@@ -1,5 +1,6 @@
 <?php
 
+use Monolog\Logger;
 use Symfony\Bridge\Monolog\Handler\ConsoleHandler;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -7,58 +8,62 @@ class PastellLogger
 {
     public const MESSAGE = 'message';
 
-    private $logger;
+    private Logger $logger;
+    private int $log_level;
+    private ?string $name = null;
 
-    private $log_level;
-
-
-    public function __construct(Monolog\Logger $logger, $log_level = Monolog\Logger::INFO)
+    public function __construct(Logger $logger, int $log_level = Logger::INFO)
     {
         $this->logger = $logger;
         $this->log_level = $log_level;
     }
 
-    public function debug($message, array $context = [])
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    public function debug($message, array $context = []): void
     {
         $this->getLoggerWithName()->debug($message, $context);
     }
 
-    public function info($message, array $context = [])
+    public function info($message, array $context = []): void
     {
         $this->getLoggerWithName()->info($message, $context);
     }
 
-    public function notice($message, array $context = [])
+    public function notice($message, array $context = []): void
     {
         $this->getLoggerWithName()->notice($message, $context);
     }
 
-    public function warning($message, array $context = [])
+    public function warning($message, array $context = []): void
     {
         $this->getLoggerWithName()->warning($message, $context);
     }
 
-    public function error($message, array $context = [])
+    public function error($message, array $context = []): void
     {
         $this->getLoggerWithName()->error($message, $context);
     }
 
-    public function alert($message, array $context = [])
+    public function alert($message, array $context = []): void
     {
         $this->getLoggerWithName()->alert($message, $context);
     }
 
-    public function critical($message, array $context = [])
+    public function critical($message, array $context = []): void
     {
         $this->getLoggerWithName()->critical($message, $context);
     }
 
-    public function emergency($message, array $context = [])
+    public function emergency($message, array $context = []): void
     {
         $this->getLoggerWithName()->emergency($message, $context);
     }
 
-    public function enableStdOut($enable_stdout = true)
+    public function enableStdOut(bool $enable_stdout = true): void
     {
         if (! $enable_stdout) {
             return;
@@ -73,17 +78,9 @@ class PastellLogger
         }
     }
 
-
-    private $name;
-
-    public function setName($name)
+    private function getLoggerWithName(): Logger
     {
-        $this->name = $name;
-    }
-
-    private function getLoggerWithName()
-    {
-        if (! $this->name) {
+        if ($this->name === null) {
             $trace = debug_backtrace();
             if (empty($trace[2]['class'])) {
                 $this->name = basename($trace[1]['file']);

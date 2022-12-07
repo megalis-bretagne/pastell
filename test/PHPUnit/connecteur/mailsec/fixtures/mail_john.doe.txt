@@ -6,44 +6,6 @@ X-PASTELL-DOCUMENT: NOTTESTABLE
 Message-ID: NOTTESTABLE
 MIME-Version: 1.0
 DATE: NOTTESTABLE
-Content-Type: multipart/alternative; boundary=NOTTESTABLE
-
---NOTTESTABLE
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-
-
-
-
-
-Mise =C3=A0 disposition d'une facture
-
-Bonjour,
-
-La soc=
-i=C3=A9t=C3=A9  met =C3=A0 votre dispostion la facture num=C3=A9ro .
-
-=
-
-Le montant de cette commande est de : 42 francs
-
-
-Vous pouvez r=
-=C3=A9cup=C3=A9rer votre facture en clique sur le lien suivant :
-
-
-R=
-=C3=A9cup=C3=A9rer la facture
-
-
-Cordialement.
-
-
-
-
-
-
---NOTTESTABLE
 Content-Type: text/html; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
@@ -82,4 +44,3 @@ g src=3D'cid:NOTTESTABLEimage0' alt=3D''/>
 <=
 /body>
 </html>
---NOTTESTABLE
