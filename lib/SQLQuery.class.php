@@ -38,6 +38,11 @@ class SQLQuery
         $this->pdo = null;
     }
 
+    public function isConnected(): bool
+    {
+        return $this->pdo !== null;
+    }
+
     public function getPdo()
     {
         if (! $this->pdo) {
