@@ -16,11 +16,10 @@
             'download_all_link': download_all_link ~ '?fichier_reponse=true'
         } %}
 
-        <a href="{{ reponse_url }}" class="btn btn-outline-primary">
-            Modifier
-        </a>
-
         <form action="{{ path('mailsec_recipient_validate', {'key': mailSecInfo.key}) }}" method='post'>
+            <a href="{{ reponse_url }}" class="btn btn-outline-primary">
+                Modifier
+            </a>
             <input type='submit' class='btn btn-primary' value="Valider"/>
         </form>
     </div>

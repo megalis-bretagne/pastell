@@ -35,7 +35,7 @@
                 {% if displayedField.isDownloadZipAvailable() %}
                     <br/>
                     <a href="{{ download_all_link is defined ?
-                    download_all_link ~ '&field=' ~ displayedField.getField().getName() :
+                    download_all_link ~ '?&field=' ~ displayedField.getField().getName() :
                     "/DonneesFormulaire/downloadAll?id_e=$id_e&id_d=$id_d&id_ce=$id_ce&field=" ~ displayedField.getField().getName() }}"
                        class="btn btn-primary">
                         <i class="fa fa-download"></i>&nbsp;Télécharger tous les fichiers
