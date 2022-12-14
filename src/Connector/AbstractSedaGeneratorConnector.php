@@ -10,6 +10,7 @@ use DonneesFormulaire;
 use DonneesFormulaireException;
 use FluxData;
 use Pastell\Seda\Message\SedaMessageBuilder;
+use Pastell\Seda\SedaVersion;
 use SEDAConnecteur;
 use SimpleXMLWrapperException;
 use TmpFolder;
@@ -20,13 +21,13 @@ abstract class AbstractSedaGeneratorConnector extends SEDAConnecteur
     private const SEDA_GENERATOR_VERSION_PATH = '/version';
     private const SEDA_GENERATOR_GENERATE_PATH = '/generate';
     private const SEDA_GENERATOR_GENERATE_PATH_WITH_TEMPLATE = '/generateWithTemplate';
-
     private const SEDA_GENERATOR_URL_ID = 'seda_generator_url';
     private const SEDA_GENERATOR_GLOBAL_TYPE = 'Generateur SEDA';
 
     private DonneesFormulaire $connecteurConfig;
 
     private ?string $bordereau = null;
+    abstract public function getVersion(): SedaVersion;
 
     public function __construct(
         private readonly CurlWrapperFactory $curlWrapperFactory,
@@ -292,7 +293,7 @@ abstract class AbstractSedaGeneratorConnector extends SEDAConnecteur
         $message = $this->sedaMessageBuilder
             ->setDonneesFormulaire($this->getDocDonneesFormulaire())
             ->setFluxData($fluxData)
-            ->setVersion($dataFromBordereau['version'] ?? '')
+            ->setVersion($this->getVersion())
             ->buildHeaders($dataFromBordereau)
             ->buildKeywords($dataFromBordereau['keywords'] ?? '')
             ->buildFiles($dataFromFiles)

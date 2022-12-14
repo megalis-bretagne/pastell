@@ -82,10 +82,9 @@ class SedaMessageBuilder
         return $this->message;
     }
 
-
-    public function setVersion(string $version): static
+    public function setVersion(SedaVersion $version): static
     {
-        $this->message->setVersion(SedaVersion::from($version ?: SedaVersion::VERSION_2_1->value));
+        $this->message->setVersion($version);
         return $this;
     }
 

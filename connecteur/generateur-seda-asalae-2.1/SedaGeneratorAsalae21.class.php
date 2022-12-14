@@ -3,9 +3,15 @@
 declare(strict_types=1);
 
 use Pastell\Connector\AbstractSedaGeneratorConnector;
+use Pastell\Seda\SedaVersion;
 
 final class SedaGeneratorAsalae21 extends AbstractSedaGeneratorConnector
 {
+    public function getVersion(): SedaVersion
+    {
+        return SedaVersion::VERSION_2_1;
+    }
+
     public function getPastellToSeda(): array
     {
         $pastellToSeda = parent::getPastellToSeda();
