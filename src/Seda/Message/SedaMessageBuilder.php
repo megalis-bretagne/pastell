@@ -26,6 +26,8 @@ class SedaMessageBuilder
     private $idGeneratorFunction;
 
     private DonneesFormulaire $donneesFormulaire;
+    private string $algorithm;
+    private string $algorithmIdentifier;
     private FluxData $fluxData;
     private SedaMessage $message;
 
@@ -60,6 +62,18 @@ class SedaMessageBuilder
     public function setDonneesFormulaire(DonneesFormulaire $donneesFormulaire): self
     {
         $this->donneesFormulaire = $donneesFormulaire;
+        return $this;
+    }
+
+    public function setHashAlgorithm(string $algorithm): self
+    {
+        $this->algorithm = $algorithm;
+        return $this;
+    }
+
+    public function setAlgorithmIdentifier(string $identifier): self
+    {
+        $this->algorithmIdentifier = $identifier;
         return $this;
     }
 
@@ -221,7 +235,8 @@ class SedaMessageBuilder
             foreach ($this->getDonneesFormulaire()->get($field) as $filenum => $filename) {
                 $file = new File(($this->idGeneratorFunction)());
                 $file->filename = $filename;
-                $file->messageDigest = $this->getDonneesFormulaire()->getFileDigest($field, $filenum);
+                $file->messageDigest = $this->getDonneesFormulaire()->getFileDigest($field, $filenum, $this->algorithm);
+                $file->algorithmIdentifier = $this->algorithmIdentifier;
                 $file->uri = $this->normalizeUri($filename, $file->messageDigest);
                 $file->size = (string)$this->getDonneesFormulaire()->getFileSize($field, $filenum);
                 if (empty($localFile['do_not_put_mime_type'])) {
@@ -555,7 +570,8 @@ class SedaMessageBuilder
                 $file = new File(($this->idGeneratorFunction)());
                 $realFileName = \basename($relativePath);
                 $file->filename = $realFileName;
-                $file->messageDigest = \hash_file('sha256', $filepath);
+                $file->messageDigest = \hash_file($this->algorithm, $filepath);
+                $file->algorithmIdentifier = $this->algorithmIdentifier;
                 $file->uri = $this->normalizeUri($relativePath, $file->messageDigest);
                 $file->size = (string)\filesize($filepath);
 

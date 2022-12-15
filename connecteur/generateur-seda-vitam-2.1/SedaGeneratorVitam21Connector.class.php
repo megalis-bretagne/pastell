@@ -27,6 +27,18 @@ final class SedaGeneratorVitam21Connector extends AbstractSedaGeneratorConnector
         return SedaVersion::VERSION_2_1_VITAM;
     }
 
+    /**
+     * @throws UnrecoverableException
+     */
+    public function getAlgorithmIdentifier(string $algorithm): string
+    {
+        return match ($algorithm) {
+            'sha256' => 'SHA-256',
+            'sha512' => 'SHA-512',
+            default => throw new UnrecoverableException('Algorithme non supporté'),
+        };
+    }
+
     public function getPastellToSeda(): array
     {
         $pastellToSeda = parent::getPastellToSeda();

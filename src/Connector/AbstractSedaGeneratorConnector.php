@@ -22,6 +22,7 @@ abstract class AbstractSedaGeneratorConnector extends SEDAConnecteur
     private const SEDA_GENERATOR_GENERATE_PATH = '/generate';
     private const SEDA_GENERATOR_GENERATE_PATH_WITH_TEMPLATE = '/generateWithTemplate';
     private const SEDA_GENERATOR_URL_ID = 'seda_generator_url';
+    private const SEDA_GENERATOR_HASH_ALGORITHM_ID = 'hash_algorithm';
     private const SEDA_GENERATOR_GLOBAL_TYPE = 'Generateur SEDA';
 
     private DonneesFormulaire $connecteurConfig;
@@ -40,6 +41,30 @@ abstract class AbstractSedaGeneratorConnector extends SEDAConnecteur
     public function setConnecteurConfig(DonneesFormulaire $connecteurConfig): void
     {
         $this->connecteurConfig = $connecteurConfig;
+    }
+
+    /**
+     * @throws UnrecoverableException
+     */
+    public function getHashAlgorithm(): string
+    {
+        return match ((int)$this->connecteurConfig->get(self::SEDA_GENERATOR_HASH_ALGORITHM_ID)) {
+            0 => 'sha256',
+            1 => 'sha512',
+            default => throw new UnrecoverableException('Algorithme non supporté'),
+        };
+    }
+
+    /**
+     * @throws UnrecoverableException
+     */
+    public function getAlgorithmIdentifier(string $algorithm): string
+    {
+        return match ($algorithm) {
+            'sha256' => 'http://www.w3.org/2001/04/xmlenc#sha256',
+            'sha512' => 'http://www.w3.org/2001/04/xmlenc#sha512',
+            default => throw new UnrecoverableException('Algorithme non supporté'),
+        };
     }
 
     private function getSedaGeneratorURL(): string
@@ -290,8 +315,11 @@ abstract class AbstractSedaGeneratorConnector extends SEDAConnecteur
      */
     public function getMessage(FluxData $fluxData, array $dataFromBordereau, string $dataFromFiles): array
     {
+        $algorithm = $this->getHashAlgorithm();
         $message = $this->sedaMessageBuilder
             ->setDonneesFormulaire($this->getDocDonneesFormulaire())
+            ->setHashAlgorithm($algorithm)
+            ->setAlgorithmIdentifier($this->getAlgorithmIdentifier($algorithm))
             ->setFluxData($fluxData)
             ->setVersion($this->getVersion())
             ->buildHeaders($dataFromBordereau)

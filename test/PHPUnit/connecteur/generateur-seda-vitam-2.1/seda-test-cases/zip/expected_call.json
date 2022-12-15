@@ -62,6 +62,7 @@
                                             "Filename": "20120718_AU_20120719_President.txt",
                                             "Uri": "content\/634b027b1b69e1242d40d53e312b3b4ac7710f55be81f289b549446ef6778bee.txt",
                                             "MessageDigest": "634b027b1b69e1242d40d53e312b3b4ac7710f55be81f289b549446ef6778bee",
+                                            "AlgorithmIdentifier": "SHA-256",
                                             "Size": "6",
                                             "MimeType": "text\/plain",
                                             "Title": "Archive zip -- 20120718_AU_20120719_President.txt -- 7756W3_9\/7756W03_Rencontres_avec_PCG\/7756W03_Annee_2012\/20120718_AU_20120719_President.txt   est un fichier "
@@ -71,6 +72,7 @@
                                             "Filename": "20121001_AU_20121003_President.txt",
                                             "Uri": "content\/53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3.txt",
                                             "MessageDigest": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3",
+                                            "AlgorithmIdentifier": "SHA-256",
                                             "Size": "2",
                                             "MimeType": "text\/plain",
                                             "Title": "Archive zip -- 20121001_AU_20121003_President.txt -- 7756W3_9\/7756W03_Rencontres_avec_PCG\/7756W03_Annee_2012\/20121001_AU_20121003_President.txt   est un fichier "
@@ -100,6 +102,7 @@
                                     "Filename": "20131017_AU_20150312_seances_Commission_permanente.pdf",
                                     "Uri": "content\/ea243e5457028e97f9bc93b37a72f8e80ea61ae081911bb037765590ee6aa435.pdf",
                                     "MessageDigest": "ea243e5457028e97f9bc93b37a72f8e80ea61ae081911bb037765590ee6aa435",
+                                    "AlgorithmIdentifier": "SHA-256",
                                     "Size": "3",
                                     "MimeType": "text\/plain",
                                     "Title": "Archive zip -- 20131017_AU_20150312_seances_Commission_permanente.pdf -- 7756W3_9\/7756W05_Assemblee_departementale_Groupe_socialiste\/20131017_AU_20150312_seances_Commission_permanente.pdf   est un fichier "
@@ -109,6 +112,7 @@
                                     "Filename": "20131023_AU_20150323_seances_Conseil_general.pdf",
                                     "Uri": "content\/ea243e5457028e97f9bc93b37a72f8e80ea61ae081911bb037765590ee6aa435.pdf",
                                     "MessageDigest": "ea243e5457028e97f9bc93b37a72f8e80ea61ae081911bb037765590ee6aa435",
+                                    "AlgorithmIdentifier": "SHA-256",
                                     "Size": "3",
                                     "MimeType": "text\/plain",
                                     "Title": "Archive zip -- 20131023_AU_20150323_seances_Conseil_general.pdf -- 7756W3_9\/7756W05_Assemblee_departementale_Groupe_socialiste\/20131023_AU_20150323_seances_Conseil_general.pdf   est un fichier "
@@ -130,6 +134,7 @@
                             "Filename": "7756_Bordereau_versement.pdf",
                             "Uri": "content\/de46bfca3ce1afc7345b5e3b24b3c7c9e98f9f7de62cfd45ba1f6565e3e71da5.pdf",
                             "MessageDigest": "de46bfca3ce1afc7345b5e3b24b3c7c9e98f9f7de62cfd45ba1f6565e3e71da5",
+                            "AlgorithmIdentifier": "SHA-256",
                             "Size": "1156",
                             "MimeType": "application\/pdf",
                             "Title": "Archive zip -- 7756_Bordereau_versement.pdf -- 7756W3_9\/7756_Bordereau_versement.pdf   est un fichier "
@@ -139,6 +144,7 @@
                             "Filename": "fichier.txt",
                             "Uri": "content\/084c799cd551dd1d8d5c5f9a5d593b2e931f5e36122ee5c793c1d08a19839cc0.txt",
                             "MessageDigest": "084c799cd551dd1d8d5c5f9a5d593b2e931f5e36122ee5c793c1d08a19839cc0",
+                            "AlgorithmIdentifier": "SHA-256",
                             "Size": "3",
                             "MimeType": "text\/plain",
                             "Title": "Archive zip -- fichier.txt -- 7756W3_9\/fichier.txt   est un fichier "
