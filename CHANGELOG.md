@@ -12,6 +12,7 @@
 - Connecteur Vitam #1251
 - Contrôle sur les identifiants du connecteur Transformation #1426
 - Onglet de visualisation des transformations après l'étape #1426
+- Choix de l'algorithme de calcul d'empreinte des fichiers pour les connecteurs utilisant le générateur SEDA #1668
 
 ## Évolutions
 

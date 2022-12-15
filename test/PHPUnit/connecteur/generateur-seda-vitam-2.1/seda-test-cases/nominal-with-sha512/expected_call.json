@@ -1,0 +1,72 @@
+{
+    "version": "2.1-vitam",
+    "Title": "Actes soumis au contr\u00f4le de l\u00e9galit\u00e9 : Nomination du colonel Moutarde",
+    "ArchivalAgreement": "ACCORDS_ACTES",
+    "ArchivalProfile": "PROFILE_ACTES",
+    "ServiceLevel": "234567890",
+    "Language": "fra",
+    "DescriptionLanguage": "fra",
+    "StartDate": "2020-12-04",
+    "EndDate": "2020-12-04",
+    "AccessRule": {
+        "Rule": "AR038",
+        "StartDate": "2020-12-04"
+    },
+    "AppraisalRule": {
+        "FinalAction": "Destroy",
+        "Rule": "P10Y",
+        "StartDate": "2020-12-04"
+    },
+    "Keywords": [
+        {
+            "KeywordContent": "D\u00e9lib\u00e9ration"
+        },
+        {
+            "KeywordContent": "1.1 Titulaire de la fonction publique territoriale"
+        }
+    ],
+    "Files": [
+        {
+            "Id": "NOT_TESTABLE_1",
+            "Filename": "actes.pdf",
+            "Uri": "content\/65019286222ace418f742556366f9b9da5aaf6797527d2f0cba5bfe6b2f8ed24746542a0f2be1da8d63c2477f688b608eb53628993afa624f378b03f10090ce7.pdf",
+            "MessageDigest": "65019286222ace418f742556366f9b9da5aaf6797527d2f0cba5bfe6b2f8ed24746542a0f2be1da8d63c2477f688b608eb53628993afa624f378b03f10090ce7",
+            "AlgorithmIdentifier": "SHA-512",
+            "Size": "7",
+            "MimeType": "text\/plain",
+            "Title": "Actes soumis au contr\u00f4le de l\u00e9galit\u00e9 : Nomination du colonel Moutarde"
+        },
+        {
+            "Id": "NOT_TESTABLE_2",
+            "Filename": "annexe1.pdf",
+            "Uri": "content\/bce50343a56f01dc7cf2d4c82127be4fff3a83ddb8b783b1a28fb6574637ceb71ef594b1f03a8e9b7d754341831292bcad1a3cb8a12fd2ded7a57b1b173b3bf7.pdf",
+            "MessageDigest": "bce50343a56f01dc7cf2d4c82127be4fff3a83ddb8b783b1a28fb6574637ceb71ef594b1f03a8e9b7d754341831292bcad1a3cb8a12fd2ded7a57b1b173b3bf7",
+            "AlgorithmIdentifier": "SHA-512",
+            "Size": "11",
+            "MimeType": "text\/plain",
+            "Title": "Annexe de l'acte"
+        },
+        {
+            "Id": "NOT_TESTABLE_3",
+            "Filename": "annexe2.pdf",
+            "Uri": "content\/07ad9cbbb0147f116fa1066b9ec7489c9d6dc9846dc404efacb7832504976a1a6de825971a1cf722f600cba3541c4dd559660e8d09b101cf9728b3e361d9cbc0.pdf",
+            "MessageDigest": "07ad9cbbb0147f116fa1066b9ec7489c9d6dc9846dc404efacb7832504976a1a6de825971a1cf722f600cba3541c4dd559660e8d09b101cf9728b3e361d9cbc0",
+            "AlgorithmIdentifier": "SHA-512",
+            "Size": "3",
+            "MimeType": "text\/plain",
+            "Title": "Annexe de l'acte"
+        }
+    ],
+    "OriginatingAgency": {
+        "Identifier": "491 011 698 0001",
+        "Name": "LIBRICIEL SCOP service RH"
+    },
+    "ArchivalAgency": {
+        "Identifier": "FRAD000",
+        "Name": "Service d'archive de Libriciel"
+    },
+    "TransferringAgency": {
+        "Identifier": "491 011 698",
+        "Name": "LIBRICIEL SCOP"
+    }
+}

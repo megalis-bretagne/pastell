@@ -22,7 +22,7 @@ abstract class AbstractSedaGeneratorConnector extends SEDAConnecteur
     private const SEDA_GENERATOR_GENERATE_PATH = '/generate';
     private const SEDA_GENERATOR_GENERATE_PATH_WITH_TEMPLATE = '/generateWithTemplate';
     private const SEDA_GENERATOR_URL_ID = 'seda_generator_url';
-    private const SEDA_GENERATOR_HASH_ALGORITHM_ID = 'hash_algorithm';
+    public const SEDA_GENERATOR_HASH_ALGORITHM_ID = 'hash_algorithm';
     private const SEDA_GENERATOR_GLOBAL_TYPE = 'Generateur SEDA';
 
     private DonneesFormulaire $connecteurConfig;
