@@ -25,10 +25,7 @@ class UtilisateurControlerTest extends ControlerTestCase
             'prenom' => 'buz',
             'email' => 'boz@byz.fr'
         ]);
-        $this->getObjectInstancier()->getInstance(RoleSQL::class)->addDroit(
-            'admin',
-            'utilisateur:creation'
-        );
+
         try {
             $this->getUtilisateurControler()->doEditionAction();
         } catch (LastMessageException $e) {
