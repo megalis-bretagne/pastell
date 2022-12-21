@@ -4,9 +4,9 @@ use Aws\S3\S3Client;
 
 class S3Wrapper implements ProofBackend
 {
-    private String $type;
-    private String $extension;
-    private String $bucket;
+    private string $type;
+    private string $extension;
+    private string $bucket;
 
     public function __construct($type, $extension, $bucket)
     {
