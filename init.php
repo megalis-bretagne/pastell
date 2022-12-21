@@ -54,6 +54,12 @@ if (REDIS_SERVER && !TESTING_ENVIRONNEMENT) {
     $objectInstancier->setInstance(LockFactory::class, new LockFactory(new InMemoryStore()));
 }
 
+//if (TESTING_ENVIRONNEMENT){
+//    $objectInstancier->setInstance(ProofBackend::class, );
+//} else {
+    $objectInstancier->setInstance(ProofBackend::class, new S3Wrapper('preuve', 'tsa', 'journal-preuves'));
+//}
+
 $objectInstancier->setInstance('cache_ttl_in_seconds', CACHE_TTL_IN_SECONDS);
 $objectInstancier->setInstance('disable_job_queue', DISABLE_JOB_QUEUE);
 $objectInstancier->setInstance('disable_journal_horodatage', DISABLE_JOURNAL_HORODATAGE);

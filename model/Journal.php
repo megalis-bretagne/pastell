@@ -37,6 +37,7 @@ class Journal extends SQL
         private readonly DocumentTypeFactory $documentTypeFactory,
         private readonly Logger $logger,
         private readonly bool $disable_journal_horodatage,
+        private readonly ProofBackend $proofBackend,
     ) {
         parent::__construct($sqlQuery);
     }
@@ -105,16 +106,19 @@ class Journal extends SQL
             $date_horodatage = $this->horodateur->getTimeStamp($preuve);
 
             if (! $date_horodatage) {
-                $preuve = "";
-                $date_horodatage = "";
+                $preuve = '';
+                $date_horodatage = '';
             }
         }
 
-
-        $sql = "INSERT INTO journal(type,id_e,id_u,id_d,action,message,date,message_horodate,preuve,date_horodatage,document_type) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-        $this->query($sql, $type, $id_e, $id_u, $id_d, $action, $message, $now, $message_horodate, $preuve, $date_horodatage, $document_type);
+        $sql = "INSERT INTO journal(type,id_e,id_u,id_d,action,message,date,message_horodate,date_horodatage,document_type) VALUES (?,?,?,?,?,?,?,?,?,?)";
+        $this->query($sql, $type, $id_e, $id_u, $id_d, $action, $message, $now, $message_horodate, $date_horodatage, $document_type);
 
         $id_j = $this->lastInsertId();
+
+        if ($preuve !== '') {
+            $this->saveProof($id_j, $preuve);
+        }
 
         if (
             (! $preuve) &&
@@ -128,7 +132,15 @@ class Journal extends SQL
 
         return $id_j;
     }
+    public function saveProof(int $id_j, $preuve): void
+    {
+        $this->proofBackend->write($id_j, $preuve);
+    }
 
+    public function getProof(int $id_j)
+    {
+        return $this->proofBackend->read($id_j);
+    }
 
     public function getAll(
         $id_e = false,
@@ -150,8 +162,11 @@ class Journal extends SQL
             $documentType = $this->documentTypeFactory->getFluxDocumentType($line['document_type']);
             $result[$i]['document_type_libelle'] = $documentType->getName();
             $result[$i]['action_libelle'] = $documentType->getAction()->getActionName($line['action']);
-            if ($with_preuve == false) {
+            if ($with_preuve == false && $result[$i]['id_j'] < 1004) {
                 unset($result[$i]['preuve']);
+            }
+            if ($with_preuve && $result[$i]['id_j'] > 1004) {
+                $result[$i]['preuve'] = $this->getProof($result[$i]['id_j']);
             }
         }
         return $result;
@@ -278,7 +293,11 @@ class Journal extends SQL
     public function getInfo($id_j)
     {
         $sql = "SELECT * FROM journal WHERE id_j=?";
-        return $this->queryOne($sql, $id_j);
+        $result = $this->queryOne($sql, $id_j);
+        if ($result['id_j'] > 1004) {
+            $result['preuve'] = $this->getProof($result['id_j']);
+        }
+        return $result;
     }
 
     public function getAllInfo($id_j)
@@ -297,7 +316,9 @@ class Journal extends SQL
         $documentType = $this->documentTypeFactory->getFluxDocumentType($result['document_type']);
         $result['document_type_libelle'] = $documentType->getName();
         $result['action_libelle'] = $documentType->getAction()->getActionName($result['action']);
-
+        if ($result['id_j'] > 1004) {
+            $result['preuve'] = $this->getProof($id_j);
+        }
         return $result;
     }
 
