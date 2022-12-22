@@ -93,7 +93,7 @@ abstract class PastellTestCase extends TestCase
         $this->objectInstancier->setInstance(TestHandler::class, $testHandler);
         $this->getObjectInstancier()->getInstance(Logger::class)->pushHandler($testHandler);
         $this->reinitFileSystem();
-        $this->objectInstancier->setInstance(ProofBackend::class, new S3Wrapper('preuve', 'tsa', 'journal-preuves'));
+        $this->objectInstancier->setInstance(ProofBackend::class, new S3Wrapper('preuve', 'tsa', 'journal-preuves-test'));
         $this->getJournal()->setId(1);
 
         $this->objectInstancier->setInstance('opensslPath', OPENSSL_PATH);

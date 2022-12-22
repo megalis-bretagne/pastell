@@ -116,7 +116,7 @@ final class SAEGenerateArchiveAction extends ConnecteurTypeActionExecutor
 
         $journal = $this->getJournal()->getAll($this->id_e, false, $this->id_d, 0, 0, 10000);
         foreach ($journal as $i => $journal_item) {
-            $journal[$i]['preuve'] = \base64_encode($journal_item['preuve']);
+            $journal[$i]['preuve'] = ($journal_item['preuve']);
         }
 
         $date_journal_debut = $journal[\count($journal) - 1]['date'];

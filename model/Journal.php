@@ -116,9 +116,7 @@ class Journal extends SQL
 
         $id_j = $this->lastInsertId();
 
-        if ($preuve !== '') {
-            $this->saveProof($id_j, $preuve);
-        }
+        $this->saveProof($id_j, $preuve);
 
         if (
             (! $preuve) &&
@@ -142,6 +140,12 @@ class Journal extends SQL
         return $this->proofBackend->read($id_j);
     }
 
+    public function getAllProof(): array
+    {
+        $sql = "SELECT * FROM journal";
+        return $this->query($sql);
+    }
+
     public function getAll(
         $id_e = false,
         $type = false,
@@ -162,10 +166,9 @@ class Journal extends SQL
             $documentType = $this->documentTypeFactory->getFluxDocumentType($line['document_type']);
             $result[$i]['document_type_libelle'] = $documentType->getName();
             $result[$i]['action_libelle'] = $documentType->getAction()->getActionName($line['action']);
-            if ($with_preuve == false && $result[$i]['id_j'] < 1004) {
+            if (!$with_preuve) {
                 unset($result[$i]['preuve']);
-            }
-            if ($with_preuve && $result[$i]['id_j'] > 1004) {
+            } else {
                 $result[$i]['preuve'] = $this->getProof($result[$i]['id_j']);
             }
         }
@@ -294,9 +297,8 @@ class Journal extends SQL
     {
         $sql = "SELECT * FROM journal WHERE id_j=?";
         $result = $this->queryOne($sql, $id_j);
-        if ($result['id_j'] > 1004) {
-            $result['preuve'] = $this->getProof($result['id_j']);
-        }
+        $result['preuve'] = $this->getProof($result['id_j']);
+
         return $result;
     }
 
@@ -316,9 +318,8 @@ class Journal extends SQL
         $documentType = $this->documentTypeFactory->getFluxDocumentType($result['document_type']);
         $result['document_type_libelle'] = $documentType->getName();
         $result['action_libelle'] = $documentType->getAction()->getActionName($result['action']);
-        if ($result['id_j'] > 1004) {
-            $result['preuve'] = $this->getProof($id_j);
-        }
+        $result['preuve'] = $this->getProof($id_j);
+
         return $result;
     }
 
@@ -336,6 +337,7 @@ class Journal extends SQL
         foreach ($id_j_list as $id_j) {
             $info = $this->getInfo($id_j);
             $preuve = $this->horodateur->getTimestampReply($info['message_horodate']);
+            $this->saveProof($id_j, $preuve);
             $date_horodatage = $this->horodateur->getTimeStamp($preuve);
             $this->query($sql, $preuve, $date_horodatage, $info['id_j']);
             echo "{$info['id_j']} horodaté : $date_horodatage\n";
