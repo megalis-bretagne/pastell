@@ -161,14 +161,15 @@ publish_to_nexus:
   only:
     - tags
   variables:
+    DIRECTORY_NAME: pastell-${CI_COMMIT_REF_NAME}
     TARBALL_NAME: pastell-${CI_COMMIT_REF_NAME}.tar.gz
     PAYLOAD: "payload={\"text\": \"[Pastell] Création de la version [$CI_COMMIT_REF_NAME](https://nexus.libriciel.fr/repository/ls-raw/public/plateforme/pastell/${TARBALL_NAME})\"}"
-    DONT_INIT_DATABASE: "true"
-    DONT_RETRIEVE_VALIDCA: "true"
   script:
-    - ./docker/make-package.sh ${CI_COMMIT_REF_NAME} && cd build-package/pastell-${CI_COMMIT_REF_NAME} && tar cvzf /tmp/${TARBALL_NAME} package
-    - cp /tmp/${TARBALL_NAME} ${CI_PROJECT_DIR}
-    - curl -v -u ${REGISTRY_CONTAINER_USER}:${REGISTRY_CONTAINER_PASSWORD} --upload-file /tmp/${TARBALL_NAME} https://nexus.libriciel.fr/repository/ls-raw/public/plateforme/pastell/${TARBALL_NAME}
+    - mkdir -p ${DIRECTORY_NAME}
+    - sed -e "s/canary$/${VERSION}/" docker/docker-compose.yml >  ${DIRECTORY_NAME}/docker-compose.yml
+    - cp docker/.env.dist ${DIRECTORY_NAME}/.env.dist
+    - tar cvzf ${TARBALL_NAME} ${DIRECTORY_NAME}
+    - curl -v -u ${REGISTRY_CONTAINER_USER}:${REGISTRY_CONTAINER_PASSWORD} --upload-file ${TARBALL_NAME} https://nexus.libriciel.fr/repository/ls-raw/public/plateforme/pastell/${TARBALL_NAME}
     - curl -i -X POST -d "$PAYLOAD" $MATTERMOST_WEBHOOK
   artifacts:
     paths:
