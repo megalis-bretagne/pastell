@@ -6,5 +6,5 @@ interface ProofBackend
 {
     public function write($id, $content): void;
 
-    public function read($id);
+    public function read($id): string;
 }

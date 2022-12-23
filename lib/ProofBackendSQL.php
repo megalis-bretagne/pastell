@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-class ProofBackendTest extends SQL implements ProofBackend
+class ProofBackendSQL extends SQL implements ProofBackend
 {
     public function __construct(
         SQLQuery $sqlQuery,
@@ -16,7 +16,7 @@ class ProofBackendTest extends SQL implements ProofBackend
         $this->query($sql, $content, $id);
     }
 
-    public function read($id)
+    public function read($id): string
     {
         $sql = "SELECT preuve FROM journal WHERE id_j = ?";
         return $this->query($sql, $id)[0]['preuve'];

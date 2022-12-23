@@ -135,7 +135,7 @@ class Journal extends SQL
         $this->proofBackend->write($id_j, $preuve);
     }
 
-    public function getProof(int $id_j)
+    public function getProof(int $id_j): string
     {
         return $this->proofBackend->read($id_j);
     }

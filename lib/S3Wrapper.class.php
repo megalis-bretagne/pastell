@@ -39,7 +39,7 @@ class S3Wrapper implements ProofBackend
         ]);
     }
 
-    public function read($id)
+    public function read($id): string
     {
         $object = $this->aws->getObject([
             'Bucket' => $this->bucket,
