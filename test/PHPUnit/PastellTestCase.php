@@ -93,7 +93,11 @@ abstract class PastellTestCase extends TestCase
         $this->objectInstancier->setInstance(TestHandler::class, $testHandler);
         $this->getObjectInstancier()->getInstance(Logger::class)->pushHandler($testHandler);
         $this->reinitFileSystem();
-        $this->objectInstancier->setInstance(ProofBackend::class, new S3Wrapper('preuve', 'tsa', 'journal-preuves-test'));
+        $this->objectInstancier->setInstance(ProofBackend::class, new ProofBackendTest($this->getObjectInstancier()->getInstance('SQLQuery')));
+        $this->objectInstancier->setInstance('S3url', S3_ENDPOINT);
+        $this->objectInstancier->setInstance('S3key', S3_KEY);
+        $this->objectInstancier->setInstance('S3secret', S3_SECRET);
+        $this->objectInstancier->setInstance('S3bucket', S3_BUCKET);
         $this->getJournal()->setId(1);
 
         $this->objectInstancier->setInstance('opensslPath', OPENSSL_PATH);
