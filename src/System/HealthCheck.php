@@ -15,6 +15,7 @@ class HealthCheck
     public const EXPECTED_ELEMENTS_CHECK = 'EXPECTED_ELEMENTS_CHECK';
     public const COMMAND_CHECK = 'COMMAND_CHECK';
     public const CONSTANTS_CHECK = 'CONSTANTS_CHECK';
+    public const DATETIME_CHECK = 'DATETIME_CHECK';
     public const DATABASE_SCHEMA_CHECK = 'DATABASE_SCHEMA_CHECK';
     public const DATABASE_ENCODING_CHECK = 'DATABASE_ENCODING_CHECK';
     public const CRASHED_TABLES_CHECK = 'CRASHED_TABLES_CHECK';
@@ -47,6 +48,7 @@ class HealthCheck
             self::CRASHED_TABLES_CHECK => Check\CrashedTablesCheck::class,
             self::MISSING_CONNECTORS_CHECK => Check\MissingConnectorsCheck::class,
             self::MISSING_MODULES_CHECK => Check\MissingModulesCheck::class,
+            self::DATETIME_CHECK => Check\DatetimeCheck::class
         ];
     }
 

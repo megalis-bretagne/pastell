@@ -217,6 +217,22 @@
         </table>
     </div>
 
+    <div class="box">
+        <h2 id="desc-constants-table">Date et heure</h2>
+        <table class='table table-striped' aria-labelledby="desc-constants-table">
+            <tr>
+                <th class="w140" scope="col">Élément</th>
+                <th scope="col">Valeur</th>
+            </tr>
+            {% for data in checkDatetime %}
+                <tr>
+                    <th scope="row">{{ data.label }}</th>
+                    <td>{{ data.result }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
     {% if display_feature_toggle_in_test_page %}
         <div class="box">
             <h2 id="desc-constants-table">Fonctionnalités activables</h2>

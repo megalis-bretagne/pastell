@@ -50,6 +50,7 @@ class SystemControler extends PastellControler
         $this->setViewParameter('checkExpectedElements', $healthCheck->check(HealthCheck::EXPECTED_ELEMENTS_CHECK));
         $this->setViewParameter('checkCommands', $healthCheck->check(HealthCheck::COMMAND_CHECK));
         $this->setViewParameter('checkConstants', $healthCheck->check(HealthCheck::CONSTANTS_CHECK));
+        $this->setViewParameter('checkDatetime', $healthCheck->check(HealthCheck::DATETIME_CHECK));
         $this->setViewParameter('checkDatabaseSchema', $healthCheck->check(HealthCheck::DATABASE_SCHEMA_CHECK)[0]);
         $this->setViewParameter('checkDatabaseEncoding', $healthCheck->check(HealthCheck::DATABASE_ENCODING_CHECK)[0]);
         $this->setViewParameter('checkCrashedTables', $healthCheck->check(HealthCheck::CRASHED_TABLES_CHECK)[0]);

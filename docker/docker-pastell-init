@@ -9,6 +9,7 @@ cat <<EOF
 define("SITE_BASE","${PASTELL_SITE_BASE}");
 define("WEBSEC_BASE","${WEBSEC_BASE}");
 
+define("TIMEZONE", "${TIMEZONE}");
 define("BD_DSN","mysql:dbname=${MYSQL_DATABASE:-pastell};host=${MYSQL_HOST:-localhost};port=${MYSQL_PORT:-3306};charset=utf8mb4");
 define("BD_DBNAME","${MYSQL_DATABASE:-pastell}");
 define("BD_USER","${MYSQL_USER:-user}");
