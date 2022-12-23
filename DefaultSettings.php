@@ -255,3 +255,19 @@ if (!defined("MAILER_DSN")) {
 if (!defined("USE_UUID_FOR_DOCUMENT")) {
     define("USE_UUID_FOR_DOCUMENT", false);
 }
+
+if (!defined("S3_ENDPOINT")) {
+    define("S3_ENDPOINT", "http://minio:9000/");
+}
+
+if (!defined("S3_KEY")) {
+    define("S3_KEY", "minioadmin");
+}
+
+if (!defined("S3_SECRET")) {
+    define("S3_SECRET", "minioadmin");
+}
+
+if (!defined("S3_BUCKET")) {
+    define("S3_BUCKET", "journal-preuves");
+}

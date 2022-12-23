@@ -1,51 +1,60 @@
 <?php
 
+declare(strict_types=1);
+
 use Aws\S3\S3Client;
 
 class S3Wrapper implements ProofBackend
 {
-    private string $type;
-    private string $extension;
+    private S3Client $aws;
     private string $bucket;
 
-    public function __construct($type, $extension, $bucket)
+    /**
+     * @param string $S3url
+     * @param string $S3key
+     * @param string $S3secret
+     * @param string $S3bucket
+     */
+    public function __construct(string $S3url, string $S3key, string $S3secret, string $S3bucket)
     {
-        $this->type = $type;
-        $this->extension = $extension;
-        $this->bucket = $bucket;
-        // mettre tous les parametres spécifiques à MINIO bucket extension etc
-    }
-
-    public static function getAccess(): S3Client
-    {
-        return new S3Client([
+        $this->bucket = $S3bucket;
+        $this->aws = new S3Client([
             'version' => 'latest',
             'region'  => 'fr-par',
-            'endpoint' => 'http://minio:9000/',
+            'endpoint' => $S3url,
             'use_path_style_endpoint' => true,
             'credentials' => [
-                'key'    => 'minioadmin',
-                'secret' => 'minioadmin'
+                'key'    => $S3key,
+                'secret' => $S3secret,
             ],
         ]);
     }
+
     public function write($id, $content): void
     {
-        $connexion = self::getAccess();
-        $connexion->putObject([
+        $this->aws->putObject([
             'Bucket' => $this->bucket,
-            'Key'    => $id . $this->type . '.' . $this->extension,
+            'Key'    => $id . 'preuve.tsa',
             'Body'   => $content,
         ]);
     }
 
     public function read($id)
     {
-        $connexion = self::getAccess();
-        $object = $connexion->getObject([
+        $object = $this->aws->getObject([
             'Bucket' => $this->bucket,
-            'Key'    => $id . $this->type . '.' . $this->extension,
+            'Key'    => $id . 'preuve.tsa',
         ]);
         return $object['Body'];
+    }
+
+    public function createBucket(): void
+    {
+        $this->aws->createBucket(['Bucket' => $this->bucket]);
+    }
+
+    public function isBucketSet(): bool
+    {
+        return $this->aws->doesBucketExist($this->bucket);
     }
 }

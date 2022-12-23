@@ -54,10 +54,14 @@ if (REDIS_SERVER && !TESTING_ENVIRONNEMENT) {
     $objectInstancier->setInstance(LockFactory::class, new LockFactory(new InMemoryStore()));
 }
 
-//if (TESTING_ENVIRONNEMENT){
-//    $objectInstancier->setInstance(ProofBackend::class, );
+//if (TESTING_ENVIRONNEMENT) {
+//    $objectInstancier->setInstance(ProofBackend::class, new ProofBackendTest());
 //} else {
-    $objectInstancier->setInstance(ProofBackend::class, new S3Wrapper('preuve', 'tsa', 'journal-preuves'));
+$objectInstancier->setInstance('S3url', S3_ENDPOINT);
+$objectInstancier->setInstance('S3key', S3_KEY);
+$objectInstancier->setInstance('S3secret', S3_SECRET);
+$objectInstancier->setInstance('S3bucket', S3_BUCKET);
+$objectInstancier->setInstance(ProofBackend::class, new S3Wrapper(S3_ENDPOINT, S3_KEY, S3_SECRET, S3_BUCKET));
 //}
 
 $objectInstancier->setInstance('cache_ttl_in_seconds', CACHE_TTL_IN_SECONDS);
