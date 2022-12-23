@@ -1,0 +1,94 @@
+nom: 'Document PDF (destinataire)'
+type: 'Types de dossier personnalisés'
+description: ''
+connecteur: {  }
+formulaire:
+    Information:
+        libelle:
+            name: Libellé
+            type: text
+            requis: false
+            multiple: false
+            commentaire: ''
+            title: true
+        document:
+            name: Document
+            type: file
+            requis: true
+            multiple: false
+            commentaire: ''
+        annexe:
+            name: Annexe(s)
+            type: file
+            requis: false
+            multiple: true
+            commentaire: ''
+champs-affiches:
+    - titre
+    - dernier_etat
+    - date_dernier_etat
+champs-recherche-avancee:
+    - type
+    - id_e
+    - lastetat
+    - last_state_begin
+    - etatTransit
+    - state_begin
+    - search
+action:
+    creation:
+        name-action: Créer
+        name: Créé
+        rule:
+            no-last-action: ''
+    modification:
+        name-action: Modifier
+        name: 'En cours de rédaction'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+    supression:
+        name-action: Supprimer
+        name: Supprimé
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - termine
+                - fatal-error
+        action-class: Supprimer
+        warning: 'Êtes-vous sûr ?'
+    importation:
+        name: 'Importation du document'
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+    orientation:
+        name: 'Envoi du document'
+        name-action: 'Envoyer le document'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+            document_is_valide: true
+        action-class: OrientationTypeDossierPersonnalise
+    termine:
+        name: 'Traitement terminé'
+        rule:
+            role_id_e: no-role
+    reouverture:
+        name: 'Rouvrir le dossier'
+        rule:
+            last-action:
+                - termine
+        action-class: Reopen
+    cheminement-change:
+        no-workflow: true
+        rule:
+            role_id_e: 'no-role,'
+        action-class: CheminementChangeTypeDossierPersonnalise
+studio_definition: eyJpZF90eXBlX2Rvc3NpZXIiOiJscy1kb2N1bWVudC1wZGYtZHJhZnQtZGVzdGluYXRhaXJlIiwicGFzdGVsbC12ZXJzaW9uIjoiJVZFUlNJT04lIiwidGltZXN0YW1wIjoxNjcxNzg4MDA1LCJyYXdfZGF0YSI6eyJpZF90eXBlX2Rvc3NpZXIiOiJscy1kb2N1bWVudC1wZGYtZHJhZnQtZGVzdGluYXRhaXJlIiwibm9tIjoiRG9jdW1lbnQgUERGIChkZXN0aW5hdGFpcmUpIiwidHlwZSI6IlR5cGVzIGRlIGRvc3NpZXIgcGVyc29ubmFsaXNcdTAwZTlzIiwiZGVzY3JpcHRpb24iOiIiLCJub21fb25nbGV0IjoiSW5mb3JtYXRpb24iLCJyZXN0cmljdGlvbl9wYWNrIjoiIiwiZm9ybXVsYWlyZUVsZW1lbnQiOlt7ImVsZW1lbnRfaWQiOiJsaWJlbGxlIiwibmFtZSI6IkxpYmVsbFx1MDBlOSIsInR5cGUiOiJ0ZXh0IiwiY29tbWVudGFpcmUiOiIiLCJyZXF1aXMiOiIiLCJjaGFtcHNfYWZmaWNoZXMiOiIiLCJjaGFtcHNfcmVjaGVyY2hlX2F2YW5jZWUiOiIiLCJ0aXRyZSI6Im9uIiwic2VsZWN0X3ZhbHVlIjoiIiwicHJlZ19tYXRjaCI6IiIsInByZWdfbWF0Y2hfZXJyb3IiOiIiLCJjb250ZW50X3R5cGUiOiIifSx7ImVsZW1lbnRfaWQiOiJkb2N1bWVudCIsIm5hbWUiOiJEb2N1bWVudCIsInR5cGUiOiJmaWxlIiwiY29tbWVudGFpcmUiOiIiLCJyZXF1aXMiOiJvbiIsImNoYW1wc19hZmZpY2hlcyI6IiIsImNoYW1wc19yZWNoZXJjaGVfYXZhbmNlZSI6IiIsInRpdHJlIjoiIiwic2VsZWN0X3ZhbHVlIjoiIiwicHJlZ19tYXRjaCI6IiIsInByZWdfbWF0Y2hfZXJyb3IiOiIiLCJjb250ZW50X3R5cGUiOiIifSx7ImVsZW1lbnRfaWQiOiJhbm5leGUiLCJuYW1lIjoiQW5uZXhlKHMpIiwidHlwZSI6Im11bHRpX2ZpbGUiLCJjb21tZW50YWlyZSI6IiIsInJlcXVpcyI6IiIsImNoYW1wc19hZmZpY2hlcyI6IiIsImNoYW1wc19yZWNoZXJjaGVfYXZhbmNlZSI6IiIsInRpdHJlIjoiIiwic2VsZWN0X3ZhbHVlIjoiIiwicHJlZ19tYXRjaCI6IiIsInByZWdfbWF0Y2hfZXJyb3IiOiIiLCJjb250ZW50X3R5cGUiOiIifV0sImV0YXBlIjpbXX19Cg==

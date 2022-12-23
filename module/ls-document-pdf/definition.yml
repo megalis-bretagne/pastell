@@ -4,6 +4,11 @@ description: ''
 connecteur:
     - transformation
     - signature
+    - mailsec
+    - pdf-relance
+    - GED
+    - 'Bordereau SEDA'
+    - SAE
 formulaire:
     Informations:
         libelle:
@@ -20,15 +25,39 @@ formulaire:
             multiple: false
             commentaire: ''
             content-type: application/pdf
+        annexe:
+            name: Annexe(s)
+            type: file
+            requis: false
+            multiple: true
+            commentaire: ''
     Cheminement:
         envoi_transformation:
-            name: 'Transformation initiale'
+            name: Transformation
             type: checkbox
             onchange: cheminement-change
             default: checked
             read-only: true
         envoi_signature:
             name: Visa/Signature
+            type: checkbox
+            onchange: cheminement-change
+            default: ''
+            read-only: false
+        envoi_mailsec:
+            name: 'Mail sécurisé'
+            type: checkbox
+            onchange: cheminement-change
+            default: ''
+            read-only: false
+        envoi_depot:
+            name: 'Dépôt (GED, FTP, ...)'
+            type: checkbox
+            onchange: cheminement-change
+            default: ''
+            read-only: false
+        envoi_sae:
+            name: "Système d'archivage électronique"
             type: checkbox
             onchange: cheminement-change
             default: ''
@@ -119,6 +148,95 @@ formulaire:
             type: file
             multiple: true
             read-only: true
+    'Mail sécurisé':
+        to:
+            name: Destinataire(s)
+            commentaire: 'Plusieurs emails possibles séparés par une virgule'
+            requis: true
+            type: mail-list
+            autocomplete: MailSec/getContactAjax
+        cc:
+            name: 'Copie à'
+            commentaire: 'Plusieurs emails possibles séparés par une virgule'
+            type: mail-list
+            autocomplete: MailSec/getContactAjax
+        bcc:
+            name: 'Copie cachée à'
+            commentaire: 'Plusieurs emails possibles séparés par une virgule'
+            type: mail-list
+            autocomplete: MailSec/getContactAjax
+        password:
+            name: 'Mot de passe'
+            type: password
+            may_be_null: true
+        password2:
+            name: 'Mot de passe (confirmation)'
+            type: password
+            may_be_null: true
+            is_equal: password
+            is_equal_error: 'Les mots de passe ne correspondent pas'
+        key:
+            no-show: true
+            read-only: true
+        sent_mail_number:
+            name: Destinataires
+            default: '0'
+            no-show: true
+            read-only: true
+        sent_mail_read:
+            name: 'Mails lus'
+            default: '0'
+            no-show: true
+            read-only: true
+        sent_mail_answered:
+            name: 'Mails répondus'
+            default: '0'
+            no-show: true
+            read-only: true
+    'Retour GED':
+        has_ged_document_id:
+            no-show: true
+            read-only: true
+        ged_document_id_file:
+            name: 'Identifiants des documents sur la GED'
+            type: file
+            visionneuse: Pastell\Viewer\GedIdDocumentsViewer
+            read-only: true
+            requis: true
+            visionneuse-no-link: true
+    SAE:
+        sae_show:
+            no-show: true
+        journal:
+            name: 'Faisceau de preuves'
+            type: file
+        date_journal_debut:
+            name: 'Date du premier évènement journalisé'
+        date_cloture_journal:
+            name: 'Date de clôture du journal'
+        date_cloture_journal_iso8601:
+            name: 'Date de clôture du journal (iso 8601)'
+        sae_transfert_id:
+            name: 'Identifiant de transfert'
+            index: true
+        sae_bordereau:
+            name: 'Bordereau SEDA'
+            type: file
+        sae_archive:
+            name: "Paquet d'archive (SIP)"
+            type: file
+        ar_sae:
+            type: file
+            name: 'Accusé de réception SAE'
+        sae_ack_comment:
+            name: "Commentaire de l'accusé de réception"
+        reply_sae:
+            type: file
+            name: 'Réponse du SAE'
+        sae_archival_identifier:
+            name: "Identifiant de l'archive sur le SAE"
+        sae_atr_comment:
+            name: 'Commentaire de la réponse du SAE'
 champs-affiches:
     - titre
     - dernier_etat
@@ -140,6 +258,12 @@ page-condition:
         envoi_fast: true
     Signature:
         has_signature: true
+    'Mail sécurisé':
+        envoi_mailsec: true
+    'Retour GED':
+        has_ged_document_id: true
+    SAE:
+        sae_show: true
 action:
     creation:
         name-action: Créer
@@ -155,6 +279,10 @@ action:
                 - modification
                 - importation
                 - transformation
+                - recu-iparapheur
+                - reception
+                - non-recu
+                - send-ged
                 - send-signature-error
     supression:
         name-action: Supprimer
@@ -168,6 +296,7 @@ action:
                 - fatal-error
                 - transformation-error
                 - rejet-iparapheur
+                - rejet-sae
         action-class: Supprimer
         warning: 'Êtes-vous sûr ?'
     importation:
@@ -185,6 +314,10 @@ action:
                 - importation
                 - transformation
                 - recu-iparapheur
+                - reception
+                - non-recu
+                - send-ged
+                - accepter-sae
             document_is_valide: true
         action-class: OrientationTypeDossierPersonnalise
     termine:
@@ -223,6 +356,9 @@ action:
             has_transformation: has_transformation
         editable-content:
             - envoi_signature
+            - envoi_mailsec
+            - envoi_depot
+            - envoi_sae
             - envoi_iparapheur
             - iparapheur_sous_type
             - has_date_limite
@@ -233,6 +369,24 @@ action:
             - fast_parapheur_email_destinataire
             - fast_parapheur_email_cc
             - fast_parapheur_agents
+            - to
+            - cc
+            - bcc
+            - password
+            - password2
+            - sae_show
+            - journal
+            - date_journal_debut
+            - date_cloture_journal
+            - date_cloture_journal_iso8601
+            - sae_transfert_id
+            - sae_bordereau
+            - sae_archive
+            - ar_sae
+            - sae_ack_comment
+            - reply_sae
+            - sae_archival_identifier
+            - sae_atr_comment
         modification-no-change-etat: true
     transformation-error:
         name: 'Erreur lors de la transformation du dossier'
@@ -267,6 +421,7 @@ action:
             iparapheur_date_limite: date_limite
             objet: libelle
             document: document
+            autre_document_attache: annexe
         action-automatique: verif-iparapheur
     send-signature-error:
         name: "Erreur lors de l'envoi du dossier à la signature"
@@ -305,6 +460,7 @@ action:
             iparapheur_date_limite: date_limite
             objet: libelle
             document: document
+            autre_document_attache: annexe
     erreur-verif-iparapheur:
         name: 'Erreur lors de la vérification du statut de signature'
         rule:
@@ -314,6 +470,29 @@ action:
         rule:
             role_id_e: no-role
         action-automatique: orientation
+        editable-content:
+            - envoi_mailsec
+            - envoi_depot
+            - envoi_sae
+            - to
+            - cc
+            - bcc
+            - password
+            - password2
+            - sae_show
+            - journal
+            - date_journal_debut
+            - date_cloture_journal
+            - date_cloture_journal_iso8601
+            - sae_transfert_id
+            - sae_bordereau
+            - sae_archive
+            - ar_sae
+            - sae_ack_comment
+            - reply_sae
+            - sae_archival_identifier
+            - sae_atr_comment
+        modification-no-change-etat: true
     rejet-iparapheur:
         name: 'Signature refusée'
         rule:
@@ -328,4 +507,270 @@ action:
             iparapheur_type: iparapheur_type
             iparapheur_sous_type: iparapheur_sous_type
             fast_parapheur_circuit: fast_parapheur_circuit
-studio_definition: eyJpZF90eXBlX2Rvc3NpZXIiOiJscy1kb2N1bWVudC1wZGYtZHJhZnQiLCJwYXN0ZWxsLXZlcnNpb24iOiIlVkVSU0lPTiUiLCJ0aW1lc3RhbXAiOjE2NTcyMDU1NjQsInJhd19kYXRhIjp7Im5vbSI6IkRvY3VtZW50IFBERiAoRHJhZnQpIiwidHlwZSI6IlR5cGVzIGRlIGRvc3NpZXIgRG9jdW1lbnQiLCJldGFwZSI6W3sidHlwZSI6InRyYW5zZm9ybWF0aW9uIiwibGFiZWwiOiJUcmFuc2Zvcm1hdGlvbiBpbml0aWFsZSIsInJlcXVpcyI6Im9uIiwibnVtX2V0YXBlIjowLCJhdXRvbWF0aXF1ZSI6Im9uIiwiZGVmYXVsdENoZWNrZWQiOmZhbHNlLCJzcGVjaWZpY190eXBlX2luZm8iOltdLCJudW1fZXRhcGVfc2FtZV90eXBlIjowLCJldGFwZV93aXRoX3NhbWVfdHlwZV9leGlzdHMiOmZhbHNlfSx7InR5cGUiOiJzaWduYXR1cmUiLCJsYWJlbCI6IlZpc2FcL1NpZ25hdHVyZSIsInJlcXVpcyI6IiIsIm51bV9ldGFwZSI6IjEiLCJhdXRvbWF0aXF1ZSI6Im9uIiwiZGVmYXVsdENoZWNrZWQiOmZhbHNlLCJzcGVjaWZpY190eXBlX2luZm8iOnsiYW5uZXhlIjoiIiwiaGFzX2RhdGVfbGltaXRlIjoib24iLCJkb2N1bWVudF9hX3NpZ25lciI6ImRvY3VtZW50IiwibGliZWxsZV9wYXJhcGhldXIiOiJsaWJlbGxlIiwiaGFzX21ldGFkYXRhX2luX2pzb24iOiIiLCJjb250aW51ZV9hZnRlcl9yZWZ1c2FsIjoiIn0sIm51bV9ldGFwZV9zYW1lX3R5cGUiOjAsImV0YXBlX3dpdGhfc2FtZV90eXBlX2V4aXN0cyI6ZmFsc2V9XSwibm9tX29uZ2xldCI6IkluZm9ybWF0aW9ucyIsImRlc2NyaXB0aW9uIjoiIiwiaWRfdHlwZV9kb3NzaWVyIjoibHMtZG9jdW1lbnQtcGRmLWRyYWZ0IiwicmVzdHJpY3Rpb25fcGFjayI6IiIsImZvcm11bGFpcmVFbGVtZW50IjpbeyJuYW1lIjoiTGliZWxsXHUwMGU5IiwidHlwZSI6InRleHQiLCJ0aXRyZSI6Im9uIiwicmVxdWlzIjoib24iLCJlbGVtZW50X2lkIjoibGliZWxsZSIsInByZWdfbWF0Y2giOiIiLCJjb21tZW50YWlyZSI6IiIsImNvbnRlbnRfdHlwZSI6IiIsInNlbGVjdF92YWx1ZSI6IiIsImNoYW1wc19hZmZpY2hlcyI6IiIsInByZWdfbWF0Y2hfZXJyb3IiOiIiLCJjaGFtcHNfcmVjaGVyY2hlX2F2YW5jZWUiOiIifSx7Im5hbWUiOiJEb2N1bWVudCBwZGYiLCJ0eXBlIjoiZmlsZSIsInRpdHJlIjpmYWxzZSwicmVxdWlzIjoib24iLCJlbGVtZW50X2lkIjoiZG9jdW1lbnQiLCJwcmVnX21hdGNoIjoiIiwiY29tbWVudGFpcmUiOiIiLCJjb250ZW50X3R5cGUiOiJhcHBsaWNhdGlvblwvcGRmIiwic2VsZWN0X3ZhbHVlIjoiIiwiY2hhbXBzX2FmZmljaGVzIjoiIiwicHJlZ19tYXRjaF9lcnJvciI6IiIsImNoYW1wc19yZWNoZXJjaGVfYXZhbmNlZSI6IiJ9XX19
+    preparation-send-mailsec:
+        name: "Préparation de l'envoi par mail sécurisé"
+        rule:
+            role_id_e: no-role
+        action-automatique: send-mailsec
+    send-mailsec:
+        name-action: 'Envoyer le mail sécurisé'
+        name: "Envoi d'un mail sécurisé"
+        rule:
+            last-action:
+                - preparation-send-mailsec
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecEnvoyer
+        connecteur-type-mapping:
+            to: to
+            cc: cc
+            bcc: bcc
+            sent_mail_number: sent_mail_number
+        action-automatique: mailsec-relance
+    mailsec-relance:
+        name: Relancé
+        name-action: 'Relancer si nécessaire'
+        rule:
+            last-action:
+                - send-mailsec
+                - renvoi
+                - reception-partielle
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecRelance
+        connecteur-type-mapping:
+            reception-partielle: reception-partielle
+            prepare-renvoi: prepare-renvoi
+            non-recu: preparation-non-recu
+            send-mailsec: send-mailsec
+        action-automatique: mailsec-relance
+    prepare-renvoi:
+        name: 'Préparation de la relance du mail'
+        rule:
+            role_id_e: no-role
+        action-automatique: renvoi
+    renvoi:
+        name-action: 'Envoyer à nouveau'
+        name: Renvoyé
+        rule:
+            last-action:
+                - mailsec-relance
+                - send-mailsec
+                - renvoi
+                - reception-partielle
+            role_id_e: editeur
+            document_is_valide: true
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecRenvoyer
+        action-automatique: mailsec-relance
+        action-class: StandardAction
+    reception:
+        name: Reçu
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+        editable-content:
+            - envoi_depot
+            - envoi_sae
+            - sae_show
+            - journal
+            - date_journal_debut
+            - date_cloture_journal
+            - date_cloture_journal_iso8601
+            - sae_transfert_id
+            - sae_bordereau
+            - sae_archive
+            - ar_sae
+            - sae_ack_comment
+            - reply_sae
+            - sae_archival_identifier
+            - sae_atr_comment
+        modification-no-change-etat: true
+    reception-partielle:
+        name: 'Reçu partiellement'
+        rule:
+            role_id_e: no-role
+        action-automatique: mailsec-relance
+    preparation-non-recu:
+        name: 'Préparation au passage comme non reçu'
+        rule:
+            role_id_e: no-role
+        action-automatique: non-recu
+    non-recu:
+        name: 'Non reçu'
+        name-action: 'Définir comme non reçu'
+        warning: ok
+        rule:
+            last-action:
+                - preparation-non-recu
+                - renvoi
+                - send-mailsec
+                - reception-partielle
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecNotReceived
+        action-automatique: orientation
+        editable-content:
+            - envoi_depot
+            - envoi_sae
+            - sae_show
+            - journal
+            - date_journal_debut
+            - date_cloture_journal
+            - date_cloture_journal_iso8601
+            - sae_transfert_id
+            - sae_bordereau
+            - sae_archive
+            - ar_sae
+            - sae_ack_comment
+            - reply_sae
+            - sae_archival_identifier
+            - sae_atr_comment
+        modification-no-change-etat: true
+    reponse:
+        name: 'Une réponse a été enregistrée'
+        rule:
+            no-action:
+                - creation
+    compute_read_mail:
+        name: 'Calcul des mails lus'
+        rule:
+            role_id_e: no-role
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecComputeReadMail
+        connecteur-type-mapping:
+            sent_mail_read: sent_mail_read
+    compute_answered_mail:
+        name: 'Calcul des mails répondus'
+        rule:
+            role_id_e: no-role
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecComputeAnsweredMail
+        connecteur-type-mapping:
+            sent_mail_answered: sent_mail_answered
+    preparation-send-ged:
+        name: "Préparation de l'envoi à la GED"
+        rule:
+            role_id_e: no-role
+        action-automatique: send-ged
+    send-ged:
+        name-action: 'Verser à la GED'
+        name: 'Versé à la GED'
+        rule:
+            last-action:
+                - preparation-send-ged
+                - error-ged
+        action-automatique: orientation
+        action-class: StandardAction
+        connecteur-type: GED
+        connecteur-type-action: GEDEnvoyer
+        connecteur-type-mapping:
+            fatal-error: error-ged
+        editable-content:
+            - envoi_sae
+            - sae_show
+            - journal
+            - date_journal_debut
+            - date_cloture_journal
+            - date_cloture_journal_iso8601
+            - sae_transfert_id
+            - sae_bordereau
+            - sae_archive
+            - ar_sae
+            - sae_ack_comment
+            - reply_sae
+            - sae_archival_identifier
+            - sae_atr_comment
+        modification-no-change-etat: true
+    error-ged:
+        name: 'Erreur irrécupérable lors du dépôt'
+        rule:
+            role_id_e: no-role
+    preparation-send-sae:
+        name: "Préparation de l'envoi au SAE"
+        rule:
+            role_id_e: no-role
+        action-automatique: generate-sip
+    generate-sip:
+        name-action: "Générer le paquet d'archive (SIP)"
+        name: "Paquet d'archive (SIP) généré"
+        rule:
+            last-action:
+                - preparation-send-sae
+                - generate-sip-error
+                - rejet-sae
+        action-class: StandardAction
+        connecteur-type: SAE
+        connecteur-type-action: Pastell\Step\SAE\Action\SAEGenerateArchiveAction
+        action-automatique: send-archive
+    generate-sip-error:
+        name: "Erreur lors de la génération de l'archive"
+        rule:
+            role_id_e: no-role
+    send-archive:
+        name-action: 'Verser au SAE'
+        name: 'Versé au SAE'
+        rule:
+            last-action:
+                - generate-sip
+                - rejet-sae
+                - erreur-envoie-sae
+        action-class: StandardAction
+        connecteur-type: SAE
+        connecteur-type-action: Pastell\Step\SAE\Action\SAESendArchiveAction
+        action-automatique: verif-sae
+    erreur-envoie-sae:
+        name: "Erreur lors de l'envoi au SAE"
+        rule:
+            role_id_e: no-role
+    verif-sae:
+        name-action: "Récupérer l'AR du document sur le SAE"
+        name: "Récuperation de l'AR sur le SAE"
+        rule:
+            last-action:
+                - send-archive
+                - verif-sae-erreur
+        action-class: StandardAction
+        connecteur-type: SAE
+        connecteur-type-action: SAEVerifier
+    verif-sae-erreur:
+        name: "Erreur lors de la récupération de l'AR"
+        rule:
+            role_id_e: no-role
+    ar-recu-sae:
+        name: 'AR SAE reçu'
+        rule:
+            role_id_e: no-role
+        action-automatique: validation-sae
+    ack-not-provided:
+        name: 'En attente de la validation par le SAE'
+        rule:
+            role_id_e: no-role
+        action-automatique: validation-sae
+    validation-sae:
+        name-action: "Vérifier l'acceptation par le SAE"
+        name: "Vérification de l'acceptation par le SAE"
+        rule:
+            last-action:
+                - ar-recu-sae
+                - ack-not-provided
+                - validation-sae-erreur
+        action-class: StandardAction
+        connecteur-type: SAE
+        connecteur-type-action: SAEValider
+    validation-sae-erreur:
+        name: 'Erreur lors de la vérification de la validité du transfert'
+        rule:
+            role_id_e: no-role
+    accepter-sae:
+        name: 'Transfert accepté par le SAE'
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+    rejet-sae:
+        name: 'Transfert rejeté par le SAE'
+        rule:
+            role_id_e: no-role
+studio_definition: ewogICJpZF90eXBlX2Rvc3NpZXIiOiAibHMtZG9jdW1lbnQtcGRmLWRyYWZ0IiwKICAicGFzdGVsbC12ZXJzaW9uIjogIiVWRVJTSU9OJSIsCiAgInRpbWVzdGFtcCI6IDE2NzE3ODc4MDYsCiAgInJhd19kYXRhIjogewogICAgImlkX3R5cGVfZG9zc2llciI6ICJscy1kb2N1bWVudC1wZGYtZHJhZnQiLAogICAgIm5vbSI6ICJEb2N1bWVudCBQREYgKERyYWZ0KSIsCiAgICAidHlwZSI6ICJUeXBlcyBkZSBkb3NzaWVyIERvY3VtZW50IiwKICAgICJkZXNjcmlwdGlvbiI6ICIiLAogICAgIm5vbV9vbmdsZXQiOiAiSW5mb3JtYXRpb25zIiwKICAgICJyZXN0cmljdGlvbl9wYWNrIjogIiIsCiAgICAiZm9ybXVsYWlyZUVsZW1lbnQiOiBbCiAgICAgIHsKICAgICAgICAiZWxlbWVudF9pZCI6ICJsaWJlbGxlIiwKICAgICAgICAibmFtZSI6ICJMaWJlbGxcdTAwZTkiLAogICAgICAgICJ0eXBlIjogInRleHQiLAogICAgICAgICJjb21tZW50YWlyZSI6ICIiLAogICAgICAgICJyZXF1aXMiOiAib24iLAogICAgICAgICJjaGFtcHNfYWZmaWNoZXMiOiAiIiwKICAgICAgICAiY2hhbXBzX3JlY2hlcmNoZV9hdmFuY2VlIjogIiIsCiAgICAgICAgInRpdHJlIjogIm9uIiwKICAgICAgICAic2VsZWN0X3ZhbHVlIjogIiIsCiAgICAgICAgInByZWdfbWF0Y2giOiAiIiwKICAgICAgICAicHJlZ19tYXRjaF9lcnJvciI6ICIiLAogICAgICAgICJjb250ZW50X3R5cGUiOiAiIgogICAgICB9LAogICAgICB7CiAgICAgICAgImVsZW1lbnRfaWQiOiAiZG9jdW1lbnQiLAogICAgICAgICJuYW1lIjogIkRvY3VtZW50IHBkZiIsCiAgICAgICAgInR5cGUiOiAiZmlsZSIsCiAgICAgICAgImNvbW1lbnRhaXJlIjogIiIsCiAgICAgICAgInJlcXVpcyI6ICJvbiIsCiAgICAgICAgImNoYW1wc19hZmZpY2hlcyI6ICIiLAogICAgICAgICJjaGFtcHNfcmVjaGVyY2hlX2F2YW5jZWUiOiAiIiwKICAgICAgICAidGl0cmUiOiBmYWxzZSwKICAgICAgICAic2VsZWN0X3ZhbHVlIjogIiIsCiAgICAgICAgInByZWdfbWF0Y2giOiAiIiwKICAgICAgICAicHJlZ19tYXRjaF9lcnJvciI6ICIiLAogICAgICAgICJjb250ZW50X3R5cGUiOiAiYXBwbGljYXRpb25cL3BkZiIKICAgICAgfSwKICAgICAgewogICAgICAgICJlbGVtZW50X2lkIjogImFubmV4ZSIsCiAgICAgICAgIm5hbWUiOiAiQW5uZXhlKHMpIiwKICAgICAgICAidHlwZSI6ICJtdWx0aV9maWxlIiwKICAgICAgICAiY29tbWVudGFpcmUiOiAiIiwKICAgICAgICAicmVxdWlzIjogIiIsCiAgICAgICAgImNoYW1wc19hZmZpY2hlcyI6ICIiLAogICAgICAgICJjaGFtcHNfcmVjaGVyY2hlX2F2YW5jZWUiOiAiIiwKICAgICAgICAidGl0cmUiOiAiIiwKICAgICAgICAic2VsZWN0X3ZhbHVlIjogIiIsCiAgICAgICAgInByZWdfbWF0Y2giOiAiIiwKICAgICAgICAicHJlZ19tYXRjaF9lcnJvciI6ICIiLAogICAgICAgICJjb250ZW50X3R5cGUiOiAiIgogICAgICB9CiAgICBdLAogICAgImV0YXBlIjogWwogICAgICB7CiAgICAgICAgIm51bV9ldGFwZSI6IDAsCiAgICAgICAgInR5cGUiOiAidHJhbnNmb3JtYXRpb24iLAogICAgICAgICJsYWJlbCI6IG51bGwsCiAgICAgICAgImRlZmF1bHRDaGVja2VkIjogZmFsc2UsCiAgICAgICAgInJlcXVpcyI6ICJvbiIsCiAgICAgICAgImF1dG9tYXRpcXVlIjogIm9uIiwKICAgICAgICAic3BlY2lmaWNfdHlwZV9pbmZvIjogW10sCiAgICAgICAgIm51bV9ldGFwZV9zYW1lX3R5cGUiOiAwLAogICAgICAgICJldGFwZV93aXRoX3NhbWVfdHlwZV9leGlzdHMiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgIm51bV9ldGFwZSI6ICIxIiwKICAgICAgICAidHlwZSI6ICJzaWduYXR1cmUiLAogICAgICAgICJsYWJlbCI6IG51bGwsCiAgICAgICAgImRlZmF1bHRDaGVja2VkIjogZmFsc2UsCiAgICAgICAgInJlcXVpcyI6ICIiLAogICAgICAgICJhdXRvbWF0aXF1ZSI6ICJvbiIsCiAgICAgICAgInNwZWNpZmljX3R5cGVfaW5mbyI6IHsKICAgICAgICAgICJsaWJlbGxlX3BhcmFwaGV1ciI6ICJsaWJlbGxlIiwKICAgICAgICAgICJkb2N1bWVudF9hX3NpZ25lciI6ICJkb2N1bWVudCIsCiAgICAgICAgICAiYW5uZXhlIjogImFubmV4ZSIsCiAgICAgICAgICAiaGFzX2RhdGVfbGltaXRlIjogIm9uIiwKICAgICAgICAgICJoYXNfbWV0YWRhdGFfaW5fanNvbiI6ICIiLAogICAgICAgICAgImNvbnRpbnVlX2FmdGVyX3JlZnVzYWwiOiAiIgogICAgICAgIH0sCiAgICAgICAgIm51bV9ldGFwZV9zYW1lX3R5cGUiOiAwLAogICAgICAgICJldGFwZV93aXRoX3NhbWVfdHlwZV9leGlzdHMiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgIm51bV9ldGFwZSI6IDIsCiAgICAgICAgInR5cGUiOiAibWFpbHNlYyIsCiAgICAgICAgImxhYmVsIjogIiIsCiAgICAgICAgImRlZmF1bHRDaGVja2VkIjogZmFsc2UsCiAgICAgICAgInJlcXVpcyI6ICIiLAogICAgICAgICJhdXRvbWF0aXF1ZSI6ICJvbiIsCiAgICAgICAgInNwZWNpZmljX3R5cGVfaW5mbyI6IFtdLAogICAgICAgICJudW1fZXRhcGVfc2FtZV90eXBlIjogMCwKICAgICAgICAiZXRhcGVfd2l0aF9zYW1lX3R5cGVfZXhpc3RzIjogZmFsc2UKICAgICAgfSwKICAgICAgewogICAgICAgICJudW1fZXRhcGUiOiAzLAogICAgICAgICJ0eXBlIjogImRlcG90IiwKICAgICAgICAibGFiZWwiOiAiIiwKICAgICAgICAiZGVmYXVsdENoZWNrZWQiOiBmYWxzZSwKICAgICAgICAicmVxdWlzIjogIiIsCiAgICAgICAgImF1dG9tYXRpcXVlIjogIm9uIiwKICAgICAgICAic3BlY2lmaWNfdHlwZV9pbmZvIjogW10sCiAgICAgICAgIm51bV9ldGFwZV9zYW1lX3R5cGUiOiAwLAogICAgICAgICJldGFwZV93aXRoX3NhbWVfdHlwZV9leGlzdHMiOiBmYWxzZQogICAgICB9LAogICAgICB7CiAgICAgICAgIm51bV9ldGFwZSI6ICI0IiwKICAgICAgICAidHlwZSI6ICJzYWUiLAogICAgICAgICJsYWJlbCI6IG51bGwsCiAgICAgICAgImRlZmF1bHRDaGVja2VkIjogZmFsc2UsCiAgICAgICAgInJlcXVpcyI6ICIiLAogICAgICAgICJhdXRvbWF0aXF1ZSI6ICJvbiIsCiAgICAgICAgInNwZWNpZmljX3R5cGVfaW5mbyI6IHsKICAgICAgICAgICJzYWVfaGFzX21ldGFkYXRhX2luX2pzb24iOiAiIgogICAgICAgIH0sCiAgICAgICAgIm51bV9ldGFwZV9zYW1lX3R5cGUiOiAwLAogICAgICAgICJldGFwZV93aXRoX3NhbWVfdHlwZV9leGlzdHMiOiBmYWxzZQogICAgICB9CiAgICBdCiAgfQp9Cg==
