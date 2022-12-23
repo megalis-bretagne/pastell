@@ -40,6 +40,11 @@ class PastellPackTest extends PastellTestCase
             'ls-document-pdf',
             'Document PDF',
         ],
+        'ls-document-pdf-draft-destinataire' => [
+            '',
+            'ls-document-pdf-destinataire',
+            'Document PDF (destinataire)',
+        ],
     ];
 
     public function jsonProvider(): array
