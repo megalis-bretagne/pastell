@@ -26,6 +26,8 @@ class SedaMessageBuilder
     private $idGeneratorFunction;
 
     private DonneesFormulaire $donneesFormulaire;
+    private string $algorithm;
+    private string $algorithmIdentifier;
     private FluxData $fluxData;
     private SedaMessage $message;
 
@@ -63,6 +65,18 @@ class SedaMessageBuilder
         return $this;
     }
 
+    public function setHashAlgorithm(string $algorithm): self
+    {
+        $this->algorithm = $algorithm;
+        return $this;
+    }
+
+    public function setAlgorithmIdentifier(string $identifier): self
+    {
+        $this->algorithmIdentifier = $identifier;
+        return $this;
+    }
+
     public function getFluxData(): FluxData
     {
         if (!isset($this->fluxData)) {
@@ -82,10 +96,9 @@ class SedaMessageBuilder
         return $this->message;
     }
 
-
-    public function setVersion(string $version): static
+    public function setVersion(SedaVersion $version): static
     {
-        $this->message->setVersion(SedaVersion::from($version ?: SedaVersion::VERSION_2_1->value));
+        $this->message->setVersion($version);
         return $this;
     }
 
@@ -222,7 +235,8 @@ class SedaMessageBuilder
             foreach ($this->getDonneesFormulaire()->get($field) as $filenum => $filename) {
                 $file = new File(($this->idGeneratorFunction)());
                 $file->filename = $filename;
-                $file->messageDigest = $this->getDonneesFormulaire()->getFileDigest($field, $filenum);
+                $file->messageDigest = $this->getDonneesFormulaire()->getFileDigest($field, $filenum, $this->algorithm);
+                $file->algorithmIdentifier = $this->algorithmIdentifier;
                 $file->uri = $this->normalizeUri($filename, $file->messageDigest);
                 $file->size = (string)$this->getDonneesFormulaire()->getFileSize($field, $filenum);
                 if (empty($localFile['do_not_put_mime_type'])) {
@@ -556,7 +570,8 @@ class SedaMessageBuilder
                 $file = new File(($this->idGeneratorFunction)());
                 $realFileName = \basename($relativePath);
                 $file->filename = $realFileName;
-                $file->messageDigest = \hash_file('sha256', $filepath);
+                $file->messageDigest = \hash_file($this->algorithm, $filepath);
+                $file->algorithmIdentifier = $this->algorithmIdentifier;
                 $file->uri = $this->normalizeUri($relativePath, $file->messageDigest);
                 $file->size = (string)\filesize($filepath);
 

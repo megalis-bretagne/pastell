@@ -9,12 +9,13 @@ final class File implements \JsonSerializable
     public string $filename;
     public string $uri;
     public string $messageDigest;
+    public string $algorithmIdentifier;
     public string $size;
     public ?string $mimeType = null;
     public string $title;
 
     public function __construct(
-        private string $id,
+        private readonly string $id,
     ) {
     }
 
@@ -25,6 +26,7 @@ final class File implements \JsonSerializable
             'Filename' => $this->filename,
             'Uri' => $this->uri,
             'MessageDigest' => $this->messageDigest,
+            'AlgorithmIdentifier' => $this->algorithmIdentifier,
             'Size' => $this->size,
             'MimeType' => $this->mimeType,
             'Title' => $this->title,

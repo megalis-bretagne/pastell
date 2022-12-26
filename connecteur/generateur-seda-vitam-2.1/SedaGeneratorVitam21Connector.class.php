@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Pastell\Connector\AbstractSedaGeneratorConnector;
 use Pastell\Seda\Message\VitamSedaMessageBuilder;
+use Pastell\Seda\SedaVersion;
 
 final class SedaGeneratorVitam21Connector extends AbstractSedaGeneratorConnector
 {
@@ -19,6 +20,23 @@ final class SedaGeneratorVitam21Connector extends AbstractSedaGeneratorConnector
             $this->tmpFolder,
             $this->sedaMessageBuilder
         );
+    }
+
+    public function getVersion(): SedaVersion
+    {
+        return SedaVersion::VERSION_2_1_VITAM;
+    }
+
+    /**
+     * @throws UnrecoverableException
+     */
+    public function getAlgorithmIdentifier(string $algorithm): string
+    {
+        return match ($algorithm) {
+            'sha256' => 'SHA-256',
+            'sha512' => 'SHA-512',
+            default => throw new UnrecoverableException('Algorithme non supporté'),
+        };
     }
 
     public function getPastellToSeda(): array

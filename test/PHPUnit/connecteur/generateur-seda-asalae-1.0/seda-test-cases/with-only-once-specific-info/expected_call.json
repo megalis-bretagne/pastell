@@ -30,26 +30,7 @@
             "Id": "NOT_TESTABLE_4",
             "Title": "Retour du Tdt",
             "ContentDescription": {
-                "DescriptionLevel": "subgrp",
-                "Language": "fra",
-                "CustodialHistory": "Historique de la conservation de Nomination du colonel Moutarde",
-                "Keywords": [
-                    {
-                        "KeywordContent": "actes"
-                    },
-                    {
-                        "KeywordContent": "controle de l\u00e9galit\u00e9"
-                    }
-                ]
-            },
-            "AccessRestrictionRule": {
-                "AccessRule": "AR038",
-                "StartDate": "2020-10-12"
-            },
-            "AppraisalRule": {
-                "FinalAction": "detruire",
-                "Rule": "P10Y",
-                "StartDate": "2020-10-12"
+                "CustodialHistory": "Historique de la conservation"
             },
             "Files": [
                 {

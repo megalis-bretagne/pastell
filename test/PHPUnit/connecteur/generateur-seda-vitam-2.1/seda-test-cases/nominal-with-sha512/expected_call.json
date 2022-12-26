@@ -3,6 +3,7 @@
     "Title": "Actes soumis au contr\u00f4le de l\u00e9galit\u00e9 : Nomination du colonel Moutarde",
     "ArchivalAgreement": "ACCORDS_ACTES",
     "ArchivalProfile": "PROFILE_ACTES",
+    "ServiceLevel": "234567890",
     "Language": "fra",
     "DescriptionLanguage": "fra",
     "StartDate": "2020-12-04",
@@ -28,9 +29,9 @@
         {
             "Id": "NOT_TESTABLE_1",
             "Filename": "actes.pdf",
-            "Uri": "content\/fbc1a9f858ea9e177916964bd88c3d37b91a1e84412765e29950777f265c4b75.pdf",
-            "MessageDigest": "fbc1a9f858ea9e177916964bd88c3d37b91a1e84412765e29950777f265c4b75",
-            "AlgorithmIdentifier": "SHA-256",
+            "Uri": "content\/65019286222ace418f742556366f9b9da5aaf6797527d2f0cba5bfe6b2f8ed24746542a0f2be1da8d63c2477f688b608eb53628993afa624f378b03f10090ce7.pdf",
+            "MessageDigest": "65019286222ace418f742556366f9b9da5aaf6797527d2f0cba5bfe6b2f8ed24746542a0f2be1da8d63c2477f688b608eb53628993afa624f378b03f10090ce7",
+            "AlgorithmIdentifier": "SHA-512",
             "Size": "7",
             "MimeType": "text\/plain",
             "Title": "Actes soumis au contr\u00f4le de l\u00e9galit\u00e9 : Nomination du colonel Moutarde"
@@ -38,22 +39,22 @@
         {
             "Id": "NOT_TESTABLE_2",
             "Filename": "annexe1.pdf",
-            "Uri": "content\/dbd318c1c462aee872f41109a4dfd3048871a03dedd0fe0e757ced57dad6f2d7.pdf",
-            "MessageDigest": "dbd318c1c462aee872f41109a4dfd3048871a03dedd0fe0e757ced57dad6f2d7",
-            "AlgorithmIdentifier": "SHA-256",
+            "Uri": "content\/bce50343a56f01dc7cf2d4c82127be4fff3a83ddb8b783b1a28fb6574637ceb71ef594b1f03a8e9b7d754341831292bcad1a3cb8a12fd2ded7a57b1b173b3bf7.pdf",
+            "MessageDigest": "bce50343a56f01dc7cf2d4c82127be4fff3a83ddb8b783b1a28fb6574637ceb71ef594b1f03a8e9b7d754341831292bcad1a3cb8a12fd2ded7a57b1b173b3bf7",
+            "AlgorithmIdentifier": "SHA-512",
             "Size": "11",
             "MimeType": "text\/plain",
-            "Title": "Annexe de l'acte num\u00e9ro 1 : annexe1.pdf"
+            "Title": "Annexe de l'acte"
         },
         {
             "Id": "NOT_TESTABLE_3",
             "Filename": "annexe2.pdf",
-            "Uri": "content\/d12441fc641d202581cf7f6396cb1f1f36a033620b5d306d023c6f6fb21918f2.pdf",
-            "MessageDigest": "d12441fc641d202581cf7f6396cb1f1f36a033620b5d306d023c6f6fb21918f2",
-            "AlgorithmIdentifier": "SHA-256",
+            "Uri": "content\/07ad9cbbb0147f116fa1066b9ec7489c9d6dc9846dc404efacb7832504976a1a6de825971a1cf722f600cba3541c4dd559660e8d09b101cf9728b3e361d9cbc0.pdf",
+            "MessageDigest": "07ad9cbbb0147f116fa1066b9ec7489c9d6dc9846dc404efacb7832504976a1a6de825971a1cf722f600cba3541c4dd559660e8d09b101cf9728b3e361d9cbc0",
+            "AlgorithmIdentifier": "SHA-512",
             "Size": "3",
             "MimeType": "text\/plain",
-            "Title": "Annexe de l'acte num\u00e9ro 2 : annexe2.pdf"
+            "Title": "Annexe de l'acte"
         }
     ],
     "OriginatingAgency": {
@@ -62,7 +63,7 @@
     },
     "ArchivalAgency": {
         "Identifier": "FRAD000",
-        "Name": "Service d'archive de Libriceil"
+        "Name": "Service d'archive de Libriciel"
     },
     "TransferringAgency": {
         "Identifier": "491 011 698",

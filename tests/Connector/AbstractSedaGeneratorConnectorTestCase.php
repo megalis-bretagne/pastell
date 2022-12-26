@@ -170,6 +170,12 @@ abstract class AbstractSedaGeneratorConnectorTestCase extends PastellTestCase
 
         $id_ce = $this->createSedaGeneriqueConnector();
 
+        if (\str_contains($testName, 'with-sha512')) {
+            $this->configureConnector($id_ce, [
+               AbstractSedaGeneratorConnector::SEDA_GENERATOR_HASH_ALGORITHM_ID => 1,
+            ]);
+        }
+
         $connecteurConfig = $this->getConnecteurFactory()->getConnecteurConfig($id_ce);
 
         $connecteurConfig->addFileFromCopy('files', 'file.xml', $folder . '/files.xml');

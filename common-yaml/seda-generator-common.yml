@@ -22,6 +22,13 @@ formulaire:
             type: externalData
             link_name: 'Gérer les fichiers du bordereau'
             choice-action: fill-files
+        hash_algorithm:
+            name: 'Algorithme de hash des fichiers'
+            commentaire: "Algorithme utilisé pour calculer l'empreinte des fichiers"
+            type: select
+            value:
+                - 'SHA-256'
+                - 'SHA-512'
         template:
             name: 'Template du bordereau'
             type: file
