@@ -1,0 +1,169 @@
+{
+    "version": "1.0",
+    "Title": "Actes soumis au contr\u00f4le de l\u00e9galit\u00e9 : Nomination du colonel Moutarde",
+    "ArchivalAgreement": "ACCORDS_ACTES",
+    "ArchivalProfile": "PROFILE_ACTES",
+    "Language": "fra",
+    "DescriptionLanguage": "fra",
+    "StartDate": "2020-12-04",
+    "EndDate": "2020-12-04",
+    "AccessRule": {
+        "Rule": "AR038",
+        "StartDate": "2020-12-04"
+    },
+    "AppraisalRule": {
+        "FinalAction": "detruire",
+        "Rule": "P10Y",
+        "StartDate": "2020-12-04"
+    },
+    "Keywords": [
+        {
+            "KeywordContent": "D\u00e9lib\u00e9ration"
+        },
+        {
+            "KeywordContent": "1.1 Titulaire de la fonction publique territoriale"
+        }
+    ],
+    "ArchiveUnits": [
+        {
+            "Id": "NOT_TESTABLE_1",
+            "Title": "toto",
+            "ContentDescription": {
+                "Language": "fra",
+                "CustodialHistory": "toto Nomination du colonel Moutarde  root"
+            },
+            "ArchiveUnits": [
+                {
+                    "Id": "NOT_TESTABLE_2",
+                    "Title": "Archive zip -- 7756W3_9 -- 7756W3_9  est un repertoire  ",
+                    "ContentDescription": {
+                        "Language": "fra",
+                        "CustodialHistory": "toto Nomination du colonel Moutarde 7756W3_9 "
+                    },
+                    "ArchiveUnits": [
+                        {
+                            "Id": "NOT_TESTABLE_3",
+                            "Title": "Archive zip -- 7756W03_Rencontres_avec_PCG -- 7756W3_9\/7756W03_Rencontres_avec_PCG  est un repertoire  ",
+                            "ContentDescription": {
+                                "Language": "fra",
+                                "CustodialHistory": "toto Nomination du colonel Moutarde 7756W03_Rencontres_avec_PCG "
+                            },
+                            "ArchiveUnits": [
+                                {
+                                    "Id": "NOT_TESTABLE_4",
+                                    "Title": "Archive zip -- 7756W03_Annee_2012 -- 7756W3_9\/7756W03_Rencontres_avec_PCG\/7756W03_Annee_2012  est un repertoire  ",
+                                    "ContentDescription": {
+                                        "Language": "fra",
+                                        "CustodialHistory": "toto Nomination du colonel Moutarde 7756W03_Annee_2012 "
+                                    },
+                                    "Files": [
+                                        {
+                                            "Id": "NOT_TESTABLE_5",
+                                            "Filename": "20120718_AU_20120719_President.txt",
+                                            "Uri": "7756W3_9\/7756W03_Rencontres_avec_PCG\/7756W03_Annee_2012\/20120718_AU_20120719_President.txt",
+                                            "MessageDigest": "3b8c22edcd64d1c468bd2dae4a33a2eea37252d00d9cb3067ad8261e49858589b842a301de06fc48ca6f5b4645be05a10e46e6985ff1b97aab3d6ad0db341e90",
+                                            "AlgorithmIdentifier": "http:\/\/www.w3.org\/2001\/04\/xmlenc#sha512",
+                                            "Size": "6",
+                                            "MimeType": "text\/plain",
+                                            "Title": "Archive zip -- 20120718_AU_20120719_President.txt -- 7756W3_9\/7756W03_Rencontres_avec_PCG\/7756W03_Annee_2012\/20120718_AU_20120719_President.txt   est un fichier "
+                                        },
+                                        {
+                                            "Id": "NOT_TESTABLE_6",
+                                            "Filename": "20121001_AU_20121003_President.txt",
+                                            "Uri": "7756W3_9\/7756W03_Rencontres_avec_PCG\/7756W03_Annee_2012\/20121001_AU_20121003_President.txt",
+                                            "MessageDigest": "63e22ec2fbeebabf005e58fbfb0eee607c4aa417045a68a0cc63767b048e3559268d35e72f367d3b2dbd5dbddf12fc4397762ba149260b3795a0391713bddcd7",
+                                            "AlgorithmIdentifier": "http:\/\/www.w3.org\/2001\/04\/xmlenc#sha512",
+                                            "Size": "2",
+                                            "MimeType": "text\/plain",
+                                            "Title": "Archive zip -- 20121001_AU_20121003_President.txt -- 7756W3_9\/7756W03_Rencontres_avec_PCG\/7756W03_Annee_2012\/20121001_AU_20121003_President.txt   est un fichier "
+                                        }
+                                    ]
+                                },
+                                {
+                                    "Id": "NOT_TESTABLE_7",
+                                    "Title": "Archive zip -- 7756W03_Annee_2013 -- 7756W3_9\/7756W03_Rencontres_avec_PCG\/7756W03_Annee_2013  est un repertoire  ",
+                                    "ContentDescription": {
+                                        "Language": "fra",
+                                        "CustodialHistory": "toto Nomination du colonel Moutarde 7756W03_Annee_2013 "
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "Id": "NOT_TESTABLE_8",
+                            "Title": "Archive zip -- 7756W05_Assemblee_departementale_Groupe_socialiste -- 7756W3_9\/7756W05_Assemblee_departementale_Groupe_socialiste  est un repertoire  ",
+                            "ContentDescription": {
+                                "Language": "fra",
+                                "CustodialHistory": "toto Nomination du colonel Moutarde 7756W05_Assemblee_departementale_Groupe_socialiste "
+                            },
+                            "Files": [
+                                {
+                                    "Id": "NOT_TESTABLE_9",
+                                    "Filename": "20131017_AU_20150312_seances_Commission_permanente.pdf",
+                                    "Uri": "7756W3_9\/7756W05_Assemblee_departementale_Groupe_socialiste\/20131017_AU_20150312_seances_Commission_permanente.pdf",
+                                    "MessageDigest": "51064cf2aac63b2e58d44cc3a1d181036c994602d31c494698e642ee81b45dddeaded9cffe7a23e97159f1c49a1945233b78e12a56c6ab3ea2679d60188ab261",
+                                    "AlgorithmIdentifier": "http:\/\/www.w3.org\/2001\/04\/xmlenc#sha512",
+                                    "Size": "3",
+                                    "MimeType": "text\/plain",
+                                    "Title": "Archive zip -- 20131017_AU_20150312_seances_Commission_permanente.pdf -- 7756W3_9\/7756W05_Assemblee_departementale_Groupe_socialiste\/20131017_AU_20150312_seances_Commission_permanente.pdf   est un fichier "
+                                },
+                                {
+                                    "Id": "NOT_TESTABLE_10",
+                                    "Filename": "20131023_AU_20150323_seances_Conseil_general.pdf",
+                                    "Uri": "7756W3_9\/7756W05_Assemblee_departementale_Groupe_socialiste\/20131023_AU_20150323_seances_Conseil_general.pdf",
+                                    "MessageDigest": "51064cf2aac63b2e58d44cc3a1d181036c994602d31c494698e642ee81b45dddeaded9cffe7a23e97159f1c49a1945233b78e12a56c6ab3ea2679d60188ab261",
+                                    "AlgorithmIdentifier": "http:\/\/www.w3.org\/2001\/04\/xmlenc#sha512",
+                                    "Size": "3",
+                                    "MimeType": "text\/plain",
+                                    "Title": "Archive zip -- 20131023_AU_20150323_seances_Conseil_general.pdf -- 7756W3_9\/7756W05_Assemblee_departementale_Groupe_socialiste\/20131023_AU_20150323_seances_Conseil_general.pdf   est un fichier "
+                                }
+                            ]
+                        },
+                        {
+                            "Id": "NOT_TESTABLE_11",
+                            "Title": "Archive zip -- 7756W06_Suivi_directions_de_la_DGA -- 7756W3_9\/7756W06_Suivi_directions_de_la_DGA  est un repertoire  ",
+                            "ContentDescription": {
+                                "Language": "fra",
+                                "CustodialHistory": "toto Nomination du colonel Moutarde 7756W06_Suivi_directions_de_la_DGA "
+                            }
+                        }
+                    ],
+                    "Files": [
+                        {
+                            "Id": "NOT_TESTABLE_12",
+                            "Filename": "7756_Bordereau_versement.pdf",
+                            "Uri": "7756W3_9\/7756_Bordereau_versement.pdf",
+                            "MessageDigest": "d937c64412c21265c444d401ccb832420c9b975fa0dead30d882e0821548820394fb15cc49213e629f79923dc261388b58e2a09c1a0db129f04b735ae61eb3b8",
+                            "AlgorithmIdentifier": "http:\/\/www.w3.org\/2001\/04\/xmlenc#sha512",
+                            "Size": "1156",
+                            "MimeType": "application\/pdf",
+                            "Title": "Archive zip -- 7756_Bordereau_versement.pdf -- 7756W3_9\/7756_Bordereau_versement.pdf   est un fichier "
+                        },
+                        {
+                            "Id": "NOT_TESTABLE_13",
+                            "Filename": "fichier.txt",
+                            "Uri": "7756W3_9\/fichier.txt",
+                            "MessageDigest": "65f61ced21494aeaa7f9f2bb439d37df97f6ba2394da57f215e7ffd457f647e478532174a9406e8519b2444ad85aba2f8a47edcb8bff8419ff0083bd9a9a1274",
+                            "AlgorithmIdentifier": "http:\/\/www.w3.org\/2001\/04\/xmlenc#sha512",
+                            "Size": "3",
+                            "MimeType": "text\/plain",
+                            "Title": "Archive zip -- fichier.txt -- 7756W3_9\/fichier.txt   est un fichier "
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "OriginatingAgency": {
+        "Identifier": "491 011 698 0001",
+        "Name": "LIBRICIEL SCOP service RH"
+    },
+    "ArchivalAgency": {
+        "Identifier": "FRAD000",
+        "Name": "Service d'archive de Libriceil"
+    },
+    "TransferringAgency": {
+        "Identifier": "491 011 698",
+        "Name": "LIBRICIEL SCOP"
+    }
+}
