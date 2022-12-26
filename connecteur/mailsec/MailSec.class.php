@@ -153,7 +153,10 @@ class MailSec extends MailsecConnecteur
         $content_html = $this->processMessageItem($this->connecteurConfig->getFileContent("content_html"), $link);
 
         $mailsec_from_description = $this->connecteurConfig->getWithDefault('mailsec_from_description');
-        $mailsec_reply_to = $this->connecteurConfig->get('mailsec_reply_to', $this->plateforme_mail);
+        $mailsec_reply_to = $this->connecteurConfig->get(
+            'mailsec_reply_to',
+            $this->plateforme_mail
+        ) ?: $this->plateforme_mail;
 
         $templatedEmail = (new TemplatedEmail())
             ->from(new Address($this->plateforme_mail, $mailsec_from_description))
