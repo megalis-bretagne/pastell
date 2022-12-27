@@ -1,0 +1,27 @@
+{% extends 'websec/base.html.twig' %}
+
+{% block main %}
+    <div class="box">
+        <h2>Votre message</h2>
+        {% include '_includes/forms/detail.html.twig' %}
+    </div>
+
+    <div class="box">
+        <h2>Votre réponse</h2>
+        <div class="alert alert-info">Votre réponse ne sera pas envoyée tant que vous ne l'aurez pas validée</div>
+        {% include '_includes/forms/detail.html.twig' with {
+            'donneesFormulaire': mailSecInfo.donneesFormulaireReponse,
+            'fieldDataList': mailSecInfo.fieldDataListReponse,
+            'recuperation_fichier_url': reponse_recuperation_fichier_url,
+            'download_all_link': download_all_link ~ '?fichier_reponse=true'
+        } %}
+
+        <form action="{{ path('mailsec_recipient_validate', {'key': mailSecInfo.key}) }}" method='post'>
+            <a href="{{ reponse_url }}" class="btn btn-outline-primary">
+                Modifier
+            </a>
+            <input type='submit' class='btn btn-primary' value="Valider"/>
+        </form>
+    </div>
+{% endblock %}
+

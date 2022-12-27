@@ -18,7 +18,7 @@ cf : http://blogs.kent.ac.uk/webdev/2011/07/14/phpunit-and-unserialized-pdo-inst
       <directory suffix=".php">connecteur-type</directory>
       <directory suffix=".php">controler</directory>
       <directory suffix=".php">lib</directory>
-      <directory suffix=".php">mail</directory>
+      <directory suffix=".php">mailsec</directory>
       <directory suffix=".php">model</directory>
       <directory suffix=".php">module</directory>
       <directory suffix=".php">pastell-core</directory>

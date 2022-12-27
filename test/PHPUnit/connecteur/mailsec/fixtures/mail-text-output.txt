@@ -19,4 +19,4 @@ avec d'=C3=A9ventuelles pi=
 Pour en pren=
 dre connaissance veuillez cliquer sur le lien suivant.
 https://localhost:=
-8443index.php?key=NOTTESTABLE
+8443/mail/NOTTESTABLE

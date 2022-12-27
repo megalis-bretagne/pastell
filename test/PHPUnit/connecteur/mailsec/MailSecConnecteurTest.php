@@ -296,8 +296,8 @@ class MailSecConnecteurTest extends PastellTestCase
             $mailAsString
         );
         $mailAsString = preg_replace(
-            "#index\.php\?key=.*#",
-            "index.php?key=NOTTESTABLE",
+            '#/mail/(.*)#',
+            '/mail/NOTTESTABLE',
             $mailAsString
         );
         $mailAsString = preg_replace(
@@ -311,17 +311,23 @@ class MailSecConnecteurTest extends PastellTestCase
             $mailAsString
         );
         $mailAsString = preg_replace(
-            "#cid:[0-9a-f]*#",
-            "cid:NOTTESTABLE",
+            '#cid:[0-9a-f]+#',
+            'cid:NOTTESTABLE',
             $mailAsString
         );
+        $mailAsString = preg_replace(
+            '/cid:(\S|\s)*@/U',
+            'cid:NOTTESTABLE@',
+            $mailAsString
+        );
+
         $mailAsString = preg_replace(
             "#Content-ID: <[0-9a-f]*#",
             "Content-ID: <NOTTESTABLE",
             $mailAsString
         );
 
-        //file_put_contents($filename, $mailAsString);
+//        file_put_contents($filename, $mailAsString);
         self::assertStringEqualsFile(
             $filename,
             $mailAsString

@@ -115,6 +115,7 @@
   },
   "autoload": {
     "psr-4": {
+      "Mailsec\\": "mailsec/",
       "Pastell\\": "src/",
       "Utils\\Rector\\": "utils/rector/src"
     },

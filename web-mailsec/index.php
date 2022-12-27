@@ -1,5 +1,19 @@
 <?php
-$logger_system = "MAILSEC";
-require_once( __DIR__ . "/../init.php");
 
-$objectInstancier->getInstance(FrontController::class)->getMailSecDestinataireControler()->indexAction();
+declare(strict_types=1);
+
+use Mailsec\Kernel;
+use Symfony\Component\Dotenv\Dotenv;
+use Symfony\Component\HttpFoundation\Request;
+
+$logger_system = 'MAILSEC';
+require_once __DIR__ . '/../init.php';
+
+(new Dotenv())->bootEnv(dirname(__DIR__) . '/.env');
+
+$request = Request::createFromGlobals();
+
+$kernel = new Kernel($_SERVER['APP_ENV'], (bool)$_SERVER['APP_DEBUG']);
+$response = $kernel->handle($request);
+$response->send();
+$kernel->terminate($request, $response);

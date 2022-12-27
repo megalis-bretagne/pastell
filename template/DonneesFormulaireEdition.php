@@ -113,7 +113,7 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1) {
                                     <script>
                                         $(document).ready(function(){
                                             var query_param = {
-                                                target: '<?php echo $mailsec_key ? 'chunk_upload.php' : '/DonneesFormulaire/chunkUpload'; ?>',
+                                                target: '<?php echo $mailsec_key ? "mail/$mailsec_key/chunkUpload" : '/DonneesFormulaire/chunkUpload'; ?>',
                                                 id_e: '<?php echo $id_e ?>',
                                                 id_d: '<?php echo $id_d ?>',
                                                 id_ce: '<?php echo $id_ce ?>',
@@ -133,7 +133,7 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1) {
                                         <script>
                                             $(document).ready(function(){
                                                 var query_param = {
-                                                    target: '<?php echo $mailsec_key ? 'chunk_upload.php' : '/DonneesFormulaire/chunkUpload'; ?>',
+                                                    target: '<?php echo $mailsec_key ? "mail/$mailsec_key/chunkUpload" : '/DonneesFormulaire/chunkUpload'; ?>',
                                                     id_e: '<?php echo $id_e ?>',
                                                     id_d: '<?php echo $id_d ?>',
                                                     id_ce: '<?php echo $id_ce ?>',

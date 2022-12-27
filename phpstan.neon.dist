@@ -16,6 +16,7 @@ parameters:
     - controler
     - installation
     - lib
+    - mailsec
     - model
     - module
     - pastell-core

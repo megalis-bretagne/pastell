@@ -1,0 +1,83 @@
+{% set id_ce = inject.id_ce %}
+{% set id_d = inject.id_d %}
+{% set id_e = inject.id_e %}
+{% set action = inject.action %}
+
+{% if not donneesFormulaire.isValidable() %}
+    <div class="alert alert-danger">
+        {{ donneesFormulaire.getLastError() }}
+    </div>
+{% endif %}
+
+<table class='table table-striped' aria-label="Données du formulaire">
+    {% for numField,displayedField in fieldDataList %}
+        <tr>
+            <th class="w300">
+                {{ displayedField.getField().getLibelle() }}
+            </th>
+            <td>
+                {% for num,value in displayedField.getValue() %}
+                    {% if displayedField.isURL() %}
+                        <a href="{{ displayedField.getURL(recuperation_fichier_url, num, id_e) }}"
+                        id="link_{{ numField }}"
+                        >
+                    {% endif %}
+                    {% if displayedField.getField().getType() == 'textarea' %}
+                        {{ value | pastell_add_links_to_urls | raw | nl2br }}
+                    {% else %}
+                        <span> {{ value }}</span>
+                    {% endif %}
+                    <br/>
+                    {% if displayedField.isURL() %}
+                        </a>
+                    {% endif %}
+                {% endfor %}
+                {% if displayedField.isDownloadZipAvailable() %}
+                    <br/>
+                    <a href="{{ download_all_link is defined ?
+                    download_all_link ~ '?&field=' ~ displayedField.getField().getName() :
+                    "/DonneesFormulaire/downloadAll?id_e=$id_e&id_d=$id_d&id_ce=$id_ce&field=" ~ displayedField.getField().getName() }}"
+                       class="btn btn-primary">
+                        <i class="fa fa-download"></i>&nbsp;Télécharger tous les fichiers
+                        : {{ displayedField.getField().getLibelle() }}
+                    </a>
+                {% endif %}
+
+                {% if displayedField.getField().getVisionneuse() %}
+                    <a
+                            id="visionneuse_link_{{ num_field }}"
+                            class=' btn btn-primary'
+                            href="{{ path('app.legacy.donneesformulaire_visionneuse',
+                                {'id_e': id_e, 'id_d': id_d, 'id_ce': id_ce, 'field': displayedField.getField().getName()}) }}"
+                    >
+                        <i class="fa fa-eye"></i>
+                        &nbsp;Voir
+                    </a>
+                    <div class='visionneuse_result'></div>
+                    <script>
+                        $(document).ready(function () {
+                            let visionneuse_link = $("#visionneuse_link_{{ num_field }}");
+                            $(".visionneuse_result").hide();
+
+                            visionneuse_link.click(function () {
+                                const link = $(this).attr('href');
+                                const visionneuse_result = $(this).next(".visionneuse_result");
+                                visionneuse_result.toggle();
+                                $.ajax({
+                                    url: link,
+                                    cache: false
+                                }).done(function (html) {
+                                    visionneuse_result.html(html);
+                                });
+                                return false;
+                            });
+                            {% if not displayedField.getField().displayLink() %}
+                            $("#link_{{ num_field }}").hide();
+                            {% endif %}
+                        });
+                    </script>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+</table>
