@@ -125,6 +125,10 @@
 - Suppression du support MySQL. La seule base supportée est MariaDB.
 - Suppression de la création d'une entité par API via PATCH avec le paramètre 'create' et suppression du test 'testCreateWithEditAction()'
 
+## Limitations
+
+- Les dates sont enregistrées en heure locale (TIMEZONE), de fait, il n'est pas possible de changer de fuseau horaire après une installation initiale
+
 # [3.1.18] - 2022-11-21
 
 ## Corrections
