@@ -32,7 +32,6 @@ phpcs.xml
 /public/bundles/
 /var/
 /vendor/
-/build-package/
 
 ###> phpunit/phpunit ###
 /phpunit.xml
