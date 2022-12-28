@@ -1,7 +1,7 @@
 {
   "id_type_dossier": "ls-document-pdf-draft",
   "pastell-version": "%VERSION%",
-  "timestamp": 1671787806,
+  "timestamp": 1672211765,
   "raw_data": {
     "id_type_dossier": "ls-document-pdf-draft",
     "nom": "Document PDF (Draft)",
@@ -43,6 +43,20 @@
         "name": "Annexe(s)",
         "type": "multi_file",
         "commentaire": "",
+        "requis": "",
+        "champs_affiches": "",
+        "champs_recherche_avancee": "",
+        "titre": "",
+        "select_value": "",
+        "preg_match": "",
+        "preg_match_error": "",
+        "content_type": ""
+      },
+      {
+        "element_id": "metadonnees",
+        "name": "Fichier contenant les m\u00e9tadonn\u00e9es",
+        "type": "file",
+        "commentaire": "Pr\u00e9f\u00e9rentiellement au format JSON, XML possible",
         "requis": "",
         "champs_affiches": "",
         "champs_recherche_avancee": "",
