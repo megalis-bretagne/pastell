@@ -167,7 +167,7 @@ publish_to_nexus:
     PAYLOAD: "payload={\"text\": \"[Pastell] Création de la version [$CI_COMMIT_REF_NAME](https://nexus.libriciel.fr/repository/ls-raw/public/plateforme/pastell/${TARBALL_NAME})\"}"
   script:
     - mkdir -p ${DIRECTORY_NAME}
-    - sed -e "s/canary$/${VERSION}/" docker/docker-compose.yml >  ${DIRECTORY_NAME}/docker-compose.yml
+    - sed -e "s/canary$/${CI_COMMIT_REF_NAME}/" docker/docker-compose.yml >  ${DIRECTORY_NAME}/docker-compose.yml
     - cp docker/.env.dist ${DIRECTORY_NAME}/.env.dist
     - tar cvzf ${TARBALL_NAME} ${DIRECTORY_NAME}
     - curl -v -u ${REGISTRY_CONTAINER_USER}:${REGISTRY_CONTAINER_PASSWORD} --upload-file ${TARBALL_NAME} https://nexus.libriciel.fr/repository/ls-raw/public/plateforme/pastell/${TARBALL_NAME}
