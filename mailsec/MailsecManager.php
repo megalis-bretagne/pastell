@@ -127,7 +127,7 @@ final class MailsecManager
     private function getRecipientFlux(string $flux): string
     {
         $recipientFlux = $flux . '-destinataire';
-        if ($this->objectInstancier->getInstance(DocumentTypeFactory::class)->isTypePresent($recipientFlux)) {
+        if (! $this->objectInstancier->getInstance(DocumentTypeFactory::class)->isTypePresent($recipientFlux)) {
             $recipientFlux = 'mailsec-destinataire';
         }
         return $recipientFlux;
