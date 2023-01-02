@@ -27,9 +27,13 @@ class MoveProofToMinio extends Command
     }
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $proofList = $this->journal->getAllProof();
-        foreach ($proofList as $proof) {
-            $this->journal->saveProof($proof['id_j'], $proof['preuve']);
+        $sql = "SELECT id_j FROM journal WHERE preuve != ''";
+        $proofIdList = $this->journal->query($sql);
+
+        foreach ($proofIdList as $proofId) {
+            $sql = "SELECT preuve FROM journal WHERE id_j = ?";
+            $proof = $this->journal->query($sql, $proofId['id_j'])[0];
+            $this->journal->saveProof($proofId['id_j'], $proof['preuve']);
         }
         $sql = "UPDATE journal SET preuve = ''";
         $this->journal->query($sql);

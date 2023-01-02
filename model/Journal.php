@@ -140,12 +140,6 @@ class Journal extends SQL
         return $this->proofBackend->read($id_j);
     }
 
-    public function getAllProof(): array
-    {
-        $sql = "SELECT * FROM journal";
-        return $this->query($sql);
-    }
-
     public function getAll(
         $id_e = false,
         $type = false,
