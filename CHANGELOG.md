@@ -45,6 +45,7 @@
 - Possibilité de modifier un flux studio en paramétrant l'état des dossiers associés en erreur fatale #1007
 - Filtre sur les types de fichiers lors de l'upload directement dans le formulaire #1654
 - Le dernier message des travaux programmés est visible et leur ID mène vers leur détail #1676
+- Les droits entite:lecture et journal:lecture sont cochés par défaut à la création d'un rôle #1580
 
 ## Suppressions
 

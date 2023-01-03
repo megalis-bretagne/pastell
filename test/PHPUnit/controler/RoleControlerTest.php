@@ -55,4 +55,23 @@ class RoleControlerTest extends ControlerTestCase
         $this->setPostInfo(['role' => 'test','droit' => ['system:lecture' => 'selected']]);
         $this->roleControler->doDetailAction();
     }
+
+    public function testDoEditionActionNewRole(): void
+    {
+        $this->setPostInfo(
+            [
+                'role' => 'test',
+                'libelle' => 'test',
+                'nouveau' => true
+            ]
+        );
+
+        try {
+            $this->roleControler->doEditionAction();
+        } catch (LastMessageException $e) {
+            /** Nothing to do */
+        }
+
+        $this->assertEquals(['entite:lecture' => 1, 'journal:lecture' => 1], $this->roleControler->getRoleSQL()->getDroit([], 'test'));
+    }
 }
