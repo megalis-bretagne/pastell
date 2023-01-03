@@ -45,7 +45,7 @@ class S3Wrapper implements ProofBackend
             'Bucket' => $this->bucket,
             'Key'    => $id . 'preuve.tsa',
         ]);
-        return $object['Body'];
+        return $object['Body']->__toString();
     }
 
     public function createBucket(): void
