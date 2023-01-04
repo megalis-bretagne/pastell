@@ -1,6 +1,6 @@
 # [4.0.0]
 
-**Cette version nécessite une modification de la base de données**
+***Cette version nécessite une modification de la base de données***
 ***Cette version nécessite une mise à jour du générateur SEDA en 1.0.0***
 
 
@@ -18,6 +18,7 @@
 - Choix de l'algorithme de calcul d'empreinte des fichiers pour les connecteurs utilisant le générateur SEDA #1668
 - Création d'un connecteur de générateur SEDA 2.2 pour Asalae #1634
 - Ajout d'un droit de création d'utilisateurs pour différencier de l'édition #1156
+- Ajout de la commande ```app:module:force-send-ged-and-delete [-i|--includeSubEntities] [--dry-run] [--] [<sourceModule> [<entityId>]]``` #1562
 
 ## Évolutions
 
