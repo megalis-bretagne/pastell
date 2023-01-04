@@ -3,11 +3,12 @@
 namespace Pastell\Command\Module;
 
 use ConnecteurFactory;
-use DepotConnecteur;
 use DocumentSQL;
 use DonneesFormulaireFactory;
 use EntiteSQL;
 use Exception;
+use FakeGED;
+use GEDConnecteur;
 use Journal;
 use NotFoundException;
 use Pastell\Command\BaseCommand;
@@ -19,7 +20,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ForceSendGedAndDelete extends BaseCommand
 {
     private const CONNECTOR_TYPE = 'GED';
-    private const CONNECTOR_EXCLUDED = 'FakeGED';
 
     public function __construct(
         private readonly DocumentSQL $documentSQL,
@@ -136,7 +136,7 @@ class ForceSendGedAndDelete extends BaseCommand
                 sprintf(
                     'Connector %s %s for id_e=%d',
                     self::CONNECTOR_TYPE,
-                    get_class($connector),
+                    $connector::class,
                     $entity,
                 )
             );
@@ -146,7 +146,7 @@ class ForceSendGedAndDelete extends BaseCommand
                 $entity,
                 $successNumberForEntity,
                 $documentsNumberEntity,
-                get_class($connector)
+                $connector::class
             );
             $errorNumber += $documentsNumberEntity - $successNumberForEntity;
         }
@@ -204,9 +204,9 @@ class ForceSendGedAndDelete extends BaseCommand
     /**
      * @throws Exception
      */
-    private function getDepotConnecteur(string $sourceModule, int $entity): DepotConnecteur
+    private function getDepotConnecteur(string $sourceModule, int $entity): GEDConnecteur
     {
-        /** @var DepotConnecteur $connector */
+        /** @var GEDConnecteur|false $connector */
         $connector = $this->connecteurFactory->getConnecteurByType($entity, $sourceModule, self::CONNECTOR_TYPE);
 
         if (!$connector) {
@@ -217,12 +217,12 @@ class ForceSendGedAndDelete extends BaseCommand
                 $entity,
             ));
         }
-        $connectorClass = get_class($connector);
-        if ($connectorClass === self::CONNECTOR_EXCLUDED) {
+
+        if ($connector instanceof FakeGED) {
             throw new Exception(sprintf(
                 'Connector %s invalid %s for `%s` id_e=%d',
                 self::CONNECTOR_TYPE,
-                $connectorClass,
+                $connector::class,
                 $sourceModule,
                 $entity,
             ));
@@ -231,11 +231,11 @@ class ForceSendGedAndDelete extends BaseCommand
     }
 
     /**
-     * @param DepotConnecteur $connector
+     * @param GEDConnecteur $connector
      * @throws NotFoundException
      */
     private function forceSendAndDelete(
-        DepotConnecteur $connector,
+        GEDConnecteur $connector,
         array $documents,
         bool $dryRun
     ): int {
