@@ -40,6 +40,12 @@ class PastellPackTest extends PastellTestCase
             'ls-document-pdf',
             'Document PDF',
         ],
+        'ls-recup-parapheur-draft' =>
+        [
+            '',
+            'ls-recup-parapheur',
+            'Récupération parapheur',
+        ],
         'ls-document-pdf-draft-destinataire' => [
             '',
             'ls-document-pdf-destinataire',
