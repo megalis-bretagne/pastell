@@ -64,6 +64,9 @@ trivy: ## Run trivy
 start:  ## Start all services
 	$(DOCKER_COMPOSE) up -d --remove-orphans
 
+start-minio:  ## Start all services with minio
+	$(DOCKER_COMPOSE) -f docker/docker-compose.minio.yml up -d --remove-orphans
+
 stop: ## Stop all services
 	$(DOCKER_COMPOSE) down
 
