@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Storage\StorageInterface;
+
 class JournalTest extends PastellTestCase
 {
     /**
@@ -27,7 +29,8 @@ class JournalTest extends PastellTestCase
             $this->getObjectInstancier()->getInstance(DocumentTypeFactory::class),
             $this->getLogger(),
             false,
-            $this->getObjectInstancier()->getInstance(ProofBackend::class),
+            $this->getObjectInstancier()->getInstance('use_storage'),
+            $this->getObjectInstancier()->getInstance(StorageInterface::class),
         );
         $journal->setId(1);
         return $journal;
