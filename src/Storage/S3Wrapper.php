@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
+namespace Pastell\Storage;
+
 use Aws\S3\S3Client;
 
-class S3Wrapper implements ProofBackend
+class S3Wrapper implements StorageInterface
 {
     private S3Client $aws;
     private string $bucket;
@@ -30,22 +32,23 @@ class S3Wrapper implements ProofBackend
         ]);
     }
 
-    public function write($id, $content): void
+    public function write(string $id, string $content): string
     {
         $this->aws->putObject([
             'Bucket' => $this->bucket,
-            'Key'    => $id . 'preuve.tsa',
+            'Key'    => $id,
             'Body'   => $content,
         ]);
+        return $id;
     }
 
-    public function read($id): string
+    public function read(string $id): string
     {
         $object = $this->aws->getObject([
             'Bucket' => $this->bucket,
-            'Key'    => $id . 'preuve.tsa',
+            'Key'    => $id,
         ]);
-        return $object['Body']->__toString();
+        return $object->get('Body')->__toString();
     }
 
     public function createBucket(): void
