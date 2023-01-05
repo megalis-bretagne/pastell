@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Pastell\Command;
+namespace Pastell\Command\Storage;
 
 use Journal;
 use Symfony\Component\Console\Command\Command;
@@ -21,7 +21,7 @@ class MoveProofToMinio extends Command
     protected function configure()
     {
         $this
-            ->setName('dev:move-proof-to-minio')
+            ->setName('app:storage:minio:move-proof-to-minio')
             ->setDescription('Move all existing proof from DB to MinIO (object storage)')
         ;
     }
