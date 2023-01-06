@@ -59,13 +59,13 @@ if (REDIS_SERVER && !TESTING_ENVIRONNEMENT) {
 }
 
 $objectInstancier->setInstance('use_storage', USE_STORAGE);
+$objectInstancier->setInstance('S3url', S3_ENDPOINT);
+$objectInstancier->setInstance('S3key', S3_KEY);
+$objectInstancier->setInstance('S3secret', S3_SECRET);
 if (USE_STORAGE) {
     if (TESTING_ENVIRONNEMENT) {
         $objectInstancier->setInstance(StorageInterface::class, new StorageInterfaceTest());
     } else {
-        $objectInstancier->setInstance('S3url', S3_ENDPOINT);
-        $objectInstancier->setInstance('S3key', S3_KEY);
-        $objectInstancier->setInstance('S3secret', S3_SECRET);
         $objectInstancier->setInstance('S3bucket', S3_BUCKET_JOURNAL);
         $objectInstancier->setInstance(StorageInterface::class, new S3Wrapper(S3_ENDPOINT, S3_KEY, S3_SECRET, S3_BUCKET_JOURNAL));
     }

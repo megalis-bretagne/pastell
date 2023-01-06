@@ -70,6 +70,9 @@ start-minio:  ## Start all services with minio
 stop: ## Stop all services
 	$(DOCKER_COMPOSE) down
 
+stop-minio:  ## Start all services with minio
+	$(DOCKER_COMPOSE) -f docker/docker-compose.minio.yml down
+
 module-pack-urbanisme: docker-compose-up ## Run make-module pack_urbanisme
 	$(MAKE_MODULE) ./pack-json/pack-urbanisme/dossier-autorisation-urba-draft.json ./module/ --id dossier-autorisation-urbanisme --name "Dossiers d'autorisation d'urbanisme (archivage)" --restriction_pack 'pack_urbanisme'
 	$(MAKE_MODULE) ./pack-json/pack-urbanisme/document-autorisation-urba-destinataire-draft.json ./module/ --id document-autorisation-urbanisme-destinataire --name "Document d'autorisation d'urbanisme (destinataire)" --restriction_pack 'pack_urbanisme'

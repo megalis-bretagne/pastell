@@ -17,7 +17,7 @@ class StorageInterfaceTest implements StorageInterface
     public function read(string $id): string
     {
         if (isset(self::$memory[$id])) {
-            return self::$memory[$id]->__toString();
+            return self::$memory[$id];
         }
         return 'Objet inexistant';
     }
