@@ -138,12 +138,11 @@ class UtilisateurAPIController extends BaseAPIController
     {
         $id_e = $this->getFromRequest('id_e', 0);
         $id_u = $this->getFromQueryArgs(0);
-        $dataUtilisateur['id_u'] = $id_u;
 
         if (
             $id_u !== false
             && $this->verifExists($id_u)
-            && $this->checkDroit($this->utilisateur->getUserFromData($dataUtilisateur)['id_e'], 'utilisateur:edition')
+            && $this->checkDroit($this->utilisateur->getInfo($id_u)['id_e'], 'utilisateur:edition')
         ) {
             $action = $this->getFromQueryArgs(1);
             if ($action === 'activate') {
@@ -158,6 +157,10 @@ class UtilisateurAPIController extends BaseAPIController
                 throw new UnrecoverableException('Cette action n\'existe pas.');
             }
             return $this->detail();
+        }
+
+        if (! $id_u) {
+            $this->checkDroit($id_e, 'utilisateur:creation');
         }
 
         $id_u = $this->editionUtilisateur(
@@ -216,7 +219,6 @@ class UtilisateurAPIController extends BaseAPIController
         $is_creation = false;
 
         if (! $id_u) {
-            $this->checkDroit($id_e, 'utilisateur:creation');
             $is_creation = true;
             $id_u = $this->utilisateurCreator->create($login, $password, $password, $email);
             if (! $id_u) {
