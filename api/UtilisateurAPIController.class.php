@@ -159,10 +159,7 @@ class UtilisateurAPIController extends BaseAPIController
             return $this->detail();
         }
 
-        if (! $id_u) {
-            $this->checkDroit($id_e, 'utilisateur:creation');
-        }
-
+        $this->checkDroit($id_e, 'utilisateur:creation');
         $id_u = $this->editionUtilisateur(
             $id_e,
             null,
