@@ -64,7 +64,7 @@ $css_files_list = [
 <!DOCTYPE html>
 <html>
     <head>
-        <title><?php hecho($page_title) . " - Pastell"; ?></title>
+        <title><?php hecho($page_title . " - Pastell"); ?></title>
 
         <meta name="description" content="Pastell est un logiciel de gestion de flux de documents. Les documents peuvent être crées via un système de formulaires configurables. Chaque document suit alors un workflow prédéfini, également configurable." />
         <meta name="keywords" content="Pastell, collectivité territoriale, flux, document, données, logiciel, logiciel libre, open source" />

@@ -118,7 +118,7 @@ class DocumentControlerTest extends ControlerTestCase
 
     public function testListDocument()
     {
-        $this->expectOutputRegex('/Liste des dossiers Actes \(générique\) pour Bourg-en-Bresse/');
+        $this->expectOutputRegex('/Liste des dossiers Actes \(g&eacute;n&eacute;rique\) pour Bourg-en-Bresse/');
         $documentController = $this->getControlerInstance(DocumentControler::class);
         $this->setGetInfo([
             'id_e' => 1,
