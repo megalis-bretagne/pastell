@@ -64,12 +64,26 @@ class JournalTest extends PastellTestCase
         $this->assertEquals("MOCK TIMESTAMP", $info['preuve']);
     }
 
+    public function testAddSQLWithObjectStorage()
+    {
+        $this->getObjectInstancier()->setInstance('use_storage', true);
+        $this->setUp();
+        $this->testAddSQL();
+    }
+
     public function testAddSQLWihtoutHorodateur()
     {
         $journal = $this->getJournal();
         $id_j = $journal->addSQL(false, false, false, false, false, false);
         $info = $journal->getInfo($id_j);
         $this->assertEquals("", $info['preuve']);
+    }
+
+    public function testAddSQLWihtoutHorodateurwithObjectStorage()
+    {
+        $this->getObjectInstancier()->setInstance('use_storage', true);
+        $this->setUp();
+        $this->testAddSQLWihtoutHorodateur();
     }
 
     public function testGetAll()
@@ -135,6 +149,13 @@ class JournalTest extends PastellTestCase
 
         $info = $journal->getInfo($id_j);
         $this->assertEquals("MOCK TIMESTAMP", $info['preuve']);
+    }
+
+    public function testHorodateAllWithObjectStorage()
+    {
+        $this->getObjectInstancier()->setInstance('use_storage', true);
+        $this->setUp();
+        $this->testHorodateAll();
     }
 
     public function testGetNbLine()
