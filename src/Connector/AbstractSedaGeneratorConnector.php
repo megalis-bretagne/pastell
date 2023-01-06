@@ -150,7 +150,7 @@ abstract class AbstractSedaGeneratorConnector extends SEDAConnecteur
             'DescriptionLevel' => [
                 'seda' => 'DescriptionLevel',
                 'libelle' => 'Niveau de description',
-                'commentaire' => 'DescriptionLevel (attendue : class, collection, file, fonds, item, recordgrp, series, subfonds, subgrp, subseries)',
+                'commentaire' => 'DescriptionLevel (attendue : Fonds, Subfonds, Class, Collection, Series, Subseries, RecordGrp, SubGrp, File, Item, OtherLevel)',
             ],
             'archiveunits_title' => [
                 'seda' => 'ArchiveUnits.Title',

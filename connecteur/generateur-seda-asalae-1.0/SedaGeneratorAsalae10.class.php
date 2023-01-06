@@ -17,6 +17,7 @@ final class SedaGeneratorAsalae10 extends AbstractSedaGeneratorConnector
         $pastellToSeda['titre']['commentaire'] = 'Archive - Name';
         $pastellToSeda['Language']['commentaire'] = 'Language (forme attendue: fra)';
         $pastellToSeda['DescriptionLanguage']['commentaire'] = 'DescriptionLanguage (forme attendue: fra)';
+        $pastellToSeda['DescriptionLevel']['commentaire'] = 'DescriptionLevel (attendue : class, collection, file, fonds, item, recordgrp, series, subfonds, subgrp, subseries)';
         $pastellToSeda['archiveunits_title']['commentaire'] = 'Archive - Description';
         $pastellToSeda['StartDate']['commentaire'] = 'OldestDate (forme attendue Y-m-d)';
         $pastellToSeda['EndDate']['commentaire'] = 'LatestDate (forme attendue Y-m-d)';
