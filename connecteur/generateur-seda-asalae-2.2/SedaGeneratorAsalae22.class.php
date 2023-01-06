@@ -5,27 +5,27 @@ declare(strict_types=1);
 use Pastell\Connector\AbstractSedaGeneratorConnector;
 use Pastell\Seda\SedaVersion;
 
-final class SedaGeneratorAsalae10 extends AbstractSedaGeneratorConnector
+final class SedaGeneratorAsalae22 extends AbstractSedaGeneratorConnector
 {
     public function getVersion(): SedaVersion
     {
-        return SedaVersion::VERSION_1_0;
+        return SedaVersion::VERSION_2_2_ASALAE;
     }
+
     public function getPastellToSeda(): array
     {
         $pastellToSeda = parent::getPastellToSeda();
-        $pastellToSeda['titre']['commentaire'] = 'Archive - Name';
-        $pastellToSeda['Language']['commentaire'] = 'Language (forme attendue: fra)';
-        $pastellToSeda['DescriptionLanguage']['commentaire'] = 'DescriptionLanguage (forme attendue: fra)';
-        $pastellToSeda['DescriptionLevel']['commentaire'] = 'DescriptionLevel (attendue : class, collection, file, fonds, item, recordgrp, series, subfonds, subgrp, subseries)';
-        $pastellToSeda['archiveunits_title']['commentaire'] = 'Archive - Description';
-        $pastellToSeda['StartDate']['commentaire'] = 'OldestDate (forme attendue Y-m-d)';
-        $pastellToSeda['EndDate']['commentaire'] = 'LatestDate (forme attendue Y-m-d)';
-        $pastellToSeda['CustodialHistory']['commentaire'] = 'Archive - CustodialHistoryItem';
-        $pastellToSeda['AccessRule_Rule']['commentaire'] = 'Archive - AccessRestrictionRule - Code (forme attendue : de AR038 à AR062)';
-        $pastellToSeda['AccessRule_StartDate']['commentaire'] = 'AccessRestrictionRule - StartDate (forme attentue Y-m-d)';
-        $pastellToSeda['AppraisalRule_Rule']['commentaire'] = 'AppraisalRule - Duration (forme attendue encoder en xsd:duration, voir http://www.datypic.com/sc/xsd/t-xsd_duration.html)';
-        $pastellToSeda['AppraisalRule_FinalAction']['commentaire'] = 'AppraisalRule - Code (forme attendue: Conserver OU Détruire)';
+        $pastellToSeda['titre']['commentaire'] = 'ArchiveUnit - Title';
+        $pastellToSeda['Language']['commentaire'] = 'Language (forme attendue: fr)';
+        $pastellToSeda['DescriptionLanguage']['commentaire'] = 'DescriptionLanguage (forme attendue: fr)';
+        $pastellToSeda['archiveunits_title']['commentaire'] = 'ArchiveUnit - Description';
+        $pastellToSeda['StartDate']['commentaire'] = 'StartDate (forme attendue Y-m-d)';
+        $pastellToSeda['EndDate']['commentaire'] = 'EndDate (forme attendue Y-m-d)';
+        $pastellToSeda['CustodialHistory']['commentaire'] = 'ArchiveUnit - CustodialHistoryItem';
+        $pastellToSeda['AccessRule_Rule']['commentaire'] = 'AccessRule - Rule (forme attendue : de AR038 à AR062)';
+        $pastellToSeda['AccessRule_StartDate']['commentaire'] = 'AccessRule - StartDate (forme attentue Y-m-d)';
+        $pastellToSeda['AppraisalRule_Rule']['commentaire'] = 'AppraisalRule - Rule (forme attendue encoder en xsd:duration, voir http://www.datypic.com/sc/xsd/t-xsd_duration.html)';
+        $pastellToSeda['AppraisalRule_FinalAction']['commentaire'] = 'AppraisalRule - FinalAction (forme attendue: Conserver OU Détruire)';
 
         return \array_merge(
             $pastellToSeda,
@@ -53,12 +53,12 @@ final class SedaGeneratorAsalae10 extends AbstractSedaGeneratorConnector
                 'OriginatingAgencyArchiveIdentifier' => [
                     'seda' => 'OriginatingAgencyArchiveIdentifier',
                     'libelle' => "Identifiant donné à l'archive par le service producteur",
-                    'commentaire' => 'OriginatingAgencyArchiveIdentifier',
+                    'commentaire' => 'OriginatingAgencyArchiveUnitIdentifier'
                 ],
                 'TransferringAgencyArchiveIdentifier' => [
                     'seda' => 'TransferringAgencyArchiveIdentifier',
                     'libelle' => "Identifiant donné à l'archive par le service versant",
-                    'commentaire' => 'TransferringAgencyArchiveIdentifier',
+                    'commentaire' => 'TransferringAgencyArchiveUnitIdentifier',
                 ],
             ]
         );
