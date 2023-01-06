@@ -2,19 +2,20 @@
 
 /**
  * @var Gabarit $this
- * @var bool $droitEdition
+ * @var bool $droitCreation
  * @var string $descendance
  * @var array $all_role
  * @var string $role_selected
  * @var string $search
  * @var int $nb_utilisateur
  * @var array $liste_utilisateur
+ * @var int $id_e
  */
 ?>
 <div class="box">
 
 
-    <?php if ($droitEdition) : ?>
+    <?php if ($droitCreation) : ?>
         <a href="Utilisateur/edition?id_e=<?php echo $id_e?>" class='btn btn-primary grow'><i class="fa fa-plus-circle"></i>&nbsp;Ajouter</a>
     <?php endif;?>
 

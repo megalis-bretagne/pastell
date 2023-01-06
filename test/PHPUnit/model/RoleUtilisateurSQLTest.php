@@ -129,6 +129,7 @@ class RoleUtilisateurSQLTest extends PastellTestCase
             'system:lecture',
             'test:edition',
             'test:lecture',
+            'utilisateur:creation',
             'utilisateur:edition',
             'utilisateur:lecture',
         ], $all_droit);

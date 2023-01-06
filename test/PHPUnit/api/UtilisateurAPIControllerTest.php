@@ -209,7 +209,33 @@ class UtilisateurAPIControllerTest extends PastellTestCase
         $this->getObjectInstancier()->getInstance(UtilisateurCreator::class)
             ->create('tester', 'tester', 'tester', 'tester@mail');
         $this->expectException(ForbiddenException::class);
-        $this->expectExceptionMessage('Acces interdit id_e=1, droit=utilisateur:edition,id_u=3');
-        $this->getInternalAPIAsUser('3')->post('/utilisateur/1/deactivate', ['id_e' => 1]);
+        $this->expectExceptionMessage('Acces interdit id_e=0, droit=utilisateur:edition,id_u=3');
+        $this->getInternalAPIAsUser('3')->post('/utilisateur/1/deactivate');
+    }
+
+    public function testCreateUserFail(): void
+    {
+        $this->getObjectInstancier()->getInstance(UtilisateurCreator::class)
+            ->create('tester', 'tester', 'tester', 'tester@mail');
+        $this->getObjectInstancier()->getInstance(RoleSQL::class)
+            ->edit('utilisateurLectureEdition', 'Droit utilisateur');
+        $this->getObjectInstancier()->getInstance(RoleSQL::class)
+            ->addDroit('utilisateurLectureEdition', 'utilisateur:edition');
+        $this->getObjectInstancier()->getInstance(RoleUtilisateur::class)
+            ->addRole('3', 'utilisateurLectureEdition', '1');
+
+        $userInfo = [
+            'id_e' => '1',
+            'login' => 'foo',
+            'password' => 'D@iw3DDf41Nl$DXzMJL!Uc2Yo',
+            'password2' => 'D@iw3DDf41Nl$DXzMJL!Uc2Yo',
+            'nom' => 'baz',
+            'prenom' => 'buz',
+            'email' => 'boz@byz.fr'
+        ];
+
+        $this->expectException(ForbiddenException::class);
+        $this->expectExceptionMessage('Acces interdit id_e=1, droit=utilisateur:creation,id_u=3');
+        $this->getInternalAPIAsUser(3)->post('/utilisateur', $userInfo);
     }
 }

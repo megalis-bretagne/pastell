@@ -14,6 +14,7 @@
 - Onglet de visualisation des transformations après l'étape #1426
 - Choix de l'algorithme de calcul d'empreinte des fichiers pour les connecteurs utilisant le générateur SEDA #1668
 - Création d'un connecteur de générateur SEDA 2.2 pour Asalae #1634
+- Ajout d'un droit de création d'utilisateurs pour différencier de l'édition #1156
 
 ## Évolutions
 

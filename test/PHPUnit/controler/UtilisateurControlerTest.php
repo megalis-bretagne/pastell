@@ -199,4 +199,33 @@ class UtilisateurControlerTest extends ControlerTestCase
             );
         }
     }
+
+    public function testAccesPageCreationFail(): void
+    {
+        $this->setGetInfo([
+            'id_e' => 1,
+        ]);
+        $controller = $this->getUtilisateurControler();
+        $user = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class)
+            ->create('tester', 'tester', 'tester', 'tester@mail');
+        $this->getObjectInstancier()->getInstance(RoleSQL::class)
+            ->edit('entiteLectureEdition', 'Droit utilisateur');
+        $this->getObjectInstancier()->getInstance(RoleSQL::class)
+            ->addDroit('entiteLectureEdition', 'utilisateur:edition');
+        $this->getObjectInstancier()->getInstance(RoleUtilisateur::class)
+            ->addRole('3', 'entiteLectureEdition', '1');
+
+        $this->getObjectInstancier()->getInstance(Authentification::class)->connexion('tester', 3);
+
+        $this->expectException(LastErrorException::class);
+        $this->expectExceptionMessage("Vous n'avez pas les droits nécessaires (1:utilisateur:creation) pour accéder à cette page");
+        $controller->editionAction();
+    }
+
+    public function testAccesPageCreation(): void
+    {
+        $this->getUtilisateurControler()->editionAction();
+        $pageTitle = $this->getUtilisateurControler()->getViewParameterByKey('page_title');
+        $this->assertEquals($pageTitle, 'Nouvel utilisateur ');
+    }
 }
