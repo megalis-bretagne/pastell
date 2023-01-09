@@ -222,10 +222,18 @@ class UtilisateurControlerTest extends ControlerTestCase
         $controller->editionAction();
     }
 
+    /**
+     * @throws UnrecoverableException
+     * @throws NotFoundException
+     * @throws LastMessageException
+     * @throws LastErrorException
+     */
     public function testAccesPageCreation(): void
     {
+        \ob_start();
         $this->getUtilisateurControler()->editionAction();
+        \ob_get_clean();
         $pageTitle = $this->getUtilisateurControler()->getViewParameterByKey('page_title');
-        $this->assertEquals($pageTitle, 'Nouvel utilisateur ');
+        static::assertSame($pageTitle, 'Nouvel utilisateur ');
     }
 }
