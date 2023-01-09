@@ -1079,6 +1079,7 @@ action:
                 - preparation-send-sae
                 - generate-sip-error
                 - rejet-sae
+                - erreur-envoie-sae
         action-class: StandardAction
         connecteur-type: SAE
         connecteur-type-action: Pastell\Step\SAE\Action\SAEGenerateArchiveAction
