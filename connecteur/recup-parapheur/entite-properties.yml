@@ -20,38 +20,6 @@ formulaire:
             type: externalData
             choice-action: tenant_name
             link_name: 'Sélectionner le tenant'
-#        type_id:
-#            name: Identifiant du type parapheur
-#            read-only: true
-#        type_name:
-#            name: Nom du type parapheur
-#            type: externalData
-#            choice-action: type_name
-#            link_name: 'Sélectionner le type'
-#        sous_type_id:
-#            name: Identifiant du sous-type parapheur
-#            read-only: true
-#        sous_type_name:
-#            name: Nom du sous-type parapheur
-#            type: externalData
-#            choice-action: sous_type_name
-#            link_name: 'Sélectionner le type'
-#        recup_type:
-#            name: Type de récupération
-#            type: select
-#            value:
-#                - Dossier en fin de circuit
-#                - Dossier à la corbeille
-#        bureau_id:
-#            name: Identifiant du bureau à récupérer
-#            commentaire: Utilisable uniquement pour les dossiers en fin de circuit
-#            read-only: true
-#        bureau_name:
-#            name: Nom du bureau à récupérer
-#            commentaire: Utilisable uniquement pour les dossiers en fin de circuit
-#            type: externalData
-#            choice-action: bureau_name
-#            link_name: 'Sélectionner le bureau'
         pastell_module_id:
             name: Identifiant du type de dossier Pastell
             commentaire: Le dossier doit être un dossier studio. Par défaut, le type de dossier recup-parapheur est selectionné
@@ -77,21 +45,6 @@ formulaire:
 action:
     tenant_name:
         action-class: TenantNameAction
-        rule:
-            internal-action: true
-
-    type_name:
-        action-class: TypeNameAction
-        rule:
-            internal-action: true
-
-    sous_type_name:
-        action-class: SousTypeNameAction
-        rule:
-            internal-action: true
-
-    bureau_name:
-        action-class: BureauNameAction
         rule:
             internal-action: true
 
