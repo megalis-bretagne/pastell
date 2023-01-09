@@ -25,15 +25,7 @@ class GlaneurDocumentCreator
         );
 
         $files = [];
-        if (! is_array($glaneurLocalDocumentInfo->element_files_association)) {
-            echo "ppp";
-            exit;
-        }
         foreach ($glaneurLocalDocumentInfo->element_files_association as $key => $files_list) {
-            if (! is_array($files_list)) {
-                echo "pas bon $key";
-                exit;
-            }
             foreach ($files_list as $file_num => $file) {
                 $files[$key]['name'][$file_num] = $file;
                 $files[$key]['tmp_name'][$file_num] = $repertoire . "/" . $file;

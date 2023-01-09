@@ -15,11 +15,11 @@
     <input type='hidden' name='id_ce' value='<?php hecho($id_ce); ?>'/>
     <input type='hidden' name='field' value='<?php hecho($field); ?>'/>
     <?php $this->displayCSRFInput(); ?>
-    <select name='<?php hecho($element_id) ?>' class='select2_entite form-control col-md-1'>
+    <select name='<?php hecho($element_id) ?>' class='select2_entite form-control col-md-1' aria-label="choisir une valeur">
         <?php foreach ($dictionnary as $keyId => $value) : ?>
             <option
                 value='<?php echo $keyId ?>'
-                <?php echo $selected_id == $keyId ? 'selected' : '' ?>
+                <?php echo $selected_id === $keyId ? 'selected' : '' ?>
             >
                 <?php hecho($value); ?>
             </option>

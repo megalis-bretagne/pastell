@@ -18,8 +18,8 @@ abstract class DictionnaryChoice extends ChoiceActionExecutor
         if (! isset($dictionnary[$element_id])) {
             throw new RecoverableException("Cet élément n'existe pas");
         }
-        $emementName = $dictionnary[$element_id];
-        $this->getConnecteurProperties()->setData($this->getElementName(), $emementName);
+        $elementName = $dictionnary[$element_id];
+        $this->getConnecteurProperties()->setData($this->getElementName(), $elementName);
         $this->getConnecteurProperties()->setData($this->getElementId(), $element_id);
         return true;
     }

@@ -116,7 +116,7 @@ action:
 
     recup_one:
         name: Faire une boucle de récupération (synchrone)
-        action-class: RecupParapheurRecupOne
+        action-class: RecupParapheurRecup
 
     recup:
         name: Lancer la récupération (synchrone)

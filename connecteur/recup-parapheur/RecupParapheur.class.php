@@ -2,6 +2,7 @@
 
 use IparapheurV5Client\Api\AdminTrashBin;
 use IparapheurV5Client\Api\Tenant;
+use IparapheurV5Client\Client;
 use IparapheurV5Client\Model\ListTrashBinFoldersQuery;
 use IparapheurV5Client\TokenQuery;
 use Pastell\Client\IparapheurV5\ClientFactory;
@@ -49,7 +50,7 @@ class RecupParapheur extends Connecteur
         }
     }
 
-    private function getAuthenticatedClient()
+    private function getAuthenticatedClient(): Client
     {
         $tokenQuery = new TokenQuery();
         $tokenQuery->username = $this->connecteurConfig->get(self::USERNAME);
@@ -165,7 +166,7 @@ class RecupParapheur extends Connecteur
         return $id_d;
     }
 
-    private function getElementId($elementId)
+    private function getElementId($elementId): string
     {
         return $this->elementIdDictionnary[$elementId];
     }
