@@ -8,15 +8,12 @@ use Pastell\Client\IparapheurV5\Model\Premis;
 use Pastell\Client\IparapheurV5\Model\PreservationLevelValue;
 use Pastell\Client\IparapheurV5\Model\Type;
 use Pastell\Client\IparapheurV5\Model\ZipContentModel;
-use SimpleXMLWrapper;
 use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
-use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
 use Symfony\Component\Serializer\NameConverter\MetadataAwareNameConverter;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\BackedEnumNormalizer;
@@ -58,16 +55,28 @@ class ZipContent
             }
             if ($object->type === Type::file) {
                 if ($object->preservationLevel->preservationLevelValue === PreservationLevelValue::mainDocument) {
-                    $zipContentModel->documentPrincipaux[] = 'Documents principaux/' . $object->originalName;
+                    $zipContentModel->documentPrincipaux[] = $object->originalName;
                 }
                 if ($object->preservationLevel->preservationLevelValue === PreservationLevelValue::annex) {
-                    $zipContentModel->annexe[] = 'Annexes/' . $object->originalName;
+                    $zipContentModel->annexe[] = $object->originalName;
                 }
             }
         }
         if (! isset($zipContentModel->name)) {
             throw new UnrecoverableException("Impossible de trouver le nom du dossier dans l'archive");
         }
+
+        foreach($zipContentModel->documentPrincipaux as $documentPrincipaux) {
+            rename($folderPath ."/Documents principaux/$documentPrincipaux", $folderPath. "/$documentPrincipaux");
+        }
+        foreach($zipContentModel->annexe as $i => $annexe) {
+            if (file_exists($folderPath ."/Annexes/$annexe")) {
+                rename($folderPath . "/Annexes/$annexe", $folderPath . "/$annexe");
+            } else {
+                unset($zipContentModel->annexe[$i]);
+            }
+        }
+
         $zipContentModel->bordereau = $zipContentModel->name . "_bordereau.pdf";
         return $zipContentModel;
     }

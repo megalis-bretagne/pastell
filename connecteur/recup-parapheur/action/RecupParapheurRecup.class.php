@@ -1,6 +1,6 @@
 <?php
 
-class RecupParapheurRecup
+class RecupParapheurRecup extends ActionExecutor
 {
     public function go()
     {
