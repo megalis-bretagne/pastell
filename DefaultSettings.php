@@ -274,5 +274,5 @@ if (!defined("S3_BUCKET_JOURNAL")) {
 }
 
 if (!defined("USE_STORAGE")) {
-    define("USE_STORAGE", true);
+    define("USE_STORAGE", false);
 }
