@@ -139,6 +139,12 @@
 
 - Les dates sont enregistrées en heure locale (TIMEZONE), de fait, il n'est pas possible de changer de fuseau horaire après une installation initiale
 
+# [3.1.19]
+
+## Corrections
+
+- Correction du contrôle lors de la création d'un type de dossier #1675
+
 # [3.1.18] - 2022-11-21
 
 ## Corrections
