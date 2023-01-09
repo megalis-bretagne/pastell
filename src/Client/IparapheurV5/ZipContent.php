@@ -66,11 +66,11 @@ class ZipContent
             throw new UnrecoverableException("Impossible de trouver le nom du dossier dans l'archive");
         }
 
-        foreach($zipContentModel->documentPrincipaux as $documentPrincipaux) {
-            rename($folderPath ."/Documents principaux/$documentPrincipaux", $folderPath. "/$documentPrincipaux");
+        foreach ($zipContentModel->documentPrincipaux as $documentPrincipaux) {
+            rename($folderPath . "/Documents principaux/$documentPrincipaux", $folderPath . "/$documentPrincipaux");
         }
-        foreach($zipContentModel->annexe as $i => $annexe) {
-            if (file_exists($folderPath ."/Annexes/$annexe")) {
+        foreach ($zipContentModel->annexe as $i => $annexe) {
+            if (file_exists($folderPath . "/Annexes/$annexe")) {
                 rename($folderPath . "/Annexes/$annexe", $folderPath . "/$annexe");
             } else {
                 unset($zipContentModel->annexe[$i]);
