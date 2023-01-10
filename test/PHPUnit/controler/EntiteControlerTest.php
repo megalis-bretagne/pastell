@@ -163,5 +163,4 @@ class EntiteControlerTest extends ControlerTestCase
         $this->expectOutputRegex('/Content-type: application\/json;*/');
         $this->entiteControler->doExportConfigAction();
     }
-
 }
