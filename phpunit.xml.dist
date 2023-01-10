@@ -7,6 +7,7 @@ cf : http://blogs.kent.ac.uk/webdev/2011/07/14/phpunit-and-unserialized-pdo-inst
 
   <php>
     <server name="KERNEL_CLASS" value="Pastell\Kernel" />
+    <server name="SHELL_VERBOSITY" value="0" />
   </php>
 
   <coverage>
