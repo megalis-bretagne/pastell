@@ -5,6 +5,7 @@ use Pastell\Service\FeatureToggleService;
 use Pastell\Service\ImportExportConfig\ExportConfigService;
 use Pastell\Service\ImportExportConfig\ImportConfigService;
 use Pastell\Service\FeatureToggle\CDGFeature;
+use Symfony\Component\Security\Csrf\TokenGenerator\UriSafeTokenGenerator;
 
 class EntiteControler extends PastellControler
 {
@@ -628,12 +629,22 @@ class EntiteControler extends PastellControler
         }
         $exportConfigService = $this->getObjectInstancier()->getInstance(ExportConfigService::class);
         $exportInfo = $exportConfigService->getInfo($id_e, $options);
+
+        $generator = new UriSafeTokenGenerator();
+        $password = $generator->generateToken();
+        $this->getObjectInstancier()->getInstance(MemoryCache::class)->store(
+            "export_configuration_password_$id_e",
+            $password,
+            60
+        );
+
         $this->setViewParameter('id_e', $id_e);
+        $this->setViewParameter('password', $password);
         $this->setViewParameter('exportInfo', $exportInfo);
         $this->setViewParameter('template_milieu', "EntiteExportConfigVerif");
         $this->setViewParameter('menu_gauche_select', "Entite/exportConfig");
         $this->setViewParameter('options', $options);
-        $this->setPageTitle("Vérification de l'import de la configuration");
+        $this->setPageTitle("Vérification de l'export de la configuration");
         $this->renderDefault();
     }
 
@@ -646,9 +657,6 @@ class EntiteControler extends PastellControler
     {
         $recuperateur = $this->getPostInfo();
         $id_e = $recuperateur->getInt('id_e', 0);
-        $password = $this->getPostInfo()->get('password');
-        $password_check = $this->getPostInfo()->get('password_check');
-
         $this->verifDroit(0, "system:edition");
 
         $options = [];
@@ -658,15 +666,13 @@ class EntiteControler extends PastellControler
             $link .= sprintf("%s=%s&", $id, $options[$id]);
         }
 
-
-        if ($password !== $password_check) {
-            $this->setLastError('Les mots de passe ne correspondent pas.');
-            $this->redirect($link);
-        } elseif (mb_strlen($password) < Crypto::PASSWORD_MINIMUM_LENGTH) {
-            $this->setLastError('Le mot de passe fait moins de ' . Crypto::PASSWORD_MINIMUM_LENGTH . ' caractères.');
+        $password = $this->getObjectInstancier()
+            ->getInstance(MemoryCache::class)
+            ->fetch("export_configuration_password_$id_e");
+        if (empty($password)) {
+            $this->setLastError('Export impossible : Expiration du mot de passe généré');
             $this->redirect($link);
         }
-
 
         $exportConfigService = $this->getObjectInstancier()->getInstance(ExportConfigService::class);
         $exportInfo = $exportConfigService->getExportedFile($id_e, $options);
@@ -675,7 +681,7 @@ class EntiteControler extends PastellControler
 
         $filename = 'export.json';
 
-        $this->getInstance(SendFileToBrowser::class)
+        $this->getObjectInstancier()->getInstance(SendFileToBrowser::class)
             ->sendData($encryptedInfo, $filename, 'application/json');
     }
 

@@ -1,5 +1,7 @@
 <?php
 
+use Symfony\Component\Security\Csrf\TokenGenerator\UriSafeTokenGenerator;
+
 class EntiteControlerTest extends ControlerTestCase
 {
     /**
@@ -138,4 +140,28 @@ class EntiteControlerTest extends ControlerTestCase
         $info = $this->getObjectInstancier()->getInstance(EntiteSQL::class)->getInfo(3);
         $this->assertEquals("TEST ENTITIES", $info['denomination']);
     }
+
+    /**
+     * @throws LastMessageException
+     * @throws LastErrorException
+     * @throws JsonException
+     */
+    public function testDoExportConfigAction(): void
+    {
+        $id_e = 1;
+        $this->setPostInfo([
+            'id_e' => $id_e
+        ]);
+        $generator = new UriSafeTokenGenerator();
+        $password = $generator->generateToken();
+        $this->getObjectInstancier()->getInstance(MemoryCache::class)->store(
+            "export_configuration_password_$id_e",
+            $password,
+            60
+        );
+
+        $this->expectOutputRegex('/Content-type: application\/json;*/');
+        $this->entiteControler->doExportConfigAction();
+    }
+
 }
