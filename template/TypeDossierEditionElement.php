@@ -13,8 +13,7 @@
         <h2>Ajout d'un élément au formulaire</h2>
     <?php endif; ?>
 
-    <form action='<?php $this->url("TypeDossier/doEditionElement"); ?>' method='post' >
-<!--          onSubmit="return updateDefaultField()">-->
+    <form action='<?php $this->url("TypeDossier/doEditionElement"); ?>' method='post' onSubmit="return checkDefaultValueOnSelect()">
         <?php $this->displayCSRFInput() ?>
         <input type='hidden' name='id_t' value='<?php hecho($type_de_dossier_info['id_t'])?>' />
         <input type='hidden' name='orig_element_id' value='<?php hecho($formulaireElement->element_id)?>' />
@@ -188,7 +187,7 @@
                 input.type = 'checkbox';
                 input.id = 'default_value';
                 input.name = 'default_value';
-                input.value = '<?php echo $formulaireElement->default_value ? 'checked=\'checked\'' : ''; ?>';
+                input.checked = <?php echo $formulaireElement->default_value ? '1' : '0'; ?>;
                 td.appendChild(input);
             } else if (option === 'text' || option === 'select') {
                 td.innerHTML = '';
@@ -197,7 +196,7 @@
                 input.id = 'default_value';
                 input.name = 'default_value';
                 input.className= 'form-control col-md-8';
-                input.value = '<?php echo $formulaireElement->default_value; ?>';
+                input.value = '<?php echo preg_replace('/\s+/', ' ', $formulaireElement->default_value ?? ''); ?>';
                 td.appendChild(input);
              } else if (option === 'textarea') {
                 td.innerHTML = '';
@@ -206,7 +205,7 @@
                 textarea.name = 'default_value';
                 textarea.className= 'form-control col-md-8';
                 textarea.style.height = '150px';
-                textarea.value = '<?php echo get_hecho($formulaireElement->default_value); ?>';
+                textarea.value = '<?php echo preg_replace('/\s+/', '\n', $formulaireElement->default_value ?? ''); ?>';
                 td.appendChild(textarea);
             } else {
                 td.innerHTML = '';
@@ -233,20 +232,34 @@
     });
 
     // function checkDefaultValueOnSelect() {
-    //     let selection = document.getElementById('select_value_text').value;
-    //     let value = document.getElementById('default_value_text').value;
-    //     if ( === 'select' && value !== '') {
-    //         if (
-    //             (selection.type === 'int')
-    //             || (selection.endsWith(value) && selection.includes("\n"+value))
-    //             || (selection.startsWith(value) && selection.includes(value+"\n"))
-    //             || selection.includes("\n"+value+"\n")
-    //         ) {
-    //             return true;
-    //         } else {
-    //             alert('La valeur par défaut ne fait pas partie des valeurs de la liste déroulante');
-    //             return false;
+    //     let value = document.getElementById('default_value').value;
+    //     let list = document.getElementById('select_value').value;
+    //     alert(value);
+    //     alert(list);
+    //     alert(document.getElementById('select_value').value);
+    //     if ($(this).children("option:selected").val() === 'select' && value === '') {
+    //
+    //
+    //
+    //         let lineCount = 1;
+    //         for (let i = 0; i < list.value.length; i++) {
+    //             if (list[i] === "\n") {
+    //                 lineCount++;
+    //             }
     //         }
+    //         alert(lineCount);
+    //         //
+    //         // if (
+    //         //     (list.type === 'int')
+    //         //     || (list.endsWith(value) && list.includes("\n"+value))
+    //         //     || (list.startsWith(value) && list.includes(value+"\n"))
+    //         //     || list.includes("\n"+value+"\n")
+    //         // ) {
+    //         //     return true;
+    //         // } else {
+    //         //     alert('La valeur par défaut ne fait pas partie des valeurs de la liste déroulante');
+    //         //     return false;
+    //         // }
     //     }
     // }
 
