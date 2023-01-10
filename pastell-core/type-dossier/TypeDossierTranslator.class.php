@@ -70,6 +70,7 @@ class TypeDossierTranslator
                 || $this->getType($typeDossierFormulaireElement) === 'textarea'
                 || $this->getType($typeDossierFormulaireElement) === 'checkbox'
                 || $this->getType($typeDossierFormulaireElement) === 'select'
+                || $this->getType($typeDossierFormulaireElement) === 'date'
             ) {
                 if ($typeDossierFormulaireElement->default_value !== false && $typeDossierFormulaireElement->default_value !== '') {
                     $result[DocumentType::FORMULAIRE][$onglet_name][$element_id]['default']

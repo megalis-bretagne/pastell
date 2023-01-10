@@ -13,7 +13,8 @@
         <h2>Ajout d'un élément au formulaire</h2>
     <?php endif; ?>
 
-    <form action='<?php $this->url("TypeDossier/doEditionElement"); ?>' method='post' onSubmit="return checkDefaultValueOnSelect()">
+    <form action='<?php $this->url("TypeDossier/doEditionElement"); ?>' method='post' >
+<!--          onSubmit="return updateDefaultField()">-->
         <?php $this->displayCSRFInput() ?>
         <input type='hidden' name='id_t' value='<?php hecho($type_de_dossier_info['id_t'])?>' />
         <input type='hidden' name='orig_element_id' value='<?php hecho($formulaireElement->element_id)?>' />
@@ -49,7 +50,7 @@
                     <label for="type" >Type d'élément</label>
                 </th>
                 <td>
-                    <select onchange="getDefaultFieldByType(this.value)" id="type" name="type" class="form-control col-md-8">
+                    <select id="type" name="type" class="form-control col-md-8">
                         <?php foreach (TypeDossierFormulaireElementManager::getAllTypeElement() as $type => $type_libelle) : ?>
                             <option value="<?php echo $type; ?>" <?php echo $type == $formulaireElement->type ? 'selected="selected"' : ''; ?>><?php echo $type_libelle; ?></option>
                         <?php endforeach; ?>
@@ -170,15 +171,45 @@
             const option = $(this).children("option:selected").val();
             if (option === "select") {
                 $("#select_value_tr").show();
-
             } else {
                 $("#select_value_tr").hide();
             }
 
-            if (option === 'text' || option === 'textarea' || option === 'checkbox' || option === 'select'){
+            if (option === 'text' || option === 'textarea' || option === 'checkbox' || option === 'select' || option === 'date') {
                 $("#default_value_tr").show();
             } else {
                 $("#default_value_tr").hide();
+            }
+
+            let td = document.getElementById('default_value_td');
+            if (option === 'checkbox' || option === 'date') {
+                td.innerHTML = '';
+                let input = document.createElement('input');
+                input.type = 'checkbox';
+                input.id = 'default_value';
+                input.name = 'default_value';
+                input.value = '<?php echo $formulaireElement->default_value ? 'checked=\'checked\'' : ''; ?>';
+                td.appendChild(input);
+            } else if (option === 'text' || option === 'select') {
+                td.innerHTML = '';
+                let input = document.createElement('input');
+                input.type = 'text';
+                input.id = 'default_value';
+                input.name = 'default_value';
+                input.className= 'form-control col-md-8';
+                input.value = '<?php echo $formulaireElement->default_value; ?>';
+                td.appendChild(input);
+             } else if (option === 'textarea') {
+                td.innerHTML = '';
+                let textarea = document.createElement('textarea');
+                textarea.id = 'default_value';
+                textarea.name = 'default_value';
+                textarea.className= 'form-control col-md-8';
+                textarea.style.height = '150px';
+                textarea.value = '<?php echo get_hecho($formulaireElement->default_value); ?>';
+                td.appendChild(textarea);
+            } else {
+                td.innerHTML = '';
             }
 
             if (option === 'text') {
@@ -201,31 +232,23 @@
         }).trigger("change");
     });
 
-    function getDefaultFieldByType(typeElement) {
-        let td = document.getElementById('default_value_td');
-        if (typeElement === 'checkbox') {
-            td.innerHTML = "<input name='default_value' id='default_value' class='' type='checkbox' <?php echo $formulaireElement->default_value ? 'checked=\'checked\'' : ''; ?> />";
-        } else {
-            td.innerHTML = "<input class='form-control col-md-8' id='default_value' name='default_value' value='<?php echo get_hecho($formulaireElement->default_value); ?>'/>";
-        }
-    }
-
-    function checkDefaultValueOnSelect() {
-        let selection = document.getElementById('select_value').value;
-        let value = document.getElementById('default_value').value;
-        if (document.getElementById('type').value === 'select' && value !== '') {
-            if (
-                (selection.endsWith(value) && selection.includes("\n"+value))
-                || (selection.startsWith(value) && selection.includes(value+"\n"))
-                || selection.includes("\n"+value+"\n")
-            ) {
-                return true;
-            } else {
-                alert('La valeur par défaut ne fait pas partie des valeurs de la liste déroulante');
-                return false;
-            }
-        }
-    }
+    // function checkDefaultValueOnSelect() {
+    //     let selection = document.getElementById('select_value_text').value;
+    //     let value = document.getElementById('default_value_text').value;
+    //     if ( === 'select' && value !== '') {
+    //         if (
+    //             (selection.type === 'int')
+    //             || (selection.endsWith(value) && selection.includes("\n"+value))
+    //             || (selection.startsWith(value) && selection.includes(value+"\n"))
+    //             || selection.includes("\n"+value+"\n")
+    //         ) {
+    //             return true;
+    //         } else {
+    //             alert('La valeur par défaut ne fait pas partie des valeurs de la liste déroulante');
+    //             return false;
+    //         }
+    //     }
+    // }
 
 </script>
 
