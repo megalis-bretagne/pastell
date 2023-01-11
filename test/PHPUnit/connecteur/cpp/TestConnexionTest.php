@@ -5,7 +5,6 @@ require_once __DIR__ . "/../../../../connecteur/cpp/CPP.class.php";
 
 class TestConnexionTest extends ExtensionCppTestCase
 {
-
     private const MEMORY_KEY = "pastell_token_piste_61cde1ef-41ab-441c-b23f-95991f9d919g";
     private const TOKEN = "Bearer BHv3LJUSWnGl5JRzxm8948mqhvv8P1UQLtCdjj1HgKdm8vQgmkeWQF";
     public function setUp()
