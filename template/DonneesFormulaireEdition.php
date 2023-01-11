@@ -183,7 +183,7 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1) {
                                     <option <?php
                                     if (
                                             $this->donneesFormulaire->geth($field->getName()) == get_hecho($value)
-                                            || $this->donneesFormulaire->geth($field->getName()) === $field->getDefault()
+                                            || $this->donneesFormulaire->geth($value) === $field->getDefault()
                                     ) {
                                         echo "selected='selected'";
                                     }

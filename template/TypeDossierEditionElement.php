@@ -231,37 +231,26 @@
         }).trigger("change");
     });
 
-    // function checkDefaultValueOnSelect() {
-    //     let value = document.getElementById('default_value').value;
-    //     let list = document.getElementById('select_value').value;
-    //     alert(value);
-    //     alert(list);
-    //     alert(document.getElementById('select_value').value);
-    //     if ($(this).children("option:selected").val() === 'select' && value === '') {
-    //
-    //
-    //
-    //         let lineCount = 1;
-    //         for (let i = 0; i < list.value.length; i++) {
-    //             if (list[i] === "\n") {
-    //                 lineCount++;
-    //             }
-    //         }
-    //         alert(lineCount);
-    //         //
-    //         // if (
-    //         //     (list.type === 'int')
-    //         //     || (list.endsWith(value) && list.includes("\n"+value))
-    //         //     || (list.startsWith(value) && list.includes(value+"\n"))
-    //         //     || list.includes("\n"+value+"\n")
-    //         // ) {
-    //         //     return true;
-    //         // } else {
-    //         //     alert('La valeur par défaut ne fait pas partie des valeurs de la liste déroulante');
-    //         //     return false;
-    //         // }
-    //     }
-    // }
+    function checkDefaultValueOnSelect() {
+        let defaultValue = document.getElementById('default_value').value;
+        if (document.getElementById('type').value === 'select' && defaultValue !== '') {
+            let list = document.getElementById('select_value').value;
+            let listArray = list.split('\n');
+            let lineCount = listArray.length;
+            if (list.endsWith('\n')) {
+                lineCount = lineCount - 1;
+            }
+            if (
+                !isNaN(defaultValue) && defaultValue >= 1 && defaultValue <= lineCount && !listArray[defaultValue-1].includes(':')
+                || list.startsWith(defaultValue+":") || list.includes("\n"+defaultValue+":")
+            ) {
+                return true;
+            } else {
+                alert('La valeur par défaut ne correspond pas à une valeur de la liste déroulante');
+                return false;
+            }
+        }
+    }
 
 </script>
 
