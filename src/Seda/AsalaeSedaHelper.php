@@ -18,6 +18,10 @@ final class AsalaeSedaHelper extends SedaHelper
                 '/seda:ArchiveTransferReply/seda:DataObjectPackage/seda:DescriptiveMetadata' .
                 '/seda:ArchiveUnit/seda:Content/seda:ArchivalAgencyArchiveUnitIdentifier',
             ],
+            self::SEDA_2_2_NS => [
+                '/seda:ArchiveTransferReply/seda:DataObjectPackage/seda:DescriptiveMetadata' .
+                '/seda:ArchiveUnit/seda:Content/seda:ArchivalAgencyArchiveUnitIdentifier',
+            ],
         ];
     }
 

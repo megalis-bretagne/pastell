@@ -12,6 +12,7 @@ abstract class SedaHelper
     public const SEDA_0_2_NS = 'fr:gouv:ae:archive:draft:standard_echange_v0.2';
     public const SEDA_1_0_NS = 'fr:gouv:culture:archivesdefrance:seda:v1.0';
     public const SEDA_2_1_NS = 'fr:gouv:culture:archivesdefrance:seda:v2.1';
+    public const SEDA_2_2_NS = 'fr:gouv:culture:archivesdefrance:seda:v2.2';
 
     abstract public function getSAEArchivalIdentifierFromAtrXpath(): array;
     abstract public function getComment(SimpleXMLElement $xml): string;
@@ -61,6 +62,7 @@ abstract class SedaHelper
             self::SEDA_0_2_NS => ['/seda:ArchiveTransferReply/seda:TransferIdentifier'],
             self::SEDA_1_0_NS => ['/seda:Acknowledgement/seda:MessageReceivedIdentifier'],
             self::SEDA_2_1_NS => ['/seda:Acknowledgement/seda:MessageReceivedIdentifier'],
+            self::SEDA_2_2_NS => ['/seda:Acknowledgement/seda:MessageReceivedIdentifier'],
         ];
         return $this->getElement($xml, $xpath, 'Identifiant de transfert');
     }
@@ -74,6 +76,7 @@ abstract class SedaHelper
             self::SEDA_0_2_NS => ['/seda:ArchiveTransferAcceptance/seda:TransferIdentifier'],
             self::SEDA_1_0_NS => ['/seda:ArchiveTransferReply/seda:TransferIdentifier'],
             self::SEDA_2_1_NS => ['/seda:ArchiveTransferReply/seda:MessageIdentifier'],
+            self::SEDA_2_2_NS => ['/seda:ArchiveTransferReply/seda:MessageIdentifier'],
         ];
         return $this->getElement($xml, $xpath, 'Identifiant de transfert');
     }
@@ -87,6 +90,7 @@ abstract class SedaHelper
             self::SEDA_0_2_NS => ['/seda:ArchiveTransferReply/seda:TransferReplyIdentifier'],
             self::SEDA_1_0_NS => ['/seda:Acknowledgement/seda:AcknowledgementIdentifier'],
             self::SEDA_2_1_NS => ['/seda:Acknowledgement/seda:MessageIdentifier'],
+            self::SEDA_2_2_NS => ['/seda:Acknowledgement/seda:MessageIdentifier'],
         ];
         return $this->getElement($xml, $xpath, "Identifiant de l'acquittement");
     }
@@ -100,6 +104,7 @@ abstract class SedaHelper
             self::SEDA_0_2_NS => ['/seda:ArchiveTransferAcceptance/seda:TransferAcceptanceIdentifier'],
             self::SEDA_1_0_NS => ['/seda:ArchiveTransferReply/seda:TransferReplyIdentifier'],
             self::SEDA_2_1_NS => ['/seda:ArchiveTransferReply/seda:MessageRequestIdentifier'],
+            self::SEDA_2_2_NS => ['/seda:ArchiveTransferReply/seda:MessageRequestIdentifier'],
         ];
         return $this->getElement($xml, $xpath, "Identifiant de l'ATR");
     }
@@ -122,6 +127,7 @@ abstract class SedaHelper
             self::SEDA_0_2_NS => ['/seda:ArchiveTransfer/seda:TransferringAgency/seda:Identification'],
             self::SEDA_1_0_NS => ['/seda:ArchiveTransfer/seda:TransferringAgency/seda:Identification'],
             self::SEDA_2_1_NS => ['/seda:ArchiveTransfer/seda:TransferringAgency/seda:Identifier'],
+            self::SEDA_2_2_NS => ['/seda:ArchiveTransfer/seda:TransferringAgency/seda:Identifier'],
         ];
         return $this->getElement($xml, $xpath, 'Identifiant du service versant');
     }

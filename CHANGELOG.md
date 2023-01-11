@@ -1,6 +1,8 @@
 # [4.0.0]
 
 **Cette version nécessite une modification de la base de données**
+***Cette version nécessite une mise à jour du générateur SEDA en 1.0.0***
+
 
 ## Corrections
 
