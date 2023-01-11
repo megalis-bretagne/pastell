@@ -222,14 +222,26 @@ class CPPWrapper
             );
         }
 
-        $this->logger->debug("PISTE get token response", [mb_substr($result, 0, 100)]);
-
         $array_result = $this->utf8Encoder->decode(json_decode($result));
-
         if (! is_array($array_result)) {
             throw new CPPWrapperExceptionGetToken("PISTE impossible de déchiffrer le token");
         }
+        if (
+            !$array_result['token_type']
+            || !$array_result['access_token']
+            || !(is_int($array_result['expires_in']) && $array_result['expires_in'] > 0)
+        ) {
+            $this->logger->error(
+                "PISTE get token invalid return",
+                [$result]
+            );
+            throw new CPPWrapperExceptionGetToken(
+                "PISTE get token invalid return: " .
+                $result
+            );
+        }
 
+        $this->logger->debug("PISTE get token response", [mb_substr($result, 0, 100)]);
         $token = $array_result['token_type'] . ' ' . $array_result['access_token'];
 
         $this->memoryCache->store(

@@ -145,6 +145,10 @@
 
 - Correction du contrôle lors de la création d'un type de dossier #1675
 
+## Ajouts
+
+- CPP: Ajout d'un contrôle sur le token PISTE en cas de retour vide #1682
+
 # [3.1.18] - 2022-11-21
 
 ## Corrections
