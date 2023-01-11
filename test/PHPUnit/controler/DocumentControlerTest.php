@@ -359,7 +359,7 @@ Pragma: public
 bar', $output);
     }
 
-    public function testEditionWithDefaultValue()
+    public function testEditionWithDefaultValue(): void
     {
         $this->loadTypeDossier(__DIR__ . '/../pastell-core/type-dossier/fixtures/test-default-value.json');
         $typeDossier = 'testdefaultvalue';
@@ -367,14 +367,14 @@ bar', $output);
         $this->getObjectInstancier()->getInstance(RoleSQL::class)->addDroit('admin', "$typeDossier:edition");
         $documentID = $this->createDocument($typeDossier)['id_d'];
         $data = $this->getDonneesFormulaireFactory()->get($documentID, $typeDossier)->getRawDataWithoutPassword();
-        $this->assertEquals('Ma valeur par défaut !', $data['nomtest']);
-        $this->assertEquals(
+        $this->assertSame('Ma valeur par défaut !', $data['nomtest']);
+        $this->assertSame(
             'Sur
 Plusieurs
 Lignes',
             $data['airedetexte']
         );
-        $this->assertEquals(true, $data['macheckbox']);
-        $this->assertEquals('vert', $data['maselection']);
+        $this->assertSame('on', $data['macheckbox']);
+        $this->assertSame('3', $data['maselection']);
     }
 }

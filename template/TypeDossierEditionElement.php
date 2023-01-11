@@ -174,14 +174,14 @@
                 $("#select_value_tr").hide();
             }
 
-            if (option === 'text' || option === 'textarea' || option === 'checkbox' || option === 'select' || option === 'date') {
+            if (option === 'text' || option === 'textarea' || option === 'checkbox' || option === 'select') {
                 $("#default_value_tr").show();
             } else {
                 $("#default_value_tr").hide();
             }
 
             let td = document.getElementById('default_value_td');
-            if (option === 'checkbox' || option === 'date') {
+            if (option === 'checkbox') {
                 td.innerHTML = '';
                 let input = document.createElement('input');
                 input.type = 'checkbox';

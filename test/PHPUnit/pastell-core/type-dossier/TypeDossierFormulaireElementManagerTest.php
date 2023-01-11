@@ -133,8 +133,8 @@ class TypeDossierFormulaireElementManagerTest extends \PHPUnit\Framework\TestCas
             'element_id' => '3',
             'name' => 'selectiontest',
             'type' => 'select',
-            'default_value' => 'jaune',
+            'default_value' => '1',
         ]));
-        $this->assertEquals('jaune', $typeDossierFormulaireElement->default_value);
+        $this->assertEquals('1', $typeDossierFormulaireElement->default_value);
     }
 }

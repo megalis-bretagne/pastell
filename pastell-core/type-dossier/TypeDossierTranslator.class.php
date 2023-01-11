@@ -66,11 +66,10 @@ class TypeDossierTranslator
                 'commentaire' => $typeDossierFormulaireElement->commentaire,
             ];
             if (
-                $this->getType($typeDossierFormulaireElement) === 'text'
-                || $this->getType($typeDossierFormulaireElement) === 'textarea'
-                || $this->getType($typeDossierFormulaireElement) === 'checkbox'
-                || $this->getType($typeDossierFormulaireElement) === 'select'
-                || $this->getType($typeDossierFormulaireElement) === 'date'
+                $typeDossierFormulaireElement->type === TypeDossierFormulaireElementManager::TYPE_TEXT
+                || $typeDossierFormulaireElement->type === TypeDossierFormulaireElementManager::TYPE_TEXTAREA
+                || $typeDossierFormulaireElement->type === TypeDossierFormulaireElementManager::TYPE_CHECKBOX
+                || $typeDossierFormulaireElement->type === TypeDossierFormulaireElementManager::TYPE_SELECT
             ) {
                 if ($typeDossierFormulaireElement->default_value !== false && $typeDossierFormulaireElement->default_value !== '') {
                     $result[DocumentType::FORMULAIRE][$onglet_name][$element_id]['default']
