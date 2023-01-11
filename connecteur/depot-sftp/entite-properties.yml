@@ -20,4 +20,4 @@ formulaire:
             name: 'Répertoire de dépôt'
         depot_sftp_rename_suffix:
             name: 'Suffixe de dépôt'
-            commentaire: 'Les fichiers sont déposés avec ce suffixe, puis renommer ensuite (ex: .part)'
+            commentaire: 'Les fichiers sont déposés avec ce suffixe (ex: .part), puis renommés ensuite'
