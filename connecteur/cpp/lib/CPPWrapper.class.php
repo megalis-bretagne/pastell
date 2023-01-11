@@ -251,10 +251,19 @@ class CPPWrapper
             );
         }
 
-        $this->logger->debug("PISTE get token response", [mb_substr($result, 0, 100)]);
-
         $array_result = $this->utf8Encoder->decode(json_decode($result));
+        if (!$array_result['token_type'] || !$array_result['access_token'] || !$array_result['expires_in']) {
+            $this->logger->error(
+                "PISTE get token invalid return",
+                [$result]
+            );
+            throw new CPPWrapperExceptionGetToken(
+                "PISTE get token invalid return: " .
+                $result
+            );
+        }
 
+        $this->logger->debug("PISTE get token response", [mb_substr($result, 0, 100)]);
         $token = $array_result['token_type'] . ' ' . $array_result['access_token'];
 
         $this->memoryCache->store(
