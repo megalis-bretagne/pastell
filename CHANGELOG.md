@@ -52,6 +52,7 @@
 - Filtre sur les types de fichiers lors de l'upload directement dans le formulaire #1654
 - Le dernier message des travaux programmés est visible et leur ID mène vers leur détail #1676
 - Les droits entite:lecture et journal:lecture sont cochés par défaut à la création d'un rôle #1580
+- Permettre `generate-sip` en état `erreur-envoie-sae` #1709
 
 ## Suppressions
 
