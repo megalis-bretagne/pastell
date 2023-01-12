@@ -4,12 +4,12 @@
  * @var Gabarit $this
  * @var int $id_e
  * @var array $options
+ * @var string $password
  */
 
 use Pastell\Service\ImportExportConfig\ExportConfigService;
 
 ?>
-
 
 <div class="box">
     <h2>Les éléments suivants vont être exportés</h2>
@@ -50,8 +50,10 @@ use Pastell\Service\ImportExportConfig\ExportConfigService;
 </div>
 
 <div class="alert alert-info">
-    Le mot de passe demandé permet de protéger le contenu du fichier.
-    Il sera nécessaire pour importer à nouveau le connecteur sur un autre Pastell.
+    Votre mot de passe pour ce fichier est <strong><?php hecho($password);?></strong><br>
+    Assurez-vous de le sauvegarder, il ne sera plus affiché.<br>
+    Le mot de passe généré permet de protéger le contenu du fichier.
+    Il sera nécessaire pour importer à nouveau la configuration sur un autre Pastell.
 </div>
 <div class="box">
 
@@ -61,63 +63,9 @@ use Pastell\Service\ImportExportConfig\ExportConfigService;
         <?php foreach (ExportConfigService::getOptions() as $id => $label) : ?>
             <input type="hidden" name="<?php hecho($id) ?>" value="<?php hecho($options[$id])?>"/>
         <?php endforeach; ?>
-        <table class='table table-striped' aria-label="Demande de mot de passe pour l'export de la configuration">
-            <tr>
-                <th>
-                    <label for='password'>
-                        Mot de passe<span class='obl'>*</span>
-                    </label>
-                </th>
-                <td>
-                    <div class="input-group">
-                        <input
-                            id="password"
-                            type="password"
-                            class="form-control col-md-4 ls-box-input"
-                            name="password"
-                            value=''
-                            minlength="8"
-                            required
-                        />
-                        <div class="input-group-append">
-                            <span class="input-group-text">
-                                <i class="fa fa-eye-slash" onclick="switchInputType('password',this)"></i>
-                            </span>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    <label for='password_check'>
-                        Mot de passe (vérification)<span class='obl'>*</span>
-                    </label>
-                </th>
-                <td>
-                    <div class="input-group">
-                        <input
-                            id="password_check"
-                            type="password"
-                            class="form-control col-md-4 ls-box-input"
-                            name="password_check"
-                            value=''
-                            minlength="8"
-                            required
-                        />
-                        <div class="input-group-append">
-                            <span class="input-group-text">
-                                <i class="fa fa-eye-slash" onclick="switchInputType('password_check',this)"></i>
-                            </span>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-        </table>
-
         <a class='btn btn-outline-primary' href='Entite/exportConfig?id_e=<?php hecho($id_e); ?>'>
             <i class="fa fa-times-circle"></i>&nbsp;Annuler
         </a>
-
         <button type='submit' class='btn btn-primary'><i class="fa fa-download"></i>&nbsp;Récupérer le fichier</button>
 
     </form>

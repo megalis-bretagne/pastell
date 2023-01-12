@@ -43,6 +43,7 @@
 - Actes et Helios automatique: Lorsque le traitement est terminé, il est possible de modifier le document pour cocher la case envoi_sae et faire l'action "Verser au SAE" (c'était déjà possible via le connecteur de purge) #1627
 - Vérification de la force du mot de passe sur les requêtes API de type POST ou PATCH
 - Un mot de passe est généré automatiquement pour l'exportation d'un connecteur #1597
+- Un mot de passe est généré automatiquement pour l'exportation de la configuration #1705
 - La fréquence des connecteurs passe à 10 minutes par défaut #1633
 - Possibilité de mettre un filtre sur 'is_active' dans la recherche des entités sur l'API #1648
 - Possibilité d'activer et de désactiver un compte utilisateur par API #1536
