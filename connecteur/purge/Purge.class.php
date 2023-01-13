@@ -1,47 +1,26 @@
 <?php
 
+use Pastell\Service\Document\DocumentDeletionService;
+
 class Purge extends Connecteur
 {
     public const GO_TROUGH_STATE = "GO_TROUGH_STATE";
     public const IN_STATE = "IN_STATE";
 
+    private DonneesFormulaire $connecteurConfig;
 
-    /** @var  DonneesFormulaire */
-    private $connecteurConfig;
-
-    /** @var DocumentActionEntite  */
-    private $documentActionEntite;
-
-    private $journal;
-    private $jobManager;
-
-    private $lastMessage;
-
-    private $actionPossible;
-
-    private $documentTypeFactory;
-    private $donneesFormulaireFactory;
-    private $documentEntite;
-    private $documentSQL;
+    private string $lastMessage;
 
     public function __construct(
-        DocumentActionEntite $documentActionEntite,
-        Journal $journal,
-        JobManager $jobManager,
-        ActionPossible $actionPossible,
-        DocumentTypeFactory $documentTypeFactory,
-        DonneesFormulaireFactory $donneesFormulaireFactory,
-        DocumentEntite $documentEntite,
-        DocumentSQL $documentSQL
+        private readonly DocumentActionEntite $documentActionEntite,
+        private readonly Journal $journal,
+        private readonly JobManager $jobManager,
+        private readonly ActionPossible $actionPossible,
+        private readonly DocumentTypeFactory $documentTypeFactory,
+        private readonly DonneesFormulaireFactory $donneesFormulaireFactory,
+        private readonly DocumentEntite $documentEntite,
+        private readonly DocumentDeletionService $documentDeletionService,
     ) {
-        $this->documentActionEntite = $documentActionEntite;
-        $this->journal = $journal;
-        $this->jobManager = $jobManager;
-        $this->actionPossible = $actionPossible;
-        $this->documentTypeFactory = $documentTypeFactory;
-        $this->donneesFormulaireFactory = $donneesFormulaireFactory;
-        $this->documentEntite = $documentEntite;
-        $this->documentSQL = $documentSQL;
     }
 
     public function getLastMessage()
@@ -95,35 +74,10 @@ class Purge extends Connecteur
             throw new UnrecoverableException("Le connecteur n'est pas actif");
         }
         foreach ($this->listDocumentGlobal() as $document_info) {
-            $this->supprimer($document_info);
+            $this->documentDeletionService->delete($document_info['id_d'], 'Connecteur de purge global');
         }
         $this->lastMessage = "Les documents ont été purgés";
         return true;
-    }
-
-    /**
-     * @param array $document_info
-     * @throws NotFoundException
-     * On ne peut pas utiliser l'action car on est pas sur que chaque flux possède bien une action de supression
-     * Idéalement, il faudrait mettre ca dans un service et fusionner avec l'action
-     * Mais comme on doit porter le code en v2 qui a pas de service, on peut pas pour le moment
-     */
-    public function supprimer(array $document_info)
-    {
-        $info = $this->documentSQL->getInfo($document_info['id_d']);
-
-        $this->donneesFormulaireFactory->get($document_info['id_d'])->delete();
-        $this->documentSQL->delete($document_info['id_d']);
-        $this->jobManager->deleteDocumentForAllEntities($info['id_d']);
-
-        $message = "Le document « {$info['titre']} » ({$document_info['id_d']}) a été supprimé par le connecteur de purge global";
-        $this->journal->add(
-            Journal::DOCUMENT_ACTION,
-            $document_info['id_e'],
-            $document_info['id_d'],
-            "suppression",
-            $message
-        );
     }
 
     /**
@@ -149,8 +103,19 @@ class Purge extends Connecteur
                 $this->modifDocument($document_info['id_e'], $document_info['id_d']);
             }
 
-            if (! $this->actionPossible->isActionPossible($document_info['id_e'], 0, $document_info['id_d'], $etat_cible)) {
-                $this->lastMessage .= get_hecho("{$document_info['id_d']} - {$document_info['titre']} - {$document_info['last_action_date']}") . " : action impossible : " . $this->actionPossible->getLastBadRule() . "<br/>";
+            if (
+                ! $this->actionPossible->isActionPossible(
+                    $document_info['id_e'],
+                    0,
+                    $document_info['id_d'],
+                    $etat_cible
+                )
+            ) {
+                $this->lastMessage .= sprintf(
+                    '%s : action impossible : %s <br/>',
+                    get_hecho("{$document_info['id_d']} - {$document_info['titre']} - {$document_info['last_action_date']}"),
+                    $this->actionPossible->getLastBadRule(),
+                );
                 continue;
             }
 
@@ -169,7 +134,10 @@ class Purge extends Connecteur
                 $etat_cible,
                 $this->connecteurConfig->get('verrou')
             );
-            $this->lastMessage .= get_hecho("{$document_info['id_d']} - {$document_info['titre']} - {$document_info['last_action_date']}") . "<br/>";
+            $this->lastMessage .= sprintf(
+                '%s<br/>',
+                get_hecho("{$document_info['id_d']} - {$document_info['titre']} - {$document_info['last_action_date']}"),
+            );
         }
 
         return true;
@@ -205,7 +173,10 @@ class Purge extends Connecteur
                 continue;
             }
 
-            if (! in_array($modification_key, $editable_content) && ! in_array($last_action, ['modification','creation'])) {
+            if (
+                ! in_array($modification_key, $editable_content) &&
+                ! in_array($last_action, ['modification','creation'])
+            ) {
                 continue;
             }
             $donneesFormulaire->setData($modification_key, $modification_value);
