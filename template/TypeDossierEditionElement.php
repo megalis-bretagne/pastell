@@ -60,7 +60,7 @@
                 <th class="w400">
                     <label for="select_value" >Valeur de la liste déroulante</label>
                     <p class='form_commentaire'>Une ligne par option.<br/>
-                        Possibilité d'enregistrer un dictionnaire sous la forme "clé:valeur"<br/>
+                        Possibilité d'enregistrer un dictionnaire sous la forme "clé:valeur" (sans espace)<br/>
                     </p>
                 </th>
                 <td>
@@ -189,16 +189,23 @@
                 input.name = 'default_value';
                 input.checked = <?php echo $formulaireElement->default_value ? '1' : '0'; ?>;
                 td.appendChild(input);
-            } else if (option === 'text' || option === 'select') {
+            } else if (option === 'text') {
                 td.innerHTML = '';
                 let input = document.createElement('input');
                 input.type = 'text';
                 input.id = 'default_value';
                 input.name = 'default_value';
-                input.className= 'form-control col-md-8';
+                input.className = 'form-control col-md-8';
                 input.value = '<?php echo preg_replace('/\s+/', ' ', $formulaireElement->default_value ?? ''); ?>';
                 td.appendChild(input);
-             } else if (option === 'textarea') {
+            } else if (option === 'select') {
+                td.innerHTML = '';
+                let input = document.createElement('select');
+                input.id = 'default_value';
+                input.name = 'default_value';
+                input.className = 'form-control col-md-8';
+                td.appendChild(input);
+            } else if (option === 'textarea') {
                 td.innerHTML = '';
                 let textarea = document.createElement('textarea');
                 textarea.id = 'default_value';
@@ -229,7 +236,45 @@
                 $(this).css("background-color", !!(index & 1) ? "var(--ls-grey-50)" : "var(--ls-white)");
             });
         }).trigger("change");
+
+        $("#select_value").change(function () {
+            document.getElementById('default_value').innerHTML = '';
+            let option = document.createElement('option');
+            option.innerText = '...';
+            option.value = '';
+            document.getElementById('default_value').appendChild(option);
+            let objectList = getObjectList();
+            for (const [key, value] of Object.entries(objectList)) {
+                let option = document.createElement('option');
+                let defaultValue = '<?php hecho($formulaireElement->default_value) ; ?>';
+                if (defaultValue === key) {
+                    option.selected = true;
+                }
+                option.value = key;
+                option.innerText = value;
+
+                document.getElementById('default_value').appendChild(option);
+            }
+
+        }).trigger("change");
     });
+
+    function getObjectList() {
+        let listValue = document.getElementById('select_value').value;
+        listValue = listValue.split('\n');
+        let objectList = {};
+        let count = 1;
+        for (let item in listValue) {
+            if (listValue[item].includes(':')) {
+                let keyValue = listValue[item].split(':');
+                objectList[keyValue[0]] = keyValue[1];
+            } else {
+                objectList[count] = listValue[item];
+            }
+            count += 1;
+        }
+        return objectList;
+    }
 
     function checkDefaultValueOnSelect() {
         let defaultValue = document.getElementById('default_value').value;
