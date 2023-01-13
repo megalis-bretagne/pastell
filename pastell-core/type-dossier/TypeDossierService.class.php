@@ -102,6 +102,22 @@ class TypeDossierService
             }
         }
 
+        if ($recuperateur->get('type') === 'select') {
+            $values = explode("\n", trim($recuperateur->get('select_value'), "\n"));
+            $res = [];
+            foreach ($values as $key => $value) {
+                $explodedValue = explode(':', $value, 2);
+                if (count($explodedValue) === 2) {
+                    $res[] = $explodedValue[0];
+                } else {
+                    $res[] = $key + 1;
+                }
+            }
+            if (!in_array($recuperateur->get('default_value'), $res)) {
+                throw new TypeDossierException('La clé de la valeur par défaut ne correspond à aucune valeur de la liste déroulante');
+            }
+        }
+
         $formulaireElement = $this->getFormulaireElementFromProperties($typeDossierData, $element_id);
         if (!$orig_element_id) {
             $typeDossierData->formulaireElement[] = $formulaireElement;
