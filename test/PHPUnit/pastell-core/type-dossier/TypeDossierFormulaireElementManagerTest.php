@@ -110,4 +110,31 @@ class TypeDossierFormulaireElementManagerTest extends \PHPUnit\Framework\TestCas
         $this->assertEquals("foo", $typeDossierFormulaireElement->element_id);
         $this->assertEquals("foo", $typeDossierFormulaireElement->name);
     }
+
+    public function testEditionElementWithDefault(): void
+    {
+        $typeDossierFormulaireElement = new TypeDossierFormulaireElementProperties();
+        $typeDossierFormulaireElementManager = new TypeDossierFormulaireElementManager();
+        $typeDossierFormulaireElementManager->edition($typeDossierFormulaireElement, new Recuperateur([
+            'element_id' => '1',
+            'name' => 'nomtest',
+            'type' => 'text',
+            'default_value' => 'Mon nom',
+        ]));
+        $this->assertEquals('Mon nom', $typeDossierFormulaireElement->default_value);
+        $typeDossierFormulaireElementManager->edition($typeDossierFormulaireElement, new Recuperateur([
+            'element_id' => '2',
+            'name' => 'checkboxtest',
+            'type' => 'checkbox',
+            'default_value' => 'on',
+        ]));
+        $this->assertEquals('on', $typeDossierFormulaireElement->default_value);
+        $typeDossierFormulaireElementManager->edition($typeDossierFormulaireElement, new Recuperateur([
+            'element_id' => '3',
+            'name' => 'selectiontest',
+            'type' => 'select',
+            'default_value' => '1',
+        ]));
+        $this->assertEquals('1', $typeDossierFormulaireElement->default_value);
+    }
 }

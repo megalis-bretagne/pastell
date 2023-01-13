@@ -13,7 +13,7 @@
         <h2>Ajout d'un élément au formulaire</h2>
     <?php endif; ?>
 
-    <form action='<?php $this->url("TypeDossier/doEditionElement"); ?>' method='post' >
+    <form action='<?php $this->url("TypeDossier/doEditionElement"); ?>' method='post' onSubmit="return checkDefaultValueOnSelect()">
         <?php $this->displayCSRFInput() ?>
         <input type='hidden' name='id_t' value='<?php hecho($type_de_dossier_info['id_t'])?>' />
         <input type='hidden' name='orig_element_id' value='<?php hecho($formulaireElement->element_id)?>' />
@@ -60,7 +60,7 @@
                 <th class="w400">
                     <label for="select_value" >Valeur de la liste déroulante</label>
                     <p class='form_commentaire'>Une ligne par option.<br/>
-                        Possibilité d'enregistrer un dictionnaire sous la forme "clé:valeur"<br/>
+                        Possibilité d'enregistrer un dictionnaire sous la forme "clé:valeur" (sans espace)<br/>
                     </p>
                 </th>
                 <td>
@@ -90,6 +90,12 @@
                     <input class="form-control col-md-8" id="preg_match_error" name="preg_match_error"
                            value="<?php echo get_hecho($formulaireElement->preg_match_error); ?>"/>
                 </td>
+            </tr>
+            <tr id="default_value_tr">
+                <th class="w400">
+                    <label for="default_value_tr">Valeur par défaut</label>
+                </th>
+                <td id="default_value_td"></td>
             </tr>
             <tr id="content_type_tr">
                 <th class="w400">
@@ -164,9 +170,52 @@
             const option = $(this).children("option:selected").val();
             if (option === "select") {
                 $("#select_value_tr").show();
-
             } else {
                 $("#select_value_tr").hide();
+            }
+
+            if (option === 'text' || option === 'textarea' || option === 'checkbox' || option === 'select') {
+                $("#default_value_tr").show();
+            } else {
+                $("#default_value_tr").hide();
+            }
+
+            let td = document.getElementById('default_value_td');
+            if (option === 'checkbox') {
+                td.innerHTML = '';
+                let input = document.createElement('input');
+                input.type = 'checkbox';
+                input.id = 'default_value';
+                input.name = 'default_value';
+                input.checked = <?php echo $formulaireElement->default_value ? '1' : '0'; ?>;
+                td.appendChild(input);
+            } else if (option === 'text') {
+                td.innerHTML = '';
+                let input = document.createElement('input');
+                input.type = 'text';
+                input.id = 'default_value';
+                input.name = 'default_value';
+                input.className = 'form-control col-md-8';
+                input.value = '<?php echo preg_replace('/\s+/', ' ', $formulaireElement->default_value ?? ''); ?>';
+                td.appendChild(input);
+            } else if (option === 'select') {
+                td.innerHTML = '';
+                let input = document.createElement('select');
+                input.id = 'default_value';
+                input.name = 'default_value';
+                input.className = 'form-control col-md-8';
+                td.appendChild(input);
+            } else if (option === 'textarea') {
+                td.innerHTML = '';
+                let textarea = document.createElement('textarea');
+                textarea.id = 'default_value';
+                textarea.name = 'default_value';
+                textarea.className= 'form-control col-md-8';
+                textarea.style.height = '150px';
+                textarea.value = '<?php echo preg_replace('/\s+/', '\n', $formulaireElement->default_value ?? ''); ?>';
+                td.appendChild(textarea);
+            } else {
+                td.innerHTML = '';
             }
 
             if (option === 'text') {
@@ -176,6 +225,7 @@
                 $("#preg_match_tr").hide();
                 $("#preg_match_error_tr").hide();
             }
+
             if (option === "file" || option === "multi_file"){
                 $("#content_type_tr").show();
             } else {
@@ -186,6 +236,66 @@
                 $(this).css("background-color", !!(index & 1) ? "var(--ls-grey-50)" : "var(--ls-white)");
             });
         }).trigger("change");
+
+        $("#select_value").change(function () {
+            document.getElementById('default_value').innerHTML = '';
+            let option = document.createElement('option');
+            option.innerText = '...';
+            option.value = '';
+            document.getElementById('default_value').appendChild(option);
+            let objectList = getObjectList();
+            for (const [key, value] of Object.entries(objectList)) {
+                let option = document.createElement('option');
+                let defaultValue = '<?php hecho($formulaireElement->default_value) ; ?>';
+                if (defaultValue === key) {
+                    option.selected = true;
+                }
+                option.value = key;
+                option.innerText = value;
+
+                document.getElementById('default_value').appendChild(option);
+            }
+
+        }).trigger("change");
     });
+
+    function getObjectList() {
+        let listValue = document.getElementById('select_value').value;
+        listValue = listValue.split('\n');
+        let objectList = {};
+        let count = 1;
+        for (let item in listValue) {
+            if (listValue[item].includes(':')) {
+                let keyValue = listValue[item].split(':');
+                objectList[keyValue[0]] = keyValue[1];
+            } else {
+                objectList[count] = listValue[item];
+            }
+            count += 1;
+        }
+        return objectList;
+    }
+
+    function checkDefaultValueOnSelect() {
+        let defaultValue = document.getElementById('default_value').value;
+        if (document.getElementById('type').value === 'select' && defaultValue !== '') {
+            let list = document.getElementById('select_value').value;
+            let listArray = list.split('\n');
+            let lineCount = listArray.length;
+            if (list.endsWith('\n')) {
+                lineCount = lineCount - 1;
+            }
+            if (
+                !isNaN(defaultValue) && defaultValue >= 1 && defaultValue <= lineCount && !listArray[defaultValue-1].includes(':')
+                || list.startsWith(defaultValue+":") || list.includes("\n"+defaultValue+":")
+            ) {
+                return true;
+            } else {
+                alert('La valeur par défaut ne correspond pas à une valeur de la liste déroulante');
+                return false;
+            }
+        }
+    }
+
 </script>
 

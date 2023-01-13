@@ -19,6 +19,7 @@ class TypeDossierFormulaireElementManager
     public const SELECT_VALUE = "select_value";
     public const PREG_MATCH = 'preg_match';
     public const PREG_MATCH_ERROR = 'preg_match_error';
+    public const DEFAULT_VALUE = 'default_value';
     public const CONTENT_TYPE = 'content_type';
 
     public const TYPE_TEXT = "text";
@@ -43,6 +44,7 @@ class TypeDossierFormulaireElementManager
             self::TITRE,
             self::SELECT_VALUE,
             self::PREG_MATCH,
+            self::DEFAULT_VALUE,
             self::PREG_MATCH_ERROR,
             self::CONTENT_TYPE
         ];

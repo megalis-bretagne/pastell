@@ -1,0 +1,76 @@
+{
+  "id_type_dossier": "testdefaultvalue",
+  "pastell-version": "%VERSION%",
+  "timestamp": 1667579493,
+  "raw_data": {
+    "id_type_dossier": "testdefaultvalue",
+    "nom": "testdefaultvalue",
+    "type": "Types de dossier personnalis\u00e9s",
+    "description": "",
+    "nom_onglet": "onglet1",
+    "restriction_pack": "",
+    "formulaireElement": [
+      {
+        "element_id": "nomtest",
+        "name": "Nom test",
+        "type": "text",
+        "commentaire": "",
+        "requis": "",
+        "champs_affiches": "",
+        "champs_recherche_avancee": "",
+        "titre": "",
+        "select_value": "",
+        "preg_match": "",
+        "default_value": "Ma valeur par d\u00e9faut !",
+        "preg_match_error": "",
+        "content_type": ""
+      },
+      {
+        "element_id": "macheckbox",
+        "name": "Ma checkbox coché",
+        "type": "checkbox",
+        "commentaire": "",
+        "requis": "",
+        "champs_affiches": "",
+        "champs_recherche_avancee": "",
+        "titre": "",
+        "select_value": "",
+        "preg_match": "",
+        "default_value": "on",
+        "preg_match_error": "",
+        "content_type": ""
+      },
+      {
+        "element_id": "maselection",
+        "name": "Ma selection",
+        "type": "select",
+        "commentaire": "",
+        "requis": "",
+        "champs_affiches": "",
+        "champs_recherche_avancee": "",
+        "titre": "",
+        "select_value": "rouge\njaune\nvert",
+        "preg_match": "",
+        "default_value": "3",
+        "preg_match_error": "",
+        "content_type": ""
+      },
+      {
+        "element_id": "airedetexte",
+        "name": "Aire de texte",
+        "type": "textarea",
+        "commentaire": "",
+        "requis": "",
+        "champs_affiches": "",
+        "champs_recherche_avancee": "",
+        "titre": "",
+        "select_value": "",
+        "preg_match": "",
+        "default_value": "Sur\nPlusieurs\nLignes",
+        "preg_match_error": "",
+        "content_type": ""
+      }
+    ],
+    "etape": []
+  }
+}

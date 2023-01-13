@@ -65,6 +65,17 @@ class TypeDossierTranslator
                 'multiple' => boolval($typeDossierFormulaireElement->type == 'multi_file'),
                 'commentaire' => $typeDossierFormulaireElement->commentaire,
             ];
+            if (
+                $typeDossierFormulaireElement->type === TypeDossierFormulaireElementManager::TYPE_TEXT
+                || $typeDossierFormulaireElement->type === TypeDossierFormulaireElementManager::TYPE_TEXTAREA
+                || $typeDossierFormulaireElement->type === TypeDossierFormulaireElementManager::TYPE_CHECKBOX
+                || $typeDossierFormulaireElement->type === TypeDossierFormulaireElementManager::TYPE_SELECT
+            ) {
+                if ($typeDossierFormulaireElement->default_value !== false && $typeDossierFormulaireElement->default_value !== '') {
+                    $result[DocumentType::FORMULAIRE][$onglet_name][$element_id]['default']
+                        = $typeDossierFormulaireElement->default_value;
+                }
+            }
             if ($typeDossierFormulaireElement->type == TypeDossierFormulaireElementManager::TYPE_SELECT) {
                 $values = explode("\n", trim($typeDossierFormulaireElement->select_value, "\n"));
                 $res = [];
