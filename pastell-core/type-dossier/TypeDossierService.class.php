@@ -102,6 +102,12 @@ class TypeDossierService
             }
         }
 
+        if ($recuperateur->get('type') === 'text') {
+            if (!preg_match($recuperateur->get('preg_match'), $recuperateur->get('default_value'))) {
+                throw new TypeDossierException('La valeur par défaut ne répond pas à l\'expression régulière.');
+            }
+        }
+
         if ($recuperateur->get('type') === 'select') {
             $values = explode("\n", trim($recuperateur->get('select_value'), "\n"));
             $res = [];
