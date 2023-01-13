@@ -102,13 +102,16 @@ class TypeDossierService
             }
         }
 
-        if ($recuperateur->get('type') === 'text') {
-            if (!preg_match($recuperateur->get('preg_match'), $recuperateur->get('default_value'))) {
+        if ($recuperateur->get('type') === 'text' && $recuperateur->get('default_value') !== '') {
+            if (
+                $recuperateur->get('preg_match')
+                && !preg_match($recuperateur->get('preg_match'), $recuperateur->get('default_value'))
+            ) {
                 throw new TypeDossierException('La valeur par défaut ne répond pas à l\'expression régulière.');
             }
         }
 
-        if ($recuperateur->get('type') === 'select') {
+        if ($recuperateur->get('type') === 'select' && $recuperateur->get('default_value') !== '') {
             $values = explode("\n", trim($recuperateur->get('select_value'), "\n"));
             $res = [];
             foreach ($values as $key => $value) {

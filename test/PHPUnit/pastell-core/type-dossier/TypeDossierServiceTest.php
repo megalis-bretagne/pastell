@@ -582,7 +582,7 @@ class TypeDossierServiceTest extends PastellTestCase
             'element_id' => 'maliste',
             'name' => 'Ma liste',
             'type' => 'select',
-            'select_value' => "a\nb\nc\nd",
+            'select_value' => "0:a\nb\nc\nd",
             'default_value' => '5'
         ]);
         $this->expectException(TypeDossierException::class);
