@@ -316,6 +316,39 @@ class CPPWrapperTest extends ExtensionCppTestCase
         $this->assertEquals("Bearer 5TqQc6hAsUsmxD5UpSxmV0kXTgUJY7vNX6HWUodz3lfiwmWvERTjVp", $token);
     }
 
+    public function testGetTokenInvalid()
+    {
+        $this->expectException(CPPWrapperExceptionGetToken::class);
+        $this->expectExceptionMessage(
+            'PISTE get token invalid return: {"access_token":"","token_type":"Bearer","expires_in":3600,"scope":"openid"}'
+        );
+
+        $this->getObjectInstancier()->getInstance(MemoryCache::class)->delete(self::MEMORY_KEY);
+        $returnData = [
+            'access_token' => '',
+            'token_type' => 'Bearer',
+            'expires_in' => 3600,
+            'scope' => 'openid',
+        ];
+        $curlWrapperToken = $this->getMockBuilder(CurlWrapper::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $curlWrapperToken->expects($this->any())->method('get')->willReturn(json_encode($returnData));
+        $curlWrapperToken->expects($this->any())->method('getLastHttpCode')->willReturn(200);
+
+        $curlWrapperFactoryToken = $this->getMockBuilder(CurlWrapperFactory::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $curlWrapperFactoryToken->expects($this->any())->method('getInstance')->willReturn($curlWrapperToken);
+        $this->getObjectInstancier()->setInstance(CurlWrapperFactory::class, $curlWrapperFactoryToken);
+
+        $this->cppWrapper = $this->getCPPWrapper();
+        $this->cppWrapper->testConnexion();
+
+        $token = $this->getObjectInstancier()->getInstance(MemoryCache::class)->fetch(self::MEMORY_KEY);
+        $this->assertEquals(self::TOKEN, $token);
+    }
+
     /**
      * @return array
      */
