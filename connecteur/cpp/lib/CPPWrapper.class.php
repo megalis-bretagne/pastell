@@ -252,7 +252,11 @@ class CPPWrapper
         }
 
         $array_result = $this->utf8Encoder->decode(json_decode($result));
-        if (!$array_result['token_type'] || !$array_result['access_token'] || !$array_result['expires_in']) {
+        if (
+            !$array_result['token_type']
+            || !$array_result['access_token']
+            || !(is_int($array_result['expires_in']) && $array_result['expires_in'] > 0)
+        ) {
             $this->logger->error(
                 "PISTE get token invalid return",
                 [$result]
