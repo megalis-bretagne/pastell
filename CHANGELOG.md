@@ -1,3 +1,9 @@
+# [3.1.19]
+
+## Corrections
+
+- Correction du contrôle lors de la création d'un type de dossier #1675
+
 # [3.1.18] - 2022-11-21
 
 ## Corrections
