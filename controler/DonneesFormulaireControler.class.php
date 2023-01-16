@@ -17,8 +17,29 @@ class DonneesFormulaireControler extends PastellControler
     private function verifDroitEditionOnDocumentOrConnecteur($id_e, $id_d, $id_ce)
     {
         if ($id_d) {
-            $info = $this->getDocumentSQL()->getInfo($id_d);
-            if (! $this->getDroitService()->hasDroit($this->getId_u(), $this->getDroitService()->getDroitEdition($info['type']), $id_e)) {
+            // Si l'id_d est un document_email_reponse alors on vérifie les droits sur le document_email, issue #1703
+            $reponse_info =
+                $this->getObjectInstancier()
+                    ->getInstance(DocumentEmailReponseSQL::class)
+                    ->getInfoFromIdReponse($id_d);
+            if (!empty($reponse_info)) {
+                $mail_info =
+                    $this->getObjectInstancier()
+                        ->getInstance(DocumentEmail::class)
+                        ->getInfoFromPK($reponse_info['id_de']);
+            }
+            if (!empty($mail_info)) {
+                $info = $this->getDocumentSQL()->getInfo($mail_info['id_d']);
+            } else {
+                $info = $this->getDocumentSQL()->getInfo($id_d);
+            }
+            if (
+                ! $this->getDroitService()->hasDroit(
+                    $this->getId_u(),
+                    $this->getDroitService()->getDroitEdition($info['type']),
+                    $id_e
+                )
+            ) {
                 if (! $this->isDocumentEmailChunkUpload()) {
                     echo "KO";
                     exit_wrapper();
@@ -43,8 +64,29 @@ class DonneesFormulaireControler extends PastellControler
     private function verifDroitLectureOnDocumentOrConnecteur($id_e, $id_d, $id_ce)
     {
         if ($id_d) {
-            $info = $this->getDocumentSQL()->getInfo($id_d);
-            if (! $this->getDroitService()->hasDroit($this->getId_u(), $this->getDroitService()->getDroitLecture($info['type']), $id_e)) {
+            // Si l'id_d est un document_email_reponse alors on vérifie les droits sur le document_email, issue #1703
+            $reponse_info =
+                $this->getObjectInstancier()
+                    ->getInstance(DocumentEmailReponseSQL::class)
+                    ->getInfoFromIdReponse($id_d);
+            if (!empty($reponse_info)) {
+                $mail_info =
+                    $this->getObjectInstancier()
+                        ->getInstance(DocumentEmail::class)
+                        ->getInfoFromPK($reponse_info['id_de']);
+            }
+            if (!empty($mail_info)) {
+                $info = $this->getDocumentSQL()->getInfo($mail_info['id_d']);
+            } else {
+                $info = $this->getDocumentSQL()->getInfo($id_d);
+            }
+            if (
+                ! $this->getDroitService()->hasDroit(
+                    $this->getId_u(),
+                    $this->getDroitService()->getDroitLecture($info['type']),
+                    $id_e
+                )
+            ) {
                 if (! $this->isDocumentEmailChunkUpload()) {
                     echo "KO";
                     exit_wrapper();
@@ -97,7 +139,7 @@ class DonneesFormulaireControler extends PastellControler
             $file_name = $donneesFormulaire->getFileName($field, $i);
             if (! $zipArchive->addFile($file_path, $file_name)) {
                 throw new Exception(
-                    "Impossible d'ajouter le fichier $file_path ($file_name) dand l'archive $zip_filename"
+                    "Impossible d'ajouter le fichier $file_path ($file_name) dans l'archive $zip_filename"
                 );
             }
         }

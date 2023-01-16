@@ -144,6 +144,7 @@
 ## Corrections
 
 - Correction du contrôle lors de la création d'un type de dossier #1675
+- Il n'était pas possible de télécharger tous les fichiers d'une réponse mail #1703
 
 ## Ajouts
 
