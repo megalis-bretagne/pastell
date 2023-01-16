@@ -22,7 +22,7 @@ class SystemControlerTest extends ControlerTestCase
 
     public function testIndex()
     {
-        $this->expectOutputRegex("#Test du système#");
+        $this->expectOutputRegex("#Test du syst&egrave;me#");
         $this->systemControler->indexAction();
     }
 

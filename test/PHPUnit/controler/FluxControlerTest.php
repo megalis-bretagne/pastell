@@ -38,7 +38,7 @@ class FluxControlerTest extends ControlerTestCase
      */
     public function testIndexActionWithoutId_e()
     {
-        $this->expectOutputRegex("#Entité racine : Associations connecteurs globaux - Pastell#");
+        $this->expectOutputRegex("#Entit&eacute; racine : Associations connecteurs globaux - Pastell#");
         $this->fluxControler->indexAction();
     }
 
