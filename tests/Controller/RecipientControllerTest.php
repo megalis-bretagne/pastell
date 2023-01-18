@@ -139,4 +139,14 @@ final class RecipientControllerTest extends WebTestCase
             $this->client->getResponse()->getContent()
         );
     }
+
+    public function testUnavailable(): void
+    {
+        $this->client->request('GET', '/mail/unavailable');
+        self::assertResponseIsSuccessful();
+        self::assertStringContainsString(
+            'Ce mail sécurisé n\'est plus disponnible.',
+            $this->client->getResponse()->getContent()
+        );
+    }
 }
