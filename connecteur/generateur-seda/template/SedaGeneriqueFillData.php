@@ -23,7 +23,8 @@
                         <?php hecho($element_info['libelle']);  ?>
                     </label>
                     <?php if (! empty($element_info['commentaire'])) : ?>
-                    <p class="form_commentaire"><?php hecho($element_info['commentaire']);?></p>
+                        <p class="form_commentaire"><?php
+                            echo $this->getHTMLPurifier()->purify($element_info['commentaire']); ?></p>
                     <?php endif; ?>
                 </th>
                 <td>

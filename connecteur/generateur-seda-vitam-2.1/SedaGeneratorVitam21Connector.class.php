@@ -68,6 +68,24 @@ final class SedaGeneratorVitam21Connector extends AbstractSedaGeneratorConnector
                     'libelle' => 'Identifiant du service versant',
                     'commentaire' => 'SubmissionAgencyIdentifier',
                 ],
+                'TransferringAgencyArchiveIdentifier' => [
+                    'seda' => 'TransferringAgencyArchiveIdentifier',
+                    'libelle' => "Identifiant donné à l'archive par le service versant",
+                    'commentaire' => 'TransferringAgencyArchiveUnitIdentifier',
+                ],
+                'ArchiveUnit_ExternalReferenceName' => [
+                    'seda' => 'ExternalReferenceName',
+                    'libelle' => 'Nom de la métadonnée de rattachement',
+                    'commentaire' => <<<EOT
+UpdateOperation.ArchiveUnitIdentifierKey.MetadataName <br />
+Doit correspondre à une balise du bloc "Content" du schéma SEDA 2.1
+EOT,
+                ],
+                'ArchiveUnit_ExternalReference' => [
+                    'seda' => 'ExternalReference',
+                    'libelle' => 'Référence à une unité d\'archive',
+                    'commentaire' => 'UpdateOperation.ArchiveUnitIdentifierKey.MetadataValue',
+                ],
             ]
         );
     }

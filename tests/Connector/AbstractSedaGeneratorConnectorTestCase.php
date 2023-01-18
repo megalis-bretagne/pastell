@@ -157,6 +157,7 @@ abstract class AbstractSedaGeneratorConnectorTestCase extends PastellTestCase
     {
         $this->setCurl(function (array $json_data) use ($testName) {
             $json_content = \json_encode($json_data, \JSON_THROW_ON_ERROR);
+//            \mkdir($this->getExpectedCallDirectory() . '/' . $testName);
 //            \file_put_contents(
 //                $this->getExpectedCallDirectory() . '/' . $testName . '/expected_call.json',
 //                \json_encode($json_data, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT)

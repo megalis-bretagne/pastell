@@ -124,6 +124,10 @@ class SedaMessageBuilder
         $this->message->endDate = $dataFromBordereau['EndDate'] ?? null;
         $this->message->originatingAgencyIdentifier = $dataFromBordereau['OriginatingAgencyIdentifier'] ?? null;
         $this->message->submissionAgencyIdentifier = $dataFromBordereau['SubmissionAgencyIdentifier'] ?? null;
+        $this->message
+            ->transferringAgencyArchiveIdentifier = $dataFromBordereau['TransferringAgencyArchiveIdentifier'] ?? null;
+        $this->message->externalReferenceName = $dataFromBordereau['ArchiveUnit_ExternalReferenceName'] ?? null;
+        $this->message->externalReference = $dataFromBordereau['ArchiveUnit_ExternalReference'] ?? null;
 
         if ($this->message->getVersion() === SedaVersion::VERSION_1_0) {
             $appraisalRuleFinalAction = [
