@@ -519,4 +519,29 @@ class PastellControler extends Controler
     {
         return $this->getInstance(Logger::class);
     }
+
+    /**
+     * @param string $id_d
+     * @return array
+     * Si l'id_d est un document_email_reponse alors on retourne les infos de document_email, issue #1486 #1703
+     */
+    public function getInfoDocumentOrigin(string $id_d): array
+    {
+        $reponse_info =
+            $this->getObjectInstancier()
+                ->getInstance(DocumentEmailReponseSQL::class)
+                ->getInfoFromIdReponse($id_d);
+        if (!empty($reponse_info)) {
+            $mail_info =
+                $this->getObjectInstancier()
+                    ->getInstance(DocumentEmail::class)
+                    ->getInfoFromPK($reponse_info['id_de']);
+        }
+        if (!empty($mail_info)) {
+            $info = $this->getDocumentSQL()->getInfo($mail_info['id_d']);
+        } else {
+            $info = $this->getDocumentSQL()->getInfo($id_d);
+        }
+        return $info;
+    }
 }
