@@ -50,7 +50,7 @@ class MailSecDestinataireControler extends PastellControler
         $mailSecInfo->key = $this->getPostOrGetInfo()->get('key');
 
         $mailsec_info  = $this->getDocumentEmail()->getInfoFromKey($mailSecInfo->key);
-        if (! $mailsec_info) {
+        if ((! $mailsec_info)  || $mailsec_info['non_recu']) {
             $this->redirectWebMailsec("invalid.php");
         }
 

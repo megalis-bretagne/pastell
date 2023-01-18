@@ -125,6 +125,7 @@ CREATE TABLE `document_email` (
 	`reponse` text NOT NULL,
 	`has_error` tinyint(1) NOT NULL,
 	`last_error` text NOT NULL,
+	`non_recu` tinyint(1) NOT NULL,
 	PRIMARY KEY (`id_de`),
 	UNIQUE KEY `key` (`key`) 
 )  ENGINE=MyISAM  ;

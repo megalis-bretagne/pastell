@@ -263,9 +263,27 @@ bar', $output);
         $this->assertLastMessage("Mail défini comme non-reçu.");
 
         $documentEmail = $this->getObjectInstancier()->getInstance(DocumentEmail::class);
-        $this->assertEmpty($documentEmail->getInfo('id_d'));
+        $this->assertEquals(1, $documentEmail->getInfo($id_d)[0]['non_recu']);
 
         $this->assertLastDocumentAction('non-recu', $id_d);
         $this->assertActionPossible(['supression'], $id_d);
+    }
+
+    public function testIndexActionWhenNonRecu()
+    {
+        $mail_sec_info  = $this->createMailSec(self::FLUX_MAILSEC, self::ACTION_MAILSEC_ENVOI_MAIL);
+        $key = $mail_sec_info['key'];
+        $id_d = $mail_sec_info['id_d'];
+
+        $this->assertTrue($this->triggerActionOnDocument($id_d, "non-recu"));
+
+        $mailsecController = $this->getControlerInstance(MailSecDestinataireControler::class);
+
+        $this->setGetInfo(['key' => $key]);
+        $mailsecController->setServerInfo(['REMOTE_ADDR' => '127.0.0.1']);
+
+        $this->expectException(LastMessageException::class);
+        $this->expectExceptionMessage("Redirection vers /invalid.php");
+        $mailsecController->indexAction();
     }
 }
