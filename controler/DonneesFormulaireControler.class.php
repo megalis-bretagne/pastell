@@ -17,26 +17,12 @@ class DonneesFormulaireControler extends PastellControler
     private function verifDroitEditionOnDocumentOrConnecteur($id_e, $id_d, $id_ce)
     {
         if ($id_d) {
-            // Si l'id_d est un document_email_reponse alors on vérifie les droits sur le document_email, issue #1703
-            $reponse_info =
-                $this->getObjectInstancier()
-                    ->getInstance(DocumentEmailReponseSQL::class)
-                    ->getInfoFromIdReponse($id_d);
-            if (!empty($reponse_info)) {
-                $mail_info =
-                    $this->getObjectInstancier()
-                        ->getInstance(DocumentEmail::class)
-                        ->getInfoFromPK($reponse_info['id_de']);
-            }
-            if (!empty($mail_info)) {
-                $info = $this->getDocumentSQL()->getInfo($mail_info['id_d']);
-            } else {
-                $info = $this->getDocumentSQL()->getInfo($id_d);
-            }
             if (
                 ! $this->getDroitService()->hasDroit(
                     $this->getId_u(),
-                    $this->getDroitService()->getDroitEdition($info['type']),
+                    $this->getDroitService()->getDroitEdition(
+                        $this->getInfoDocumentOrigin($id_d)['type']
+                    ),
                     $id_e
                 )
             ) {
@@ -64,26 +50,12 @@ class DonneesFormulaireControler extends PastellControler
     private function verifDroitLectureOnDocumentOrConnecteur($id_e, $id_d, $id_ce)
     {
         if ($id_d) {
-            // Si l'id_d est un document_email_reponse alors on vérifie les droits sur le document_email, issue #1703
-            $reponse_info =
-                $this->getObjectInstancier()
-                    ->getInstance(DocumentEmailReponseSQL::class)
-                    ->getInfoFromIdReponse($id_d);
-            if (!empty($reponse_info)) {
-                $mail_info =
-                    $this->getObjectInstancier()
-                        ->getInstance(DocumentEmail::class)
-                        ->getInfoFromPK($reponse_info['id_de']);
-            }
-            if (!empty($mail_info)) {
-                $info = $this->getDocumentSQL()->getInfo($mail_info['id_d']);
-            } else {
-                $info = $this->getDocumentSQL()->getInfo($id_d);
-            }
             if (
                 ! $this->getDroitService()->hasDroit(
                     $this->getId_u(),
-                    $this->getDroitService()->getDroitLecture($info['type']),
+                    $this->getDroitService()->getDroitLecture(
+                        $this->getInfoDocumentOrigin($id_d)['type']
+                    ),
                     $id_e
                 )
             ) {
