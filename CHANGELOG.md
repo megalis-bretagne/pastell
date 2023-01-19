@@ -1,9 +1,12 @@
 # [3.1.19]
 
+***Cette version nécessite une modification de la base de données***
+
 ## Corrections
 
 - Correction du contrôle lors de la création d'un type de dossier #1675
 - Il n'était pas possible de télécharger tous les fichiers d'une réponse mail #1703
+- Il y a eu une regression lors de la correction en 3.1.9 #1365, on perdait les informations du mail sécurisé en passage en non-recu #1646
 
 ## Ajouts
 
