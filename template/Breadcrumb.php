@@ -86,7 +86,7 @@
                 <span class="divider">/</span>
             </li>
             <li>
-                <form action='<?php echo $navigation_url ?>' method='get' id="bc_form">
+                <form action='<?php hecho($navigation_url); ?>' method='get' id="bc_form">
                     <input type='hidden' name='type' value='<?php hecho($type ?? ''); ?>'/>
                     <select name='id_e' class='select2_breadcrumb' id='select2_id_e_bc'>
                         <option></option>
