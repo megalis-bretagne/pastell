@@ -17,12 +17,13 @@ class DonneesFormulaireControler extends PastellControler
     private function verifDroitEditionOnDocumentOrConnecteur($id_e, $id_d, $id_ce)
     {
         if ($id_d) {
+            // Si l'id_d est un document_email_reponse alors on vérifie les droits sur le document_email, issue #1703
+            $mail_info = $this->getDocumentEmailService()->getDocumentEmailFromIdReponse($id_d);
+            $info = (!empty($mail_info)) ? $mail_info : $this->getDocumentSQL()->getInfo($id_d);
             if (
                 ! $this->getDroitService()->hasDroit(
                     $this->getId_u(),
-                    $this->getDroitService()->getDroitEdition(
-                        $this->getInfoDocumentOrigin($id_d)['type']
-                    ),
+                    $this->getDroitService()->getDroitEdition($info['type']),
                     $id_e
                 )
             ) {
@@ -50,12 +51,13 @@ class DonneesFormulaireControler extends PastellControler
     private function verifDroitLectureOnDocumentOrConnecteur($id_e, $id_d, $id_ce)
     {
         if ($id_d) {
+            // Si l'id_d est un document_email_reponse alors on vérifie les droits sur le document_email, issue #1703
+            $mail_info = $this->getDocumentEmailService()->getDocumentEmailFromIdReponse($id_d);
+            $info = (!empty($mail_info)) ? $mail_info : $this->getDocumentSQL()->getInfo($id_d);
             if (
                 ! $this->getDroitService()->hasDroit(
                     $this->getId_u(),
-                    $this->getDroitService()->getDroitLecture(
-                        $this->getInfoDocumentOrigin($id_d)['type']
-                    ),
+                    $this->getDroitService()->getDroitLecture($info['type']),
                     $id_e
                 )
             ) {
