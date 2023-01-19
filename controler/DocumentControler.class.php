@@ -1241,7 +1241,13 @@ class DocumentControler extends PastellControler
         $field = $recuperateur->get('field');
         $num = $recuperateur->getInt('num');
 
-        $this->verifDroitLecture($id_e, $this->getInfoDocumentOrigin($id_d)['id_d']);
+        // Si l'id_d est un document_email_reponse alors on vérifie les droits sur le document_email, issue #1486
+        $mail_info = $this->getDocumentEmailService()->getDocumentEmailFromIdReponse($id_d);
+        if (!empty($mail_info)) {
+            $this->verifDroitLecture($id_e, $mail_info['id_d']);
+        } else {
+            $this->verifDroitLecture($id_e, $id_d);
+        }
 
         $document = $this->getDocumentSQL();
         $info = $document->getInfo($id_d);
