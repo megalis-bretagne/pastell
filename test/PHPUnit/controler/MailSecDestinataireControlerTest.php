@@ -249,7 +249,7 @@ bar', $output);
      * @param string $flux_name
      * @param string $action_envoi
      */
-    public function testSupprimerMailSecActionWhenNonRecu(string $flux_name, string $action_envoi)
+    public function testSupprimerMailSecActionWhenNonRecu(string $flux_name, string $action_envoi): void
     {
         $mail_sec_info  = $this->createMailSec($flux_name, $action_envoi);
         $id_d = $mail_sec_info['id_d'];

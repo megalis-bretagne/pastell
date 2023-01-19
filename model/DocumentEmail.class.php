@@ -178,7 +178,7 @@ EOT;
         return $this->queryOne($sql, $id_d);
     }
 
-    public function addEtatNonRecu($id_d)
+    public function addEtatNonRecu(string $id_d): void
     {
         $sql = "UPDATE document_email SET non_recu=1 WHERE id_d=? and lu=0";
         $this->query($sql, $id_d);
