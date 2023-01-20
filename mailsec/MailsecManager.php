@@ -67,9 +67,8 @@ final class MailsecManager
             $mailSecInfo->id_d,
             'editeur'
         );
-        $mailSecInfo->denomination_entite = get_hecho(
-            $this->objectInstancier->getInstance(EntiteSQL::class)->getInfo($mailSecInfo->id_e)['denomination']
-        );
+        $mailSecInfo->denomination_entite =
+            $this->objectInstancier->getInstance(EntiteSQL::class)->getInfo($mailSecInfo->id_e)['denomination'];
         $mailSecInfo->type_document = $this->objectInstancier
             ->getInstance(DocumentSQL::class)
             ->getInfo($mailSecInfo->id_d)['type'];
