@@ -60,6 +60,11 @@ final class SedaGeneratorAsalae22 extends AbstractSedaGeneratorConnector
                     'libelle' => "Identifiant donné à l'archive par le service versant",
                     'commentaire' => 'TransferringAgencyArchiveUnitIdentifier',
                 ],
+                'ArchiveUnit_ExternalReference' => [
+                    'seda' => 'ExternalReference',
+                    'libelle' => 'Référence à une unité d\'archive',
+                    'commentaire' => 'RepositoryArchiveUnitPID',
+                ],
             ]
         );
     }

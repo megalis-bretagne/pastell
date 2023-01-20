@@ -29,7 +29,9 @@ class SedaMessage implements \JsonSerializable
     public ?string $serviceLevel;
     public ?string $originatingAgencyIdentifier;
     public ?string $submissionAgencyIdentifier;
-
+    public ?string $transferringAgencyArchiveIdentifier;
+    public ?string $externalReferenceName;
+    public ?string $externalReference;
 
     /** @var ?array{Identifier: string, Name: string} $archivalAgency */
     private ?array $archivalAgency = null;
@@ -151,6 +153,9 @@ class SedaMessage implements \JsonSerializable
             'TransferringAgency' => $this->transferringAgency,
             'OriginatingAgencyIdentifier' => $this->originatingAgencyIdentifier,
             'SubmissionAgencyIdentifier' => $this->submissionAgencyIdentifier,
+            'TransferringAgencyArchiveIdentifier' => $this->transferringAgencyArchiveIdentifier,
+            'ExternalReferenceName' => $this->externalReferenceName,
+            'ExternalReference' => $this->externalReference,
         ]);
     }
 }
