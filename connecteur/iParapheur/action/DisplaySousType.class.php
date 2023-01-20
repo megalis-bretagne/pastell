@@ -17,7 +17,7 @@ class DisplaySousType extends ActionExecutor
         }
 
         $message = sprintf(
-            'Liste des sous-type pour le type %s : %s',
+            'Liste des sous-types pour le type %s : %s',
             $properties->get('iparapheur_type'),
             implode(', ', $all_sous_type)
         );

@@ -237,7 +237,7 @@ class DaemonControler extends PastellControler
 
         $this->setViewParameter(
             'return_url',
-            urlencode("Daemon/job?filtre=$filtre&offset=" . $this->getViewParameterByKey('offset'))
+            "Daemon/job?filtre=$filtre&offset=" . $this->getViewParameterByKey('offset')
         );
 
         $this->setViewParameter('count', $this->getWorkerSQL()->getNbJob($filtre));
