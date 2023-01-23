@@ -19,15 +19,15 @@
 
     <form action='Document/action' method='post'>
         <?php $this->displayCSRFInput() ?>
-        <input type='hidden' name='id_d' value='<?php echo $id_d ?>'/>
-        <input type='hidden' name='id_e' value='<?php echo $id_e ?>'/>
-        <input type='hidden' name='page' value='<?php echo $page ?>'/>
-        <input type='hidden' name='action' value='<?php echo $action ?>'/>
+        <input type='hidden' name='id_d' value='<?php hecho($id_d); ?>'/>
+        <input type='hidden' name='id_e' value='<?php hecho($id_e); ?>'/>
+        <input type='hidden' name='page' value='<?php hecho($page); ?>'/>
+        <input type='hidden' name='action' value='<?php hecho($action); ?>'/>
         <input type='hidden' name='go' value='1'/>
 
         <a
                 class='btn btn-outline-primary'
-                href='<?php $this->url("Document/detail?id_d={$id_d}&id_e={$id_e}&page={$page}"); ?>'
+                href='<?php $this->url(get_hecho("Document/detail?id_d={$id_d}&id_e={$id_e}&page={$page}")); ?>'
         >
             <i class="fa fa-times-circle"></i>&nbsp;Annuler
         </a>
