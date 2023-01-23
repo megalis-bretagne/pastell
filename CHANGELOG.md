@@ -139,7 +139,7 @@
 
 - Les dates sont enregistrées en heure locale (TIMEZONE), de fait, il n'est pas possible de changer de fuseau horaire après une installation initiale
 
-# [3.1.19]
+# [3.1.19] - 2023-02-06
 
 ***Cette version nécessite une modification de la base de données***
 
@@ -148,6 +148,7 @@
 - Correction du contrôle lors de la création d'un type de dossier #1675
 - Il n'était pas possible de télécharger tous les fichiers d'une réponse mail #1703
 - Il y a eu une regression lors de la correction en 3.1.9 #1365, on perdait les informations du mail sécurisé en passage en non-recu #1646
+- OIDC : Le client_id n'est plus envoyé dans le body lors de l'utilisation de l'authentification basic #1741
 
 ## Ajouts
 
