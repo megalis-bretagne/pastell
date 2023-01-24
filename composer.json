@@ -34,6 +34,7 @@
     "flowjs/flow-php-server": "^1.0",
     "guzzlehttp/psr7": "^2.2",
     "jumbojett/openid-connect-php": "^0.9.0",
+    "libriciel/iparapheur-v5-api-php": "^0.1.0",
     "libriciel/php-password": "^3.0",
     "libriciel/vitam-api-php": "^1.1",
     "monolog/monolog": "^3.2",
@@ -107,7 +108,7 @@
     "codecept": "codecept -c test/codeception/codeception.yml run",
     "phpcs": "phpcs",
     "phpcbf": "phpcbf",
-    "phpstan": "phpstan",
+    "phpstan": "phpstan --xdebug",
     "auto-scripts": {
       "cache:clear": "symfony-cmd",
       "assets:install %PUBLIC_DIR%": "symfony-cmd"

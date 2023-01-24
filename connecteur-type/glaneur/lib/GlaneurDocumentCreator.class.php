@@ -19,7 +19,6 @@ class GlaneurDocumentCreator
      */
     public function create(GlaneurDocumentInfo $glaneurLocalDocumentInfo, string $repertoire)
     {
-
         $new_id_d = $this->documentCreationService->createDocumentWithoutAuthorizationChecking(
             $glaneurLocalDocumentInfo->id_e,
             $glaneurLocalDocumentInfo->nom_flux

@@ -56,7 +56,7 @@ codeception:  ## Run acceptance tests
 	$(DOCKER_COMPOSE_UP)
 
 phpstan: docker-compose-up ## Run phpstan
-	$(DOCKER_COMPOSE_EXEC) vendor/bin/phpstan
+	$(DOCKER_COMPOSE_EXEC) vendor/bin/phpstan --xdebug
 
 trivy: ## Run trivy
 	$(EXEC_TRIVY)
@@ -81,6 +81,7 @@ module-pack-publication: docker-compose-up ## Run make-module pack_publication
 
 module-pack-document: docker-compose-up ## Run make-module pack_document
 	$(MAKE_MODULE) ./pack-json/pack-document/ls-document-pdf-draft.json ./module/ --id ls-document-pdf --name "Document PDF"
+	$(MAKE_MODULE) ./pack-json/pack-document/ls-recup-parapheur-draft.json ./module/ --id ls-recup-parapheur --name "Récupération parapheur"
 	$(MAKE_MODULE) ./pack-json/pack-document/ls-document-pdf-draft-destinataire.json ./module/ --id ls-document-pdf-destinataire --name "Document PDF (destinataire)"
 
 

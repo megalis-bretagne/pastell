@@ -1,0 +1,370 @@
+nom: 'Récupération parapheur'
+type: 'Types de dossier document'
+description: 'Type de dossier permettant la connexion à un parapheur pour récupérer les dossiers'
+connecteur:
+    - transformation
+    - GED
+    - 'Bordereau SEDA'
+    - SAE
+formulaire:
+    Information:
+        dossier_id:
+            name: 'Identifiant du dossier sur le parapheur'
+            type: text
+            requis: true
+            multiple: false
+            commentaire: ''
+            index: true
+        dossier_name:
+            name: 'Nom du dossier'
+            type: text
+            requis: true
+            multiple: false
+            commentaire: ''
+            title: true
+        document_signe:
+            name: 'Document signé'
+            type: file
+            requis: true
+            multiple: true
+            commentaire: ''
+        annexe:
+            name: Annexe
+            type: file
+            requis: false
+            multiple: true
+            commentaire: ''
+        bordereau:
+            name: Bordereau
+            type: file
+            requis: true
+            multiple: false
+            commentaire: ''
+        premis:
+            name: 'Fichier PREMIS'
+            type: file
+            requis: true
+            multiple: false
+            commentaire: "Le fichier PREMIS contient les méta-données et l'historique du parapheur"
+    Cheminement:
+        envoi_transformation:
+            name: Transformation
+            type: checkbox
+            onchange: cheminement-change
+            default: checked
+            read-only: true
+        envoi_depot:
+            name: 'Dépôt (GED, FTP, ...)'
+            type: checkbox
+            onchange: cheminement-change
+            default: ''
+            read-only: false
+        envoi_sae:
+            name: "Système d'archivage électronique"
+            type: checkbox
+            onchange: cheminement-change
+            default: ''
+            read-only: false
+    Transformation:
+        has_transformation:
+            no-show: true
+            read-only: true
+        transformation_file:
+            name: Transformations
+            type: file
+            visionneuse: Pastell\Viewer\TransformationViewer
+            read-only: true
+            visionneuse-no-link: true
+    'Retour GED':
+        has_ged_document_id:
+            no-show: true
+            read-only: true
+        ged_document_id_file:
+            name: 'Identifiants des documents sur la GED'
+            type: file
+            visionneuse: Pastell\Viewer\GedIdDocumentsViewer
+            read-only: true
+            requis: true
+            visionneuse-no-link: true
+    SAE:
+        sae_show:
+            no-show: true
+        journal:
+            name: 'Faisceau de preuves'
+            type: file
+        date_journal_debut:
+            name: 'Date du premier évènement journalisé'
+        date_cloture_journal:
+            name: 'Date de clôture du journal'
+        date_cloture_journal_iso8601:
+            name: 'Date de clôture du journal (iso 8601)'
+        sae_transfert_id:
+            name: 'Identifiant de transfert'
+            index: true
+        sae_bordereau:
+            name: 'Bordereau SEDA'
+            type: file
+        sae_archive:
+            name: "Paquet d'archive (SIP)"
+            type: file
+        ar_sae:
+            type: file
+            name: 'Accusé de réception SAE'
+        sae_ack_comment:
+            name: "Commentaire de l'accusé de réception"
+        reply_sae:
+            type: file
+            name: 'Réponse du SAE'
+        sae_archival_identifier:
+            name: "Identifiant de l'archive sur le SAE"
+        sae_atr_comment:
+            name: 'Commentaire de la réponse du SAE'
+champs-affiches:
+    - titre
+    - dernier_etat
+    - date_dernier_etat
+    - dossier_id
+champs-recherche-avancee:
+    - type
+    - id_e
+    - lastetat
+    - last_state_begin
+    - etatTransit
+    - state_begin
+    - search
+    - dossier_id
+page-condition:
+    Transformation:
+        has_transformation: true
+    'Retour GED':
+        has_ged_document_id: true
+    SAE:
+        sae_show: true
+action:
+    creation:
+        name-action: Créer
+        name: Créé
+        rule:
+            no-last-action: ''
+    modification:
+        name-action: Modifier
+        name: 'En cours de rédaction'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - transformation
+                - send-ged
+    supression:
+        name-action: Supprimer
+        name: Supprimé
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - termine
+                - fatal-error
+                - transformation-error
+                - rejet-sae
+        action-class: Supprimer
+        warning: 'Êtes-vous sûr ?'
+    importation:
+        name: 'Importation du document'
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+    orientation:
+        name: 'Envoi du document'
+        name-action: 'Envoyer le document'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - transformation
+                - send-ged
+                - accepter-sae
+            document_is_valide: true
+        action-class: OrientationTypeDossierPersonnalise
+    termine:
+        name: 'Traitement terminé'
+        rule:
+            role_id_e: no-role
+    reouverture:
+        name: 'Rouvrir le dossier'
+        rule:
+            last-action:
+                - termine
+        action-class: Reopen
+    cheminement-change:
+        no-workflow: true
+        rule:
+            role_id_e: 'no-role,'
+        action-class: CheminementChangeTypeDossierPersonnalise
+    preparation-transformation:
+        name: 'Préparation à la transformation'
+        rule:
+            role_id_e: no-role
+        action-automatique: transformation
+    transformation:
+        name-action: 'Transformer le document'
+        name: 'Transformation du document'
+        rule:
+            last-action:
+                - preparation-transformation
+                - transformation-error
+        action-class: StandardAction
+        action-automatique: orientation
+        connecteur-type: transformation
+        connecteur-type-action: TransformationTransform
+        connecteur-type-mapping:
+            transformation_file: transformation_file
+            has_transformation: has_transformation
+        editable-content:
+            - envoi_depot
+            - envoi_sae
+            - sae_show
+            - journal
+            - date_journal_debut
+            - date_cloture_journal
+            - date_cloture_journal_iso8601
+            - sae_transfert_id
+            - sae_bordereau
+            - sae_archive
+            - ar_sae
+            - sae_ack_comment
+            - reply_sae
+            - sae_archival_identifier
+            - sae_atr_comment
+        modification-no-change-etat: true
+    transformation-error:
+        name: 'Erreur lors de la transformation du dossier'
+        rule:
+            role_id_e: no-role
+    preparation-send-ged:
+        name: "Préparation de l'envoi à la GED"
+        rule:
+            role_id_e: no-role
+        action-automatique: send-ged
+    send-ged:
+        name-action: 'Verser à la GED'
+        name: 'Versé à la GED'
+        rule:
+            last-action:
+                - preparation-send-ged
+                - error-ged
+        action-automatique: orientation
+        action-class: StandardAction
+        connecteur-type: GED
+        connecteur-type-action: GEDEnvoyer
+        connecteur-type-mapping:
+            fatal-error: error-ged
+        editable-content:
+            - envoi_sae
+            - sae_show
+            - journal
+            - date_journal_debut
+            - date_cloture_journal
+            - date_cloture_journal_iso8601
+            - sae_transfert_id
+            - sae_bordereau
+            - sae_archive
+            - ar_sae
+            - sae_ack_comment
+            - reply_sae
+            - sae_archival_identifier
+            - sae_atr_comment
+        modification-no-change-etat: true
+    error-ged:
+        name: 'Erreur irrécupérable lors du dépôt'
+        rule:
+            role_id_e: no-role
+    preparation-send-sae:
+        name: "Préparation de l'envoi au SAE"
+        rule:
+            role_id_e: no-role
+        action-automatique: generate-sip
+    generate-sip:
+        name-action: "Générer le paquet d'archive (SIP)"
+        name: "Paquet d'archive (SIP) généré"
+        rule:
+            last-action:
+                - preparation-send-sae
+                - generate-sip-error
+                - rejet-sae
+                - erreur-envoie-sae
+        action-class: StandardAction
+        connecteur-type: SAE
+        connecteur-type-action: Pastell\Step\SAE\Action\SAEGenerateArchiveAction
+        action-automatique: send-archive
+    generate-sip-error:
+        name: "Erreur lors de la génération de l'archive"
+        rule:
+            role_id_e: no-role
+    send-archive:
+        name-action: 'Verser au SAE'
+        name: 'Versé au SAE'
+        rule:
+            last-action:
+                - generate-sip
+                - rejet-sae
+                - erreur-envoie-sae
+        action-class: StandardAction
+        connecteur-type: SAE
+        connecteur-type-action: Pastell\Step\SAE\Action\SAESendArchiveAction
+        action-automatique: verif-sae
+    erreur-envoie-sae:
+        name: "Erreur lors de l'envoi au SAE"
+        rule:
+            role_id_e: no-role
+    verif-sae:
+        name-action: "Récupérer l'AR du document sur le SAE"
+        name: "Récuperation de l'AR sur le SAE"
+        rule:
+            last-action:
+                - send-archive
+                - verif-sae-erreur
+        action-class: StandardAction
+        connecteur-type: SAE
+        connecteur-type-action: SAEVerifier
+    verif-sae-erreur:
+        name: "Erreur lors de la récupération de l'AR"
+        rule:
+            role_id_e: no-role
+    ar-recu-sae:
+        name: 'AR SAE reçu'
+        rule:
+            role_id_e: no-role
+        action-automatique: validation-sae
+    ack-not-provided:
+        name: 'En attente de la validation par le SAE'
+        rule:
+            role_id_e: no-role
+        action-automatique: validation-sae
+    validation-sae:
+        name-action: "Vérifier l'acceptation par le SAE"
+        name: "Vérification de l'acceptation par le SAE"
+        rule:
+            last-action:
+                - ar-recu-sae
+                - ack-not-provided
+                - validation-sae-erreur
+        action-class: StandardAction
+        connecteur-type: SAE
+        connecteur-type-action: SAEValider
+    validation-sae-erreur:
+        name: 'Erreur lors de la vérification de la validité du transfert'
+        rule:
+            role_id_e: no-role
+    accepter-sae:
+        name: 'Transfert accepté par le SAE'
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+    rejet-sae:
+        name: 'Transfert rejeté par le SAE'
+        rule:
+            role_id_e: no-role
+studio_definition: eyJpZF90eXBlX2Rvc3NpZXIiOiJscy1yZWN1cC1wYXJhcGhldXItZHJhZnQiLCJwYXN0ZWxsLXZlcnNpb24iOiIlVkVSU0lPTiUiLCJ0aW1lc3RhbXAiOjE2NzE2MzYzODYsInJhd19kYXRhIjp7ImlkX3R5cGVfZG9zc2llciI6ImxzLXJlY3VwLXBhcmFwaGV1ci1kcmFmdCIsIm5vbSI6IlJcdTAwZTljdXBcdTAwZTlyYXRpb24gcGFyYXBoZXVyIiwidHlwZSI6IlR5cGVzIGRlIGRvc3NpZXIgZG9jdW1lbnQiLCJkZXNjcmlwdGlvbiI6IlR5cGUgZGUgZG9zc2llciBwZXJtZXR0YW50IGxhIGNvbm5leGlvbiBcdTAwZTAgdW4gcGFyYXBoZXVyIHBvdXIgclx1MDBlOWN1cFx1MDBlOXJlciBsZXMgZG9zc2llcnMiLCJub21fb25nbGV0IjoiSW5mb3JtYXRpb24iLCJyZXN0cmljdGlvbl9wYWNrIjoiIiwiZm9ybXVsYWlyZUVsZW1lbnQiOlt7ImVsZW1lbnRfaWQiOiJkb3NzaWVyX2lkIiwibmFtZSI6IklkZW50aWZpYW50IGR1IGRvc3NpZXIgc3VyIGxlIHBhcmFwaGV1ciIsInR5cGUiOiJ0ZXh0IiwiY29tbWVudGFpcmUiOiIiLCJyZXF1aXMiOiJvbiIsImNoYW1wc19hZmZpY2hlcyI6Im9uIiwiY2hhbXBzX3JlY2hlcmNoZV9hdmFuY2VlIjoib24iLCJ0aXRyZSI6ZmFsc2UsInNlbGVjdF92YWx1ZSI6IiIsInByZWdfbWF0Y2giOiIiLCJwcmVnX21hdGNoX2Vycm9yIjoiIiwiY29udGVudF90eXBlIjoiIn0seyJlbGVtZW50X2lkIjoiZG9zc2llcl9uYW1lIiwibmFtZSI6Ik5vbSBkdSBkb3NzaWVyIiwidHlwZSI6InRleHQiLCJjb21tZW50YWlyZSI6IiIsInJlcXVpcyI6Im9uIiwiY2hhbXBzX2FmZmljaGVzIjoiIiwiY2hhbXBzX3JlY2hlcmNoZV9hdmFuY2VlIjoiIiwidGl0cmUiOiJvbiIsInNlbGVjdF92YWx1ZSI6IiIsInByZWdfbWF0Y2giOiIiLCJwcmVnX21hdGNoX2Vycm9yIjoiIiwiY29udGVudF90eXBlIjoiIn0seyJlbGVtZW50X2lkIjoiZG9jdW1lbnRfc2lnbmUiLCJuYW1lIjoiRG9jdW1lbnQgc2lnblx1MDBlOSIsInR5cGUiOiJtdWx0aV9maWxlIiwiY29tbWVudGFpcmUiOiIiLCJyZXF1aXMiOiJvbiIsImNoYW1wc19hZmZpY2hlcyI6IiIsImNoYW1wc19yZWNoZXJjaGVfYXZhbmNlZSI6IiIsInRpdHJlIjoiIiwic2VsZWN0X3ZhbHVlIjoiIiwicHJlZ19tYXRjaCI6IiIsInByZWdfbWF0Y2hfZXJyb3IiOiIiLCJjb250ZW50X3R5cGUiOiIifSx7ImVsZW1lbnRfaWQiOiJhbm5leGUiLCJuYW1lIjoiQW5uZXhlIiwidHlwZSI6Im11bHRpX2ZpbGUiLCJjb21tZW50YWlyZSI6IiIsInJlcXVpcyI6IiIsImNoYW1wc19hZmZpY2hlcyI6IiIsImNoYW1wc19yZWNoZXJjaGVfYXZhbmNlZSI6IiIsInRpdHJlIjoiIiwic2VsZWN0X3ZhbHVlIjoiIiwicHJlZ19tYXRjaCI6IiIsInByZWdfbWF0Y2hfZXJyb3IiOiIiLCJjb250ZW50X3R5cGUiOiIifSx7ImVsZW1lbnRfaWQiOiJib3JkZXJlYXUiLCJuYW1lIjoiQm9yZGVyZWF1IiwidHlwZSI6ImZpbGUiLCJjb21tZW50YWlyZSI6IiIsInJlcXVpcyI6Im9uIiwiY2hhbXBzX2FmZmljaGVzIjoiIiwiY2hhbXBzX3JlY2hlcmNoZV9hdmFuY2VlIjoiIiwidGl0cmUiOiIiLCJzZWxlY3RfdmFsdWUiOiIiLCJwcmVnX21hdGNoIjoiIiwicHJlZ19tYXRjaF9lcnJvciI6IiIsImNvbnRlbnRfdHlwZSI6IiJ9LHsiZWxlbWVudF9pZCI6InByZW1pcyIsIm5hbWUiOiJGaWNoaWVyIFBSRU1JUyIsInR5cGUiOiJmaWxlIiwiY29tbWVudGFpcmUiOiJMZSBmaWNoaWVyIFBSRU1JUyBjb250aWVudCBsZXMgbVx1MDBlOXRhLWRvbm5cdTAwZTllcyBldCBsJ2hpc3RvcmlxdWUgZHUgcGFyYXBoZXVyIiwicmVxdWlzIjoib24iLCJjaGFtcHNfYWZmaWNoZXMiOiIiLCJjaGFtcHNfcmVjaGVyY2hlX2F2YW5jZWUiOiIiLCJ0aXRyZSI6IiIsInNlbGVjdF92YWx1ZSI6IiIsInByZWdfbWF0Y2giOiIiLCJwcmVnX21hdGNoX2Vycm9yIjoiIiwiY29udGVudF90eXBlIjoiIn1dLCJldGFwZSI6W3sibnVtX2V0YXBlIjowLCJ0eXBlIjoidHJhbnNmb3JtYXRpb24iLCJsYWJlbCI6IiIsImRlZmF1bHRDaGVja2VkIjpmYWxzZSwicmVxdWlzIjoib24iLCJhdXRvbWF0aXF1ZSI6Im9uIiwic3BlY2lmaWNfdHlwZV9pbmZvIjpbXSwibnVtX2V0YXBlX3NhbWVfdHlwZSI6MCwiZXRhcGVfd2l0aF9zYW1lX3R5cGVfZXhpc3RzIjpmYWxzZX0seyJudW1fZXRhcGUiOjEsInR5cGUiOiJkZXBvdCIsImxhYmVsIjoiIiwiZGVmYXVsdENoZWNrZWQiOmZhbHNlLCJyZXF1aXMiOiIiLCJhdXRvbWF0aXF1ZSI6Im9uIiwic3BlY2lmaWNfdHlwZV9pbmZvIjpbXSwibnVtX2V0YXBlX3NhbWVfdHlwZSI6MCwiZXRhcGVfd2l0aF9zYW1lX3R5cGVfZXhpc3RzIjpmYWxzZX0seyJudW1fZXRhcGUiOiIyIiwidHlwZSI6InNhZSIsImxhYmVsIjpudWxsLCJkZWZhdWx0Q2hlY2tlZCI6ZmFsc2UsInJlcXVpcyI6IiIsImF1dG9tYXRpcXVlIjoib24iLCJzcGVjaWZpY190eXBlX2luZm8iOnsic2FlX2hhc19tZXRhZGF0YV9pbl9qc29uIjoiIn0sIm51bV9ldGFwZV9zYW1lX3R5cGUiOjAsImV0YXBlX3dpdGhfc2FtZV90eXBlX2V4aXN0cyI6ZmFsc2V9XX19Cg==
