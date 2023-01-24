@@ -1,12 +1,15 @@
 include:
-
-  - project: "libriciel/integration-continue/templates"
-    ref: master
-    file: '/publish-container-to-registry.yml'
-
   - project: "libriciel/integration-continue/templates"
     ref: master
     file: '/security-check.yml'
+
+  - project: "libriciel/integration-continue/templates"
+    ref: publish-container-to-registry-1.0.0
+    file: '/jobs/publish-container-to-registry/publish-container-to-registry.yml'
+
+  - project: "libriciel/integration-continue/templates"
+    ref: publish-compose-to-nexus-0.1.0
+    file: '/jobs/publish-compose-to-nexus/publish-compose-to-nexus.yml'
 
 stages:
     - build
@@ -150,28 +153,14 @@ deploy_dev:
         - ssh -tt gitlab@pastell-4-0.dev.libriciel.net "docker login -u gitlab-ci-token -p '$CI_JOB_TOKEN' $CI_REGISTRY && cd /data/docker-file/ && docker-compose pull && docker-compose up -d"
         - curl -i -X POST -d "$PAYLOAD" $MATTERMOST_WEBHOOK
 
-publish_container_to_registry:
+publish-container-to-registry:
   before_script:
     - date=$(date)
     - sed -i "s/%CI_BUILD_ID%/${CI_PIPELINE_ID}/" ./manifest.yml
     - sed -i "s/%BUILD_DATE%/$date/" ./manifest.yml
     - sed -i "s/%VERSION%/${CI_COMMIT_REF_NAME}/" ./manifest.yml
 
-publish_to_nexus:
-  stage: deploy
-  only:
-    - tags
-  variables:
-    DIRECTORY_NAME: pastell-${CI_COMMIT_REF_NAME}
-    TARBALL_NAME: pastell-${CI_COMMIT_REF_NAME}.tar.gz
-    PAYLOAD: "payload={\"text\": \"[Pastell] Création de la version [$CI_COMMIT_REF_NAME](https://nexus.libriciel.fr/repository/ls-raw/public/plateforme/pastell/${TARBALL_NAME})\"}"
-  script:
-    - mkdir -p ${DIRECTORY_NAME}
-    - sed -e "s/canary$/${CI_COMMIT_REF_NAME}/" docker/docker-compose.yml >  ${DIRECTORY_NAME}/docker-compose.yml
-    - cp docker/.env.dist ${DIRECTORY_NAME}/.env.dist
-    - tar cvzf ${TARBALL_NAME} ${DIRECTORY_NAME}
-    - curl -v -u ${REGISTRY_CONTAINER_USER}:${REGISTRY_CONTAINER_PASSWORD} --upload-file ${TARBALL_NAME} https://nexus.libriciel.fr/repository/ls-raw/public/plateforme/pastell/${TARBALL_NAME}
-    - curl -i -X POST -d "$PAYLOAD" $MATTERMOST_WEBHOOK
-  artifacts:
-    paths:
-      - ${TARBALL_NAME}
+publish-compose-to-nexus:
+  before_script:
+    - sed -i "s/canary$/${CI_COMMIT_REF_NAME}/" docker/docker-compose.yml
+  needs: [ "publish-container-to-registry" ]
