@@ -43,21 +43,28 @@ class RoleControler extends PastellControler
         $this->renderDefault();
     }
 
-    public function editionAction()
+    /**
+     * @throws LastMessageException
+     * @throws NotFoundException
+     * @throws LastErrorException
+     */
+    public function editionAction(): void
     {
-        $this->verifDroit(0, "role:edition");
+        $this->verifDroit(0, 'role:edition');
         $role = $this->getGetInfo()->get('role');
 
         if ($role) {
             $this->setViewParameter('nouveau', false);
             $this->setViewParameter('page_title', "Modification du rôle $role ");
             $this->setViewParameter('role_info', $this->getRoleSQL()->getInfo($role));
+            $this->setViewParameter('cancelRedirectUrl', '/Role/detail?role=' . $role);
         } else {
             $this->setViewParameter('nouveau', true);
             $this->setViewParameter('page_title', "Ajout d'un rôle");
             $this->setViewParameter('role_info', ['libelle' => '','role' => '']);
+            $this->setViewParameter('cancelRedirectUrl', '/Role/index');
         }
-        $this->setViewParameter('template_milieu', "RoleEdition");
+        $this->setViewParameter('template_milieu', 'RoleEdition');
         $this->renderDefault();
     }
 
