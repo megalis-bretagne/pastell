@@ -115,7 +115,7 @@ class ZipContent
     /**
      * @throws UnrecoverableException
      */
-    private function unzipArchive($zip_file, $target_folder): void
+    private function unzipArchive(string $zip_file, string $target_folder): void
     {
         $zip = new ZipArchive();
         $handle = $zip->open($zip_file);

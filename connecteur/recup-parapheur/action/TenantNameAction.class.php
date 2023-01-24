@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . '/../../../connecteur-type/utilities/DictionnaryChoice.class.php';
-
 class TenantNameAction extends DictionnaryChoice
 {
     public function getElementId(): string
@@ -16,7 +14,7 @@ class TenantNameAction extends DictionnaryChoice
 
     public function getTitle(): string
     {
-        return 'Sélectionner un tenant';
+        return 'Sélectionner une entité';
     }
 
     public function displayAPI()

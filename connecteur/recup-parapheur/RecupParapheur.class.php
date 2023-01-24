@@ -152,8 +152,6 @@ class RecupParapheur extends Connecteur
             $glaneurLocalDocumentInfo->action_ok = 'importation';
             $glaneurLocalDocumentInfo->action_ko = 'fatal-error';
             $id_d = $this->glaneurDocumentCreator->create($glaneurLocalDocumentInfo, $tmp_folder);
-        } catch (Exception $e) {
-            throw $e;
         } finally {
             $tmpFolder->delete($tmp_folder);
         }
@@ -166,7 +164,7 @@ class RecupParapheur extends Connecteur
         return $id_d;
     }
 
-    private function getElementId($elementId): string
+    private function getElementId(string $elementId): string
     {
         return $this->elementIdDictionnary[$elementId];
     }

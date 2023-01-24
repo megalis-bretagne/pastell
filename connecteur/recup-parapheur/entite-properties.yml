@@ -38,7 +38,7 @@ formulaire:
                 Une ligne par correspondance de type: element: id_element_pastell
                 élément à mettre en correspondance : dossier_id, dossier_name, document_signe, annexe, bordereau, premis
         nb_recup:
-            name: Nombre de dossiers à récupérer et créer pour un passage du travail
+            name: Nombre de dossiers à récupérer pour un passage du travail
             commentaire: 10 par défaut
             default: 10
 
