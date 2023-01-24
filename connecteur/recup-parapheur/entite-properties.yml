@@ -19,7 +19,7 @@ formulaire:
             name: Nom du l'entité iparapheur
             type: externalData
             choice-action: tenant_name
-            link_name: 'Sélectionner le tenant'
+            link_name: "Sélectionner l'entité"
         pastell_module_id:
             name: Identifiant du type de dossier Pastell
             commentaire: Le dossier doit être un dossier studio. Par défaut, le type de dossier recup-parapheur est selectionné
