@@ -30,6 +30,15 @@ class DepotCMIS extends DepotConnecteur
     /** @var  Session */
     private $session;
 
+    private $http_proxy_url;
+    private $no_proxy;
+
+    public function __construct(string $http_proxy_url = "", string $no_proxy = "")
+    {
+        $this->http_proxy_url = $http_proxy_url;
+        $this->no_proxy = $no_proxy;
+    }
+
     public function listDirectory()
     {
         $result = array();
@@ -106,10 +115,10 @@ class DepotCMIS extends DepotConnecteur
 
     private function getFolder()
     {
-
         if ($this->folder) {
             return $this->folder;
         }
+        $url = $this->connecteurConfig->get(self::DEPOT_CMIS_URL);
 
         $httpInvoker = new Client();
 
@@ -121,9 +130,14 @@ class DepotCMIS extends DepotConnecteur
             )
         );
 
+        $proxyNeeded = new ProxyNeeded($this->http_proxy_url, $this->no_proxy);
+        if ($this->http_proxy_url !== "" && $proxyNeeded->isNeeded($url)) {
+            $httpInvoker->setDefaultOption('proxy', $this->http_proxy_url);
+        }
+
         $parameters = [
             SessionParameter::BINDING_TYPE => BindingType::BROWSER,
-            SessionParameter::BROWSER_URL => $this->connecteurConfig->get(self::DEPOT_CMIS_URL),
+            SessionParameter::BROWSER_URL => $url,
             SessionParameter::BROWSER_SUCCINCT => false,
             SessionParameter::HTTP_INVOKER_OBJECT => $httpInvoker
         ];
