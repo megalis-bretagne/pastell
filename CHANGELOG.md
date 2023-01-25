@@ -152,6 +152,7 @@
 ## Ajouts
 
 - CPP: Ajout d'un contrôle sur le token PISTE en cas de retour vide #1682
+- Prise en compte des constantes HTTP_PROXY_URL et NO_PROXY pour le connecteur depot-cmis #1671
 
 # [3.1.18] - 2022-11-21
 
