@@ -131,7 +131,7 @@ class DepotCMIS extends DepotConnecteur
         );
 
         $proxyNeeded = new ProxyNeeded($this->http_proxy_url, $this->no_proxy);
-        if ($this->http_proxy_url !== "" && $proxyNeeded->isNeeded($url)) {
+        if ($proxyNeeded->isNeeded($url)) {
             $httpInvoker->setDefaultOption('proxy', $this->http_proxy_url);
         }
 
