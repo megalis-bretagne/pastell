@@ -12,7 +12,7 @@ class RecupPESRetourAll extends ActionExecutor
         $envoye = [];
         foreach ($all_col as $infoCollectivite) {
             try {
-                $tdT = $this->objectInstancier->getInstance(DonneesFormulaireFactory::class)->getConnecteurByType(
+                $tdT = $this->objectInstancier->getInstance(ConnecteurFactory::class)->getConnecteurByType(
                     $infoCollectivite['id_e'],
                     'helios-pes-retour',
                     'TdT'
