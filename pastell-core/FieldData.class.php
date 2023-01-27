@@ -75,7 +75,7 @@ class FieldData
 
     public function getValue()
     {
-        if (! $this->value) {
+        if ($this->value === '') {
             return [];
         }
         if (! is_array($this->value)) {
