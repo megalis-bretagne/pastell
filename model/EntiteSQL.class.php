@@ -336,4 +336,80 @@ class EntiteSQL extends SQL
         $sql = "SELECT * FROM entite WHERE is_active = ?";
         return $this->query($sql, $is_active);
     }
+
+    public function create(
+        string $name,
+        string $siren = '',
+        string $type = self::TYPE_COLLECTIVITE,
+        int $parent = 0,
+        int $cdg = 0,
+    ): int {
+        $date = \date(\Date::DATE_ISO);
+        $query = <<<EOT
+INSERT INTO entite(denomination,siren,type,entite_mere,date_inscription,centre_de_gestion)
+VALUES (?,?,?,?,?,?);
+EOT;
+
+        $this->query($query, $name, $siren, $type, $parent, $date, $cdg);
+        return (int)$this->lastInsertId();
+    }
+
+    public function update(
+        int $entityId,
+        string $name,
+        string $siren = '',
+        string $type = self::TYPE_COLLECTIVITE,
+        int $parent = 0,
+        int $cdg = 0,
+    ): void {
+        $query = <<<EOT
+UPDATE entite
+SET denomination=?, siren=?, type=?, entite_mere=?, centre_de_gestion=?
+WHERE id_e=?;
+EOT;
+        $this->query($query, $name, $siren, $type, $parent, $cdg, $entityId);
+    }
+
+    public function updateAncestor(int $entityId, int $ancestor = 0): void
+    {
+        $deleteQuery = 'DELETE FROM entite_ancetre WHERE id_e=?;';
+        $this->query($deleteQuery, $entityId);
+        $insertQuery = 'INSERT INTO entite_ancetre(id_e_ancetre,id_e,niveau) VALUES (?,?,?);';
+        $selectQuery = 'SELECT entite_mere FROM entite WHERE id_e=?;';
+        $niveau = 0;
+        $this->query($insertQuery, $entityId, $entityId, $niveau++);
+        while ($ancestor !== 0) {
+            $this->query($insertQuery, $ancestor, $entityId, $niveau++);
+            $ancestor = (int)$this->queryOne($selectQuery, $ancestor);
+        }
+        $this->query($insertQuery, 0, $entityId, $niveau);
+    }
+
+    public function isActive(int $entityId): bool
+    {
+        if ($entityId === 0) {
+            return true;
+        }
+
+        $info = $this->getInfo($entityId);
+        if ($info === false) {
+            return false;
+        }
+
+        return (bool)$info['is_active'];
+    }
+
+    public function isCDG(int $entityId): bool
+    {
+        if ($entityId === 0) {
+            return true;
+        }
+
+        $info = $this->getInfo($entityId);
+        if ($info === false) {
+            return false;
+        }
+
+        return $info['type'] === self::TYPE_CENTRE_DE_GESTION;
+    }
 }

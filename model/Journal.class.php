@@ -25,6 +25,7 @@ class Journal extends SQL
     public const ACTION_SUPPRIME = 'Supprimé';
     public const ACTION_MODIFFIE = 'Modifié';
     public const ACTION_AJOUTE = 'Ajouté';
+    public const ACTION_CREATED = 'Créé';
 
     private $id_u;
     private Horodateur $horodateur;
