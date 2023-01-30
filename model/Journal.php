@@ -171,7 +171,7 @@ class Journal extends SQL
             $result[$i]['action_libelle'] = $documentType->getAction()->getActionName($line['action']);
             if (!$with_preuve) {
                 unset($result[$i]['preuve']);
-            } elseif ($this->use_storage) {
+            } elseif ($result[$i]['preuve'] === '' && $this->use_storage) {
                 $result[$i]['preuve'] = $this->getProof($result[$i]['id_j']);
             }
         }
@@ -301,7 +301,7 @@ class Journal extends SQL
         $sql = "SELECT * FROM journal WHERE id_j=?";
         $result = $this->queryOne($sql, $id_j);
 
-        if ($this->use_storage) {
+        if ($result['preuve'] === '' && $this->use_storage) {
             $result['preuve'] = $this->getProof($result['id_j']);
         }
 
@@ -325,7 +325,7 @@ class Journal extends SQL
         $result['document_type_libelle'] = $documentType->getName();
         $result['action_libelle'] = $documentType->getAction()->getActionName($result['action']);
 
-        if ($this->use_storage) {
+        if ($result['preuve'] === '' && $this->use_storage) {
             $result['preuve'] = $this->getProof($id_j);
         }
 
