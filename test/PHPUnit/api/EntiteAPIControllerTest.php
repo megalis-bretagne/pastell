@@ -44,19 +44,25 @@ class EntiteAPIControllerTest extends PastellTestCase
         $this->assertEquals('Bourg-en-Bresse', $info['denomination']);
     }
 
-    public function testCreateFilleCDG()
+    public function testCreateFilleCDG(): void
     {
-        $info = $this->getInternalAPI()->patch(
-            "/entite/1",
+        $this->getObjectInstancier()->getInstance(EntiteSQL::class)->update(
+            self::ID_E_COL,
+            'name',
+            '',
+            EntiteSQL::TYPE_CENTRE_DE_GESTION
+        );
+        $info = $this->getInternalAPI()->post(
+            '/entite',
             [
                 'id_e' => 2,
                 'denomination' => 'Métropolis',
                 'type' => 'collectivite',
                 'siren' => '677203002',
-                'centre_de_gestion' => 1,
+                'centre_de_gestion' => self::ID_E_COL,
             ]
         );
-        $this->assertEquals(1, $info['centre_de_gestion']);
+        static::assertSame(1, $info['centre_de_gestion']);
     }
 
     public function testCreateFille()
