@@ -4,13 +4,14 @@ namespace Pastell\Service\ImportExportConfig;
 
 use ConnecteurFactory;
 use DonneesFormulaireException;
-use EntiteCreator;
 use Exception;
 use FluxEntiteHeritageSQL;
 use Pastell\Service\Connecteur\ConnecteurAssociationService;
 use Pastell\Service\Connecteur\ConnecteurCreationService;
+use Pastell\Service\Entite\EntityCreationService;
+use UnrecoverableException;
 
-class ImportConfigService
+final class ImportConfigService
 {
     //Ne permets pas d'importer les centres de gestion des collectivités !
 
@@ -18,7 +19,7 @@ class ImportConfigService
     private array $lastErrors = [];
 
     public function __construct(
-        private readonly EntiteCreator $entiteCreator,
+        private readonly EntityCreationService $entityCreationService,
         private readonly ConnecteurFactory $connecteurFactory,
         private readonly FluxEntiteHeritageSQL $fluxEntiteHeritageSQL,
         private readonly ConnecteurCreationService $connecteurCreationService,
@@ -46,6 +47,9 @@ class ImportConfigService
         $this->importAssociationInheritance($exportedData, $id_e_mapping, $id_e_root);
     }
 
+    /**
+     * @throws UnrecoverableException
+     */
     private function importEntity(array $exportedData, int $id_e_root): array
     {
         $id_e_mapping = [];
@@ -53,10 +57,9 @@ class ImportConfigService
             return $id_e_mapping;
         }
         $entityInfo = $exportedData[ExportConfigService::ENTITY_INFO];
-        $id_e_entity = $this->entiteCreator->edit(
-            0,
-            $entityInfo['siren'],
+        $id_e_entity = $this->entityCreationService->create(
             $entityInfo['denomination'],
+            $entityInfo['siren'],
             $entityInfo['type'],
             $id_e_root
         );
@@ -64,6 +67,9 @@ class ImportConfigService
         return $id_e_mapping;
     }
 
+    /**
+     * @throws UnrecoverableException
+     */
     public function importChildEntity(array $exportedData, array $id_e_mapping, int $id_e_root): array
     {
         if (empty($exportedData[ExportConfigService::ENTITY_CHILD])) {
@@ -76,10 +82,9 @@ class ImportConfigService
             } else {
                 $entity_child['entite_mere'] = $id_e_mapping[$entity_child['entite_mere']];
             }
-            $id_e_entity = $this->entiteCreator->edit(
-                0,
-                $entity_child['siren'],
+            $id_e_entity = $this->entityCreationService->create(
                 $entity_child['denomination'],
+                $entity_child['siren'],
                 $entity_child['type'],
                 $entity_child['entite_mere'],
             );

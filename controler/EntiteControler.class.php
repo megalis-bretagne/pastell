@@ -1,6 +1,8 @@
 <?php
 
 use Pastell\Service\Crypto;
+use Pastell\Service\Entite\EntityCreationService;
+use Pastell\Service\Entite\EntityUpdateService;
 use Pastell\Service\FeatureToggleService;
 use Pastell\Service\ImportExportConfig\ExportConfigService;
 use Pastell\Service\ImportExportConfig\ImportConfigService;
@@ -333,11 +335,26 @@ class EntiteControler extends PastellControler
         $this->renderDefault();
     }
 
-    public function doEditionAction()
+    /**
+     * @throws UnrecoverableException
+     * @throws LastMessageException
+     * @throws LastErrorException
+     */
+    public function doEditionAction(): void
     {
         $recuperateur = $this->getPostInfo();
-        $id_e = $recuperateur->get('id_e');
-        $entite_mere =  $recuperateur->get('entite_mere', 0);
+        $id_e = $recuperateur->getInt('id_e');
+        $name = $recuperateur->get('denomination');
+        $siren = $recuperateur->get('siren');
+        $entite_mere =  $recuperateur->getInt('entite_mere', 0);
+        $type = EntiteSQL::TYPE_COLLECTIVITE;
+        $cdg = 0;
+
+        if ($this->getViewParameterByKey('cdg_feature')) {
+            $type = $recuperateur->get('type');
+            $cdg = $recuperateur->getInt('centre_de_gestion', 0);
+        }
+
         try {
             // Ajout du controle des droits qui ne se fait plus sur la function "edition" commune aux APIs et à la console Pastell
             if ($id_e) {
@@ -346,10 +363,21 @@ class EntiteControler extends PastellControler
             $this->hasDroitEdition($entite_mere);
 
             if ($id_e) {
-                $this->apiPatch("/entite/$id_e");
+                $this->getInstance(EntityUpdateService::class)->update(
+                    $name,
+                    $siren,
+                    $type,
+                    $entite_mere,
+                    $cdg,
+                );
             } else {
-                $result = $this->apiPost("/entite");
-                $id_e = $result['id_e'];
+                $id_e = $this->getInstance(EntityCreationService::class)->create(
+                    $name,
+                    $siren,
+                    $type,
+                    $entite_mere,
+                    $cdg,
+                );
             }
         } catch (Exception $e) {
             $this->setLastError($e->getMessage());
@@ -514,30 +542,39 @@ class EntiteControler extends PastellControler
         $this->redirect("/Entite/import?page=1&id_e=$id_e");
     }
 
-    public function doImportAction()
+    /**
+     * @throws UnrecoverableException
+     * @throws LastMessageException
+     * @throws LastErrorException
+     */
+    public function doImportAction(): void
     {
-
-        $recuperateur = new Recuperateur($_POST);
+        $recuperateur = $this->getPostInfo();
 
         $id_e = $recuperateur->getInt('id_e', 0);
         $centre_de_gestion = $recuperateur->getInt('centre_de_gestion');
-        $this->verifDroit($id_e, "entite:edition");
+        $this->verifDroit($id_e, 'entite:edition');
 
 
         $fileUploader = new FileUploader();
         $file_path = $fileUploader->getFilePath('csv_col');
         if (! $file_path) {
-            $this->setLastError("Impossible de lire le fichier");
+            $this->setLastError('Impossible de lire le fichier');
             $this->redirect("/Entite/import?id_e=$id_e");
         }
 
         $CSV = new CSV();
         $colList = $CSV->get($file_path);
 
-        $entiteCreator = new EntiteCreator($this->getSQLQuery(), $this->getJournal());
         $nb_col = 0;
         foreach ($colList as $col) {
-            $entiteCreator->edit(0, $col[1], $col[0], EntiteSQL::TYPE_COLLECTIVITE, $id_e, $centre_de_gestion);
+            $this->getInstance(EntityCreationService::class)->create(
+                $col[1],
+                $col[0],
+                EntiteSQL::TYPE_COLLECTIVITE,
+                $id_e,
+                $centre_de_gestion,
+            );
             $nb_col++;
         }
 

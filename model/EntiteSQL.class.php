@@ -385,6 +385,21 @@ EOT;
         $this->query($insertQuery, 0, $entityId, $niveau);
     }
 
+    public function updateAllAncestors(): void
+    {
+        $sql = 'DELETE FROM entite_ancetre;';
+        $this->query($sql);
+
+        $sql = 'INSERT INTO entite_ancetre(id_e_ancetre,id_e,niveau) VALUES (0,0,0);';
+        $this->query($sql);
+
+        $sql = 'SELECT entite_mere,id_e FROM entite;';
+        $allEntite = $this->query($sql);
+        foreach ($allEntite as $entite) {
+            $this->updateAncestor($entite['id_e'], $entite['entite_mere']);
+        }
+    }
+
     public function isActive(int $entityId): bool
     {
         if ($entityId === 0) {
