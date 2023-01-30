@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\Entite\EntityCreationService;
+
 class PastellControlerTest extends ControlerTestCase
 {
     public function testsetNavigationInfo()
@@ -35,58 +37,61 @@ class PastellControlerTest extends ControlerTestCase
         );
     }
 
-    public function testSetNavigationWhenUserHasNoEntiteLectureRight()
+    /**
+     * @throws UnrecoverableException
+     */
+    public function testSetNavigationWhenUserHasNoEntiteLectureRight(): void
     {
-        $entiteCreator = $this->getObjectInstancier()->getInstance(EntiteCreator::class);
-        $entiteCreator->edit(0, "000000000", "Nouvelle entité");
+        $entityCreationService = $this->getObjectInstancier()->getInstance(EntityCreationService::class);
+        $entityCreationService->create('Nouvelle entité', '000000000');
 
-        $this->authenticateNewUserWithPermission(["helios-generique:edition"], 1);
+        $this->authenticateNewUserWithPermission(['helios-generique:edition'], 1);
 
         $pastellControler = $this->getObjectInstancier()->getInstance(PastellControler::class);
 
         $pastellControler->setNavigationInfo(0, 'test');
-        $this->assertCount(1, $pastellControler->getViewParameterOrObject('navigation')[0]['children']);
+        static::assertCount(1, $pastellControler->getViewParameterByKey('navigation')[0]['children']);
     }
 
-    public function testSetNavigationWhenUserHasNoRightAtAll()
+    /**
+     * @throws UnrecoverableException
+     */
+    public function testSetNavigationWhenUserHasNoRightAtAll(): void
     {
-        $entiteCreator = $this->getObjectInstancier()->getInstance(EntiteCreator::class);
-        $entiteCreator->edit(0, "000000000", "Nouvelle entité");
+        $entityCreationService = $this->getObjectInstancier()->getInstance(EntityCreationService::class);
+        $entityCreationService->create('Nouvelle entité', '000000000');
 
-        $this->authenticateNewUserWithPermission(["helios-generique:edition"], 1);
+        $this->authenticateNewUserWithPermission(['helios-generique:edition'], 1);
 
         $pastellControler = $this->getObjectInstancier()->getInstance(PastellControler::class);
 
         $pastellControler->setNavigationInfo(0, 'test');
-        $this->assertCount(1, $pastellControler->getViewParameterOrObject('navigation')[0]['children']);
+        static::assertCount(1, $pastellControler->getViewParameterByKey('navigation')[0]['children']);
     }
 
-    public function testSetNavigationWhenUserHasNoRightOnSecondLevel()
+    /**
+     * @throws UnrecoverableException
+     */
+    public function testSetNavigationWhenUserHasNoRightOnSecondLevel(): void
     {
-        $entiteCreator = $this->getObjectInstancier()->getInstance(EntiteCreator::class);
-        $id_e_fille = $entiteCreator->edit(
-            0,
-            "000000000",
-            "Nouvelle entité",
-            EntiteSQL::TYPE_COLLECTIVITE,
-            2
-        );
-        $id_e_fille2 = $entiteCreator->edit(
-            0,
-            "000000000",
-            "Nouvelle entité 2",
+        $entityCreationService = $this->getObjectInstancier()->getInstance(EntityCreationService::class);
+        $id_e_fille = $entityCreationService->create('Nouvelle entité', '000000000', EntiteSQL::TYPE_COLLECTIVITE, 2);
+
+        $id_e_fille2 = $entityCreationService->create(
+            'Nouvelle entité 2',
+            '000000000',
             EntiteSQL::TYPE_COLLECTIVITE,
             2
         );
 
-        $this->authenticateNewUserWithPermission(["helios-generique:edition"], $id_e_fille);
+        $this->authenticateNewUserWithPermission(['helios-generique:edition'], $id_e_fille);
 
         $pastellControler = $this->getObjectInstancier()->getInstance(PastellControler::class);
         $pastellControler->setNavigationInfo($id_e_fille, 'test');
-        $this->assertCount(1, $pastellControler->getViewParameterOrObject('navigation')[1]['same_level_entities']);
-        $this->assertEquals(
-            "Nouvelle entité",
-            $pastellControler->getViewParameterOrObject('navigation')[1]['same_level_entities'][0]['denomination']
+        static::assertCount(1, $pastellControler->getViewParameterByKey('navigation')[1]['same_level_entities']);
+        static::assertEquals(
+            'Nouvelle entité',
+            $pastellControler->getViewParameterByKey('navigation')[1]['same_level_entities'][0]['denomination']
         );
     }
 }

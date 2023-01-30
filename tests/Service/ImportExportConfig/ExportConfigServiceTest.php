@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Pastell\Tests\Service\ImportExportConfig;
 
-use EntiteCreator;
 use EntiteSQL;
 use FakeTdT;
 use FluxEntiteHeritageSQL;
+use Pastell\Service\Entite\EntityCreationService;
 use Pastell\Service\ImportExportConfig\ExportConfigService;
 use Pastell\Service\ImportExportConfig\ImportConfigService;
 use PastellTestCase;
@@ -31,16 +31,24 @@ class ExportConfigServiceTest extends PastellTestCase
         $this->associateFluxWithConnector($id_ce, "test", "test", 2);
         $this->associateFluxWithConnector(2, "actes-generique", "TdT", 2);
 
-        /** @var EntiteCreator $entiteCreator */
-        $entiteCreator = $this->getObjectInstancier()->getInstance(EntiteCreator::class);
-        $id_e_herite = $entiteCreator->edit(0, "", "Entite qui hérite", 'collectivite', 1);
+        $entityCreationService = $this->getObjectInstancier()->getInstance(EntityCreationService::class);
+        $id_e_herite = $entityCreationService->create(
+            'Entite qui hérite',
+            '',
+            EntiteSQL::TYPE_COLLECTIVITE,
+            self::ID_E_COL
+        );
 
         /** @var FluxEntiteHeritageSQL $fluxEntiteHeritageSQL */
         $fluxEntiteHeritageSQL = $this->getObjectInstancier()->getInstance(FluxEntiteHeritageSQL::class);
         $fluxEntiteHeritageSQL->setInheritanceAllFlux($id_e_herite);
 
-        $id_e_herite_actes = $entiteCreator->edit(0, "", "Entite qui hérite que de actes", 'collectivite', 1);
-
+        $id_e_herite_actes = $entityCreationService->create(
+            'Entite qui hérite que de actes',
+            '',
+            EntiteSQL::TYPE_COLLECTIVITE,
+            self::ID_E_COL
+        );
         /** @var FluxEntiteHeritageSQL $fluxEntiteHeritageSQL */
         $fluxEntiteHeritageSQL = $this->getObjectInstancier()->getInstance(FluxEntiteHeritageSQL::class);
         $fluxEntiteHeritageSQL->setInheritance($id_e_herite_actes, 'actes_generique');
@@ -53,8 +61,10 @@ class ExportConfigServiceTest extends PastellTestCase
             ExportConfigService::INCLUDE_CHILD => true,
             ExportConfigService::INCLUDE_ASSOCIATION => true,
             ]);
-        $id_e_root = $entiteCreator->edit(0, '', "Entité d'importation");
-
+        $id_e_root = $entityCreationService->create(
+            "Entité d'importation",
+            '',
+        );
         $importConfigService = $this->getObjectInstancier()->getInstance(ImportConfigService::class);
 
         $importConfigService->import($exportedInfo, $id_e_root);

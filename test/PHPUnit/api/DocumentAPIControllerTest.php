@@ -240,11 +240,11 @@ class DocumentAPIControllerTest extends PastellTestCase
         $this->assertEquals("Le formulaire est incomplet : le champ «Acte» est obligatoire.", $info['message']);
     }
 
-    public function testCount()
+    public function testCount(): void
     {
-        $this->getInternalAPI()->post("entite/1/document", ['type' => 'actes-generique']);
-        $info = $this->getInternalAPI()->get("document/count", ['id_e' => 1,'type' => 'actes-generique']);
-        $this->assertEquals(
+        $this->createDocument('actes-generique');
+        $info = $this->getInternalAPI()->get('document/count', ['id_e' => 1,'type' => 'actes-generique']);
+        static::assertEquals(
             [
             1 =>
                  [
@@ -257,14 +257,14 @@ class DocumentAPIControllerTest extends PastellTestCase
                         ],
                     'info' =>
                          [
-                            'id_e' => '1',
+                            'id_e' => 1,
                             'type' => 'collectivite',
                             'denomination' => 'Bourg-en-Bresse',
-                            'siren' => '123456789',
+                            'siren' => '000000000',
                             'date_inscription' => '0000-00-00 00:00:00',
                             'entite_mere' => '0',
-                            'centre_de_gestion' => '0',
-                            'is_active' => '1',
+                            'centre_de_gestion' => 0,
+                            'is_active' => 1,
                         ],
                 ],
              ],

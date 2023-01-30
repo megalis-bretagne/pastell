@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\Entite\EntityCreationService;
+
 class RoleUtilisateurSQLTest extends PastellTestCase
 {
     /**
@@ -149,23 +151,26 @@ class RoleUtilisateurSQLTest extends PastellTestCase
     }
 
 
-    public function testGetArbreFille()
+    /**
+     * @throws UnrecoverableException
+     */
+    public function testGetArbreFille(): void
     {
-        $entiteCreator = $this->getObjectInstancier()->getInstance(EntiteCreator::class);
-        $id_e_1 = $entiteCreator->edit(0, "000000000", "Entité 1");
-        $id_e_2 = $entiteCreator->edit(0, "000000000", "Entité 2");
-        $id_e_3 = $entiteCreator->edit(0, "000000000", "Entité 3", EntiteSQL::TYPE_COLLECTIVITE, $id_e_2);
+        $entityCreationService = $this->getObjectInstancier()->getInstance(EntityCreationService::class);
+        $id_e_1 = $entityCreationService->create('Entité 1', '000000000');
+        $id_e_2 = $entityCreationService->create('Entité 2', '000000000');
+        $id_e_3 = $entityCreationService->create('Entité 3', '000000000', EntiteSQL::TYPE_COLLECTIVITE, $id_e_2);
 
         $utilisateurCreator = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class);
         $id_u = $utilisateurCreator->create('test_get_arbre_fille', 'aa', 'aa', 'aa@aa.fr');
 
-        $this->roleUtilisateurSQL->addRole($id_u, "admin", $id_e_1);
-        $this->roleUtilisateurSQL->addRole($id_u, "admin", $id_e_3);
+        $this->roleUtilisateurSQL->addRole($id_u, 'admin', $id_e_1);
+        $this->roleUtilisateurSQL->addRole($id_u, 'admin', $id_e_3);
 
-        $arbre_fille = $this->roleUtilisateurSQL->getArbreFille($id_u, "entite:lecture");
+        $arbre_fille = $this->roleUtilisateurSQL->getArbreFille($id_u, 'entite:lecture');
         //var_export($arbre_fille);
 
-        $this->assertEquals(
+        static::assertSame(
             [
                 0 =>
                      [
@@ -184,49 +189,52 @@ class RoleUtilisateurSQLTest extends PastellTestCase
         );
     }
 
-    public function testGetArbreFille2()
+    /**
+     * @throws UnrecoverableException
+     */
+    public function testGetArbreFille2(): void
     {
-        $entiteCreator = $this->getObjectInstancier()->getInstance(EntiteCreator::class);
-        $id_e_1 = $entiteCreator->edit(0, "000000000", "Entité 1");
-        $id_e_2 = $entiteCreator->edit(0, "000000000", "Entité 2");
-        $id_e_3 = $entiteCreator->edit(0, "000000000", "Entité 3", EntiteSQL::TYPE_COLLECTIVITE, $id_e_2);
+        $entityCreationService = $this->getObjectInstancier()->getInstance(EntityCreationService::class);
+        $id_e_1 = $entityCreationService->create('Entité 1', '000000000');
+        $id_e_2 = $entityCreationService->create('Entité 2', '000000000');
+        $id_e_3 = $entityCreationService->create('Entité 3', '000000000', EntiteSQL::TYPE_COLLECTIVITE, $id_e_2);
 
         $utilisateurCreator = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class);
         $id_u = $utilisateurCreator->create('test_get_arbre_fille', 'aa', 'aa', 'aa@aa.fr');
 
-        $this->roleUtilisateurSQL->addRole($id_u, "admin", 0);
+        $this->roleUtilisateurSQL->addRole($id_u, 'admin', 0);
 
-        $arbre_fille = $this->roleUtilisateurSQL->getArbreFille($id_u, "entite:lecture");
+        $arbre_fille = $this->roleUtilisateurSQL->getArbreFille($id_u, 'entite:lecture');
 
-        $this->assertEquals(
+        static::assertSame(
             [
                 0 =>
                     [
-                        'id_e' => '1',
+                        'id_e' => 1,
                         'denomination' => 'Bourg-en-Bresse',
                         'profondeur' => 0,
                     ],
                 1 =>
                     [
-                        'id_e' => '2',
+                        'id_e' => 2,
                         'denomination' => 'CCAS',
                         'profondeur' => 1,
                     ],
                 2 =>
                     [
-                        'id_e' => '3',
+                        'id_e' => 3,
                         'denomination' => 'Entité 1',
                         'profondeur' => 0,
                     ],
                 3 =>
                     [
-                        'id_e' => '4',
+                        'id_e' => 4,
                         'denomination' => 'Entité 2',
                         'profondeur' => 0,
                     ],
                 4 =>
                     [
-                        'id_e' => '5',
+                        'id_e' => 5,
                         'denomination' => 'Entité 3',
                         'profondeur' => 1,
                     ],
@@ -235,11 +243,14 @@ class RoleUtilisateurSQLTest extends PastellTestCase
         );
     }
 
-    public function testGetChildrenWithPermission()
+    /**
+     * @throws UnrecoverableException
+     */
+    public function testGetChildrenWithPermission(): void
     {
-        $entiteCreator = $this->getObjectInstancier()->getInstance(EntiteCreator::class);
-        $id_e_2 = $entiteCreator->edit(0, "000000000", "Entité 2");
-        $id_e_3 = $entiteCreator->edit(0, "000000000", "Entité 3", EntiteSQL::TYPE_COLLECTIVITE, $id_e_2);
+        $entityCreationService = $this->getObjectInstancier()->getInstance(EntityCreationService::class);
+        $id_e_2 = $entityCreationService->create('Entité 2', '000000000');
+        $id_e_3 = $entityCreationService->create('Entité 3', '000000000', EntiteSQL::TYPE_COLLECTIVITE, $id_e_2);
 
         $utilisateurCreator = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class);
         $id_u = $utilisateurCreator->create(
@@ -249,12 +260,12 @@ class RoleUtilisateurSQLTest extends PastellTestCase
             'aa@aa.fr'
         );
 
-        $this->roleUtilisateurSQL->addRole($id_u, "admin", $id_e_2);
-        $this->roleUtilisateurSQL->addRole($id_u, "admin", $id_e_3);
+        $this->roleUtilisateurSQL->addRole($id_u, 'admin', $id_e_2);
+        $this->roleUtilisateurSQL->addRole($id_u, 'admin', $id_e_3);
 
         $childrenWithPermissions = $this->roleUtilisateurSQL->getChildrenWithPermission($id_e_2, $id_u);
 
-        $this->assertCount(1, $childrenWithPermissions);
-        $this->assertSame($id_e_3, $childrenWithPermissions[0]['id_e']);
+        static::assertCount(1, $childrenWithPermissions);
+        static::assertSame($id_e_3, $childrenWithPermissions[0]['id_e']);
     }
 }
