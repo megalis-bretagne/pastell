@@ -25,14 +25,18 @@ if ($search) {
     <i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des dossiers
 </a>
 <div class="box">
-    <form action='<?php $this->url("Document/confirmTraitementLot"); ?>' >
-        <h3>Selectionner un ou plusieurs objets, puis l'action à éxecuter</h3>
+    <form action='<?php $this->url('Document/confirmTraitementLot'); ?>' >
+        <h3>Sélectionner un ou plusieurs objets, puis l'action à exécuter</h3>
         <div class="form-inline">
 
             <select class="form-control col-md-5 mr-2" id="action-select" name="action" title="selectionner une action">
                 <option value="" disabled selected>Sélectionner une action</option>
             </select>
-            <button type="submit" class="btn btn-primary" id="action-select-submit"><i class="fa fa-cogs"></i>&nbsp;Éxecuter</button>
+            <button type="submit"
+                    class="btn btn-primary"
+                    id="action-select-submit"
+            ><i class="fa fa-cogs"></i>&nbsp;Exécuter
+            </button>
         </div>
         <br/>
 

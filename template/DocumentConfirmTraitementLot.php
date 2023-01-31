@@ -54,7 +54,7 @@
         <?php else : ?>
             <button type="submit" class="btn btn-primary">
                 <i class="fa fa-cogs"></i>&nbsp;
-                Éxecuter
+                Exécuter
             </button>
         <?php endif; ?>
     </form>
