@@ -1,6 +1,7 @@
 <?php
 
 use Monolog\Logger;
+use Pastell\Storage\S3adapter;
 use Pastell\Storage\StorageInterface;
 
 class Journal extends SQL
@@ -38,12 +39,16 @@ class Journal extends SQL
         private readonly DocumentTypeFactory $documentTypeFactory,
         private readonly Logger $logger,
         private readonly bool $disable_journal_horodatage,
-        private readonly bool $use_storage,
+        private readonly bool $use_external_storage_for_journal_proof,
         private readonly StorageInterface $storage,
     ) {
         parent::__construct($sqlQuery);
     }
 
+    public function setInterfaceStorage(string $S3url, string $S3key, string $S3secret, string $S3bucket): void
+    {
+        $this->storage = new S3adapter($S3url, $S3key, $S3secret, $S3bucket);
+    }
     public function setHorodateur(Horodateur $horodateur)
     {
         $this->horodateur = $horodateur;
@@ -113,7 +118,7 @@ class Journal extends SQL
             }
         }
 
-        if (!$this->use_storage) {
+        if (!$this->use_external_storage_for_journal_proof) {
             $sql = "INSERT INTO journal(type,id_e,id_u,id_d,action,message,date,message_horodate,date_horodatage,document_type, preuve) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
             $this->query($sql, $type, $id_e, $id_u, $id_d, $action, $message, $now, $message_horodate, $date_horodatage, $document_type, $preuve);
 
@@ -171,7 +176,7 @@ class Journal extends SQL
             $result[$i]['action_libelle'] = $documentType->getAction()->getActionName($line['action']);
             if (!$with_preuve) {
                 unset($result[$i]['preuve']);
-            } elseif ($result[$i]['preuve'] === '' && $this->use_storage) {
+            } elseif ($result[$i]['preuve'] === '' && $this->use_external_storage_for_journal_proof) {
                 $result[$i]['preuve'] = $this->getProof($result[$i]['id_j']);
             }
         }
@@ -301,7 +306,7 @@ class Journal extends SQL
         $sql = "SELECT * FROM journal WHERE id_j=?";
         $result = $this->queryOne($sql, $id_j);
 
-        if ($result['preuve'] === '' && $this->use_storage) {
+        if ($result['preuve'] === '' && $this->use_external_storage_for_journal_proof) {
             $result['preuve'] = $this->getProof($result['id_j']);
         }
 
@@ -325,7 +330,7 @@ class Journal extends SQL
         $result['document_type_libelle'] = $documentType->getName();
         $result['action_libelle'] = $documentType->getAction()->getActionName($result['action']);
 
-        if ($result['preuve'] === '' && $this->use_storage) {
+        if ($result['preuve'] === '' && $this->use_external_storage_for_journal_proof) {
             $result['preuve'] = $this->getProof($id_j);
         }
 
@@ -341,7 +346,7 @@ class Journal extends SQL
         $sql = "SELECT id_j FROM journal_attente_preuve";
         $id_j_list = $this->queryOneCol($sql);
 
-        if (!$this->use_storage) {
+        if (!$this->use_external_storage_for_journal_proof) {
             $sql = "UPDATE journal set preuve=?,date_horodatage=? WHERE id_j=?";
         } else {
             $sql = "UPDATE journal set date_horodatage=? WHERE id_j=?";
@@ -352,7 +357,7 @@ class Journal extends SQL
             $info = $this->getInfo($id_j);
             $preuve = $this->horodateur->getTimestampReply($info['message_horodate']);
             $date_horodatage = $this->horodateur->getTimeStamp($preuve);
-            if (!$this->use_storage) {
+            if (!$this->use_external_storage_for_journal_proof) {
                 $this->query($sql, $preuve, $date_horodatage, $info['id_j']);
             } else {
                 $this->saveProof($id_j, $preuve);

@@ -1,10 +1,11 @@
 services:
   web:
     environment:
-      S3_ENDPOINT: ${S3_ENDPOINT:-http://minio:9000/}
+      S3_URL: ${S3_URL:-http://minio:9000/}
       S3_KEY: ${S3_KEY:-minioadmin}
       S3_SECRET: ${S3_SECRET:-minioadmin}
-      S3_BUCKET: ${S3_BUCKET:-journal-preuves}
+      S3_BUCKET_JOURNAL: ${S3_BUCKET_JOURNAL:-journal-preuves}
+      USE_EXTERNAL_STORAGE_FOR_JOURNAL_PROOF: ${USE_EXTERNAL_STORAGE_FOR_JOURNAL_PROOF:-false}
 
   minio:
     image: quay.io/minio/minio

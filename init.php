@@ -11,8 +11,8 @@ use Pastell\Utilities\Identifier\IdentifierGeneratorInterface;
 use Pastell\Utilities\Identifier\UuidGenerator;
 use Pastell\Storage\S3Wrapper;
 use Pastell\Storage\StorageInterface;
-use Pastell\Storage\StorageInterfaceNone;
-use Pastell\Storage\StorageInterfaceTest;
+use Pastell\Storage\StorageInterfaceDummy;
+use Pastell\Storage\StorageInterfaceFake;
 use Symfony\Component\Lock\LockFactory;
 use Symfony\Component\Lock\Store\InMemoryStore;
 use Symfony\Component\Lock\Store\RedisStore;
@@ -58,21 +58,11 @@ if (REDIS_SERVER && !TESTING_ENVIRONNEMENT) {
     $objectInstancier->setInstance(LockFactory::class, new LockFactory(new InMemoryStore()));
 }
 
-$objectInstancier->setInstance('use_storage', USE_STORAGE);
-$objectInstancier->setInstance('S3url', S3_ENDPOINT);
-$objectInstancier->setInstance('S3key', S3_KEY);
-$objectInstancier->setInstance('S3secret', S3_SECRET);
-if (USE_STORAGE) {
-    if (TESTING_ENVIRONNEMENT) {
-        $objectInstancier->setInstance(StorageInterface::class, new StorageInterfaceTest());
-    } else {
-        $objectInstancier->setInstance('S3bucket', S3_BUCKET_JOURNAL);
-        $objectInstancier->setInstance(StorageInterface::class, new S3Wrapper(S3_ENDPOINT, S3_KEY, S3_SECRET, S3_BUCKET_JOURNAL));
-    }
-} else {
-    $objectInstancier->setInstance(StorageInterface::class, new StorageInterfaceNone());
-}
-
+$objectInstancier->setInstance('use_external_storage_for_journal_proof', USE_EXTERNAL_STORAGE_FOR_JOURNAL_PROOF);
+$objectInstancier->setInstance('s3Url', S3_URL);
+$objectInstancier->setInstance('s3Key', S3_KEY);
+$objectInstancier->setInstance('s3Secret', S3_SECRET);
+$objectInstancier->setInstance(StorageInterface::class, new StorageInterfaceDummy());
 
 $objectInstancier->setInstance('cache_ttl_in_seconds', CACHE_TTL_IN_SECONDS);
 $objectInstancier->setInstance('disable_job_queue', DISABLE_JOB_QUEUE);
@@ -98,6 +88,14 @@ try {
     /** Nothing to do */
 }
 
+if (USE_EXTERNAL_STORAGE_FOR_JOURNAL_PROOF) {
+    if (TESTING_ENVIRONNEMENT) {
+        $objectInstancier->setInstance(StorageInterface::class, new StorageInterfaceFake());
+    } else {
+        $objectInstancier->setInstance('s3BucketJournal', S3_BUCKET_JOURNAL);
+        $objectInstancier->getInstance(Journal::class)->setInterfaceStorage(S3_URL, S3_KEY, S3_SECRET, S3_BUCKET_JOURNAL);
+    }
+}
 
 /** @var SQLQuery $sqlQuery */
 $sqlQuery = $objectInstancier->getInstance(SQLQuery::class);

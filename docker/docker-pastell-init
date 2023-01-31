@@ -79,6 +79,12 @@ define("NO_PROXY", "${NO_PROXY:-localhost,127.0.0.1,::1,seda-generator}");
 
 define("USE_UUID_FOR_DOCUMENT", ${USE_UUID_FOR_DOCUMENT:-false});
 
+define("S3_URL", "${S3_URL:-http://minio:9000/}");
+define("S3_KEY", "${S3_KEY:-minioadmin}");
+define("S3_SECRET", "${S3_SECRET:-minioadmin}");
+define("S3_BUCKET_JOURNAL", "${S3_BUCKET_JOURNAL:-journal-preuves}");
+define("USE_EXTERNAL_STORAGE_FOR_JOURNAL_PROOF", "${USE_EXTERNAL_STORAGE_FOR_JOURNAL_PROOF:-false}");
+
 EOF
 
 env | grep '^TOGGLE_' | sed "s/^TOGGLE_\([^=]*\)=\(.*\)/\$feature_toggle[Pastell\\\Service\\\FeatureToggle\\\\\1::class] = \2;/g"
