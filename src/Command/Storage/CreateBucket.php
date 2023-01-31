@@ -13,9 +13,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 class CreateBucket extends Command
 {
     public function __construct(
-        private readonly string $S3url,
-        private readonly string $S3key,
-        private readonly string $S3secret,
+        private readonly string $s3Url,
+        private readonly string $s3Key,
+        private readonly string $s3Secret,
     ) {
         parent::__construct();
     }
@@ -30,7 +30,7 @@ class CreateBucket extends Command
     }
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $S3wrapper = new S3adapter($this->S3url, $this->S3key, $this->S3secret, $input->getArgument('bucket'));
+        $S3wrapper = new S3adapter($this->s3Url, $this->s3Key, $this->s3Secret, $input->getArgument('bucket'));
         if (!$S3wrapper->isBucketSet()) {
             $S3wrapper->createBucket();
         }
