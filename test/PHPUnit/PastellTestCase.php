@@ -95,7 +95,7 @@ abstract class PastellTestCase extends TestCase
         $this->objectInstancier->setInstance(TestHandler::class, $testHandler);
         $this->getObjectInstancier()->getInstance(Logger::class)->pushHandler($testHandler);
         $this->reinitFileSystem();
-        $this->objectInstancier->setInstance('use_storage', false);
+        $this->objectInstancier->setInstance('use_external_storage_for_journal_proof', false);
         $this->objectInstancier->setInstance(StorageInterface::class, new StorageInterfaceFake());
         $this->getJournal()->setId(1);
 

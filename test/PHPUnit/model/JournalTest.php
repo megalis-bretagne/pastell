@@ -29,7 +29,7 @@ class JournalTest extends PastellTestCase
             $this->getObjectInstancier()->getInstance(DocumentTypeFactory::class),
             $this->getLogger(),
             false,
-            $this->getObjectInstancier()->getInstance('use_storage'),
+            $this->getObjectInstancier()->getInstance('use_external_storage_for_journal_proof'),
             $this->getObjectInstancier()->getInstance(StorageInterface::class),
         );
         $journal->setId(1);
@@ -66,7 +66,7 @@ class JournalTest extends PastellTestCase
 
     public function testAddSQLWithObjectStorage()
     {
-        $this->getObjectInstancier()->setInstance('use_storage', true);
+        $this->getObjectInstancier()->setInstance('use_external_storage_for_journal_proof', true);
         $this->setUp();
         $this->testAddSQL();
     }
@@ -81,7 +81,7 @@ class JournalTest extends PastellTestCase
 
     public function testAddSQLWihtoutHorodateurwithObjectStorage()
     {
-        $this->getObjectInstancier()->setInstance('use_storage', true);
+        $this->getObjectInstancier()->setInstance('use_external_storage_for_journal_proof', true);
         $this->setUp();
         $this->testAddSQLWihtoutHorodateur();
     }
@@ -153,7 +153,7 @@ class JournalTest extends PastellTestCase
 
     public function testHorodateAllWithObjectStorage()
     {
-        $this->getObjectInstancier()->setInstance('use_storage', true);
+        $this->getObjectInstancier()->setInstance('use_external_storage_for_journal_proof', true);
         $this->setUp();
         $this->testHorodateAll();
     }
