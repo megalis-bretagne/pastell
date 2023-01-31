@@ -1,9 +1,7 @@
 <?php
 
 //Docker : https://hub.docker.com/r/gui81/alfresco/
-
 //A tester : http://jeci.fr/blog/2017/0922-en-alfresco-docker-cloud-201707.html
-
 //composer update
 
 use Dkd\PhpCmis\Data\FolderInterface;
@@ -30,13 +28,11 @@ class DepotCMIS extends DepotConnecteur
     /** @var  Session */
     private $session;
     private int $errorReporting;
-    private $http_proxy_url;
-    private $no_proxy;
 
-    public function __construct(string $http_proxy_url = "", string $no_proxy = "")
-    {
-        $this->http_proxy_url = $http_proxy_url;
-        $this->no_proxy = $no_proxy;
+    public function __construct(
+        private readonly string $http_proxy_url = "",
+        private readonly string $no_proxy = ""
+    ) {
     }
 
     /**
@@ -161,7 +157,7 @@ class DepotCMIS extends DepotConnecteur
         );
 
         $proxyNeeded = new ProxyNeeded($this->http_proxy_url, $this->no_proxy);
-        if ($this->http_proxy_url !== "" && $proxyNeeded->isNeeded($url)) {
+        if ($proxyNeeded->isNeeded($url)) {
             $httpInvoker->setDefaultOption('proxy', $this->http_proxy_url);
         }
 
