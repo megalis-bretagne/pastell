@@ -5,9 +5,8 @@ use Monolog\Logger;
 use org\bovigo\vfs\vfsStream;
 use Pastell\Service\Connecteur\ConnecteurAssociationService;
 use Pastell\Service\Pack\PackService;
-use Pastell\Storage\S3Wrapper;
 use Pastell\Storage\StorageInterface;
-use Pastell\Storage\StorageInterfaceTest;
+use Pastell\Storage\StorageInterfaceFake;
 use Pastell\Tests\SymfonyContainerFactory;
 use Pastell\Utilities\Identifier\IdentifierGeneratorInterface;
 use PHPUnit\Framework\TestCase;
@@ -97,7 +96,7 @@ abstract class PastellTestCase extends TestCase
         $this->getObjectInstancier()->getInstance(Logger::class)->pushHandler($testHandler);
         $this->reinitFileSystem();
         $this->objectInstancier->setInstance('use_storage', false);
-        $this->objectInstancier->setInstance(StorageInterface::class, new StorageInterfaceTest());
+        $this->objectInstancier->setInstance(StorageInterface::class, new StorageInterfaceFake());
         $this->getJournal()->setId(1);
 
         $this->objectInstancier->setInstance('opensslPath', OPENSSL_PATH);

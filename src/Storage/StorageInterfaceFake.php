@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Pastell\Storage;
 
-class StorageInterfaceTest implements StorageInterface
+class StorageInterfaceFake implements StorageInterface
 {
     public static array $memory = [];
 

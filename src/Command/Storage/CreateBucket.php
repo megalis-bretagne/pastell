@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Pastell\Command\Storage;
 
-use Pastell\Storage\S3Wrapper;
+use Pastell\Storage\S3adapter;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -30,7 +30,7 @@ class CreateBucket extends Command
     }
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $S3wrapper = new S3Wrapper($this->S3url, $this->S3key, $this->S3secret, $input->getArgument('bucket'));
+        $S3wrapper = new S3adapter($this->S3url, $this->S3key, $this->S3secret, $input->getArgument('bucket'));
         if (!$S3wrapper->isBucketSet()) {
             $S3wrapper->createBucket();
         }

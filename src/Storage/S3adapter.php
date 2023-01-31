@@ -6,7 +6,7 @@ namespace Pastell\Storage;
 
 use Aws\S3\S3Client;
 
-class S3Wrapper implements StorageInterface
+class S3adapter implements StorageInterface
 {
     private S3Client $aws;
     private string $bucket;
