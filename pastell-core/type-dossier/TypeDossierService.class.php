@@ -123,7 +123,9 @@ class TypeDossierService
                 }
             }
             if (!in_array($recuperateur->get('default_value'), $res)) {
-                throw new TypeDossierException('La clé de la valeur par défaut ne correspond à aucune valeur de la liste déroulante');
+                throw new TypeDossierException(
+                    'La clé de la valeur par défaut ne correspond à aucune valeur de la liste déroulante'
+                );
             }
         }
 
