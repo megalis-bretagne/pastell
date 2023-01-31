@@ -566,4 +566,46 @@ class TypeDossierServiceTest extends PastellTestCase
         $this->assertSame(0, $typeDossierRawData['etape'][0]['num_etape_same_type']);
         $this->assertSame(1, $typeDossierRawData['etape'][1]['num_etape_same_type']);
     }
+
+
+    /**
+     * @throws Exception
+     */
+    public function testEditionElementSelectWithFalseDefaultKey(): void
+    {
+        $typeDossierProperties = new TypeDossierProperties();
+        $typeDossierProperties->id_type_dossier = "test";
+        $typeDossierEditionService = $this->getObjectInstancier()->getInstance(TypeDossierEditionService::class);
+        $id_t = $typeDossierEditionService->edit(0, $typeDossierProperties);
+
+        $recuperateur = new Recuperateur([
+            'element_id' => 'maliste',
+            'name' => 'Ma liste',
+            'type' => 'select',
+            'select_value' => "0:a\nb\nc\nd",
+            'default_value' => '5'
+        ]);
+        $this->expectException(TypeDossierException::class);
+        $this->expectExceptionMessage('La clé de la valeur par défaut ne correspond à aucune valeur de la liste déroulante');
+        $this->getTypeDossierService()->editionElement($id_t, $recuperateur);
+    }
+
+    public function testEditionElementTextWithPregMatch(): void
+    {
+        $typeDossierProperties = new TypeDossierProperties();
+        $typeDossierProperties->id_type_dossier = "test";
+        $typeDossierEditionService = $this->getObjectInstancier()->getInstance(TypeDossierEditionService::class);
+        $id_t = $typeDossierEditionService->edit(0, $typeDossierProperties);
+
+        $recuperateur = new Recuperateur([
+            'element_id' => 'montexte',
+            'name' => 'Mon texte',
+            'type' => 'text',
+            'preg_match' => '/^[0-9A-Z_]{2,15}$/',
+            'default_value' => 'aaa'
+        ]);
+        $this->expectException(TypeDossierException::class);
+        $this->expectExceptionMessage('La valeur par défaut ne répond pas à l\'expression régulière.');
+        $this->getTypeDossierService()->editionElement($id_t, $recuperateur);
+    }
 }

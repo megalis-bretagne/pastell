@@ -1,5 +1,6 @@
 <?php
 
+use Pastell\Configuration\ElementType;
 use Pastell\Service\TypeDossier\TypeDossierEditionService;
 use Pastell\Service\TypeDossier\TypeDossierManager;
 
@@ -99,6 +100,33 @@ class TypeDossierService
         if ($recuperateur->get('titre')) {
             foreach ($typeDossierData->formulaireElement as $formulaireElement) {
                 $formulaireElement->titre = false;
+            }
+        }
+
+        if ($recuperateur->get('type') === ElementType::TEXT->value && $recuperateur->get('default_value') !== '') {
+            if (
+                $recuperateur->get('preg_match')
+                && !preg_match($recuperateur->get('preg_match'), $recuperateur->get('default_value'))
+            ) {
+                throw new TypeDossierException('La valeur par défaut ne répond pas à l\'expression régulière.');
+            }
+        }
+
+        if ($recuperateur->get('type') === ElementType::SELECT->value && $recuperateur->get('default_value') !== '') {
+            $values = explode("\n", trim($recuperateur->get('select_value'), "\n"));
+            $res = [];
+            foreach ($values as $key => $value) {
+                $explodedValue = explode(':', $value, 2);
+                if (count($explodedValue) === 2) {
+                    $res[] = $explodedValue[0];
+                } else {
+                    $res[] = $key + 1;
+                }
+            }
+            if (!in_array($recuperateur->get('default_value'), $res, true)) {
+                throw new TypeDossierException(
+                    'La clé de la valeur par défaut ne correspond à aucune valeur de la liste déroulante'
+                );
             }
         }
 
