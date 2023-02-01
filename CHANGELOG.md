@@ -21,6 +21,7 @@
 - Ajout d'un droit de création d'utilisateurs pour différencier de l'édition #1156
 - Ajout de la commande ```app:module:force-send-ged-and-delete [-i|--includeSubEntities] [--dry-run] [--] [<sourceModule> [<entityId>]]``` #1562
 - Valeur par défaut disponible (texte, textarea, checkbox et liste déroulante) dans les flux studio #1065
+- Archives composites sur le connecteur de génération SEDA Asalae 2.1 #1753
 
 ## Évolutions
 
