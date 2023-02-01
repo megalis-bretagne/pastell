@@ -29,6 +29,47 @@ class DonneesFormulaireTest extends PastellTestCase
         ];
     }
 
+    public function getProvider(): \Generator
+    {
+        // On checkbox field
+        yield ['ma_checkbox', 'true', true];
+        yield ['ma_checkbox', 'false', false];
+        yield ['ma_checkbox', '0', '0'];
+        yield ['ma_checkbox', '1', '1'];
+        yield ['ma_checkbox', 'on', true];
+        yield ['ma_checkbox', 'On', true];
+        yield ['ma_checkbox', 'off', false];
+        yield ['ma_checkbox', 'Off', false];
+        yield ['ma_checkbox', 0, 0];
+        yield ['ma_checkbox', 1, 1];
+        yield ['ma_checkbox', true, true];
+        yield ['ma_checkbox', false, false];
+        // On text field
+        yield ['test2', 'true', 'true'];
+        yield ['test2', 'false', 'false'];
+        yield ['test2', '0', '0'];
+        yield ['test2', '1', '1'];
+        yield ['test2', 'on', 'on'];
+        yield ['test2', 'On', 'On'];
+        yield ['test2', 'off', 'off'];
+        yield ['test2', 'Off', 'Off'];
+        yield ['test2', 0, 0];
+        yield ['test2', 1, 1];
+        yield ['test2', true, true];
+        yield ['test2', false, false];
+    }
+
+    /**
+     * @dataProvider getProvider
+     * @throws NotFoundException
+     */
+    public function testGet(string $field, mixed $value, mixed $expected): void
+    {
+        $form = $this->getDonneesFormulaireFactory()->get('id_d', 'test');
+        $form->setData($field, $value);
+        self::assertSame($expected, $form->get($field));
+    }
+
     /*
      * Bon, ben il semblerait que ca soit fait exprès...
      public function testTrue(){
