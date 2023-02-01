@@ -54,9 +54,10 @@ if (empty($type_e_menu) && !empty($this->viewParameter['id_d'])) {
                     ?>
 
                     <li>
-                        <a class="<?php echo $a_class ?>" href='<?php $this->url($menu_gauche_link . "&type=$nom"); ?>'>
+                        <a class="<?php echo $a_class ?>"
+                           href='<?php $this->url(get_hecho($menu_gauche_link . "&type=$nom")); ?>'
+                        >
                             <?php hecho($affichage); ?>
-
                         </a>
 
                     </li>

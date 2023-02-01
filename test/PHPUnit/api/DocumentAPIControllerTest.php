@@ -410,6 +410,7 @@ class DocumentAPIControllerTest extends PastellTestCase
                                 'reponse' => '',
                                 'has_error' => '0',
                                 'last_error' => '',
+                                'non_recu' => '0',
                             ],
                     ],
                 'email_reponse' =>

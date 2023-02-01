@@ -126,7 +126,7 @@ final class RecipientControllerTest extends WebTestCase
         $this->client->request('GET', '/mail/' . $mailsecInfo['key'] . '/password');
 
         self::assertResponseIsSuccessful();
-        self::assertPageTitleSame('Mail sécurisé - Pastell');
+        self::assertPageTitleSame('Mot de passe Mail sécurisé - Pastell');
         self::assertStringContainsString('Veuillez saisir le mot de passe', $this->client->getResponse()->getContent());
     }
 
@@ -134,8 +134,20 @@ final class RecipientControllerTest extends WebTestCase
     {
         $this->client->request('GET', '/mail/invalid');
         self::assertResponseIsSuccessful();
+        self::assertPageTitleSame('Mail sécurisé invalide - Pastell');
         self::assertStringContainsString(
             'La clé du message ne correspond à aucun mail sécurisé.',
+            $this->client->getResponse()->getContent()
+        );
+    }
+
+    public function testUnavailable(): void
+    {
+        $this->client->request('GET', '/mail/unavailable');
+        self::assertResponseIsSuccessful();
+        self::assertPageTitleSame('Mail sécurisé indisponible - Pastell');
+        self::assertStringContainsString(
+            'Ce mail sécurisé n\'est plus disponible.',
             $this->client->getResponse()->getContent()
         );
     }

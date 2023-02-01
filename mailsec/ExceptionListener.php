@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Mailsec;
 
 use Mailsec\Exception\InvalidKeyException;
+use Mailsec\Exception\UnavailableMailException;
 use Mailsec\Exception\MissingPasswordException;
 use Mailsec\Exception\NotEditableResponseException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -39,6 +40,13 @@ final class ExceptionListener implements EventSubscriberInterface
             $event->setResponse(
                 new RedirectResponse(
                     $this->router->generate('mailsec_recipient_invalid')
+                )
+            );
+        }
+        if ($exception instanceof UnavailableMailException) {
+            $event->setResponse(
+                new RedirectResponse(
+                    $this->router->generate('mailsec_recipient_unavailable')
                 )
             );
         }

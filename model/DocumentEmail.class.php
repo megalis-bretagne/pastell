@@ -92,7 +92,7 @@ class DocumentEmail extends SQL
     public function consulter($key, Journal $journal)
     {
         $result = $this->getInfoFromKey($key);
-        if (! $result) {
+        if ((! $result) || $result['non_recu']) {
             return false;
         }
         if ($result['lu']) {
@@ -172,9 +172,9 @@ EOT;
         return $this->queryOne($sql, $id_d);
     }
 
-    public function delete(string $documentId): void
+    public function addEtatNonRecu($id_d): void
     {
-        $sql = 'DELETE FROM document_email WHERE id_d=?;';
-        $this->query($sql, $documentId);
+        $sql = "UPDATE document_email SET non_recu=1 WHERE id_d=? and lu=0";
+        $this->query($sql, $id_d);
     }
 }

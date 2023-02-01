@@ -130,17 +130,10 @@ class TypeDossierControler extends PastellControler
     {
         $this->verifDroit(0, "system:edition");
 
+        $target_type_dossier_id = $this->getPostOrGetInfo()->get('id_type_dossier');
         $id_t = $this->getPostOrGetInfo()->getInt('id_t');
         $is_new = ! $id_t;
 
-        $target_type_dossier_id = $this->getPostOrGetInfo()->get('id_type_dossier');
-        $typeDossierProperties = $this->getTypeDossierManager()->getTypeDossierProperties($id_t);
-
-        $source_type_dossier_id = '';
-        if (! $is_new) {
-            $source_type_dossier_id = $typeDossierProperties->id_type_dossier;
-            $this->verifyTypeDossierIsUnused($source_type_dossier_id);
-        }
         $typeDossierEditionService = $this->getTypeDossierEditionService();
         try {
             $typeDossierEditionService->checkTypeDossierId($target_type_dossier_id);
@@ -149,7 +142,10 @@ class TypeDossierControler extends PastellControler
             $this->redirect("/TypeDossier/list");
         }
 
+        $typeDossierProperties = $this->getTypeDossierManager()->getTypeDossierProperties($id_t);
         if (! $is_new) {
+            $source_type_dossier_id = $typeDossierProperties->id_type_dossier;
+            $this->verifyTypeDossierIsUnused($source_type_dossier_id);
             $typeDossierEditionService->renameTypeDossierId($source_type_dossier_id, $target_type_dossier_id);
         }
         $typeDossierProperties->id_type_dossier = $target_type_dossier_id;
@@ -161,13 +157,25 @@ class TypeDossierControler extends PastellControler
         }
 
         if ($is_new) {
-            $typeDossierEditionService->editLibelleInfo($id_t, $target_type_dossier_id, TypeDossierUtilService::TYPE_DOSSIER_CLASSEMENT_DEFAULT, "", "onglet1");
+            $typeDossierEditionService->editLibelleInfo(
+                $id_t,
+                $target_type_dossier_id,
+                TypeDossierUtilService::TYPE_DOSSIER_CLASSEMENT_DEFAULT,
+                "",
+                "onglet1"
+            );
             $message = "Le type de dossier personnalisé $target_type_dossier_id a été créé";
-            $this->getTypeDossierActionService()->add($this->getId_u(), $id_t, TypeDossierActionService::ACTION_AJOUTE, $message);
+            $typeDosssierAction = TypeDossierActionService::ACTION_AJOUTE;
         } else {
             $message = "Modification de l'identifiant du type de dossier personnalisé $target_type_dossier_id";
-            $this->getTypeDossierActionService()->add($this->getId_u(), $id_t, TypeDossierActionService::ACTION_MODIFFIE, $message);
+            $typeDosssierAction = TypeDossierActionService::ACTION_MODIFFIE;
         }
+        $this->getTypeDossierActionService()->add(
+            $this->getId_u(),
+            $id_t,
+            $typeDosssierAction,
+            $message
+        );
         $this->setLastMessage($message);
 
         $this->redirect("/TypeDossier/detail?id_t=$id_t");

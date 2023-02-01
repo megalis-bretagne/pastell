@@ -1,6 +1,7 @@
 <?php
 
 use Monolog\Logger;
+use Pastell\Service\Document\DocumentEmailService;
 use Pastell\Service\Droit\DroitService;
 
 class PastellControler extends Controler
@@ -486,6 +487,11 @@ class PastellControler extends Controler
     public function getDocumentEntite(): DocumentEntite
     {
         return $this->getInstance(DocumentEntite::class);
+    }
+
+    public function getDocumentEmailService(): DocumentEmailService
+    {
+        return $this->getInstance(DocumentEmailService::class);
     }
 
     /**

@@ -887,6 +887,14 @@
                 "Key": "",
                 "Default": null,
                 "Extra": ""
+            },
+            "non_recu": {
+                "Field": "non_recu",
+                "Type": "tinyint(1)",
+                "Null": "NO",
+                "Key": "",
+                "Default": null,
+                "Extra": ""
             }
         },
         "Index": {

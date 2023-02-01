@@ -15,6 +15,7 @@ use Mailsec\Exception\InvalidKeyException;
 use Mailsec\Exception\MissingPasswordException;
 use Mailsec\Exception\NotEditableResponseException;
 use Mailsec\Exception\UnableToExecuteActionException;
+use Mailsec\Exception\UnavailableMailException;
 use Mailsec\MailsecManager;
 use ManifestFactory;
 use NotFoundException;
@@ -50,7 +51,18 @@ final class RecipientController extends AbstractController
     public function invalid(): Response
     {
         return $this->render('websec/invalid.html.twig', [
-            'page_title' => 'Mail sécurisé',
+            'page_title' => 'Mail sécurisé invalide',
+            'gabarit' => $this->gabarit,
+            'manifest_info' => $this->manifestFactory->getPastellManifest(),
+            'timer' => $this->pastellTimer,
+        ]);
+    }
+
+    #[Route('/mail/unavailable', name: 'mailsec_recipient_unavailable', methods: ['GET'])]
+    public function unavailable(): Response
+    {
+        return $this->render('websec/unavailable.html.twig', [
+            'page_title' => 'Mail sécurisé indisponible',
             'gabarit' => $this->gabarit,
             'manifest_info' => $this->manifestFactory->getPastellManifest(),
             'timer' => $this->pastellTimer,
@@ -61,6 +73,7 @@ final class RecipientController extends AbstractController
      * @throws MissingPasswordException
      * @throws InvalidKeyException
      * @throws NotFoundException
+     * @throws UnavailableMailException
      */
     #[Route('/mail/{key}', name: 'mailsec_recipient_index', methods: ['GET'])]
     public function index(string $key, Request $request): Response
@@ -102,6 +115,7 @@ final class RecipientController extends AbstractController
      * @throws MissingPasswordException
      * @throws NotFoundException
      * @throws InvalidKeyException
+     * @throws UnavailableMailException
      */
     #[Route('/mail/{key}/password', name: 'mailsec_recipient_password', methods: ['GET', 'POST'])]
     public function password(string $key, Request $request): Response
@@ -117,7 +131,7 @@ final class RecipientController extends AbstractController
             $this->addFlash('danger', 'Le mot de passe est incorrect');
         }
         return $this->render('websec/password.html.twig', [
-            'page_title' => 'Mail sécurisé',
+            'page_title' => 'Mot de passe Mail sécurisé',
             'gabarit' => $this->gabarit,
             'manifest_info' => $this->manifestFactory->getPastellManifest(),
             'timer' => $this->pastellTimer,
@@ -131,6 +145,7 @@ final class RecipientController extends AbstractController
      * @throws NotFoundException
      * @throws InvalidKeyException
      * @throws MissingPasswordException
+     * @throws UnavailableMailException
      */
     #[Route('/mail/{key}/reply', name: 'mailsec_recipient_reply', methods: ['GET', 'POST'])]
     public function reply(string $key, Request $request): Response
@@ -202,6 +217,7 @@ final class RecipientController extends AbstractController
      * @throws InvalidKeyException
      * @throws NotFoundException
      * @throws MissingPasswordException
+     * @throws UnavailableMailException
      */
     #[Route('/mail/{key}/validate', name: 'mailsec_recipient_validate', methods: ['GET', 'POST'])]
     public function validate(string $key, Request $request): Response
@@ -258,6 +274,7 @@ final class RecipientController extends AbstractController
     /**
      * @throws MissingPasswordException
      * @throws InvalidKeyException
+     * @throws UnavailableMailException
      * @throws NotFoundException
      * @throws Exception
      */
@@ -276,6 +293,7 @@ final class RecipientController extends AbstractController
      * @throws InvalidKeyException
      * @throws MissingPasswordException
      * @throws DonneesFormulaireException
+     * @throws UnavailableMailException
      */
     #[Route('/mail/{key}/deleteFile', name: 'mailsec_recipient_deleteFile', methods: ['GET'])]
     public function deleteFile(string $key, Request $request): Response
@@ -298,6 +316,7 @@ final class RecipientController extends AbstractController
      * @throws MissingPasswordException
      * @throws InvalidKeyException
      * @throws NotFoundException
+     * @throws UnavailableMailException
      */
     #[Route('/mail/{key}/downloadFile', name: 'mailsec_recipient_downloadFile', methods: ['GET'])]
     public function downloadFile(string $key, Request $request): Response
@@ -330,6 +349,7 @@ final class RecipientController extends AbstractController
     /**
      * @throws MissingPasswordException
      * @throws InvalidKeyException
+     * @throws UnavailableMailException
      * @throws NotFoundException
      * @throws Exception
      */

@@ -26,7 +26,7 @@ class DatabaseUpdate extends BaseCommand
                 'force',
                 'f',
                 InputOption::VALUE_NONE,
-                'Truncate the table journal_historique without asking'
+                'Mets à jour la base de données sans demande de confirmation'
             );
         ;
     }

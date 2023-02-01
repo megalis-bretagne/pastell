@@ -1,9 +1,7 @@
 <?php
 
 //Docker : https://hub.docker.com/r/gui81/alfresco/
-
 //A tester : http://jeci.fr/blog/2017/0922-en-alfresco-docker-cloud-201707.html
-
 //composer update
 
 use Dkd\PhpCmis\Data\FolderInterface;
@@ -29,8 +27,16 @@ class DepotCMIS extends DepotConnecteur
 
     /** @var  Session */
     private $session;
-
     private int $errorReporting;
+
+    private string $http_proxy_url;
+    private string $no_proxy;
+
+    public function __construct(string $http_proxy_url = '', string $no_proxy = '')
+    {
+        $this->http_proxy_url = $http_proxy_url;
+        $this->no_proxy = $no_proxy;
+    }
 
     /**
      * The version of Guzzle is not compatible with PHP 8.1
@@ -138,10 +144,10 @@ class DepotCMIS extends DepotConnecteur
 
     private function getFolder()
     {
-
         if ($this->folder) {
             return $this->folder;
         }
+        $url = $this->connecteurConfig->get(self::DEPOT_CMIS_URL);
 
         $httpInvoker = new Client();
 
@@ -153,9 +159,14 @@ class DepotCMIS extends DepotConnecteur
             ]
         );
 
+        $proxyNeeded = new ProxyNeeded($this->http_proxy_url, $this->no_proxy);
+        if ($proxyNeeded->isNeeded($url)) {
+            $httpInvoker->setDefaultOption('proxy', $this->http_proxy_url);
+        }
+
         $parameters = [
             SessionParameter::BINDING_TYPE => BindingType::BROWSER,
-            SessionParameter::BROWSER_URL => $this->connecteurConfig->get(self::DEPOT_CMIS_URL),
+            SessionParameter::BROWSER_URL => $url,
             SessionParameter::BROWSER_SUCCINCT => false,
             SessionParameter::HTTP_INVOKER_OBJECT => $httpInvoker
         ];

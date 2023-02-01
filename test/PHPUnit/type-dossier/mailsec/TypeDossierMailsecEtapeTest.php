@@ -123,6 +123,6 @@ class TypeDossierMailsecEtapeTest extends PastellTestCase
         $this->assertLastDocumentAction('non-recu', $id_d);
 
         $documentEmail = $this->getObjectInstancier()->getInstance(DocumentEmail::class);
-        $this->assertEmpty($documentEmail->getInfo('id_d'));
+        $this->assertEquals(1, $documentEmail->getInfo($id_d)[0]['non_recu']);
     }
 }

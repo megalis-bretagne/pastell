@@ -16,6 +16,7 @@ use DonneesFormulaireFactory;
 use EntiteSQL;
 use Journal;
 use Mailsec\Exception\InvalidKeyException;
+use Mailsec\Exception\UnavailableMailException;
 use Mailsec\Exception\MissingPasswordException;
 use Mailsec\Exception\NotEditableResponseException;
 use Mailsec\Exception\UnableToExecuteActionException;
@@ -43,6 +44,7 @@ final class MailsecManager
      * @throws MissingPasswordException
      * @throws NotFoundException
      * @throws InvalidKeyException
+     * @throws UnavailableMailException
      */
     public function getMailsecInfo(string $key, Request $request, bool $checkPassword = true): MailSecInfo
     {
@@ -52,6 +54,9 @@ final class MailsecManager
         $info = $this->objectInstancier->getInstance(DocumentEmail::class)->getInfoFromKey($mailSecInfo->key);
         if (!$info) {
             throw new InvalidKeyException('Unable to find key');
+        }
+        if ($info['non_recu']) {
+            throw new UnavailableMailException('Email no longer available');
         }
 
         $mailSecInfo->id_de = $info['id_de'];
