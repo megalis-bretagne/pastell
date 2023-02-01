@@ -83,7 +83,7 @@ define("S3_URL", "${S3_URL:-http://minio:9000/}");
 define("S3_KEY", "${S3_KEY:-minioadmin}");
 define("S3_SECRET", "${S3_SECRET:-minioadmin}");
 define("S3_BUCKET_JOURNAL", "${S3_BUCKET_JOURNAL:-journal-preuves}");
-define("USE_EXTERNAL_STORAGE_FOR_JOURNAL_PROOF", "${USE_EXTERNAL_STORAGE_FOR_JOURNAL_PROOF:-false}");
+define("USE_EXTERNAL_STORAGE_FOR_JOURNAL_PROOF", ${USE_EXTERNAL_STORAGE_FOR_JOURNAL_PROOF:-false});
 
 EOF
 
