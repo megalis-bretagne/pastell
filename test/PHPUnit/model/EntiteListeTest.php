@@ -80,11 +80,11 @@ class EntiteListeTest extends PastellTestCase
         );
     }
 
-    public function testGetBySiren()
+    public function testGetBySiren(): void
     {
-        $this->assertEquals(
-            "Bourg-en-Bresse",
-            $this->entiteListe->getBySiren("123456789")[0]['denomination']
+        static::assertSame(
+            'Bourg-en-Bresse',
+            $this->entiteListe->getBySiren('000000000')[0]['denomination']
         );
     }
 }

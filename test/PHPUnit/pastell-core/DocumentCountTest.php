@@ -2,12 +2,12 @@
 
 class DocumentCountTest extends PastellTestCase
 {
-    public function testCountAll()
+    public function testCountAll(): void
     {
-        $this->getInternalAPI()->post("/entite/1/document", ['type' => 'actes-generique']);
+        $this->createDocument('actes-generique');
         $documentCount = $this->getObjectInstancier()->getInstance(DocumentCount::class);
         $result = $documentCount->getAll(1);
-        $this->assertEquals(
+        static::assertEquals(
             [
                 1 =>
                      [
@@ -38,10 +38,10 @@ class DocumentCountTest extends PastellTestCase
                             ],
                         'info' =>
                              [
-                                'id_e' => '1',
+                                'id_e' => 1,
                                 'type' => 'collectivite',
                                 'denomination' => 'Bourg-en-Bresse',
-                                'siren' => '123456789',
+                                'siren' => '000000000',
                                 'date_inscription' => '0000-00-00 00:00:00',
                                 'entite_mere' => '0',
                                 'centre_de_gestion' => '0',
@@ -75,10 +75,10 @@ class DocumentCountTest extends PastellTestCase
                             ],
                         'info' =>
                              [
-                                'id_e' => '2',
+                                'id_e' => 2,
                                 'type' => 'collectivite',
                                 'denomination' => 'CCAS',
-                                'siren' => '123456788',
+                                'siren' => '111111118',
                                 'date_inscription' => '0000-00-00 00:00:00',
                                 'entite_mere' => '1',
                                 'centre_de_gestion' => '0',
@@ -90,12 +90,12 @@ class DocumentCountTest extends PastellTestCase
         );
     }
 
-    public function testCountLimit()
+    public function testCountLimit(): void
     {
-        $this->getInternalAPI()->post("/entite/1/document", ['type' => 'actes-generique']);
+        $this->createDocument('actes-generique');
         $documentCount = $this->getObjectInstancier()->getInstance(DocumentCount::class);
         $result = $documentCount->getAll(1, 1, 'actes-generique');
-        $this->assertEquals(
+        static::assertSame(
             [
                 1 =>
                      [
@@ -103,19 +103,19 @@ class DocumentCountTest extends PastellTestCase
                              [
                                 'actes-generique' =>
                                      [
-                                        'creation' => '1',
+                                        'creation' => 1,
                                     ],
                             ],
                         'info' =>
                              [
-                                'id_e' => '1',
+                                'id_e' => 1,
                                 'type' => 'collectivite',
                                 'denomination' => 'Bourg-en-Bresse',
-                                'siren' => '123456789',
+                                'siren' => '000000000',
                                 'date_inscription' => '0000-00-00 00:00:00',
                                 'entite_mere' => '0',
-                                'centre_de_gestion' => '0',
-                                'is_active' => '1',
+                                'centre_de_gestion' => 0,
+                                'is_active' => 1,
                             ],
                     ]
              ],

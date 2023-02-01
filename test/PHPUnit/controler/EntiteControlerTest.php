@@ -124,7 +124,11 @@ class EntiteControlerTest extends ControlerTestCase
         $this->assertCount(1, $info['liste_collectivite']);
     }
 
-    public function testDoEditionAction()
+    /**
+     * @throws UnrecoverableException
+     * @throws LastErrorException
+     */
+    public function testDoEditionAction(): void
     {
         $this->setPostInfo([
             'id_e' => 0,
@@ -133,12 +137,13 @@ class EntiteControlerTest extends ControlerTestCase
             'type' => 'collectivite',
         ]);
         try {
+            $this->entiteControler->_beforeAction();
             $this->entiteControler->doEditionAction();
-        } catch (LastMessageException $e) {
+        } catch (LastMessageException) {
         }
 
         $info = $this->getObjectInstancier()->getInstance(EntiteSQL::class)->getInfo(3);
-        $this->assertEquals("TEST ENTITIES", $info['denomination']);
+        static::assertSame('TEST ENTITIES', $info['denomination']);
     }
 
     /**

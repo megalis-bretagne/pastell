@@ -96,9 +96,9 @@ class EntiteSQLTest extends PastellTestCase
         $this->assertTrue($this->entiteSQL->exists(1));
     }
 
-    public function testGetBySiren()
+    public function testGetBySiren(): void
     {
-        $id_e = $this->entiteSQL->getBySiren('123456789');
+        $id_e = $this->entiteSQL->getBySiren('000000000');
         $this->assertEquals(1, $id_e);
     }
 

@@ -1,30 +1,17 @@
 <?php
 
 use Pastell\Service\Entite\EntiteDeletionService;
+use Pastell\Service\Entite\EntityCreationService;
+use Pastell\Service\Entite\EntityUpdateService;
 
-class EntiteAPIController extends BaseAPIController
+final class EntiteAPIController extends BaseAPIController
 {
-    private $entiteSQL;
-
-    private $siren;
-
-    private $entiteCreator;
-
-    /**
-     * @var EntiteDeletionService
-     */
-    private $entiteDeletionService;
-
     public function __construct(
-        EntiteSQL $entiteSQL,
-        Siren $siren,
-        EntiteCreator $entiteCreator,
-        EntiteDeletionService $entiteDeletionService
+        private readonly EntiteSQL $entiteSQL,
+        private readonly EntityCreationService $entityCreationService,
+        private readonly EntityUpdateService $entityUpdateService,
+        private readonly EntiteDeletionService $entiteDeletionService,
     ) {
-        $this->entiteSQL = $entiteSQL;
-        $this->siren = $siren;
-        $this->entiteCreator = $entiteCreator;
-        $this->entiteDeletionService = $entiteDeletionService;
     }
 
     /**
@@ -77,8 +64,9 @@ class EntiteAPIController extends BaseAPIController
     }
 
     /**
+     * @throws UnrecoverableException
      * @throws NotFoundException
-     * @throws Exception
+     * @throws ForbiddenException
      */
     public function post()
     {
@@ -96,10 +84,12 @@ class EntiteAPIController extends BaseAPIController
         }
         $entite_mere = $this->getFromRequest('entite_mere', 0);
         $type = $this->getFromRequest('type');
-        $siren = $this->getFromRequest('siren', "");
+        $siren = $this->getFromRequest('siren', '');
         $denomination = $this->getFromRequest('denomination');
         $centre_de_gestion = $this->getFromRequest('centre_de_gestion', 0);
-        $id_e = $this->edition(null, $denomination, $siren, $type, $entite_mere, $centre_de_gestion);
+
+        $this->checkDroit($entite_mere, 'entite:edition');
+        $id_e = $this->entityCreationService->create($denomination, $siren, $type, $entite_mere, $centre_de_gestion);
         return $this->getInfo($id_e);
     }
 
@@ -124,6 +114,12 @@ class EntiteAPIController extends BaseAPIController
         return $result;
     }
 
+    /**
+     * @throws UnrecoverableException
+     * @throws NotFoundException
+     * @throws ForbiddenException
+     * @throws Exception
+     */
     public function patch()
     {
         $data = $this->getRequest();
@@ -132,7 +128,6 @@ class EntiteAPIController extends BaseAPIController
         $infoEntiteExistante = $this->entiteSQL->getEntiteFromData($data);
 
         $id_e = $infoEntiteExistante['id_e'];
-
 
         // Sauvegarde des valeurs. Si elles ne sont pas présentes dans $data, il faut les conserver.
         $entite_mere = $infoEntiteExistante['entite_mere'];
@@ -146,7 +141,7 @@ class EntiteAPIController extends BaseAPIController
         }
 
         $type = $infoEntiteExistante['type'];
-        $siren = $infoEntiteExistante['siren'] ?? "";
+        $siren = $infoEntiteExistante['siren'] ?? '';
         $denomination = $infoEntiteExistante['denomination'];
         if ($infoEntiteExistante['entite_mere']) {
             $entite_mere = $infoEntiteExistante['entite_mere'];
@@ -155,36 +150,12 @@ class EntiteAPIController extends BaseAPIController
             $centre_de_gestion = $infoEntiteExistante['centre_de_gestion'];
         }
 
-        $this->edition($id_e, $denomination, $siren, $type, $entite_mere, $centre_de_gestion);
+        $this->checkDroit($id_e, 'entite:edition');
+        $this->checkDroit($entite_mere, 'entite:edition');
+        $this->entityUpdateService->update($id_e, $denomination, $siren, $type, $entite_mere, $centre_de_gestion);
 
         $result = $this->getInfo($id_e);
         $result['result'] = self::RESULT_OK;
         return $result;
-    }
-
-    private function edition($id_e, $nom, $siren, $type, $entite_mere, $centre_de_gestion)
-    {
-        $this->checkDroit($entite_mere, "entite:edition");
-
-        if ($id_e) {
-            $this->checkDroit($id_e, "entite:edition");
-        }
-
-        if (!$nom) {
-            throw new Exception("Le nom (denomination) est obligatoire");
-        }
-        if (! $type) {
-            $type = EntiteSQL::TYPE_COLLECTIVITE;
-        }
-        if (! in_array($type, [EntiteSQL::TYPE_CENTRE_DE_GESTION,EntiteSQL::TYPE_COLLECTIVITE])) {
-            throw new Exception("Le type d'entité doit être renseigné. Les valeurs possibles sont collectivite ou centre_de_gestion.");
-        }
-
-        if ($siren !== '' && ! $this->siren->isValid($siren)) {
-            throw new Exception("Le siren « $siren » ne semble pas valide");
-        }
-
-        $id_e = $this->entiteCreator->edit($id_e, $siren, $nom, $type, $entite_mere, $centre_de_gestion);
-        return $id_e;
     }
 }

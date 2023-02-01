@@ -33,10 +33,9 @@ class AdminControler extends Controler
         return $this->getInstance(RoleUtilisateur::class);
     }
 
-    /** @return EntiteCreator */
-    private function getEntiteCreator()
+    private function getEntiteSQL(): EntiteSQL
     {
-        return $this->getInstance(EntiteCreator::class);
+        return $this->getInstance(EntiteSQL::class);
     }
 
     public function createAdmin($login, $password, $email)
@@ -62,7 +61,7 @@ class AdminControler extends Controler
         foreach ($this->getRoleDroit()->getAllDroit() as $droit) {
             $this->getRoleSQL()->addDroit("admin", $droit);
         }
-        $this->getEntiteCreator()->updateAllEntiteAncetre();
+        $this->getEntiteSQL()->updateAllAncestors();
     }
 
     public function createOrUpdateAdmin(string $login, string $email): void
