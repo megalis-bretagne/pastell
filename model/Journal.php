@@ -1,7 +1,6 @@
 <?php
 
 use Monolog\Logger;
-use Pastell\Storage\S3Adapter;
 use Pastell\Storage\StorageInterface;
 
 class Journal extends SQL
@@ -45,9 +44,9 @@ class Journal extends SQL
         parent::__construct($sqlQuery);
     }
 
-    public function setInterfaceStorage(string $S3url, string $S3key, string $S3secret, string $S3bucket): void
+    public function setInterfaceStorage(StorageInterface $storageInterface): void
     {
-        $this->storage = new S3Adapter($S3url, $S3key, $S3secret, $S3bucket);
+        $this->storage = $storageInterface;
     }
     public function setHorodateur(Horodateur $horodateur)
     {

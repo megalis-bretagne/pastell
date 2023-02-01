@@ -9,7 +9,7 @@ use Pastell\Database\DatabaseUpdater;
 use Pastell\Service\FeatureToggleService;
 use Pastell\Utilities\Identifier\IdentifierGeneratorInterface;
 use Pastell\Utilities\Identifier\UuidGenerator;
-use Pastell\Storage\S3Wrapper;
+use Pastell\Storage\S3Adapter;
 use Pastell\Storage\StorageInterface;
 use Pastell\Storage\StorageInterfaceDummy;
 use Pastell\Storage\StorageInterfaceFake;
@@ -93,7 +93,7 @@ if (USE_EXTERNAL_STORAGE_FOR_JOURNAL_PROOF) {
         $objectInstancier->setInstance(StorageInterface::class, new StorageInterfaceFake());
     } else {
         $objectInstancier->setInstance('s3BucketJournal', S3_BUCKET_JOURNAL);
-        $objectInstancier->getInstance(Journal::class)->setInterfaceStorage(S3_URL, S3_KEY, S3_SECRET, S3_BUCKET_JOURNAL);
+        $objectInstancier->getInstance(Journal::class)->setInterfaceStorage(new S3Adapter(S3_URL, S3_KEY, S3_SECRET, S3_BUCKET_JOURNAL));
     }
 }
 
