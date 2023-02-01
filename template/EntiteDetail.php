@@ -86,7 +86,9 @@ $id_e = $entiteExtendedInfo['id_e'];
             </a>
         <?php endif;?>
 
-        <a class='btn btn-warning' href='Entite/activer?id_e=<?php echo $id_e?>&active=<?php echo ! $entiteExtendedInfo['is_active']?>'>
+        <a class='btn btn-warning'
+           href='Entite/activer?id_e=<?php echo $id_e?>&active=<?php echo ! $entiteExtendedInfo['is_active']?>'
+        >
             <?php if ($entiteExtendedInfo['is_active']) : ?>
                 <i class="fa fa-toggle-on"></i>&nbsp;Désactiver
             <?php else :?>
@@ -105,7 +107,9 @@ $id_e = $entiteExtendedInfo['id_e'];
 
     <?php if (count($entiteExtendedInfo['filles']) > 5) : ?>
         <?php if ($droit_edition) : ?>
-            <a class='btn btn-primary' href="Entite/edition?entite_mere=<?php echo $id_e?>" >
+            <a class='btn btn-primary <?php echo !$entiteExtendedInfo['is_active'] ? 'disabled' : ''; ?>'
+               href="Entite/edition?entite_mere=<?php echo $id_e?>"
+            >
                 <i class="fa fa-plus-circle"></i>&nbsp;Ajouter une entité fille
             </a>&nbsp;&nbsp;
             <a class='btn btn-outline-primary' href="Entite/import?id_e=<?php echo $id_e?>" >
@@ -156,7 +160,9 @@ $id_e = $entiteExtendedInfo['id_e'];
     <?php endif; ?>
 
     <?php if ($droit_edition) : ?>
-        <a class='btn btn-primary' href="Entite/edition?entite_mere=<?php echo $id_e?>" >
+        <a class='btn btn-primary <?php echo !$entiteExtendedInfo['is_active'] ? 'disabled' : ''; ?>'
+           href="Entite/edition?entite_mere=<?php echo $id_e?>"
+        >
             <i class="fa fa-plus-circle"></i>&nbsp;Ajouter une entité fille
         </a>&nbsp;&nbsp;
         <a class='btn btn-outline-primary' href="Entite/import?id_e=<?php echo $id_e?>" >

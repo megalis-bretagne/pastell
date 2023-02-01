@@ -7,7 +7,7 @@ namespace Pastell\Tests\Service\Entite;
 use EntiteSQL;
 use Journal;
 use Pastell\Service\Entite\EntityCreationService;
-use Pastell\Service\Validator\EntityValidator;
+use Pastell\Validator\EntityValidator;
 use PastellTestCase;
 use UnrecoverableException;
 

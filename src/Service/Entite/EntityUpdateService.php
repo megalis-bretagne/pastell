@@ -6,7 +6,7 @@ namespace Pastell\Service\Entite;
 
 use EntiteSQL;
 use Journal;
-use Pastell\Service\Validator\EntityValidator;
+use Pastell\Validator\EntityValidator;
 use UnrecoverableException;
 
 final class EntityUpdateService
