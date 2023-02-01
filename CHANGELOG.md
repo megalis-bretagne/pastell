@@ -8,6 +8,7 @@
 - Pour voir les utilisateurs d'une entité, le droit "utilisateur:lecture" est désormais nécessaire #1528
 - Les accents sont pris en compte à la création d'une entité si une erreur survient à la validation du formulaire #1103
 - Les valeurs "true" ou "false" ne sont plus remplacées par "1" ou "0" sur les champs texte #303
+- Il n'est plus possible de créer des entités filles à partir d'une entité désactivée #1708
 
 ## Ajouts
 
