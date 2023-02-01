@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Pastell\Tests\Service\Validator;
+namespace Pastell\Tests\Validator;
 
 use EntiteSQL;
-use Pastell\Service\Validator\EntityValidator;
+use Pastell\Validator\EntityValidator;
 use PastellTestCase;
 use Siren;
 use UnrecoverableException;
@@ -56,7 +56,7 @@ class EntityValidatorTest extends PastellTestCase
         $this->getObjectInstancier()->getInstance(EntiteSQL::class)->setActive(self::ID_E_COL, false);
         $this->expectException(UnrecoverableException::class);
         $this->expectExceptionMessage(
-            sprintf("L'entité %s ne peut pas être utilisée comme entité mère", self::ID_E_COL)
+            sprintf("L'entité id_e=%s est désactivée, il n'est pas possible de créer une entité fille", self::ID_E_COL)
         );
         $this->entityValidator()->validate('name', '', EntiteSQL::TYPE_COLLECTIVITE, self::ID_E_COL, 0);
     }

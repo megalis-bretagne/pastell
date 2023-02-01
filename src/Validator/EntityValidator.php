@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Pastell\Service\Validator;
+namespace Pastell\Validator;
 
 use EntiteSQL;
 use Siren;
@@ -37,7 +37,9 @@ final class EntityValidator
         }
 
         if (!$this->entiteSQL->isActive($parent)) {
-            throw new UnrecoverableException("L'entité $parent ne peut pas être utilisée comme entité mère");
+            throw new UnrecoverableException(
+                "L'entité id_e=$parent est désactivée, il n'est pas possible de créer une entité fille"
+            );
         }
 
         if (!$this->entiteSQL->isCDG($cdg)) {
