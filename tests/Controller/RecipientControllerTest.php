@@ -145,9 +145,9 @@ final class RecipientControllerTest extends WebTestCase
     {
         $this->client->request('GET', '/mail/unavailable');
         self::assertResponseIsSuccessful();
-        self::assertPageTitleSame('Mail sécurisé indisponnible - Pastell');
+        self::assertPageTitleSame('Mail sécurisé indisponible - Pastell');
         self::assertStringContainsString(
-            'Ce mail sécurisé n\'est plus disponnible.',
+            'Ce mail sécurisé n\'est plus disponible.',
             $this->client->getResponse()->getContent()
         );
     }

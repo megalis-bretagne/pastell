@@ -247,7 +247,7 @@ class CPPWrapperTest extends ExtensionCppTestCase
     /**
      * @throws Exception
      */
-    public function testGetToken()
+    public function testGetToken(): void
     {
         $this->getObjectInstancier()->getInstance(MemoryCache::class)->delete(self::MEMORY_KEY);
         $returnData = [

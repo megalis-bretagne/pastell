@@ -62,7 +62,7 @@ final class RecipientController extends AbstractController
     public function unavailable(): Response
     {
         return $this->render('websec/unavailable.html.twig', [
-            'page_title' => 'Mail sécurisé indisponnible',
+            'page_title' => 'Mail sécurisé indisponible',
             'gabarit' => $this->gabarit,
             'manifest_info' => $this->manifestFactory->getPastellManifest(),
             'timer' => $this->pastellTimer,
