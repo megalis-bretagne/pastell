@@ -29,10 +29,13 @@ class DepotCMIS extends DepotConnecteur
     private $session;
     private int $errorReporting;
 
-    public function __construct(
-        private readonly string $http_proxy_url = "",
-        private readonly string $no_proxy = ""
-    ) {
+    private string $http_proxy_url;
+    private string $no_proxy;
+
+    public function __construct(string $http_proxy_url = '', string $no_proxy = '')
+    {
+        $this->http_proxy_url = $http_proxy_url;
+        $this->no_proxy = $no_proxy;
     }
 
     /**
