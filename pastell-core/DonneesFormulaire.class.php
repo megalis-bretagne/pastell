@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Configuration\ElementType;
+
 /**
  * Gestion des données de formulaire à partir d'un fichier YML de type clé:valeur
  */
@@ -212,12 +214,15 @@ class DonneesFormulaire
         }
         $value = $this->fichierCleValeur->get($item);
         if (!is_array($value)) {
-            if (in_array(strtolower($value), ['true', 'on', '+', 'yes', 'y'])) {
-                return true;
-            }
+            $field = $this->getFormulaire()->getField($item);
+            if ($field instanceof Field && $field->getType() === ElementType::CHECKBOX->value) {
+                if (in_array(strtolower($value), ['true', 'on', '+', 'yes', 'y'])) {
+                    return true;
+                }
 
-            if (in_array(strtolower($value), ['false', 'off', '-', 'no', 'n'])) {
-                return false;
+                if (in_array(strtolower($value), ['false', 'off', '-', 'no', 'n'])) {
+                    return false;
+                }
             }
         }
         return $value;
