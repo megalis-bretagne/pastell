@@ -6,28 +6,22 @@ namespace Pastell\Storage;
 
 use Aws\S3\S3Client;
 
-class S3adapter implements StorageInterface
+class S3Adapter implements StorageInterface
 {
     private S3Client $aws;
     private string $bucket;
 
-    /**
-     * @param string $S3url
-     * @param string $S3key
-     * @param string $S3secret
-     * @param string $S3bucket
-     */
-    public function __construct(string $S3url, string $S3key, string $S3secret, string $S3bucket)
+    public function __construct(string $s3Url, string $s3Key, string $s3Secret, string $s3Bucket)
     {
-        $this->bucket = $S3bucket;
+        $this->bucket = $s3Bucket;
         $this->aws = new S3Client([
             'version' => 'latest',
             'region'  => 'fr-par',
-            'endpoint' => $S3url,
+            'endpoint' => $s3Url,
             'use_path_style_endpoint' => true,
             'credentials' => [
-                'key'    => $S3key,
-                'secret' => $S3secret,
+                'key'    => $s3Key,
+                'secret' => $s3Secret,
             ],
         ]);
     }
