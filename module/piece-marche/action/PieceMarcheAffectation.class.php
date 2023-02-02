@@ -12,7 +12,7 @@ class PieceMarcheAffectation extends ActionExecutor
             return false;
         }
         $this->getJsonMetadata();
-        $this->addActionOK("Les valeurs par défaut sont afféctées");
+        $this->addActionOK('Les valeurs par défaut sont affectées');
 
         return true;
     }
