@@ -94,6 +94,7 @@ class FluxControler extends PastellControler
             $this->setViewParameter('template_milieu', "FluxGlobalList");
         }
         $this->setNavigationInfo($id_e, "Flux/index?");
+        $this->setViewParameter('droit_edition', $this->getRoleUtilisateur()->hasDroit($this->getId_u(), 'connecteur:edition', $id_e));
         $this->setViewParameter('menu_gauche_select', "Flux/index");
         $this->setViewParameter('entite_denomination', $this->getEntiteSQL()->getDenomination($this->getViewParameterOrObject('id_e')));
         $this->setViewParameter('page_title', "{$this->getViewParameterOrObject('entite_denomination')} : " . ($id_e ? 'Liste des types de dossier' : 'Associations connecteurs globaux'));

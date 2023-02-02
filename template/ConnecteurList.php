@@ -1,6 +1,10 @@
 <?php
 
-/** @var Gabarit $this */
+/** @var Gabarit $this
+ * @var bool $droit_edition
+ * @var array $all_connecteur
+ * @var int $id_e
+ */
 ?>
 <div class="box">
     <?php if ($droit_edition) : ?>
@@ -24,10 +28,12 @@
         <td><?php echo $all_connecteur_definition[$connecteur['id_connecteur']]['nom'] ?? ""?> (<?php  echo $connecteur['id_connecteur'];  ?>)</td>
         <td><?php hecho($connecteur['libelle']);?></td>
         <td>
-            <a class='btn btn-primary' href='<?php $this->url("Connecteur/edition?id_ce={$connecteur['id_ce']}") ?>'>
-                <i class="fa fa-pencil"></i>
-                Modifier
-            </a>
+            <?php if ($droit_edition) : ?>
+                <a class='btn btn-primary' href='<?php $this->url("Connecteur/edition?id_ce={$connecteur['id_ce']}") ?>'>
+                    <i class="fa fa-pencil"></i>
+                    Modifier
+                </a>
+            <?php endif;?>
         </td>
     </tr>
 <?php endforeach;?>
