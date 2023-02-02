@@ -135,21 +135,21 @@ class MailSecConnecteurTest extends PastellTestCase
     /**
      * @throws Exception
      */
-    public function testSendHTML()
+    public function testSendHTML(): void
     {
-        $this->addContentHTML(__DIR__ . "/fixtures/mail-exemple.html");
+        $this->addContentHTML(__DIR__ . '/fixtures/mail-exemple.html');
         $this->addEmbededImage('image1.png');
         $this->addEmbededImage('image2.png', 1);
 
         $mailsec = $this->getMailSec();
 
-
-        $key = $this->getDocumentEmail()->add(1, self::EMAIL, "to");
+        $key = $this->getDocumentEmail()->add(1, self::EMAIL, 'to');
 
         $document_email_info = $this->getDocumentEmail()->getInfoFromKey($key);
 
         $mailsec->sendOneMail(1, 1, $document_email_info[DocumentEmail::ID_DE]);
-        $this->assertMailEqualsFile(__DIR__ . "/fixtures/mail-html-output.txt");
+
+        $this->assertMailEqualsFile(__DIR__ . '/fixtures/mail-html-output.txt');
     }
 
     /**
@@ -327,7 +327,13 @@ class MailSecConnecteurTest extends PastellTestCase
             $mailAsString
         );
 
-//        file_put_contents($filename, $mailAsString);
+        $mailAsString = preg_replace(
+            '/name="(.*)@symfony"/',
+            'name="NOT_TESTABLE@symfony"',
+            $mailAsString
+        );
+
+//        \file_put_contents($filename, $mailAsString);
         self::assertStringEqualsFile(
             $filename,
             $mailAsString
