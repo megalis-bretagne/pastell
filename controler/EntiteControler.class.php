@@ -427,7 +427,7 @@ class EntiteControler extends PastellControler
         $id_e = $recuperateur->getInt('id_e', 0);
         $this->hasConnecteurDroitLecture($id_e);
         $this->hasEntiteDroitLecture($id_e);
-        $this->setViewParameter('droit_edition', $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "entite:edition", $id_e));
+        $this->setViewParameter('droit_edition', $this->getRoleUtilisateur()->hasDroit($this->getId_u(), 'connecteur:edition', $id_e));
         $this->setViewParameter('id_e', $id_e);
         $this->setViewParameter('all_connecteur', $this->getConnecteurEntiteSQL()->getAll($id_e));
         if ($id_e) {

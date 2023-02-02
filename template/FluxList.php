@@ -7,6 +7,7 @@
  * @var int $id_e_mere
  * @var array $all_herited
  * @var int $id_e
+ * @var bool $droit_edition
  */
 ?>
 <div class="box">
@@ -21,8 +22,10 @@
                         <input type='hidden' name='flux' value='<?php echo FluxEntiteHeritageSQL::ALL_FLUX?>' />
                         <?php if ($all_herited) :?>
                             <em>Tous les types de dossier sont hérités de la mère</em>
-                            <button type='submit' class='btn btn-primary'><i class='fa fa-minus-circle'></i>&nbsp;Supprimer l'héritage</button>
-                        <?php else :?>
+                            <?php if ($droit_edition) : ?>
+                                <button type='submit' class='btn btn-primary'><i class='fa fa-minus-circle'></i>&nbsp;Supprimer l'héritage</button>
+                            <?php endif;?>
+                        <?php elseif ($droit_edition) :?>
                             <button type='submit' class='btn btn-primary'><i class='fa fa-plus-circle'></i>&nbsp;Faire tout hériter</button>
                         <?php endif;?>
                     </form>
