@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\Document\DocumentDeletionService;
+
 class JobManagerTest extends PastellTestCase
 {
     /** @var  JobManager */
@@ -232,5 +234,33 @@ class JobManagerTest extends PastellTestCase
         $job = $this->jobQueueSQL->getJob($id_job);
         $this->assertSame(0, $job->is_lock);
         $this->assertSame($originalDateNextTry, $job->next_try);
+    }
+
+    /**
+     * @throws NotFoundException
+     */
+    public function testNoJobLeftWhenDocumentDeleted(): void
+    {
+        $document = $this->createDocument('test');
+        $id_d = $document['id_d'];
+        $this->triggerActionOnDocument($id_d, 'action-auto');
+        static::assertSame(true, $this->jobQueueSQL->hasDocumentJob(self::ID_E_COL, $id_d));
+        $this->getObjectInstancier()->getInstance(DocumentDeletionService::class)->delete($id_d);
+        static::assertSame(false, $this->jobQueueSQL->hasDocumentJob(self::ID_E_COL, $id_d));
+    }
+
+    public function testNoJobLeftWhenDocumentInFatalError(): void
+    {
+        $document = $this->createDocument('test');
+        $id_d = $document['id_d'];
+        $this->triggerActionOnDocument($id_d, 'action-auto');
+        static::assertSame(true, $this->jobQueueSQL->hasDocumentJob(self::ID_E_COL, $id_d));
+        $this->getObjectInstancier()->getInstance(ActionExecutorFactory::class)->executeOnDocument(
+            self::ID_E_COL,
+            self::ID_U_ADMIN,
+            $id_d,
+            'fatal-error'
+        );
+        static::assertSame(false, $this->jobQueueSQL->hasDocumentJob(self::ID_E_COL, $id_d));
     }
 }
