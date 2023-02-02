@@ -22,11 +22,11 @@ class DocumentDeletionService
 
     /**
      * @param string $id_d
-     * @param string $message
-     * @return void
+     * @param string|null $message
+     * @return string
      * @throws NotFoundException
      */
-    public function delete(string $id_d, ?string $message = null): void
+    public function delete(string $id_d, ?string $message = null): string
     {
         $id_e = $this->documentEntite->getEntite($id_d)[0]['id_e'];
         $info = $this->documentSQL->getInfo($id_d);
@@ -45,8 +45,9 @@ class DocumentDeletionService
             Journal::DOCUMENT_ACTION,
             $id_e,
             $id_d,
-            "suppression",
+            'suppression',
             $message
         );
+        return $message;
     }
 }
