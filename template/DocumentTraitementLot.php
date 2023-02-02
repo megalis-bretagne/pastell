@@ -154,7 +154,7 @@ $(document).ready(function(){
                 .replaceClass('btn-primary','btn-danger');
         } else {
             $("#action-select-submit")
-                .html("<i class=\"fa fa-cogs\"></i>&nbsp;Éxecuter")
+                .html("<i class=\"fa fa-cogs\"></i>&nbsp;Exécuter")
                 .replaceClass('btn-danger','btn-primary');
         }
         $("#action-select-submit").prop('disabled', false);
