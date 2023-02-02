@@ -653,6 +653,7 @@ class TypeDossierControler extends PastellControler
                 'fatal-error',
                 "Passage en erreur fatale via le studio"
             );
+            $this->getObjectInstancier()->getInstance(JobManager::class)->deleteDocumentForAllEntities($dossier['id_d']);
         }
 
         $this->setLastMessage("Tous les dossiers <b>{$id_type_dossier}</b> ont été mis dans l'état erreur fatale");
