@@ -121,7 +121,7 @@ class FluxControler extends PastellControler
         $this->setViewParameter('all_herited', $fluxEntiteHeritageSQL->hasInheritanceAllFlux($id_e));
         $this->setViewParameter('flux_connecteur_list', $this->getConnectorForFlux($id_e, $flux));
         $this->setViewParameter('template_milieu', "FluxDetail");
-
+        $this->setViewParameter('droit_edition', $this->getRoleUtilisateur()->hasDroit($this->getId_u(), 'connecteur:edition', $id_e));
         $this->setNavigationInfo($id_e, "Flux/index?");
         $this->setViewParameter('menu_gauche_select', "Flux/index");
         $this->setViewParameter('entite_denomination', $this->getEntiteSQL()->getDenomination($id_e));
