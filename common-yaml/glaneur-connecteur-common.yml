@@ -22,8 +22,13 @@ formulaire:
             name: 'Nom du fichier de métadonnées'
             commentaire: 'manifest.xml par défaut'
         flux_name:
+            no-show: true
+        document_type_label:
             name: 'Identifiant du type de dossier à alimenter'
             commentaire: "Pris dans le manifest s'il existe"
+            type: externalData
+            choice-action: type_document
+            link_name: 'Sélectionner le type de dossier'
         file_preg_match:
             name: 'Expressions rationnelles pour associer les fichiers'
             type: textarea
@@ -71,3 +76,13 @@ action:
         name: 'Lancer le glanage'
         action-class: GlaneurLancerGlanage
         action-automatique: go
+    type_document:
+        rule:
+            internal-action: true
+        action-class: StandardChoiceAction
+        connecteur-type: utilities
+        connecteur-type-action: GetModuleList
+        connecteur-type-mapping:
+            page_title: 'Choix du type de dossier'
+            module_type: flux_name
+            module_type_label: document_type_label
