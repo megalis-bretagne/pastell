@@ -244,9 +244,9 @@ class JobManagerTest extends PastellTestCase
         $document = $this->createDocument('test');
         $id_d = $document['id_d'];
         $this->triggerActionOnDocument($id_d, 'action-auto');
-        static::assertSame(true, $this->jobQueueSQL->hasDocumentJob(self::ID_E_COL, $id_d));
+        static::assertTrue($this->jobQueueSQL->hasDocumentJob(self::ID_E_COL, $id_d));
         $this->getObjectInstancier()->getInstance(DocumentDeletionService::class)->delete($id_d);
-        static::assertSame(false, $this->jobQueueSQL->hasDocumentJob(self::ID_E_COL, $id_d));
+        static::assertFalse($this->jobQueueSQL->hasDocumentJob(self::ID_E_COL, $id_d));
     }
 
     public function testNoJobLeftWhenDocumentInFatalError(): void
@@ -254,13 +254,13 @@ class JobManagerTest extends PastellTestCase
         $document = $this->createDocument('test');
         $id_d = $document['id_d'];
         $this->triggerActionOnDocument($id_d, 'action-auto');
-        static::assertSame(true, $this->jobQueueSQL->hasDocumentJob(self::ID_E_COL, $id_d));
+        static::assertTrue($this->jobQueueSQL->hasDocumentJob(self::ID_E_COL, $id_d));
         $this->getObjectInstancier()->getInstance(ActionExecutorFactory::class)->executeOnDocument(
             self::ID_E_COL,
             self::ID_U_ADMIN,
             $id_d,
             'fatal-error'
         );
-        static::assertSame(false, $this->jobQueueSQL->hasDocumentJob(self::ID_E_COL, $id_d));
+        static::assertFalse($this->jobQueueSQL->hasDocumentJob(self::ID_E_COL, $id_d));
     }
 }
