@@ -1060,7 +1060,7 @@ class DocumentControler extends PastellControler
         }
         $result = $this->getActionExecutorFactory()->executeOnDocument($id_e, $this->getId_u(), $id_d, $action, $id_destinataire);
         $message = $this->getActionExecutorFactory()->getLastMessage();
-        if ($action === 'fatal-error' && $go) {
+        if ($action === FatalError::ACTION_ID && $go) {
             $this->getInstance(JobManager::class)->deleteDocumentForAllEntities($id_d);
         }
         if (! $result) {
