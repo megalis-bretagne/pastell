@@ -296,4 +296,41 @@ class TypeDossierControlerTest extends ControlerTestCase
             ->getLastAction($docInfo[0]['id_e'], $docInfo[0]['id_d']);
         $this->assertEquals('fatal-error', $lastActionDoc, '');
     }
+
+    /**
+     * @throws TypeDossierException
+     * @throws Exception
+     */
+    public function testNoJobLeftFatalErrorFromTypeDossier(): void
+    {
+        $this->getObjectInstancier()->getInstance(TypeDossierLoader::class)->createTypeDossierDefinitionFile(
+            'cas-nominal'
+        );
+        $info = $this->createDocument('cas-nominal');
+        $id_d = $info['id_d'];
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
+        $donneesFormulaire->addFileFromData(
+            'arrete',
+            'arrete.pdf',
+            'aaa'
+        );
+        $this->configureDocument($id_d, [
+            'objet' => 'test',
+            'prenom_agent' => 'eric',
+            'nom_agent' => 'foo',
+            'iparapheur_sous_type' => 'TEST',
+            'to' => 'foo@bar.com',
+        ]);
+        $this->triggerActionOnDocument($id_d, 'orientation');
+        $jobQueueSQL = $this->getObjectInstancier()->getInstance(JobQueueSQL::class);
+        static::assertTrue($jobQueueSQL->hasDocumentJob(self::ID_E_COL, $id_d));
+        $this->setPostInfo([
+            'id_type_dossier' => 'cas-nominal',
+        ]);
+        try {
+            $this->getTypeDossierController()->doPutInFatalErrorAction();
+        } catch (Exception) {
+        }
+        static::assertFalse($jobQueueSQL->hasDocumentJob(self::ID_E_COL, $id_d));
+    }
 }

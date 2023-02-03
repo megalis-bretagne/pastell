@@ -235,32 +235,4 @@ class JobManagerTest extends PastellTestCase
         $this->assertSame(0, $job->is_lock);
         $this->assertSame($originalDateNextTry, $job->next_try);
     }
-
-    /**
-     * @throws NotFoundException
-     */
-    public function testNoJobLeftWhenDocumentDeleted(): void
-    {
-        $document = $this->createDocument('test');
-        $id_d = $document['id_d'];
-        $this->triggerActionOnDocument($id_d, 'action-auto');
-        static::assertTrue($this->jobQueueSQL->hasDocumentJob(self::ID_E_COL, $id_d));
-        $this->getObjectInstancier()->getInstance(DocumentDeletionService::class)->delete($id_d);
-        static::assertFalse($this->jobQueueSQL->hasDocumentJob(self::ID_E_COL, $id_d));
-    }
-
-    public function testNoJobLeftWhenDocumentInFatalError(): void
-    {
-        $document = $this->createDocument('test');
-        $id_d = $document['id_d'];
-        $this->triggerActionOnDocument($id_d, 'action-auto');
-        static::assertTrue($this->jobQueueSQL->hasDocumentJob(self::ID_E_COL, $id_d));
-        $this->getObjectInstancier()->getInstance(ActionExecutorFactory::class)->executeOnDocument(
-            self::ID_E_COL,
-            self::ID_U_ADMIN,
-            $id_d,
-            'fatal-error'
-        );
-        static::assertFalse($this->jobQueueSQL->hasDocumentJob(self::ID_E_COL, $id_d));
-    }
 }
