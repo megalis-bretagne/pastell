@@ -1,7 +1,5 @@
 <?php
 
-use Pastell\Service\Document\DocumentDeletionService;
-
 class JobManagerTest extends PastellTestCase
 {
     /** @var  JobManager */
