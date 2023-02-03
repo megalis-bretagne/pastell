@@ -195,9 +195,6 @@ class ActionExecutorFactory
         ) {
             $this->getJobManager()->setJobForDocument($id_e, $id_d, $this->getLastMessageString(), $action_name);
         }
-        if ($action_name === 'fatal-error') {
-            $this->getJobManager()->deleteDocumentForAllEntities($id_d);
-        }
         $this->getLogger()->info(
             "executeOnDocument - fin - id_e=$id_e,id_d=$id_d,id_u=$id_u,action_name=$action_name - " .
             ($result ? 'OK' : 'KO') . ' - ' .
