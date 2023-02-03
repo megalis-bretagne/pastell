@@ -60,6 +60,7 @@
 - Les droits entite:lecture et journal:lecture sont cochés par défaut à la création d'un rôle #1580
 - Permettre `generate-sip` en état `erreur-envoie-sae` #1709
 - Les champs de type date ne sont plus initialisés par défaut à la date du jour #1692
+- Le type de dossier sur le connecteur Glaneur est sélectionnable via une liste déroulante #1698
 
 ## Suppressions
 
