@@ -377,4 +377,23 @@ Lignes',
         $this->assertSame('on', $data['macheckbox']);
         $this->assertSame('3', $data['maselection']);
     }
+
+    public function testNoJobLeftFatalErrorFromDocument(): void
+    {
+        $id_d = $this->createDocument('test')['id_d'];
+        $this->triggerActionOnDocument($id_d, 'action-auto');
+        $jobQueueSQL = $this->getObjectInstancier()->getInstance(JobQueueSQL::class);
+        static::assertTrue($jobQueueSQL->hasDocumentJob(self::ID_E_COL, $id_d));
+        $this->setGetInfo([
+            'id_d' => $id_d,
+            'action' => FatalError::ACTION_ID,
+            'id_e' => self::ID_E_COL,
+            'go' => 1,
+        ]);
+        try {
+            $this->getControlerInstance(DocumentControler::class)->actionAction();
+        } catch (Exception) {
+        }
+        static::assertFalse($jobQueueSQL->hasDocumentJob(self::ID_E_COL, $id_d));
+    }
 }
