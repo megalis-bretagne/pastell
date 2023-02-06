@@ -1,0 +1,1246 @@
+nom: 'Document individuel'
+type: 'Ressources humaines'
+description: ''
+connecteur:
+    - transformation
+    - signature
+    - TdT
+    - mailsec
+    - pdf-relance
+    - GED
+    - 'Bordereau SEDA'
+    - SAE
+formulaire:
+    Information:
+        titre_document:
+            name: 'Titre du document'
+            type: text
+            requis: true
+            multiple: false
+            commentaire: ''
+            title: true
+        matricule_agent:
+            name: "Matricule de l'agent"
+            type: text
+            requis: true
+            multiple: false
+            commentaire: ''
+            index: true
+        prenom_agent:
+            name: "Prénom de l'agent"
+            type: text
+            requis: true
+            multiple: false
+            commentaire: "Premier prénom de l'agent"
+        prenoms_suivants_agent:
+            name: "Prénom(s) suivant(s) de l'agent"
+            type: text
+            requis: false
+            multiple: false
+            commentaire: "Autres prénoms de l'agent séparé par des espaces"
+        nom_usage_agent:
+            name: "Nom d'usage de l'agent"
+            type: text
+            requis: false
+            multiple: false
+            commentaire: ''
+        nom_naissance_agent:
+            name: "Nom de naissance de l'agent"
+            type: text
+            requis: false
+            multiple: false
+            commentaire: ''
+        date_naissance_agent:
+            name: "Date de naissance de l'agent"
+            type: date
+            requis: true
+            multiple: false
+            commentaire: ''
+        email_agent:
+            name: "Adresse email de l'agent"
+            type: text
+            requis: false
+            multiple: false
+            commentaire: ''
+        telephone_agent:
+            name: "Numéro de téléphone de l'agent"
+            type: text
+            requis: false
+            multiple: false
+            commentaire: ''
+        metier_agent:
+            name: "Métier de l'agent"
+            type: text
+            requis: false
+            multiple: false
+            commentaire: ''
+        statut_agent:
+            name: "Statut de l'agent"
+            type: text
+            requis: false
+            multiple: false
+            commentaire: ''
+        grade_agent:
+            name: "Grade de l'agent"
+            type: text
+            requis: false
+            multiple: false
+            commentaire: ''
+        siret_collectivite:
+            name: 'Numéro SIRET de la collectivité territoriale'
+            type: text
+            requis: true
+            multiple: false
+            commentaire: ''
+        nom_collectivite:
+            name: 'Nom de la collectivité territoriale'
+            type: text
+            requis: false
+            multiple: false
+            commentaire: ''
+        type_document:
+            name: 'Type du document'
+            type: text
+            requis: true
+            multiple: false
+            commentaire: 'Selon la typologie du logiciel appelant'
+        date_document:
+            name: 'Date du document'
+            type: date
+            requis: true
+            multiple: false
+            commentaire: ''
+        document:
+            name: 'Arrêté de carrière'
+            type: file
+            requis: true
+            multiple: false
+            commentaire: ''
+            content-type: application/pdf
+        annexes:
+            name: Annexe(s)
+            type: file
+            requis: false
+            multiple: true
+            commentaire: ''
+            onchange: autre_document_attache-change
+        metadonnees:
+            name: 'Fichier de métadonnées'
+            type: file
+            requis: false
+            multiple: false
+            commentaire: ''
+            content-type: 'application/json, application/xml'
+    Cheminement:
+        envoi_transformation:
+            name: Transformation
+            type: checkbox
+            onchange: cheminement-change
+            default: checked
+            read-only: true
+        envoi_signature:
+            name: Visa/Signature
+            type: checkbox
+            onchange: cheminement-change
+            default: ''
+            read-only: false
+        envoi_tdt_actes:
+            name: 'Envoi à la préfecture (via un Tdt)'
+            type: checkbox
+            onchange: cheminement-change
+            default: ''
+            read-only: false
+        envoi_mailsec:
+            name: 'Mail sécurisé'
+            type: checkbox
+            onchange: cheminement-change
+            default: ''
+            read-only: false
+        envoi_depot:
+            name: 'Dépôt (GED, FTP, ...)'
+            type: checkbox
+            onchange: cheminement-change
+            default: ''
+            read-only: false
+        envoi_sae:
+            name: "Système d'archivage électronique"
+            type: checkbox
+            onchange: cheminement-change
+            default: ''
+            read-only: false
+    Transformation:
+        has_transformation:
+            no-show: true
+            read-only: true
+        transformation_file:
+            name: Transformations
+            type: file
+            visionneuse: Pastell\Viewer\TransformationViewer
+            read-only: true
+            visionneuse-no-link: true
+    i-Parapheur:
+        envoi_iparapheur:
+            no-show: true
+        iparapheur_type:
+            name: 'Type iParapheur'
+            read-only: true
+        iparapheur_sous_type:
+            name: 'Sous-type i-Parapheur'
+            requis: true
+            index: true
+            type: externalData
+            choice-action: iparapheur-sous-type
+            link_name: 'Sélectionner un sous-type'
+        has_date_limite:
+            name: 'Utiliser une date limite'
+            type: checkbox
+        date_limite:
+            name: 'Date limite'
+            type: date
+    'Parapheur FAST':
+        envoi_fast:
+            no-show: true
+        fast_parapheur_circuit:
+            name: 'Circuit sur le parapheur'
+            type: externalData
+            choice-action: iparapheur-sous-type
+            link_name: 'Liste des circuits'
+        fast_parapheur_circuit_configuration:
+            name: 'Configuration du circuit à la volée (au format JSON)'
+            commentaire: 'Si ce fichier est déposé, il remplace le circuit choisi dans le champ "Circuit sur le parapheur"'
+            type: file
+        fast_parapheur_email_destinataire:
+            name: 'Email du destinataire'
+            commentaire: "Email de la personne à qui l’on souhaite envoyer le document après sa signature<br />\nUniquement avec le mode \"circuit à la volée\""
+        fast_parapheur_email_cc:
+            name: 'Email des destinataires en copie carbone'
+            commentaire: "Permet de rajouter des destinataires mais en copie carbone<br />\nUniquement avec le mode \"circuit à la volée\""
+        fast_parapheur_agents:
+            name: 'Emails des agents'
+            commentaire: "Les emails des utilisateurs à rajouter en tant qu’agent. Séparé par des virgules<br />\nUniquement avec le mode \"circuit à la volée\""
+    Signature:
+        iparapheur_dossier_id:
+            name: '#ID dossier parapheur'
+            read-only: true
+        iparapheur_historique:
+            name: 'Historique iparapheur'
+            type: file
+            read-only: true
+        parapheur_last_message:
+            name: 'Dernier message reçu du parapheur'
+            read-only: true
+        has_signature:
+            no-show: true
+            read-only: true
+        signature:
+            name: 'Signature détachée'
+            type: file
+            read-only: true
+        bordereau_signature:
+            name: 'Bordereau de signature'
+            type: file
+            read-only: true
+        document_original:
+            name: 'Document original'
+            type: file
+            read-only: true
+        multi_document_original:
+            name: 'Multi-document(s) original'
+            type: file
+            multiple: true
+            read-only: true
+        iparapheur_annexe_sortie:
+            name: 'Annexe(s) de sortie du parapheur'
+            type: file
+            multiple: true
+            read-only: true
+    Acte:
+        acte_nature:
+            name: "Nature de l'acte"
+            type: select
+            requis: true
+            value:
+                3: 'Actes individuels'
+                2: 'Actes réglementaires'
+                6: Autres
+                4: 'Contrats, conventions et avenants'
+                1: Délibérations
+                5: 'Documents budgétaires et financiers'
+            onchange: autre_document_attache-change
+        numero_de_lacte:
+            name: "Numéro de l'acte"
+            requis: true
+            commentaire: '15 caractères maximum (chiffres, lettres en majuscule ou _)'
+            preg_match: '#^[0-9A-Z_]{1,15}$#'
+            preg_match_error: '15 caractères maximum (chiffres, lettres en majuscule ou _)'
+            index: true
+        date_de_lacte:
+            name: "Date de l'acte"
+            type: date
+            requis: true
+            commentaire: 'Date de la décision'
+        document_papier:
+            name: 'Envoi de documents papiers complémentaires'
+            type: checkbox
+        classification:
+            name: 'Classification en matière et sous-matière'
+            type: externalData
+            requis: true
+            link_name: 'Sélectionner dans la classification en matière et sous-matière'
+            choice-action: classification
+        type_piece:
+            name: 'Typologie des pièces'
+            type: externalData
+            link_name: 'Sélectionner des types de pièces'
+            choice-action: type-piece
+            edit-only: true
+            requis: true
+        type_piece_fichier:
+            name: 'Typologie des pièces'
+            type: file
+            visionneuse: Pastell\Viewer\TypologyActesViewer
+            read-only: true
+            requis: true
+            visionneuse-no-link: true
+        type_acte:
+            no-show: true
+            onchange: typology-change-by-api
+        type_pj:
+            no-show: true
+            onchange: typology-change-by-api
+    'Retour Tdt':
+        has_bordereau:
+            no-show: true
+            read-only: true
+        tedetis_transaction_id:
+            name: 'Identifiant de la transaction sur le TdT'
+            read-only: true
+        bordereau:
+            name: "Bordereau d'acquittement"
+            type: file
+            read-only: true
+        aractes:
+            name: 'Accusé de réception technique'
+            type: file
+            commentaire: 'Accusé de réception (XML) envoyé par la préfecture'
+            read-only: true
+        acte_tamponne:
+            name: 'Acte tamponné par le TdT'
+            type: file
+            read-only: true
+        annexes_tamponnees:
+            name: 'Annexe(s) tamponnée(s) par le TdT'
+            type: file
+            multiple: true
+            read-only: true
+        date_ar:
+            name: "Date de l'accusé de réception"
+            type: date
+            read-only: true
+        acte_publication_date:
+            name: "Date de publication de l'acte"
+            type: date
+    Annulation:
+        has_annulation:
+            no-show: true
+            read-only: true
+        date_ar_annulation:
+            name: "Date de l'accusé de réception d'annulation"
+            type: date
+            read-only: true
+        tedetis_annulation_id:
+            name: "Identifiant de la transaction d'annulation"
+            read-only: true
+    'Mail sécurisé':
+        to:
+            name: Destinataire(s)
+            commentaire: 'Plusieurs emails possibles séparés par une virgule'
+            requis: true
+            type: mail-list
+            autocomplete: MailSec/getContactAjax
+        cc:
+            name: 'Copie à'
+            commentaire: 'Plusieurs emails possibles séparés par une virgule'
+            type: mail-list
+            autocomplete: MailSec/getContactAjax
+        bcc:
+            name: 'Copie cachée à'
+            commentaire: 'Plusieurs emails possibles séparés par une virgule'
+            type: mail-list
+            autocomplete: MailSec/getContactAjax
+        password:
+            name: 'Mot de passe'
+            type: password
+            may_be_null: true
+        password2:
+            name: 'Mot de passe (confirmation)'
+            type: password
+            may_be_null: true
+            is_equal: password
+            is_equal_error: 'Les mots de passe ne correspondent pas'
+        key:
+            no-show: true
+            read-only: true
+        sent_mail_number:
+            name: Destinataires
+            default: '0'
+            no-show: true
+            read-only: true
+        sent_mail_read:
+            name: 'Mails lus'
+            default: '0'
+            no-show: true
+            read-only: true
+        sent_mail_answered:
+            name: 'Mails répondus'
+            default: '0'
+            no-show: true
+            read-only: true
+    'Retour GED':
+        has_ged_document_id:
+            no-show: true
+            read-only: true
+        ged_document_id_file:
+            name: 'Identifiants des documents sur la GED'
+            type: file
+            visionneuse: Pastell\Viewer\GedIdDocumentsViewer
+            read-only: true
+            requis: true
+            visionneuse-no-link: true
+    SAE:
+        sae_show:
+            no-show: true
+        journal:
+            name: 'Faisceau de preuves'
+            type: file
+        date_journal_debut:
+            name: 'Date du premier évènement journalisé'
+        date_cloture_journal:
+            name: 'Date de clôture du journal'
+        date_cloture_journal_iso8601:
+            name: 'Date de clôture du journal (iso 8601)'
+        sae_transfert_id:
+            name: 'Identifiant de transfert'
+            index: true
+        sae_bordereau:
+            name: 'Bordereau SEDA'
+            type: file
+        sae_archive:
+            name: "Paquet d'archive (SIP)"
+            type: file
+        ar_sae:
+            type: file
+            name: 'Accusé de réception SAE'
+        sae_ack_comment:
+            name: "Commentaire de l'accusé de réception"
+        reply_sae:
+            type: file
+            name: 'Réponse du SAE'
+        sae_archival_identifier:
+            name: "Identifiant de l'archive sur le SAE"
+        sae_atr_comment:
+            name: 'Commentaire de la réponse du SAE'
+champs-affiches:
+    - titre
+    - dernier_etat
+    - date_dernier_etat
+    - matricule_agent
+champs-recherche-avancee:
+    - type
+    - id_e
+    - lastetat
+    - last_state_begin
+    - etatTransit
+    - state_begin
+    - search
+    - matricule_agent
+page-condition:
+    Transformation:
+        has_transformation: true
+    i-Parapheur:
+        envoi_iparapheur: true
+    'Parapheur FAST':
+        envoi_fast: true
+    Signature:
+        has_signature: true
+    Acte:
+        envoi_tdt_actes: true
+    'Retour Tdt':
+        has_bordereau: true
+    Annulation:
+        has_annulation: true
+    'Mail sécurisé':
+        envoi_mailsec: true
+    'Retour GED':
+        has_ged_document_id: true
+    SAE:
+        sae_show: true
+action:
+    creation:
+        name-action: Créer
+        name: Créé
+        rule:
+            no-last-action: ''
+    modification:
+        name-action: Modifier
+        name: 'En cours de rédaction'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - transformation
+                - recu-iparapheur
+                - acquiter-tdt
+                - reception
+                - non-recu
+                - send-ged
+                - send-signature-error
+                - acquiter-tdt
+                - reception
+                - non-recu
+                - send-ged
+                - accepter-sae
+                - termine
+    supression:
+        name-action: Supprimer
+        name: Supprimé
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - termine
+                - fatal-error
+                - transformation-error
+                - rejet-iparapheur
+                - annuler-tdt
+                - rejet-sae
+        action-class: Supprimer
+        warning: 'Êtes-vous sûr ?'
+    importation:
+        name: 'Importation du document'
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+    orientation:
+        name: 'Envoi du document'
+        name-action: 'Envoyer le document'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - transformation
+                - recu-iparapheur
+                - acquiter-tdt
+                - reception
+                - non-recu
+                - send-ged
+                - accepter-sae
+            document_is_valide: true
+        action-class: OrientationTypeDossierPersonnalise
+    termine:
+        name: 'Traitement terminé'
+        rule:
+            role_id_e: no-role
+        editable-content:
+            - acte_publication_date
+        modification-no-change-etat: true
+    reouverture:
+        name: 'Rouvrir le dossier'
+        rule:
+            last-action:
+                - termine
+        action-class: Reopen
+    cheminement-change:
+        no-workflow: true
+        rule:
+            role_id_e: 'no-role,'
+        action-class: CheminementChangeTypeDossierPersonnalise
+    preparation-transformation:
+        name: 'Préparation à la transformation'
+        rule:
+            role_id_e: no-role
+        action-automatique: transformation
+    transformation:
+        name-action: 'Transformer le document'
+        name: 'Transformation du document'
+        rule:
+            last-action:
+                - preparation-transformation
+                - transformation-error
+        action-class: StandardAction
+        action-automatique: orientation
+        connecteur-type: transformation
+        connecteur-type-action: TransformationTransform
+        connecteur-type-mapping:
+            transformation_file: transformation_file
+            has_transformation: has_transformation
+        editable-content:
+            - envoi_signature
+            - envoi_tdt_actes
+            - envoi_mailsec
+            - envoi_depot
+            - envoi_sae
+            - envoi_iparapheur
+            - iparapheur_sous_type
+            - has_date_limite
+            - date_limite
+            - envoi_fast
+            - fast_parapheur_circuit
+            - fast_parapheur_circuit_configuration
+            - fast_parapheur_email_destinataire
+            - fast_parapheur_email_cc
+            - fast_parapheur_agents
+            - acte_nature
+            - numero_de_lacte
+            - date_de_lacte
+            - document_papier
+            - classification
+            - type_piece
+            - type_acte
+            - type_pj
+            - acte_publication_date
+            - to
+            - cc
+            - bcc
+            - password
+            - password2
+            - sae_show
+            - journal
+            - date_journal_debut
+            - date_cloture_journal
+            - date_cloture_journal_iso8601
+            - sae_transfert_id
+            - sae_bordereau
+            - sae_archive
+            - ar_sae
+            - sae_ack_comment
+            - reply_sae
+            - sae_archival_identifier
+            - sae_atr_comment
+        modification-no-change-etat: true
+    transformation-error:
+        name: 'Erreur lors de la transformation du dossier'
+        rule:
+            role_id_e: no-role
+    preparation-send-iparapheur:
+        name: "Préparation de l'envoi au parapheur"
+        rule:
+            role_id_e: no-role
+        action-automatique: send-iparapheur
+    send-iparapheur:
+        name-action: 'Transmettre au parapheur'
+        name: 'Transmis au parapheur'
+        rule:
+            last-action:
+                - preparation-send-iparapheur
+                - send-signature-error
+        action-class: StandardAction
+        connecteur-type: signature
+        connecteur-type-action: SignatureEnvoie
+        connecteur-type-mapping:
+            iparapheur_type: iparapheur_type
+            iparapheur_sous_type: iparapheur_sous_type
+            iparapheur_dossier_id: iparapheur_dossier_id
+            fast_parapheur_circuit: fast_parapheur_circuit
+            fast_parapheur_circuit_configuration: fast_parapheur_circuit_configuration
+            fast_parapheur_email_destinataire: fast_parapheur_email_destinataire
+            fast_parapheur_email_cc: fast_parapheur_email_cc
+            fast_parapheur_agents: fast_parapheur_agents
+            send-signature-error: send-signature-error
+            iparapheur_has_date_limite: has_date_limite
+            iparapheur_date_limite: date_limite
+            objet: titre_document
+            document: document
+            autre_document_attache: annexes
+        action-automatique: verif-iparapheur
+    send-signature-error:
+        name: "Erreur lors de l'envoi du dossier à la signature"
+        editable-content:
+            - fast_parapheur_circuit
+            - fast_parapheur_circuit_configuration
+            - fast_parapheur_email_destinataire
+            - fast_parapheur_email_cc
+            - fast_parapheur_agents
+        rule:
+            role_id_e: no-role
+    verif-iparapheur:
+        name-action: 'Vérifier le statut de signature'
+        name: 'Vérification de la signature'
+        rule:
+            last-action:
+                - erreur-verif-iparapheur
+                - send-iparapheur
+        action-class: StandardAction
+        connecteur-type: signature
+        connecteur-type-action: SignatureRecuperation
+        connecteur-type-mapping:
+            iparapheur_historique: iparapheur_historique
+            parapheur_last_message: parapheur_last_message
+            has_signature: has_signature
+            signature: signature
+            document_original: document_original
+            multi_document_original: multi_document_original
+            bordereau: bordereau_signature
+            iparapheur_annexe_sortie: iparapheur_annexe_sortie
+            iparapheur_dossier_id: iparapheur_dossier_id
+            recu-iparapheur: recu-iparapheur
+            rejet-iparapheur: rejet-iparapheur
+            erreur-verif-iparapheur: erreur-verif-iparapheur
+            iparapheur_has_date_limite: has_date_limite
+            iparapheur_date_limite: date_limite
+            objet: titre_document
+            document: document
+            autre_document_attache: annexes
+    erreur-verif-iparapheur:
+        name: 'Erreur lors de la vérification du statut de signature'
+        rule:
+            role_id_e: no-role
+    recu-iparapheur:
+        name: 'Signature récuperée'
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+        editable-content:
+            - envoi_tdt_actes
+            - envoi_mailsec
+            - envoi_depot
+            - envoi_sae
+            - acte_nature
+            - numero_de_lacte
+            - date_de_lacte
+            - document_papier
+            - classification
+            - type_piece
+            - type_acte
+            - type_pj
+            - acte_publication_date
+            - to
+            - cc
+            - bcc
+            - password
+            - password2
+            - sae_show
+            - journal
+            - date_journal_debut
+            - date_cloture_journal
+            - date_cloture_journal_iso8601
+            - sae_transfert_id
+            - sae_bordereau
+            - sae_archive
+            - ar_sae
+            - sae_ack_comment
+            - reply_sae
+            - sae_archival_identifier
+            - sae_atr_comment
+        modification-no-change-etat: true
+    rejet-iparapheur:
+        name: 'Signature refusée'
+        rule:
+            role_id_e: no-role
+    iparapheur-sous-type:
+        name: 'Liste des sous-type iParapheur'
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: IparapheurSousType
+        connecteur-type-mapping:
+            iparapheur_type: iparapheur_type
+            iparapheur_sous_type: iparapheur_sous_type
+            fast_parapheur_circuit: fast_parapheur_circuit
+    pre-send-tdt:
+        name: "Préparation de l'envoi au Tdt"
+        rule:
+            role_id_e: no-role
+        action-automatique: send-tdt
+    send-tdt:
+        name-action: 'Transmettre au TdT'
+        name: 'Transmis au TdT'
+        rule:
+            last-action:
+                - pre-send-tdt
+                - send-tdt-erreur
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdTEnvoiActe
+        connecteur-type-mapping:
+            acte_nature: acte_nature
+            numero_de_lacte: numero_de_lacte
+            date_de_lacte: date_de_lacte
+            document_papier: document_papier
+            classification: classification
+            type_acte: type_acte
+            type_pj: type_pj
+            send-tdt-erreur: send-tdt-erreur
+            document-transmis-tdt: document-transmis-tdt
+            tedetis_transaction_id: tedetis_transaction_id
+            arrete: document
+            autre_document_attache: annexes
+            objet: titre_document
+        action-automatique: verif-tdt
+    send-tdt-erreur:
+        name: "Erreur lors de l'envoi des données au TdT"
+        rule:
+            role_id_e: no-role
+    document-transmis-tdt:
+        name-action: 'Transmettre les documents au TdT'
+        name: 'En attente du certificat RGS**'
+        rule:
+            role_id_e: no-role
+    teletransmission-tdt:
+        name-action: 'Ordonner la télétransmission au TdT'
+        name: 'Tentative de télétransmission sur le TDT'
+        rule:
+            last-action:
+                - teletransmission-tdt
+                - document-transmis-tdt
+        action-class: TdtTeletransmettre
+        connecteur-type-mapping:
+            tedetis_transaction_id: tedetis_transaction_id
+            return-teletransmission-tdt: return-teletransmission-tdt
+    return-teletransmission-tdt:
+        name: 'Ordre de télétransmission envoyé sur le TDT'
+        rule:
+            last-action:
+                - teletransmission-tdt
+        action-class: TdtRetourTeletransmettre
+        connecteur-type-mapping:
+            tedetis_transaction_id: tedetis_transaction_id
+        action-automatique: verif-tdt
+    verif-tdt:
+        name-action: 'Vérifier le statut de la transaction'
+        name: 'Statut vérifié par le TdT'
+        rule:
+            last-action:
+                - send-tdt
+                - tdt-error
+                - erreur-verif-tdt
+                - document-transmis-tdt
+                - teletransmission-tdt
+                - return-teletransmission-tdt
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdTRecupActe
+        connecteur-type-mapping:
+            tedetis_transaction_id: tedetis_transaction_id
+            erreur-verif-tdt: erreur-verif-tdt
+            acquiter-tdt: acquiter-tdt
+            numero_de_lacte: numero_de_lacte
+            has_bordereau: has_bordereau
+            bordereau: bordereau
+            aractes: aractes
+            acte_tamponne: acte_tamponne
+            annexes_tamponnees: annexes_tamponnees
+            date_ar: date_ar
+            arrete: document
+            autre_document_attache: annexes
+            objet: titre_document
+    erreur-verif-tdt:
+        name: "Erreur lors de la vérification du statut de l'acte"
+        rule:
+            role_id_e: no-role
+    tdt-error:
+        name: 'Erreur sur le TdT'
+        rule:
+            role_id_e: no-role
+    acquiter-tdt:
+        name: 'Acquitté par la préfecture'
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+        editable-content:
+            - envoi_mailsec
+            - envoi_depot
+            - envoi_sae
+            - to
+            - cc
+            - bcc
+            - password
+            - password2
+            - sae_show
+            - journal
+            - date_journal_debut
+            - date_cloture_journal
+            - date_cloture_journal_iso8601
+            - sae_transfert_id
+            - sae_bordereau
+            - sae_archive
+            - ar_sae
+            - sae_ack_comment
+            - reply_sae
+            - sae_archival_identifier
+            - sae_atr_comment
+            - acte_publication_date
+        modification-no-change-etat: true
+    annulation-tdt:
+        name-action: 'Annuler la transaction'
+        name: "Demande d'annulation envoyée"
+        rule:
+            has-action:
+                - acquiter-tdt
+            no-action:
+                - annulation-tdt
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdTAnnulation
+        connecteur-type-mapping:
+            tedetis_transaction_id: tedetis_transaction_id
+            tedetis_annulation_id: tedetis_annulation_id
+            has_annulation: has_annulation
+            annulation-tdt: annulation-tdt
+        action-automatique: verif-annulation-tdt
+        warning: "Attention cette action n'est pas réversible"
+    tamponner-tdt:
+        name: "Retamponner l'acte et les annexes"
+        rule:
+            has-action:
+                - acquiter-tdt
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdTRestamp
+        connecteur-type-mapping:
+            tedetis_transaction_id: tedetis_transaction_id
+            acte_tamponne: acte_tamponne
+            annexes_tamponnees: annexes_tamponnees
+            date_ar: date_ar
+            acte_publication_date: acte_publication_date
+            arrete: document
+            autre_document_attache: annexes
+            objet: titre_document
+    verif-annulation-tdt:
+        name-action: "Vérifier le statut de la transaction d'annulation"
+        name: 'Statut vérifié par le TdT'
+        rule:
+            last-action:
+                - annulation-tdt
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdTRecupAnnulation
+        connecteur-type-mapping:
+            tedetis_transaction_id: tedetis_transaction_id
+            tdt-error: tdt-error
+            annuler-tdt: annuler-tdt
+            date_ar_annulation: date_ar_annulation
+    annuler-tdt:
+        name: 'Transaction annulée'
+        rule:
+            role_id_e: no-role
+    type-piece:
+        name: 'Typologie des pièces'
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: StandardChoiceAction
+        connecteur-type: TdT
+        connecteur-type-action: TdtChoiceTypologieActes
+        connecteur-type-mapping:
+            acte_nature: acte_nature
+            classification: classification
+            arrete: document
+            autre_document_attache: annexes
+    classification:
+        name: 'Classification ACTES'
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: Classification
+    autre_document_attache-change:
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdtAnnexeTypologieAnnexeChange
+    typology-change-by-api:
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdtTypologieChangeByApi
+        connecteur-type-mapping:
+            type_acte: type_acte
+            type_pj: type_pj
+            type_piece: type_piece
+            type_piece_fichier: type_piece_fichier
+            acte_nature: acte_nature
+            arrete: document
+            autre_document_attache: annexes
+    preparation-send-mailsec:
+        name: "Préparation de l'envoi par mail sécurisé"
+        rule:
+            role_id_e: no-role
+        action-automatique: send-mailsec
+    send-mailsec:
+        name-action: 'Envoyer le mail sécurisé'
+        name: "Envoi d'un mail sécurisé"
+        rule:
+            last-action:
+                - preparation-send-mailsec
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecEnvoyer
+        connecteur-type-mapping:
+            to: to
+            cc: cc
+            bcc: bcc
+            sent_mail_number: sent_mail_number
+        action-automatique: mailsec-relance
+    mailsec-relance:
+        name: Relancé
+        name-action: 'Relancer si nécessaire'
+        rule:
+            last-action:
+                - send-mailsec
+                - renvoi
+                - reception-partielle
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecRelance
+        connecteur-type-mapping:
+            reception-partielle: reception-partielle
+            prepare-renvoi: prepare-renvoi
+            non-recu: preparation-non-recu
+            send-mailsec: send-mailsec
+        action-automatique: mailsec-relance
+    prepare-renvoi:
+        name: 'Préparation de la relance du mail'
+        rule:
+            role_id_e: no-role
+        action-automatique: renvoi
+    renvoi:
+        name-action: 'Envoyer à nouveau'
+        name: Renvoyé
+        rule:
+            last-action:
+                - mailsec-relance
+                - send-mailsec
+                - renvoi
+                - reception-partielle
+            role_id_e: editeur
+            document_is_valide: true
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecRenvoyer
+        action-automatique: mailsec-relance
+        action-class: StandardAction
+    reception:
+        name: Reçu
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+        editable-content:
+            - envoi_depot
+            - envoi_sae
+            - sae_show
+            - journal
+            - date_journal_debut
+            - date_cloture_journal
+            - date_cloture_journal_iso8601
+            - sae_transfert_id
+            - sae_bordereau
+            - sae_archive
+            - ar_sae
+            - sae_ack_comment
+            - reply_sae
+            - sae_archival_identifier
+            - sae_atr_comment
+            - acte_publication_date
+        modification-no-change-etat: true
+    reception-partielle:
+        name: 'Reçu partiellement'
+        rule:
+            role_id_e: no-role
+        action-automatique: mailsec-relance
+    preparation-non-recu:
+        name: 'Préparation au passage comme non reçu'
+        rule:
+            role_id_e: no-role
+        action-automatique: non-recu
+    non-recu:
+        name: 'Non reçu'
+        name-action: 'Définir comme non reçu'
+        warning: ok
+        rule:
+            last-action:
+                - preparation-non-recu
+                - renvoi
+                - send-mailsec
+                - reception-partielle
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecNotReceived
+        action-automatique: orientation
+        editable-content:
+            - envoi_depot
+            - envoi_sae
+            - sae_show
+            - journal
+            - date_journal_debut
+            - date_cloture_journal
+            - date_cloture_journal_iso8601
+            - sae_transfert_id
+            - sae_bordereau
+            - sae_archive
+            - ar_sae
+            - sae_ack_comment
+            - reply_sae
+            - sae_archival_identifier
+            - sae_atr_comment
+            - acte_publication_date
+        modification-no-change-etat: true
+    reponse:
+        name: 'Une réponse a été enregistrée'
+        rule:
+            no-action:
+                - creation
+    compute_read_mail:
+        name: 'Calcul des mails lus'
+        rule:
+            role_id_e: no-role
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecComputeReadMail
+        connecteur-type-mapping:
+            sent_mail_read: sent_mail_read
+    compute_answered_mail:
+        name: 'Calcul des mails répondus'
+        rule:
+            role_id_e: no-role
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecComputeAnsweredMail
+        connecteur-type-mapping:
+            sent_mail_answered: sent_mail_answered
+    preparation-send-ged:
+        name: "Préparation de l'envoi à la GED"
+        rule:
+            role_id_e: no-role
+        action-automatique: send-ged
+    send-ged:
+        name-action: 'Verser à la GED'
+        name: 'Versé à la GED'
+        rule:
+            last-action:
+                - preparation-send-ged
+                - error-ged
+        action-automatique: orientation
+        action-class: StandardAction
+        connecteur-type: GED
+        connecteur-type-action: GEDEnvoyer
+        connecteur-type-mapping:
+            fatal-error: error-ged
+        editable-content:
+            - envoi_sae
+            - sae_show
+            - journal
+            - date_journal_debut
+            - date_cloture_journal
+            - date_cloture_journal_iso8601
+            - sae_transfert_id
+            - sae_bordereau
+            - sae_archive
+            - ar_sae
+            - sae_ack_comment
+            - reply_sae
+            - sae_archival_identifier
+            - sae_atr_comment
+            - acte_publication_date
+        modification-no-change-etat: true
+    error-ged:
+        name: 'Erreur irrécupérable lors du dépôt'
+        rule:
+            role_id_e: no-role
+    preparation-send-sae:
+        name: "Préparation de l'envoi au SAE"
+        rule:
+            role_id_e: no-role
+        action-automatique: generate-sip
+    generate-sip:
+        name-action: "Générer le paquet d'archive (SIP)"
+        name: "Paquet d'archive (SIP) généré"
+        rule:
+            last-action:
+                - preparation-send-sae
+                - generate-sip-error
+                - rejet-sae
+                - erreur-envoie-sae
+        action-class: StandardAction
+        connecteur-type: SAE
+        connecteur-type-action: Pastell\Step\SAE\Action\SAEGenerateArchiveAction
+        action-automatique: send-archive
+    generate-sip-error:
+        name: "Erreur lors de la génération de l'archive"
+        rule:
+            role_id_e: no-role
+    send-archive:
+        name-action: 'Verser au SAE'
+        name: 'Versé au SAE'
+        rule:
+            last-action:
+                - generate-sip
+                - rejet-sae
+                - erreur-envoie-sae
+        action-class: StandardAction
+        connecteur-type: SAE
+        connecteur-type-action: Pastell\Step\SAE\Action\SAESendArchiveAction
+        action-automatique: verif-sae
+    erreur-envoie-sae:
+        name: "Erreur lors de l'envoi au SAE"
+        rule:
+            role_id_e: no-role
+    verif-sae:
+        name-action: "Récupérer l'AR du document sur le SAE"
+        name: "Récuperation de l'AR sur le SAE"
+        rule:
+            last-action:
+                - send-archive
+                - verif-sae-erreur
+        action-class: StandardAction
+        connecteur-type: SAE
+        connecteur-type-action: SAEVerifier
+    verif-sae-erreur:
+        name: "Erreur lors de la récupération de l'AR"
+        rule:
+            role_id_e: no-role
+    ar-recu-sae:
+        name: 'AR SAE reçu'
+        rule:
+            role_id_e: no-role
+        action-automatique: validation-sae
+    ack-not-provided:
+        name: 'En attente de la validation par le SAE'
+        rule:
+            role_id_e: no-role
+        action-automatique: validation-sae
+    validation-sae:
+        name-action: "Vérifier l'acceptation par le SAE"
+        name: "Vérification de l'acceptation par le SAE"
+        rule:
+            last-action:
+                - ar-recu-sae
+                - ack-not-provided
+                - validation-sae-erreur
+        action-class: StandardAction
+        connecteur-type: SAE
+        connecteur-type-action: SAEValider
+    validation-sae-erreur:
+        name: 'Erreur lors de la vérification de la validité du transfert'
+        rule:
+            role_id_e: no-role
+    accepter-sae:
+        name: 'Transfert accepté par le SAE'
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+        editable-content:
+            - acte_publication_date
+        modification-no-change-etat: true
+    rejet-sae:
+        name: 'Transfert rejeté par le SAE'
+        rule:
+            role_id_e: no-role
+restriction_pack:
+    - pack_rh
+studio_definition: ewogICJpZF90eXBlX2Rvc3NpZXIiOiAiZHJhZnQtcmgtZG9jdW1lbnQtaW5kaXZpZHVlbCIsCiAgInBhc3RlbGwtdmVyc2lvbiI6ICIzLjEuMTciLAogICJ0aW1lc3RhbXAiOiAxNjY0Nzc5ODcwLAogICJyYXdfZGF0YSI6IHsKICAgICJpZF90eXBlX2Rvc3NpZXIiOiAiZHJhZnQtcmgtZG9jdW1lbnQtaW5kaXZpZHVlbCIsCiAgICAibm9tIjogIkRvY3VtZW50IGluZGl2aWR1ZWwgKERSQUZUKSIsCiAgICAidHlwZSI6ICJSZXNzb3VyY2VzIGh1bWFpbmVzIiwKICAgICJkZXNjcmlwdGlvbiI6ICIiLAogICAgIm5vbV9vbmdsZXQiOiAiSW5mb3JtYXRpb24iLAogICAgInJlc3RyaWN0aW9uX3BhY2siOiAiIiwKICAgICJmb3JtdWxhaXJlRWxlbWVudCI6IFsKICAgICAgewogICAgICAgICJlbGVtZW50X2lkIjogInRpdHJlX2RvY3VtZW50IiwKICAgICAgICAibmFtZSI6ICJUaXRyZSBkdSBkb2N1bWVudCIsCiAgICAgICAgInR5cGUiOiAidGV4dCIsCiAgICAgICAgImNvbW1lbnRhaXJlIjogIiIsCiAgICAgICAgInJlcXVpcyI6ICJvbiIsCiAgICAgICAgImNoYW1wc19hZmZpY2hlcyI6ICIiLAogICAgICAgICJjaGFtcHNfcmVjaGVyY2hlX2F2YW5jZWUiOiAiIiwKICAgICAgICAidGl0cmUiOiAib24iLAogICAgICAgICJzZWxlY3RfdmFsdWUiOiAiIiwKICAgICAgICAicHJlZ19tYXRjaCI6ICIiLAogICAgICAgICJwcmVnX21hdGNoX2Vycm9yIjogIiIsCiAgICAgICAgImNvbnRlbnRfdHlwZSI6ICIiCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAiZWxlbWVudF9pZCI6ICJtYXRyaWN1bGVfYWdlbnQiLAogICAgICAgICJuYW1lIjogIk1hdHJpY3VsZSBkZSBsJ2FnZW50IiwKICAgICAgICAidHlwZSI6ICJ0ZXh0IiwKICAgICAgICAiY29tbWVudGFpcmUiOiAiIiwKICAgICAgICAicmVxdWlzIjogIm9uIiwKICAgICAgICAiY2hhbXBzX2FmZmljaGVzIjogIm9uIiwKICAgICAgICAiY2hhbXBzX3JlY2hlcmNoZV9hdmFuY2VlIjogIm9uIiwKICAgICAgICAidGl0cmUiOiAiIiwKICAgICAgICAic2VsZWN0X3ZhbHVlIjogIiIsCiAgICAgICAgInByZWdfbWF0Y2giOiAiIiwKICAgICAgICAicHJlZ19tYXRjaF9lcnJvciI6ICIiLAogICAgICAgICJjb250ZW50X3R5cGUiOiAiIgogICAgICB9LAogICAgICB7CiAgICAgICAgImVsZW1lbnRfaWQiOiAicHJlbm9tX2FnZW50IiwKICAgICAgICAibmFtZSI6ICJQclx1MDBlOW5vbSBkZSBsJ2FnZW50IiwKICAgICAgICAidHlwZSI6ICJ0ZXh0IiwKICAgICAgICAiY29tbWVudGFpcmUiOiAiUHJlbWllciBwclx1MDBlOW5vbSBkZSBsJ2FnZW50IiwKICAgICAgICAicmVxdWlzIjogIm9uIiwKICAgICAgICAiY2hhbXBzX2FmZmljaGVzIjogIiIsCiAgICAgICAgImNoYW1wc19yZWNoZXJjaGVfYXZhbmNlZSI6ICIiLAogICAgICAgICJ0aXRyZSI6ICIiLAogICAgICAgICJzZWxlY3RfdmFsdWUiOiAiIiwKICAgICAgICAicHJlZ19tYXRjaCI6ICIiLAogICAgICAgICJwcmVnX21hdGNoX2Vycm9yIjogIiIsCiAgICAgICAgImNvbnRlbnRfdHlwZSI6ICIiCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAiZWxlbWVudF9pZCI6ICJwcmVub21zX3N1aXZhbnRzX2FnZW50IiwKICAgICAgICAibmFtZSI6ICJQclx1MDBlOW5vbShzKSBzdWl2YW50KHMpIGRlIGwnYWdlbnQiLAogICAgICAgICJ0eXBlIjogInRleHQiLAogICAgICAgICJjb21tZW50YWlyZSI6ICJBdXRyZXMgcHJcdTAwZTlub21zIGRlIGwnYWdlbnQgc1x1MDBlOXBhclx1MDBlOSBwYXIgZGVzIGVzcGFjZXMiLAogICAgICAgICJyZXF1aXMiOiAiIiwKICAgICAgICAiY2hhbXBzX2FmZmljaGVzIjogIiIsCiAgICAgICAgImNoYW1wc19yZWNoZXJjaGVfYXZhbmNlZSI6ICIiLAogICAgICAgICJ0aXRyZSI6ICIiLAogICAgICAgICJzZWxlY3RfdmFsdWUiOiAiIiwKICAgICAgICAicHJlZ19tYXRjaCI6ICIiLAogICAgICAgICJwcmVnX21hdGNoX2Vycm9yIjogIiIsCiAgICAgICAgImNvbnRlbnRfdHlwZSI6ICIiCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAiZWxlbWVudF9pZCI6ICJub21fdXNhZ2VfYWdlbnQiLAogICAgICAgICJuYW1lIjogIk5vbSBkJ3VzYWdlIGRlIGwnYWdlbnQiLAogICAgICAgICJ0eXBlIjogInRleHQiLAogICAgICAgICJjb21tZW50YWlyZSI6ICIiLAogICAgICAgICJyZXF1aXMiOiAiIiwKICAgICAgICAiY2hhbXBzX2FmZmljaGVzIjogIiIsCiAgICAgICAgImNoYW1wc19yZWNoZXJjaGVfYXZhbmNlZSI6ICIiLAogICAgICAgICJ0aXRyZSI6ICIiLAogICAgICAgICJzZWxlY3RfdmFsdWUiOiAiIiwKICAgICAgICAicHJlZ19tYXRjaCI6ICIiLAogICAgICAgICJwcmVnX21hdGNoX2Vycm9yIjogIiIsCiAgICAgICAgImNvbnRlbnRfdHlwZSI6ICIiCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAiZWxlbWVudF9pZCI6ICJub21fbmFpc3NhbmNlX2FnZW50IiwKICAgICAgICAibmFtZSI6ICJOb20gZGUgbmFpc3NhbmNlIGRlIGwnYWdlbnQiLAogICAgICAgICJ0eXBlIjogInRleHQiLAogICAgICAgICJjb21tZW50YWlyZSI6ICIiLAogICAgICAgICJyZXF1aXMiOiAiIiwKICAgICAgICAiY2hhbXBzX2FmZmljaGVzIjogIiIsCiAgICAgICAgImNoYW1wc19yZWNoZXJjaGVfYXZhbmNlZSI6ICIiLAogICAgICAgICJ0aXRyZSI6ICIiLAogICAgICAgICJzZWxlY3RfdmFsdWUiOiAiIiwKICAgICAgICAicHJlZ19tYXRjaCI6ICIiLAogICAgICAgICJwcmVnX21hdGNoX2Vycm9yIjogIiIsCiAgICAgICAgImNvbnRlbnRfdHlwZSI6ICIiCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAiZWxlbWVudF9pZCI6ICJkYXRlX25haXNzYW5jZV9hZ2VudCIsCiAgICAgICAgIm5hbWUiOiAiRGF0ZSBkZSBuYWlzc2FuY2UgZGUgbCdhZ2VudCIsCiAgICAgICAgInR5cGUiOiAiZGF0ZSIsCiAgICAgICAgImNvbW1lbnRhaXJlIjogIiIsCiAgICAgICAgInJlcXVpcyI6ICJvbiIsCiAgICAgICAgImNoYW1wc19hZmZpY2hlcyI6ICIiLAogICAgICAgICJjaGFtcHNfcmVjaGVyY2hlX2F2YW5jZWUiOiAiIiwKICAgICAgICAidGl0cmUiOiAiIiwKICAgICAgICAic2VsZWN0X3ZhbHVlIjogIiIsCiAgICAgICAgInByZWdfbWF0Y2giOiAiIiwKICAgICAgICAicHJlZ19tYXRjaF9lcnJvciI6ICIiLAogICAgICAgICJjb250ZW50X3R5cGUiOiAiIgogICAgICB9LAogICAgICB7CiAgICAgICAgImVsZW1lbnRfaWQiOiAiZW1haWxfYWdlbnQiLAogICAgICAgICJuYW1lIjogIkFkcmVzc2UgZW1haWwgZGUgbCdhZ2VudCIsCiAgICAgICAgInR5cGUiOiAidGV4dCIsCiAgICAgICAgImNvbW1lbnRhaXJlIjogIiIsCiAgICAgICAgInJlcXVpcyI6ICIiLAogICAgICAgICJjaGFtcHNfYWZmaWNoZXMiOiAiIiwKICAgICAgICAiY2hhbXBzX3JlY2hlcmNoZV9hdmFuY2VlIjogIiIsCiAgICAgICAgInRpdHJlIjogIiIsCiAgICAgICAgInNlbGVjdF92YWx1ZSI6ICIiLAogICAgICAgICJwcmVnX21hdGNoIjogIiIsCiAgICAgICAgInByZWdfbWF0Y2hfZXJyb3IiOiAiIiwKICAgICAgICAiY29udGVudF90eXBlIjogIiIKICAgICAgfSwKICAgICAgewogICAgICAgICJlbGVtZW50X2lkIjogInRlbGVwaG9uZV9hZ2VudCIsCiAgICAgICAgIm5hbWUiOiAiTnVtXHUwMGU5cm8gZGUgdFx1MDBlOWxcdTAwZTlwaG9uZSBkZSBsJ2FnZW50IiwKICAgICAgICAidHlwZSI6ICJ0ZXh0IiwKICAgICAgICAiY29tbWVudGFpcmUiOiAiIiwKICAgICAgICAicmVxdWlzIjogIiIsCiAgICAgICAgImNoYW1wc19hZmZpY2hlcyI6ICIiLAogICAgICAgICJjaGFtcHNfcmVjaGVyY2hlX2F2YW5jZWUiOiAiIiwKICAgICAgICAidGl0cmUiOiAiIiwKICAgICAgICAic2VsZWN0X3ZhbHVlIjogIiIsCiAgICAgICAgInByZWdfbWF0Y2giOiAiIiwKICAgICAgICAicHJlZ19tYXRjaF9lcnJvciI6ICIiLAogICAgICAgICJjb250ZW50X3R5cGUiOiAiIgogICAgICB9LAogICAgICB7CiAgICAgICAgImVsZW1lbnRfaWQiOiAibWV0aWVyX2FnZW50IiwKICAgICAgICAibmFtZSI6ICJNXHUwMGU5dGllciBkZSBsJ2FnZW50IiwKICAgICAgICAidHlwZSI6ICJ0ZXh0IiwKICAgICAgICAiY29tbWVudGFpcmUiOiAiIiwKICAgICAgICAicmVxdWlzIjogIiIsCiAgICAgICAgImNoYW1wc19hZmZpY2hlcyI6ICIiLAogICAgICAgICJjaGFtcHNfcmVjaGVyY2hlX2F2YW5jZWUiOiAiIiwKICAgICAgICAidGl0cmUiOiAiIiwKICAgICAgICAic2VsZWN0X3ZhbHVlIjogIiIsCiAgICAgICAgInByZWdfbWF0Y2giOiAiIiwKICAgICAgICAicHJlZ19tYXRjaF9lcnJvciI6ICIiLAogICAgICAgICJjb250ZW50X3R5cGUiOiAiIgogICAgICB9LAogICAgICB7CiAgICAgICAgImVsZW1lbnRfaWQiOiAic3RhdHV0X2FnZW50IiwKICAgICAgICAibmFtZSI6ICJTdGF0dXQgZGUgbCdhZ2VudCIsCiAgICAgICAgInR5cGUiOiAidGV4dCIsCiAgICAgICAgImNvbW1lbnRhaXJlIjogIiIsCiAgICAgICAgInJlcXVpcyI6ICIiLAogICAgICAgICJjaGFtcHNfYWZmaWNoZXMiOiAiIiwKICAgICAgICAiY2hhbXBzX3JlY2hlcmNoZV9hdmFuY2VlIjogIiIsCiAgICAgICAgInRpdHJlIjogIiIsCiAgICAgICAgInNlbGVjdF92YWx1ZSI6ICIiLAogICAgICAgICJwcmVnX21hdGNoIjogIiIsCiAgICAgICAgInByZWdfbWF0Y2hfZXJyb3IiOiAiIiwKICAgICAgICAiY29udGVudF90eXBlIjogIiIKICAgICAgfSwKICAgICAgewogICAgICAgICJlbGVtZW50X2lkIjogImdyYWRlX2FnZW50IiwKICAgICAgICAibmFtZSI6ICJHcmFkZSBkZSBsJ2FnZW50IiwKICAgICAgICAidHlwZSI6ICJ0ZXh0IiwKICAgICAgICAiY29tbWVudGFpcmUiOiAiIiwKICAgICAgICAicmVxdWlzIjogIiIsCiAgICAgICAgImNoYW1wc19hZmZpY2hlcyI6ICIiLAogICAgICAgICJjaGFtcHNfcmVjaGVyY2hlX2F2YW5jZWUiOiAiIiwKICAgICAgICAidGl0cmUiOiAiIiwKICAgICAgICAic2VsZWN0X3ZhbHVlIjogIiIsCiAgICAgICAgInByZWdfbWF0Y2giOiAiIiwKICAgICAgICAicHJlZ19tYXRjaF9lcnJvciI6ICIiLAogICAgICAgICJjb250ZW50X3R5cGUiOiAiIgogICAgICB9LAogICAgICB7CiAgICAgICAgImVsZW1lbnRfaWQiOiAic2lyZXRfY29sbGVjdGl2aXRlIiwKICAgICAgICAibmFtZSI6ICJOdW1cdTAwZTlybyBTSVJFVCBkZSBsYSBjb2xsZWN0aXZpdFx1MDBlOSB0ZXJyaXRvcmlhbGUiLAogICAgICAgICJ0eXBlIjogInRleHQiLAogICAgICAgICJjb21tZW50YWlyZSI6ICIiLAogICAgICAgICJyZXF1aXMiOiAib24iLAogICAgICAgICJjaGFtcHNfYWZmaWNoZXMiOiAiIiwKICAgICAgICAiY2hhbXBzX3JlY2hlcmNoZV9hdmFuY2VlIjogIiIsCiAgICAgICAgInRpdHJlIjogZmFsc2UsCiAgICAgICAgInNlbGVjdF92YWx1ZSI6ICIiLAogICAgICAgICJwcmVnX21hdGNoIjogIiIsCiAgICAgICAgInByZWdfbWF0Y2hfZXJyb3IiOiAiIiwKICAgICAgICAiY29udGVudF90eXBlIjogIiIKICAgICAgfSwKICAgICAgewogICAgICAgICJlbGVtZW50X2lkIjogIm5vbV9jb2xsZWN0aXZpdGUiLAogICAgICAgICJuYW1lIjogIk5vbSBkZSBsYSBjb2xsZWN0aXZpdFx1MDBlOSB0ZXJyaXRvcmlhbGUiLAogICAgICAgICJ0eXBlIjogInRleHQiLAogICAgICAgICJjb21tZW50YWlyZSI6ICIiLAogICAgICAgICJyZXF1aXMiOiAiIiwKICAgICAgICAiY2hhbXBzX2FmZmljaGVzIjogIiIsCiAgICAgICAgImNoYW1wc19yZWNoZXJjaGVfYXZhbmNlZSI6ICIiLAogICAgICAgICJ0aXRyZSI6IGZhbHNlLAogICAgICAgICJzZWxlY3RfdmFsdWUiOiAiIiwKICAgICAgICAicHJlZ19tYXRjaCI6ICIiLAogICAgICAgICJwcmVnX21hdGNoX2Vycm9yIjogIiIsCiAgICAgICAgImNvbnRlbnRfdHlwZSI6ICIiCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAiZWxlbWVudF9pZCI6ICJ0eXBlX2RvY3VtZW50IiwKICAgICAgICAibmFtZSI6ICJUeXBlIGR1IGRvY3VtZW50IiwKICAgICAgICAidHlwZSI6ICJ0ZXh0IiwKICAgICAgICAiY29tbWVudGFpcmUiOiAiU2Vsb24gbGEgdHlwb2xvZ2llIGR1IGxvZ2ljaWVsIGFwcGVsYW50IiwKICAgICAgICAicmVxdWlzIjogIm9uIiwKICAgICAgICAiY2hhbXBzX2FmZmljaGVzIjogIiIsCiAgICAgICAgImNoYW1wc19yZWNoZXJjaGVfYXZhbmNlZSI6ICIiLAogICAgICAgICJ0aXRyZSI6IGZhbHNlLAogICAgICAgICJzZWxlY3RfdmFsdWUiOiAiIiwKICAgICAgICAicHJlZ19tYXRjaCI6ICIiLAogICAgICAgICJwcmVnX21hdGNoX2Vycm9yIjogIiIsCiAgICAgICAgImNvbnRlbnRfdHlwZSI6ICIiCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAiZWxlbWVudF9pZCI6ICJkYXRlX2RvY3VtZW50IiwKICAgICAgICAibmFtZSI6ICJEYXRlIGR1IGRvY3VtZW50IiwKICAgICAgICAidHlwZSI6ICJkYXRlIiwKICAgICAgICAiY29tbWVudGFpcmUiOiAiIiwKICAgICAgICAicmVxdWlzIjogIm9uIiwKICAgICAgICAiY2hhbXBzX2FmZmljaGVzIjogIiIsCiAgICAgICAgImNoYW1wc19yZWNoZXJjaGVfYXZhbmNlZSI6ICIiLAogICAgICAgICJ0aXRyZSI6IGZhbHNlLAogICAgICAgICJzZWxlY3RfdmFsdWUiOiAiIiwKICAgICAgICAicHJlZ19tYXRjaCI6ICIiLAogICAgICAgICJwcmVnX21hdGNoX2Vycm9yIjogIiIsCiAgICAgICAgImNvbnRlbnRfdHlwZSI6ICIiCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAiZWxlbWVudF9pZCI6ICJkb2N1bWVudCIsCiAgICAgICAgIm5hbWUiOiAiQXJyXHUwMGVhdFx1MDBlOSBkZSBjYXJyaVx1MDBlOHJlIiwKICAgICAgICAidHlwZSI6ICJmaWxlIiwKICAgICAgICAiY29tbWVudGFpcmUiOiAiIiwKICAgICAgICAicmVxdWlzIjogIm9uIiwKICAgICAgICAiY2hhbXBzX2FmZmljaGVzIjogIiIsCiAgICAgICAgImNoYW1wc19yZWNoZXJjaGVfYXZhbmNlZSI6ICIiLAogICAgICAgICJ0aXRyZSI6ICIiLAogICAgICAgICJzZWxlY3RfdmFsdWUiOiAiIiwKICAgICAgICAicHJlZ19tYXRjaCI6ICIiLAogICAgICAgICJwcmVnX21hdGNoX2Vycm9yIjogIiIsCiAgICAgICAgImNvbnRlbnRfdHlwZSI6ICJhcHBsaWNhdGlvblwvcGRmIgogICAgICB9LAogICAgICB7CiAgICAgICAgImVsZW1lbnRfaWQiOiAiYW5uZXhlcyIsCiAgICAgICAgIm5hbWUiOiAiQW5uZXhlKHMpIiwKICAgICAgICAidHlwZSI6ICJtdWx0aV9maWxlIiwKICAgICAgICAiY29tbWVudGFpcmUiOiAiIiwKICAgICAgICAicmVxdWlzIjogIiIsCiAgICAgICAgImNoYW1wc19hZmZpY2hlcyI6ICIiLAogICAgICAgICJjaGFtcHNfcmVjaGVyY2hlX2F2YW5jZWUiOiAiIiwKICAgICAgICAidGl0cmUiOiAiIiwKICAgICAgICAic2VsZWN0X3ZhbHVlIjogIiIsCiAgICAgICAgInByZWdfbWF0Y2giOiAiIiwKICAgICAgICAicHJlZ19tYXRjaF9lcnJvciI6ICIiLAogICAgICAgICJjb250ZW50X3R5cGUiOiAiIgogICAgICB9LAogICAgICB7CiAgICAgICAgImVsZW1lbnRfaWQiOiAibWV0YWRvbm5lZXMiLAogICAgICAgICJuYW1lIjogIkZpY2hpZXIgZGUgbVx1MDBlOXRhZG9ublx1MDBlOWVzIiwKICAgICAgICAidHlwZSI6ICJmaWxlIiwKICAgICAgICAiY29tbWVudGFpcmUiOiAiIiwKICAgICAgICAicmVxdWlzIjogIiIsCiAgICAgICAgImNoYW1wc19hZmZpY2hlcyI6ICIiLAogICAgICAgICJjaGFtcHNfcmVjaGVyY2hlX2F2YW5jZWUiOiAiIiwKICAgICAgICAidGl0cmUiOiAiIiwKICAgICAgICAic2VsZWN0X3ZhbHVlIjogIiIsCiAgICAgICAgInByZWdfbWF0Y2giOiAiIiwKICAgICAgICAicHJlZ19tYXRjaF9lcnJvciI6ICIiLAogICAgICAgICJjb250ZW50X3R5cGUiOiAiYXBwbGljYXRpb25cL2pzb24sIGFwcGxpY2F0aW9uXC94bWwiCiAgICAgIH0KICAgIF0sCiAgICAiZXRhcGUiOiBbCiAgICAgIHsKICAgICAgICAibnVtX2V0YXBlIjogMCwKICAgICAgICAidHlwZSI6ICJ0cmFuc2Zvcm1hdGlvbiIsCiAgICAgICAgImxhYmVsIjogbnVsbCwKICAgICAgICAiZGVmYXVsdENoZWNrZWQiOiBmYWxzZSwKICAgICAgICAicmVxdWlzIjogIm9uIiwKICAgICAgICAiYXV0b21hdGlxdWUiOiAib24iLAogICAgICAgICJzcGVjaWZpY190eXBlX2luZm8iOiBbXSwKICAgICAgICAibnVtX2V0YXBlX3NhbWVfdHlwZSI6IDAsCiAgICAgICAgImV0YXBlX3dpdGhfc2FtZV90eXBlX2V4aXN0cyI6IGZhbHNlCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAibnVtX2V0YXBlIjogIjEiLAogICAgICAgICJ0eXBlIjogInNpZ25hdHVyZSIsCiAgICAgICAgImxhYmVsIjogbnVsbCwKICAgICAgICAiZGVmYXVsdENoZWNrZWQiOiBmYWxzZSwKICAgICAgICAicmVxdWlzIjogIiIsCiAgICAgICAgImF1dG9tYXRpcXVlIjogIm9uIiwKICAgICAgICAic3BlY2lmaWNfdHlwZV9pbmZvIjogewogICAgICAgICAgImxpYmVsbGVfcGFyYXBoZXVyIjogInRpdHJlX2RvY3VtZW50IiwKICAgICAgICAgICJkb2N1bWVudF9hX3NpZ25lciI6ICJkb2N1bWVudCIsCiAgICAgICAgICAiYW5uZXhlIjogImFubmV4ZXMiLAogICAgICAgICAgImhhc19kYXRlX2xpbWl0ZSI6ICJvbiIsCiAgICAgICAgICAiaGFzX21ldGFkYXRhX2luX2pzb24iOiAiIiwKICAgICAgICAgICJjb250aW51ZV9hZnRlcl9yZWZ1c2FsIjogIiIKICAgICAgICB9LAogICAgICAgICJudW1fZXRhcGVfc2FtZV90eXBlIjogMCwKICAgICAgICAiZXRhcGVfd2l0aF9zYW1lX3R5cGVfZXhpc3RzIjogZmFsc2UKICAgICAgfSwKICAgICAgewogICAgICAgICJudW1fZXRhcGUiOiAiMiIsCiAgICAgICAgInR5cGUiOiAidGR0X2FjdGVzIiwKICAgICAgICAibGFiZWwiOiBudWxsLAogICAgICAgICJkZWZhdWx0Q2hlY2tlZCI6IGZhbHNlLAogICAgICAgICJyZXF1aXMiOiAiIiwKICAgICAgICAiYXV0b21hdGlxdWUiOiAib24iLAogICAgICAgICJzcGVjaWZpY190eXBlX2luZm8iOiB7CiAgICAgICAgICAib2JqZXRfYWN0ZSI6ICJ0aXRyZV9kb2N1bWVudCIsCiAgICAgICAgICAiZmljaGllcl9hY3RlIjogImRvY3VtZW50IiwKICAgICAgICAgICJmaWNoaWVyX2FubmV4ZSI6ICJhbm5leGVzIiwKICAgICAgICAgICJkcm9pdF9zcGVjaWZpcXVlIjogIiIKICAgICAgICB9LAogICAgICAgICJudW1fZXRhcGVfc2FtZV90eXBlIjogMCwKICAgICAgICAiZXRhcGVfd2l0aF9zYW1lX3R5cGVfZXhpc3RzIjogZmFsc2UKICAgICAgfSwKICAgICAgewogICAgICAgICJudW1fZXRhcGUiOiAzLAogICAgICAgICJ0eXBlIjogIm1haWxzZWMiLAogICAgICAgICJsYWJlbCI6ICIiLAogICAgICAgICJkZWZhdWx0Q2hlY2tlZCI6IGZhbHNlLAogICAgICAgICJyZXF1aXMiOiAiIiwKICAgICAgICAiYXV0b21hdGlxdWUiOiAib24iLAogICAgICAgICJzcGVjaWZpY190eXBlX2luZm8iOiBbXSwKICAgICAgICAibnVtX2V0YXBlX3NhbWVfdHlwZSI6IDAsCiAgICAgICAgImV0YXBlX3dpdGhfc2FtZV90eXBlX2V4aXN0cyI6IGZhbHNlCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAibnVtX2V0YXBlIjogNCwKICAgICAgICAidHlwZSI6ICJkZXBvdCIsCiAgICAgICAgImxhYmVsIjogIiIsCiAgICAgICAgImRlZmF1bHRDaGVja2VkIjogZmFsc2UsCiAgICAgICAgInJlcXVpcyI6ICIiLAogICAgICAgICJhdXRvbWF0aXF1ZSI6ICJvbiIsCiAgICAgICAgInNwZWNpZmljX3R5cGVfaW5mbyI6IFtdLAogICAgICAgICJudW1fZXRhcGVfc2FtZV90eXBlIjogMCwKICAgICAgICAiZXRhcGVfd2l0aF9zYW1lX3R5cGVfZXhpc3RzIjogZmFsc2UKICAgICAgfSwKICAgICAgewogICAgICAgICJudW1fZXRhcGUiOiAiNSIsCiAgICAgICAgInR5cGUiOiAic2FlIiwKICAgICAgICAibGFiZWwiOiBudWxsLAogICAgICAgICJkZWZhdWx0Q2hlY2tlZCI6IGZhbHNlLAogICAgICAgICJyZXF1aXMiOiAiIiwKICAgICAgICAiYXV0b21hdGlxdWUiOiAib24iLAogICAgICAgICJzcGVjaWZpY190eXBlX2luZm8iOiB7CiAgICAgICAgICAic2FlX2hhc19tZXRhZGF0YV9pbl9qc29uIjogIiIKICAgICAgICB9LAogICAgICAgICJudW1fZXRhcGVfc2FtZV90eXBlIjogMCwKICAgICAgICAiZXRhcGVfd2l0aF9zYW1lX3R5cGVfZXhpc3RzIjogZmFsc2UKICAgICAgfQogICAgXQogIH0KfQ==

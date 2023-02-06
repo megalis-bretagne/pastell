@@ -23,6 +23,7 @@
 - Ajout de la commande ```app:module:force-send-ged-and-delete [-i|--includeSubEntities] [--dry-run] [--] [<sourceModule> [<entityId>]]``` #1562
 - Valeur par défaut disponible (texte, textarea, checkbox et liste déroulante) dans les flux studio #1065
 - Archives composites sur le connecteur de génération SEDA Asalae 2.1 #1753
+- Ajout du Pack RH #1773
 
 ## Évolutions
 

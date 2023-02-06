@@ -49,6 +49,7 @@ services:
             PACK_CHORUS_PRO: ${PACK_CHORUS_PRO:-false}
             PACK_MARCHE: ${PACK_MARCHE:-false}
             PACK_URBANISME: ${PACK_URBANISME:-false}
+            PACK_RH: ${PACK_RH:-false}
             PACK_TEST: ${PACK_TEST:-false}
             PACK_LIBERSIGN: ${PACK_LIBERSIGN:-false}
             TIMEZONE: ${TIMEZONE:-Europe/Paris}

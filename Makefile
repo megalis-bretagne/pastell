@@ -72,6 +72,14 @@ module-pack-urbanisme: docker-compose-up ## Run make-module pack_urbanisme
 	$(MAKE_MODULE) ./pack-json/pack-urbanisme/document-autorisation-urba-destinataire-draft.json ./module/ --id document-autorisation-urbanisme-destinataire --name "Document d'autorisation d'urbanisme (destinataire)" --restriction_pack 'pack_urbanisme'
 	$(MAKE_MODULE) ./pack-json/pack-urbanisme/document-autorisation-urba-draft.json ./module/ --id document-autorisation-urbanisme --name "Document d'autorisation d'urbanisme" --restriction_pack 'pack_urbanisme'
 
+module-pack-rh: docker-compose-up ## Run make-module pack-rh
+	$(MAKE_MODULE) ./pack-json/pack-rh/draft-rh-document-individuel.json ./module/ --id rh-document-individuel --name "Document individuel" --restriction_pack 'pack_rh'
+	$(MAKE_MODULE) ./pack-json/pack-rh/draft-rh-document-individuel-destinataire.json ./module/ --id rh-document-individuel-destinataire --name "Document individuel (destinataire)" --restriction_pack 'pack_rh'
+	$(MAKE_MODULE) ./pack-json/pack-rh/draft-rh-bulletin-salaire.json ./module/ --id rh-bulletin-salaire --name "Bulletin de salaire" --restriction_pack 'pack_rh'
+	$(MAKE_MODULE) ./pack-json/pack-rh/draft-rh-archivage-dossier-agent.json ./module/ --id rh-archivage-dossier-agent --name "Archivage des éléments du dossier individuel de l'agent" --restriction_pack 'pack_rh'
+	$(MAKE_MODULE) ./pack-json/pack-rh/draft-rh-archivage-collectif.json ./module/ --id rh-archivage-collectif --name "Archivage des données de gestion collective (fichier unitaire)" --restriction_pack 'pack_rh'
+	$(MAKE_MODULE) ./pack-json/pack-rh/draft-rh-archivage-collectif-zip.json ./module/ --id rh-archivage-collectif-zip --name "Archivage des données de gestion collective (fichier compressé)" --restriction_pack 'pack_rh'
+
 module-pack-gfc: docker-compose-up ## Run make-module pack_gfc
 	$(MAKE_MODULE) ./pack-json/pack-gfc/dossier-wgfc.json ./module/ --id gfc-dossier
 	$(MAKE_MODULE) ./pack-json/pack-gfc/dossier-wgfc-destinataire.json ./module/ --id gfc-dossier-destinataire
@@ -85,7 +93,7 @@ module-pack-document: docker-compose-up ## Run make-module pack_document
 	$(MAKE_MODULE) ./pack-json/pack-document/ls-document-pdf-draft-destinataire.json ./module/ --id ls-document-pdf-destinataire --name "Document PDF (destinataire)"
 
 
-all-module: module-pack-gfc module-pack-urbanisme module-pack-publication module-pack-document
+all-module: module-pack-gfc module-pack-urbanisme module-pack-rh module-pack-publication module-pack-document
 
 build-extensions: ## Build extensions
 	$(EXEC_COMPOSER) composer install --ignore-platform-reqs --working-dir=./extensions/pastell-depot-cmis/
