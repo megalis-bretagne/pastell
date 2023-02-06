@@ -30,6 +30,36 @@ class PastellPackTest extends PastellTestCase
             'document-autorisation-urbanisme-destinataire',
             "Document d'autorisation d'urbanisme (destinataire)"
         ],
+        'draft-rh-document-individuel' => [
+            'pack_rh',
+            'rh-document-individuel',
+            "Document individuel"
+        ],
+        'draft-rh-document-individuel-destinataire' => [
+            'pack_rh',
+            'rh-document-individuel-destinataire',
+            "Document individuel (destinataire)"
+        ],
+        'draft-rh-bulletin-salaire' => [
+            'pack_rh',
+            'rh-bulletin-salaire',
+            "Bulletin de salaire"
+        ],
+        'draft-rh-archivage-dossier-agent' => [
+            'pack_rh',
+            'rh-archivage-dossier-agent',
+            "Archivage des éléments du dossier individuel de l'agent"
+        ],
+        'draft-rh-archivage-collectif' => [
+            'pack_rh',
+            'rh-archivage-collectif',
+            "Archivage des données de gestion collective (fichier unitaire)"
+        ],
+        'draft-rh-archivage-collectif-zip' => [
+            'pack_rh',
+            'rh-archivage-collectif-zip',
+            "Archivage des données de gestion collective (fichier compressé)"
+        ],
         'ls-actes-publication-draft' => [
             '',
             'ls-actes-publication',
