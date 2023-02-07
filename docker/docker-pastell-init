@@ -50,6 +50,7 @@ define("LIST_PACK", [
   "pack_chorus_pro" => ${PACK_CHORUS_PRO:-false},
   "pack_marche" => ${PACK_MARCHE:-false},
   "pack_urbanisme" => ${PACK_URBANISME:-false},
+  "pack_rh" => ${PACK_RH:-false},
   "pack_test" => ${PACK_TEST:-false},
   "pack_libersign" => ${PACK_LIBERSIGN:-false},
 ]);
