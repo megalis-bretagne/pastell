@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Configuration\ElementType;
+
 /**
  * La classe Field représente un champ d'un formulaire Pastell défini dans un fichier de type definition.yml, entite-properties.yml ou global-properties.yml
  */
@@ -15,7 +17,6 @@ class Field
     public const MAX_FILE_SIZE = 'max_file_size';
     public const MAX_MULTIPLE_FILE_SIZE = 'max_multiple_file_size';
     public const CONTENT_TYPE = 'content-type';
-    public const EMPTY_VALUE = 'empty';
 
     public const TYPE_FILE = 'file';
     public const TYPE_SELECT = 'select';
@@ -101,16 +102,12 @@ class Field
 
     public function getDefault()
     {
-        if ($this->getType() == 'date') {
+        if ($this->getType() === ElementType::DATE->value) {
             if ($this->getProperties(self::DEFAULT)) {
-                if ($this->getProperties(self::DEFAULT) === self::EMPTY_VALUE) {
-                    return '';
-                }
-                $default = strtotime($this->getProperties(self::DEFAULT));
-            } else {
-                $default = strtotime("now");
+                $default = \strtotime($this->getProperties(self::DEFAULT));
+                return \date('Y-m-d', $default);
             }
-            return date("Y-m-d", $default);
+            return '';
         }
         return $this->getProperties(self::DEFAULT);
     }
