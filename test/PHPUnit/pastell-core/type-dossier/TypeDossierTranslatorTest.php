@@ -26,18 +26,21 @@ class TypeDossierTranslatorTest extends PastellTestCase
         yield 'test-modif-cheminement' => ['test-modif-cheminement'];
         yield 'double-ged-facultatif' => ['double-ged-facultatif'];
     }
+
     /**
      * @dataProvider caseProvider
-     * @param string $case
      * @throws Exception
      */
-    public function testTranslation(string $case)
+    public function testTranslation(string $case): void
     {
         $this->loadDossierType("$case.json");
         $this->validateDefinitionFile($case);
 
-//        file_put_contents(__DIR__ . "/fixtures/$case.yml", file_get_contents($this->getWorkspacePath() . "/type-dossier-personnalise/module/$case/definition.yml"));
-        $this->assertFileEquals(
+//        \file_put_contents(
+//            __DIR__ . "/fixtures/$case.yml",
+//            \file_get_contents($this->getWorkspacePath() . "/type-dossier-personnalise/module/$case/definition.yml")
+//        );
+        static::assertFileEquals(
             __DIR__ . "/fixtures/$case.yml",
             $this->getWorkspacePath() . "/type-dossier-personnalise/module/$case/definition.yml"
         );
@@ -47,13 +50,18 @@ class TypeDossierTranslatorTest extends PastellTestCase
      *
      * @throws Exception
      */
-    public function testTranslate()
+    public function testTranslate(): void
     {
         $type_dossier = 'actes-avant-apres';
         $this->loadDossierType("{$type_dossier}.json");
         $this->validateDefinitionFile($type_dossier);
-        //file_put_contents(__DIR__ . "/fixtures/{$type_dossier}.yml", file_get_contents($this->getWorkspacePath() . "/type-dossier-personnalise/module/$type_dossier/definition.yml"));
-        $this->assertFileEquals(
+//        \file_put_contents(
+//            __DIR__ . "/fixtures/{$type_dossier}.yml",
+//            \file_get_contents(
+//                $this->getWorkspacePath() . "/type-dossier-personnalise/module/$type_dossier/definition.yml"
+//            )
+//        );
+        static::assertFileEquals(
             __DIR__ . "/fixtures/{$type_dossier}.yml",
             $this->getWorkspacePath() . "/type-dossier-personnalise/module/$type_dossier/definition.yml"
         );

@@ -59,6 +59,7 @@
 - Le dernier message des travaux programmés est visible et leur ID mène vers leur détail #1676
 - Les droits entite:lecture et journal:lecture sont cochés par défaut à la création d'un rôle #1580
 - Permettre `generate-sip` en état `erreur-envoie-sae` #1709
+- Les champs de type date ne sont plus initialisés par défaut à la date du jour #1692
 
 ## Suppressions
 
