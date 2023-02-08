@@ -16,7 +16,6 @@ class TdtTypologieChangeByApi extends ConnecteurTypeActionExecutor
      */
     public function go()
     {
-
         $result = [];
 
         $type_acte_element = $this->getMappingValue('type_acte');
@@ -31,20 +30,42 @@ class TdtTypologieChangeByApi extends ConnecteurTypeActionExecutor
 
         if ($type_acte) {
             if (isset($info['actes_type_pj_list']) && ! array_key_exists($type_acte, $info['actes_type_pj_list'])) {
-                throw new UnrecoverableException("Le type de pièce «" . $type_acte . "» ne correspond pas pour la nature et la classification selectionnée");
+                throw new UnrecoverableException(
+                    sprintf(
+                        'Le type de pièce «%s» ne correspond pas pour la nature et la classification selectionnée',
+                        $type_acte
+                    )
+                );
             }
-            $result[] =  ['filename' => $info['pieces'][0], "typologie" => $info['actes_type_pj_list'][$type_acte] ?? $type_acte];
+            $result[] = [
+                'filename' => $info['pieces'][0],
+                'typologie' => $info['actes_type_pj_list'][$type_acte] ?? $type_acte,
+            ];
         }
 
         if ($type_pj) {
             if ((count($type_pj)) !== (count($info['pieces']) - 1)) {
-                throw new UnrecoverableException("Le nombre de type de pièce «" . count($type_pj) . "» ne correspond pas au nombre d'annexe «" . (count($info['pieces']) - 1) . "»");
+                throw new UnrecoverableException(
+                    sprintf(
+                        "Le nombre de type de pièce «%s» ne correspond pas au nombre d'annexe «%d»",
+                        count($type_pj),
+                        count($info['pieces']) - 1
+                    )
+                );
             }
             foreach ($type_pj as $i => $type) {
                 if (isset($info['actes_type_pj_list']) && ! array_key_exists($type, $info['actes_type_pj_list'])) {
-                    throw new UnrecoverableException("Le type de pièce «" . $type . "» ne correspond pas pour la nature et la classification selectionnée");
+                    throw new UnrecoverableException(
+                        sprintf(
+                            'Le type de pièce «%s» ne correspond pas pour la nature et la classification selectionnée',
+                            $type
+                        )
+                    );
                 }
-                $result[] = ['filename' => $info['pieces'][$i + 1], "typologie" => $info['actes_type_pj_list'][$type] ?? $type];
+                $result[] = [
+                    'filename' => $info['pieces'][$i + 1],
+                    'typologie' => $info['actes_type_pj_list'][$type] ?? $type,
+                ];
             }
         }
 
@@ -95,7 +116,9 @@ class TdtTypologieChangeByApi extends ConnecteurTypeActionExecutor
 
         $result['actes_type_pj_list'] = $actesTypePJ->getTypePJListe($actesTypePJData);
         if (! $result['actes_type_pj_list']) {
-            throw new UnrecoverableException("Aucun type de pièce ne correspond pour la nature et la classification selectionnée");
+            throw new UnrecoverableException(
+                'Aucun type de pièce ne correspond pour la nature et la classification selectionnée'
+            );
         }
 
         $result['pieces'] = $this->getAllPieces();
@@ -120,5 +143,10 @@ class TdtTypologieChangeByApi extends ConnecteurTypeActionExecutor
             $pieces_list = array_merge($pieces_list, $this->getDonneesFormulaire()->get($autre_document_attache));
         }
         return $pieces_list;
+    }
+
+    public function updateJobQueueAfterExecution(): bool
+    {
+        return false;
     }
 }

@@ -14,11 +14,22 @@ class StandardAction extends ActionExecutor
         return $result;
     }
 
+    /**
+     * @throws RecoverableException
+     */
     public function goLot(array $all_id_d)
     {
         $connecteurTypeActionExecutor = $this->getConnecteurTypeActionExecutor();
         $result = $connecteurTypeActionExecutor->goLot($all_id_d);
         $this->setLastMessage($connecteurTypeActionExecutor->getLastMessage());
         return $result;
+    }
+
+    /**
+     * @throws RecoverableException
+     */
+    public function updateJobQueueAfterExecution(): bool
+    {
+        return $this->getConnecteurTypeActionExecutor()->updateJobQueueAfterExecution();
     }
 }

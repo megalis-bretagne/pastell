@@ -3,8 +3,8 @@
 class CheminementChangeTypeDossierPersonnalise extends ActionExecutor
 {
     /**
-     * @return bool
-     * @throws Exception
+     * @throws NotFoundException
+     * @throws UnrecoverableException
      */
     public function go()
     {
@@ -28,7 +28,7 @@ class CheminementChangeTypeDossierPersonnalise extends ActionExecutor
                 $this->getDonneesFormulaire()->setData('envoi_fast', false);
             }
         } elseif (count($signatureFields) > 1) {
-            for ($i = 1; $i <= count($signatureFields); ++$i) {
+            for ($i = 1, $limit = count($signatureFields); $i <= $limit; ++$i) {
                 if ($this->getDonneesFormulaire()->get("envoi_signature_$i")) {
                     // Display iparapheur tab by default
                     $this->getDonneesFormulaire()->setData("envoi_iparapheur_$i", true);
@@ -55,5 +55,10 @@ class CheminementChangeTypeDossierPersonnalise extends ActionExecutor
         }
 
         return true;
+    }
+
+    public function updateJobQueueAfterExecution(): bool
+    {
+        return false;
     }
 }
