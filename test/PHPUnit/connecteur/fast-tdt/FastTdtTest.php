@@ -57,12 +57,14 @@ class FastTdtTest extends PastellTestCase
         $acte->arrete = new Fichier();
         $acte->arrete->filepath = __DIR__ . '/fixtures/vide.pdf';
         $acte->arrete->filename = 'arrete.pdf';
+        $acte->arrete->content = '';
 
         $annexes = [];
         for ($i = 0; $i < $numberOfAnnexes; ++$i) {
             $annexe = new Fichier();
             $annexe->filepath = __DIR__ . '/fixtures/vide.pdf';
             $annexe->filename = "$i.pdf";
+            $annexe->content = '';
             $annexes[] = $annexe;
         }
         $acte->autre_document_attache = $annexes;
