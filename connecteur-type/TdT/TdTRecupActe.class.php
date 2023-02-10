@@ -2,7 +2,7 @@
 
 class TdTRecupActe extends ConnecteurTypeActionExecutor
 {
-    public const BORDEREAU_TDT_SUFFIX = "-bordereau-tdt.pdf";
+    public const BORDEREAU_TDT_SUFFIX = '-bordereau-tdt.pdf';
 
     /**
      * @return bool
@@ -20,6 +20,7 @@ class TdTRecupActe extends ConnecteurTypeActionExecutor
         $has_bordereau_element = $this->getMappingValue('has_bordereau');
         $bordereau_element = $this->getMappingValue('bordereau');
         $aractes_element = $this->getMappingValue('aractes');
+        $acteUniqueIdElement = $this->getMappingValue('acte_unique_id');
         $arrete_element = $this->getMappingValue('arrete');
         $acte_tamponne_element = $this->getMappingValue('acte_tamponne');
         $autre_document_attache_element = $this->getMappingValue('autre_document_attache');
@@ -32,7 +33,10 @@ class TdTRecupActe extends ConnecteurTypeActionExecutor
 
         $actionCreator = $this->getActionCreator();
         if (! $tedetis_transaction_id) {
-            $message = "Une erreur est survenue lors de l'envoi à " . $tdT->getLogicielName() . " (tedetis_transaction_id non disponible)";
+            $message = \sprintf(
+                "Une erreur est survenue lors de l'envoi à %s (tedetis_transaction_id non disponible)",
+                $tdT->getLogicielName()
+            );
             $this->setLastMessage($message);
             $actionCreator->addAction($this->id_e, 0, $tdt_error, $message);
             $this->notify($tdt_error, $this->type, $message);
@@ -42,13 +46,13 @@ class TdTRecupActe extends ConnecteurTypeActionExecutor
         try {
             $status = $tdT->getStatus($tedetis_transaction_id);
         } catch (Exception $e) {
-            $message = "Echec de la récupération des informations : " .  $e->getMessage();
+            $message = 'Echec de la récupération des informations : ' .  $e->getMessage();
             $this->setLastMessage($message);
             return false;
         }
 
         if ($status == TdtConnecteur::STATUS_ERREUR) {
-            $message = "Transaction en erreur sur le TdT : " . $tdT->getLastError();
+            $message = 'Transaction en erreur sur le TdT : ' . $tdT->getLastError();
             $this->setLastMessage($message);
             $this->getActionCreator()->addAction($this->id_e, $this->id_u, $erreur_verif_tdt, $message);
             $this->notify($erreur_verif_tdt, $this->type, $message);
@@ -56,7 +60,7 @@ class TdTRecupActe extends ConnecteurTypeActionExecutor
         }
 
         if ($status != TdtConnecteur::STATUS_ACQUITTEMENT_RECU) {
-            $this->setLastMessage("La transaction a comme statut : " . TdtConnecteur::getStatusString($status));
+            $this->setLastMessage('La transaction a comme statut : ' . TdtConnecteur::getStatusString($status));
             return true;
         }
 
@@ -65,30 +69,50 @@ class TdTRecupActe extends ConnecteurTypeActionExecutor
         $actes_tamponne = $tdT->getActeTamponne($tedetis_transaction_id);
         $annexes_tamponnees_list = $tdT->getAnnexesTamponnees($tedetis_transaction_id);
 
-
-
         $actionCreator->addAction($this->id_e, 0, $acquiter_tdt, "L'acte a été acquitté par le contrôle de légalité");
 
         $infoDocument = $this->getDocument()->getInfo($this->id_d);
         $documentActionEntite = $this->getDocumentActionEntite();
         $infoUser = $documentActionEntite->getUserFromAction($this->id_e, $this->id_d, $send_tdt);
-        $message = "L'acte « {$infoDocument['titre']} » télétransmis par {$infoUser['prenom']} {$infoUser['nom']} a été acquitté par le contrôle de légalité";
+        $message = \sprintf(
+            "L'acte « %s » télétransmis par %s %s a été acquitté par le contrôle de légalité",
+            $infoDocument['titre'],
+            $infoUser['prenom'],
+            $infoUser['nom']
+        );
 
-        $message .= "\n\nConsulter le détail de l'acte : " . SITE_BASE . "Document/detail?id_d={$this->id_d}&id_e={$this->id_e}";
+        $message .= \sprintf(
+            "\n\nConsulter le détail de l'acte : %sDocument/detail?id_d=%s&id_e=%s",
+            SITE_BASE,
+            $this->id_d,
+            $this->id_e
+        );
 
         $donneesFormulaire = $this->getDonneesFormulaire();
         $numero_de_lacte = $donneesFormulaire->get($numero_de_lacte_element);
 
         if ($bordereau_data) {
             $donneesFormulaire->setData($has_bordereau_element, true);
-            $donneesFormulaire->addFileFromData($bordereau_element, $numero_de_lacte . self::BORDEREAU_TDT_SUFFIX, $bordereau_data);
+            $donneesFormulaire->addFileFromData(
+                $bordereau_element,
+                $numero_de_lacte . self::BORDEREAU_TDT_SUFFIX,
+                $bordereau_data
+            );
         }
         if ($aractes) {
             $donneesFormulaire->addFileFromData($aractes_element, "$numero_de_lacte-ar-actes.xml", $aractes);
+            $simpleXMLWrapper = new SimpleXMLWrapper();
+            $xmlDocument = $simpleXMLWrapper->loadString($aractes);
+            $idActe = (string)$xmlDocument->xpath('//actes:ARActe/@actes:IDActe')[0];
+            $donneesFormulaire->setData($acteUniqueIdElement, $idActe);
         }
         if ($actes_tamponne) {
             $actes_original_filename = $donneesFormulaire->getFileNameWithoutExtension($arrete_element);
-            $donneesFormulaire->addFileFromData($acte_tamponne_element, $actes_original_filename . "-tampon.pdf", $actes_tamponne);
+            $donneesFormulaire->addFileFromData(
+                $acte_tamponne_element,
+                $actes_original_filename . '-tampon.pdf',
+                $actes_tamponne
+            );
         }
         if ($annexes_tamponnees_list) {
             $file_number = 0;
@@ -96,11 +120,14 @@ class TdTRecupActe extends ConnecteurTypeActionExecutor
                 if (empty($annexe_tamponnee)) {
                     continue;
                 }
-                $annexe_filename_send = $tdT->getFilenameTransformation($this->getDonneesFormulaire()->getFileName($autre_document_attache_element, $i));
+                $annexe_filename_send = $tdT->getFilenameTransformation(
+                    $this->getDonneesFormulaire()->getFileName($autre_document_attache_element, $i)
+                );
                 if (strcmp($annexe_filename_send, $annexe_tamponnee['filename']) !== 0) {
-                    $message = "Une erreur est survenue lors de la récupération des annexes tamponnées de " . $tdT->getLogicielName() .
-                        " L'annexe tamponée " . $annexe_tamponnee['filename'] . " ne correspond pas avec " . $annexe_filename_send;
-                    ;
+                    $message = 'Une erreur est survenue lors de la récupération des annexes tamponnées de ' .
+                        $tdT->getLogicielName() . " L'annexe tamponée " . $annexe_tamponnee['filename'] .
+                        ' ne correspond pas avec ' . $annexe_filename_send;
+
                     $this->setLastMessage($message);
                     $actionCreator->addAction($this->id_e, 0, $tdt_error, $message);
                     $this->notify($tdt_error, $this->type, $message);
@@ -109,7 +136,7 @@ class TdTRecupActe extends ConnecteurTypeActionExecutor
                 $annexe_filename = $donneesFormulaire->getFileNameWithoutExtension($autre_document_attache_element, $i);
                 $donneesFormulaire->addFileFromData(
                     $annexes_tamponnees_element,
-                    $annexe_filename . "-tampon.pdf",
+                    $annexe_filename . '-tampon.pdf',
                     $annexe_tamponnee['content'],
                     $file_number++
                 );
