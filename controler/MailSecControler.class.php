@@ -187,25 +187,28 @@ class MailSecControler extends PastellControler
         $this->renderDefault();
     }
 
-    public function doImportAction()
+    /**
+     * @throws LastMessageException
+     * @throws LastErrorException
+     */
+    public function doImportAction(): void
     {
-        $recuperateur = new Recuperateur($_POST);
+        $recuperateur = $this->getPostInfo();
 
         $id_e = $recuperateur->getInt('id_e', 0);
-        $this->verifDroit($id_e, "annuaire:edition");
+        $this->verifDroit($id_e, 'annuaire:edition');
 
         $fileUploader = new FileUploader();
         $file_path = $fileUploader->getFilePath('csv');
         if (! $file_path) {
-            $this->getLastError()->setLastError("Impossible de lire le fichier");
-            header("Location: import?id_e=$id_e");
-            exit;
+            $this->getLastError()->setLastError('Impossible de lire le fichier');
+            $this->redirect('/MailSec/import?id_e=' . $id_e);
         }
 
         $finfo = new finfo();
 
         if (! in_array($finfo->file($file_path, FILEINFO_MIME_TYPE), [ 'text/plain','text/csv'])) {
-            $this->setLastError("Le fichier doit être en CSV");
+            $this->setLastError('Le fichier doit être en CSV');
             $this->redirect("/MailSec/import?id_e=$id_e");
         }
 
@@ -217,7 +220,7 @@ class MailSecControler extends PastellControler
         $nb_import = $annuaireImporter->import($id_e, $file_path);
 
         $this->getLastMessage()->setLastMessage("$nb_import emails ont été importés");
-        header("Location: annuaire?id_e=$id_e");
+        $this->redirect('/MailSec/annuaire?id_e=' . $id_e);
     }
 
     public function exportAction()
