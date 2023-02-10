@@ -59,8 +59,8 @@ class TransformationTransform extends ConnecteurTypeActionExecutor
     }
 
     /**
-     * @param array $modified_fields
      * @throws NotFoundException
+     * @throws JsonException
      * @throws UnrecoverableException
      */
     private function addOnChange(array $modified_fields = []): void
@@ -78,7 +78,8 @@ class TransformationTransform extends ConnecteurTypeActionExecutor
                     $this->id_destinataire,
                     $this->from_api,
                     $this->action_params,
-                    $this->id_worker
+                    $this->id_worker,
+                    false
                 );
             }
         }

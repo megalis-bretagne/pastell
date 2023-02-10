@@ -2,6 +2,10 @@
 
 class TdtAnnexeTypologieAnnexeChange extends ConnecteurTypeActionExecutor
 {
+    /**
+     * @throws NotFoundException
+     * @throws DonneesFormulaireException
+     */
     public function go()
     {
         if (! empty($this->action_params['from_glaneur'])) {
@@ -46,6 +50,11 @@ class TdtAnnexeTypologieAnnexeChange extends ConnecteurTypeActionExecutor
         $this->getDonneesFormulaire()->setData($type_pj_element, json_encode($type_pj));
 
         $this->setLastMessage("Modification des fichiers ou de la nature : merci de revoir la typologie");
+        return false;
+    }
+
+    public function updateJobQueueAfterExecution(): bool
+    {
         return false;
     }
 }
