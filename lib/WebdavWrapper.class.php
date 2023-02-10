@@ -1,56 +1,41 @@
 <?php
 
+declare(strict_types=1);
+
 use Sabre\DAV\Client;
 use Sabre\HTTP\ClientHttpException;
 use Sabre\HTTP\Request;
 
-/*
- * source doc:
- * http://sabre.io/dav/davclient/
- * https://www.ikeepincloud.com/fr/script_php
- */
-
-// Un docker pour tester webdav : https://hub.docker.com/r/morrisjobke/webdav/
-//
-
 class WebdavWrapper
 {
-    /** @var Client */
-    private $dav;
-
-    /** @var WebdavClientFactory */
-    private $webdavClientFactory;
+    private Client $dav;
+    private WebdavClientFactory $webdavClientFactory;
 
     public function __construct()
     {
         $this->setWebdavClientFactory(new WebdavClientFactory());
     }
 
-    public function setWebdavClientFactory(WebdavClientFactory $webdavClientFactory)
+    public function setWebdavClientFactory(WebdavClientFactory $webdavClientFactory): void
     {
         $this->webdavClientFactory = $webdavClientFactory;
     }
 
-    public function setDataConnexion($url, $user, $password)
+    public function setDataConnexion(string $url, string $user, string $password): void
     {
         $settings = [
             'baseUri' => $url,
             'userName' => $user,
             'password' => $password,
         ];
-        // Creation d'un nouveau client SabreDAV
         $this->dav = $this->webdavClientFactory->getInstance($settings);
     }
 
-    /**
-     * Authenticate with certificate
-     *
-     * @param string $certificatePath
-     * @param string $keyPath
-     * @param string $certificatePassword
-     */
-    public function setAuthenticationByCertificate($certificatePath, $keyPath, $certificatePassword)
-    {
+    public function setAuthenticationByCertificate(
+        string $certificatePath,
+        string $keyPath,
+        string $certificatePassword
+    ): void {
         $this->dav->addCurlSetting(CURLOPT_SSLCERT, $certificatePath);
         $this->dav->addCurlSetting(CURLOPT_SSLKEY, $keyPath);
         $this->dav->addCurlSetting(CURLOPT_SSLKEYPASSWD, $certificatePassword);
@@ -61,7 +46,7 @@ class WebdavWrapper
      * Should not be used
      * @see https://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYPEER.html
      */
-    public function allowInsecureConnection()
+    public function allowInsecureConnection(): void
     {
         $this->dav->addCurlSetting(CURLOPT_SSL_VERIFYPEER, false);
     }
@@ -70,31 +55,28 @@ class WebdavWrapper
      * If the server answers with a 200 HTTP code, it needs to have a Dav header
      * @see http://www.webdav.org/specs/rfc4918.html#HEADER_DAV
      *
-     * @return bool
      * @throws Exception
      */
-    public function isConnected()
+    public function isConnected(): bool
     {
         $options = $this->dav->send(new Request('OPTIONS', $this->dav->getAbsoluteUrl('') ?: ''));
         if ($options->getStatus() !== 200) {
             throw new Exception($options->getStatus() . ' : ' . $options->getStatusText());
-        } elseif (!$options->getHeader('Dav')) {
-            throw new Exception("Le serveur ne présente pas le header Dav");
+        }
+
+        if (!$options->getHeader('Dav')) {
+            throw new Exception('Le serveur ne présente pas le header Dav');
         }
 
         return true;
     }
 
     /**
-     * @param $folder
-     * @param array $properties
-     * @param int $depth
-     * @return array
      * @throws ClientHttpException
      */
-    public function propfind($folder, array $properties = ['{DAV:}displayname'], $depth = 0)
+    public function propfind(string $folder, array $properties = ['{DAV:}displayname'], int $depth = 0): array
     {
-        $files = $this->dav->propfind($folder, $properties, $depth);
+        $files = $this->dav->propFind($this->normalize($folder), $properties, $depth);
         if (!$files) {
             return [];
         }
@@ -110,11 +92,10 @@ class WebdavWrapper
     }
 
     /**
-     * @param $element
      * @return resource|string
      * @throws Exception
      */
-    public function get($element)
+    public function get(string $element)
     {
         $response = $this->dav->send(new Request('GET', $this->dav->getAbsoluteUrl($element) ?: ''));
         if ($response->getStatus() !== 200) {
@@ -125,38 +106,33 @@ class WebdavWrapper
     }
 
     /**
-     * @param $element
-     * @return bool
      * @throws Exception
      */
-    public function exists($element)
+    public function exists(string $element): bool
     {
         try {
             /**
              * Only check the current resource
              * @see http://www.webdav.org/specs/rfc4918.html#HEADER_Depth
              */
-            $this->dav->propfind($element, [
+            $this->dav->propFind($this->normalize($element), [
                 '{DAV:}displayname',
             ], 0);
         } catch (ClientHttpException $e) {
-            if ($e->getCode() == '404') {
+            if ($e->getCode() === 404) {
                 return false;
             }
-            throw new Exception($e->getCode() . " " . $e->getMessage(), $e->getCode(), $e);
+            throw new Exception($e->getCode() . ' ' . $e->getMessage(), $e->getCode(), $e);
         }
         return true;
     }
 
     /**
-     * @param $folder
-     * @return array
      * @throws ClientHttpException
      */
-    public function listFolder($folder)
+    public function listFolder(string $folder): array
     {
-
-        $nlist = $this->dav->propfind($folder, [
+        $nlist = $this->dav->propFind($this->normalize($folder), [
             '{DAV:}displayname',
         ], 1);
 
@@ -171,51 +147,40 @@ class WebdavWrapper
     }
 
     /**
-     * @param $folder
-     * @param $new_folder_name
-     * @return array|bool
      * @throws ClientHttpException
      */
-    public function createFolder($folder, $new_folder_name)
+    public function createFolder(string $folder, string $newFolderName): false|array
     {
         $folder_list = $this->listFolder($folder);
-        if (in_array($new_folder_name, $folder_list)) {
+        if (in_array($newFolderName, $folder_list, true)) {
             return false;
         }
-        return $this->dav->request('MKCOL', $new_folder_name);
+        return $this->dav->request('MKCOL', $this->normalize($newFolderName));
     }
 
     /**
-     * @param $folder
-     * @param $ficrep
-     * @return array
      * @throws ClientHttpException
      * @throws Exception
      */
-    public function delete($folder, $ficrep)
+    public function delete(string $folder, string $ficrep): array
     {
         $folder_list = $this->listFolder($folder);
-        if (in_array($ficrep, $folder_list)) {
+        if (in_array($ficrep, $folder_list, true)) {
             $filepath = $folder
                 ? $folder . '/' . $ficrep
                 : $ficrep;
 
-            return $this->dav->request('DELETE', $filepath);
-        } else {
-            throw new Exception($ficrep . " n'est pas dans " . $folder);
+            return $this->dav->request('DELETE', $this->normalize($filepath));
         }
+
+        throw new Exception($ficrep . " n'est pas dans " . $folder);
     }
 
     /**
-     * @param $folder
-     * @param $remote_file
-     * @param $file_content
-     * @param array $headers
-     * @return array
      * @throws ClientHttpException
      * @throws Exception
      */
-    public function addDocument($folder, $remote_file, $file_content, array $headers = [])
+    public function addDocument(string $folder, string $remote_file, string $file_content, array $headers = []): array
     {
         if ($folder) {
             $new_file = $folder . "/" . $remote_file;
@@ -224,14 +189,20 @@ class WebdavWrapper
         }
 
         $folder_list = $this->listFolder($folder);
-        if (in_array($remote_file, $folder_list)) {
-            throw new Exception($remote_file . " existe déja " . $folder);
+        if (in_array($remote_file, $folder_list, true)) {
+            throw new Exception($remote_file . ' existe déja ' . $folder);
         }
 
-        $response = $this->dav->request('PUT', $new_file, $file_content, $headers);
-        if ($response['statusCode'] != 201) {
-            throw new Exception("Erreur lors du dépot webdav : code " . $response['statusCode']);
+        $response = $this->dav->request('PUT', $this->normalize($new_file), $file_content, $headers);
+        if ($response['statusCode'] !== 201) {
+            throw new Exception('Erreur lors du dépot webdav : code ' . $response['statusCode']);
         }
         return $response;
+    }
+
+    private function normalize(string $folder): string
+    {
+        $tmp = \rawurlencode($folder);
+        return \str_replace('%2F', '/', $tmp);
     }
 }
