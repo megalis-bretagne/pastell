@@ -50,7 +50,9 @@
                     <p class='form_commentaire'>Sélectionné par défaut (si non obligatoire).</p>
                 </th>
                 <td>
-                    <input name='default_checked' id='default_checked' class="" type="checkbox" <?php echo $etapeInfo->defaultChecked ? "checked='checked'" : ""?>/>
+                    <input name='default_checked' id='default_checked' class=""
+                           type="checkbox" <?php echo $etapeInfo->defaultChecked ? "checked='checked'" : ""?>
+                    />
                 </td>
             </tr>
             <tr>
@@ -58,7 +60,9 @@
                     <label for="requis" >Étape obligatoire</label>
                 </th>
                 <td>
-                    <input name='requis' id='requis' class="" type="checkbox" <?php echo $etapeInfo->requis ? "checked='checked'" : ""?>/>
+                    <input name='requis' id='requis' class=""
+                           type="checkbox" <?php echo $etapeInfo->requis ? "checked='checked'" : ""?>
+                    />
                 </td>
             </tr>
             <tr>
@@ -66,7 +70,9 @@
                     <label for="automatique" >Enchaîner automatiquement sur l'étape suivante</label>
                 </th>
                 <td>
-                    <input name='automatique' id='automatique'  type="checkbox" <?php echo $etapeInfo->automatique ? "checked='checked'" : ""?>/>
+                    <input name='automatique' id='automatique'
+                           type="checkbox" <?php echo $etapeInfo->automatique ? "checked='checked'" : ""?>
+                    />
                 </td>
             </tr>
         </table>
@@ -80,43 +86,73 @@
 
                     <td>
                         <?php if ($element_info['type'] == 'file') : ?>
-                            <select class="form-control col-md-8" name='<?php hecho($element_id) ?>' id="<?php hecho($element_id) ?>">
+                            <select class="form-control col-md-8"
+                                    name='<?php hecho($element_id) ?>'
+                                    id="<?php hecho($element_id) ?>"
+                            >
                                 <option value=""></option>
                                 <?php foreach ($file_field_list as $file_field_id => $file_field_info) : ?>
-                                    <option value="<?php echo $file_field_id ?>" <?php echo $file_field_id == $etapeInfo->specific_type_info[$element_id] ? 'selected="selected"' : ''; ?>><?php hecho($file_field_info->name) ?></option>
+                                    <option value="<?php echo $file_field_id ?>"
+                                        <?php echo $file_field_id == $etapeInfo->specific_type_info[$element_id] ? 'selected="selected"' : ''; ?>
+                                    ><?php hecho($file_field_info->name) ?></option>
                                 <?php endforeach; ?>
                             </select>
                         <?php elseif ($element_info['type'] == 'multi_file') : ?>
-                            <select class="form-control col-md-8" name='<?php hecho($element_id) ?>' id="<?php hecho($element_id) ?>">
+                            <select class="form-control col-md-8"
+                                    name='<?php hecho($element_id) ?>'
+                                    id="<?php hecho($element_id) ?>"
+                            >
                                 <option value=""></option>
                                 <?php foreach ($multi_file_field_list as $file_field_id => $file_field_info) : ?>
-                                    <option value="<?php echo $file_field_id ?>" <?php echo $file_field_id == $etapeInfo->specific_type_info[$element_id] ? 'selected="selected"' : ''; ?>><?php hecho($file_field_info->name) ?></option>
+                                    <option value="<?php echo $file_field_id ?>"
+                                        <?php echo $file_field_id == $etapeInfo->specific_type_info[$element_id] ? 'selected="selected"' : ''; ?>
+                                    ><?php hecho($file_field_info->name) ?></option>
                                 <?php endforeach; ?>
                             </select>
                         <?php elseif ($element_info['type'] == 'select') : ?>
-                            <select class="form-control col-md-8" name='<?php hecho($element_id) ?>' id="<?php hecho($element_id) ?>">
+                            <select class="form-control col-md-8"
+                                    name='<?php hecho($element_id) ?>'
+                                    id="<?php hecho($element_id) ?>"
+                            >
                                 <?php foreach ($element_info['value'] as $file_field_id => $file_field_value) : ?>
-                                    <option value="<?php echo $file_field_id ?>" <?php echo $file_field_id == $etapeInfo->specific_type_info[$element_id] ? 'selected="selected"' : ''; ?>><?php hecho($file_field_value) ?></option>
+                                    <option value="<?php echo $file_field_id ?>"
+                                        <?php echo $file_field_id == $etapeInfo->specific_type_info[$element_id] ? 'selected="selected"' : ''; ?>
+                                    ><?php hecho($file_field_value) ?></option>
                                 <?php endforeach; ?>
                             </select>
                         <?php elseif ($element_info['type'] == 'checkbox') : ?>
-                            <input name='<?php hecho($element_id) ?>' id='<?php hecho($element_id) ?>'  type="checkbox" <?php echo $etapeInfo->specific_type_info[$element_id] ? "checked='checked'" : ""?>/>
+                            <input name='<?php hecho($element_id) ?>'
+                                   id='<?php hecho($element_id) ?>'
+                                   type="checkbox"
+                                <?php echo $etapeInfo->specific_type_info[$element_id] ? "checked='checked'" : ""?>
+                            />
                         <?php elseif ($element_info['type'] == 'text_select') : ?>
-                            <select class="form-control col-md-8" name='<?php hecho($element_id) ?>' id="<?php hecho($element_id) ?>">
+                            <select class="form-control col-md-8"
+                                    name='<?php hecho($element_id) ?>'
+                                    id="<?php hecho($element_id) ?>"
+                            >
                                 <option value=""></option>
                                 <?php foreach ($text_field_list as $file_field_id => $file_field_info) : ?>
-                                    <option value="<?php echo $file_field_id ?>" <?php echo $file_field_id == $etapeInfo->specific_type_info[$element_id] ? 'selected="selected"' : ''; ?>><?php hecho($file_field_info->name) ?></option>
+                                    <option value="<?php echo $file_field_id ?>"
+                                        <?php echo $file_field_id == $etapeInfo->specific_type_info[$element_id] ? 'selected="selected"' : ''; ?>
+                                    ><?php hecho($file_field_info->name) ?></option>
                                 <?php endforeach; ?>
                             </select>
                         <?php else : ?>
-                            <input class="form-control col-md-8" name='<?php hecho($element_id) ?>' id='<?php hecho($element_id) ?>' value="<?php hecho($etapeInfo->specific_type_info[$element_id])?>"/>
+                            <input class="form-control col-md-8"
+                                   name='<?php hecho($element_id) ?>'
+                                   id='<?php hecho($element_id) ?>'
+                                   value="<?php hecho($etapeInfo->specific_type_info[$element_id])?>"
+                            />
                         <?php endif; ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
         </table>
 
-        <a class='btn btn-outline-primary' href='<?php $this->url("TypeDossier/detail?id_t={$type_de_dossier_info['id_t']}")?>'>
+        <a class='btn btn-outline-primary'
+           href='<?php $this->url("TypeDossier/detail?id_t={$type_de_dossier_info['id_t']}")?>'
+        >
             <i class="fa fa-times-circle"></i>&nbsp;Annuler
         </a>
         <button type="submit" class="btn btn-primary">

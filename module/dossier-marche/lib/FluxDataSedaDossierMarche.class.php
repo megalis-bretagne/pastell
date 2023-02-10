@@ -87,7 +87,12 @@ class FluxDataSedaDossierMarche extends FluxDataSedaDefault
     public function getFilepath_document_file()
     {
         $archive_content = $this->getArchiveContent(self::NAME_ZIP);
-        return $archive_content['tmp_folder'] . "/" . $archive_content['root_directory'] . "/" . $archive_content['file_list'][$this->num_document_path++];
+        return \sprintf(
+            '%s/%s/%s',
+            $archive_content['tmp_folder'],
+            $archive_content['root_directory'],
+            $archive_content['file_list'][$this->num_document_path++]
+        );
     }
 
     private $num_documentname = 0;
@@ -116,11 +121,13 @@ class FluxDataSedaDossierMarche extends FluxDataSedaDefault
     public function get_document_size_in_ko()
     {
         $archive_content = $this->getArchiveContent(self::NAME_ZIP);
-        return round(
-            filesize($archive_content['tmp_folder'] . "/" . $archive_content['root_directory'] . "/" . $archive_content['file_list'][$this->num_documentsize++])
-            /
-            1024
+        $filename = \sprintf(
+            '%s/%s/%s',
+            $archive_content['tmp_folder'],
+            $archive_content['root_directory'],
+            $archive_content['file_list'][$this->num_documentsize++]
         );
+        return round(filesize($filename) / 1024);
     }
 
 
@@ -134,12 +141,23 @@ class FluxDataSedaDossierMarche extends FluxDataSedaDefault
     {
         $archive_content = $this->getArchiveContent(self::NAME_ZIP);
         return hash_file(
-            "sha256",
-            $archive_content['tmp_folder'] . "/" . $archive_content['root_directory'] . "/" . $archive_content['file_list'][$this->num_document_sha256++]
+            'sha256',
+            \sprintf(
+                '%s/%s/%s',
+                $archive_content['tmp_folder'],
+                $archive_content['root_directory'],
+                $archive_content['file_list'][$this->num_document_sha256++]
+            )
         );
     }
 
-    //num_consultation - Marché num_marché – intitulé_marché, notifié le date_notification AAAA-MM-JJ [si case récurrent cochée écrire « (récurrent) - si case infructueux cochée écrire (infructueux) - si case sans_suite cochée écrire (sans suite)]  - contenu_versement
+    /**
+     * num_consultation - Marché num_marché –
+     * intitulé_marché, notifié le date_notification AAAA-MM-JJ [si case récurrent cochée écrire « (récurrent) -
+     * si case infructueux cochée écrire (infructueux) -
+     * si case sans_suite cochée écrire (sans suite)] -
+     * contenu_versement
+     */
     public function get_nom_archive()
     {
         $numero_consultation = $this->donneesFormulaire->get('numero_consultation');
@@ -189,7 +207,10 @@ class FluxDataSedaDossierMarche extends FluxDataSedaDefault
     {
         $type_consultation = $this->donneesFormulaire->get('type_consultation');
         if ($type_consultation) {
-            $lst_type_consultation = $this->donneesFormulaire->getFormulaire()->getField("type_consultation")->getSelect();
+            $lst_type_consultation = $this->donneesFormulaire
+                ->getFormulaire()
+                ->getField('type_consultation')
+                ->getSelect();
             $type_consultation = $lst_type_consultation[$this->donneesFormulaire->get('type_consultation')];
         }
         return $type_consultation;
