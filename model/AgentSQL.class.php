@@ -17,8 +17,12 @@ class AgentSQL extends SQL
         $sql = "DELETE FROM agent WHERE siren=? AND matricule=?";
         $this->query($sql, $info[9], $info[0]);
 
-        $sql = "INSERT INTO agent (matricule,titre,nom_usage,nom_patronymique,prenom,emploi_grade_code,emploi_grade_libelle,collectivite_code,collectivite_libelle ,siren,type_dossier_code ,type_dossier_libelle,train_traitement_code,train_traitement_libelle)" .
-                " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        $sql = <<<EOT
+INSERT INTO agent (matricule,titre,nom_usage,nom_patronymique,prenom,emploi_grade_code,emploi_grade_libelle,
+                   collectivite_code,collectivite_libelle ,siren,type_dossier_code ,type_dossier_libelle,
+                   train_traitement_code,train_traitement_libelle)
+VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+EOT;
         $this->query($sql, $info);
         return true;
     }

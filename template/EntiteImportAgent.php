@@ -35,8 +35,12 @@
 <div class="alert alert-info">
     <p><strong>Format du fichier</strong></p>
     <p>Le fichier CSV doit contenir un agent par ligne.</p>
-    <p>Les lignes sont formatées de la manière suivante :
-    "Matricule (5)";"Titre";"Nom d'usage";"Nom patronymique";"Prénom";"Emploi / Grade (C)";"Emploi / Grade (L)";"Collectivité (C)";"Collectivité (L)";"SIREN";"Type de dossier";"Type de dossier (L)";"Train de traitement (C)";"Train de traitement (L)"</p>
+    <p>
+        Les lignes sont formatées de la manière suivante :
+        "Matricule (5)";"Titre";"Nom d'usage";"Nom patronymique";"Prénom";"Emploi / Grade (C)";"Emploi /
+        Grade (L)";"Collectivité (C)";"Collectivité (L)";"SIREN";"Type de dossier";"Type de dossier (L)";
+        "Train de traitement (C)";"Train de traitement (L)"
+    </p>
     <p>Note: si le fichier est trop gros (&gt;  <?php echo ini_get("upload_max_filesize") ?>) 
     vous pouvez le compresser avec gzip.
     </p>

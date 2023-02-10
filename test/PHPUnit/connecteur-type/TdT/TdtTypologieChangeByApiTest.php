@@ -24,9 +24,9 @@ class TdtTypologieChangeByApiTest extends PastellTestCase
         $this->assertEquals("22_NE", $info['content']['data']['type_acte']);
         $this->assertEquals('["41_NC","22_DP"]', $info['content']['data']['type_pj']);
         $this->assertEquals("3 fichier(s) typé(s)", $info['content']['data']['type_piece']);
-        $this->assertEquals(
-            '[{"filename":"arrete.pdf","typologie":"Notice explicative (22_NE)"},{"filename":"annexe1.pdf","typologie":"Notification de cr\u00e9ation ou de vacance de poste (41_NC)"},{"filename":"annexe2.pdf","typologie":"Document photographique (22_DP)"}]',
-            $donneesFormulaire->getFileContent('type_piece_fichier')
+        static::assertJsonFileEqualsJsonFile(
+            __DIR__ . '/fixtures/type_piece_fichier.json',
+            $donneesFormulaire->getFilePath('type_piece_fichier')
         );
     }
 

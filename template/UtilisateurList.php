@@ -10,17 +10,25 @@
  * @var int $nb_utilisateur
  * @var array $liste_utilisateur
  * @var int $id_e
+ * @var int $offset
  */
+
+$exportUserUrl = sprintf(
+    'Entite/exportUtilisateur?id_e=%s&descendance=%s&role_selected=%s&search=%s',
+    $id_e,
+    get_hecho($descendance),
+    $role_selected,
+    get_hecho($search)
+);
 ?>
 <div class="box">
-
-
     <?php if ($droitCreation) : ?>
-        <a href="Utilisateur/edition?id_e=<?php echo $id_e?>" class='btn btn-primary grow'><i class="fa fa-plus-circle"></i>&nbsp;Ajouter</a>
+        <a href="Utilisateur/edition?id_e=<?php echo $id_e?>"
+           class='btn btn-primary grow'
+        ><i class="fa fa-plus-circle"></i>&nbsp;Ajouter</a>
     <?php endif;?>
 
     <h2>Rechercher un utilisateur</h2>
-
 
     <form action="Entite/utilisateur" method='get' class="table-end">
         <input type='hidden' name='id_e' value='<?php echo $id_e?>'/>
@@ -35,16 +43,24 @@
         <td><select name='role' class="form-control col-md-5">
         <option value=''>N'importe quel rôle</option>
             <?php foreach ($all_role as $role) : ?>
-                <option value='<?php hecho($role['role']); ?>' <?php echo $role_selected == $role['role'] ? "selected='selected'" : ""?>> <?php hecho($role['libelle']); ?> </option>
+                <option value='<?php hecho($role['role']); ?>'
+                    <?php echo $role_selected == $role['role'] ? "selected='selected'" : ""?>
+                > <?php hecho($role['libelle']); ?> </option>
             <?php endforeach ; ?>
             </select>
         </td></tr>
         <tr>
-        <td>
-        Recherche </td><td><input class="form-control col-md-5" type='text' name='search' value='<?php hecho($search)?>' placeholder="Rerchercher par nom, prénom ou login"/></td>
+            <td>Recherche</td>
+            <td>
+                <input class="form-control col-md-5" type='text' name='search'
+                       value='<?php hecho($search) ?>' placeholder="Rechercher par nom, prénom ou login"
+                />
+            </td>
         </tr>
         </table>
-        <a href="Entite/utilisateur?id_e=<?php hecho($id_e) ?>" class="btn btn-outline-primary" ><i class="fa fa-undo"></i>&nbsp;Réinitialiser</a>
+        <a href="Entite/utilisateur?id_e=<?php hecho($id_e) ?>"
+           class="btn btn-outline-primary"
+        ><i class="fa fa-undo"></i>&nbsp;Réinitialiser</a>
         <button type="submit" class="btn btn-primary">
             <i class="fa fa-search"></i>&nbsp;Rechercher
         </button>
@@ -52,9 +68,15 @@
 
 <h2>Liste des utilisateurs - résultats de la recherche</h2>
 
-<a class='btn btn-outline-primary' href='Entite/exportUtilisateur?id_e=<?php echo $id_e?>&descendance=<?php hecho($descendance); ?>&role_selected=<?php echo $role_selected?>&search=<?php hecho($search); ?>'><i class='fa fa-download'></i>&nbsp;Exporter</a>
+<a class='btn btn-outline-primary' href='<?php echo $exportUserUrl; ?>'><i class='fa fa-download'></i>&nbsp;Exporter</a>
 
-<?php $this->SuivantPrecedent($offset, UtilisateurListe::NB_UTILISATEUR_DISPLAY, $nb_utilisateur, "Entite/utilisateur?id_e=$id_e&page=1&search=$search&descendance=$descendance&role_selected=$role_selected"); ?>
+    <?php
+    $this->SuivantPrecedent(
+        $offset,
+        UtilisateurListe::NB_UTILISATEUR_DISPLAY,
+        $nb_utilisateur,
+        "Entite/utilisateur?id_e=$id_e&page=1&search=$search&descendance=$descendance&role_selected=$role_selected"
+    ); ?>
 
 <table class='table table-striped'>
 <thead>
@@ -89,14 +111,25 @@
 
         </td>
         <?php if ($descendance) : ?>
-            <td><a href='Entite/detail?id_e=<?php echo $user['id_e']?>'><?php hecho($user['denomination'] ?: "Entité racine"); ?></a></td>
+            <td>
+                <a href='Entite/detail?id_e=<?php echo $user['id_e']?>'
+                ><?php hecho($user['denomination'] ?: "Entité racine"); ?></a>
+            </td>
         <?php endif;?>
     </tr>
 <?php endforeach; ?>
 
 </table>
 
-<?php $this->SuivantPrecedent($offset, UtilisateurListe::NB_UTILISATEUR_DISPLAY, $nb_utilisateur, "Entite/utilisateur?id_e=$id_e&page=1&search=$search&descendance=$descendance&role_selected=$role_selected"); ?>
+    <?php
+    $this->SuivantPrecedent(
+        $offset,
+        UtilisateurListe::NB_UTILISATEUR_DISPLAY,
+        $nb_utilisateur,
+        "Entite/utilisateur?id_e=$id_e&page=1&search=$search&descendance=$descendance&role_selected=$role_selected"
+    ); ?>
 
-<a class='btn btn-outline-primary' href='Entite/exportUtilisateur?id_e=<?php echo $id_e?>&descendance=<?php hecho($descendance); ?>&role_selected=<?php echo $role_selected?>&search=<?php hecho($search); ?>'><i class='fa fa-download'></i>&nbsp;Exporter</a>
+    <a class='btn btn-outline-primary'
+       href='<?php echo $exportUserUrl; ?>'
+    ><i class='fa fa-download'></i>&nbsp;Exporter</a>
 </div>

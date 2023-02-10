@@ -22,45 +22,54 @@
  */
 ?>
 
-    <a class='btn btn-link' href='Document/list?id_e=<?php echo $id_e?>&type=<?php echo $type?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des dossiers </a>
+    <a class='btn btn-link'
+       href='Document/list?id_e=<?php echo $id_e?>&type=<?php echo $type?>'
+    ><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des dossiers </a>
 
 
     <div class="accordion" id="accordionExample">
-      <div class="card">
-            <a id="headingOne" class="card-header ls-accordion" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-             <i class="fa fa-search"></i> Recherche avancée <i class="fa fa-plus-square plier"></i><i class="fa fa-minus-square deplier"></i>
-                 </a>
+        <div class="card">
+            <a id="headingOne"
+               class="card-header ls-accordion"
+               data-toggle="collapse" data-target="#collapseOne"
+               aria-expanded="true" aria-controls="collapseOne"
+            >
+                <i class="fa fa-search"></i> Recherche avancée
+                <i class="fa fa-plus-square plier"></i><i class="fa fa-minus-square deplier"></i>
+            </a>
 
-        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-          <div class="card-body">
-            <div>
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div class="card-body">
+                    <div>
+                        <form action='Document/search' method='get'>
+                            <input type='hidden' name='go' value='go'/>
+                            <input type='hidden' name='date_in_fr' value='true'/>
 
+                            <?php $this->getRechercheAvanceFormulaireHTML()->display(); ?>
 
-<form action='Document/search' method='get' >
-    <input type='hidden' name='go' value='go' />
-    <input type='hidden' name='date_in_fr' value='true' />
+                            <a class='btn btn-outline-primary'
+                               href='<?php $this->url("Document/list?id_e=$id_e&type=$type"); ?>'
+                            >
+                                <i class="fa fa-times-circle"></i>
+                                Annuler
+                            </a>
 
-    <?php $this->getRechercheAvanceFormulaireHTML()->display(); ?>
+                            <a class='btn btn-outline-primary'
+                               href='Document/search?id_e=<?php echo $id_e ?>&type=<?php echo $type ?>'
+                            >
+                                <i class="fa fa-undo"></i>&nbsp;
+                                Réinitialiser
+                            </a>
 
-    <a class='btn btn-outline-primary' href='<?php $this->url("Document/list?id_e=$id_e&type=$type"); ?>'>
-        <i class="fa fa-times-circle"></i>
-        Annuler
-    </a>
-
-    <a class='btn btn-outline-primary' href='Document/search?id_e=<?php echo $id_e?>&type=<?php echo $type?>'>
-        <i class="fa fa-undo"></i>&nbsp;
-        Réinitialiser
-    </a>
-
-    <button type="submit" class="btn btn-primary">
-        <i class="fa fa-search"></i>&nbsp;Rechercher
-    </button>
-</form>
-</div>
-</div>
-</div>
-</div>
-</div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa fa-search"></i>&nbsp;Rechercher
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script type="text/javascript">
         var type = $('select[name="type"]');
@@ -79,8 +88,22 @@
 
 <?php
 
-$url = "id_e=$id_e&search=$search&type=$type&lastetat=$lastEtat&last_state_begin=$last_state_begin_iso&last_state_end=$last_state_end_iso&etatTransit=$etatTransit
-            &state_begin=$state_begin_iso&state_end=$state_end_iso&notEtatTransit=$notEtatTransit&tri=$tri&sens_tri=$sens_tri&date_in_fr=true";
+$url = sprintf(
+    'id_e=%s&search=%s&type=%s&lastetat=%s&last_state_begin=%s&last_state_end=%s&etatTransit=%s&state_begin=%s' .
+    '&state_end=%s&notEtatTransit=%s&tri=%s&sens_tri=%s&date_in_fr=true',
+    $id_e,
+    $search,
+    $type,
+    $lastEtat,
+    $last_state_begin_iso,
+    $last_state_end_iso,
+    $etatTransit,
+    $state_begin_iso,
+    $state_end_iso,
+    $notEtatTransit,
+    $tri,
+    $sens_tri
+);
 
 if ($type) {
     foreach ($indexedFieldValue as $indexName => $indexValue) {
@@ -90,8 +113,36 @@ if ($type) {
 
 
 if ($go = 'go') {
-    $listDocument = $documentActionEntite->getListBySearch($id_e, $type, $offset, $limit, $search, $lastEtat, $last_state_begin_iso, $last_state_end_iso, $tri, $allDroitEntite, $etatTransit, $state_begin_iso, $state_end_iso, $notEtatTransit);
-    $count = $documentActionEntite->getNbDocumentBySearch($id_e, $type, $search, $lastEtat, $last_state_begin_iso, $last_state_end_iso, $allDroitEntite, $etatTransit, $state_begin_iso, $state_end_iso, $notEtatTransit, $indexedFieldValue);
+    $listDocument = $documentActionEntite->getListBySearch(
+        $id_e,
+        $type,
+        $offset,
+        $limit,
+        $search,
+        $lastEtat,
+        $last_state_begin_iso,
+        $last_state_end_iso,
+        $tri,
+        $allDroitEntite,
+        $etatTransit,
+        $state_begin_iso,
+        $state_end_iso,
+        $notEtatTransit
+    );
+    $count = $documentActionEntite->getNbDocumentBySearch(
+        $id_e,
+        $type,
+        $search,
+        $lastEtat,
+        $last_state_begin_iso,
+        $last_state_end_iso,
+        $allDroitEntite,
+        $etatTransit,
+        $state_begin_iso,
+        $state_end_iso,
+        $notEtatTransit,
+        $indexedFieldValue
+    );
     if ($count) {
         $this->suivantPrecedent($offset, $limit, $count, "Document/search?$url");
         $this->setViewParameter('url', $url);
@@ -105,7 +156,9 @@ if ($go = 'go') {
             <i class='fa fa-cogs'></i>&nbsp;Traitement par lot
         </a>
 
-            <a class='btn btn-primary' href='Document/export?<?php echo $url?>'><i class='fa fa-download'></i>&nbsp;Exporter</a>
+            <a class='btn btn-primary'
+               href='Document/export?<?php echo $url?>'
+            ><i class='fa fa-download'></i>&nbsp;Exporter</a>
         <?php
     } else {
         ?>

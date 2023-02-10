@@ -1,15 +1,16 @@
 <?php
 
-/** @var Gabarit $this */
-/** @var  $page */
-/** @var  DonneesFormulaire $donneesFormulaire */
-/** @var  array $inject */
-/** @var  $action_url */
-/** @var  $my_role */
-/** @var $recuperation_fichier_url */
-/** @var $suppression_fichier_url */
-/** @var $externalDataURL */
-
+/**
+ * @var Gabarit $this
+ * @var int $page
+ * @var DonneesFormulaire $donneesFormulaire
+ * @var array $inject
+ * @var string $action_url
+ * @var string $my_role
+ * @var string $recuperation_fichier_url
+ * @var string $suppression_fichier_url
+ * @var string $externalDataURL
+ */
 
 $page_number = $page;
 
@@ -140,7 +141,7 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1) {
                                                     page: '<?php echo $page ?>',
                                                     field: '<?php echo $field->getName() ?>',
                                                     key: '<?php echo $mailsec_key ?>',
-                                                    token_value: '<?php  echo $this->getCSRFToken()->getCSRFToken(); ?>',
+                                                    token_value: '<?php echo $this->getCSRFToken()->getCSRFToken(); ?>',
                                                     single_file: true,
                                                     accept: '<?php echo implode(',', $field->getContentType())?>'
                                                 };
@@ -151,10 +152,26 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1) {
                             <?php endif;?>
                             <?php if ($this->donneesFormulaire->get($field->getName())) :
                                 foreach ($this->donneesFormulaire->get($field->getName()) as $num => $fileName) : ?>
-                                            <a href='<?php echo $recuperation_fichier_url ?>&field=<?php echo $field->getName()?>&num=<?php echo $num ?>'><?php echo $fileName ?></a>
+                                    <?php
+                                    $fileDownloadUrl = \sprintf(
+                                        '%s&field=%s&num=%s',
+                                        $recuperation_fichier_url,
+                                        $field->getName(),
+                                        $num
+                                    ); ?>
+                                            <a href='<?php echo $fileDownloadUrl; ?>'><?php echo $fileName; ?></a>
                                             &nbsp;&nbsp;
                                             <?php if ($donneesFormulaire->isEditable($field->getName())) : ?>
-                                                <a style='margin:4px 0'  href='<?php echo $suppression_fichier_url ?>&field=<?php echo $field->getName() ?>&num=<?php echo $num ?>'><i class="fa fa-times-circle" style="color:red"></i></a>
+                                                <?php
+                                                $fileDeletionUrl = \sprintf(
+                                                    '%s&field=%s&num=%s',
+                                                    $suppression_fichier_url,
+                                                    $field->getName(),
+                                                    $num
+                                                ); ?>
+                                                <a style='margin:4px 0' href='<?php echo $fileDeletionUrl; ?>'>
+                                                    <i class="fa fa-times-circle" style="color:red"></i>
+                                                </a>
                                             <?php endif;?>
                                         <br/>
                                 <?php endforeach;?>
@@ -176,8 +193,11 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1) {
                         </select>
                             <?php endforeach;?>
                         <?php else :?>
-                            <select class='form-control col-md-12' id='<?php echo $field->getName()?>' name='<?php echo $field->getName()?>' <?php echo $donneesFormulaire->isEditable($field->getName()) ?: "disabled='disabled'" ?>>
-
+                            <select class='form-control col-md-12'
+                                    id='<?php echo $field->getName()?>'
+                                    name='<?php echo $field->getName()?>'
+                                <?php echo $donneesFormulaire->isEditable($field->getName()) ?: "disabled='disabled'" ?>
+                            >
                                 <option value=''>...</option>
                                 <?php foreach ($field->getSelect() as $value => $name) : ?>
                                     <option <?php
@@ -194,13 +214,33 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1) {
                     <?php elseif ($field->getType() == 'externalData') :?>
                         <?php if ($donneesFormulaire->isEditable($field->getName())) : ?>
                             <?php if ($id_ce) : ?>
-                                <button type="submit" class="btn btn-outline-primary" name="external_data_button" value="<?php echo  urlencode("$externalDataURL?id_ce=$id_ce&field=" . $field->getName()); ?>">
-                                    <i class="fa fa-hand-o-up"></i>&nbsp; <?php echo $field->getProperties('link_name')?>
+                                <?php $connectorExternalDataUrl = urlencode(
+                                    sprintf("$externalDataURL?id_ce=$id_ce&field=%s", $field->getName())
+                                ); ?>
+                                <button type="submit"
+                                        class="btn btn-outline-primary"
+                                        name="external_data_button"
+                                        value="<?php echo $connectorExternalDataUrl; ?>"
+                                >
+                                    <i class="fa fa-hand-o-up"></i>&nbsp;
+                                    <?php echo $field->getProperties('link_name')?>
                                 </button>
                             <?php elseif ($field->isEnabled($id_e, $id_d) && isset($id_e)) :?>
-                                <button type="submit" class="btn btn-outline-primary" name="external_data_button" value="<?php echo  urlencode("$externalDataURL?id_e=$id_e&id_d=$id_d&page=$page_number&field=" . $field->getName()); ?>">
-                                    <i class="fa fa-hand-o-up"></i>&nbsp; <?php echo $field->getProperties('link_name')?>
-                                </button>
+                                <?php $documentExternalDataUrl = urlencode(
+                                    sprintf(
+                                        "$externalDataURL?id_e=$id_e&id_d=$id_d&page=$page_number&field=%s",
+                                        $field->getName()
+                                    )
+                                ); ?>
+
+                        <button type="submit"
+                                class="btn btn-outline-primary"
+                                name="external_data_button"
+                                value="<?php echo $documentExternalDataUrl; ?>"
+                        >
+                            <i class="fa fa-hand-o-up"></i>&nbsp; <?php
+                            echo $field->getProperties('link_name')?>
+                        </button>
                             <?php else :?>
                                 non disponible
                             <?php endif;?>

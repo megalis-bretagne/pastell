@@ -579,10 +579,19 @@ class DocumentControler extends PastellControler
             $this->redirect("");
         }
 
-        $url_tri = "Document/search?id_e={$this->getViewParameterOrObject('id_e')}&search={$this->getViewParameterOrObject('search')}&type={$this->getViewParameterOrObject('type')}&lastetat={$this->getViewParameterOrObject('lastEtat')}" .
-                        "&last_state_begin={$this->getViewParameterOrObject('last_state_begin_iso')}&last_state_end={$this->getViewParameterOrObject('last_state_end_iso')}&etatTransit={$this->getViewParameterOrObject('etatTransit')}" .
-                        "&state_begin={$this->getViewParameterOrObject('state_begin_iso')}&state_end={$this->getViewParameterOrObject('state_end_iso')}&date_in_fr=true";
-
+        $url_tri = \sprintf(
+            'Document/search?id_e=%s&search=%s&type=%s&lastetat=%s&last_state_begin=%s&last_state_end=%s' .
+            '&etatTransit=%s&state_begin=%s&state_end=%s&date_in_fr=true',
+            $this->getViewParameterByKey('id_e'),
+            $this->getViewParameterByKey('search'),
+            $this->getViewParameterByKey('type'),
+            $this->getViewParameterByKey('lastEtat'),
+            $this->getViewParameterByKey('last_state_begin_iso'),
+            $this->getViewParameterByKey('last_state_end_iso'),
+            $this->getViewParameterByKey('etatTransit'),
+            $this->getViewParameterByKey('state_begin_iso'),
+            $this->getViewParameterByKey('state_end_iso'),
+        );
         if ($this->getViewParameterOrObject('type')) {
             foreach ($indexedFieldValue as $indexName => $indexValue) {
                 $url_tri .= "&" . urlencode($indexName) . "=" . urlencode($indexValue);
@@ -632,10 +641,38 @@ class DocumentControler extends PastellControler
             $indexedFieldsList = [];
         }
 
-
-        $limit = $this->getDocumentActionEntite()->getNbDocumentBySearch($id_e, $type, $search, $lastEtat, $last_state_begin_iso, $last_state_end_iso, $allDroitEntite, $etatTransit, $state_begin, $state_end, $notEtatTransit, $indexedFieldValue);
-        $listDocument = $this->getDocumentActionEntite()->
-            getListBySearch($id_e, $type, $offset, $limit, $search, $lastEtat, $last_state_begin_iso, $last_state_end_iso, $tri, $allDroitEntite, $etatTransit, $state_begin, $state_end, $notEtatTransit, $indexedFieldValue, $sens_tri);
+        $limit = $this->getDocumentActionEntite()->getNbDocumentBySearch(
+            $id_e,
+            $type,
+            $search,
+            $lastEtat,
+            $last_state_begin_iso,
+            $last_state_end_iso,
+            $allDroitEntite,
+            $etatTransit,
+            $state_begin,
+            $state_end,
+            $notEtatTransit,
+            $indexedFieldValue
+        );
+        $listDocument = $this->getDocumentActionEntite()->getListBySearch(
+            $id_e,
+            $type,
+            $offset,
+            $limit,
+            $search,
+            $lastEtat,
+            $last_state_begin_iso,
+            $last_state_end_iso,
+            $tri,
+            $allDroitEntite,
+            $etatTransit,
+            $state_begin,
+            $state_end,
+            $notEtatTransit,
+            $indexedFieldValue,
+            $sens_tri
+        );
 
         $line = ["ENTITE","ID_D","TYPE","TITRE","DERNIERE ACTION","DATE DERNIERE ACTION"];
         foreach ($indexedFieldsList as $indexField => $indexLibelle) {
@@ -658,7 +695,10 @@ class DocumentControler extends PastellControler
              $result[] = $line;
         }
 
-        $this->getInstance(CSVoutput::class)->sendAttachment("pastell-export-$id_e-$type-$search-$lastEtat-$tri.csv", $result);
+        $this->getInstance(CSVoutput::class)->sendAttachment(
+            "pastell-export-$id_e-$type-$search-$lastEtat-$tri.csv",
+            $result
+        );
     }
 
 

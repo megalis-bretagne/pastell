@@ -29,7 +29,10 @@
                 </th>
                 <td>
                     <?php if (! empty($element_info['value'])) : ?>
-                        <select id="<?php hecho($pastell_id) ?>" name="<?php hecho($pastell_id) ?>"  class="form-control col-md-12" >
+                        <select id="<?php hecho($pastell_id) ?>"
+                                name="<?php hecho($pastell_id) ?>"
+                                class="form-control col-md-12"
+                        >
                             <?php foreach ($element_info['value'] as $value) : ?>
                                 <option <?php if (($data[$pastell_id] ?? '') === $value) {
                                     echo 'selected="selected"';
@@ -53,13 +56,22 @@
                     <label for="keywords">Liste de mots-clés</label>
                     <p class="form_commentaire">
                         Un mot clé par ligne de la forme : "Contenu du mot-clé","KeywordReference","KeywordType"
-                        <br/><br/>Attention, si un élement contient une virgule, il est nécessaire d'entourer l'expression par des "guillemets"
-                        <br/><br/>L'ensemble du champ est analysé avec Twig puis, les lignes sont lues comme des lignes CSV (<b>,</b> comme séparateur de champs, <b>"</b> comme clôture de champs et <b>\</b> comme caractère d'échappement)
-                        <br/><br/>Les mots clés sont mis dans le bordereau au niveau Archive - Keyword (seda 1.0)/ ArchiveUnit - Keyword (seda 2.1)
+                        <br/><br/>Attention, si un élement contient une virgule, il est nécessaire d'entourer
+                        l'expression par des "guillemets"
+                        <br/><br/>L'ensemble du champ est analysé avec Twig puis, les lignes sont lues comme des lignes
+                        CSV (<b>,</b> comme séparateur de champs, <b>"</b> comme clôture de champs et <b>\</b>
+                        comme caractère d'échappement)
+                        <br/><br/>Les mots clés sont mis dans le bordereau au niveau
+                        Archive -Keyword (seda 1.0)/ ArchiveUnit - Keyword (seda 2.1)
                     </p>
                 </th>
                 <td>
-                    <textarea id="keywords" name="keywords" cols="80" rows="10" class="form-control col-md-12"><?php hecho($data['keywords'] ?? '')?></textarea>
+                    <textarea id="keywords"
+                              name="keywords"
+                              cols="80"
+                              rows="10"
+                              class="form-control col-md-12"
+                    ><?php hecho($data['keywords'] ?? '') ?></textarea>
                 </td>
             </tr>
         </table>
@@ -105,7 +117,9 @@
         </div>
     </div>
 <?php else : ?>
-    <div class="alert alert-warning">Associer ce connecteur à un seul flux de l'entité pour avoir la liste des éléments disponibles sur ce flux</div>
+    <div class="alert alert-warning">
+        Associer ce connecteur à un seul flux de l'entité pour avoir la liste des éléments disponibles sur ce flux
+    </div>
 <?php endif; ?>
 
 <?php include __DIR__ . "/SedaGeneriqueFillTwigExplanation.php" ?>

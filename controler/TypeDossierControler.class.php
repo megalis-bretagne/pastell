@@ -520,9 +520,19 @@ class TypeDossierControler extends PastellControler
         if ($result[TypeDossierUtilService::ID_TYPE_DOSSIER] == $result[TypeDossierUtilService::ORIG_ID_TYPE_DOSSIER]) {
             $message = "Le type de dossier  <b>{$result['id_type_dossier']}</b> a été importé.";
         } else {
-            $message = "Le type de dossier a été importé avec l'identifiant <b>{$result[TypeDossierUtilService::ID_TYPE_DOSSIER]}</b> car l'identiant original ({$result[TypeDossierUtilService::ORIG_ID_TYPE_DOSSIER]}) existe déjà sur la plateforme";
+            $message = sprintf(
+                "Le type de dossier a été importé avec l'identifiant <b>%s</b> car l'identifiant original (%s)" .
+                ' existe déjà sur la plateforme',
+                $result[TypeDossierUtilService::ID_TYPE_DOSSIER],
+                $result[TypeDossierUtilService::ORIG_ID_TYPE_DOSSIER]
+            );
         }
-        $this->getTypeDossierActionService()->add($this->getId_u(), $result[TypeDossierUtilService::ID_T], TypeDossierActionService::ACTION_AJOUTE, $message);
+        $this->getTypeDossierActionService()->add(
+            $this->getId_u(),
+            $result[TypeDossierUtilService::ID_T],
+            TypeDossierActionService::ACTION_AJOUTE,
+            $message
+        );
         $this->setLastMessage($message);
         $this->redirect("/TypeDossier/detail?id_t={$result['id_t']}");
     }
