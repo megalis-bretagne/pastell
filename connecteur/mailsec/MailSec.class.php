@@ -176,19 +176,15 @@ class MailSec extends MailsecConnecteur
         }
 
         if ($content_html) {
-            if ($this->connecteurConfig->get('embeded_image')) {
-                foreach ($this->connecteurConfig->get('embeded_image') as $i => $filename) {
+            $imageField = 'embeded_image';
+            if ($this->connecteurConfig->get($imageField)) {
+                foreach ($this->connecteurConfig->get($imageField) as $i => $filename) {
                     $datePart = DataPart::fromPath(
-                        $this->connecteurConfig->getFilePath("embeded_image", $i),
-                        "image$i"
+                        $this->connecteurConfig->getFilePath($imageField, $i),
+                        "image$i",
+                        $this->connecteurConfig->getContentType($imageField, $i)
                     );
-                    $contentId = $datePart->getContentId();
-                    $templatedEmail->attachPart($datePart);
-                    $content_html = preg_replace(
-                        "#cid:image$i#",
-                        "cid:$contentId",
-                        $content_html
-                    );
+                    $templatedEmail->addPart($datePart);
                 }
             }
             $templatedEmail->html($content_html)
