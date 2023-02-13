@@ -41,6 +41,7 @@ formulaire:
         date_de_lacte:
             name: "Date de l'acte"
             type: date
+            default: now
             requis: true
             commentaire: 'Date de la décision'
         document_papier:

@@ -94,6 +94,7 @@
             <tr id="default_value_tr">
                 <th class="w400">
                     <label for="default_value_tr">Valeur par défaut</label>
+                    <p class="form_commentaire" id="default_value_form_comment"></p>
                 </th>
                 <td id="default_value_td"></td>
             </tr>
@@ -174,14 +175,14 @@
                 $("#select_value_tr").hide();
             }
 
-            if (option === 'text' || option === 'textarea' || option === 'checkbox' || option === 'select') {
+            if (['text', 'textarea', 'checkbox', 'select', 'date'].includes(option)) {
                 $("#default_value_tr").show();
             } else {
                 $("#default_value_tr").hide();
             }
 
             let td = document.getElementById('default_value_td');
-            if (option === 'checkbox') {
+            if (['checkbox', 'date'].includes(option)) {
                 td.innerHTML = '';
                 let input = document.createElement('input');
                 input.type = 'checkbox';
@@ -216,6 +217,12 @@
                 td.appendChild(textarea);
             } else {
                 td.innerHTML = '';
+            }
+
+            if(option === 'date') {
+                document.getElementById('default_value_form_comment').innerText = 'Initialiser à la date du jour';
+            } else {
+                document.getElementById('default_value_form_comment').innerText = '';
             }
 
             if (option === 'text') {

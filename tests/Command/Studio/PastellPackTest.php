@@ -13,7 +13,7 @@ use TypeDossierException;
 class PastellPackTest extends PastellTestCase
 {
     private array $moduleDefinition = [
-        'dossier-wgfc' => ['', 'gfc-dossier', "Dossier GFC"],
+        'dossier-wgfc' => ['', 'gfc-dossier', 'Dossier GFC'],
         'dossier-wgfc-destinataire' => ['', 'gfc-dossier-destinataire', 'Dossier GFC (destinataire)'],
         'dossier-autorisation-urba-draft' => [
             'pack_urbanisme',
@@ -33,17 +33,17 @@ class PastellPackTest extends PastellTestCase
         'draft-rh-document-individuel' => [
             'pack_rh',
             'rh-document-individuel',
-            "Document individuel"
+            'Document individuel'
         ],
         'draft-rh-document-individuel-destinataire' => [
             'pack_rh',
             'rh-document-individuel-destinataire',
-            "Document individuel (destinataire)"
+            'Document individuel (destinataire)'
         ],
         'draft-rh-bulletin-salaire' => [
             'pack_rh',
             'rh-bulletin-salaire',
-            "Bulletin de salaire"
+            'Bulletin de salaire'
         ],
         'draft-rh-archivage-dossier-agent' => [
             'pack_rh',
@@ -53,12 +53,12 @@ class PastellPackTest extends PastellTestCase
         'draft-rh-archivage-collectif' => [
             'pack_rh',
             'rh-archivage-collectif',
-            "Archivage des données de gestion collective (fichier unitaire)"
+            'Archivage des données de gestion collective (fichier unitaire)'
         ],
         'draft-rh-archivage-collectif-zip' => [
             'pack_rh',
             'rh-archivage-collectif-zip',
-            "Archivage des données de gestion collective (fichier compressé)"
+            'Archivage des données de gestion collective (fichier compressé)'
         ],
         'ls-actes-publication-draft' => [
             '',
@@ -87,7 +87,7 @@ class PastellPackTest extends PastellTestCase
     {
         $result = [];
         $finder = new Finder();
-        $paths = $finder->in(__DIR__ . "/../../../pack-json/")->files()->name('*.json');
+        $paths = $finder->in(__DIR__ . '/../../../pack-json/')->files()->name('*.json');
         /** @var SplFileInfo $file */
         foreach ($paths as $file) {
             $data = array_merge(
@@ -103,11 +103,6 @@ class PastellPackTest extends PastellTestCase
 
     /**
      * @dataProvider jsonProvider
-     * @param string $jsonFilepath
-     * @param string $restrictionPack
-     * @param string $moduleId
-     * @param string $moduleName
-     * @return void
      * @throws TypeDossierException
      * @throws Exception
      */
@@ -129,6 +124,11 @@ class PastellPackTest extends PastellTestCase
             $moduleId,
             $moduleName
         );
+
+//        \file_put_contents(
+//            __DIR__ . "/../../../module/$moduleId/definition.yml",
+//            \file_get_contents($tmp_folder . "/$moduleId/definition.yml"),
+//        );
 
         self::assertFileEquals(
             __DIR__ . "/../../../module/$moduleId/definition.yml",

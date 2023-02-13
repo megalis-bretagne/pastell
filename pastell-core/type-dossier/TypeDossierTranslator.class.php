@@ -61,21 +61,34 @@ class TypeDossierTranslator
             $result[DocumentType::FORMULAIRE][$onglet_name][$element_id] = [
                 'name' => $typeDossierFormulaireElement->name ?: $element_id,
                 'type' => $this->getType($typeDossierFormulaireElement),
-                Field::REQUIS => boolval($typeDossierFormulaireElement->requis),
-                'multiple' => boolval($typeDossierFormulaireElement->type == 'multi_file'),
+                Field::REQUIS => (bool)$typeDossierFormulaireElement->requis,
+                'multiple' => $typeDossierFormulaireElement->type === 'multi_file',
                 'commentaire' => $typeDossierFormulaireElement->commentaire,
             ];
+
             if (
-                $typeDossierFormulaireElement->type === TypeDossierFormulaireElementManager::TYPE_TEXT
-                || $typeDossierFormulaireElement->type === TypeDossierFormulaireElementManager::TYPE_TEXTAREA
-                || $typeDossierFormulaireElement->type === TypeDossierFormulaireElementManager::TYPE_CHECKBOX
-                || $typeDossierFormulaireElement->type === TypeDossierFormulaireElementManager::TYPE_SELECT
+                $typeDossierFormulaireElement->default_value !== false &&
+                $typeDossierFormulaireElement->default_value !== '' &&
+                \in_array(
+                    $typeDossierFormulaireElement->type,
+                    [
+                        TypeDossierFormulaireElementManager::TYPE_TEXT,
+                        TypeDossierFormulaireElementManager::TYPE_TEXTAREA,
+                        TypeDossierFormulaireElementManager::TYPE_CHECKBOX,
+                        TypeDossierFormulaireElementManager::TYPE_SELECT,
+                        TypeDossierFormulaireElementManager::TYPE_DATE,
+                    ],
+                    true
+                )
             ) {
-                if ($typeDossierFormulaireElement->default_value !== false && $typeDossierFormulaireElement->default_value !== '') {
-                    $result[DocumentType::FORMULAIRE][$onglet_name][$element_id]['default']
-                        = $typeDossierFormulaireElement->default_value;
+                $defaultValue = $typeDossierFormulaireElement->default_value;
+                if ($typeDossierFormulaireElement->type === TypeDossierFormulaireElementManager::TYPE_DATE) {
+                    $defaultValue = 'now';
                 }
+                $result[DocumentType::FORMULAIRE][$onglet_name][$element_id]['default']
+                    = $defaultValue;
             }
+
             if ($typeDossierFormulaireElement->type == TypeDossierFormulaireElementManager::TYPE_SELECT) {
                 $values = explode("\n", trim($typeDossierFormulaireElement->select_value, "\n"));
                 $res = [];

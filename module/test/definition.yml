@@ -20,13 +20,13 @@ formulaire:
             requis: true
         date_indexed:
             type: date
+            default: now
             index: true
         date_in_the_past:
             type: date
             default: '-30days'
         date_empty:
             type: date
-            default: empty
         nom:
             index: true
         prenom:
