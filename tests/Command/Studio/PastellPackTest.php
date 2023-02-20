@@ -45,6 +45,11 @@ class PastellPackTest extends PastellTestCase
             'rh-bulletin-salaire',
             'Bulletin de salaire'
         ],
+        'draft-rh-bulletin-salaire-destinataire' => [
+            'pack_rh',
+            'rh-bulletin-salaire-destinataire',
+            'Bulletin de salaire (destinataire)',
+        ],
         'draft-rh-archivage-dossier-agent' => [
             'pack_rh',
             'rh-archivage-dossier-agent',
