@@ -364,6 +364,7 @@ class EntiteControler extends PastellControler
 
             if ($id_e) {
                 $this->getInstance(EntityUpdateService::class)->update(
+                    $id_e,
                     $name,
                     $siren,
                     $type,

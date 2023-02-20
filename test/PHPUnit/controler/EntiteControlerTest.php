@@ -168,4 +168,22 @@ class EntiteControlerTest extends ControlerTestCase
         $this->expectOutputRegex('/Content-type: application\/json;*/');
         $this->entiteControler->doExportConfigAction();
     }
+
+    public function testDoEditionActionWhenModification(): void
+    {
+        $this->setPostInfo([
+            'id_e' => 1,
+            'siren' => '000000000',
+            'denomination' => 'TEST ENTITIES',
+            'type' => 'collectivite',
+        ]);
+        try {
+            $this->entiteControler->_beforeAction();
+            $this->entiteControler->doEditionAction();
+        } catch (LastMessageException) {
+        }
+
+        $info = $this->getObjectInstancier()->getInstance(EntiteSQL::class)->getInfo(1);
+        static::assertSame('TEST ENTITIES', $info['denomination']);
+    }
 }
