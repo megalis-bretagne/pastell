@@ -236,4 +236,37 @@ class UtilisateurControlerTest extends ControlerTestCase
         $pageTitle = $this->getUtilisateurControler()->getViewParameterByKey('page_title');
         static::assertSame($pageTitle, 'Nouvel utilisateur ');
     }
+
+    public function testDoEditionActionNoPassword()
+    {
+        $this->setPostInfo([
+            'login' => 'foo',
+            'password' => 'D@iw3DDf41Nl$DXzMJL!Uc2Yo',
+            'nom' => 'baz',
+            'prenom' => 'buz',
+            'email' => 'boz@byz.fr'
+        ]);
+        try {
+            $this->getUtilisateurControler()->doEditionAction();
+        } catch (LastMessageException $e) {
+            /** Nothing to do */
+        }
+        $utilisateurSQL = $this->getObjectInstancier()->getInstance(UtilisateurSQL::class);
+        $userCreated = $utilisateurSQL->getInfo(3);
+
+        $this->setPostInfo([
+            'id_u' => 3,
+            'login' => 'foo',
+            'nom' => 'baz',
+            'prenom' => 'buz',
+            'email' => 'boz@byz.fr'
+        ]);
+        try {
+            $this->getUtilisateurControler()->doEditionAction();
+        } catch (LastMessageException $e) {
+            /** Nothing to do */
+        }
+        $userUpdated = $utilisateurSQL->getInfo(3);
+        self::assertSame($userCreated['password'], $userUpdated['password']);
+    }
 }
