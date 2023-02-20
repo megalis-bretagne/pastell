@@ -76,6 +76,7 @@ module-pack-rh: docker-compose-up ## Run make-module pack-rh
 	$(MAKE_MODULE) ./pack-json/pack-rh/draft-rh-document-individuel.json ./module/ --id rh-document-individuel --name "Document individuel" --restriction_pack 'pack_rh'
 	$(MAKE_MODULE) ./pack-json/pack-rh/draft-rh-document-individuel-destinataire.json ./module/ --id rh-document-individuel-destinataire --name "Document individuel (destinataire)" --restriction_pack 'pack_rh'
 	$(MAKE_MODULE) ./pack-json/pack-rh/draft-rh-bulletin-salaire.json ./module/ --id rh-bulletin-salaire --name "Bulletin de salaire" --restriction_pack 'pack_rh'
+	$(MAKE_MODULE) ./pack-json/pack-rh/draft-rh-bulletin-salaire-destinataire.json ./module/ --id rh-bulletin-salaire-destinataire --name "Bulletin de salaire (destinataire)" --restriction_pack 'pack_rh'
 	$(MAKE_MODULE) ./pack-json/pack-rh/draft-rh-archivage-dossier-agent.json ./module/ --id rh-archivage-dossier-agent --name "Archivage des éléments du dossier individuel de l'agent" --restriction_pack 'pack_rh'
 	$(MAKE_MODULE) ./pack-json/pack-rh/draft-rh-archivage-collectif.json ./module/ --id rh-archivage-collectif --name "Archivage des données de gestion collective (fichier unitaire)" --restriction_pack 'pack_rh'
 	$(MAKE_MODULE) ./pack-json/pack-rh/draft-rh-archivage-collectif-zip.json ./module/ --id rh-archivage-collectif-zip --name "Archivage des données de gestion collective (fichier compressé)" --restriction_pack 'pack_rh'
