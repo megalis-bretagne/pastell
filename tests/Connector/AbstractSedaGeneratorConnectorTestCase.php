@@ -66,7 +66,7 @@ abstract class AbstractSedaGeneratorConnectorTestCase extends PastellTestCase
             ->willReturnCallback($returnCallback);
     }
 
-    private function createSedaGeneriqueConnector(): int
+    protected function createSedaGeneriqueConnector(): int
     {
         $sedaMessageBuilder = $this->getSedaMessageBuilder();
         $sedaMessageBuilder->setIdGeneratorFunction(function () {

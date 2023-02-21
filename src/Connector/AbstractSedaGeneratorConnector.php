@@ -301,7 +301,7 @@ abstract class AbstractSedaGeneratorConnector extends SEDAConnecteur
         try {
             $this->generateArchiveThrow($fluxData, $archive_path, $tmp_folder);
         } catch (\Exception $e) {
-            throw new UnrecoverableException($e);
+            throw new UnrecoverableException($e->getMessage());
         } finally {
             $this->tmpFolder->delete($tmp_folder);
         }
