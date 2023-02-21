@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Pastell\Connector\AbstractSedaGeneratorConnector;
 use Pastell\Seda\Message\SedaMessageBuilder;
 use Pastell\Tests\Connector\AbstractSedaGeneratorConnectorTestCase;
 
@@ -20,5 +21,17 @@ final class SedaGeneratorAsalae10Test extends AbstractSedaGeneratorConnectorTest
     public function getExpectedCallDirectory(): string
     {
         return __DIR__ . '/seda-test-cases';
+    }
+
+    public function testGenerateArchiveWhenThrowAnException(): void
+    {
+        $id_ce = $this->createSedaGeneriqueConnector();
+        /** @var AbstractSedaGeneratorConnector $sedaGeneriqueConnector */
+        $sedaGeneriqueConnector = $this->getConnecteurFactory()->getConnecteurById($id_ce);
+        $this->expectException(UnrecoverableException::class);
+        $this->expectExceptionMessage(
+            "Impossible de créer le fichier d'archive empty - status : 2 - output: tar: *: Cannot stat: No such file or directory"
+        );
+        $sedaGeneriqueConnector->generateArchive(new \FluxDataTest([]), "empty");
     }
 }
