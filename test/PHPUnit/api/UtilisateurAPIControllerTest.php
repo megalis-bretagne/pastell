@@ -238,4 +238,20 @@ class UtilisateurAPIControllerTest extends PastellTestCase
         $this->expectExceptionMessage('Acces interdit id_e=1, droit=utilisateur:creation,id_u=3');
         $this->getInternalAPIAsUser(3)->post('/utilisateur', $userInfo);
     }
+
+    public function testPasswordPreservedPatchWithNoPassword(): void
+    {
+        $info =  [
+            'login' => 'foo',
+            'prenom' => 'foo',
+            'password' => 'D@iw3DDf41Nl$DXzMJL!Uc2Yo',
+            'nom' => 'bar',
+            'email' => 'foo@bar.baz',
+        ];
+        $info = $this->getInternalAPI()->post("utilisateur", $info);
+        $userCreated = $this->getObjectInstancier()->getInstance(UtilisateurSQL::class)->getInfo($info['id_u']);
+        $info2 = $this->getInternalAPI()->patch("utilisateur/3", ['nom' => 'faa']);
+        $userUpdated = $this->getObjectInstancier()->getInstance(UtilisateurSQL::class)->getInfo($info2['id_u']);
+        self::assertSame($userCreated['password'], $userUpdated['password']);
+    }
 }
