@@ -52,8 +52,8 @@ use Pastell\Service\ImportExportConfig\ExportConfigService;
 <div class="alert alert-danger">
     <?php if (
         empty($exportInfo[ExportConfigService::ENTITY_INFO])
-        && empty($exportInfo[ExportConfigService::ENTITY_INFO])
-    ) :?>
+        && empty($exportInfo[ExportConfigService::ENTITY_CHILD])
+) :?>
         La configuration requiert d'inclure au minimum les informations sur l'entité ou les entités filles.
     <?php endif; ?>
 </div>
