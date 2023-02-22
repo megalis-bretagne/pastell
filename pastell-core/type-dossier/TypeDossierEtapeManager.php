@@ -250,7 +250,7 @@ class TypeDossierEtapeManager
             return $result;
         }
 
-        $type_dossier_etape_class = glob($type_dossier_path . "/TypeDossier*Etape.class.php");
+        $type_dossier_etape_class = glob($type_dossier_path . "/TypeDossier*Etape.php");
 
         if (empty($type_dossier_etape_class)) {
             return $result;
@@ -258,7 +258,7 @@ class TypeDossierEtapeManager
         require_once $type_dossier_etape_class[0];
 
         $basename = basename($type_dossier_etape_class[0]);
-        preg_match("#^(.*)\.class\.php$#", $basename, $matches);
+        preg_match("#^(.*)\.php$#", $basename, $matches);
         /**
          * @var TypeDossierEtapeSetSpecificInformation $typeDossierSpecificEtape
          */

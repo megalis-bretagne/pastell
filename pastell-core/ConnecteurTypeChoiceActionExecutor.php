@@ -33,7 +33,7 @@ abstract class ConnecteurTypeChoiceActionExecutor extends ChoiceActionExecutor
         $extensions = $this->objectInstancier->getInstance(Extensions::class);
 
         foreach ($extensions->getAllModule() as $module_id => $module_path) {
-            $fichier_recherche = $module_path . "/lib/" . $this->data_seda_class_name . ".class.php";
+            $fichier_recherche = $module_path . "/lib/" . $this->data_seda_class_name . ".php";
             if (file_exists($fichier_recherche)) {
                 return $fichier_recherche;
             }

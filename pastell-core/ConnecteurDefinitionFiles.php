@@ -124,12 +124,12 @@ class ConnecteurDefinitionFiles
     public function getConnecteurClass(string $id_connecteur): mixed
     {
         $connecteur_path = $this->extensions->getConnecteurPath($id_connecteur);
-        $all = glob("$connecteur_path/*.class.php");
+        $all = glob("$connecteur_path/*.php");
         if (! $all) {
             throw new Exception("Impossible de trouver une classe pour le connecteur $id_connecteur");
         }
         $class_file = $all[0];
-        $class_name = basename($class_file, '.class.php');
+        $class_name = basename($class_file, '.php');
         if (!class_exists($class_name, false)) {
             require_once($class_file);
         }

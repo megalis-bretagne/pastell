@@ -47,10 +47,10 @@ parameters:
       # Il s'agit de symboles externes utilisés par l'extension PHP Soap, donc pas corrigeables
       message: '/Access to an undefined property NotBuggySoapClient::\$__last_request(.*)/'
       paths:
-        - lib/NotBuggySoapClient.class.php
+        - lib/NotBuggySoapClient.php
     -
       message: '/Access to an undefined property object::(\$nom|\$NomDocPrincipal)/'
-      path: connecteur/iParapheur/IParapheur.class.php
+      path: connecteur/iParapheur/IParapheur.php
     -
       message: '/PHPDoc tag @throws with type (.*) is not subtype of Throwable/'
       path: test/codeception/tests/_support/_generated/
