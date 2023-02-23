@@ -11,14 +11,9 @@ class UtilisateurAPIController extends BaseAPIController
     public function __construct(
         private readonly UtilisateurSQL $utilisateur,
         private readonly UtilisateurListe $utilisateurListe,
-        private readonly UtilisateurCreator $utilisateurCreator,
-        private readonly RoleUtilisateur $roleUtilisateur,
-        private readonly Journal $journal,
         private readonly UserCreationService $userCreationService,
         private readonly UserUpdateService $userUpdateService,
         private readonly UtilisateurDeletionService $utilisateurDeletionService,
-        private readonly PasswordEntropy $passwordEntropy,
-        private readonly TokenGenerator $tokenGenerator,
     ) {
     }
 

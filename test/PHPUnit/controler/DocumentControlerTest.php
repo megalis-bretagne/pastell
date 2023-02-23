@@ -1,6 +1,7 @@
 <?php
 
 use Mailsec\MailsecManager;
+use Pastell\Service\Utilisateur\UserCreationService;
 use Symfony\Component\HttpFoundation\Request;
 
 class DocumentControlerTest extends ControlerTestCase
@@ -197,18 +198,17 @@ class DocumentControlerTest extends ControlerTestCase
         );
     }
 
-    public function testIndexWithoutRight()
+    /**
+     * @throws UnrecoverableException
+     * @throws ConflictException
+     */
+    public function testIndexWithoutRight(): void
     {
-        $utilisateurSQL = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class);
-        $id_u = $utilisateurSQL->create(
-            "badguy",
-            'D@iw3DDf41Nl$DXzMJL!Uc2Yo',
-            'D@iw3DDf41Nl$DXzMJL!Uc2Yo',
-            "test@bar.baz"
-        );
+        $userCreationService = $this->getObjectInstancier()->getInstance(UserCreationService::class);
+        $id_u = $userCreationService->create('badguy', 'test@bar.baz', 'foo', 'foo');
 
         $roleUtilisateur = $this->getObjectInstancier()->getInstance(RoleUtilisateur::class);
-        $roleUtilisateur->addRole($id_u, "admin", 2);
+        $roleUtilisateur->addRole($id_u, 'admin', 2);
         $this->getObjectInstancier()->getInstance(Authentification::class)->connexion('admin', $id_u);
 
         $documentController = $this->getObjectInstancier()->getInstance(DocumentControler::class);
@@ -216,21 +216,25 @@ class DocumentControlerTest extends ControlerTestCase
         try {
             ob_start(); //Very uggly...
             $documentController->indexAction();
-            $this->assertTrue(false);
+            static::assertTrue(false);
         } catch (Exception $e) {
             /* Nothing to do */
         }
         ob_end_clean();
-        $this->assertEquals(
+        static::assertEquals(
             "Vous n'avez pas les droits nécessaires pour accéder à cette page",
             $documentController->getLastError()->getLastError()
         );
     }
 
+    /**
+     * @throws UnrecoverableException
+     * @throws ConflictException
+     */
     public function testIndexWithTwoRoleOnTwoEntities(): void
     {
-        $utilisateurSQL = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class);
-        $id_u = $utilisateurSQL->create('badguy', 'foo', 'foo', 'test@bar.baz');
+        $userCreationService = $this->getObjectInstancier()->getInstance(UserCreationService::class);
+        $id_u = $userCreationService->create('badguy', 'test@bar.baz', 'foo', 'foo');
 
         $documentController = $this->getControlerInstance(DocumentControler::class);
         $roleUtilisateur = $this->getObjectInstancier()->getInstance(RoleUtilisateur::class);
@@ -241,21 +245,25 @@ class DocumentControlerTest extends ControlerTestCase
         ob_start();
         $documentController->indexAction();
         $result = ob_get_clean();
-        $this->assertStringContainsString('Bourg-en-Bresse', $result);
-        $this->assertStringContainsString('CCAS', $result);
+        static::assertStringContainsString('Bourg-en-Bresse', $result);
+        static::assertStringContainsString('CCAS', $result);
     }
 
-    public function testIndexWithTwoDifferentRoleOnTwoEntities()
+    /**
+     * @throws UnrecoverableException
+     * @throws ConflictException
+     */
+    public function testIndexWithTwoDifferentRoleOnTwoEntities(): void
     {
-        $utilisateurSQL = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class);
-        $id_u = $utilisateurSQL->create("badguy", "foo", "foo", "test@bar.baz");
+        $userCreationService = $this->getObjectInstancier()->getInstance(UserCreationService::class);
+        $id_u = $userCreationService->create('badguy', 'test@bar.baz', 'foo', 'foo');
 
         $roleSQL = $this->getObjectInstancier()->getInstance(RoleSQL::class);
         $roleSQL->addDroit('utilisateur', 'actes-generique:lecture');
 
         $roleUtilisateur = $this->getObjectInstancier()->getInstance(RoleUtilisateur::class);
-        $roleUtilisateur->addRole($id_u, "admin", 2);
-        $roleUtilisateur->addRole($id_u, "utilisateur", 1);
+        $roleUtilisateur->addRole($id_u, 'admin', 2);
+        $roleUtilisateur->addRole($id_u, 'utilisateur', 1);
         $this->getObjectInstancier()->getInstance(Authentification::class)->connexion('admin', $id_u);
 
         $documentController = $this->getControlerInstance(DocumentControler::class);
@@ -263,10 +271,9 @@ class DocumentControlerTest extends ControlerTestCase
 
         ob_start();
         $documentController->indexAction();
-        $result = ob_get_contents();
-        ob_end_clean();
-        $this->assertStringContainsString("Bourg-en-Bresse", $result);
-        $this->assertStringContainsString("CCAS", $result);
+        $result = ob_get_clean();
+        static::assertStringContainsString('Bourg-en-Bresse', $result);
+        static::assertStringContainsString('CCAS', $result);
     }
 
 

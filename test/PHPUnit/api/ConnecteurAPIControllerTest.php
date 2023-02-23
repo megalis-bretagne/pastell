@@ -1,6 +1,7 @@
 <?php
 
 use Pastell\Service\Connecteur\ConnecteurActionService;
+use Pastell\Service\Utilisateur\UserCreationService;
 
 class ConnecteurAPIControllerTest extends PastellTestCase
 {
@@ -204,47 +205,50 @@ class ConnecteurAPIControllerTest extends PastellTestCase
         ], $info['data']);
     }
 
-    public function testGetContentWithoutRight()
+    /**
+     * @throws UnrecoverableException
+     * @throws ConflictException
+     */
+    public function testGetContentWithoutRight(): void
     {
-        $utilisateurSQL = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class);
-        $id_u = $utilisateurSQL->create("badguy", "foo", "foo", "test@bar.baz");
+        $userCreationService = $this->getObjectInstancier()->getInstance(UserCreationService::class);
+        $id_u = $userCreationService->create('badguy', 'test@bar.baz', 'user', 'user');
 
         $roleUtilisateur = $this->getObjectInstancier()->getInstance(RoleUtilisateur::class);
-        $roleUtilisateur->addRole($id_u, "admin", 2);
+        $roleUtilisateur->addRole($id_u, 'admin', 2);
 
         $internalAPI = $this->getInternalAPI();
         $internalAPI->setUtilisateurId($id_u);
 
         try {
-            $internalAPI->patch("/entite/2/connecteur/12/content", ['champs1' => 'bar']);
-        } catch (Exception $e) {
-/* Nothing to do  */
+            $internalAPI->patch('/entite/2/connecteur/12/content', ['champs1' => 'bar']);
+        } catch (Exception) {
+            /* Nothing to do  */
         }
 
         $internalAPI->setUtilisateurId(1);
-        $result = $internalAPI->get("/entite/1/connecteur/12/");
-        $this->assertEmpty($result['data']);
+        $result = $internalAPI->get('/entite/1/connecteur/12/');
+        static::assertEmpty($result['data']);
     }
 
-    public function testActionWithoutRight()
+    /**
+     * @throws UnrecoverableException
+     * @throws ConflictException
+     */
+    public function testActionWithoutRight(): void
     {
-        $utilisateurSQL = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class);
-        $id_u = $utilisateurSQL->create(
-            "badguy",
-            'D@iw3DDf41Nl$DXzMJL!Uc2Yo',
-            'D@iw3DDf41Nl$DXzMJL!Uc2Yo',
-            "test@bar.baz"
-        );
+        $userCreationService = $this->getObjectInstancier()->getInstance(UserCreationService::class);
+        $id_u = $userCreationService->create('badguy', 'test@bar.baz', 'user', 'user');
 
         $roleUtilisateur = $this->getObjectInstancier()->getInstance(RoleUtilisateur::class);
-        $roleUtilisateur->addRole($id_u, "admin", 2);
+        $roleUtilisateur->addRole($id_u, 'admin', 2);
 
         $internalAPI = $this->getInternalAPI();
         $internalAPI->setUtilisateurId($id_u);
 
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("Le connecteur 12 n'appartient pas à l'entité 2");
-        $internalAPI->post("/entite/2/connecteur/12/action/ok");
+        $internalAPI->post('/entite/2/connecteur/12/action/ok');
     }
 
     public function testGetAll()
@@ -387,25 +391,28 @@ class ConnecteurAPIControllerTest extends PastellTestCase
         );
     }
 
-    public function testGetAllWithoutPermission()
+    /**
+     * @throws UnrecoverableException
+     * @throws ConflictException
+     */
+    public function testGetAllWithoutPermission(): void
     {
-        $userId = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class)
-            ->create('test', 'D@iw3DDf41Nl$DXzMJL!Uc2Yo', 'D@iw3DDf41Nl$DXzMJL!Uc2Yo', 'test@test.test');
+        $userCreationService = $this->getObjectInstancier()->getInstance(UserCreationService::class);
+        $userId = $userCreationService->create('test', 'test@bar.baz', 'user', 'user');
         $this->expectException(ForbiddenException::class);
         $this->expectExceptionMessage("Acces interdit id_e=0, droit=connecteur:lecture,id_u=$userId");
 
         $this->getInternalAPIAsUser($userId)->get('/connecteur/all');
     }
 
-    public function testGetFileFromAnotherEntite()
+    /**
+     * @throws UnrecoverableException
+     * @throws ConflictException
+     */
+    public function testGetFileFromAnotherEntite(): void
     {
-        $utilisateurSQL = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class);
-        $id_u = $utilisateurSQL->create(
-            'badguy',
-            'D@iw3DDf41Nl$DXzMJL!Uc2Yo',
-            'D@iw3DDf41Nl$DXzMJL!Uc2Yo',
-            'test@bar.baz'
-        );
+        $userCreationService = $this->getObjectInstancier()->getInstance(UserCreationService::class);
+        $id_u = $userCreationService->create('badguy', 'test@bar.baz', 'user', 'user');
 
         $roleUtilisateur = $this->getObjectInstancier()->getInstance(RoleUtilisateur::class);
         $roleUtilisateur->addRole($id_u, 'admin', 2);
@@ -432,10 +439,14 @@ class ConnecteurAPIControllerTest extends PastellTestCase
         );
     }
 
-    public function testGetExternalDataFromAnotherEntite()
+    /**
+     * @throws UnrecoverableException
+     * @throws ConflictException
+     */
+    public function testGetExternalDataFromAnotherEntite(): void
     {
-        $utilisateurSQL = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class);
-        $id_u = $utilisateurSQL->create('badguy', 'foo', 'foo', 'test@bar.baz');
+        $userCreationService = $this->getObjectInstancier()->getInstance(UserCreationService::class);
+        $id_u = $userCreationService->create('badguy', 'test@bar.baz', 'user', 'user');
         $roleUtilisateur = $this->getObjectInstancier()->getInstance(RoleUtilisateur::class);
         $roleUtilisateur->addRole($id_u, 'admin', 2);
 
@@ -444,18 +455,17 @@ class ConnecteurAPIControllerTest extends PastellTestCase
         $this->getInternalAPI()->get('/entite/2/connecteur/12/externalData/external_data');
     }
 
-    public function testPostWithReadPermission()
+    /**
+     * @throws UnrecoverableException
+     * @throws ConflictException
+     */
+    public function testPostWithReadPermission(): void
     {
         $roleSql = $this->getObjectInstancier()->getInstance(RoleSQL::class);
         $roleSql->edit('readonly', 'readonly');
         $roleSql->addDroit('readonly', 'entite:lecture');
-        $userId = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class)
-            ->create(
-                'readonly',
-                'D@iw3DDf41Nl$DXzMJL!Uc2Yo',
-                'D@iw3DDf41Nl$DXzMJL!Uc2Yo',
-                'readonly@example.com'
-            );
+        $userCreationService = $this->getObjectInstancier()->getInstance(UserCreationService::class);
+        $userId = $userCreationService->create('readonly', 'readonly@example.org', 'user', 'user');
         $this->getObjectInstancier()->getInstance(RoleUtilisateur::class)->addRole($userId, 'readonly', self::ID_E_COL);
 
         $this->expectException(ForbiddenException::class);
@@ -467,18 +477,17 @@ class ConnecteurAPIControllerTest extends PastellTestCase
         ]);
     }
 
-    public function testPostFileWithReadPermission()
+    /**
+     * @throws UnrecoverableException
+     * @throws ConflictException
+     */
+    public function testPostFileWithReadPermission(): void
     {
         $roleSql = $this->getObjectInstancier()->getInstance(RoleSQL::class);
         $roleSql->edit('readonly', 'readonly');
         $roleSql->addDroit('readonly', 'entite:lecture');
-        $userId = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class)
-            ->create(
-                'readonly',
-                'D@iw3DDf41Nl$DXzMJL!Uc2Yo',
-                'D@iw3DDf41Nl$DXzMJL!Uc2Yo',
-                'readonly@example.com'
-            );
+        $userCreationService = $this->getObjectInstancier()->getInstance(UserCreationService::class);
+        $userId = $userCreationService->create('readonly', 'readonly@example.org', 'user', 'user');
         $this->getObjectInstancier()->getInstance(RoleUtilisateur::class)->addRole($userId, 'readonly', self::ID_E_COL);
 
         $this->expectException(ForbiddenException::class);

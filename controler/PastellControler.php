@@ -542,12 +542,6 @@ class PastellControler extends Controler
         return $this->getInstance(FluxDefinitionFiles::class);
     }
 
-    /** @return UtilisateurCreator */
-    public function getUtilisateurCreator(): UtilisateurCreator
-    {
-        return $this->getInstance(UtilisateurCreator::class);
-    }
-
     public function getManifestFactory()
     {
         return $this->getInstance(ManifestFactory::class);

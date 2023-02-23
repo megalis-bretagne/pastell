@@ -22,12 +22,12 @@ class AdminControlerTest extends ControlerTestCase
 
     public function testCreateOrUpdateAdmin(): void
     {
-        $email = "foo@bar.com";
-        $login = "foo";
+        $email = 'foo@bar.com';
+        $login = 'foo';
         $this->adminControler->createOrUpdateAdmin($login, $email);
         $utilisateurSQL = $this->getObjectInstancier()->getInstance(UtilisateurSQL::class);
-        $id_u = $utilisateurSQL->getIdFromLogin("foo");
+        $id_u = $utilisateurSQL->getIdFromLogin('foo');
         self::assertEquals('foo', $utilisateurSQL->getInfo($id_u)['login']);
-        self::assertEquals("Création de l'utilisateur foo OK", $this->getLogRecords()[2]['message']);
+        self::assertMatchesRegularExpression("/Mot de passe de l'administrateur : (.*)/", $this->getLogRecords()[2]['message']);
     }
 }

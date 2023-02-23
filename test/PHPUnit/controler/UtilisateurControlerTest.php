@@ -1,5 +1,6 @@
 <?php
 
+use Pastell\Service\Utilisateur\UserCreationService;
 use Pastell\Service\Utilisateur\UserTokenService;
 
 class UtilisateurControlerTest extends ControlerTestCase
@@ -202,14 +203,20 @@ class UtilisateurControlerTest extends ControlerTestCase
         }
     }
 
+    /**
+     * @throws UnrecoverableException
+     * @throws NotFoundException
+     * @throws ConflictException
+     * @throws LastMessageException
+     */
     public function testAccesPageCreationFail(): void
     {
         $this->setGetInfo([
             'id_e' => 1,
         ]);
         $controller = $this->getUtilisateurControler();
-        $user = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class)
-            ->create('tester', 'tester', 'tester', 'tester@mail');
+        $user = $this->getObjectInstancier()->getInstance(UserCreationService::class)
+            ->create('tester', 'tester@example.org', 'tester', 'tester');
         $this->getObjectInstancier()->getInstance(RoleSQL::class)
             ->edit('entiteLectureEdition', 'Droit utilisateur');
         $this->getObjectInstancier()->getInstance(RoleSQL::class)

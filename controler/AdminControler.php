@@ -1,15 +1,10 @@
 <?php
 
 use Pastell\Service\TokenGenerator;
+use Pastell\Service\Utilisateur\UserCreationService;
 
 class AdminControler extends Controler
 {
-    /** @return UtilisateurCreator */
-    private function getUtilisateurCreator()
-    {
-        return $this->getInstance(UtilisateurCreator::class);
-    }
-
     /** @return RoleDroit */
     private function getRoleDroit()
     {
@@ -38,19 +33,23 @@ class AdminControler extends Controler
         return $this->getInstance(EntiteSQL::class);
     }
 
-    public function createAdmin($login, $password, $email)
+    public function createAdmin(string $login, string $password, string $email): bool
     {
         $this->fixDroit();
-        $id_u = $this->getUtilisateurCreator()->create($login, $password, $password, $email);
-        if (!$id_u) {
-            $this->setLastError($this->getUtilisateurCreator()->getLastError());
+        try {
+            $id_u = $this->getObjectInstancier()->getInstance(UserCreationService::class)->create(
+                $login,
+                $email,
+                'admin',
+                'admin',
+                0,
+                $password
+            );
+        } catch (Exception $e) {
+            $this->setLastError($e->getMessage());
             return false;
         }
-        //Ajout de l'affectation du nom (reprise du login) pour avoir accès à la fiche de l'utilisateur depuis l'IHM
-        $this->getUtilisateur()->setNomPrenom($id_u, $login, "");
-        $this->getUtilisateur()->validMailAuto($id_u);
-        $this->getUtilisateur()->setColBase($id_u, 0);
-        $this->getRoleUtilisateur()->addRole($id_u, "admin", 0);
+        $this->getRoleUtilisateur()->addRole($id_u, 'admin', 0);
         return true;
     }
 

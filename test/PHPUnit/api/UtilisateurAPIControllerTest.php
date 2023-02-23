@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\Utilisateur\UserCreationService;
+
 class UtilisateurAPIControllerTest extends PastellTestCase
 {
     public function testCreate()
@@ -206,17 +208,17 @@ class UtilisateurAPIControllerTest extends PastellTestCase
 
     public function testPostDeactivateFailDroit(): void
     {
-        $this->getObjectInstancier()->getInstance(UtilisateurCreator::class)
-            ->create('tester', 'tester', 'tester', 'tester@mail');
+        $user = $this->getObjectInstancier()->getInstance(UserCreationService::class)
+            ->create('tester', 'tester@example.org', 'tester', 'tester');
         $this->expectException(ForbiddenException::class);
         $this->expectExceptionMessage('Acces interdit id_e=0, droit=utilisateur:edition,id_u=3');
-        $this->getInternalAPIAsUser('3')->post('/utilisateur/1/deactivate');
+        $this->getInternalAPIAsUser($user)->post('/utilisateur/1/deactivate');
     }
 
     public function testCreateUserFail(): void
     {
-        $this->getObjectInstancier()->getInstance(UtilisateurCreator::class)
-            ->create('tester', 'tester', 'tester', 'tester@mail');
+        $user = $this->getObjectInstancier()->getInstance(UserCreationService::class)
+            ->create('tester', 'tester@example.org', 'tester', 'tester');
         $this->getObjectInstancier()->getInstance(RoleSQL::class)
             ->edit('utilisateurLectureEdition', 'Droit utilisateur');
         $this->getObjectInstancier()->getInstance(RoleSQL::class)
@@ -236,7 +238,7 @@ class UtilisateurAPIControllerTest extends PastellTestCase
 
         $this->expectException(ForbiddenException::class);
         $this->expectExceptionMessage('Acces interdit id_e=1, droit=utilisateur:creation,id_u=3');
-        $this->getInternalAPIAsUser(3)->post('/utilisateur', $userInfo);
+        $this->getInternalAPIAsUser($user)->post('/utilisateur', $userInfo);
     }
 
     public function testPasswordPreservedPatchWithNoPassword(): void
