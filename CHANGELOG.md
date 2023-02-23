@@ -62,6 +62,7 @@
 - Permettre `generate-sip` en état `erreur-envoie-sae` #1709
 - Les champs de type date ne sont plus initialisés par défaut à la date du jour #1692
 - Le type de dossier sur le connecteur Glaneur est sélectionnable via une liste déroulante #1698
+- Les fichiers de classe n'ont plus l'extension .class #1743
 
 ## Suppressions
 
