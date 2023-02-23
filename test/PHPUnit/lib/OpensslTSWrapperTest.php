@@ -1,11 +1,14 @@
 <?php
 
-class OpensslTSWrapperTest extends PHPUnit\Framework\TestCase
+declare(strict_types=1);
+
+use PHPUnit\Framework\TestCase;
+
+class OpensslTSWrapperTest extends TestCase
 {
-    /**
-     * @var OpensslTSWrapper
-     */
-    private $opensslTSWrapper;
+    private const TIMESTAMP_KEY_FILENAME = 'timestamp-key.pem';
+    private const TIMESTAMP_CERTIFICATE_FILENAME = 'timestamp-certificate.pem';
+    private OpensslTSWrapper $opensslTSWrapper;
 
     protected function setUp(): void
     {
@@ -13,51 +16,89 @@ class OpensslTSWrapperTest extends PHPUnit\Framework\TestCase
         $this->opensslTSWrapper = new OpensslTSWrapper(OPENSSL_PATH);
     }
 
-
-    public function testGetTimestampQuery()
+    public function testGetTimestampQuery(): void
     {
-        $timestamp_query = $this->opensslTSWrapper->getTimestampQuery("toto");
-        $this->assertNotEmpty($timestamp_query);
+        $timestamp_query = $this->opensslTSWrapper->getTimestampQuery('toto');
+        static::assertNotEmpty($timestamp_query);
     }
 
-    public function testGetTimestampQueryString()
+    public function testGetTimestampQueryString(): void
     {
         $this->opensslTSWrapper->setHashAlgorithm('sha256');
-        $timestamp_query = $this->opensslTSWrapper->getTimestampQuery("toto");
+        $timestamp_query = $this->opensslTSWrapper->getTimestampQuery('toto');
         $timestamp_query_string = $this->opensslTSWrapper->getTimestampQueryString($timestamp_query);
-        $this->assertMatchesRegularExpression("#Hash Algorithm: sha256#", $timestamp_query_string);
+        static::assertMatchesRegularExpression('#Hash Algorithm: sha256#', $timestamp_query_string);
     }
 
-    public function testCreateTimestampReply()
+    public function testCreateTimestampReply(): void
     {
-        $timestamp_query = $this->opensslTSWrapper->getTimestampQuery("toto");
-        chdir(__DIR__ . "/fixtures/");
-        $timestamp_reply = $this->opensslTSWrapper->createTimestampReply($timestamp_query, __DIR__ . "/fixtures/timestamp-cert.pem", __DIR__ . "/fixtures/timestamp-key.pem", "", __DIR__ . "/fixtures/openssl-tsa.cnf");
+        $timestamp_query = $this->opensslTSWrapper->getTimestampQuery('toto');
+        chdir(__DIR__ . '/fixtures/');
+        $timestamp_reply = $this->opensslTSWrapper->createTimestampReply(
+            $timestamp_query,
+            __DIR__ . '/fixtures/' . self::TIMESTAMP_CERTIFICATE_FILENAME,
+            __DIR__ . '/fixtures/' . self::TIMESTAMP_KEY_FILENAME,
+            "",
+            __DIR__ . '/fixtures/openssl-tsa.cnf'
+        );
         $timestamp_reply_string = $this->opensslTSWrapper->getTimestampReplyString($timestamp_reply);
-        $this->assertMatchesRegularExpression("#Policy OID: 1.2.3.4.1#", $timestamp_reply_string);
+        static::assertMatchesRegularExpression('#Policy OID: tsa_policy1#', $timestamp_reply_string);
     }
 
-    public function testVerify()
+    public function testVerify(): void
     {
         $this->opensslTSWrapper->setHashAlgorithm('sha256');
-        $timestamp_query = $this->opensslTSWrapper->getTimestampQuery("toto");
-        chdir(__DIR__ . "/fixtures/");
-        $timestamp_reply = $this->opensslTSWrapper->createTimestampReply($timestamp_query, __DIR__ . "/fixtures/timestamp-cert.pem", __DIR__ . "/fixtures/timestamp-key.pem", "", __DIR__ . "/fixtures/openssl-tsa.cnf");
-        $this->assertTrue($this->opensslTSWrapper->verify("toto", $timestamp_reply, __DIR__ . "/fixtures/autorite-cert.pem", __DIR__ . "/fixtures/timestamp-cert.pem", __DIR__ . "/fixtures/openssl-tsa.cnf"));
+        $timestamp_query = $this->opensslTSWrapper->getTimestampQuery('toto');
+        chdir(__DIR__ . '/fixtures/');
+        $timestamp_reply = $this->opensslTSWrapper->createTimestampReply(
+            $timestamp_query,
+            __DIR__ . '/fixtures/' . self::TIMESTAMP_CERTIFICATE_FILENAME,
+            __DIR__ . '/fixtures/' . self::TIMESTAMP_KEY_FILENAME,
+            '',
+            __DIR__ . '/fixtures/openssl-tsa.cnf'
+        );
+        static::assertTrue($this->opensslTSWrapper->verify(
+            'toto',
+            $timestamp_reply,
+            __DIR__ . '/fixtures/' . self::TIMESTAMP_CERTIFICATE_FILENAME,
+            __DIR__ . '/fixtures/' . self::TIMESTAMP_CERTIFICATE_FILENAME,
+            __DIR__ . '/fixtures/openssl-tsa.cnf'
+        ));
     }
 
-    public function testVerifyFailed()
+    public function testVerifyFailed(): void
     {
-        $timestamp_reply = "not a timestamp reply";
-        $this->assertFalse($this->opensslTSWrapper->verify("toto", $timestamp_reply, __DIR__ . "/fixtures/autorite-cert.pem", __DIR__ . "/fixtures/timestamp-cert.pem", __DIR__ . "/fixtures/openssl-tsa.cnf"));
-        $this->assertMatchesRegularExpression("#Verification: FAILED#", $this->opensslTSWrapper->getLastError());
+        $timestamp_reply = 'not a timestamp reply';
+        static::assertFalse($this->opensslTSWrapper->verify(
+            'toto',
+            $timestamp_reply,
+            __DIR__ . '/fixtures/' . self::TIMESTAMP_CERTIFICATE_FILENAME,
+            __DIR__ . '/fixtures/' . self::TIMESTAMP_CERTIFICATE_FILENAME,
+            __DIR__ . '/fixtures/openssl-tsa.cnf'
+        ));
+        static::assertMatchesRegularExpression(
+            '#Verification: FAILED#',
+            $this->opensslTSWrapper->getLastError()
+        );
     }
 
-    public function testAllSha1()
+    public function testAllSha1(): void
     {
-        $timestamp_query = $this->opensslTSWrapper->getTimestampQuery("toto");
-        chdir(__DIR__ . "/fixtures/");
-        $timestamp_reply = $this->opensslTSWrapper->createTimestampReply($timestamp_query, __DIR__ . "/fixtures/timestamp-cert.pem", __DIR__ . "/fixtures/timestamp-key.pem", "", __DIR__ . "/fixtures/openssl-tsa.cnf");
-        $this->assertTrue($this->opensslTSWrapper->verify("toto", $timestamp_reply, __DIR__ . "/fixtures/autorite-cert.pem", __DIR__ . "/fixtures/timestamp-cert.pem", __DIR__ . "/fixtures/openssl-tsa.cnf"));
+        $timestamp_query = $this->opensslTSWrapper->getTimestampQuery('toto');
+        chdir(__DIR__ . '/fixtures/');
+        $timestamp_reply = $this->opensslTSWrapper->createTimestampReply(
+            $timestamp_query,
+            __DIR__ . '/fixtures/' . self::TIMESTAMP_CERTIFICATE_FILENAME,
+            __DIR__ . '/fixtures/' . self::TIMESTAMP_KEY_FILENAME,
+            '',
+            __DIR__ . '/fixtures/openssl-tsa.cnf'
+        );
+        static::assertTrue($this->opensslTSWrapper->verify(
+            'toto',
+            $timestamp_reply,
+            __DIR__ . '/fixtures/' . self::TIMESTAMP_CERTIFICATE_FILENAME,
+            __DIR__ . '/fixtures/' . self::TIMESTAMP_CERTIFICATE_FILENAME,
+            __DIR__ . '/fixtures/openssl-tsa.cnf'
+        ));
     }
 }

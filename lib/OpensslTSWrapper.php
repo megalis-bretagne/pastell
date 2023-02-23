@@ -76,16 +76,18 @@ class OpensslTSWrapper
                     " -in $timestampReplyFilePath " .
                     " -CAfile $CAFilePath" .
                     " -untrusted $certFilePath " .
-                    " -config " . $configFile .
-                    " > /dev/null ; echo $?";
+                    " -config $configFile";
 
-        $result =  trim($this->execute($command));
+        $result =  trim($this->execute($command . ' > /dev/null ; echo $?'));
+
+        if ($result !== '0') {
+            $this->lastError = trim($this->execute($command));
+        }
 
         unlink($dataFilePath);
         unlink($timestampReplyFilePath);
 
-        $this->lastError = $result;
-        return $result === "0";
+        return $result === '0';
     }
 
     public function createTimestampReply($timestampRequest, $signerCertificate, $signerKey, $signerKeyPassword, $configFile)
