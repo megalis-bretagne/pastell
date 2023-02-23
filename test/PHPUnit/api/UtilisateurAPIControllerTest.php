@@ -47,12 +47,12 @@ class UtilisateurAPIControllerTest extends PastellTestCase
         );
     }
 
-    public function testCreateWithoutLogin()
+    public function testCreateWithoutLogin(): void
     {
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage("Il faut saisir un login");
+        $this->expectException(UnrecoverableException::class);
+        $this->expectExceptionMessage('Le login est obligatoire');
         $this->getInternalAPI()->post(
-            "utilisateur",
+            '/utilisateur',
             [
                 'email' => 'foo@bar.baz',
                 'prenom' => 'foo',
