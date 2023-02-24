@@ -51,7 +51,7 @@ class ActesAddTypePieceFichier extends BaseCommand
     protected function configure()
     {
         // Fix Modification de l'affichage de la typologie en version [3.0.0] - 2019-10-14
-        // Cf /connecteur-type/TdT/TdtChoiceTypologieActes.class.php commit 17/07/2019
+        // Cf /connecteur-type/TdT/TdtChoiceTypologieActes.php commit 17/07/2019
         $this
             ->setName('app:module:actes-add-type-piece-fichier')
             ->setDescription('Build type_piece_fichier with type_acte and type_pj for source module actes')

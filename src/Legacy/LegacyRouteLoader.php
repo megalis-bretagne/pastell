@@ -17,10 +17,10 @@ final class LegacyRouteLoader extends Loader
     {
         $collection = new RouteCollection();
         $finder = new Finder();
-        $finder->files()->name('*Controler.class.php')->notName('PastellControler.class.php');
+        $finder->files()->name('*Controler.php')->notName('PastellControler.php');
         /** @var SplFileInfo $legacyScriptFile */
         foreach ($finder->in(__DIR__ . '/../../controler') as $legacyScriptFile) {
-            $controllerClassName = \str_replace('.class.php', '', $legacyScriptFile->getFilename());
+            $controllerClassName = \str_replace('.php', '', $legacyScriptFile->getFilename());
             $reflectionClass = new ReflectionClass($controllerClassName);
             $methods = $reflectionClass->getMethods(\ReflectionMethod::IS_PUBLIC);
             foreach ($methods as $method) {

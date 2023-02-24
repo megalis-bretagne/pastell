@@ -62,6 +62,7 @@
 - Permettre `generate-sip` en état `erreur-envoie-sae` #1709
 - Les champs de type date ne sont plus initialisés par défaut à la date du jour #1692
 - Le type de dossier sur le connecteur Glaneur est sélectionnable via une liste déroulante #1698
+- Les fichiers de classe n'ont plus l'extension .class #1743
 
 ## Suppressions
 
@@ -126,7 +127,7 @@
 - Suppression du service versant dans le connecteur asalae #1504
 - Suppression du certificat utilisateur sur le connecteur i-Parapheur ; Suppression du connecteur global i-Parapheur #1476
 - Suppression de AIDE_URL remplacé par le connecteur help-url
-- Suppression de Visionneuse.class.php, les visionneuses doivent désormais implémenter l'interface Viewer
+- Suppression de Visionneuse.php, les visionneuses doivent désormais implémenter l'interface Viewer
   - XMLVisionneuse devient Pastell\Viewer\XmlViewer
   - TypologieActesVisionneuse devient Pastell\Viewer\TypologyActesViewer
   - RawVisionneuse devient Pastell\Viewer\RawViewer
@@ -1019,7 +1020,7 @@ Le script script/bug/set-database-encoding-to-utf8.php permet de palier au probl
 - Connecteur Mail sécurisé : Gérer la substitution des mots clés référençant des données dans un fichier json lors de la création des mail (body & subject) #454
 - Flux PDF générique : ajout d'un fichier de méta-données pour l'envoi au mail sécurisé
 - Script permettant de récupérer une preuve au format texte d'une entrée du `journal_historique` #476
-- Ajout de l'action commune ./action/CommonExtractionAction.class.php et de la librairie ExtractZipStructure.class.php #483
+- Ajout de l'action commune ./action/CommonExtractionAction.php et de la librairie ExtractZipStructure.php #483
 
 # [2.0.8] - 2018-08-21
 

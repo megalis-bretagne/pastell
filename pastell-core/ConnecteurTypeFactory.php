@@ -68,8 +68,8 @@ class ConnecteurTypeFactory
         $result = [];
         $connecteur_type_list = $this->getExtensions()->getAllConnecteurType();
         foreach ($connecteur_type_list as $connecteur_type_name => $connecteur_type_path) {
-            foreach (glob("$connecteur_type_path/*.class.php") as $action_executor_path) {
-                preg_match("#/([^/]+).class.php$#", $action_executor_path, $matches);
+            foreach (glob("$connecteur_type_path/*.php") as $action_executor_path) {
+                preg_match("#/([^/]+).php$#", $action_executor_path, $matches);
                 $result[] = $matches[1];
             }
         }
