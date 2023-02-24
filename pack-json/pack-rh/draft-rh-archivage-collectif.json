@@ -45,12 +45,12 @@
         "titre": false,
         "requis": "on",
         "element_id": "siret_collectivite",
-        "preg_match": "",
-        "commentaire": "",
+        "preg_match": "#^[0-9]{14}$#",
+        "commentaire": "Numéro SIREN + numéro NIC (14 chiffres)",
         "content_type": "",
         "select_value": "",
         "champs_affiches": "",
-        "preg_match_error": "",
+        "preg_match_error": "Doit contenir 14 chiffres",
         "champs_recherche_avancee": ""
       },
       {
