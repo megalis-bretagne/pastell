@@ -83,7 +83,9 @@ formulaire:
             type: text
             requis: true
             multiple: false
-            commentaire: ''
+            commentaire: 'Numéro SIREN + numéro NIC (14 chiffres)'
+            preg_match: '#^[0-9]{14}$#'
+            preg_match_error: 'Doit contenir 14 chiffres'
         nom_collectivite:
             name: 'Nom de la collectivité territoriale'
             type: text
