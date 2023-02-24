@@ -54,6 +54,14 @@ define("LIST_PACK", [
   "pack_test" => ${PACK_TEST:-false},
   "pack_libersign" => ${PACK_LIBERSIGN:-false},
 ]);
+
+define("NB_WORKERS", "${NB_WORKERS:-5}");
+define("JOURNAL_MAX_AGE_IN_MONTHS", "${JOURNAL_MAX_AGE_IN_MONTHS:-2}");
+define("UNLOK_JOB_ERROR_AT_STARTUP", "${UNLOK_JOB_ERROR_AT_STARTUP:-false}");
+define("NB_JOB_PAR_VERROU", "${NB_JOB_PAR_VERROU:-1}");
+define("HTTP_PROXY_URL", "${HTTP_PROXY_URL:-}");
+define("NO_PROXY", "${NO_PROXY:-localhost,127.0.0.1,::1,seda-generator}");
+
 EOF
 
 env | grep '^TOGGLE_' | sed "s/^TOGGLE_\([^=]*\)=\(.*\)/\$feature_toggle[Pastell\\\Service\\\FeatureToggle\\\\\1::class] = \2;/g"
