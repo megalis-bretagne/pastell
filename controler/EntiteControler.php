@@ -623,12 +623,12 @@ class EntiteControler extends PastellControler
         $recuperateur = $this->getGetInfo();
         $id_e = $recuperateur->getInt('id_e', 0);
 
-        $this->verifDroit(0, "system:edition");
+        $this->verifDroit($id_e, 'system:edition');
 
         $this->setViewParameter('id_e', $id_e);
         $this->setViewParameter('template_milieu', 'EntiteExportConfig');
         $this->setViewParameter('menu_gauche_select', 'Entite/exportConfig');
-        $this->setPageTitle("Export de la configuration");
+        $this->setPageTitle('Export de la configuration');
         $this->renderDefault();
     }
 
@@ -642,12 +642,12 @@ class EntiteControler extends PastellControler
         $recuperateur = $this->getGetInfo();
         $id_e = $recuperateur->getInt('id_e', 0);
 
-        $this->verifDroit(0, "system:edition");
+        $this->verifDroit($id_e, 'system:edition');
 
         $this->setViewParameter('id_e', $id_e);
-        $this->setViewParameter('template_milieu', "EntiteImportConfig");
-        $this->setViewParameter('menu_gauche_select', "Entite/importConfig");
-        $this->setPageTitle("Import de la configuration");
+        $this->setViewParameter('template_milieu', 'EntiteImportConfig');
+        $this->setViewParameter('menu_gauche_select', 'Entite/importConfig');
+        $this->setPageTitle('Import de la configuration');
         $this->renderDefault();
     }
 
@@ -660,7 +660,7 @@ class EntiteControler extends PastellControler
     {
         $recuperateur = $this->getPostInfo();
         $id_e = $recuperateur->getInt('id_e', 0);
-        $this->verifDroit(0, "system:edition");
+        $this->verifDroit($id_e, 'system:edition');
         $options = [];
         foreach (ExportConfigService::getOptions() as $id => $label) {
             $options[$id] = $recuperateur->get($id);
@@ -679,8 +679,8 @@ class EntiteControler extends PastellControler
         $this->setViewParameter('id_e', $id_e);
         $this->setViewParameter('password', $password);
         $this->setViewParameter('exportInfo', $exportInfo);
-        $this->setViewParameter('template_milieu', "EntiteExportConfigVerif");
-        $this->setViewParameter('menu_gauche_select', "Entite/exportConfig");
+        $this->setViewParameter('template_milieu', 'EntiteExportConfigVerif');
+        $this->setViewParameter('menu_gauche_select', 'Entite/exportConfig');
         $this->setViewParameter('options', $options);
         $this->setPageTitle("Vérification de l'export de la configuration");
         $this->renderDefault();
@@ -695,13 +695,13 @@ class EntiteControler extends PastellControler
     {
         $recuperateur = $this->getPostInfo();
         $id_e = $recuperateur->getInt('id_e', 0);
-        $this->verifDroit(0, "system:edition");
+        $this->verifDroit($id_e, 'system:edition');
 
         $options = [];
-        $link = "/Entite/exportConfigVerif?";
+        $link = '/Entite/exportConfigVerif?';
         foreach (ExportConfigService::getOptions() as $id => $label) {
             $options[$id] = $recuperateur->get($id);
-            $link .= sprintf("%s=%s&", $id, $options[$id]);
+            $link .= sprintf('%s=%s&', $id, $options[$id]);
         }
 
         $password = $this->getObjectInstancier()
@@ -730,7 +730,9 @@ class EntiteControler extends PastellControler
      */
     public function doImportConfigAction(): void
     {
-        $this->verifDroit(0, "system:edition");
+        $recuperateur = $this->getPostInfo();
+        $id_e = $recuperateur->getInt('id_e', 0);
+        $this->verifDroit($id_e, 'system:edition');
         $fileUploader = new FileUploader();
         $file_content = $fileUploader->getFileContent('pser');
         $password = $this->getPostInfo()->get('password');
@@ -741,7 +743,7 @@ class EntiteControler extends PastellControler
         $importConfigService = $this->getObjectInstancier()->getInstance(ImportConfigService::class);
         $importConfigService->import($message, $id_e);
         $lastErrors = $importConfigService->getLastErrors();
-        $this->setLastMessage("Les données ont été importées<br/>" . implode('<br/>', $lastErrors));
+        $this->setLastMessage('Les données ont été importées<br/>' . implode('<br/>', $lastErrors));
         $this->redirect("/Entite/detail?id_e=$id_e");
     }
 }
