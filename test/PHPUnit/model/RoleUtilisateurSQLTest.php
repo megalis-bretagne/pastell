@@ -1,13 +1,11 @@
 <?php
 
 use Pastell\Service\Entite\EntityCreationService;
+use Pastell\Service\Utilisateur\UserCreationService;
 
 class RoleUtilisateurSQLTest extends PastellTestCase
 {
-    /**
-     * @var RoleUtilisateur
-     */
-    private $roleUtilisateurSQL;
+    private RoleUtilisateur $roleUtilisateurSQL;
 
     protected function setUp(): void
     {
@@ -161,14 +159,13 @@ class RoleUtilisateurSQLTest extends PastellTestCase
         $id_e_2 = $entityCreationService->create('Entité 2', '000000000');
         $id_e_3 = $entityCreationService->create('Entité 3', '000000000', EntiteSQL::TYPE_COLLECTIVITE, $id_e_2);
 
-        $utilisateurCreator = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class);
-        $id_u = $utilisateurCreator->create('test_get_arbre_fille', 'aa', 'aa', 'aa@aa.fr');
+        $userCreationService = $this->getObjectInstancier()->getInstance(UserCreationService::class);
+        $id_u = $userCreationService->create('test_get_arbre_fille', 'aa@aa.fr', 'user', 'user');
 
         $this->roleUtilisateurSQL->addRole($id_u, 'admin', $id_e_1);
         $this->roleUtilisateurSQL->addRole($id_u, 'admin', $id_e_3);
 
         $arbre_fille = $this->roleUtilisateurSQL->getArbreFille($id_u, 'entite:lecture');
-        //var_export($arbre_fille);
 
         static::assertSame(
             [
@@ -199,8 +196,8 @@ class RoleUtilisateurSQLTest extends PastellTestCase
         $id_e_2 = $entityCreationService->create('Entité 2', '000000000');
         $id_e_3 = $entityCreationService->create('Entité 3', '000000000', EntiteSQL::TYPE_COLLECTIVITE, $id_e_2);
 
-        $utilisateurCreator = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class);
-        $id_u = $utilisateurCreator->create('test_get_arbre_fille', 'aa', 'aa', 'aa@aa.fr');
+        $userCreationService = $this->getObjectInstancier()->getInstance(UserCreationService::class);
+        $id_u = $userCreationService->create('test_get_arbre_fille', 'aa@aa.fr', 'user', 'user');
 
         $this->roleUtilisateurSQL->addRole($id_u, 'admin', 0);
 
@@ -252,13 +249,8 @@ class RoleUtilisateurSQLTest extends PastellTestCase
         $id_e_2 = $entityCreationService->create('Entité 2', '000000000');
         $id_e_3 = $entityCreationService->create('Entité 3', '000000000', EntiteSQL::TYPE_COLLECTIVITE, $id_e_2);
 
-        $utilisateurCreator = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class);
-        $id_u = $utilisateurCreator->create(
-            'test',
-            'D@iw3DDf41Nl$DXzMJL!Uc2Yo',
-            'D@iw3DDf41Nl$DXzMJL!Uc2Yo',
-            'aa@aa.fr'
-        );
+        $userCreationService = $this->getObjectInstancier()->getInstance(UserCreationService::class);
+        $id_u = $userCreationService->create('test', 'aa@aa.fr', 'user', 'user');
 
         $this->roleUtilisateurSQL->addRole($id_u, 'admin', $id_e_2);
         $this->roleUtilisateurSQL->addRole($id_u, 'admin', $id_e_3);

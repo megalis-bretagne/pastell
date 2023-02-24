@@ -2,7 +2,9 @@
 
 use Pastell\Mailer\Mailer;
 use Pastell\Service\PasswordEntropy;
+use Pastell\Service\Utilisateur\UserCreationService;
 use Pastell\Service\Utilisateur\UserTokenService;
+use Pastell\Service\Utilisateur\UserUpdateService;
 use Pastell\Service\Utilisateur\UtilisateurDeletionService;
 use Pastell\Utilities\Certificate;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -430,19 +432,40 @@ class UtilisateurControler extends PastellControler
      * @throws LastErrorException
      * @throws LastMessageException
      */
-    public function doEditionAction()
+    public function doEditionAction(): void
     {
         $recuperateur = $this->getPostInfo();
 
         $id_e = $recuperateur->getInt('id_e');
-        $id_u = $recuperateur->get('id_u');
+        $id_u = $recuperateur->getInt('id_u');
+        $login = $recuperateur->get('login');
+        $email = $recuperateur->get('email');
+        $firstname = $recuperateur->get('prenom');
+        $lastname = $recuperateur->get('nom');
+        $certficate = $this->getInstance(FileUploader::class)->getFileContent('certificat') ?: null;
 
         try {
             if ($id_u) {
-                $this->apiPatch("/utilisateur/$id_u");
+                $this->getInstance(UserUpdateService::class)->update(
+                    $id_u,
+                    $login,
+                    $email,
+                    $firstname,
+                    $lastname,
+                    $id_e,
+                    null,
+                    $certficate
+                );
             } else {
-                $result = $this->apiPost("/utilisateur");
-                $id_u = $result['id_u'];
+                $id_u = $this->getInstance(UserCreationService::class)->create(
+                    $login,
+                    $email,
+                    $firstname,
+                    $lastname,
+                    $id_e,
+                    null,
+                    $certficate
+                );
             }
         } catch (Exception $e) {
             $this->redirectEdition($id_e, $id_u, $e->getMessage());

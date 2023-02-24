@@ -1,5 +1,6 @@
 <?php
 
+use Pastell\Service\Utilisateur\UserCreationService;
 use Pastell\Service\Utilisateur\UserTokenService;
 
 class UtilisateurControlerTest extends ControlerTestCase
@@ -15,26 +16,28 @@ class UtilisateurControlerTest extends ControlerTestCase
     /**
      * @throws LastErrorException
      */
-    public function testDoEditionAction()
+    public function testDoEditionAction(): void
     {
+        $password = 'D@iw3DDf41Nl$DXzMJL!Uc2Yo';
         $this->setPostInfo([
             'login' => 'foo',
-            'password' => 'D@iw3DDf41Nl$DXzMJL!Uc2Yo',
-            'password2' => 'D@iw3DDf41Nl$DXzMJL!Uc2Yo',
+            'password' => $password,
+            'password2' => $password,
             'nom' => 'baz',
             'prenom' => 'buz',
-            'email' => 'boz@byz.fr'
+            'email' => 'boz@byz.fr',
         ]);
 
         try {
             $this->getUtilisateurControler()->doEditionAction();
-        } catch (LastMessageException $e) {
+        } catch (LastMessageException) {
             /** Nothing to do */
         }
 
         $utilisateurSQL = $this->getObjectInstancier()->getInstance(UtilisateurSQL::class);
-        $this->assertEquals('boz@byz.fr', $utilisateurSQL->getInfo(3)['email']);
-        $this->assertTrue($utilisateurSQL->verifPassword(3, 'D@iw3DDf41Nl$DXzMJL!Uc2Yo'));
+        static::assertEquals('boz@byz.fr', $utilisateurSQL->getInfo(3)['email']);
+        // Password cannot be set with web controller
+        static::assertFalse($utilisateurSQL->verifPassword(3, $password));
     }
 
     /**
@@ -200,14 +203,20 @@ class UtilisateurControlerTest extends ControlerTestCase
         }
     }
 
+    /**
+     * @throws UnrecoverableException
+     * @throws NotFoundException
+     * @throws ConflictException
+     * @throws LastMessageException
+     */
     public function testAccesPageCreationFail(): void
     {
         $this->setGetInfo([
             'id_e' => 1,
         ]);
         $controller = $this->getUtilisateurControler();
-        $user = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class)
-            ->create('tester', 'tester', 'tester', 'tester@mail');
+        $user = $this->getObjectInstancier()->getInstance(UserCreationService::class)
+            ->create('tester', 'tester@example.org', 'tester', 'tester');
         $this->getObjectInstancier()->getInstance(RoleSQL::class)
             ->edit('entiteLectureEdition', 'Droit utilisateur');
         $this->getObjectInstancier()->getInstance(RoleSQL::class)

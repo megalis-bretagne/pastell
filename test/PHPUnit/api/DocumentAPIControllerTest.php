@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\Utilisateur\UserCreationService;
+
 class DocumentAPIControllerTest extends PastellTestCase
 {
     private function createTestDocument()
@@ -332,7 +334,11 @@ class DocumentAPIControllerTest extends PastellTestCase
         $this->getInternalAPI()->get("entite/2/document/$id_d");
     }
 
-    public function testPatchExternalDataWithoutEditPermission()
+    /**
+     * @throws UnrecoverableException
+     * @throws ConflictException
+     */
+    public function testPatchExternalDataWithoutEditPermission(): void
     {
         $this->expectException(ForbiddenException::class);
         $this->expectExceptionMessage('Acces interdit id_e=1, droit=test:edition,id_u=3');
@@ -340,12 +346,12 @@ class DocumentAPIControllerTest extends PastellTestCase
         $roleSql->edit('readonly', 'readonly');
         $roleSql->addDroit('readonly', 'entite:lecture');
         $roleSql->addDroit('readonly', 'test:lecture');
-        $userId = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class)
+        $userId = $this->getObjectInstancier()->getInstance(UserCreationService::class)
             ->create(
                 'readonly',
-                'D@iw3DDf41Nl$DXzMJL!Uc2Yo',
-                'D@iw3DDf41Nl$DXzMJL!Uc2Yo',
-                'readonly@example.com'
+                'readonly@example.org',
+                'readonly',
+                'readonly'
             );
         $this->getObjectInstancier()->getInstance(RoleUtilisateur::class)->addRole($userId, 'readonly', self::ID_E_COL);
 

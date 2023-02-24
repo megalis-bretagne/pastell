@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Service\Utilisateur\UserCreationService;
+
 class EntiteAPIControllerTest extends PastellTestCase
 {
     public function testList()
@@ -124,8 +126,8 @@ class EntiteAPIControllerTest extends PastellTestCase
 
     public function testDeActivateFailDroit(): void
     {
-        $this->getObjectInstancier()->getInstance(UtilisateurCreator::class)
-            ->create('tester', 'tester', 'tester', 'tester@mail');
+        $user = $this->getObjectInstancier()->getInstance(UserCreationService::class)
+            ->create('tester', 'tester@example.org', 'tester', 'tester');
         $this->getObjectInstancier()->getInstance(RoleSQL::class)
             ->edit('entite:lecture', 'entiteLectureEdition');
         $this->getObjectInstancier()->getInstance(RoleSQL::class)
@@ -134,6 +136,6 @@ class EntiteAPIControllerTest extends PastellTestCase
             ->addRole('3', 'entiteLectureEdition', '1');
         $this->expectException(ForbiddenException::class);
         $this->expectExceptionMessage('Acces interdit id_e=1, droit=entite:edition,id_u=3');
-        $this->getInternalAPIAsUser('3')->post('/entite/1/deactivate');
+        $this->getInternalAPIAsUser($user)->post('/entite/1/deactivate');
     }
 }

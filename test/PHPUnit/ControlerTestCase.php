@@ -1,5 +1,6 @@
 <?php
 
+use Pastell\Service\Utilisateur\UserCreationService;
 use Twig\Environment;
 
 class ControlerTestCase extends PastellTestCase
@@ -37,24 +38,23 @@ class ControlerTestCase extends PastellTestCase
     }
 
     /**
-     * @param array $permission
-     * @param int $id_e
-     * @return int
+     * @throws UnrecoverableException
+     * @throws ConflictException
      */
     public function authenticateNewUserWithPermission(array $permission, int $id_e = self::ID_E_COL): int
     {
         $roleSql = $this->getObjectInstancier()->getInstance(RoleSQL::class);
-        $roleSql->updateDroit("my_role", $permission);
-        $id_u = $this->getObjectInstancier()->getInstance(UtilisateurCreator::class)
-            ->create(
-                'my_login',
-                'D@iw3DDf41Nl$DXzMJL!Uc2Yo',
-                'D@iw3DDf41Nl$DXzMJL!Uc2Yo',
-                'foo@example.com'
-            );
+        $roleSql->updateDroit('my_role', $permission);
+        $id_u = $this->getObjectInstancier()->getInstance(UserCreationService::class)->create(
+            'my_login',
+            'foo@example.com',
+            'user',
+            'user',
+            $id_e,
+        );
 
         $roleUtilisateur = $this->getObjectInstancier()->getInstance(RoleUtilisateur::class);
-        $roleUtilisateur->addRole($id_u, "my_role", $id_e);
+        $roleUtilisateur->addRole($id_u, 'my_role', $id_e);
 
         $this->getObjectInstancier()->getInstance(Authentification::class)->connexion('my_login', $id_u);
 

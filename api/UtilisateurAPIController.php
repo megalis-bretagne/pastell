@@ -2,46 +2,19 @@
 
 use Pastell\Service\PasswordEntropy;
 use Pastell\Service\TokenGenerator;
+use Pastell\Service\Utilisateur\UserCreationService;
+use Pastell\Service\Utilisateur\UserUpdateService;
 use Pastell\Service\Utilisateur\UtilisateurDeletionService;
-use Pastell\Utilities\Certificate;
 
 class UtilisateurAPIController extends BaseAPIController
 {
-    private $utilisateur;
-
-    private $utilisateurListe;
-
-
-    private $utilisateurCreator;
-
-    private $roleUtilisateur;
-
-    private $journal;
-
-    private $utilisateurDeletionService;
-
-    private PasswordEntropy $passwordEntropy;
-
-    private TokenGenerator $tokenGenerator;
-
     public function __construct(
-        UtilisateurSQL $utilisateur,
-        UtilisateurListe $utilisateurListe,
-        UtilisateurCreator $utilisateurCreator,
-        RoleUtilisateur $roleUtilisateur,
-        Journal $journal,
-        UtilisateurDeletionService $utilisateurDeletionService,
-        PasswordEntropy $passwordEntropy,
-        TokenGenerator $tokenGenerator,
+        private readonly UtilisateurSQL $utilisateur,
+        private readonly UtilisateurListe $utilisateurListe,
+        private readonly UserCreationService $userCreationService,
+        private readonly UserUpdateService $userUpdateService,
+        private readonly UtilisateurDeletionService $utilisateurDeletionService,
     ) {
-        $this->utilisateur = $utilisateur;
-        $this->utilisateurListe = $utilisateurListe;
-        $this->utilisateurCreator = $utilisateurCreator;
-        $this->roleUtilisateur = $roleUtilisateur;
-        $this->journal = $journal;
-        $this->utilisateurDeletionService = $utilisateurDeletionService;
-        $this->passwordEntropy = $passwordEntropy;
-        $this->tokenGenerator = $tokenGenerator;
     }
 
     /**
@@ -129,12 +102,12 @@ class UtilisateurAPIController extends BaseAPIController
 
 
     /**
-     * @return array
-     * @throws ConflictException
-     * @throws Exception
      * @throws ForbiddenException
+     * @throws ConflictException
+     * @throws UnrecoverableException
+     * @throws NotFoundException
      */
-    public function post()
+    public function post(): array
     {
         $id_e = $this->getFromRequest('id_e', 0);
         $id_u = $this->getFromQueryArgs(0);
@@ -150,9 +123,9 @@ class UtilisateurAPIController extends BaseAPIController
             } elseif ($action === 'deactivate') {
                 if ($id_u == $this->getUtilisateurId()) {
                     throw new UnrecoverableException('Vous ne pouvez pas désactiver votre compte utilisateur.');
-                } else {
-                    $this->utilisateur->disable($id_u);
                 }
+
+                $this->utilisateur->disable($id_u);
             } else {
                 throw new UnrecoverableException('Cette action n\'existe pas.');
             }
@@ -160,127 +133,26 @@ class UtilisateurAPIController extends BaseAPIController
         }
 
         $this->checkDroit($id_e, 'utilisateur:creation');
-        $id_u = $this->editionUtilisateur(
-            $id_e,
-            null,
-            $this->getFromRequest('email'),
+
+        $id_u = $this->userCreationService->create(
             $this->getFromRequest('login'),
-            $this->getFromRequest('password') ?: $this->tokenGenerator->generate(),
-            $this->getFromRequest('nom'),
+            $this->getFromRequest('email'),
             $this->getFromRequest('prenom'),
-            $this->getFileUploader()->getFileContent('certificat')
+            $this->getFromRequest('nom'),
+            (int)$id_e,
+            $this->getFromRequest('password', null),
+            $this->getFileUploader()->getFileContent('certificat') ?: null,
         );
         return $this->getDetailInfoForAPI($id_u);
     }
 
     /**
-     * @param $id_e
-     * @param $id_u
-     * @param $email
-     * @param $login
-     * @param $password
-     * @param $nom
-     * @param $prenom
-     * @param $certificat_content
-     * @return array|bool|mixed
-     * @throws ConflictException
-     * @throws Exception
-     */
-    private function editionUtilisateur($id_e, $id_u, $email, $login, $password, $nom, $prenom, $certificat_content)
-    {
-        if (! $nom) {
-            throw new Exception("Le nom est obligatoire");
-        }
-
-        if (! $prenom) {
-            throw new Exception("Le prénom est obligatoire");
-        }
-
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            throw new Exception("Votre adresse email ne semble pas valide");
-        }
-
-
-        if ($certificat_content) {
-            $certificat = new Certificate($certificat_content);
-            if (! $certificat->isValid()) {
-                throw new Exception("Le certificat ne semble pas être valide");
-            }
-        }
-        $other_id_u = $this->utilisateur->getIdFromLogin($login);
-
-        if ($id_u && $other_id_u && ($other_id_u != $id_u)) {
-            throw new ConflictException("Un utilisateur avec le même login existe déjà.");
-        }
-
-        $is_creation = false;
-
-        if (! $id_u) {
-            $is_creation = true;
-            $id_u = $this->utilisateurCreator->create($login, $password, $password, $email);
-            if (! $id_u) {
-                throw new Exception($this->utilisateurCreator->getLastError());
-            }
-        }
-        if ($password) {
-            if (! $this->passwordEntropy->isPasswordStrongEnough($password)) {
-                throw new Exception(
-                    "Le mot mot de passe n'est pas assez fort. " .
-                    "(trop court ou pas assez de caractères différents)"
-                );
-            }
-            $this->utilisateur->setPassword($id_u, $password);
-        }
-        $oldInfo = $this->utilisateur->getInfo($id_u);
-
-        if (! empty($certificat)) {
-            $this->utilisateur->setCertificat($id_u, $certificat);
-        }
-
-        $this->utilisateur->validMailAuto($id_u);
-        $this->utilisateur->setNomPrenom($id_u, $nom, $prenom);
-        $this->utilisateur->setEmail($id_u, $email);
-        $this->utilisateur->setLogin($id_u, $login);
-        $this->utilisateur->setColBase($id_u, $id_e);
-
-        $allRole = $this->roleUtilisateur->getRole($id_u);
-        if (! $allRole) {
-            $this->roleUtilisateur->addRole($id_u, RoleUtilisateur::AUCUN_DROIT, $id_e);
-        }
-
-        $newInfo = $this->utilisateur->getInfo($id_u);
-
-        $infoToRetrieve = ['email','login','nom','prenom'];
-        $infoChanged = [];
-        foreach ($infoToRetrieve as $key) {
-            if ($oldInfo[$key] != $newInfo[$key]) {
-                $infoChanged[] = "$key : {$oldInfo[$key]} -> {$newInfo[$key]}";
-            }
-        }
-        $infoChanged  = implode("; ", $infoChanged);
-
-        $mode  = $is_creation ? "Création" : "Modification";
-        $action = $is_creation ? "Créé" : "Modifié";
-
-        $this->journal->add(
-            Journal::MODIFICATION_UTILISATEUR,
-            $id_e,
-            0,
-            $action,
-            "$mode de l'utilisateur $login ($id_u) : $infoChanged"
-        );
-
-        return $id_u;
-    }
-
-    /**
-     * @return array
-     * @throws ConflictException
-     * @throws Exception
      * @throws ForbiddenException
+     * @throws ConflictException
+     * @throws UnrecoverableException
      * @throws NotFoundException
      */
-    public function patch()
+    public function patch(): array
     {
         $createUtilisateur = $this->getFromRequest('create');
         if ($createUtilisateur) {
@@ -290,17 +162,13 @@ class UtilisateurAPIController extends BaseAPIController
         $data = $this->getRequest();
         $data['id_u'] = $this->getFromQueryArgs(0);
 
-        $utilisateur = $this->utilisateur;
-
         $infoUtilisateurExistant = $this->utilisateur->getUserFromData($data);
 
-        $id_e = $this->getFromRequest('id_e', $infoUtilisateurExistant["id_e"]);
+        $id_e = $this->getFromRequest('id_e', $infoUtilisateurExistant['id_e']);
 
         // Vérification des droits.
-        $this->checkDroit($id_e, "utilisateur:edition");
+        $this->checkDroit($id_e, 'utilisateur:edition');
 
-        // Empêche la modification du mot de passe si key 'password' absent par l'API
-        $infoUtilisateurExistant['password'] = false;
         // Modification de l'utilisateur chargé avec les infos passées par l'API
         foreach ($data as $key => $newValeur) {
             if (array_key_exists($key, $infoUtilisateurExistant)) {
@@ -309,21 +177,28 @@ class UtilisateurAPIController extends BaseAPIController
         }
 
         $login = $infoUtilisateurExistant['login'];
-        $password = $infoUtilisateurExistant['password'];
+        $password = $this->getFromRequest('password', null);
         $nom = $infoUtilisateurExistant['nom'];
         $prenom = $infoUtilisateurExistant['prenom'];
         $email = $infoUtilisateurExistant['email'];
 
-
         $certificat_content = $this->getFileUploader()->getFileContent('certificat');
 
-        // Appel du service métier pour enregistrer la modification de l'utilisateur
-        $id_u = $this->editionUtilisateur($id_e, $infoUtilisateurExistant['id_u'], $email, $login, $password, $nom, $prenom, $certificat_content);
+        $id_u = $this->userUpdateService->update(
+            $infoUtilisateurExistant['id_u'],
+            $login,
+            $email,
+            $prenom,
+            $nom,
+            (int)$id_e,
+            $password,
+            $certificat_content ?: null
+        );
 
         // Si le certificat n'est pas passé, il faut le supprimer de l'utilisateur
         // Faut-il garder ce comportement ou faire des webservices dédiés à la gestion des certificats (au moins la suppression) ?
         if (!$certificat_content && ! $this->getFromRequest('dont_delete_certificate_if_empty', false)) {
-            $utilisateur->removeCertificat($infoUtilisateurExistant['id_u']);
+            $this->utilisateur->removeCertificat($infoUtilisateurExistant['id_u']);
         }
 
         $result = $this->getDetailInfoForAPI($id_u);
