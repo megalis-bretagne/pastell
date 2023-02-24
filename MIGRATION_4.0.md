@@ -5,6 +5,8 @@
 Les fichiers PHP ne sont plus chargés automatiquement par Pastell, un autoloader au niveau de chaque extension est désormais
 requis.
 
+Les fichiers se terminant par `.class.php` doivent être renommés avec l'extension `.php`.
+
 Pour chaque extension, Pastell va tenter de charger automatiquement 2 fichiers :
 * `autoload.php` (à la racine de l'extension)
 * `vendor/autoload.php` si le fichier à la racine n'existe pas
