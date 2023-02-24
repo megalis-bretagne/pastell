@@ -182,14 +182,14 @@
         "element_id": "siret_collectivite",
         "name": "Num\u00e9ro SIRET de la collectivit\u00e9 territoriale",
         "type": "text",
-        "commentaire": "",
+        "commentaire": "Numéro SIREN + numéro NIC (14 chiffres)",
         "requis": "on",
         "champs_affiches": "",
         "champs_recherche_avancee": "",
         "titre": false,
+        "preg_match": "#^[0-9]{14}$#",
+        "preg_match_error": "Doit contenir 14 chiffres",
         "select_value": "",
-        "preg_match": "",
-        "preg_match_error": "",
         "content_type": ""
       },
       {
