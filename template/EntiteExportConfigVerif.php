@@ -49,14 +49,16 @@ use Pastell\Service\ImportExportConfig\ExportConfigService;
     </ul>
 </div>
 
-<div class="alert alert-danger">
+
     <?php if (
         empty($exportInfo[ExportConfigService::ENTITY_INFO])
         && empty($exportInfo[ExportConfigService::ENTITY_CHILD])
 ) :?>
-        La configuration requiert d'inclure au minimum les informations sur l'entité ou les entités filles.
+        <div class="alert alert-warning">
+                La configuration requiert d'inclure au minimum les informations sur l'entité ou les entités filles.
+        </div>
     <?php endif; ?>
-</div>
+
 
 <div class="alert alert-info">
     Votre mot de passe pour ce fichier est <strong><?php hecho($password);?></strong><br>
