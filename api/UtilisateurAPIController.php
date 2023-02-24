@@ -169,8 +169,6 @@ class UtilisateurAPIController extends BaseAPIController
         // Vérification des droits.
         $this->checkDroit($id_e, 'utilisateur:edition');
 
-        // Empêche la modification du mot de passe si key 'password' absent par l'API
-        $infoUtilisateurExistant['password'] = false;
         // Modification de l'utilisateur chargé avec les infos passées par l'API
         foreach ($data as $key => $newValeur) {
             if (array_key_exists($key, $infoUtilisateurExistant)) {

@@ -56,7 +56,7 @@ final class UserValidator
         int $entityId,
         ?string $password,
         ?string $certificateContent
-    ) {
+    ): bool {
         $this->validate($login, $lastname, $firstname, $email, $entityId, $certificateContent);
         if ($password !== null) {
             $this->validatePassword($password);
