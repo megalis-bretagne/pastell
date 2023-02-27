@@ -600,15 +600,7 @@ class UtilisateurControler extends PastellControler
         $this->getNotification()->add($id_u, $id_e, $type, 0, $daily_digest);
         $this->setLastMessage('La notification a été ajoutée');
 
-        $this->setGetInfo(new Recuperateur([
-            'id_u' => $id_u,
-            'id_e' => $id_e,
-            'type' => $type,
-            'from_me' => true,
-            'moi' => true,
-            'page_moi' => $page_moi
-        ]));
-        $this->notificationAction();
+        $this->redirect("/Utilisateur/notification?from_me=true&id_u=$id_u&id_e=$id_e&type=$type&moi=true");
     }
 
     /**
@@ -637,8 +629,8 @@ class UtilisateurControler extends PastellControler
         $this->setViewParameter('has_daily_digest', $this->getNotification()->hasDailyDigest($id_u, $id_e, $type));
 
         $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($type);
-        $titreSelectAction = $type ? "Paramètre des notification des documents de type "
-            . $type : "La sélection des actions n'est pas possible car aucun type de dossier n'est spécifié";
+        $titreSelectAction = $type ? 'Paramètre des notification des documents de type ' . $type :
+            "La sélection des actions n'est pas possible car aucun type de dossier n'est spécifié";
 
         $action_list = $documentType->getAction()->getActionWithNotificationPossible();
 
