@@ -48,10 +48,10 @@ formulaire:
             no-show: true
             onchange: envoi-signature-api-change
         iparapheur_type:
-            name: 'Type i-Parapheur'
+            name: 'Type iparapheur'
             read-only: true
         iparapheur_sous_type:
-            name: 'Sous-type i-Parapheur'
+            name: 'Sous-type iparapheur'
             requis: true
             read-only: true
             type: externalData
@@ -568,7 +568,7 @@ action:
         rule:
             role_id_e: no-role
     iparapheur-sous-type:
-        name: 'Liste des sous-type iParapheur'
+        name: 'Liste des sous-type iparapheur'
         no-workflow: true
         rule:
             role_id_e: no-role

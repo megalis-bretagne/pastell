@@ -133,7 +133,7 @@ class TypeDossierTransformationTest extends PastellTestCase
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($info['id_d']);
         $this->assertTrue($donneesFormulaire->get('envoi_signature'));
 
-        $this->assertLastMessage("[transformation] Le dossier n'est pas valide : Le formulaire est incomplet : le champ «Sous-type i-Parapheur» est obligatoire.");
+        $this->assertLastMessage("[transformation] Le dossier n'est pas valide : Le formulaire est incomplet : le champ «Sous-type iparapheur» est obligatoire.");
 
         $this->assertLastDocumentAction('transformation-error', $info['id_d']);
     }

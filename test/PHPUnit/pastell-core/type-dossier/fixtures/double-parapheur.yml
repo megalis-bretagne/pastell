@@ -38,14 +38,14 @@ formulaire:
             onchange: cheminement-change
             default: checked
             read-only: true
-    'i-Parapheur #1':
+    'iparapheur #1':
         envoi_iparapheur_1:
             no-show: true
         iparapheur_type_1:
-            name: 'Type iParapheur'
+            name: 'Type iparapheur'
             read-only: true
         iparapheur_sous_type_1:
-            name: 'Sous-type i-Parapheur'
+            name: 'Sous-type iparapheur'
             requis: true
             index: true
             type: externalData
@@ -118,14 +118,14 @@ formulaire:
             type: file
             multiple: true
             read-only: true
-    'i-Parapheur #2':
+    'iparapheur #2':
         envoi_iparapheur_2:
             no-show: true
         iparapheur_type_2:
-            name: 'Type iParapheur'
+            name: 'Type iparapheur'
             read-only: true
         iparapheur_sous_type_2:
-            name: 'Sous-type i-Parapheur'
+            name: 'Sous-type iparapheur'
             requis: true
             index: true
             type: externalData
@@ -211,13 +211,13 @@ champs-recherche-avancee:
     - state_begin
     - search
 page-condition:
-    'i-Parapheur #1':
+    'iparapheur #1':
         envoi_iparapheur_1: true
     'Parapheur FAST #1':
         envoi_fast_1: true
     'Signature #1':
         has_signature_1: true
-    'i-Parapheur #2':
+    'iparapheur #2':
         envoi_iparapheur_2: true
     'Parapheur FAST #2':
         envoi_fast_2: true
@@ -391,7 +391,7 @@ action:
             role_id_e: no-role
         num-same-connecteur: '0'
     iparapheur-sous-type_1:
-        name: 'Liste des sous-type iParapheur #1'
+        name: 'Liste des sous-type iparapheur #1'
         no-workflow: true
         rule:
             role_id_e: no-role
@@ -492,7 +492,7 @@ action:
             role_id_e: no-role
         num-same-connecteur: '1'
     iparapheur-sous-type_2:
-        name: 'Liste des sous-type iParapheur #2'
+        name: 'Liste des sous-type iparapheur #2'
         no-workflow: true
         rule:
             role_id_e: no-role

@@ -11,10 +11,10 @@ affiche_one: true
 formulaire:
     Document:
         iparapheur_type:
-            name: 'Type i-Parapheur'
+            name: 'Type iparapheur'
             read-only: true
         iparapheur_sous_type:
-            name: 'Sous-type i-Parapheur'
+            name: 'Sous-type iparapheur'
             requis: true
             index: true
             read-only: true
@@ -149,7 +149,7 @@ action:
             - envoi_ged
     prepare-iparapheur:
         name-action: "Préparation de l'envoi au parapheur"
-        name: "Préparation de l'envoi au iParapheur"
+        name: "Préparation de l'envoi au iparapheur"
         rule:
             role_id_e: no-role
         action-automatique: send-iparapheur
@@ -237,7 +237,7 @@ action:
         rule:
             role_id_e: no-role
     iparapheur-sous-type:
-        name: 'Liste des sous-type iParapheur'
+        name: 'Liste des sous-type iparapheur'
         no-workflow: true
         rule:
             role_id_e: no-role

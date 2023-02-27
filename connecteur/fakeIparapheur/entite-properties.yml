@@ -1,6 +1,6 @@
 nom: 'Bouchon de signature'
 type: signature
-description: "Il s'agit d'un bouchon utilisé pour le développement ou les démonstrations pendant lesquels l'utilisation d'un vrai iParapheur ne se révelerait pas commode."
+description: "Il s'agit d'un bouchon utilisé pour le développement ou les démonstrations pendant lesquels l'utilisation d'un vrai iparapheur ne se révelerait pas commode."
 formulaire:
     page0:
         iparapheur_type:
@@ -21,7 +21,7 @@ formulaire:
                 ok: 'Accepter le document'
                 error: 'Déclencher une erreur'
         iparapheur_retour:
-            name: 'Retour du iParapheur'
+            name: 'Retour du iparapheur'
             type: select
             value:
                 Archive: OK

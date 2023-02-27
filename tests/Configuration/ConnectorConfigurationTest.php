@@ -29,11 +29,11 @@ class ConnectorConfigurationTest extends PastellTestCase
         $processedConfiguration = $connectorValidation->getConfiguration(
             __DIR__ . '/../../connecteur/as@lae-rest/entite-properties.yml'
         );
-        self::assertEquals('As@lae (Rest)', $processedConfiguration['nom']);
-        /*file_put_contents(
-            __DIR__ . '/fixtures/processedConfiguration.json',
-            json_encode($processedConfiguration, JSON_THROW_ON_ERROR)
-        );*/
+        self::assertEquals('asalae (Rest)', $processedConfiguration['nom']);
+//        file_put_contents(
+//            __DIR__ . '/fixtures/processedConfiguration.json',
+//            json_encode($processedConfiguration, JSON_THROW_ON_ERROR)
+//        );
         self::assertJsonStringEqualsJsonFile(
             __DIR__ . '/fixtures/processedConfiguration.json',
             json_encode($processedConfiguration, JSON_THROW_ON_ERROR)

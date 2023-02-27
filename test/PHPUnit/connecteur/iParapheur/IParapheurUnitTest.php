@@ -114,7 +114,7 @@ class IParapheurUnitTest extends PastellTestCase
         $iParapheur = $this->getIParapheurConnecteur($soapClient);
         $this->assertFalse($iParapheur->archiver('foo'));
         $this->assertEquals(
-            "Impossible d'archiver le dossier foo sur le i-Parapheur : " . self::REPONSE_ARCHIVE_KO,
+            "Impossible d'archiver le dossier foo sur le iparapheur : " . self::REPONSE_ARCHIVE_KO,
             $iParapheur->getLastError()
         );
     }
