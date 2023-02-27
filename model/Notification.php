@@ -42,9 +42,8 @@ class Notification extends SQL
         foreach ($this->query($sql, $id_u, $id_e, $type) as $line) {
             $result[$line['action']] = 1;
         }
-
         foreach ($action_list as $i => $action) {
-            $action_list[$i]['checked'] = isset($result[$action['id']]) || isset($result[0]);
+            $action_list[$i]['checked'] = isset($result[$action['id']]);
         }
 
         return $action_list;
