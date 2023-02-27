@@ -281,7 +281,7 @@ class IParapheur extends SignatureConnecteur
             ]);
             $this->getLogger()->debug("Réponse de l'archivage du dossier $dossierID: " . json_encode($result));
             if (empty($result->MessageRetour->codeRetour) || $result->MessageRetour->codeRetour != 'OK') {
-                $this->lastError = "Impossible d'archiver le dossier $dossierID sur le i-Parapheur : " . json_encode($result);
+                $this->lastError = "Impossible d'archiver le dossier $dossierID sur le iparapheur : " . json_encode($result);
                 $this->getLogger()->notice($this->lastError);
                 return false;
             }

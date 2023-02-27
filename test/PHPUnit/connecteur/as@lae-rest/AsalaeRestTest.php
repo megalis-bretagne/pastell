@@ -72,7 +72,7 @@ class AsalaeRestTest extends PastellTestCase
         $asalaeRest = $this->getAsalaeRest('toto');
         $this->expectException(Exception::class);
         $this->expectExceptionMessage(
-            'Le serveur As@lae n\'a pas renvoyé une réponse compréhensible - problème de configuration ? : toto'
+            'Le serveur asalae n\'a pas renvoyé une réponse compréhensible - problème de configuration ? : toto'
         );
         $asalaeRest->ping();
     }
@@ -144,7 +144,7 @@ class AsalaeRestTest extends PastellTestCase
         $asalaeRest = $this->getAsalaeRest('"ok"', 200, $chunksize);
 
         $this->expectException(Exception::class);
-        $this->expectExceptionMessage("Cette version d'as@lae ne permet pas l'envoi d'archive par morceaux");
+        $this->expectExceptionMessage("Cette version d'asalae ne permet pas l'envoi d'archive par morceaux");
         $asalaeRest->sendSIP('test bordereau SEDA', $tmp_folder . '/archive.tar.gz');
     }
 

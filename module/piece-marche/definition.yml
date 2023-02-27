@@ -154,12 +154,12 @@ formulaire:
             name: 'Transmission au SAE'
             type: checkbox
             onchange: cheminement-change
-    i-Parapheur:
+    iparapheur:
         iparapheur_type:
-            name: 'Type iParapheur'
+            name: 'Type iparapheur'
             read-only: true
         iparapheur_sous_type:
-            name: 'Sous Type iParapheur'
+            name: 'Sous Type iparapheur'
             requis: true
             index: true
             read-only: true
@@ -173,11 +173,11 @@ formulaire:
             name: 'Date limite'
             type: date
         metadonnee_iparapheur:
-            name: 'Métadonnée i-Parapheur'
-            commentaire: 'Métadonnée supplémentaire envoyée au i-Parapheur'
+            name: 'Métadonnée iparapheur'
+            commentaire: 'Métadonnée supplémentaire envoyée au iparapheur'
         json_metadata:
-            name: 'Métadonnées complémentaires i-Parapheur'
-            commentaire: 'Au format JSON {"cle1":"valeur1","cle2":"valeur2",...}. Le fichier permet d''envoyer des métadonnées spécifiques au i-Parapheur. Principalement pour l''utilisation via l''API. Le fichier est écrasé par la configuration spécifique du connecteur'
+            name: 'Métadonnées complémentaires iparapheur'
+            commentaire: 'Au format JSON {"cle1":"valeur1","cle2":"valeur2",...}. Le fichier permet d''envoyer des métadonnées spécifiques au iparapheur. Principalement pour l''utilisation via l''API. Le fichier est écrasé par la configuration spécifique du connecteur'
             type: file
     'Retour Parapheur':
         has_historique:
@@ -262,7 +262,7 @@ champs-affiches:
     - dernier_etat
     - date_dernier_etat
 page-condition:
-    i-Parapheur:
+    iparapheur:
         envoi_signature: true
     'Mail sécurisé':
         envoi_mailsec: true
@@ -623,7 +623,7 @@ action:
         editable-content:
             - envoi_sae
     iparapheur-sous-type:
-        name: 'Liste des sous-type iParapheur'
+        name: 'Liste des sous-type iparapheur'
         no-workflow: true
         rule:
             role_id_e: no-role

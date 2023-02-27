@@ -1,6 +1,6 @@
-nom: i-Parapheur
+nom: iparapheur
 type: signature
-description: "Connecteur pour le iParapheur de l'Adullact"
+description: "Connecteur pour le iparapheur de l'Adullact"
 formulaire:
     page0:
         iparapheur_wsdl:
@@ -11,7 +11,7 @@ formulaire:
             name: 'Mot de passe HTTP'
             type: password
         iparapheur_type:
-            name: 'Type i-Parapheur'
+            name: 'Type iparapheur'
             type: externalData
             choice-action: iparapheur-type
             link_name: 'Sélectionner un type'
@@ -20,7 +20,7 @@ formulaire:
             commentaire: "Nombre de jours avant de déclencher une erreur s'il n'y a pas de réponse du parapheur\n(Peut ne pas être implémenté par les différents flux)."
             default: 30
         iparapheur_visibilite:
-            name: 'Visibilité pour le iParapheur'
+            name: 'Visibilité pour le iparapheur'
             type: select
             value:
                 CONFIDENTIEL: CONFIDENTIEL
@@ -32,19 +32,19 @@ formulaire:
             commentaire: "Utilisé dans le cadre de l'envoi de flux PES"
         XPathPourSignatureXML:
             name: 'Position des signatures PES'
-            commentaire: "Permet de préciser au iParapheur l'emplacement des signatures pour les PES"
+            commentaire: "Permet de préciser au iparapheur l'emplacement des signatures pour les PES"
             type: select
             value:
                 1: 'Bordereau si possible ou PES_Aller sinon (defaut)'
                 2: Bordereau
                 3: PES_Aller
         iparapheur_metadata:
-            name: 'Métadonnées à envoyer au i-Parapheur'
+            name: 'Métadonnées à envoyer au iparapheur'
             commentaire: "De la forme : nom_element_pastell_1:nom_metadonne_parapheur_1, nom_element_pastell_2:nom_metadonne_parapheur_2, ..\nAttention, il faut que le flux le supporte !"
         iparapheur_multi_doc:
             name: 'Appliquer le multi-document'
             type: checkbox
-            commentaire: 'Si le sous-type i-Parapheur le permet (Signature multi-document), alors les fichiers multiples envoyés seront des multi-documents signés'
+            commentaire: 'Si le sous-type iparapheur le permet (Signature multi-document), alors les fichiers multiples envoyés seront des multi-documents signés'
 action:
     test-iparapheur:
         name: 'Tester la connexion'
@@ -62,7 +62,7 @@ action:
         rule:
             droit_id_u: 'entite:edition'
     iparapheur-type:
-        name: 'Liste des types iParapheur'
+        name: 'Liste des types iparapheur'
         rule:
             internal-action: true
         action-class: IparapheurType

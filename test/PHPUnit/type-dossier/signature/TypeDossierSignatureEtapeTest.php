@@ -25,7 +25,7 @@ class TypeDossierSignatureEtapeTest extends PastellTestCase
         $typeDossierData->etape[0]->specific_type_info['has_date_limite'] = 'on';
 
         $result = $typeDossierTranslator->getDefinition($typeDossierData);
-        $this->assertEquals('Utiliser une date limite', $result['formulaire']['i-Parapheur']['has_date_limite']['name']);
+        $this->assertEquals('Utiliser une date limite', $result['formulaire']['iparapheur']['has_date_limite']['name']);
     }
 
     public function testHasNoDateLimite()
@@ -34,7 +34,7 @@ class TypeDossierSignatureEtapeTest extends PastellTestCase
         $typeDossierData = $this->getDefaultTypeDossierProperties();
 
         $result = $typeDossierTranslator->getDefinition($typeDossierData);
-        $this->assertArrayNotHasKey('has_date_limite', $result['formulaire']['i-Parapheur']);
+        $this->assertArrayNotHasKey('has_date_limite', $result['formulaire']['iparapheur']);
     }
 
     public function testGetSpecific()

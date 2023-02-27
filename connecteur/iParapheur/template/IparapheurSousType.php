@@ -21,7 +21,7 @@
     <table class='table table-striped'>
 
         <tr>
-            <th class='w200'>    <label for="iparapheur_sous_type">Sous-type i-Parapheur</label>
+            <th class='w200'>    <label for="iparapheur_sous_type">Sous-type iparapheur</label>
             </th>
             <td>
                 <select name='iparapheur_sous_type' id="iparapheur_sous_type" class="form-control col-md-2">

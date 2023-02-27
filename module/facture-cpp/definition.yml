@@ -189,7 +189,7 @@ formulaire:
                 PIVOT: 'Formulaire PIVOT'
                 GLANEUR: 'Glaneur PIVOT'
         envoi_visa:
-            name: 'Transmission pour validation iParapheur'
+            name: 'Transmission pour validation iparapheur'
             type: checkbox
             onchange: envoi-visa-change
         envoi_ged:
@@ -216,10 +216,10 @@ formulaire:
             onchange: recup-par-gf-change
     'Circuit parapheur':
         iparapheur_type:
-            name: 'Type iParapheur'
+            name: 'Type iparapheur'
             read-only: true
         iparapheur_sous_type:
-            name: 'Sous Type iParapheur'
+            name: 'Sous Type iparapheur'
             requis: true
             read-only: true
             type: externalData
@@ -627,7 +627,7 @@ action:
             role_id_e: no-role
         action-class: FactureCPPEnvoiVisaChange
     iparapheur-sous-type:
-        name: 'Liste des sous-type iParapheur'
+        name: 'Liste des sous-type iparapheur'
         no-workflow: true
         rule:
             role_id_e: no-role

@@ -81,7 +81,7 @@ class AsalaeREST extends SAEConnecteur
         $seda_message_result = $this->callSedaMessage($seda_message_path, false, true);
 
         if (empty($seda_message_result['chunk_session_identifier']) || empty($seda_message_result['chunk_security_identifier'])) {
-            throw new Exception("Cette version d'as@lae ne permet pas l'envoi d'archive par morceaux");
+            throw new Exception("Cette version d'asalae ne permet pas l'envoi d'archive par morceaux");
         }
 
         $this->logger->debug("Results of /sedaMessage call : ", $seda_message_result);
@@ -202,7 +202,7 @@ class AsalaeREST extends SAEConnecteur
         }
         if (!$result) {
             throw new Exception(
-                "Le serveur As@lae n'a pas renvoyé une réponse compréhensible - problème de configuration ? : $old_result"
+                "Le serveur asalae n'a pas renvoyé une réponse compréhensible - problème de configuration ? : $old_result"
             );
         }
 

@@ -128,7 +128,7 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
         $mapping = $typeDossierEtapeDefinition->getMapping($typeDossierEtape)->getAll();
 
         $this->assertEquals([
-            'i-Parapheur' => 'i-Parapheur #2',
+            'iparapheur' => 'iparapheur #2',
             'iparapheur_type' => 'iparapheur_type_2',
             'iparapheur_sous_type' => 'iparapheur_sous_type_2',
             'json_metadata' => 'json_metadata_2',
@@ -195,16 +195,16 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
         $action_list = $typeDossierEtapeDefinition->getFormulaireForEtape($typeDossierEtape);
 
         $this->assertEquals([
-            'i-Parapheur #2' =>
+            'iparapheur #2' =>
                 [
                     'iparapheur_type_2' =>
                         [
-                            'name' => 'Type iParapheur',
+                            'name' => 'Type iparapheur',
                             'read-only' => true,
                         ],
                     'iparapheur_sous_type_2' =>
                         [
-                            'name' => 'Sous-type i-Parapheur',
+                            'name' => 'Sous-type iparapheur',
                             'requis' => true,
                             'index' => true,
                             'type' => 'externalData',
@@ -413,7 +413,7 @@ Uniquement avec le mode "circuit à la volée"',
                     ],
                 ],
                 'iparapheur-sous-type_2' => [
-                    'name' => 'Liste des sous-type iParapheur #2',
+                    'name' => 'Liste des sous-type iparapheur #2',
                     'no-workflow' => true,
                     'rule' => [
                         'role_id_e' => 'no-role',
@@ -455,7 +455,7 @@ Uniquement avec le mode "circuit à la volée"',
         $page_condition = $typeDossierEtapeDefinition->getPageCondition($typeDossierEtape);
 
         $this->assertEquals([
-            'i-Parapheur #2' => [
+            'iparapheur #2' => [
                 'envoi_iparapheur_2' => true
             ],
             'Signature #2' =>

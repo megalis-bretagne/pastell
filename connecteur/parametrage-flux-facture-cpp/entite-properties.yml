@@ -6,14 +6,14 @@ restriction_pack:
 formulaire:
     page0:
         envoi_visa:
-            name: 'Transmission pour validation iParapheur'
+            name: 'Transmission pour validation iparapheur'
             type: checkbox
         iparapheur_type:
-            name: 'Type iParapheur'
-            commentaire: "Obligatoire dans le cas de l'envoi pour validation iParapheur"
+            name: 'Type iparapheur'
+            commentaire: "Obligatoire dans le cas de l'envoi pour validation iparapheur"
         iparapheur_sous_type:
-            name: 'Sous Type iParapheur'
-            commentaire: "Obligatoire dans le cas de l'envoi pour validation iParapheur"
+            name: 'Sous Type iparapheur'
+            commentaire: "Obligatoire dans le cas de l'envoi pour validation iparapheur"
         envoi_ged:
             name: 'Transmission en entrepôt'
             type: checkbox

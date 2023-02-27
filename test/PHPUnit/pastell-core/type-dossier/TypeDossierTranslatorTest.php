@@ -135,7 +135,7 @@ class TypeDossierTranslatorTest extends PastellTestCase
         ], $result['formulaire']['Cheminement']);
 
         $this->assertEquals([
-            'i-Parapheur #1' =>
+            'iparapheur #1' =>
                  [
                     'envoi_iparapheur_1' => true,
                 ],
@@ -143,7 +143,7 @@ class TypeDossierTranslatorTest extends PastellTestCase
                  [
                     'has_signature_1' => true,
                 ],
-            'i-Parapheur #2' =>
+            'iparapheur #2' =>
                  [
                     'envoi_iparapheur_2' => true,
                 ],

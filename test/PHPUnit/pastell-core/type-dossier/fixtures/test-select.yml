@@ -59,14 +59,14 @@ formulaire:
             onchange: cheminement-change
             default: checked
             read-only: true
-    i-Parapheur:
+    iparapheur:
         envoi_iparapheur:
             no-show: true
         iparapheur_type:
-            name: 'Type iParapheur'
+            name: 'Type iparapheur'
             read-only: true
         iparapheur_sous_type:
-            name: 'Sous-type i-Parapheur'
+            name: 'Sous-type iparapheur'
             requis: true
             index: true
             type: externalData
@@ -298,7 +298,7 @@ champs-recherche-avancee:
     - search
     - titre
 page-condition:
-    i-Parapheur:
+    iparapheur:
         envoi_iparapheur: true
     'Parapheur FAST':
         envoi_fast: true
@@ -482,7 +482,7 @@ action:
         rule:
             role_id_e: no-role
     iparapheur-sous-type:
-        name: 'Liste des sous-type iParapheur'
+        name: 'Liste des sous-type iparapheur'
         no-workflow: true
         rule:
             role_id_e: no-role

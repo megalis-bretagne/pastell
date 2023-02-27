@@ -30,7 +30,7 @@ class ActesGeneriqueCest
         $I->checkOption("Transmission à la GED");
         $I->checkOption("Transmission au SAE");
         $I->click("Enregistrer");
-        $I->see("Sous-type i-Parapheur	");
+        $I->see("Sous-type iparapheur	");
 
 
         $id_d = $I->grabFromCurrentUrl("#id_d=([^&]*)&#");
@@ -52,7 +52,7 @@ class ActesGeneriqueCest
 
         $I->click("Sélectionner un sous-type");
         $I->see("Choix d'un type de dossier");
-        $I->selectOption("Sous-type i-Parapheur", "Arrêté individuel");
+        $I->selectOption("Sous-type iparapheur", "Arrêté individuel");
         $I->click("valider");
         $I->see("Actes");
         $I->click("Enregistrer");
