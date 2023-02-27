@@ -6,6 +6,7 @@
 /** @var TypeDossierFormulaireElementProperties[] $multi_file_field_list */
 /** @var TypeDossierFormulaireElementProperties[] $file_field_list */
 /** @var TypeDossierFormulaireElementProperties[] $text_field_list  */
+/** @var TypeDossierFormulaireElementProperties[] $textarea_field_list  */
 /** @var array $formulaire_etape */
 /** @var array $all_etape_type */
 
@@ -14,7 +15,7 @@
 <div class="box" style="min-height: 500px;">
     <h2>Modification de l'étape du cheminement</h2>
 
-    <form action='<?php $this->url("TypeDossier/doEditionEtape"); ?>' method='post' >
+    <form action='<?php $this->url('TypeDossier/doEditionEtape'); ?>' method='post' >
         <?php $this->displayCSRFInput() ?>
         <input type='hidden' name='id_t' value='<?php hecho($type_de_dossier_info['id_t'])?>' />
         <input type='hidden' name='num_etape' value='<?php hecho($etapeInfo->num_etape)?>' />
@@ -51,7 +52,7 @@
                 </th>
                 <td>
                     <input name='default_checked' id='default_checked' class=""
-                           type="checkbox" <?php echo $etapeInfo->defaultChecked ? "checked='checked'" : ""?>
+                           type="checkbox" <?php echo $etapeInfo->defaultChecked ? "checked='checked'" : '' ?>
                     />
                 </td>
             </tr>
@@ -61,7 +62,7 @@
                 </th>
                 <td>
                     <input name='requis' id='requis' class=""
-                           type="checkbox" <?php echo $etapeInfo->requis ? "checked='checked'" : ""?>
+                           type="checkbox" <?php echo $etapeInfo->requis ? "checked='checked'" : '' ?>
                     />
                 </td>
             </tr>
@@ -71,7 +72,7 @@
                 </th>
                 <td>
                     <input name='automatique' id='automatique'
-                           type="checkbox" <?php echo $etapeInfo->automatique ? "checked='checked'" : ""?>
+                           type="checkbox" <?php echo $etapeInfo->automatique ? "checked='checked'" : '' ?>
                     />
                 </td>
             </tr>
@@ -93,7 +94,8 @@
                                 <option value=""></option>
                                 <?php foreach ($file_field_list as $file_field_id => $file_field_info) : ?>
                                     <option value="<?php echo $file_field_id ?>"
-                                        <?php echo $file_field_id == $etapeInfo->specific_type_info[$element_id] ? 'selected="selected"' : ''; ?>
+                                        <?php echo $file_field_id ==
+                                        $etapeInfo->specific_type_info[$element_id] ? 'selected="selected"' : ''; ?>
                                     ><?php hecho($file_field_info->name) ?></option>
                                 <?php endforeach; ?>
                             </select>
@@ -105,7 +107,8 @@
                                 <option value=""></option>
                                 <?php foreach ($multi_file_field_list as $file_field_id => $file_field_info) : ?>
                                     <option value="<?php echo $file_field_id ?>"
-                                        <?php echo $file_field_id == $etapeInfo->specific_type_info[$element_id] ? 'selected="selected"' : ''; ?>
+                                        <?php echo $file_field_id ==
+                                        $etapeInfo->specific_type_info[$element_id] ? 'selected="selected"' : ''; ?>
                                     ><?php hecho($file_field_info->name) ?></option>
                                 <?php endforeach; ?>
                             </select>
@@ -116,7 +119,8 @@
                             >
                                 <?php foreach ($element_info['value'] as $file_field_id => $file_field_value) : ?>
                                     <option value="<?php echo $file_field_id ?>"
-                                        <?php echo $file_field_id == $etapeInfo->specific_type_info[$element_id] ? 'selected="selected"' : ''; ?>
+                                        <?php echo $file_field_id ==
+                                        $etapeInfo->specific_type_info[$element_id] ? 'selected="selected"' : ''; ?>
                                     ><?php hecho($file_field_value) ?></option>
                                 <?php endforeach; ?>
                             </select>
@@ -134,7 +138,14 @@
                                 <option value=""></option>
                                 <?php foreach ($text_field_list as $file_field_id => $file_field_info) : ?>
                                     <option value="<?php echo $file_field_id ?>"
-                                        <?php echo $file_field_id == $etapeInfo->specific_type_info[$element_id] ? 'selected="selected"' : ''; ?>
+                                        <?php echo $file_field_id ==
+                                        $etapeInfo->specific_type_info[$element_id] ? 'selected="selected"' : ''; ?>
+                                    ><?php hecho($file_field_info->name) ?></option>
+                                <?php endforeach; ?>
+                                <?php foreach ($textarea_field_list as $file_field_id => $file_field_info) : ?>
+                                    <option value="<?php echo $file_field_id ?>"
+                                        <?php echo $file_field_id ==
+                                        $etapeInfo->specific_type_info[$element_id] ? 'selected="selected"' : ''; ?>
                                     ><?php hecho($file_field_info->name) ?></option>
                                 <?php endforeach; ?>
                             </select>

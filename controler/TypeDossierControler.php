@@ -344,20 +344,42 @@ class TypeDossierControler extends PastellControler
 
     /**
      * @throws NotFoundException
+     * @throws UnrecoverableException
      */
-    public function editionEtapeAction()
+    public function editionEtapeAction(): void
     {
         $this->commonEdition();
         $num_etape = $this->getPostOrGetInfo()->get('num_etape', 0);
 
-        $this->setViewParameter('file_field_list', $this->getTypeDossierService()->getFieldWithType($this->getViewParameterOrObject('id_t'), 'file'));
-        $this->setViewParameter('multi_file_field_list', $this->getTypeDossierService()->getFieldWithType($this->getViewParameterOrObject('id_t'), 'multi_file'));
-        $this->setViewParameter('text_field_list', $this->getTypeDossierService()->getFieldWithType($this->getViewParameterOrObject('id_t'), 'text'));
+        $this->setViewParameter(
+            'file_field_list',
+            $this->getTypeDossierService()->getFieldWithType($this->getViewParameterByKey('id_t'), 'file')
+        );
+        $this->setViewParameter(
+            'multi_file_field_list',
+            $this->getTypeDossierService()->getFieldWithType($this->getViewParameterByKey('id_t'), 'multi_file')
+        );
+        $this->setViewParameter(
+            'text_field_list',
+            $this->getTypeDossierService()->getFieldWithType($this->getViewParameterByKey('id_t'), 'text')
+        );
+        $this->setViewParameter(
+            'textarea_field_list',
+            $this->getTypeDossierService()->getFieldWithType($this->getViewParameterByKey('id_t'), 'textarea')
+        );
 
-        $this->setViewParameter('etapeInfo', $this->getTypeDossierService()->getEtapeInfo($this->getViewParameterOrObject('id_t'), $num_etape));
-        $this->setViewParameter('formulaire_etape', $this->getTypeDossierEtapeDefinition()->getFormulaireConfigurationEtape($this->getViewParameterOrObject('etapeInfo')->type));
+        $this->setViewParameter(
+            'etapeInfo',
+            $this->getTypeDossierService()->getEtapeInfo($this->getViewParameterByKey('id_t'), $num_etape)
+        );
+        $this->setViewParameter(
+            'formulaire_etape',
+            $this->getTypeDossierEtapeDefinition()->getFormulaireConfigurationEtape(
+                $this->getViewParameterByKey('etapeInfo')->type
+            )
+        );
 
-        $this->setViewParameter('template_milieu', "TypeDossierEditionEtape");
+        $this->setViewParameter('template_milieu', 'TypeDossierEditionEtape');
         $this->renderDefault();
     }
 
