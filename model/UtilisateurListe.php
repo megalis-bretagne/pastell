@@ -114,7 +114,7 @@ class UtilisateurListe extends SQL
 
             foreach ($all[$i]['all_role'] as $j => $role) {
                 $id_eMere = $role['entite_mere'];
-                $listeEntiteMere = array();
+                $listeEntiteMere = [];
                 $k = 0;
                 while ($id_eMere !== 0) {
                     $sql2 = 'SELECT denomination, entite_mere FROM entite WHERE id_e = ?';
