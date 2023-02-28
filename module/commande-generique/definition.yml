@@ -17,7 +17,7 @@ formulaire:
             type: file
             commentaire: 'format PDF'
         autre_document_attache:
-            name: 'Autre document attaché'
+            name: 'Annexe(s)'
             type: file
             multiple: true
         id_fournisseur:

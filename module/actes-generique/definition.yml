@@ -54,7 +54,7 @@ formulaire:
             commentaire: 'format PDF ou XML'
             onchange: arrete-change
         autre_document_attache:
-            name: 'Autre document attaché'
+            name: 'Annexe(s)'
             type: file
             multiple: true
             commentaire: 'Attention ! La taille totale des documents acte + annexes ne peut pas dépasser 150 Mo.'

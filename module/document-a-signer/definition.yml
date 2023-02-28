@@ -36,7 +36,7 @@ formulaire:
             requis: true
             type: file
         autre_document_attache:
-            name: 'Autre document attaché'
+            name: 'Annexe(s)'
             type: file
             multiple: true
             commentaire: 'Attention ! La taille totale des documents (principal + attaché) ne peut pas dépasser 150 Mo.'
