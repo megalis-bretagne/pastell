@@ -529,14 +529,20 @@ class UtilisateurControler extends PastellControler
      * @throws LastErrorException
      * @throws LastMessageException
      */
-    private function verifEditNotification($id_u, $id_e, $type, $page_moi = false)
+    private function verifEditNotification($id_u, $id_e, $type, $page_moi = false): bool
     {
         $utilisateur_info = $this->getUtilisateur()->getInfo($id_u);
 
+        if ($type === 0) {
+            $this->setLastError("Vous n'avez selectionné aucun type de dossier");
+            $this->redirectToPageUtilisateur($id_u, $page_moi);
+            return false;
+        }
+
         if (
-            $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "entite:edition", $id_e)
+            $this->getRoleUtilisateur()->hasDroit($this->getId_u(), 'entite:edition', $id_e)
             &&
-            $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "utilisateur:edition", $utilisateur_info['id_e'])
+            $this->getRoleUtilisateur()->hasDroit($this->getId_u(), 'utilisateur:edition', $utilisateur_info['id_e'])
         ) {
             return true;
         }
@@ -544,7 +550,7 @@ class UtilisateurControler extends PastellControler
         if (
             $id_u == $this->getId_u()
             &&
-            $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "entite:lecture", $id_e)
+            $this->getRoleUtilisateur()->hasDroit($this->getId_u(), 'entite:lecture', $id_e)
             &&
             $this->getDroitService()->hasDroit(
                 $this->getId_u(),
@@ -578,8 +584,9 @@ class UtilisateurControler extends PastellControler
     /**
      * @throws LastErrorException
      * @throws LastMessageException
+     * @throws NotFoundException
      */
-    public function notificationAjoutAction()
+    public function notificationAjoutAction(): void
     {
         $recuperateur = $this->getPostInfo();
 
@@ -591,8 +598,9 @@ class UtilisateurControler extends PastellControler
 
         $this->verifEditNotification($id_u, $id_e, $type, $page_moi);
         $this->getNotification()->add($id_u, $id_e, $type, 0, $daily_digest);
-        $this->setLastMessage("La notification a été ajoutée");
-        $this->redirectToPageUtilisateur($id_u, $page_moi);
+        $this->setLastMessage('La notification a été ajoutée');
+
+        $this->redirect("/Utilisateur/notification?from_me=true&id_u=$id_u&id_e=$id_e&type=$type&moi=true");
     }
 
     /**
@@ -600,7 +608,7 @@ class UtilisateurControler extends PastellControler
      * @throws LastMessageException
      * @throws NotFoundException
      */
-    public function notificationAction()
+    public function notificationAction(): void
     {
         $recuperateur = $this->getGetInfo();
 
@@ -621,7 +629,8 @@ class UtilisateurControler extends PastellControler
         $this->setViewParameter('has_daily_digest', $this->getNotification()->hasDailyDigest($id_u, $id_e, $type));
 
         $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($type);
-        $titreSelectAction = $type ? "Paramètre des notification des documents de type " . $type : "La sélection des actions n'est pas possible car aucun type de dossier n'est spécifié";
+        $titreSelectAction = $type ? 'Paramètre des notification des documents de type ' . $type :
+            "La sélection des actions n'est pas possible car aucun type de dossier n'est spécifié";
 
         $action_list = $documentType->getAction()->getActionWithNotificationPossible();
 
@@ -635,16 +644,16 @@ class UtilisateurControler extends PastellControler
         $this->setViewParameter('type', $type);
 
         if ($from_me) {
-            $this->setViewParameter('cancel_url', "/Utilisateur/moi");
+            $this->setViewParameter('cancel_url', '/Utilisateur/moi');
         } else {
             $this->setViewParameter('cancel_url', "/Utilisateur/detail?id_u=$id_u&id_e=$id_e");
         }
 
         $this->setViewParameter(
             'page_title',
-            get_hecho($utilisateur_info['login']) . " - abonnement aux actions des documents "
+            get_hecho($utilisateur_info['login']) . ' - abonnement aux actions des documents '
         );
-        $this->setViewParameter('template_milieu', "UtilisateurNotification");
+        $this->setViewParameter('template_milieu', 'UtilisateurNotification');
         $this->renderDefault();
     }
 
