@@ -471,30 +471,49 @@ class TypeDossierControler extends PastellControler
     /**
      * @throws LastErrorException
      * @throws LastMessageException
+     * @throws UnrecoverableException
      */
-    public function doNewEtapeAction()
+    public function doNewEtapeAction(): void
     {
         $this->commonEdition();
-        $id_type_dossier = $this->getViewParameterOrObject('type_de_dossier_info')['id_type_dossier'];
-        $this->verifyNoDocumentIsUsingTypeDossier($id_type_dossier, '/TypeDossier/detail?id_t=' . $this->getViewParameterOrObject('id_t'));
+        $id_type_dossier = $this->getViewParameterByKey('type_de_dossier_info')['id_type_dossier'];
+        $this->verifyNoDocumentIsUsingTypeDossier(
+            $id_type_dossier,
+            '/TypeDossier/detail?id_t=' . $this->getViewParameterByKey('id_t')
+        );
         $num_etape = 0;
         try {
-            $num_etape = $this->getTypeDossierService()->newEtape($this->getViewParameterOrObject('id_t'), $this->getPostOrGetInfo());
+            $num_etape = $this->getTypeDossierService()->newEtape(
+                $this->getViewParameterByKey('id_t'),
+                $this->getPostOrGetInfo()
+            );
         } catch (Exception $e) {
             $this->setLastMessage($e->getMessage());
-            $this->redirect("/TypeDossier/detail?id_t={$this->getViewParameterOrObject('id_t')}");
+            $this->redirect("/TypeDossier/detail?id_t={$this->getViewParameterByKey('id_t')}");
         }
 
-        $etapeInfo = $this->getTypeDossierService()->getEtapeInfo($this->getViewParameterOrObject('id_t'), $num_etape);
-        $message = "La modification des étapes du cheminement a été enregistrée";
+        $etapeInfo = $this->getTypeDossierService()->getEtapeInfo($this->getViewParameterByKey('id_t'), $num_etape);
+        $message = 'La modification des étapes du cheminement a été enregistrée';
         if ($etapeInfo->specific_type_info) {
-            $this->getTypeDossierActionService()->add($this->getId_u(), $this->getViewParameterOrObject('id_t'), TypeDossierActionService::ACTION_MODIFFIE, $message);
+            $this->getTypeDossierActionService()->add(
+                $this->getId_u(),
+                $this->getViewParameterByKey('id_t'),
+                TypeDossierActionService::ACTION_MODIFFIE,
+                $message
+            );
             $this->setLastMessage("L'étape a été créée. Veuillez saisir les propriétés spécifiques de l'étape.");
-            $this->redirect("/TypeDossier/editionEtape?id_t={$this->getViewParameterOrObject('id_t')}&num_etape=$num_etape");
+            $this->redirect(
+                "/TypeDossier/editionEtape?id_t={$this->getViewParameterByKey('id_t')}&num_etape=$num_etape"
+            );
         }
-        $this->getTypeDossierActionService()->add($this->getId_u(), $this->getViewParameterOrObject('id_t'), TypeDossierActionService::ACTION_MODIFFIE, $message);
+        $this->getTypeDossierActionService()->add(
+            $this->getId_u(),
+            $this->getViewParameterByKey('id_t'),
+            TypeDossierActionService::ACTION_MODIFFIE,
+            $message
+        );
         $this->setLastMessage("L'étape a été créée.");
-        $this->redirect("/TypeDossier/detail?id_t={$this->getViewParameterOrObject('id_t')}");
+        $this->redirect("/TypeDossier/detail?id_t={$this->getViewParameterByKey('id_t')}");
     }
 
     public function exportAction()
