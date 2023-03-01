@@ -52,6 +52,8 @@ class FluxControler extends PastellControler
                 foreach ($this->getConnectorForFlux($id_e, $fluxId) as $connectorInfo) {
                     if ($connectorInfo['connecteur_info']) {
                         $fluxList[$fluxId]['nb_connector']++;
+                        $fluxList[$fluxId]['famille_associe'][$fluxList[$fluxId]['nb_connector']] =
+                            $connectorInfo['connecteur_info']['type'];
                     }
                 }
                 unset($fluxList[$fluxId]['formulaire'], $fluxList[$fluxId]['action']);

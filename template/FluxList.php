@@ -55,7 +55,33 @@
                     <?php hecho($flux_id);?>
                 </td>
                 <td>
-                    <?php hecho($flux_info['nb_connector'] ?? 0); ?>
+                    <e class="mr-5">
+                        <?php hecho($flux_info['nb_connector'] ?? 0); ?>
+                    </e>
+                    <?php if (count($flux_info['famille_associe']) > 5) { ?>
+                        <em class="text-muted" data-toggle="tooltip" title="
+                            <?php foreach ($flux_info['famille_associe'] as $key => $connecteur) {
+                                hecho($connecteur . ', ');
+                            } ?>
+                        ">
+                            <em>
+                                <?php foreach ($flux_info['famille_associe'] as $key => $connecteur) {
+                                    if ($key <= 5) {
+                                        hecho($connecteur . ', ');
+                                    }
+                                } ?>
+                                ...
+                            </em>
+                    <?php } else {
+                        foreach ($flux_info['famille_associe'] as $key => $connecteur) { ?>
+                            <em class="text-muted">
+                                <?php hecho($connecteur);
+                                if ($key !== count($flux_info['famille_associe'])) { ?>
+                                    ,
+                                <?php } ?>
+                            </em>
+                        <?php }
+                    } ?>
                 </td>
             </tr>
         <?php endforeach;?>
