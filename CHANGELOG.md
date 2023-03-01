@@ -42,7 +42,7 @@
 - Possibilité de revenir en arrière sur les flux studio sur les étapes non réalisés #1539
 - Possibilité de retamponner les actes et les annexes (flux studio, actes generique et automatique ) #627
 - SAEConnecteur::sendArchive() devient SAEConnecteur:sendSIP()
-- Amélioration de la présentation de l'association des connecteurs
+- Amélioration de la présentation de l'association des connecteurs #1607
 - Possibilité d'ajouter un fichier database.json dans les extensions pour ajouter des tables sur la base de données Pastell (voir le format sur installation/pastell.json). #1557
 - Lors de la création d'un administrateur, le mot de passe est directement généré par Pastell ce qui garanti un mot de passe fort
 - La base de données par défaut est mariadb version 10.9.3

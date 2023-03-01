@@ -70,8 +70,7 @@
                     <label for="module_type">Type de dossier</label>
                 </th>
                 <td>
-                    <select name="flux" id="module_type" class="form-control col-md-2">
-                        <option></option>
+                    <select name="flux" id="module_type" class="select2_type_dossier form-control col-md-2">
                         <?php foreach ($possible_flux_list as $flux_id => $flux_info) : ?>
                             <option value="<?php hecho($flux_id); ?>">
                                 <?php hecho($flux_info['nom']); ?>
@@ -91,3 +90,8 @@
         </table>
     </form>
 </div>
+
+<script>
+    $(document).ready(function() { $(".select2_type_dossier").select2(); });
+</script>
+
