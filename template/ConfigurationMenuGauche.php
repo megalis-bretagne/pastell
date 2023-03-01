@@ -16,9 +16,9 @@ $menu = [
         'Role/index' => 'Rôles',
         'Extension/index' => 'Extensions'
     ],
-    'Type de dossier' => [
+    'Types de dossier' => [
         'System/flux' => 'Types de dossier disponibles',
-        'TypeDossier/list' => 'Types de dossier personnalisé (studio)',
+        'TypeDossier/list' => 'Types de dossier personnalisés (studio)',
         'System/definition' => 'Définition des types de dossier'
     ],
     'Connecteurs' => [
