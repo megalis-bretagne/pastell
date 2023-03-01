@@ -64,7 +64,7 @@
 - Le type de dossier sur le connecteur Glaneur est sélectionnable via une liste déroulante #1698
 - Les fichiers de classe n'ont plus l'extension .class #1743
 - A la création d'une notification, l'utilisateur est redirigé vers sa configuration #1610
-- Les éléments text area sont disponibles à la selection de l'objet pour l'envoi à la préfecture dans le studio #1690
+- Les éléments texte (multi-ligne) sont disponibles à la sélection de l'objet pour l'envoi à la préfecture dans le studio #1690
 
 ## Suppressions
 
