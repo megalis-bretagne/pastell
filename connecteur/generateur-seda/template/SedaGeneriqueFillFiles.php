@@ -156,7 +156,7 @@ if ($node_id) {
             <?php if ($node_id) : ?>
                 <div class="box">
                     <a class="collapse-link" data-toggle="collapse" href="#collapseProperties">
-                        <h2> <i class="fa fa-plus-square"></i>Propriétés spécifiques de l'unité d'archivage</h2>
+                        <h2> <i class="fa fa-plus-square"></i>Propriétés spécifiques des objets d'archives</h2>
                     </a>
 
                     <div class="collapse"   id="collapseProperties">

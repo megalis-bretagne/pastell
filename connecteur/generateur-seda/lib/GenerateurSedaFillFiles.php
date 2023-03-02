@@ -312,7 +312,9 @@ class GenerateurSedaFillFiles
                   <br/><br/>Attention, si un élément contient une virgule, il est nécessaire d'entourer l'expression par des 'guillemets'
                   <br/><br/>L'ensemble du champ est analysé avec Twig, puis les lignes sont lues comme des lignes CSV
                   ( , comme séparateur de champs, \" comme clôture de champs et \ comme caractère d'échappement)
-                  <br/><br/>Les mots clés sont mis dans le bordereau au niveau ArchiveUnit - Keyword",
+                  <br/><br/>Les mots clés sont mis dans le bordereau au niveau 
+                  <br/>Archive - Keyword (seda 1.0)
+                  <br/>ArchiveUnit - Keyword (seda 2.1)",
             ],
             'AccessRestrictionRule_AccessRule' => [
                 'libelle' => 'Délai de communicabilité',
