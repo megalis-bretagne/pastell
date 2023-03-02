@@ -55,7 +55,16 @@
                     <?php hecho($flux_id);?>
                 </td>
                 <td>
-                    <?php hecho($flux_info['nb_connector'] ?? 0); ?>
+                    <e class="mr-5">
+                        <?php hecho($flux_info['nb_connector'] ?? 0); ?>
+                    </e>
+                    <em class="text-muted"
+                        <?php if ($flux_info['affiche_hover']) : ?>
+                            data-toggle="tooltip" title="<?php hecho($flux_info['hover']) ?>"
+                        <?php endif ?>
+                    >
+                        <?php hecho($flux_info['famille_associe_affiche']); ?>
+                    </em>
                 </td>
             </tr>
         <?php endforeach;?>
