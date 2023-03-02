@@ -58,30 +58,13 @@
                     <e class="mr-5">
                         <?php hecho($flux_info['nb_connector'] ?? 0); ?>
                     </e>
-                    <?php if (count($flux_info['famille_associe']) > 5) : ?>
-                        <em class="text-muted" data-toggle="tooltip" title="
-                            <?php foreach ($flux_info['famille_associe'] as $key => $connecteur) :
-                                hecho($connecteur . ', ');
-                            endforeach; ?>
-                        ">
-                        <em>
-                            <?php foreach ($flux_info['famille_associe'] as $key => $connecteur) :
-                                if ($key <= 5) :
-                                    hecho($connecteur . ', ');
-                                endif;
-                            endforeach; ?>
-                            ...
-                        </em>
-                    <?php else :
-                        foreach ($flux_info['famille_associe'] as $key => $connecteur) : ?>
-                            <em class="text-muted">
-                                <?php hecho($connecteur);
-                                if ($key !== count($flux_info['famille_associe'])) : ?>
-                                    ,
-                                <?php endif; ?>
-                            </em>
-                        <?php endforeach;
-                    endif ?>
+                    <em class="text-muted"
+                        <?php if ($flux_info['affiche_hover']) : ?>
+                            data-toggle="tooltip" title="<?php hecho($flux_info['hover']) ?>"
+                        <?php endif ?>
+                    >
+                        <?php hecho($flux_info['famille_associe_affiche']); ?>
+                    </em>
                 </td>
             </tr>
         <?php endforeach;?>

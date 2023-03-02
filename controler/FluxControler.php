@@ -70,8 +70,36 @@ class FluxControler extends PastellControler
                     unset($fluxList[$fluxId]);
                 }
             }
-            $this->setViewParameter('flux_list', $fluxList);
 
+            foreach ($fluxList as $fluxId => $fluxInfo) {
+                $fluxList[$fluxId]['affiche_hover'] = false;
+
+                if (count($fluxInfo['famille_associe']) > 4) {
+                    $fluxList[$fluxId]['affiche_hover'] = true;
+                    $hover = '';
+                    foreach ($fluxInfo['famille_associe'] as $key => $connecteur) {
+                        $hover .= $connecteur;
+                        if ($key !== count($fluxInfo['famille_associe'])) {
+                            $hover .= ', ';
+                        }
+                    }
+                    $fluxList[$fluxId]['hover'] = $hover;
+                }
+
+                $fluxList[$fluxId]['famille_associe_affiche'] = '';
+                foreach ($fluxInfo['famille_associe'] as $key => $connecteur) {
+                    $fluxList[$fluxId]['famille_associe_affiche'] .= $connecteur;
+                    if ($key !== count($fluxInfo['famille_associe'])) {
+                        $fluxList[$fluxId]['famille_associe_affiche'] .= ', ';
+                    }
+                    if ($fluxList[$fluxId]['affiche_hover'] && $key === 4) {
+                        $fluxList[$fluxId]['famille_associe_affiche'] .= '...';
+                        break;
+                    }
+                }
+            }
+
+            $this->setViewParameter('flux_list', $fluxList);
             $this->setViewParameter('possible_flux_list', $possibleFluxList);
             $this->setViewParameter('template_milieu', "FluxList");
         } else {
