@@ -289,16 +289,51 @@ class GenerateurSedaFillFiles
     public function getArchiveUnitSpecificInfoDefinition(): array
     {
         return [
-            'Description' => 'Description',
-            'DescriptionLevel' => "Niveau de description",
-            'Language' => 'Langage de la description',
-            'CustodialHistory' => "Historique de la conservation",
-            'AccessRestrictionRule_AccessRule' => "Code de la règle de restriction d'accès",
-            'AccessRestrictionRule_StartDate' => "Date de départ de la règle de restriction d'accès",
-            'ArchiveUnit_AppraisalRule_FinalAction' => "Sort final",
-            'ArchiveUnit_AppraisalRule_Rule' => "DUA",
-            'ArchiveUnit_AppraisalRule_StartDate' => "Date de départ de la règle de sort final",
-            'Keywords' => 'Mots-clés'
+            'Description' => [
+                'libelle' => 'Description',
+                'commentaire' => '',
+            ],
+            'DescriptionLevel' => [
+                'libelle' => 'Niveau de description',
+                'commentaire' => 'forme attendue : class, collection, file, fonds, item, recordgrp, series, subfonds, subgrp, subseries',
+            ],
+            'Language' => [
+                'libelle' => 'Langue de la description',
+                'commentaire' => 'forme attendue : fra',
+            ],
+            'CustodialHistory' => [
+                'libelle' => 'Historique de conservation',
+                'commentaire' => '',
+            ],
+            'Keywords' => [
+                'libelle' => 'Mots-clés',
+                'commentaire' =>
+                    "Un mot clé par ligne de la forme : 'Contenu du mot-clé','KeywordReference','KeywordType'
+                  <br/><br/>Attention, si un élément contient une virgule, il est nécessaire d'entourer l'expression par des 'guillemets'
+                  <br/><br/>L'ensemble du champ est analysé avec Twig, puis les lignes sont lues comme des lignes CSV
+                  ( , comme séparateur de champs, \" comme clôture de champs et \ comme caractère d'échappement)
+                  <br/><br/>Les mots clés sont mis dans le bordereau au niveau ArchiveUnit - Keyword",
+            ],
+            'AccessRestrictionRule_AccessRule' => [
+                'libelle' => 'Délai de communicabilité',
+                'commentaire' => 'forme attendue : AR038 à AR062',
+            ],
+            'AccessRestrictionRule_StartDate' => [
+                'libelle' => 'Date de départ du délai de communicabilité',
+                'commentaire' => 'forme attendue : Y-m-d',
+            ],
+            'ArchiveUnit_AppraisalRule_Rule' => [
+                'libelle' => "Durée d'utilité administrative (DUA)",
+                'commentaire' => 'ex : P10Y',
+            ],
+            'ArchiveUnit_AppraisalRule_StartDate' => [
+                'libelle' => 'Date de départ de la DUA',
+                'commentaire' => 'forme attendue : Y-m-d',
+            ],
+            'ArchiveUnit_AppraisalRule_FinalAction' => [
+                'libelle' => 'Sort final',
+                'commentaire' => 'forme attendue : detruire ou conserver',
+            ],
         ];
     }
 }

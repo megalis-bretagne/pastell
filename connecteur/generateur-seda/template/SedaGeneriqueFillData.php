@@ -50,30 +50,33 @@
                     <?php endif; ?>
                 </td>
             </tr>
-            <?php endforeach ?>
-            <tr>
-                <th>
-                    <label for="keywords">Liste de mots-clés</label>
-                    <p class="form_commentaire">
-                        Un mot clé par ligne de la forme : "Contenu du mot-clé","KeywordReference","KeywordType"
-                        <br/><br/>Attention, si un élement contient une virgule, il est nécessaire d'entourer
-                        l'expression par des "guillemets"
-                        <br/><br/>L'ensemble du champ est analysé avec Twig puis, les lignes sont lues comme des lignes
-                        CSV (<b>,</b> comme séparateur de champs, <b>"</b> comme clôture de champs et <b>\</b>
-                        comme caractère d'échappement)
-                        <br/><br/>Les mots clés sont mis dans le bordereau au niveau
-                        Archive -Keyword (seda 1.0)/ ArchiveUnit - Keyword (seda 2.1)
-                    </p>
-                </th>
-                <td>
-                    <textarea id="keywords"
-                              name="keywords"
-                              cols="80"
-                              rows="10"
-                              class="form-control col-md-12"
-                    ><?php hecho($data['keywords'] ?? '') ?></textarea>
-                </td>
-            </tr>
+<!--                --><?php //if ($element_info['position'] === 140) { ?>
+<!--                <tr>-->
+<!--                    <th>-->
+<!--                        <label for="keywords">Liste de mots-clés</label>-->
+<!--                        <p class="form_commentaire">-->
+<!--                            Un mot clé par ligne de la forme : "Contenu du mot-clé","KeywordReference","KeywordType"-->
+<!--                            <br/><br/>Attention, si un élement contient une virgule, il est nécessaire d'entourer-->
+<!--                            l'expression par des "guillemets"-->
+<!--                            <br/><br/>L'ensemble du champ est analysé avec Twig puis, les lignes sont lues comme des lignes-->
+<!--                            CSV (<strong>,</strong> comme séparateur de champs, <strong>"</strong> comme clôture de champs et <strong>\</strong>-->
+<!--                            comme caractère d'échappement)-->
+<!--                            <br/><br/>Les mots clés sont mis dans le bordereau au niveau-->
+<!--                            Archive -Keyword (seda 1.0)/ ArchiveUnit - Keyword (seda 2.1)-->
+<!--                        </p>-->
+<!--                    </th>-->
+<!--                    <td>-->
+<!--                    <textarea id="keywords"-->
+<!--                              name="keywords"-->
+<!--                              cols="80"-->
+<!--                              rows="10"-->
+<!--                              class="form-control col-md-12"-->
+<!--                    >--><?php //hecho($data['keywords'] ?? '') ?><!--</textarea>-->
+<!--                    </td>-->
+<!--                }</tr>-->
+                <?php
+            endforeach ?>
+
         </table>
 
         <a class='btn btn-outline-primary'
