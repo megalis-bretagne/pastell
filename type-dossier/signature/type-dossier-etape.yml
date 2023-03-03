@@ -17,7 +17,7 @@ configuration_etape_formulaire:
         name: "Permettre l'utilisation d'une date limite"
         type: checkbox
     has_metadata_in_json:
-        name: "Permettre l'envoi d'un fichier de méta-données en JSON"
+        name: "Permettre l'envoi d'un fichier de métadonnées en JSON"
         type: checkbox
     continue_after_refusal:
         name: 'Continuer le cheminement après un refus de signature'

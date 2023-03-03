@@ -106,7 +106,7 @@ abstract class AbstractSedaGeneratorConnector extends SEDAConnecteur
             'archival_agency_identifier' => [
                 'position' => 10,
                 'seda' => 'ArchivalAgency.Identifier',
-                'libelle' => "Identifiant du service d'archive",
+                'libelle' => "Identifiant du service d'archives",
                 'commentaire' => 'ArchivalAgency - Identifier',
             ],
             'transferring_agency_identifier' => [

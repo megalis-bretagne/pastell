@@ -4,13 +4,13 @@ connecteur_type:
     - SAE
 configuration_etape_formulaire:
     sae_has_metadata_in_json:
-        name: "Permettre l'envoi d'un fichier de méta-donnée en JSON"
+        name: "Permettre l'envoi d'un fichier de métadonnée en JSON"
         type: checkbox
 formulaire:
     'Configuration SAE':
         sae_config:
             name: 'Configuration du versement SAE'
-            commentaire: "Fichier JSON {cle1:valeur1,cle2:valeur2,...}.\nLes méta-données de ce fichier prévalent sur les méta-données Pastell"
+            commentaire: "Fichier JSON {cle1:valeur1,cle2:valeur2,...}.\nLes métadonnées de ce fichier prévalent sur les métadonnées Pastell"
             type: file
     SAE:
         sae_show:

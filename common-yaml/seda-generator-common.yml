@@ -11,10 +11,10 @@ formulaire:
             type: file
             visionneuse: Pastell\Viewer\XmlViewer
         fill-data:
-            name: 'Méta-données du bordereau'
+            name: 'Métadonnées du bordereau'
             edit-only: true
             type: externalData
-            link_name: 'Gérer les méta-données du bordereau'
+            link_name: 'Gérer les métadonnées du bordereau'
             choice-action: fill-data
         fill-files:
             name: 'Fichier du bordereau'
@@ -42,7 +42,7 @@ formulaire:
             commentaire: "Remplace l'URL définie au niveau du connecteur global"
 action:
     fill-data:
-        name: 'Configurer les méta-données'
+        name: 'Configurer les métadonnées'
         rule:
             role_id_e: no-role
         action-class: SedaGeneriqueFillData
