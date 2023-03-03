@@ -27,45 +27,54 @@ final class SedaGeneratorAsalae22 extends AbstractSedaGeneratorConnector
         $pastellToSeda['AppraisalRule_Rule']['commentaire'] = 'AppraisalRule - Rule (forme attendue encoder en xsd:duration, voir http://www.datypic.com/sc/xsd/t-xsd_duration.html)';
         $pastellToSeda['AppraisalRule_FinalAction']['commentaire'] = 'AppraisalRule - FinalAction (forme attendue: Conserver OU Détruire)';
 
-        return \array_merge(
+        $pastellToSeda = \array_merge(
             $pastellToSeda,
             [
                 'archival_agency_name' => [
+                    'position' => 11,
                     'seda' => 'ArchivalAgency.Name',
                     'libelle' => "Nom du service d'archive",
                     'commentaire' => 'ArchivalAgency - Name',
                 ],
                 'transferring_agency_name' => [
+                    'position' => 21,
                     'seda' => 'TransferringAgency.Name',
                     'libelle' => 'Nom du service versant',
                     'commentaire' => 'TransferringAgency - Name',
                 ],
                 'originating_agency_identifier' => [
+                    'position' => 22,
                     'seda' => 'OriginatingAgency.Identifier',
                     'libelle' => 'Identifiant du service producteur',
                     'commentaire' => 'OriginatingAgency - Identifier',
                 ],
                 'originating_agency_name' => [
+                    'position' => 23,
                     'seda' => 'OriginatingAgency.Name',
                     'libelle' => 'Nom du service producteur',
                     'commentaire' => 'OriginatingAgency - Name',
                 ],
                 'OriginatingAgencyArchiveIdentifier' => [
+                    'position' => 81,
                     'seda' => 'OriginatingAgencyArchiveIdentifier',
                     'libelle' => "Identifiant donné à l'archive par le service producteur",
                     'commentaire' => 'OriginatingAgencyArchiveUnitIdentifier'
                 ],
                 'TransferringAgencyArchiveIdentifier' => [
+                    'position' => 82,
                     'seda' => 'TransferringAgencyArchiveIdentifier',
                     'libelle' => "Identifiant donné à l'archive par le service versant",
                     'commentaire' => 'TransferringAgencyArchiveUnitIdentifier',
                 ],
                 'ArchiveUnit_ExternalReference' => [
+                    'position' => 210,
                     'seda' => 'ExternalReference',
                     'libelle' => 'Référence à une unité d\'archive',
                     'commentaire' => 'RepositoryArchiveUnitPID',
                 ],
             ]
         );
+        array_multisort(array_column($pastellToSeda, 'position'), SORT_ASC, $pastellToSeda);
+        return $pastellToSeda;
     }
 }

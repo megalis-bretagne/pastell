@@ -104,98 +104,135 @@ abstract class AbstractSedaGeneratorConnector extends SEDAConnecteur
     {
         return [
             'archival_agency_identifier' => [
+                'position' => 10,
                 'seda' => 'ArchivalAgency.Identifier',
                 'libelle' => "Identifiant du service d'archive",
                 'commentaire' => 'ArchivalAgency - Identifier',
             ],
             'transferring_agency_identifier' => [
+                'position' => 20,
                 'seda' => 'TransferringAgency.Identifier',
                 'libelle' => 'Identifiant du service versant',
                 'commentaire' => 'TransferringAgency - Identifier',
             ],
             'commentaire' => [
+                'position' => 30,
                 'seda' => 'Comment',
-                'libelle' => 'Commentaire',
+                'libelle' => 'Commentaire du transfert',
                 'commentaire' => 'Comment',
             ],
             'titre' => [
+                'position' => 40,
                 'seda' => 'Title',
-                'libelle' => 'Titre',
+                'libelle' => "Nom de l'archive",
                 'commentaire' => 'Archive - Name (seda 1.0) / ArchiveUnit - Title (seda 2.1)',
             ],
             'archival_agreement' => [
+                'position' => 50,
                 'seda' => 'ArchivalAgreement',
-                'libelle' => 'Accord de versement',
+                'libelle' => "Identifiant de l'accord de versement",
                 'commentaire' => 'ArchivalAgreement',
             ],
             'ArchivalProfile' => [
+                'position' => 60,
                 'seda' => 'ArchivalProfile',
-                'libelle' => "Profil d'archivage",
+                'libelle' => "Identifiant du profil d'archivage",
                 'commentaire' => 'ArchivalProfile',
             ],
-            'Language' => [
-                'seda' => 'Language',
-                'libelle' => 'Langue du contenu',
-                'commentaire' => 'Language (forme attendue: fra (seda 1.0) / fr (seda 2.1))',
+            'ServiceLevel' => [
+                'position' => 70,
+                'seda' => 'ServiceLevel',
+                'libelle' => 'Identifiant du niveau de service demandé',
             ],
             'DescriptionLanguage' => [
+                'position' => 80,
                 'seda' => 'DescriptionLanguage',
                 'libelle' => 'Langue de la description',
                 'commentaire' => 'DescriptionLanguage (forme attendue: fra (seda 1.0) / fr (seda 2.1))',
             ],
-            'ServiceLevel' => [
-                'seda' => 'ServiceLevel',
-                'libelle' => 'Niveau de service demandé',
+            'Language' => [
+                'position' => 90,
+                'seda' => 'Language',
+                'libelle' => 'Langue du contenu',
+                'commentaire' => 'Language (forme attendue: fra (seda 1.0) / fr (seda 2.1))',
             ],
             'DescriptionLevel' => [
+                'position' => 100,
                 'seda' => 'DescriptionLevel',
                 'libelle' => 'Niveau de description',
-                'commentaire' => 'DescriptionLevel (attendue : Fonds, Subfonds, Class, Collection, Series, Subseries, RecordGrp, SubGrp, File, Item, OtherLevel)',
+                'commentaire' => 'DescriptionLevel (attendue : Fonds, Subfonds, Class, Collection, Series, Subseries, 
+                    RecordGrp, SubGrp, File, Item, OtherLevel)',
             ],
             'archiveunits_title' => [
+                'position' => 110,
                 'seda' => 'ArchiveUnits.Title',
                 'libelle' => "Description de l'unité d'archive principale",
                 'commentaire' => 'Archive - Description (seda 1.0) / ArchiveUnit - Description (seda 2.1)',
             ],
             'StartDate' => [
+                'position' => 120,
                 'seda' => 'StartDate',
                 'libelle' => 'Date de début',
                 'commentaire' => 'OldestDate (seda 1.0)/ StartDate (seda 2.1) (forme attendue Y-m-d)',
             ],
             'EndDate' => [
+                'position' => 130,
                 'seda' => 'EndDate',
                 'libelle' => 'Date de fin',
                 'commentaire' => 'LatestDate (seda 1.0)/ EndDate (seda 2.1)  (forme attendue Y-m-d)',
             ],
             'CustodialHistory' => [
+                'position' => 140,
                 'seda' => 'CustodialHistory',
                 'libelle' => 'Historique de conservation',
-                'commentaire' => 'Archive - CustodialHistoryItem (seda 1.0)/ ArchiveUnit - CustodialHistoryItem (seda 2.1)',
+                'commentaire' => 'Archive - CustodialHistoryItem (seda 1.0)/ 
+                    ArchiveUnit - CustodialHistoryItem (seda 2.1)',
+            ],
+            'keywords' => [
+                'position' => 150,
+                'seda' => 'AccessRule.Rule',
+                'libelle' => 'Liste de mots-clés',
+                'commentaire' =>
+                  "Un mot clé par ligne de la forme : 'Contenu du mot-clé','KeywordReference','KeywordType'
+                  <br/><br/>Attention, si un élément contient une virgule, il est nécessaire d'entourer l'expression par des 'guillemets'
+                  <br/><br/>L'ensemble du champ est analysé avec Twig, puis les lignes sont lues comme des lignes CSV
+                  ( , comme séparateur de champs, \" comme clôture de champs et \ comme caractère d'échappement)
+                  <br/><br/>Les mots clés sont mis dans le bordereau au niveau ArchiveUnit - Keyword",
             ],
             'AccessRule_Rule' => [
+                'position' => 160,
                 'seda' => 'AccessRule.Rule',
-                'libelle' => "Règle de restriction d'accès",
-                'commentaire' => 'Archive - AccessRestrictionRule - Code (seda 1.0)/ AccessRule - Rule (seda 2.1) (forme attendue : de AR038 à AR062)',
+                'libelle' => 'Délai de communicabilité',
+                'commentaire' => 'Archive - AccessRestrictionRule - Code (seda 1.0)/ 
+                    AccessRule - Rule (seda 2.1) (forme attendue : de AR038 à AR062)',
             ],
             'AccessRule_StartDate' => [
+                'position' => 170,
                 'seda' => 'AccessRule.StartDate',
-                'libelle' => "Date de départ de la règle de restriction d'accès",
-                'commentaire' => 'AccessRestrictionRule - StartDate (seda 1.0) / AccessRule - StartDate (forme attentue Y-m-d)',
+                'libelle' => 'Date de départ du délai de communicabilité',
+                'commentaire' => 'AccessRestrictionRule - StartDate (seda 1.0) / 
+                    AccessRule - StartDate (forme attentue Y-m-d)',
             ],
             'AppraisalRule_Rule' => [
+                'position' => 180,
                 'seda' => 'AppraisalRule.Rule',
-                'libelle' => "Sort final - Durée d'utilité administrative",
-                'commentaire' => 'AppraisalRule - Duration (seda 1.0) / AppraisalRule - Rule (seda 2.1) (forme attendue encoder en xsd:duration, voir http://www.datypic.com/sc/xsd/t-xsd_duration.html)',
+                'libelle' => "Durée d'utilité administrative (DUA)",
+                'commentaire' => 'AppraisalRule - Duration (seda 1.0) / 
+                    AppraisalRule - Rule (seda 2.1) (forme attendue encoder en xsd:duration, 
+                    voir http://www.datypic.com/sc/xsd/t-xsd_duration.html)',
             ],
             'AppraisalRule_StartDate' => [
+                'position' => 190,
                 'seda' => 'AppraisalRule.StartDate',
-                'libelle' => 'Sort final - Date de départ du calcul (Y-m-d)',
+                'libelle' => 'Date de départ de la DUA (Y-m-d)',
                 'commentaire' => 'AppraisalRule - StartDate',
             ],
             'AppraisalRule_FinalAction' => [
+                'position' => 200,
                 'seda' => 'AppraisalRule.FinalAction',
                 'libelle' => 'Sort final',
-                'commentaire' => 'AppraisalRule - Code (seda 1.0) / AppraisalRule - FinalAction (seda 2.1) (forme attendue: Conserver OU Détruire)',
+                'commentaire' => 'AppraisalRule - Code (seda 1.0) / 
+                    AppraisalRule - FinalAction (seda 2.1) (forme attendue: Conserver OU Détruire)',
             ],
         ];
     }

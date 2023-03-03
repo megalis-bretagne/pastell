@@ -105,7 +105,7 @@ if ($node_id) {
 
 
             <div class="box">
-                <h2>Liste des unités d'archivages</h2>
+                <h2>Liste des objets d'archives</h2>
                 <button type="submit" class="btn btn-primary inline" name="add-unit" value="root">
                     <i class='fa fa-plus-circle'></i>&nbsp;Ajouter
                 </button>
@@ -156,20 +156,29 @@ if ($node_id) {
             <?php if ($node_id) : ?>
                 <div class="box">
                     <a class="collapse-link" data-toggle="collapse" href="#collapseProperties">
-                        <h2> <i class="fa fa-plus-square"></i>Propriétés spécifiques de l'unité d'archivage</h2>
+                        <h2> <i class="fa fa-plus-square"></i>Propriétés spécifiques des objets d'archives</h2>
                     </a>
 
                     <div class="collapse"   id="collapseProperties">
                         <table  class="table table-striped">
-                            <?php foreach ($generateurSedaFillFiles->getArchiveUnitSpecificInfoDefinition() as $specificInfoId => $specifInfoLibelle) : ?>
+                            <?php foreach ($generateurSedaFillFiles->getArchiveUnitSpecificInfoDefinition() as $specificInfoId => $specifInfo) : ?>
                                 <tr>
-                                    <th class="w500"><?php hecho($specifInfoLibelle) ?></th>
+                                    <th class="w500">
+                                        <?php hecho($specifInfo['libelle']) ?>
+                                        <p class="form_commentaire">
+                                        <?php if (!empty($specifInfo['commentaire'])) {
+                                            echo $this->getHTMLPurifier()->purify($specifInfo['commentaire']);
+                                        }?>
+                                        </p>
+                                    </th>
                                     <td>
                                         <textarea
                                                 class="form-control col-md-12"
                                                 name="<?php hecho($specificInfoId) ?>"
                                                 cols="40"
-                                                rows="<?php echo max(1, substr_count($specific_info[$specificInfoId], "\n") + 1); ?>"><?php hecho($specific_info[$specificInfoId])?></textarea>
+                                                rows="<?php echo max(1, substr_count($specific_info[$specificInfoId], "\n") + 1); ?>">
+                                            <?php hecho($specific_info[$specificInfoId])?>
+                                        </textarea>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
