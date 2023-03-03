@@ -598,7 +598,6 @@ class UtilisateurControler extends PastellControler
 
         $this->verifEditNotification($id_u, $id_e, $type, $page_moi);
         $this->getNotification()->add($id_u, $id_e, $type, 0, $daily_digest);
-        $this->setLastMessage('La notification a été ajoutée');
 
         $this->redirect("/Utilisateur/notification?from_me=true&id_u=$id_u&id_e=$id_e&type=$type&moi=true");
     }
@@ -711,7 +710,7 @@ class UtilisateurControler extends PastellControler
 
         $this->getNotification()->removeAll($id_u, $id_e, $type);
 
-        $this->setLastMessage("Les notifications ont été modifiées");
+        $this->setLastMessage('Les notifications ont été modifiées');
         if (!$no_checked) {
             $this->redirectToPageUtilisateur($id_u, $page_moi);
         }
