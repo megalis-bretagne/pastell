@@ -68,13 +68,13 @@ final class SedaGeneratorAsalae10 extends AbstractSedaGeneratorConnector
                     'commentaire' => 'OriginatingAgency - Name',
                 ],
                 'OriginatingAgencyArchiveIdentifier' => [
-                    'position' => 81,
+                    'position' => 71,
                     'seda' => 'OriginatingAgencyArchiveIdentifier',
                     'libelle' => "Identifiant donné à l'archive par le service producteur",
                     'commentaire' => 'OriginatingAgencyArchiveIdentifier',
                 ],
                 'TransferringAgencyArchiveIdentifier' => [
-                    'position' => 82,
+                    'position' => 72,
                     'seda' => 'TransferringAgencyArchiveIdentifier',
                     'libelle' => "Identifiant donné à l'archive par le service versant",
                     'commentaire' => 'TransferringAgencyArchiveIdentifier',
