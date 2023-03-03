@@ -628,7 +628,7 @@ class UtilisateurControler extends PastellControler
         $this->setViewParameter('has_daily_digest', $this->getNotification()->hasDailyDigest($id_u, $id_e, $type));
 
         $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($type);
-        $titreSelectAction = $type ? 'Paramètre des notification des documents de type ' . $type :
+        $titreSelectAction = $type ? 'Paramètre des notifications des documents de type ' . $type :
             "La sélection des actions n'est pas possible car aucun type de dossier n'est spécifié";
 
         $action_list = $documentType->getAction()->getActionWithNotificationPossible();
