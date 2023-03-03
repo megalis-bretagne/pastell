@@ -55,7 +55,7 @@ class SedaGeneriqueFillData extends ChoiceActionExecutor
         $this->setViewParameter('pastell_to_seda', $connector->getPastellToSeda());
 
         $this->renderPage(
-            'Sélection des méta-données du bordereau',
+            'Sélection des métadonnées du bordereau',
             __DIR__ . '/../template/SedaGeneriqueFillData.php'
         );
         return true;

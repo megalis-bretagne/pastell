@@ -33,7 +33,7 @@ final class SedaGeneratorAsalae22 extends AbstractSedaGeneratorConnector
                 'archival_agency_name' => [
                     'position' => 11,
                     'seda' => 'ArchivalAgency.Name',
-                    'libelle' => "Nom du service d'archive",
+                    'libelle' => "Nom du service d'archives",
                     'commentaire' => 'ArchivalAgency - Name',
                 ],
                 'transferring_agency_name' => [
