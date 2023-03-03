@@ -101,3 +101,17 @@
 <?php endif; ?>
 
 <?php include __DIR__ . "/SedaGeneriqueFillTwigExplanation.php" ?>
+
+
+<script type="text/javascript">
+    const text = document.getElementsByTagName("textarea");
+    for (let i = 0; i < text.length; i++) {
+        text[i].setAttribute("style", "height:" + (text[i].scrollHeight) + "px;overflow-y:hidden;");
+        text[i].addEventListener("input", OnInput, false);
+    }
+
+    function OnInput() {
+        this.style.height = 0;
+        this.style.height = (this.scrollHeight) + "px";
+    }
+</script>
