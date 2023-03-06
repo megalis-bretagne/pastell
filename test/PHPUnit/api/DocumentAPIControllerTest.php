@@ -451,4 +451,11 @@ class DocumentAPIControllerTest extends PastellTestCase
             $info
         );
     }
+
+    public function testDeleteDocument(): void
+    {
+        $documentId = $this->createTestDocument();
+        $this->getInternalAPI()->delete("/entite/1/document/$documentId");
+        $this->expectOutputRegex('/HTTP\/1.1 204 No Content/');
+    }
 }
