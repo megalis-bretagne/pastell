@@ -12,6 +12,10 @@ class MailSecControler extends PastellControler
         $this->hasEntiteDroitLecture($id_e);
         $this->setNavigationInfo($id_e, "MailSec/annuaire?");
         $this->setViewParameter('menu_gauche_select', 'MailSec/annuaire');
+        $this->setViewParameter(
+            'droitLectureAnnuaire',
+            $this->getRoleUtilisateur()->hasDroit($this->getId_u(), 'annuaire:lecture', $id_e)
+        );
         $this->setViewParameter('menu_gauche_template', "EntiteMenuGauche");
         $this->setDroitLectureOnConnecteur($id_e);
         $this->setDroitImportExportConfig($id_e);

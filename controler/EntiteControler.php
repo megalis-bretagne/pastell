@@ -19,6 +19,10 @@ class EntiteControler extends PastellControler
             $this->hasEntiteDroitLecture($id_e);
         }
         $this->setNavigationInfo($id_e, "Entite/detail?");
+        $this->setViewParameter(
+            'droitLectureAnnuaire',
+            $this->getRoleUtilisateur()->hasDroit($this->getId_u(), 'annuaire:lecture', $id_e)
+        );
         $this->setViewParameter('menu_gauche_template', "EntiteMenuGauche");
         $this->setViewParameter('menu_gauche_select', "Entite/detail");
         $this->setDroitLectureOnConnecteur($id_e);

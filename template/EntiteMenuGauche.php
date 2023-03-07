@@ -7,6 +7,7 @@
  * @var $droitLectureOnUtilisateur
  * @var int $id_e
  * @var bool $permission_on_import_export;
+ * @var bool $droitLectureAnnuaire;
  */
 
 $admninistration_menu["Entite/detail"] = "Informations (entités)";
@@ -25,10 +26,10 @@ if (! empty($permission_on_import_export)) {
     $admninistration_menu["Entite/importConfig"] = "Import de la configuration";
 }
 
-$donnees_menu = [
-    "MailSec/annuaire" => "Annuaire (mail sécurisé)",
-    "Entite/agents" => "Agents (Actes)",
-];
+if ($droitLectureAnnuaire) {
+    $donnees_menu['MailSec/annuaire'] = 'Annuaire (mail sécurisé)';
+}
+$donnees_menu['Entite/agents'] = 'Agents (Actes)';
 
 ?>
 
