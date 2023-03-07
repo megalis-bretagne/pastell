@@ -6,24 +6,19 @@ namespace Pastell\Controller;
 
 use FrontController;
 use ObjectInstancierFactory;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 
 final class LegacyController extends AbstractController
 {
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
     public function loadLegacyScript(string $requestPath, string $legacyScript): Response
-    {
-        return $this->render(
-            'legacy.html.twig',
-            [
-                'requestPath' => $requestPath,
-                'legacyScript' => $legacyScript,
-            ]
-        );
-    }
-
-    public function legacy(string $requestPath, string $legacyScript): Response
     {
         $_SERVER['PHP_SELF'] = $requestPath;
         $_SERVER['SCRIPT_NAME'] = $requestPath;
@@ -44,6 +39,11 @@ final class LegacyController extends AbstractController
         $frontController->dispatch();
         $content = (string)\ob_get_clean();
 
-        return new Response($content);
+        $headers = [];
+        foreach (\headers_list() as $header) {
+            $trimmed = \explode(': ', $header);
+            $headers[$trimmed[0]] = $trimmed[1];
+        }
+        return new Response($content, 200, $headers);
     }
 }
