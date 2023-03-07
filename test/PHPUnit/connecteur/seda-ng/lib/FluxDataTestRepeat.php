@@ -71,7 +71,7 @@ class FluxDataTestRepeat extends FluxData
 
     public function getFileSHA256($key)
     {
-        return hash('sha256', base64_encode(mt_rand(0, mt_getrandmax())));
+        return hash('sha256', base64_encode(random_bytes(20)));
     }
 
     public function getFilePath($key)

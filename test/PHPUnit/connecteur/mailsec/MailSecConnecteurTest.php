@@ -110,10 +110,11 @@ class MailSecConnecteurTest extends PastellTestCase
      */
     public function testSendOneMail()
     {
-        $key = $this->getDocumentEmail()->add(1, self::EMAIL, "to");
+        $documentId = '1';
+        $key = $this->getDocumentEmail()->add($documentId, self::EMAIL, "to");
         $document_email_info = $this->getDocumentEmail()->getInfoFromKey($key);
 
-        $this->getMailSec()->sendOneMail(1, 1, $document_email_info[DocumentEmail::ID_DE]);
+        $this->getMailSec()->sendOneMail(1, $documentId, $document_email_info[DocumentEmail::ID_DE]);
         $this->assertMailEqualsFile(__DIR__ . "/fixtures/mail-text-output.txt");
     }
 
@@ -127,8 +128,9 @@ class MailSecConnecteurTest extends PastellTestCase
      */
     public function testSendAllMail()
     {
-        $this->getDocumentEmail()->add(1, self::EMAIL, "to");
-        $this->getMailSec()->sendAllMail(1, 1);
+        $documentId = '1';
+        $this->getDocumentEmail()->add($documentId, self::EMAIL, "to");
+        $this->getMailSec()->sendAllMail(1, $documentId);
         $this->assertMailEqualsFile(__DIR__ . "/fixtures/mail-text-output.txt");
     }
 
@@ -143,11 +145,12 @@ class MailSecConnecteurTest extends PastellTestCase
 
         $mailsec = $this->getMailSec();
 
-        $key = $this->getDocumentEmail()->add(1, self::EMAIL, 'to');
+        $documentId = '1';
+        $key = $this->getDocumentEmail()->add($documentId, self::EMAIL, 'to');
 
         $document_email_info = $this->getDocumentEmail()->getInfoFromKey($key);
 
-        $mailsec->sendOneMail(1, 1, $document_email_info[DocumentEmail::ID_DE]);
+        $mailsec->sendOneMail(1, $documentId, $document_email_info[DocumentEmail::ID_DE]);
 
         $this->assertMailEqualsFile(__DIR__ . '/fixtures/mail-html-output.txt');
     }
@@ -162,13 +165,14 @@ class MailSecConnecteurTest extends PastellTestCase
 
         $mailsec = $this->getMailSec();
 
-        $key = $this->getDocumentEmail()->add(1, self::EMAIL, "to");
+        $documentId = '1';
+        $key = $this->getDocumentEmail()->add($documentId, self::EMAIL, "to");
 
         $document_email_info = $this->getDocumentEmail()->getInfoFromKey($key);
 
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("La clé foo de @metadata:facturx:data:foo n'existe pas, vérifier la syntaxe.");
-        $mailsec->sendOneMail(1, 1, $document_email_info[DocumentEmail::ID_DE]);
+        $mailsec->sendOneMail(1, $documentId, $document_email_info[DocumentEmail::ID_DE]);
     }
 
     /**
@@ -181,13 +185,14 @@ class MailSecConnecteurTest extends PastellTestCase
 
         $mailsec = $this->getMailSec();
 
-        $key = $this->getDocumentEmail()->add(1, self::EMAIL, "to");
+        $documentId = '1';
+        $key = $this->getDocumentEmail()->add($documentId, self::EMAIL, "to");
 
         $document_email_info = $this->getDocumentEmail()->getInfoFromKey($key);
 
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("Erreur de lecture du contenu de metadata_not_found");
-        $mailsec->sendOneMail(1, 1, $document_email_info[DocumentEmail::ID_DE]);
+        $mailsec->sendOneMail(1, $documentId, $document_email_info[DocumentEmail::ID_DE]);
     }
 
     /**
@@ -201,7 +206,8 @@ class MailSecConnecteurTest extends PastellTestCase
 
         $mailsec = $this->getMailSec();
 
-        $key = $this->getDocumentEmail()->add(1, "eric.pommateau@adullact-projet.com", "to");
+        $documentId = '1';
+        $key = $this->getDocumentEmail()->add($documentId, "eric.pommateau@adullact-projet.com", "to");
 
         $document_email_info = $this->getDocumentEmail()->getInfoFromKey($key);
 
@@ -209,7 +215,7 @@ class MailSecConnecteurTest extends PastellTestCase
         $this->expectExceptionMessage(
             "La valeur de @metadata:facturx:data n'est pas un type simple, vérifier la syntaxe."
         );
-        $mailsec->sendOneMail(1, 1, $document_email_info['id_de']);
+        $mailsec->sendOneMail(1, $documentId, $document_email_info['id_de']);
     }
 
     /**
@@ -223,10 +229,12 @@ class MailSecConnecteurTest extends PastellTestCase
             'mailsec_content',
             "Un lien ici : %LINK%. C'était mon lien"
         );
-        $key = $this->getDocumentEmail()->add(1, "eric.pommateau@adullact-projet.com", "to");
+
+        $documentId = '1';
+        $key = $this->getDocumentEmail()->add($documentId, "eric.pommateau@adullact-projet.com", "to");
         $document_email_info = $this->getDocumentEmail()->getInfoFromKey($key);
 
-        $mailsec->sendOneMail(1, 1, $document_email_info['id_de']);
+        $mailsec->sendOneMail(1, $documentId, $document_email_info['id_de']);
 
         $this->assertMailEqualsFile(__DIR__ . "/fixtures/mail-link.txt");
     }
@@ -239,10 +247,11 @@ class MailSecConnecteurTest extends PastellTestCase
         $this->addContentHTML(__DIR__ . "/fixtures/mail-exemple.html");
         $mailsec = $this->getMailSec();
 
-        $this->getDocumentEmail()->add(1, "jdoe@example.org", "to");
-        $this->getDocumentEmail()->add(1, "john.doe@example.org", "to");
+        $documentId = '1';
+        $this->getDocumentEmail()->add($documentId, "jdoe@example.org", "to");
+        $this->getDocumentEmail()->add($documentId, "john.doe@example.org", "to");
 
-        $mailsec->sendAllMail(1, 1);
+        $mailsec->sendAllMail(1, $documentId);
 
         $this->assertMailContentEqualsFile(
             __DIR__ . "/fixtures/mail_jdoe.txt",
@@ -271,10 +280,11 @@ class MailSecConnecteurTest extends PastellTestCase
             UndeliveredMail::CONNECTOR_TYPE
         );
 
-        $key = $this->getDocumentEmail()->add(1, self::EMAIL, "to");
+        $documentId = '1';
+        $key = $this->getDocumentEmail()->add($documentId, self::EMAIL, "to");
         $document_email_info = $this->getDocumentEmail()->getInfoFromKey($key);
 
-        $this->getMailSec()->sendOneMail(1, 1, $document_email_info[DocumentEmail::ID_DE]);
+        $this->getMailSec()->sendOneMail(1, $documentId, $document_email_info[DocumentEmail::ID_DE]);
         $this->assertMailEqualsFile(__DIR__ . "/fixtures/mail-text-output-return-path.txt");
     }
 

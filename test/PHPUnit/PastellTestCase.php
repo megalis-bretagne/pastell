@@ -60,7 +60,7 @@ abstract class PastellTestCase extends TestCase
         $this->objectInstancier->setInstance(MemoryCache::class, new StaticWrapper());
         $this->objectInstancier->setInstance(RedisWrapper::class, $this->createMock(RedisWrapper::class));
         $this->objectInstancier->setInstance('redis_server', '');
-        $this->objectInstancier->setInstance('redis_port', '');
+        $this->objectInstancier->setInstance('redis_port', 0);
         $this->objectInstancier->setInstance('disable_journal_horodatage', false);
 
         $this->objectInstancier->setInstance(LockFactory::class, new LockFactory(new InMemoryStore()));

@@ -97,7 +97,7 @@ class CPPWrapper
 
         $curlWrapper = $this->curlWrapperFactory->getInstance();
         $curlWrapper->setProperties(CURLOPT_TIMEOUT, 60);
-        assert($this->cppWrapperConfig);
+        assert((bool)$this->cppWrapperConfig);
         $cppWrapperConfig = $this->cppWrapperConfig;
         // Authentification
         if (!($cppWrapperConfig->user_login && $cppWrapperConfig->user_password)) {

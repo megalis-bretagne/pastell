@@ -41,8 +41,8 @@ class DocumentModificationService
         $id_d,
         Recuperateur $recuperateur,
         FileUploader $fileUploader,
-        $from_api = false,
-        $from_glaneur = false
+        bool $from_api = false,
+        bool $from_glaneur = false
     ) {
         $result = $this->actionExecutorFactory->executeOnDocument(
             $id_e,
@@ -84,8 +84,8 @@ class DocumentModificationService
         $id_d,
         Recuperateur $recuperateur,
         FileUploader $fileUploader,
-        $from_api = false,
-        $from_glaneur = false
+        bool $from_api = false,
+        bool $from_glaneur = false
     ) {
         $this->verifCanModify($id_e, $id_u, $id_d);
         return $this->modifyDocumentWithoutAuthorizationChecking(

@@ -1,5 +1,6 @@
 <?php
 
+use Monolog\Level;
 use Monolog\Logger;
 use Symfony\Bridge\Monolog\Handler\ConsoleHandler;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -8,14 +9,19 @@ class PastellLogger
 {
     public const MESSAGE = 'message';
 
-    private Logger $logger;
-    private int $log_level;
     private ?string $name = null;
 
-    public function __construct(Logger $logger, int $log_level = Logger::INFO)
-    {
-        $this->logger = $logger;
-        $this->log_level = $log_level;
+    private Level $level;
+
+    /**
+     * @phpstan-param value-of<Level::VALUES> $log_level
+     */
+    public function __construct(
+        private readonly Logger $logger,
+        private readonly int $log_level,
+    ) {
+        // TODO: inject enum in constructor
+        $this->level = Level::fromValue($this->log_level);
     }
 
     public function setName(string $name): void
@@ -69,7 +75,7 @@ class PastellLogger
             return;
         }
         try {
-            $handler = new  Monolog\Handler\StreamHandler('php://stdout', $this->log_level);
+            $handler = new  Monolog\Handler\StreamHandler('php://stdout', $this->level);
             $this->logger->pushHandler($handler);
         } catch (Exception $e) {
             $message =  "Impossible de créer un streamHandler sur sdtout : " . $e->getMessage();

@@ -59,14 +59,19 @@ class GenerateurSedaFillFiles
      * @param bool $do_not_put_mime_type
      * @throws UnrecoverableException
      */
-    private function addNode(string $nodeName, string $parent_id, string $description, string $field_expression, bool $do_not_put_mime_type = false): void
-    {
+    private function addNode(
+        string $nodeName,
+        string $parent_id,
+        string $description,
+        string $field_expression,
+        bool $do_not_put_mime_type = false
+    ): void {
         $element = $this->findNodeOrRoot($parent_id);
         $archiveUnit = $element->addChild($nodeName);
         $archiveUnit->addAttribute('id', $this->createUUID());
         $archiveUnit->addAttribute('description', $description);
         $archiveUnit->addAttribute('field_expression', $field_expression);
-        $archiveUnit->addAttribute('do_not_put_mime_type', $do_not_put_mime_type);
+        $archiveUnit->addAttribute('do_not_put_mime_type', (string)$do_not_put_mime_type);
     }
 
     /**
@@ -151,7 +156,7 @@ class GenerateurSedaFillFiles
         if (isset($element->attributes()->{'do_not_put_mime_type'})) {
             $element->attributes()->{'do_not_put_mime_type'} = $do_not_put_mime_type;
         } else {
-            $element->addAttribute('do_not_put_mime_type', $do_not_put_mime_type);
+            $element->addAttribute('do_not_put_mime_type', (string)$do_not_put_mime_type);
         }
     }
 

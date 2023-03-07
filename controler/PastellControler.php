@@ -302,7 +302,7 @@ class PastellControler extends Controler
             $all_module[$flux_info['type']][$flux_id]  = $flux_info['nom'];
         }
 
-        $currentLocale = setlocale(LC_COLLATE, 0);
+        $currentLocale = setlocale(LC_COLLATE, '0');
         setlocale(LC_COLLATE, 'fr_FR.utf8');
         ksort($all_module, SORT_LOCALE_STRING);
         setlocale(LC_COLLATE, $currentLocale);

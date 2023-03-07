@@ -95,7 +95,7 @@ class XadesTest extends TestCase
                         'signatureValue' => '__SIGNATURE_VALUE__'
                     ],
                 ],
-                1631544860572,
+                '1631544860572',
                 [
                     'country' => 'France',
                     'city' => 'Montpellier',
