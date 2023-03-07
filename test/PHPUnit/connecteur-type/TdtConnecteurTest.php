@@ -45,7 +45,7 @@ class TdtConnecteurTest extends PastellTestCase
     {
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("La nature 8 est inconnue.");
-        $this->tdtConnecteur->getShortenedNatureActe(8);
+        $this->tdtConnecteur->getShortenedNatureActe('8');
     }
 
     public function getIntNatureActeProvider()

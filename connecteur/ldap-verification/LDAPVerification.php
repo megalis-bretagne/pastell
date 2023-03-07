@@ -1,5 +1,7 @@
 <?php
 
+use LDAP\Connection;
+
 class LDAPVerification extends Connecteur
 {
     private const DEFAULT_HOST = "localhost";
@@ -32,7 +34,7 @@ class LDAPVerification extends Connecteur
     }
 
     /**
-     * @return resource
+     * @return Connection
      * @throws UnrecoverableException
      */
     public function getConnexion()
@@ -47,7 +49,7 @@ class LDAPVerification extends Connecteur
     }
 
     /**
-     * @return resource
+     * @return Connection
      * @throws UnrecoverableException
      */
     private function getConnexionObject()

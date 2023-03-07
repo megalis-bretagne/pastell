@@ -43,8 +43,8 @@ class GlaneurDocumentCreator
                 $new_id_d,
                 new Recuperateur($glaneurLocalDocumentInfo->metadata),
                 $fileUploader,
-                1,
-                1
+                true,
+                true
             );
         } catch (Exception $e) {
             // Errors will be caught on document validation

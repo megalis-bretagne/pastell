@@ -74,7 +74,8 @@ final class SedaGeneratorAsalae22 extends AbstractSedaGeneratorConnector
                 ],
             ]
         );
-        array_multisort(array_column($pastellToSeda, 'position'), SORT_ASC, $pastellToSeda);
+        $columns = array_column($pastellToSeda, 'position');
+        array_multisort($columns, SORT_ASC, $pastellToSeda);
         return $pastellToSeda;
     }
 }

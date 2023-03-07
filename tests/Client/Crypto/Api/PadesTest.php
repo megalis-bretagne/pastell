@@ -90,7 +90,7 @@ class PadesTest extends TestCase
                         'signatureValue' => '__SIGNATURE_VALUE__'
                     ],
                 ],
-                1631544860572,
+                '1631544860572',
                 json_decode(file_get_contents(__DIR__ . '/../fixtures/defaultStamp.json'), true)
             )
         );

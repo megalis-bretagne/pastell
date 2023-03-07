@@ -6,7 +6,7 @@ class VerifEnvironnement
 
     public function __construct(
         private readonly string $redis_server,
-        private readonly string $redis_port,
+        private readonly int $redis_port,
     ) {
     }
 

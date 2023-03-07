@@ -77,7 +77,7 @@ class CPPImporterFacture extends ActionExecutor
         );
         $this->getLogger()->info("Date de dépôt minimum factures recues: $min_date_statut_courant_recues");
         $liste_facture_recues = $connecteur_chorus->getListeFacturesRecipiendaire(
-            false,
+            '',
             $min_date_statut_courant_recues,
             $connecteur_chorus->getDateJusquAu()
         );

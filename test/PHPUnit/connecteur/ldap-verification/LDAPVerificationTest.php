@@ -40,31 +40,31 @@ class LDAPVerificationTest extends PastellTestCase
         );
     }
 
-    private function setLDAPWrapper()
+    private function setLDAPWrapper(): void
     {
         $ldapWrapper = $this->getMockBuilder(LDAPWrapper::class)->getMock();
-        $ldapWrapper->expects($this->any())
+        $ldapWrapper
             ->method('ldap_search')
             ->willReturnCallback(function ($link, $base_dn, $filter) {
-                $this->assertTrue($link);
-                $this->assertEquals('dc=exemple,dc=com', $base_dn);
-                $this->assertEquals("(&(memberOf=pastell)(sAMAccountName=my_user))", $filter);
-                return true;
+                static::assertTrue($link);
+                static::assertSame('dc=exemple,dc=com', $base_dn);
+                static::assertSame('(&(memberOf=pastell)(sAMAccountName=my_user))', $filter);
+                return ['test'];
             });
 
-        $ldapWrapper->expects($this->any())
+        $ldapWrapper
             ->method('ldap_count_entries')
             ->willReturn(1);
 
-        $ldapWrapper->expects($this->any())
+        $ldapWrapper
             ->method('ldap_get_entries')
             ->willReturn([0 => ['dn' => 'foo']]);
 
-        $ldapWrapper->expects($this->any())
+        $ldapWrapper
             ->method('ldap_connect')
             ->willReturn(true);
 
-        $ldapWrapper->expects($this->any())
+        $ldapWrapper
             ->method('ldap_bind')
             ->willReturn(true);
 

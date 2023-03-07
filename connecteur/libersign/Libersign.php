@@ -274,7 +274,7 @@ class Libersign extends SignatureConnecteur
         return $this->cryptoClient->pades()->generateDataToSign(
             $filepath,
             $certificate,
-            $this->getStamp($signatory, time() * 1000)
+            $this->getStamp($signatory, (string)(time() * 1000))
         );
     }
 

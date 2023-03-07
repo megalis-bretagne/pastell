@@ -8,7 +8,7 @@
  * @var array $moduleList
  */
 ?>
-<a class='btn btn-link' href='Connecteur/editionModif?id_ce=<?php hecho($id_ce); ?>'>
+<a class='btn btn-link' href='Connecteur/editionModif?id_ce=<?php hecho((string)$id_ce); ?>'>
     <i class="fa fa-arrow-left"></i>&nbsp;Retour au connecteur
 </a>
 <div class="box">
@@ -16,7 +16,7 @@
 
     <form action='Connecteur/doExternalData' method='post' enctype="multipart/form-data">
         <?php $this->displayCSRFInput(); ?>
-        <input type='hidden' name='id_ce' value='<?php hecho($id_ce); ?>'/>
+        <input type='hidden' name='id_ce' value='<?php hecho((string)$id_ce); ?>'/>
         <input type='hidden' name='field' value='<?php hecho($field); ?>'/>
         <input type='hidden' name='go' value='go'/>
         <table class='table table-striped' aria-labelledby="desc-module-type-table">

@@ -8,14 +8,8 @@ use Pastell\System\HealthCheckItem;
 
 class JournalCheck implements CheckInterface
 {
-    /**
-     * @var Journal
-     */
-    private $journal;
-
-    public function __construct(Journal $journal)
+    public function __construct(private readonly Journal $journal)
     {
-        $this->journal = $journal;
     }
 
     public function check(): array
@@ -34,7 +28,7 @@ class JournalCheck implements CheckInterface
                 'Date du premier enregistrement de la table journal',
                 $this->journal->getFirstLineDate()
             ),
-            new HealthCheckItem("Nombre de mois de conservation du journal", JOURNAL_MAX_AGE_IN_MONTHS),
+            new HealthCheckItem("Nombre de mois de conservation du journal", (string)JOURNAL_MAX_AGE_IN_MONTHS),
             (new HealthCheckItem(
                 "Age du premier enregistrement de la table journal",
                 $firstLineDate . ' jours'
