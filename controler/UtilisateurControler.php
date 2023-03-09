@@ -39,22 +39,29 @@ class UtilisateurControler extends PastellControler
     {
         parent::_beforeAction();
         $id_u = $this->getGetInfo()->getInt('id_u');
+        $id_e = 0;
         if ($id_u) {
             $info = $this->getUtilisateur()->getInfo($id_u);
-            $this->setViewParameter('id_e', $info['id_e']);
-            $this->setViewParameter('id_e_menu', $info['id_e']);
+            $id_e = $info['id_e'];
+            $this->setViewParameter('id_e', $id_e);
+            $this->setViewParameter('id_e_menu', $id_e);
             $this->setViewParameter('type_e_menu', "");
-            $this->hasUtilisateurDroitLecture($info['id_e']);
-            $this->setNavigationInfo($info['id_e'], "Entite/utilisateur?");
+            $this->hasUtilisateurDroitLecture($id_e);
+            $this->setNavigationInfo($id_e, "Entite/utilisateur?");
         } elseif ($this->getGetInfo()->get('id_e')) {
             $this->setViewParameter('type_e_menu', "");
-            $this->setViewParameter('id_e', $this->getGetInfo()->get('id_e'));
-            $this->setViewParameter('id_e_menu', $this->getGetInfo()->get('id_e'));
+            $id_e = $this->getGetInfo()->get('id_e');
+            $this->setViewParameter('id_e', $id_e);
+            $this->setViewParameter('id_e_menu', $id_e);
             $this->setNavigationInfo($this->getViewParameterOrObject('id_e'), "Entite/utilisateur?");
         } else {
-            $this->setViewParameter('id_e', 0);
-            $this->setNavigationInfo(0, "Entite/utilisateur?");
+            $this->setViewParameter('id_e', $id_e);
+            $this->setNavigationInfo($id_e, "Entite/utilisateur?");
         }
+        $this->setViewParameter(
+            'droitLectureAnnuaire',
+            $this->getRoleUtilisateur()->hasDroit($this->getId_u(), 'annuaire:lecture', $id_e)
+        );
         $this->setViewParameter('menu_gauche_template', "EntiteMenuGauche");
         $this->setViewParameter('menu_gauche_select', "Entite/utilisateur");
         $this->setDroitLectureOnConnecteur($this->getViewParameterOrObject('id_e'));
