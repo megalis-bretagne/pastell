@@ -11,7 +11,7 @@
         "label": null,
         "requis": "",
         "num_etape": 0,
-        "automatique": "",
+        "automatique": "on",
         "defaultChecked": null,
         "specific_type_info": [],
         "num_etape_same_type": 0,

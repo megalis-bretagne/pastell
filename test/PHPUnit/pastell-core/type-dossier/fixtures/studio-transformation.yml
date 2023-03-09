@@ -339,6 +339,7 @@ action:
                 - preparation-transformation
                 - transformation-error
         action-class: StandardAction
+        action-automatique: orientation
         connecteur-type: transformation
         connecteur-type-action: TransformationTransform
         connecteur-type-mapping:

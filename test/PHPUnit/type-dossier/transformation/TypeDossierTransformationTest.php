@@ -143,31 +143,38 @@ class TypeDossierTransformationTest extends PastellTestCase
      * @throws NotFoundException
      * @throws TypeDossierException
      */
-    public function testEtapeTransformationValidateByOnChange()
+    public function testEtapeTransformationValidateByOnChange(): void
     {
         // transformation avec "envoi_signature": "true"
         $info = $this->createConnectorAndDocument(self::TRANSFORMATION, self::PATH_CONFIG_JSON);
 
-        $this->assertTrue(
-            $this->triggerActionOnDocument($info['id_d'], "orientation")
+        static::assertTrue(
+            $this->triggerActionOnDocument($info['id_d'], 'orientation')
         );
         $this->assertLastMessage("sélection automatique de l'action suivante");
 
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($info['id_d']);
-        $this->assertFalse($donneesFormulaire->get('envoi_signature'));
+        static::assertFalse($donneesFormulaire->get('envoi_signature'));
         $donneesFormulaire->setData('iparapheur_type', 'PADES');
         $donneesFormulaire->setData('iparapheur_sous_type', 'Document');
 
-        $this->assertTrue(
-            $this->triggerActionOnDocument($info['id_d'], "transformation")
+        static::assertTrue(
+            $this->triggerActionOnDocument($info['id_d'], 'transformation')
         );
 
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($info['id_d']);
-        $this->assertTrue($donneesFormulaire->get('envoi_signature'));
+        static::assertTrue($donneesFormulaire->get('envoi_signature'));
 
-        $this->assertLastMessage("Transformation terminée");
+        $this->assertLastMessage('Transformation terminée');
 
         $this->assertLastDocumentAction('transformation', $info['id_d']);
+
+        $jobQueueSQL = $this->getObjectInstancier()->getInstance(JobQueueSQL::class);
+        $jobId = $jobQueueSQL->getJobIdForDocument(1, $info['id_d']);
+
+        static::assertNotEmpty($jobId);
+        $job = $jobQueueSQL->getJob($jobId);
+        static::assertSame('orientation', $job->etat_cible);
     }
 
     /**
