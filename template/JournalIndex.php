@@ -107,7 +107,7 @@ $exportUrl = sprintf(
             </a>
         </td>
         <td><?php hecho($ligne['siren']) ?></td>
-        <td><?php hecho($usernameDisplayer->getUsername($ligne)); ?></td>
+        <td><?php echo $usernameDisplayer->getUsername($ligne); ?></td>
         <td>
             <?php if ($ligne['id_d']) : ?>
             <a href='<?php $this->url("Document/detail?id_d={$ligne['id_d']}&id_e={$ligne['id_e']}"); ?>'>
