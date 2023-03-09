@@ -4,7 +4,7 @@ use Pastell\Service\Droit\DroitService;
 
 class ConnecteurDisponible
 {
-    public const DROIT_NEDEED = 'entite:edition';
+    public const DROIT_NEDEED = 'connecteur:edition';
 
     private $entiteSQL;
     private $roleUtilisateur;
