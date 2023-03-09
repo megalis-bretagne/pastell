@@ -85,7 +85,16 @@ class EntiteControler extends PastellControler
         $this->setViewParameter('droitCreation', $this->getRoleUtilisateur()->hasDroit($this->getId_u(), 'utilisateur:creation', $id_e));
 
         $this->setViewParameter('nb_utilisateur', $this->getUtilisateurListe()->getNbUtilisateur($id_e, $descendance, $role, $search));
-        $this->setViewParameter('liste_utilisateur', $this->getUtilisateurListe()->getAllUtilisateur($id_e, $descendance, $role, $search, $offset));
+        $listeUtilisateur = $this->getUtilisateurListe()
+            ->getAllUtilisateur($id_e, $descendance, $role, $search, $offset);
+        foreach ($listeUtilisateur as $key => $utilisateur) {
+            foreach ($utilisateur['all_role'] as $j => $userRole) {
+                $listeUtilisateur[$key]['all_role'][$j]['ancetre'] =
+                    $this->getEntiteSQL()->getTreeEntity($userRole['entite_mere']);
+            }
+        }
+        dump($listeUtilisateur);
+        $this->setViewParameter('liste_utilisateur', $listeUtilisateur);
         $this->setViewParameter('id_e', $id_e);
         $this->setViewParameter('role_selected', !empty($role) ? $role : $recuperateur->get('role_selected'));
         $this->setViewParameter('offset', $offset);

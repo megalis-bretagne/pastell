@@ -176,16 +176,30 @@ use Pastell\Utilities\Certificate;
                 <?php endforeach; ?>
             </select>
 
-            <select name='id_e' class='select2_entite form-control col-md-1'>
-                <option></option>
-                <option value='0'>Entité racine</option>
-                <?php foreach ($arbre as $entiteInfo) : ?>
-                    <option value='<?php echo $entiteInfo['id_e'] ?>'>
-                        <?php echo str_repeat("-", $entiteInfo['profondeur']); ?>
-                        <?php hecho($entiteInfo['denomination']); ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
+            <div class="dropdown hierarchy-select mr-2" id="example-one">
+                <i class="fa fa-caret-down position-absolute" style="right:2%; top:30%; color:#7f8686"></i>
+                <button type="button" style="background-color: #ffffff; color: #474d4d; border-color:#a4adad;"
+                        class="text-left btn btn-outline-secondary btn-block" id="example-one-button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                </button>
+                <div class="dropdown-menu" aria-labelledby="example-one-button">
+                    <div class="hs-searchbox">
+                        <input type="text" class="form-control w-100" autocomplete="off" aria-label="Recherche entité">
+                    </div>
+                    <div class="hs-menu-inner">
+                        <a  class="dropdown-item" data-value="0" data-level="0">Entité racine</a>
+                        <?php foreach ($arbre as $entiteInfo) : ?>
+                            <a class="dropdown-item" data-value='<?php echo $entiteInfo['id_e'] ?>'
+                               data-level="<?php echo $entiteInfo['profondeur'] + 2; ?>">
+                                <?php hecho($entiteInfo['denomination']); ?>
+                            </a>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <input class="d-none" name="id_e" readonly="readonly"
+                       aria-hidden="true" type="text" aria-label="Entité"/>
+            </div>
+
             <button type='submit' class='btn btn-primary'>
                 <i class="fa fa-plus-circle"></i>&nbsp;Ajouter
             </button>
@@ -284,3 +298,9 @@ use Pastell\Utilities\Certificate;
     <?php endif; ?>
 
 </div>
+
+<script>
+    $('#example-one').hierarchySelect({
+        width: "auto"
+    });
+</script>

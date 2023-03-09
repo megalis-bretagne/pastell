@@ -111,25 +111,6 @@ class UtilisateurListe extends SQL
                 ' WHERE id_u=? ';
         foreach ($all as $i => $utilisateur) {
             $all[$i]['all_role'] = $this->query($sql, $utilisateur['id_u']);
-
-            foreach ($all[$i]['all_role'] as $j => $role) {
-                $id_eMere = $role['entite_mere'];
-                $listeEntiteMere = [];
-                $k = 0;
-                while ($id_eMere !== 0) {
-                    $sql2 = 'SELECT denomination, entite_mere FROM entite WHERE id_e = ?';
-                    $mere = $this->query($sql2, $id_eMere);
-                    if (isset($mere[0])) {
-                        $listeEntiteMere[$i] = $mere[0]['denomination'];
-                        $id_eMere = $mere[0]['entite_mere'];
-                        $k++;
-                    } else {
-                        $id_eMere = 0;
-                    }
-                }
-                $listeEntiteMere[$k] = 'Entité racine';
-                $all[$i]['all_role'][$j]['ancetre'] = array_reverse($listeEntiteMere);
-            }
         }
         return $all;
     }
