@@ -66,10 +66,11 @@ class TransformationTransform extends ConnecteurTypeActionExecutor
     private function addOnChange(array $modified_fields = []): void
     {
         $donneesFormulaire = $this->objectInstancier->getInstance(DonneesFormulaireFactory::class)->get($this->id_d);
+        $actionExecutorFactory = $this->objectInstancier->getInstance(ActionExecutorFactory::class);
+
         foreach ($modified_fields as $id => $value) {
             $field = $donneesFormulaire->getFieldData($id)->getField();
             if ($field->getOnChange()) {
-                $actionExecutorFactory = $this->objectInstancier->getInstance(ActionExecutorFactory::class);
                 $actionExecutorFactory->executeOnDocumentCritical(
                     $this->id_e,
                     $this->id_u,
@@ -84,6 +85,8 @@ class TransformationTransform extends ConnecteurTypeActionExecutor
             }
         }
 
+        //FIXME: it's trash
+        $actionExecutorFactory->setLastClassAction($this);
         $donneesFormulaire = $this->objectInstancier->getInstance(DonneesFormulaireFactory::class)->get($this->id_d);
         if (! $donneesFormulaire->isValidable()) {
             throw new UnrecoverableException(

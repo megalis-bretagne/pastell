@@ -56,6 +56,14 @@ class ActionExecutorFactory
         return $lockFactory->createLock($lock_name, self::LOCK_TTL_IN_SECONDS);
     }
 
+    /**
+     * @deprecated It's shit, don't use it
+     */
+    public function setLastClassAction(ActionExecutor $actionExecutor): void
+    {
+        $this->lastActionClass = $actionExecutor;
+    }
+
     public function executeOnConnecteur($id_ce, $id_u, $action_name, $from_api = false, $action_params = [], $id_worker = 0): ?bool
     {
         $lock = $this->getLock("connecteur-$id_ce");
