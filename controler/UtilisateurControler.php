@@ -43,7 +43,6 @@ class UtilisateurControler extends PastellControler
         if ($id_u) {
             $info = $this->getUtilisateur()->getInfo($id_u);
             $id_e = $info['id_e'];
-            $this->setViewParameter('id_e', $id_e);
             $this->setViewParameter('id_e_menu', $id_e);
             $this->setViewParameter('type_e_menu', "");
             $this->hasUtilisateurDroitLecture($id_e);
@@ -51,13 +50,12 @@ class UtilisateurControler extends PastellControler
         } elseif ($this->getGetInfo()->get('id_e')) {
             $this->setViewParameter('type_e_menu', "");
             $id_e = $this->getGetInfo()->get('id_e');
-            $this->setViewParameter('id_e', $id_e);
             $this->setViewParameter('id_e_menu', $id_e);
             $this->setNavigationInfo($this->getViewParameterOrObject('id_e'), "Entite/utilisateur?");
         } else {
-            $this->setViewParameter('id_e', $id_e);
             $this->setNavigationInfo($id_e, "Entite/utilisateur?");
         }
+        $this->setViewParameter('id_e', $id_e);
         $this->setViewParameter(
             'droitLectureAnnuaire',
             $this->getRoleUtilisateur()->hasDroit($this->getId_u(), 'annuaire:lecture', $id_e)
