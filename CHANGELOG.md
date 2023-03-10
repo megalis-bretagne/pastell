@@ -65,6 +65,8 @@
 - Les fichiers de classe n'ont plus l'extension .class #1743
 - A la création d'une notification, l'utilisateur est redirigé vers sa configuration #1610
 - Les éléments texte (multi-ligne) sont disponibles à la sélection de l'objet pour l'envoi à la préfecture dans le studio #1690
+- Les ancêtres d'une entité sont indiqués dans les rôles de la liste des utilisateurs et les ancêtres restent visibles
+  dans la recherche d'une entité pour l'ajout d'un rôle à un utilisateur #1680
 
 ## Suppressions
 

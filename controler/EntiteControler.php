@@ -93,7 +93,6 @@ class EntiteControler extends PastellControler
                     $this->getEntiteSQL()->getTreeEntity($userRole['entite_mere']);
             }
         }
-        dump($listeUtilisateur);
         $this->setViewParameter('liste_utilisateur', $listeUtilisateur);
         $this->setViewParameter('id_e', $id_e);
         $this->setViewParameter('role_selected', !empty($role) ? $role : $recuperateur->get('role_selected'));
