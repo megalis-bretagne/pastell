@@ -176,7 +176,7 @@ use Pastell\Utilities\Certificate;
                 <?php endforeach; ?>
             </select>
 
-            <div class="dropdown hierarchy-select mr-2" id="hierarchy-select">
+            <div class="dropdown hierarchy-select mr-2" id="entity-selection-for-role">
                 <i class="fa fa-caret-down position-absolute" style="right:2%; top:30%; color:#7f8686"></i>
                 <button type="button" style="background-color: #ffffff; color: #474d4d; border-color:#a4adad;"
                         class="text-left btn btn-outline-secondary btn-block" id="hierarchy-select-button"
@@ -300,7 +300,7 @@ use Pastell\Utilities\Certificate;
 </div>
 
 <script>
-    $('#hierarchy-select').hierarchySelect({
+    $('#entity-selection-for-role').hierarchySelect({
         width: "auto"
     });
 </script>
