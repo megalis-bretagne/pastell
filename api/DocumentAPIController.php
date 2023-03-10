@@ -163,12 +163,11 @@ class DocumentAPIController extends BaseAPIController
     /**
      * @param $id_e
      * @param $id_d
-     * @return mixed
      * @throws ForbiddenException
      * @throws NotFoundException
      * @throws Exception
      */
-    private function internalDetail($id_e, $id_d)
+    private function internalDetail($id_e, $id_d): array
     {
         $info = $this->document->getInfo($id_d);
         if (!$info) {
@@ -451,6 +450,43 @@ class DocumentAPIController extends BaseAPIController
         return $result;
     }
 
+    /**
+     * @throws ForbiddenException
+     * @throws Exception
+     */
+    private function action(
+        string $documentId,
+        int $entityId,
+        string $action,
+        array $destId = [],
+        array $actionParams = []
+    ): array {
+        $info = $this->document->getInfo($documentId);
+        if (!$info) {
+            throw new NotFoundException("Le document $documentId n'appartient pas à l'entité $entityId");
+        }
+        $this->checkDroit($entityId, $info['type'] . ':edition');
+        if (!$this->actionPossible->isActionPossible($entityId, $this->getUtilisateurId(), $documentId, $action)) {
+            throw new Exception("L'action « $action »  n'est pas permise : " . $this->actionPossible->getLastBadRule());
+        }
+
+        $result = $this->actionExecutorFactory->executeOnDocument(
+            $entityId,
+            $this->getUtilisateurId(),
+            $documentId,
+            $action,
+            $destId,
+            true,
+            $actionParams
+        );
+        $message = $this->actionExecutorFactory->getLastMessage();
+
+        if (!$result) {
+            throw new Exception($message);
+        }
+        return ['result' => $result, 'message' => $message];
+    }
+
 
     public function actionAction($id_e, $id_d)
     {
@@ -458,45 +494,46 @@ class DocumentAPIController extends BaseAPIController
         $id_destinataire = $this->getFromRequest('id_destinataire', []);
         $action_params = $this->getFromRequest('action_params', []);
 
-        $document = $this->document;
-        $info = $document->getInfo($id_d);
-        $this->checkDroit($id_e, "{$info['type']}:edition");
-
-        $actionPossible = $this->actionPossible;
-
-        if (! $actionPossible->isActionPossible($id_e, $this->getUtilisateurId(), $id_d, $action)) {
-            throw new Exception("L'action « $action »  n'est pas permise : " . $actionPossible->getLastBadRule());
-        }
-
-        $result = $this->actionExecutorFactory->executeOnDocument($id_e, $this->getUtilisateurId(), $id_d, $action, $id_destinataire, true, $action_params);
-        $message = $this->actionExecutorFactory->getLastMessage();
-
-        if (! $result) {
-            throw new Exception($message);
-        }
-        return ["result" => $result,"message" => $message];
+        return $this->action($id_d, (int)$id_e, $action, $id_destinataire, $action_params);
     }
 
+
     /**
-     * @return mixed
      * @throws ForbiddenException
-     * @throws MethodNotAllowedException
      * @throws NotFoundException
      */
-    public function delete()
+    public function delete(): array
     {
         $id_e = $this->checkedEntite();
         $id_d = $this->getFromQueryArgs(2);
 
-        if ('file' !== $this->getFromQueryArgs(3)) {
-            throw new MethodNotAllowedException("Impossible de supprimer cette ressource");
+        if ($this->getFromQueryArgs(3) === 'file') {
+            return $this->deleteFile($id_d, (int)$id_e);
         }
 
+        // TODO: Use DocumentDeletionService with a safe delete method
+        $result = $this->action($id_d, (int)$id_e, 'supression');
+
+        header_wrapper('HTTP/1.1 204 No Content');
+
+        return $result;
+    }
+
+    private function deleteFile(
+        string $documentId,
+        int $entityId,
+    ): array {
         $field = $this->getFromQueryArgs(4);
         $number = $this->getFromQueryArgs(5) ?: 0;
 
-        $this->documentModificationService->removeFile($id_e, $this->getUtilisateurId(), $id_d, $field, $number);
+        $this->documentModificationService->removeFile(
+            $entityId,
+            $this->getUtilisateurId(),
+            $documentId,
+            $field,
+            $number
+        );
 
-        return $this->internalDetail($id_e, $id_d);
+        return $this->internalDetail($entityId, $documentId);
     }
 }
