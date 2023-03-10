@@ -11,6 +11,10 @@ class FluxControler extends PastellControler
 
         $this->hasConnecteurDroitLecture($id_e);
         $this->setNavigationInfo($id_e, "Flux/index?");
+        $this->setViewParameter(
+            'droitLectureAnnuaire',
+            $this->getRoleUtilisateur()->hasDroit($this->getId_u(), 'annuaire:lecture', $id_e)
+        );
         $this->setViewParameter('menu_gauche_template', "EntiteMenuGauche");
         $this->setViewParameter('menu_gauche_select', "Flux/index");
         $this->setDroitLectureOnConnecteur($id_e);
@@ -101,6 +105,7 @@ class FluxControler extends PastellControler
 
             $this->setViewParameter('flux_list', $fluxList);
             $this->setViewParameter('possible_flux_list', $possibleFluxList);
+            $this->setViewParameter('droitConnecteurEdition', $this->hasDroit($id_e, 'connecteur:edition'));
             $this->setViewParameter('template_milieu', "FluxList");
         } else {
             $all_connecteur_type = $this->getConnecteurDefinitionFiles()->getAllGlobalType();

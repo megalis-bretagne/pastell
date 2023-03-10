@@ -8,6 +8,7 @@
  * @var array $all_herited
  * @var int $id_e
  * @var bool $droit_edition
+ * @var bool $droitConnecteurEdition
  */
 ?>
 <div class="box">
@@ -70,34 +71,36 @@
         <?php endforeach;?>
         </table>
     <?php endif;?>
-    <h2>Configurer un nouveau type de dossier</h2>
-    <form action='Flux/detail' method='get' class='form-inline'>
-        <input type='hidden' name='id_e' value='<?php hecho($id_e); ?>'/>
-        <table class='table table-striped' aria-labelledby="desc-module-type-table">
-            <tr id="tr_type_document">
-                <th class='w200' scope="row">
-                    <label for="module_type">Type de dossier</label>
-                </th>
-                <td>
-                    <select name="flux" id="module_type" class="select2_type_dossier form-control col-md-2">
-                        <?php foreach ($possible_flux_list as $flux_id => $flux_info) : ?>
-                            <option value="<?php hecho($flux_id); ?>">
-                                <?php hecho($flux_info['nom']); ?>
-                            </option>
-                        <?php endforeach ?>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>
-                    <button type='submit' class='btn btn-primary' id="valider">
-                        <i class="fa fa-plus"></i>&nbsp;Accéder à la configuration
-                    </button>
-                </td>
-            </tr>
-        </table>
-    </form>
+    <?php if ($droitConnecteurEdition) : ?>
+        <h2>Configurer un nouveau type de dossier</h2>
+        <form action='Flux/detail' method='get' class='form-inline'>
+            <input type='hidden' name='id_e' value='<?php hecho($id_e); ?>'/>
+            <table class='table table-striped' aria-labelledby="desc-module-type-table">
+                <tr id="tr_type_document">
+                    <th class='w200' scope="row">
+                        <label for="module_type">Type de dossier</label>
+                    </th>
+                    <td>
+                        <select name="flux" id="module_type" class="select2_type_dossier form-control col-md-2">
+                            <?php foreach ($possible_flux_list as $flux_id => $flux_info) : ?>
+                                <option value="<?php hecho($flux_id); ?>">
+                                    <?php hecho($flux_info['nom']); ?>
+                                </option>
+                            <?php endforeach ?>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <button type='submit' class='btn btn-primary' id="valider">
+                            <i class="fa fa-plus"></i>&nbsp;Accéder à la configuration
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    <?php endif; ?>
 </div>
 
 <script>
