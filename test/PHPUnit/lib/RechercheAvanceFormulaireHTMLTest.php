@@ -5,19 +5,14 @@ class RechercheAvanceFormulaireHTMLTest extends PastellTestCase
     /**
      * @throws Exception
      */
-    public function testWhenHaveExternalDataField()
+    public function testWhenHaveExternalDataField(): void
     {
-        $id_ce = $this->createConnector('iParapheur', 'I-Parapheur')['id_ce'];
+        $id_ce = $this->createConnector('fakeIparapheur', 'I-Parapheur')['id_ce'];
+        $this->configureConnector($id_ce, [
+            'iparapheur_type' => 'Document',
+        ]);
 
-        $connecteurConfig = $this->getConnecteurFactory()->getConnecteurConfig($id_ce);
-
-        $connecteurConfig->addFileFromData(
-            'iparapheur_sous_type',
-            'iparapheur_sous_type.tx',
-            "Cachet serveur\nCommande\nCourrier"
-        );
-
-        $this->associateFluxWithConnector($id_ce, "pdf-generique", "signature");
+        $this->associateFluxWithConnector($id_ce, 'pdf-generique', 'signature');
 
         $this->getObjectInstancier()->getInstance(Authentification::class)->connexion('admin', 1);
         $rechercheAvancerFormulaireHTML  = $this->getObjectInstancier()->getInstance(
@@ -32,9 +27,9 @@ class RechercheAvanceFormulaireHTMLTest extends PastellTestCase
 
         $this->assertStringContainsString("<select name='iparapheur_sous_type' class=\"form-control col-md-8\">
             <option value=''></option>
-                            <option                         value='Cachet serveur'>Cachet serveur</option>
+                            <option                         value='Courrier'>Courrier</option>
                             <option                         value='Commande'>Commande</option>
-                            <option                         value='Courrier'>Courrier</option>", $contents);
+                            <option                         value='Facture'>Facture</option>", $contents);
     }
 
     /**
