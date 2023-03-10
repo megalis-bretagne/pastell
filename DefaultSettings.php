@@ -223,7 +223,7 @@ if (!defined('SENTRY_ENVIRONMENT')) {
 
 # A modifier uniquement pour les environnement docker en local (dev)
 if (! defined('PES_VIEWER_URL')) {
-    define('PES_VIEWER_URL', SITE_BASE);
+    define('PES_VIEWER_URL', 'http://pes-viewer:8888');
 }
 
 if (!defined("HTTP_PROXY_URL")) {

@@ -37,7 +37,7 @@ define("LOG_LEVEL", Monolog\Logger::${LOG_LEVEL:-INFO});
 define("SENTRY_DSN", "${SENTRY_DSN}");
 define("SENTRY_ENVIRONMENT", "${SENTRY_ENVIRONMENT:-dev}");
 
-define("PES_VIEWER_URL", "${PES_VIEWER_URL:-${PASTELL_SITE_BASE}}");
+define("PES_VIEWER_URL", "${PES_VIEWER_URL:-http://pes-viewer:8888}");
 
 define("MAILER_DSN", "${MAILER_DSN:-null://null}");
 

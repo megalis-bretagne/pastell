@@ -92,7 +92,7 @@ services:
 
     pes-viewer:
         restart: unless-stopped
-        image: 'registry.libriciel.fr/public/signature/pes-viewer:1.5.1'
+        image: 'registry.libriciel.fr/public/signature/pes-viewer:2.0.2'
         deploy:
             resources:
                 limits:
