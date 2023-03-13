@@ -181,12 +181,12 @@ class EntiteSQL extends SQL
             return $all_ancetre;
         }
 
-        $allParent = [];
-        foreach ($all_ancetre as $parent) {
-            $allParent[] = $parent['id_e'];
+        $allmere = [];
+        foreach ($all_ancetre as $mere) {
+            $allmere[] = $mere['id_e'];
         }
-        foreach ($allParent as $parent_id_e) {
-            if (! in_array($parent_id_e, $listeCollectivite)) {
+        foreach ($allmere as $mere_id_e) {
+            if (! in_array($mere_id_e, $listeCollectivite)) {
                 array_shift($all_ancetre);
             } else {
                 return $all_ancetre;
@@ -341,7 +341,7 @@ class EntiteSQL extends SQL
         string $name,
         string $siren = '',
         string $type = self::TYPE_COLLECTIVITE,
-        int $parent = 0,
+        int $mere = 0,
         int $cdg = 0,
     ): int {
         $date = \date(\Date::DATE_ISO);
@@ -350,7 +350,7 @@ INSERT INTO entite(denomination,siren,type,entite_mere,date_inscription,centre_d
 VALUES (?,?,?,?,?,?);
 EOT;
 
-        $this->query($query, $name, $siren, $type, $parent, $date, $cdg);
+        $this->query($query, $name, $siren, $type, $mere, $date, $cdg);
         return (int)$this->lastInsertId();
     }
 
@@ -359,7 +359,7 @@ EOT;
         string $name,
         string $siren = '',
         string $type = self::TYPE_COLLECTIVITE,
-        int $parent = 0,
+        int $mere = 0,
         int $cdg = 0,
     ): void {
         $query = <<<EOT
@@ -367,7 +367,7 @@ UPDATE entite
 SET denomination=?, siren=?, type=?, entite_mere=?, centre_de_gestion=?
 WHERE id_e=?;
 EOT;
-        $this->query($query, $name, $siren, $type, $parent, $cdg, $entityId);
+        $this->query($query, $name, $siren, $type, $mere, $cdg, $entityId);
     }
 
     public function updateAncestor(int $entityId, int $ancestor = 0): void
@@ -426,5 +426,24 @@ EOT;
         }
 
         return $info['type'] === self::TYPE_CENTRE_DE_GESTION;
+    }
+
+    public function getTreeEntity(?int $id_eMere): array
+    {
+        $listeEntiteMere = [];
+        $i = 0;
+        while ($id_eMere !== 0) {
+            $sql = 'SELECT denomination, entite_mere FROM entite WHERE id_e = ?';
+            $mere = $this->query($sql, $id_eMere);
+            if (isset($mere[0])) {
+                $listeEntiteMere[] = $mere[0]['denomination'];
+                $id_eMere = $mere[0]['entite_mere'];
+                $i++;
+            } else {
+                $id_eMere = 0;
+            }
+        }
+        $listeEntiteMere[$i] = 'Entité racine';
+        return array_reverse($listeEntiteMere);
     }
 }

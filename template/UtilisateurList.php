@@ -103,8 +103,32 @@ $exportUserUrl = sprintf(
         <td>
             <?php foreach ($user['all_role'] as $role) : ?>
                 <?php hecho($role['libelle'] ?: "Aucun droit"); ?> -
+                <?php if ($role['denomination'] !== null) : ?>
+                    <?php if (count($role['ancetre']) > 2) : ?>
+                        <?php
+                        $tooltip = '';
+                        foreach ($role['ancetre'] as $ancetre) {
+                            $tooltip .= $ancetre . ' / ';
+                        }
+                        $tooltip .= $role['denomination'];
+                        ?>
+                        <em class="text-muted"
+                            data-toggle="tooltip"
+                            data-offset="70 0"
+                            title="<?php hecho($tooltip); ?>"
+                        >
+                            Entité racine / ... /
+                        </em>
+                    <?php else : ?>
+                        <?php foreach ($role['ancetre'] as $ancetre) : ?>
+                            <em class="text-muted">
+                                <?php hecho($ancetre . ' / '); ?>
+                            </em>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                <?php endif; ?>
                 <a href='Entite/detail?id_e=<?php echo $role['id_e']?>'>
-                <?php hecho($role['denomination'] ?: "Entité racine"); ?>
+                    <?php hecho($role['denomination'] ?: 'Entité racine'); ?>
                 </a>
                 <br/>
             <?php endforeach;?>
