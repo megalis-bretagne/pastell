@@ -93,9 +93,7 @@ class IparapheurSousType extends ChoiceActionExecutor
             /** Aucun connecteur configuré */
             return [];
         }
-        $data = $signature->isFastSignature()
-            ? explode("\n", $config->getFileContent('fast_parapheur_circuit'))
-            : explode("\n", $config->getFileContent('iparapheur_sous_type'));
+        $data = $signature->getSousType();
         foreach ($data as $key => $name) {
             if ($name) {
                 $result[$name] = $name;
