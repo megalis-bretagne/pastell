@@ -3,12 +3,6 @@ set -e
 
 /bin/bash /var/www/pastell/docker/docker-pastell-init > /data/config/DockerSettings.php
 
-# Utilisation de l'authentification cliente si nécessaire
-if [ "$AUTHENTICATION_WITH_CLIENT_CERTIFICATE" ] ; then
-    sed -i 's/# SSLVerifyclient optional/SSLVerifyclient optional/' /etc/apache2/sites-available/pastell-apache-config.conf
-fi
-
-
 # Certbot
 if [ "$LETSENCRYPT_DOMAIN" ] ; then
     if [ -f "/data/certificate/fullchain.pem" ] ; then

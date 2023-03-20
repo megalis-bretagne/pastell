@@ -5,6 +5,7 @@
  * @var array $infoUtilisateur
  * @var Certificate $certificat
  * @var array $arbre
+ * @var bool $enable_certificate_authentication
  */
 
 use Pastell\Utilities\Certificate;
@@ -39,6 +40,7 @@ use Pastell\Utilities\Certificate;
     <th><label for='prenom'>Prénom<span class='obl'>*</span></label> </th>
     <td><input class="form-control col-md-4" type='text' name='prenom' value='<?php hecho($infoUtilisateur['prenom']); ?>'/></td>
 </tr>
+<?php if ($enable_certificate_authentication) : ?>
 <tr>
     <th><label for='certificat'>Certificat (PEM)</label> </th>
     <td><input class="btn btn-outline-primary col-md-4" type='file' name='certificat' /><br/>
@@ -48,6 +50,7 @@ use Pastell\Utilities\Certificate;
     <?php endif;?>
     </td>
 </tr>
+<?php endif; ?>
 
 <?php
 $tabEntite = $roleUtilisateur->getEntite($this->Authentification->getId(), 'entite:edition');

@@ -11,6 +11,7 @@
  * @var array $notification_list
  * @var array $all_module
  * @var int $id_u
+ * @var bool $enable_certificate_authentication
  */
 
 use Pastell\Utilities\Certificate;
@@ -72,7 +73,7 @@ use Pastell\Utilities\Certificate;
             </td>
         </tr>
 
-        <?php if ($certificat->isValid()) : ?>
+        <?php if ($enable_certificate_authentication && $certificat->isValid()) : ?>
             <tr>
                 <th>Certificat</th>
                 <td>
