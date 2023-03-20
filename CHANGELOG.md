@@ -67,6 +67,7 @@
 - Les éléments texte (multi-ligne) sont disponibles à la sélection de l'objet pour l'envoi à la préfecture dans le studio #1690
 - Les ancêtres d'une entité sont indiqués dans les rôles de la liste des utilisateurs et les ancêtres restent visibles
   dans la recherche d'une entité pour l'ajout d'un rôle à un utilisateur #1680
+- La possibilité de se connecter via un certificat X509 client est une fonctionnalité activable désactivée par défaut #
 
 ## Suppressions
 

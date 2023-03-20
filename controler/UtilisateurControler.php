@@ -1,6 +1,7 @@
 <?php
 
 use Pastell\Mailer\Mailer;
+use Pastell\Service\FeatureToggle\CertificateAuthentication;
 use Pastell\Service\PasswordEntropy;
 use Pastell\Service\Utilisateur\UserCreationService;
 use Pastell\Service\Utilisateur\UserTokenService;
@@ -295,6 +296,10 @@ class UtilisateurControler extends PastellControler
             $this->verifDroit($infoUtilisateur['id_e'], 'utilisateur:creation');
             $this->setViewParameter('page_title', 'Nouvel utilisateur ');
         }
+        $this->setViewParameter(
+            'enable_certificate_authentication',
+            $this->getObjectInstancier()->getInstance(CertificateAuthentication::class)->isEnabled()
+        );
         $this->setViewParameter('id_u', $id_u);
         $this->setViewParameter('id_e', $id_e);
         $this->setViewParameter('infoUtilisateur', $infoUtilisateur);
@@ -349,6 +354,10 @@ class UtilisateurControler extends PastellControler
                 $this->getViewParameterOrObject('infoEntiteDeBase')['denomination']
             );
         }
+        $this->setViewParameter(
+            'enable_certificate_authentication',
+            $this->getObjectInstancier()->getInstance(CertificateAuthentication::class)->isEnabled()
+        );
         $this->setViewParameter('info', $info);
         $this->setViewParameter('id_u', $id_u);
         $this->setViewParameter(
