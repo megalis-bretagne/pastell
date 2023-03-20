@@ -30,7 +30,6 @@ services:
             REDIS_PORT: ${REDIS_PORT:-6379}
             PLATEFORME_MAIL: ${PLATEFORME_MAIL:-noreply@paste.ll}
             WEBSEC_BASE: ${WEBSEC_BASE:-https://localhost:8443/mailsec/}
-            AUTHENTICATION_WITH_CLIENT_CERTIFICATE: ${AUTHENTICATION_WITH_CLIENT_CERTIFICATE:-}
             PASTELL_ADMIN_LOGIN: ${PASTELL_ADMIN_LOGIN:-admin}
             PASTELL_ADMIN_EMAIL: ${PASTELL_ADMIN_EMAIL:-test@libriciel.net}
             MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-123456}

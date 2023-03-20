@@ -148,6 +148,7 @@
 - Suppression du support MySQL. La seule base supportée est MariaDB.
 - Suppression de la création d'une entité par API via PATCH avec le paramètre 'create' et suppression du test 'testCreateWithEditAction()'
 - Suppression de la classe `UtilisateurCreator`, remplacée par `UserCreationService`
+- Suppression de la constante AUTHENTICATION_WITH_CLIENT_CERTIFICATE remplacé par la constante TOGGLE_CertificateAuthentication
 
 ## Limitations
 
