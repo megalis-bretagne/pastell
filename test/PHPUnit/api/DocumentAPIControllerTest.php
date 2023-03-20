@@ -10,11 +10,34 @@ class DocumentAPIControllerTest extends PastellTestCase
         return $info['id_d'];
     }
 
-    public function testList()
+    public function testList(): void
     {
         $id_d = $this->createTestDocument();
-        $list = $this->getInternalAPI()->get("entite/1/document");
-        $this->assertEquals($id_d, $list[0]['id_d']);
+        $list = $this->getInternalAPI()->get('entite/1/document');
+        static::assertSame(
+            [
+                'id_d' => $id_d,
+                'id_e' => '1',
+                'role' => 'editeur',
+                'last_action' => 'creation',
+                'last_action_date' => $list[0]['last_action_date'],
+                'last_type' => 'test',
+                'type' => 'test',
+                'titre' => '',
+                'creation' =>  $list[0]['creation'],
+                'modification' =>  $list[0]['modification'],
+                'denomination' => 'Bourg-en-Bresse',
+                'siren' => '000000000',
+                'date_inscription' => '0000-00-00 00:00:00',
+                'entite_mere' => '0',
+                'centre_de_gestion' => '0',
+                'is_active' => true,
+                'entite_base' => 'Bourg-en-Bresse',
+                'entite' => [],
+                'last_action_display' => 'creation',
+            ],
+            $list[0]
+        );
     }
 
     public function testDetail()
@@ -246,30 +269,26 @@ class DocumentAPIControllerTest extends PastellTestCase
     {
         $this->createDocument('actes-generique');
         $info = $this->getInternalAPI()->get('document/count', ['id_e' => 1,'type' => 'actes-generique']);
-        static::assertEquals(
+        static::assertSame(
             [
-            1 =>
-                 [
-                    'flux' =>
-                         [
-                            'actes-generique' =>
-                                 [
-                                    'creation' => '1',
-                                ],
+                1 => [
+                    'flux' => [
+                        'actes-generique' => [
+                            'creation' => 1,
                         ],
-                    'info' =>
-                         [
-                            'id_e' => 1,
-                            'type' => 'collectivite',
-                            'denomination' => 'Bourg-en-Bresse',
-                            'siren' => '000000000',
-                            'date_inscription' => '0000-00-00 00:00:00',
-                            'entite_mere' => '0',
-                            'centre_de_gestion' => 0,
-                            'is_active' => 1,
-                        ],
+                    ],
+                    'info' => [
+                        'id_e' => '1',
+                        'type' => 'collectivite',
+                        'denomination' => 'Bourg-en-Bresse',
+                        'siren' => '000000000',
+                        'date_inscription' => '0000-00-00 00:00:00',
+                        'entite_mere' => '0',
+                        'centre_de_gestion' => '0',
+                        'is_active' => true,
+                    ],
                 ],
-             ],
+            ],
             $info
         );
     }

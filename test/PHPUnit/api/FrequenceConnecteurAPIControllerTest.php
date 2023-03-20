@@ -2,11 +2,11 @@
 
 class FrequenceConnecteurAPIControllerTest extends PastellTestCase
 {
-    public function testList()
+    public function testList(): void
     {
-        $result = $this->getInternalAPI()->get("/frequenceConnecteur");
-        $this->assertEquals([
-            0 =>
+        $result = $this->getInternalAPI()->get('/frequenceConnecteur');
+        static::assertSame(
+            [
                 [
                     'id_cf' => '1',
                     'type_connecteur' => '',
@@ -21,7 +21,6 @@ class FrequenceConnecteurAPIControllerTest extends PastellTestCase
                     'libelle' => null,
                     'denomination' => null,
                 ],
-            1 =>
                 [
                     'id_cf' => '2',
                     'type_connecteur' => 'entite',
@@ -36,26 +35,31 @@ class FrequenceConnecteurAPIControllerTest extends PastellTestCase
                     'libelle' => null,
                     'denomination' => null,
                 ],
-        ], $result);
+            ],
+            $result
+        );
     }
 
-    public function testDetail()
+    public function testDetail(): void
     {
-        $result = $this->getInternalAPI()->get("/frequenceConnecteur/1");
-        $this->assertEquals($result, [
-            'id_cf' => '1',
-            'type_connecteur' => '',
-            'famille_connecteur' => '',
-            'id_connecteur' => '',
-            'id_ce' => '0',
-            'action_type' => '',
-            'type_document' => '',
-            'action' => '',
-            'expression' => '2',
-            'id_verrou' => 'DEFAULT_FREQUENCE',
-            'libelle' => null,
-            'denomination' => null,
-        ]);
+        $result = $this->getInternalAPI()->get('/frequenceConnecteur/1');
+        static::assertSame(
+            [
+                'id_cf' => '1',
+                'type_connecteur' => '',
+                'famille_connecteur' => '',
+                'id_connecteur' => '',
+                'id_ce' => '0',
+                'action_type' => '',
+                'type_document' => '',
+                'action' => '',
+                'expression' => '2',
+                'id_verrou' => 'DEFAULT_FREQUENCE',
+                'libelle' => null,
+                'denomination' => null,
+            ],
+            $result
+        );
     }
 
     public function testDetailNotFound()
@@ -65,10 +69,17 @@ class FrequenceConnecteurAPIControllerTest extends PastellTestCase
         $this->getInternalAPI()->get("/frequenceConnecteur/12");
     }
 
-    public function testNew()
+    public function testNew(): void
     {
-        $result = $this->getInternalAPI()->post("/frequenceConnecteur", ['type_connecteur' => 'entite', 'famille_connecteur' => 'signature', 'expression' => 42]);
-        $this->assertEquals(
+        $result = $this->getInternalAPI()->post(
+            '/frequenceConnecteur',
+            [
+                'type_connecteur' => 'entite',
+                'famille_connecteur' => 'signature',
+                'expression' => 42,
+            ]
+        );
+        static::assertSame(
             [
                 'id_cf' => '3',
                 'type_connecteur' => 'entite',
@@ -87,20 +98,20 @@ class FrequenceConnecteurAPIControllerTest extends PastellTestCase
         );
     }
 
-    public function testEdit()
+    public function testEdit(): void
     {
-        $connecteur_frequence = $this->getInternalAPI()->get("/frequenceConnecteur/1");
+        $connecteur_frequence = $this->getInternalAPI()->get('/frequenceConnecteur/1');
         $connecteur_frequence['id_verrou'] = 'VERROU_1';
-        $result = $this->getInternalAPI()->patch("/frequenceConnecteur/1", $connecteur_frequence);
-        $this->assertEquals($connecteur_frequence, $result);
+        $result = $this->getInternalAPI()->patch('/frequenceConnecteur/1', $connecteur_frequence);
+        static::assertSame($connecteur_frequence, $result);
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
-        $return = $this->getInternalAPI()->delete("/frequenceConnecteur/1");
-        $this->assertEquals(['result' => 'ok'], $return);
+        $return = $this->getInternalAPI()->delete('/frequenceConnecteur/1');
+        static::assertSame(['result' => 'ok'], $return);
         $connecteurFrequenceSQL = $this->getObjectInstancier()->getInstance(ConnecteurFrequenceSQL::class);
-        $this->assertEmpty($connecteurFrequenceSQL->getInfo(1));
+        static::assertEmpty($connecteurFrequenceSQL->getInfo(1));
     }
 
     public function testGetAsEntiteAdministrator()

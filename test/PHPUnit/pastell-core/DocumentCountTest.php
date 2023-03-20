@@ -108,14 +108,14 @@ class DocumentCountTest extends PastellTestCase
                             ],
                         'info' =>
                              [
-                                'id_e' => 1,
+                                'id_e' => '1',
                                 'type' => 'collectivite',
                                 'denomination' => 'Bourg-en-Bresse',
                                 'siren' => '000000000',
                                 'date_inscription' => '0000-00-00 00:00:00',
                                 'entite_mere' => '0',
-                                'centre_de_gestion' => 0,
-                                'is_active' => 1,
+                                'centre_de_gestion' => '0',
+                                'is_active' => true,
                             ],
                     ]
              ],

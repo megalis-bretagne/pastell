@@ -8,13 +8,13 @@ class InternalAPITest extends PastellTestCase
         $this->assertEquals("1.4-fixtures", $version_info['version']);
     }
 
-    public function testUnauhtenticated()
+    public function testUnauthenticated(): void
     {
         $internalAPI = $this->getInternalAPI();
         $internalAPI->setUtilisateurId(false);
-        $this->expectException("UnauthorizedException");
+        $this->expectException(UnauthorizedException::class);
         $this->expectExceptionMessage("Vous devez être connecté pour utiliser l'API");
-        $internalAPI->get("/version");
+        $internalAPI->get('/version');
     }
 
     public function testScriptTest()
@@ -26,17 +26,17 @@ class InternalAPITest extends PastellTestCase
         $this->assertEquals("1.4-fixtures", $version_info['version']);
     }
 
-    public function testRessourceAbsente()
+    public function testRessourceAbsente(): void
     {
-        $this->expectException("Exception");
-        $this->expectExceptionMessage("Ressource absente");
-        $this->getInternalAPI()->get("");
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Ressource absente');
+        $this->getInternalAPI()->get('');
     }
 
-    public function testNotExistingRessource()
+    public function testNotExistingRessource(): void
     {
-        $this->expectException("NotFoundException");
+        $this->expectException(NotFoundException::class);
         $this->expectExceptionMessage("La ressource Foo n'a pas été trouvée");
-        $this->getInternalAPI()->get("/foo");
+        $this->getInternalAPI()->get('/foo');
     }
 }

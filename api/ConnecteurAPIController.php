@@ -7,39 +7,18 @@ use Pastell\Service\Droit\DroitService;
 
 class ConnecteurAPIController extends BaseAPIController
 {
-    private $donneesFormulaireFactory;
-    private $connecteurEntiteSQL;
-    private $actionPossible;
-    private $actionExecutorFactory;
-    private $connecteurFactory;
-    private $connecteurDefinitionFiles;
-    private $entiteSQL;
-    private $connecteurCreationService;
-    private $connecteurDeletionService;
-    private $connecteurModificationService;
-
     public function __construct(
-        DonneesFormulaireFactory $donneesFormulaireFactory,
-        ConnecteurEntiteSQL $connecteurEntiteSQL,
-        ActionPossible $actionPossible,
-        ActionExecutorFactory $actionExecutorFactory,
-        ConnecteurFactory $connecteurFactory,
-        ConnecteurDefinitionFiles $connecteurDefinitionFiles,
-        EntiteSQL $entiteSQL,
-        ConnecteurCreationService $connecteurCreationService,
-        ConnecteurDeletionService $connecteurDeletionService,
-        ConnecteurModificationService $connecteurModificationService
+        private readonly DonneesFormulaireFactory $donneesFormulaireFactory,
+        private readonly ConnecteurEntiteSQL $connecteurEntiteSQL,
+        private readonly ActionPossible $actionPossible,
+        private readonly ActionExecutorFactory $actionExecutorFactory,
+        private readonly ConnecteurFactory $connecteurFactory,
+        private readonly ConnecteurDefinitionFiles $connecteurDefinitionFiles,
+        private readonly EntiteSQL $entiteSQL,
+        private readonly ConnecteurCreationService $connecteurCreationService,
+        private readonly ConnecteurDeletionService $connecteurDeletionService,
+        private readonly ConnecteurModificationService $connecteurModificationService
     ) {
-        $this->donneesFormulaireFactory = $donneesFormulaireFactory;
-        $this->connecteurEntiteSQL = $connecteurEntiteSQL;
-        $this->actionPossible = $actionPossible;
-        $this->actionExecutorFactory = $actionExecutorFactory;
-        $this->connecteurFactory = $connecteurFactory;
-        $this->connecteurDefinitionFiles = $connecteurDefinitionFiles;
-        $this->entiteSQL = $entiteSQL;
-        $this->connecteurCreationService = $connecteurCreationService;
-        $this->connecteurDeletionService = $connecteurDeletionService;
-        $this->connecteurModificationService = $connecteurModificationService;
     }
 
     /**
@@ -85,7 +64,15 @@ class ConnecteurAPIController extends BaseAPIController
             return $this->detail($id_e, $id_ce);
         }
 
-        return $this->connecteurEntiteSQL->getAll($id_e);
+        $connectors = $this->connecteurEntiteSQL->getAll($id_e);
+
+        foreach ($connectors as &$connector) {
+            $connector['id_ce'] = (string)$connector['id_ce'];
+            $connector['id_e'] = (string)$connector['id_e'];
+            $connector['frequence_en_minute'] = (string)$connector['frequence_en_minute'];
+        }
+
+        return $connectors;
     }
 
     /**
@@ -96,10 +83,18 @@ class ConnecteurAPIController extends BaseAPIController
     {
         $this->checkConnecteurLecture(0);
         $id_connecteur = $this->getFromQueryArgs(1);
-        if (! $id_connecteur) {
-            return $this->connecteurEntiteSQL->getAllForPlateform();
+        if (!$id_connecteur) {
+            $connectors = $this->connecteurEntiteSQL->getAllForPlateform();
+        } else {
+            $connectors = $this->connecteurEntiteSQL->getAllById($id_connecteur);
         }
-        return $this->connecteurEntiteSQL->getAllById($id_connecteur);
+
+        foreach ($connectors as &$connector) {
+            $connector['id_ce'] = (string)$connector['id_ce'];
+            $connector['id_e'] = (string)$connector['id_e'];
+            $connector['frequence_en_minute'] = (string)$connector['frequence_en_minute'];
+        }
+        return $connectors;
     }
 
     /**
@@ -133,6 +128,10 @@ class ConnecteurAPIController extends BaseAPIController
         $result['data'] = $donneesFormulaire->getRawDataWithoutPassword();
         $result['action-possible'] = $this->actionPossible
             ->getActionPossibleOnConnecteur($id_ce, $this->getUtilisateurId());
+
+        $result['id_ce'] = (string)$result['id_ce'];
+        $result['id_e'] = (string)$result['id_e'];
+        $result['frequence_en_minute'] = (string)$result['frequence_en_minute'];
 
         return $result;
     }

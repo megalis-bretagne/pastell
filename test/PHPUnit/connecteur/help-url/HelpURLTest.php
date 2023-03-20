@@ -11,7 +11,7 @@ class HelpURLTest extends ControlerTestCase
     {
         $id_ce = $this->createConnector('help-url', "URL d'aide", 0)['id_ce'];
         $this->configureConnector($id_ce, ['help_url' => 'https://foo.bar/baz'], 0);
-        $this->associateGlobalConnector($id_ce);
+        $this->associateGlobalConnector((int)$id_ce);
         $this->getObjectInstancier()->getInstance(Authentification::class)->connexion('admin', 1);
         $aideController = $this->getControlerInstance(AideControler::class);
         $this->expectOutputRegex('#https://foo.bar/baz#');

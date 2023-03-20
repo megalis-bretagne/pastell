@@ -2,18 +2,11 @@
 
 class JournalAPIController extends BaseAPIController
 {
-    private $journal;
-    private $sqlQuery;
-    private $documentTypeFactory;
-
     public function __construct(
-        Journal $journal,
-        SQLQuery $sqlQuery,
-        DocumentTypeFactory $documentTypeFactory
+        private readonly Journal $journal,
+        private readonly SQLQuery $sqlQuery,
+        private readonly DocumentTypeFactory $documentTypeFactory,
     ) {
-        $this->journal = $journal;
-        $this->sqlQuery = $sqlQuery;
-        $this->documentTypeFactory = $documentTypeFactory;
     }
 
     public function get()
@@ -35,10 +28,28 @@ class JournalAPIController extends BaseAPIController
         $format = $this->getFromRequest('format');
         $csv_entete_colonne = $this->getFromRequest('csv_entete_colonne', 0);
 
-        $this->checkDroit($id_e, "journal:lecture");
+        $this->checkDroit($id_e, 'journal:lecture');
 
         if ($format != 'csv') {
-            $result = $this->journal->getAll($id_e, $type, $id_d, $id_user, $offset, $limit, $recherche, $date_debut, $date_fin, false, false);
+            $result = $this->journal->getAll(
+                $id_e,
+                $type,
+                $id_d,
+                $id_user,
+                $offset,
+                $limit,
+                $recherche,
+                $date_debut,
+                $date_fin,
+                false,
+                false
+            );
+            foreach ($result as &$row) {
+                $row['id_j'] = (string)$row['id_j'];
+                $row['type'] = (string)$row['type'];
+                $row['id_e'] = (string)$row['id_e'];
+                $row['id_u'] = (string)$row['id_u'];
+            }
             return $result;
         }
 
@@ -57,7 +68,18 @@ class JournalAPIController extends BaseAPIController
         $max_execution_time = ini_get('max_execution_time');
 
         $pdo = $this->sqlQuery->getPdo();
-        list($sql, $param_sql) = $this->journal->getQueryAll($id_e, $type, $id_d, $id_user, $offset, $limit, $recherche, $date_debut, $date_fin, true);
+        list($sql, $param_sql) = $this->journal->getQueryAll(
+            $id_e,
+            $type,
+            $id_d,
+            $id_user,
+            $offset,
+            $limit,
+            $recherche,
+            $date_debut,
+            $date_fin,
+            true
+        );
         $stmt = $pdo->prepare($sql);
         $stmt->execute($param_sql);
 
@@ -107,6 +129,10 @@ class JournalAPIController extends BaseAPIController
         $id_j = $this->getFromQueryArgs(0);
         $info = $this->getInfo($id_j);
         $info['preuve'] = base64_encode($info['preuve']);
+        $info['id_j'] = (string)$info['id_j'];
+        $info['type'] = (string)$info['type'];
+        $info['id_e'] = (string)$info['id_e'];
+        $info['id_u'] = (string)$info['id_u'];
         return $info;
     }
 

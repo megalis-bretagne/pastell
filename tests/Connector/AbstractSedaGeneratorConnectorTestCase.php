@@ -79,7 +79,7 @@ abstract class AbstractSedaGeneratorConnectorTestCase extends PastellTestCase
         $this->configureConnector($id_ce, [
             'seda_generator_url' => 'http://seda-generator:8080/',
         ]);
-        return $id_ce;
+        return (int)$id_ce;
     }
 
     /**

@@ -52,7 +52,7 @@ class UtilisateurAPIController extends BaseAPIController
             // Création d'un nouveau tableau pour ne retourner que les valeurs retenues
             foreach ($listUtilisateur as $id_u => $utilisateur) {
                 $result[$id_u] = [
-                    'id_u' => $utilisateur['id_u'],
+                    'id_u' => (string)$utilisateur['id_u'],
                     'login' => $utilisateur['login'],
                     'email' => $utilisateur['email'],
                     'active' => (bool)$utilisateur['is_enabled']
@@ -88,13 +88,13 @@ class UtilisateurAPIController extends BaseAPIController
         $this->checkDroit($infoUtilisateur['id_e'], "utilisateur:lecture");
 
         $result = [];
-        $result['id_u'] = $infoUtilisateur['id_u'];
+        $result['id_u'] = (string)$infoUtilisateur['id_u'];
         $result['login'] = $infoUtilisateur['login'];
         $result['nom'] = $infoUtilisateur['nom'];
         $result['prenom'] = $infoUtilisateur['prenom'];
         $result['email'] = $infoUtilisateur['email'];
         $result['certificat'] = $infoUtilisateur['certificat'];
-        $result['id_e'] = $infoUtilisateur['id_e'];
+        $result['id_e'] = (string)$infoUtilisateur['id_e'];
         $result['active'] = (bool)$infoUtilisateur['is_enabled'];
 
         return $result;
