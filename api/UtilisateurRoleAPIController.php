@@ -4,21 +4,11 @@ class UtilisateurRoleAPIController extends BaseAPIController
 {
     public const ALL_ROLES = "ALL_ROLES";
 
-    private $utilisateur;
-
-    private $roleSQL;
-
-    private $entiteSQL;
-
-
     public function __construct(
-        UtilisateurSQL $utilisateur,
-        RoleSQL $roleSQL,
-        EntiteSQL $entiteSQL
+        private readonly UtilisateurSQL $utilisateur,
+        private readonly RoleSQL $roleSQL,
+        private readonly EntiteSQL $entiteSQL
     ) {
-        $this->utilisateur = $utilisateur;
-        $this->roleSQL = $roleSQL;
-        $this->entiteSQL = $entiteSQL;
     }
 
     /**
@@ -62,14 +52,13 @@ class UtilisateurRoleAPIController extends BaseAPIController
         $role_list = $this->getRoleUtilisateur()->getRole($id_u);
         $all_droit_utilisateur = $this->getDroitService()->getAllDroitEntite($id_u, $id_e);
 
-
         // Construction du tableau de retour
         $result = [];
         foreach ($role_list as $id_u_role => $role_info) {
             $result[$id_u_role] = [
-                'id_u' => $role_info['id_u'],
+                'id_u' => (string)$role_info['id_u'],
                 'role' => $role_info['role'],
-                'id_e' => $role_info['id_e'],
+                'id_e' => (string)$role_info['id_e'],
                 'droits' => array_keys($this->roleSQL->getDroit($all_droit_utilisateur, $role_info['role']))
             ];
         }

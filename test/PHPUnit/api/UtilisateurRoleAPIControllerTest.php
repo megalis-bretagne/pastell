@@ -2,31 +2,33 @@
 
 class UtilisateurRoleAPIControllerTest extends PastellTestCase
 {
-    public function testList()
+    public function testList(): void
     {
-        $list = $this->getInternalAPI()->get("utilisateur/1/role");
-        $this->assertEquals('admin', $list[0]['role']);
+        $list = $this->getInternalAPI()->get('/utilisateur/1/role');
+        self::assertSame('1', $list[0]['id_u']);
+        self::assertSame('admin', $list[0]['role']);
+        self::assertSame('0', $list[0]['id_e']);
     }
 
-    public function testAdd()
+    public function testAdd(): void
     {
-        $this->getInternalAPI()->post("utilisateur/1/role", ['id_e' => 0,'role' => 'utilisateur']);
-        $list = $this->getInternalAPI()->get("utilisateur/1/role");
-        $this->assertEquals('utilisateur', $list[1]['role']);
+        $this->getInternalAPI()->post('/utilisateur/1/role', ['id_e' => 0,'role' => 'utilisateur']);
+        $list = $this->getInternalAPI()->get('/utilisateur/1/role');
+        static::assertSame('utilisateur', $list[1]['role']);
     }
 
-    public function testAddBadUtilisateur()
+    public function testAddBadUtilisateur(): void
     {
-        $this->expectException("NotFoundException");
+        $this->expectException(NotFoundException::class);
         $this->expectExceptionMessage("L'utilisateur n'existe pas : {id_u=42}");
-        $this->getInternalAPI()->post("utilisateur/42/role", ['id_e' => 0,'role' => 'utilisateur']);
+        $this->getInternalAPI()->post('/utilisateur/42/role', ['id_e' => 0,'role' => 'utilisateur']);
     }
 
-    public function testAddBadRole()
+    public function testAddBadRole(): void
     {
-        $this->expectException("NotFoundException");
+        $this->expectException(NotFoundException::class);
         $this->expectExceptionMessage("Le role spécifié n'existe pas {role=foo}");
-        $this->getInternalAPI()->post("utilisateur/1/role", ['id_e' => 0,'role' => 'foo']);
+        $this->getInternalAPI()->post('/utilisateur/1/role', ['id_e' => 0,'role' => 'foo']);
     }
 
     public function testAddSeveral()
@@ -52,19 +54,19 @@ class UtilisateurRoleAPIControllerTest extends PastellTestCase
     }
 
 
-    public function testDelete()
+    public function testDelete(): void
     {
-        $this->getInternalAPI()->delete("utilisateur/2/role?id_e=1&role=admin");
-        $list = $this->getInternalAPI()->get("utilisateur/2/role");
-        $this->assertEquals('aucun droit', $list[0]['role']);
+        $this->getInternalAPI()->delete('/utilisateur/2/role?id_e=1&role=admin');
+        $list = $this->getInternalAPI()->get('/utilisateur/2/role');
+        static::assertSame('aucun droit', $list[0]['role']);
     }
 
-    public function testDeleteSeveral()
+    public function testDeleteSeveral(): void
     {
-        $this->expectOutputRegex("#ok#");
-        $this->getV1("delete-several-roles-utilisateur.php?id_u=2&id_e=1&role[]=admin");
-        $list = $this->getInternalAPI()->get("utilisateur/2/role");
-        $this->assertEquals('aucun droit', $list[0]['role']);
+        $this->expectOutputRegex('#ok#');
+        $this->getV1('delete-several-roles-utilisateur.php?id_u=2&id_e=1&role[]=admin');
+        $list = $this->getInternalAPI()->get('/utilisateur/2/role');
+        static::assertSame('aucun droit', $list[0]['role']);
     }
 
     public function testDeleteSevaralNoRole()
@@ -73,11 +75,11 @@ class UtilisateurRoleAPIControllerTest extends PastellTestCase
         $this->getV1("delete-several-roles-utilisateur.php?id_u=2&id_e=1");
     }
 
-    public function testDeleteSeveralOneRole()
+    public function testDeleteSeveralOneRole(): void
     {
-        $this->expectOutputRegex("#ok#");
-        $this->getV1("delete-several-roles-utilisateur.php?id_u=2&id_e=1&role=admin");
-        $list = $this->getInternalAPI()->get("utilisateur/2/role");
-        $this->assertEquals('aucun droit', $list[0]['role']);
+        $this->expectOutputRegex('#ok#');
+        $this->getV1('delete-several-roles-utilisateur.php?id_u=2&id_e=1&role=admin');
+        $list = $this->getInternalAPI()->get('/utilisateur/2/role');
+        static::assertSame('aucun droit', $list[0]['role']);
     }
 }

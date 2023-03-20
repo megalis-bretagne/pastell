@@ -2,25 +2,19 @@
 
 class ExtensionAPIController extends BaseAPIController
 {
-    private $extensions;
-    private $extensionSQL;
-
     public function __construct(
-        Extensions $extensions,
-        ExtensionSQL $extensionSQL
+        private readonly Extensions $extensions,
+        private readonly ExtensionSQL $extensionSQL,
     ) {
-        $this->extensions = $extensions;
-        $this->extensionSQL = $extensionSQL;
     }
 
     /**
-     * @return array|bool|mixed
      * @throws ForbiddenException
      * @throws NotFoundException
      */
-    public function get()
+    public function get(): array
     {
-        $this->checkDroit(0, "system:lecture");
+        $this->checkDroit(0, 'system:lecture');
         $id_extension = $this->getFromQueryArgs(0);
         if ($id_extension) {
             if (! $this->extensionSQL->getInfo($id_extension)) {
@@ -28,19 +22,22 @@ class ExtensionAPIController extends BaseAPIController
             }
             return $this->extensions->getInfo($id_extension);
         }
-        $result['result'] = $this->extensions->getAll();
+        $extensions = $this->extensions->getAll();
+        foreach ($extensions as &$extension) {
+            $extension['id_e'] = (string)$extension['id_e'];
+        }
+        $result['result'] = $extensions;
         return $result;
     }
 
     /**
-     * @return array
      * @throws ConflictException
      * @throws ForbiddenException
      * @throws Exception
      */
-    public function post()
+    public function post(): array
     {
-        $this->checkDroit(0, "system:edition");
+        $this->checkDroit(0, 'system:edition');
         $path = $this->getFromRequest('path');
         if (! file_exists($path)) {
             throw new Exception("Le chemin « $path » n'existe pas sur le système de fichier");
@@ -54,7 +51,8 @@ class ExtensionAPIController extends BaseAPIController
             }
         }
         $id_extension = $this->extensionSQL->edit(0, $path);
-        return ['id_extension' => $id_extension,'detail' => $detail_extension];
+        $detail_extension['id_e'] = (string)$detail_extension['id_e'];
+        return ['id_extension' => (string)$id_extension,'detail' => $detail_extension];
     }
 
     /**

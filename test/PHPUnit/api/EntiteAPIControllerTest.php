@@ -4,23 +4,46 @@ use Pastell\Service\Utilisateur\UserCreationService;
 
 class EntiteAPIControllerTest extends PastellTestCase
 {
-    public function testList()
+    public function testList(): void
     {
-        $list = $this->getInternalAPI()->get("/entite");
-        $this->assertEquals('Bourg-en-Bresse', $list[0]['denomination']);
+        $list = $this->getInternalAPI()->get('/entite');
+        static::assertSame(
+            [
+                'id_e' => '1',
+                'denomination' => 'Bourg-en-Bresse',
+                'siren' => '000000000',
+                'type' => 'collectivite',
+                'centre_de_gestion' => '0',
+                'entite_mere' => '0',
+                'is_active' => true,
+            ],
+            $list[0]
+        );
     }
 
-    public function testCreate()
+    public function testCreate(): void
     {
         $result = $this->getInternalAPI()->post(
-            "/entite",
+            '/entite',
             [
-                    'denomination' => 'Métropolis',
-                    'type' => 'collectivite',
-                    'siren' => '677203002'
+                'denomination' => 'Métropolis',
+                'type' => 'collectivite',
+                'siren' => '677203002'
             ]
         );
-        $this->assertNotEmpty($result['id_e']);
+        static::assertSame(
+            [
+                'id_e' => '3',
+                'denomination' => 'Métropolis',
+                'siren' => '677203002',
+                'type' => 'collectivite',
+                'entite_mere' => '0',
+                'entite_fille' => [],
+                'centre_de_gestion' => '0',
+                'is_active' => true,
+            ],
+            $result
+        );
     }
 
     public function testDelete()
@@ -31,19 +54,52 @@ class EntiteAPIControllerTest extends PastellTestCase
         $this->getInternalAPI()->get("/entite/2");
     }
 
-    public function testEdit()
+    public function testEdit(): void
     {
         $info = $this->getInternalAPI()->patch(
-            "/entite/1",
-            ['denomination' => 'Mâcon','siren' => '677203002']
+            '/entite/1',
+            ['denomination' => 'Mâcon', 'siren' => '677203002']
         );
-        $this->assertEquals('Mâcon', $info['denomination']);
+        static::assertSame(
+            [
+                'id_e' => '1',
+                'denomination' => 'Mâcon',
+                'siren' => '677203002',
+                'type' => 'collectivite',
+                'entite_mere' => '0',
+                'entite_fille' => [
+                    [
+                        'id_e' => '2',
+                    ],
+                ],
+                'centre_de_gestion' => '0',
+                'is_active' => true,
+                'result' => 'ok',
+            ],
+            $info
+        );
     }
 
-    public function testDetail()
+    public function testDetail(): void
     {
-        $info = $this->getInternalAPI()->get("/entite/1");
-        $this->assertEquals('Bourg-en-Bresse', $info['denomination']);
+        $info = $this->getInternalAPI()->get('/entite/1');
+        static::assertSame(
+            [
+                'id_e' => '1',
+                'denomination' => 'Bourg-en-Bresse',
+                'siren' => '000000000',
+                'type' => 'collectivite',
+                'entite_mere' => '0',
+                'entite_fille' => [
+                    [
+                        'id_e' => '2',
+                    ],
+                ],
+                'centre_de_gestion' => '0',
+                'is_active' => true,
+            ],
+            $info
+        );
     }
 
     public function testCreateFilleCDG(): void
@@ -64,13 +120,25 @@ class EntiteAPIControllerTest extends PastellTestCase
                 'centre_de_gestion' => self::ID_E_COL,
             ]
         );
-        static::assertSame(1, $info['centre_de_gestion']);
+        static::assertSame(
+            [
+                'id_e' => '3',
+                'denomination' => 'Métropolis',
+                'siren' => '677203002',
+                'type' => 'collectivite',
+                'entite_mere' => '0',
+                'entite_fille' => [],
+                'centre_de_gestion' => '1',
+                'is_active' => true,
+            ],
+            $info
+        );
     }
 
-    public function testCreateFille()
+    public function testCreateFille(): void
     {
         $info = $this->getInternalAPI()->patch(
-            "/entite/2",
+            '/entite/2',
             [
                 'denomination' => 'Métropolis',
                 'type' => 'collectivite',
@@ -78,7 +146,7 @@ class EntiteAPIControllerTest extends PastellTestCase
                 'entite_mere' => 1,
             ]
         );
-        $this->assertEquals(1, $info['entite_mere']);
+        static::assertSame('1', $info['entite_mere']);
     }
 
     public function testCreateWithoutName()
@@ -121,7 +189,7 @@ class EntiteAPIControllerTest extends PastellTestCase
         $this->assertNotEquals($entiteActivated, $entiteDeactivated);
 
         $entiteReactivated = $this->getInternalAPI()->post('/entite/1/activate');
-        $this->assertEquals($entiteActivated, $entiteReactivated);
+        static::assertSame($entiteActivated, $entiteReactivated);
     }
 
     public function testDeActivateFailDroit(): void

@@ -25,9 +25,17 @@ final class EntiteAPIController extends BaseAPIController
         }
         $data['is_active'] = $this->getFromRequest('is_active', null);
         if ($data['is_active'] !== null) {
-            return $this->entiteSQL->getEntiteFromData($data);
+            $users = $this->entiteSQL->getEntiteFromData($data);
+        } else {
+            $users = $this->getRoleUtilisateur()->getAllEntiteWithFille($this->getUtilisateurId(), 'entite:lecture');
         }
-        return $this->getRoleUtilisateur()->getAllEntiteWithFille($this->getUtilisateurId(), 'entite:lecture');
+
+        foreach ($users as &$user) {
+            $user['id_e'] = (string)$user['id_e'];
+            $user['centre_de_gestion'] = (string)$user['centre_de_gestion'];
+            $user['is_active'] = (bool)$user['is_active'];
+        }
+        return $users;
     }
 
     private function getInfo($id_e)
@@ -45,19 +53,19 @@ final class EntiteAPIController extends BaseAPIController
         if ($entiteFille) {
             //GDON : completer les TU pour passer dans la boucle.
             foreach ($entiteFille as $key => $valeur) {
-                $resultFille[$key] = ['id_e' => $valeur['id_e']];
+                $resultFille[$key] = ['id_e' => (string)$valeur['id_e']];
             }
         }
 
         // Construction du tableau resultat
         $result = [];
-        $result['id_e'] = $infoEntite['id_e'];
+        $result['id_e'] = (string)$infoEntite['id_e'];
         $result['denomination'] = $infoEntite['denomination'];
         $result['siren'] = $infoEntite['siren'];
         $result['type'] = $infoEntite['type'];
         $result['entite_mere'] = $infoEntite['entite_mere'];
         $result['entite_fille'] = $resultFille;
-        $result['centre_de_gestion'] = $infoEntite['centre_de_gestion'];
+        $result['centre_de_gestion'] = (string)$infoEntite['centre_de_gestion'];
         $result['is_active'] = (bool)$infoEntite['is_active'];
 
         return $result;

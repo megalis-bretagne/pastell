@@ -4,10 +4,10 @@ use Pastell\Service\Utilisateur\UserCreationService;
 
 class UtilisateurAPIControllerTest extends PastellTestCase
 {
-    public function testCreate()
+    public function testCreate(): void
     {
         $info = $this->getInternalAPI()->post(
-            "utilisateur",
+            '/utilisateur',
             [
                 'email' => 'foo@bar.baz',
                 'login' => 'foo',
@@ -16,15 +16,27 @@ class UtilisateurAPIControllerTest extends PastellTestCase
                 'prenom' => 'bar',
             ]
         );
-        $this->assertEquals('foo', $info['nom']);
+        static::assertSame(
+            [
+                'id_u' => '3',
+                'login' => 'foo',
+                'nom' => 'foo',
+                'prenom' => 'bar',
+                'email' => 'foo@bar.baz',
+                'certificat' => '',
+                'id_e' => '0',
+                'active' => true,
+            ],
+            $info
+        );
     }
 
-    public function testCreateWithoutNom()
+    public function testCreateWithoutNom(): void
     {
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage("Le nom est obligatoire");
+        $this->expectException(UnrecoverableException::class);
+        $this->expectExceptionMessage('Le nom est obligatoire');
         $this->getInternalAPI()->post(
-            "utilisateur",
+            '/utilisateur',
             [
                 'email' => 'foo@bar.baz',
                 'login' => 'foo',
@@ -34,12 +46,12 @@ class UtilisateurAPIControllerTest extends PastellTestCase
         );
     }
 
-    public function testCreateWithoutPrenom()
+    public function testCreateWithoutPrenom(): void
     {
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage("Le prénom est obligatoire");
+        $this->expectException(UnrecoverableException::class);
+        $this->expectExceptionMessage('Le prénom est obligatoire');
         $this->getInternalAPI()->post(
-            "utilisateur",
+            '/utilisateur',
             [
                 'email' => 'foo@bar.baz',
                 'login' => 'foo',
@@ -64,12 +76,12 @@ class UtilisateurAPIControllerTest extends PastellTestCase
         );
     }
 
-    public function testCreateWithoutEmail()
+    public function testCreateWithoutEmail(): void
     {
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage("Votre adresse email ne semble pas valide");
+        $this->expectException(UnrecoverableException::class);
+        $this->expectExceptionMessage('Votre adresse email ne semble pas valide');
         $this->getInternalAPI()->post(
-            "utilisateur",
+            '/utilisateur',
             [
                 'login' => 'foo@bar.baz',
                 'prenom' => 'foo',
@@ -94,51 +106,70 @@ class UtilisateurAPIControllerTest extends PastellTestCase
         $this->getInternalAPI()->patch("utilisateur/{$info['id_u']}", ['login' => 'admin']);
     }
 
-    public function testSetCertificateKO()
+    public function testSetCertificateKO(): void
     {
         $fileUploader = new FileUploaderMock();
         $fileUploader->setFiles(['certificat' => 'toto']);
         $this->getInternalAPI()->setFileUploader($fileUploader);
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage("Le certificat ne semble pas être valide");
-        $this->getInternalAPI()->patch("utilisateur/1");
+        $this->expectException(UnrecoverableException::class);
+        $this->expectExceptionMessage('Le certificat ne semble pas être valide');
+        $this->getInternalAPI()->patch('/utilisateur/1');
     }
 
-    public function testSetCertificate()
+    public function testSetCertificate(): void
     {
-        $cert_content = file_get_contents(__DIR__ . "/../fixtures/autorite-cert.pem");
+        $cert_content = file_get_contents(__DIR__ . '/../fixtures/autorite-cert.pem');
         $fileUploader = new FileUploaderMock();
         $fileUploader->setFiles(['certificat' => $cert_content]);
         $this->getInternalAPI()->setFileUploader($fileUploader);
 
-        $info = $this->getInternalAPI()->patch("utilisateur/1");
-        $this->assertEquals($cert_content, $info['certificat']);
+        $info = $this->getInternalAPI()->patch('/utilisateur/1');
+        static::assertSame($cert_content, $info['certificat']);
     }
 
-
-    public function testList()
+    public function testList(): void
     {
-        $info = $this->getInternalAPI()->get("/utilisateur");
-        $this->assertEquals('admin', $info[0]['login']);
+        $info = $this->getInternalAPI()->get('/utilisateur');
+        static::assertSame(
+            [
+                'id_u' => '1',
+                'login' => 'admin',
+                'email' => 'eric@sigmalis.com',
+                'active' => true,
+            ],
+            $info[0]
+        );
     }
 
     public function testListV1()
     {
-        $this->expectOutputRegex("#admin#");
-        $this->getV1("list-utilisateur.php");
+        $this->expectOutputRegex('#admin#');
+        $this->getV1('list-utilisateur.php');
     }
 
-    public function testDetail()
+    public function testDetail(): void
     {
-        $info = $this->getInternalAPI()->get("/utilisateur/1");
-        $this->assertEquals('admin', $info['login']);
+        $info = $this->getInternalAPI()->get('/utilisateur/1');
+        static::assertSame(
+            [
+                'id_u' => '1',
+                'login' => 'admin',
+                'nom' => 'Pommateau',
+                'prenom' => 'Eric',
+                'email' => 'eric@sigmalis.com',
+                'certificat' => '',
+                'id_e' => '0',
+                'active' => true,
+            ],
+            $info
+        );
     }
 
-    public function testDetailNotExist()
+    public function testDetailNotExist(): void
     {
-        $this->expectException(Exception::class);
+        $this->expectException(NotFoundException::class);
         $this->expectExceptionMessage("L'utilisateur n'existe pas : {id_u=42}");
-        $this->getInternalAPI()->get("/utilisateur/42");
+        $this->getInternalAPI()->get('/utilisateur/42');
     }
 
     public function testDetailV1()
@@ -147,46 +178,71 @@ class UtilisateurAPIControllerTest extends PastellTestCase
         $this->getV1("detail-utilisateur.php?id_u=1");
     }
 
-    public function testEdit()
+    public function testEdit(): void
     {
-        $info = $this->getInternalAPI()->patch("utilisateur/1", ['login' => 'toto']);
-        $this->assertEquals('toto', $info['login']);
+        $info = $this->getInternalAPI()->patch('/utilisateur/1', ['login' => 'toto']);
+        static::assertSame(
+            [
+                'id_u' => '1',
+                'login' => 'toto',
+                'nom' => 'Pommateau',
+                'prenom' => 'Eric',
+                'email' => 'eric@sigmalis.com',
+                'certificat' => '',
+                'id_e' => '0',
+                'active' => true,
+                'result' => 'ok',
+            ],
+            $info
+        );
     }
 
-    public function testEditEntiteDeBase()
+    public function testEditEntiteDeBase(): void
     {
-        $info = $this->getInternalAPI()->patch("utilisateur/1", ['id_e' => '2']);
-        $this->assertEquals(2, $info['id_e']);
-        $info = $this->getInternalAPI()->patch("utilisateur/1", ['id_e' => '0']);
-        $this->assertEquals(0, $info['id_e']);
-        $info = $this->getInternalAPI()->patch("utilisateur/1", ['id_e' => '2']);
-        $this->assertEquals(2, $info['id_e']);
-        $info = $this->getInternalAPI()->patch("utilisateur/1", ['login' => 'toto']);
-        $this->assertEquals(2, $info['id_e']);
+        $info = $this->getInternalAPI()->patch('/utilisateur/1', ['id_e' => '2']);
+        static::assertSame('2', $info['id_e']);
+        $info = $this->getInternalAPI()->patch('/utilisateur/1', ['id_e' => '0']);
+        static::assertSame('0', $info['id_e']);
+        $info = $this->getInternalAPI()->patch('/utilisateur/1', ['id_e' => '2']);
+        static::assertSame('2', $info['id_e']);
+        $info = $this->getInternalAPI()->patch('/utilisateur/1', ['login' => 'toto']);
+        static::assertSame('2', $info['id_e']);
     }
 
-    public function testEditWithCreate()
+    public function testEditWithCreate(): void
     {
         $info = $this->getInternalAPI()->patch(
-            "utilisateur",
+            '/utilisateur',
             [
                 'email' => 'foo@bar.baz',
                 'login' => 'foo',
                 'password' => 'D@iw3DDf41Nl$DXzMJL!Uc2Yo',
                 'nom' => 'foo',
                 'prenom' => 'bar',
-                'create' => true
+                'create' => true,
             ]
         );
-        $this->assertEquals('foo', $info['login']);
+        static::assertSame(
+            [
+                'id_u' => '3',
+                'login' => 'foo',
+                'nom' => 'foo',
+                'prenom' => 'bar',
+                'email' => 'foo@bar.baz',
+                'certificat' => '',
+                'id_e' => '0',
+                'active' => true,
+            ],
+            $info
+        );
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
-        $this->getInternalAPI()->delete("utilisateur/1");
-        $this->expectException(Exception::class);
+        $this->getInternalAPI()->delete('/utilisateur/1');
+        $this->expectException(NotFoundException::class);
         $this->expectExceptionMessage("L'utilisateur n'existe pas : {id_u=1}");
-        $this->getInternalAPI()->get("utilisateur/1");
+        $this->getInternalAPI()->get('/utilisateur/1');
     }
 
     public function testPostActivateDeactivate(): void

@@ -33,7 +33,6 @@ class DocumentAPIController extends BaseAPIController
 
     public function get()
     {
-
         if ($this->getFromQueryArgs(0) == 'count') {
             return $this->count();
         }
@@ -93,7 +92,7 @@ class DocumentAPIController extends BaseAPIController
             }
         }
 
-        $listDocument = $this->documentActionEntite->getListBySearch(
+        $documents = $this->documentActionEntite->getListBySearch(
             $id_e,
             $type,
             $offset,
@@ -111,7 +110,13 @@ class DocumentAPIController extends BaseAPIController
             $indexedFieldValue,
             $sens_tri
         );
-        return $listDocument;
+
+        foreach ($documents as &$document) {
+            $document['id_e'] = (string)$document['id_e'];
+            $document['centre_de_gestion'] = (string)$document['centre_de_gestion'];
+            $document['is_active'] = (bool)$document['is_active'];
+        }
+        return $documents;
     }
 
     private function countByEntityFormat()

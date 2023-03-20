@@ -5,10 +5,18 @@ use Pastell\Service\Utilisateur\UserCreationService;
 
 class ConnecteurAPIControllerTest extends PastellTestCase
 {
-    public function testListAction()
+    public function testListAction(): void
     {
-        $list = $this->getInternalAPI()->get("/entite/0/connecteur");
-        $this->assertEquals('horodateur-interne', $list[0]['id_connecteur']);
+        $list = $this->getInternalAPI()->get('/entite/0/connecteur');
+        static::assertSame([
+            'id_ce' => '10',
+            'id_e' => '0',
+            'libelle' => 'Horodateur interne par défaut',
+            'id_connecteur' => 'horodateur-interne',
+            'type' => 'horodateur',
+            'frequence_en_minute' => '1',
+            'id_verrou' => '',
+        ], $list[0]);
     }
 
     public function testGetBadEntiteConnecteur()
@@ -25,17 +33,36 @@ class ConnecteurAPIControllerTest extends PastellTestCase
         $this->getInternalAPI()->get("/entite/42/connecteur");
     }
 
-    public function testCreate()
+    public function testCreate(): void
     {
         $info = $this->getInternalAPI()->post(
-            "/entite/1/connecteur",
+            '/entite/1/connecteur',
             ['libelle' => 'Connecteur de test','id_connecteur' => 'test']
         );
-        $this->assertEquals('Connecteur de test', $info['libelle']);
+        static::assertSame(
+            [
+                'id_ce' => '14',
+                'id_e' => '1',
+                'libelle' => 'Connecteur de test',
+                'id_connecteur' => 'test',
+                'type' => 'test',
+                'frequence_en_minute' => '1',
+                'id_verrou' => '',
+                'data' => [],
+                'action-possible' => [
+                    'ok',
+                    'fail',
+                    'une_action_auto',
+                    'une_action_long_auto',
+                    'une_action_auto_fail',
+                ],
+            ],
+            $info
+        );
 
         $connecteurActionService = $this->getObjectInstancier()->getInstance(ConnecteurActionService::class);
         $connecteur_action_message = $connecteurActionService->getByIdCe($info['id_ce'])[0]['message'];
-        $this->assertEquals("Le connecteur test « Connecteur de test » a été créé", $connecteur_action_message);
+        static::assertSame('Le connecteur test « Connecteur de test » a été créé', $connecteur_action_message);
     }
 
     public function testCreateWithoutLibelle()
@@ -48,13 +75,29 @@ class ConnecteurAPIControllerTest extends PastellTestCase
         );
     }
 
-    public function testCreateGlobale()
+    public function testCreateGlobal(): void
     {
         $info = $this->getInternalAPI()->post(
-            "/entite/0/connecteur",
+            '/entite/0/connecteur',
             ['libelle' => 'Test','id_connecteur' => 'test']
         );
-        $this->assertEquals(0, $info['id_e']);
+        static::assertSame(
+            [
+                'id_ce' => '14',
+                'id_e' => '0',
+                'libelle' => 'Test',
+                'id_connecteur' => 'test',
+                'type' => 'test',
+                'frequence_en_minute' => '1',
+                'id_verrou' => '',
+                'data' => [],
+                'action-possible' => [
+                    'ok',
+                    'fail',
+                ],
+            ],
+            $info
+        );
     }
 
     public function testCreateNotExist()
@@ -67,10 +110,10 @@ class ConnecteurAPIControllerTest extends PastellTestCase
         );
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
-        $info = $this->getInternalAPI()->delete("/entite/1/connecteur/12");
-        $this->assertEquals("ok", $info['result']);
+        $info = $this->getInternalAPI()->delete('/entite/1/connecteur/12');
+        static::assertSame(['result' => 'ok'], $info);
     }
 
     public function testDeleteNotExist()
@@ -87,20 +130,39 @@ class ConnecteurAPIControllerTest extends PastellTestCase
         $this->getInternalAPI()->delete("/entite/1/connecteur/1");
     }
 
-    public function testEdit()
+    public function testEdit(): void
     {
         $info = $this->getInternalAPI()->post(
-            "/entite/1/connecteur",
+            '/entite/1/connecteur',
             ['libelle' => 'Connecteur de test','id_connecteur' => 'test']
         );
-        $this->assertEquals('Connecteur de test', $info['libelle']);
+        static::assertSame('Connecteur de test', $info['libelle']);
         $id_ce = $info['id_ce'];
         $info = $this->getInternalAPI()->patch("/entite/1/connecteur/$id_ce", ['libelle' => 'bar']);
-        $this->assertEquals('bar', $info['libelle']);
+        static::assertSame(
+            [
+                'id_ce' => '14',
+                'id_e' => '1',
+                'libelle' => 'bar',
+                'id_connecteur' => 'test',
+                'type' => 'test',
+                'frequence_en_minute' => '1',
+                'id_verrou' => '',
+                'data' => [],
+                'action-possible' => [
+                    'ok',
+                    'fail',
+                    'une_action_auto',
+                    'une_action_long_auto',
+                    'une_action_auto_fail',
+                ],
+            ],
+            $info
+        );
 
         $connecteurActionService = $this->getObjectInstancier()->getInstance(ConnecteurActionService::class);
         $connecteur_action_message = $connecteurActionService->getByIdCe($id_ce)[0]['message'];
-        $this->assertEquals("Le libellé a été modifié en « bar »", $connecteur_action_message);
+        static::assertSame('Le libellé a été modifié en « bar »', $connecteur_action_message);
     }
 
     public function testEditNotExist()
@@ -117,20 +179,42 @@ class ConnecteurAPIControllerTest extends PastellTestCase
         $this->getInternalAPI()->patch("/entite/1/connecteur/12", ['libelle' => '']);
     }
 
-    public function testEditContentAction()
+    public function testEditContentAction(): void
     {
-        $info = $this->getInternalAPI()->patch("/entite/1/connecteur/12/content", ['champs1' => 'foo']);
-        $this->assertEquals('foo', $info['data']['champs1']);
+        $info = $this->getInternalAPI()->patch('/entite/1/connecteur/12/content', ['champs1' => 'foo']);
+        static::assertSame(
+            [
+                'id_ce' => '12',
+                'id_e' => '1',
+                'libelle' => 'connecteur non associé',
+                'id_connecteur' => 'test',
+                'type' => 'test',
+                'frequence_en_minute' => '1',
+                'id_verrou' => '',
+                'data' => [
+                    'champs1' => 'foo',
+                ],
+                'action-possible' => [
+                    'ok',
+                    'fail',
+                    'une_action_auto',
+                    'une_action_long_auto',
+                    'une_action_auto_fail',
+                ],
+                'result' => 'ok',
+            ],
+            $info
+        );
         $id_ce = $info['id_ce'];
         $connecteurActionService = $this->getObjectInstancier()->getInstance(ConnecteurActionService::class);
         $connecteur_action_message = $connecteurActionService->getByIdCe($id_ce)[0]['message'];
-        $this->assertEquals("Modification du connecteur via l'API", $connecteur_action_message);
+        static::assertSame("Modification du connecteur via l'API", $connecteur_action_message);
     }
 
-    public function testEditContentOnChangeAction()
+    public function testEditContentOnChangeAction(): void
     {
-        $info = $this->getInternalAPI()->patch("/entite/1/connecteur/12/content", ['champs3' => 'foo']);
-        $this->assertEquals('foo', $info['data']['champs4']);
+        $info = $this->getInternalAPI()->patch('/entite/1/connecteur/12/content', ['champs3' => 'foo']);
+        static::assertSame('foo', $info['data']['champs4']);
     }
 
     public function testPostFile()
@@ -149,10 +233,10 @@ class ConnecteurAPIControllerTest extends PastellTestCase
         $this->getInternalAPI()->get("/entite/1/connecteur/12/file/champs5");
     }
 
-    public function testAction()
+    public function testAction(): void
     {
-        $result = $this->getInternalAPI()->post("/entite/1/connecteur/12/action/ok");
-        $this->assertEquals(['result' => 1,'last_message' => 'OK !'], $result);
+        $result = $this->getInternalAPI()->post('/entite/1/connecteur/12/action/ok');
+        static::assertSame(['result' => true,'last_message' => 'OK !'], $result);
     }
 
     public function testActionBadConnecteurID()
@@ -182,9 +266,9 @@ class ConnecteurAPIControllerTest extends PastellTestCase
     /**
      * @throws Exception
      */
-    public function testGetConnecteur()
+    public function testGetConnecteur(): void
     {
-        $id_ce = $this->createConnector('iParapheur', "Connecteur i-Parapheur")['id_ce'];
+        $id_ce = $this->createConnector('iParapheur', 'Connecteur i-Parapheur')['id_ce'];
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->getConnecteurEntiteFormulaire($id_ce);
 
         $donneesFormulaire->setTabData([
@@ -192,16 +276,15 @@ class ConnecteurAPIControllerTest extends PastellTestCase
             'iparapheur_login' => 'admin@pastell',
             'iparapheur_password' => 'Xoo7kiey',
             'iparapheur_type' => 'PES',
-            'not_existing_element' => "I don't exist"
-
+            'not_existing_element' => "I don't exist",
         ]);
         $info = $this->getInternalAPI()->get("/entite/1/connecteur/$id_ce");
-        $this->assertEquals([
+        static::assertSame([
             'iparapheur_wsdl' => 'https://iparapheur.test',
             'iparapheur_login' => 'admin@pastell',
             'iparapheur_password' => 'MOT DE PASSE NON RECUPERABLE',
             'iparapheur_type' => 'PES',
-            'not_existing_element' => "I don't exist"
+            'not_existing_element' => "I don't exist",
         ], $info['data']);
     }
 
@@ -228,7 +311,8 @@ class ConnecteurAPIControllerTest extends PastellTestCase
 
         $internalAPI->setUtilisateurId(1);
         $result = $internalAPI->get('/entite/1/connecteur/12/');
-        static::assertEmpty($result['data']);
+
+        static::assertSame([], $result['data']);
     }
 
     /**
@@ -251,137 +335,137 @@ class ConnecteurAPIControllerTest extends PastellTestCase
         $internalAPI->post('/entite/2/connecteur/12/action/ok');
     }
 
-    public function testGetAll()
+    public function testGetAll(): void
     {
-        $this->assertSame(
+        static::assertSame(
             [
                 [
-                    'id_ce' => 1,
-                    'id_e' => 1,
+                    'id_ce' => '1',
+                    'id_e' => '1',
                     'libelle' => 'Fake iParapheur',
                     'id_connecteur' => 'fakeIparapheur',
                     'type' => 'signature',
-                    'frequence_en_minute' => 1,
+                    'frequence_en_minute' => '1',
                     'id_verrou' => '',
                     'denomination' => 'Bourg-en-Bresse',
                 ],
                 [
-                    'id_ce' => 2,
-                    'id_e' => 1,
+                    'id_ce' => '2',
+                    'id_e' => '1',
                     'libelle' => 'Fake Tdt',
                     'id_connecteur' => 'fakeTdt',
                     'type' => 'TdT',
-                    'frequence_en_minute' => 1,
+                    'frequence_en_minute' => '1',
                     'id_verrou' => '',
                     'denomination' => 'Bourg-en-Bresse',
                 ],
                 [
-                    'id_ce' => 3,
-                    'id_e' => 1,
+                    'id_ce' => '3',
+                    'id_e' => '1',
                     'libelle' => 'SEDA Standard',
                     'id_connecteur' => 'actes-seda-standard',
                     'type' => 'Bordereau SEDA',
-                    'frequence_en_minute' => 1,
+                    'frequence_en_minute' => '1',
                     'id_verrou' => '',
                     'denomination' => 'Bourg-en-Bresse',
                 ],
                 [
-                    'id_ce' => 4,
-                    'id_e' => 1,
+                    'id_ce' => '4',
+                    'id_e' => '1',
                     'libelle' => 'Fake SAE',
                     'id_connecteur' => 'fakeSAE',
                     'type' => 'SAE',
-                    'frequence_en_minute' => 1,
+                    'frequence_en_minute' => '1',
                     'id_verrou' => '',
                     'denomination' => 'Bourg-en-Bresse',
                 ],
                 [
-                    'id_ce' => 5,
-                    'id_e' => 1,
+                    'id_ce' => '5',
+                    'id_e' => '1',
                     'libelle' => 'Fake GED',
                     'id_connecteur' => 'FakeGED',
                     'type' => 'GED',
-                    'frequence_en_minute' => 1,
+                    'frequence_en_minute' => '1',
                     'id_verrou' => '',
                     'denomination' => 'Bourg-en-Bresse',
                 ],
                 [
-                    'id_ce' => 6,
-                    'id_e' => 1,
+                    'id_ce' => '6',
+                    'id_e' => '1',
                     'libelle' => 'SEDA CG86',
                     'id_connecteur' => 'actes-seda-cg86',
                     'type' => 'Bordereau SEDA',
-                    'frequence_en_minute' => 1,
+                    'frequence_en_minute' => '1',
                     'id_verrou' => '',
                     'denomination' => 'Bourg-en-Bresse',
                 ],
                 [
-                    'id_ce' => 7,
-                    'id_e' => 1,
+                    'id_ce' => '7',
+                    'id_e' => '1',
                     'libelle' => 'SEDA locarchive',
                     'id_connecteur' => 'actes-seda-locarchive',
                     'type' => 'Bordereau SEDA',
-                    'frequence_en_minute' => 1,
+                    'frequence_en_minute' => '1',
                     'id_verrou' => '',
                     'denomination' => 'Bourg-en-Bresse',
                 ],
                 [
-                    'id_ce' => 8,
-                    'id_e' => 1,
+                    'id_ce' => '8',
+                    'id_e' => '1',
                     'libelle' => 'SEDA parametrable',
                     'id_connecteur' => 'actes-seda-parametrable',
                     'type' => 'Bordereau SEDA',
-                    'frequence_en_minute' => 1,
+                    'frequence_en_minute' => '1',
                     'id_verrou' => '',
                     'denomination' => 'Bourg-en-Bresse',
                 ],
                 [
-                    'id_ce' => 9,
-                    'id_e' => 1,
+                    'id_ce' => '9',
+                    'id_e' => '1',
                     'libelle' => 'mail-fournisseur-invitation',
                     'id_connecteur' => 'mail-fournisseur-invitation',
                     'type' => 'mail-fournisseur-invitation',
-                    'frequence_en_minute' => 1,
+                    'frequence_en_minute' => '1',
                     'id_verrou' => '',
                     'denomination' => 'Bourg-en-Bresse',
                 ],
                 [
-                    'id_ce' => 10,
-                    'id_e' => 0,
+                    'id_ce' => '10',
+                    'id_e' => '0',
                     'libelle' => 'Horodateur interne par défaut',
                     'id_connecteur' => 'horodateur-interne',
                     'type' => 'horodateur',
-                    'frequence_en_minute' => 1,
+                    'frequence_en_minute' => '1',
                     'id_verrou' => '',
                     'denomination' => null,
                 ],
                 [
-                    'id_ce' => 11,
-                    'id_e' => 1,
+                    'id_ce' => '11',
+                    'id_e' => '1',
                     'libelle' => 'Mail securise',
                     'id_connecteur' => 'mailsec',
                     'type' => 'mailsec',
-                    'frequence_en_minute' => 1,
+                    'frequence_en_minute' => '1',
                     'id_verrou' => '',
                     'denomination' => 'Bourg-en-Bresse',
                 ],
                 [
-                    'id_ce' => 12,
-                    'id_e' => 1,
+                    'id_ce' => '12',
+                    'id_e' => '1',
                     'libelle' => 'connecteur non associé',
                     'id_connecteur' => 'test',
                     'type' => 'test',
-                    'frequence_en_minute' => 1,
+                    'frequence_en_minute' => '1',
                     'id_verrou' => '',
                     'denomination' => 'Bourg-en-Bresse',
                 ],
                 [
-                    'id_ce' => 13,
-                    'id_e' => 1,
+                    'id_ce' => '13',
+                    'id_e' => '1',
                     'libelle' => 'Connecteur de test',
                     'id_connecteur' => 'test',
                     'type' => 'test',
-                    'frequence_en_minute' => 1,
+                    'frequence_en_minute' => '1',
                     'id_verrou' => 'toto',
                     'denomination' => 'Bourg-en-Bresse',
                 ],
@@ -431,10 +515,10 @@ class ConnecteurAPIControllerTest extends PastellTestCase
         $this->getInternalAPIAsUser($id_u)->get('/entite/2/connecteur/12/file/champs5');
     }
 
-    public function testGetExternalData()
+    public function testGetExternalData(): void
     {
-        $this->assertSame(
-            ["pierre", "feuille", "ciseaux", "lézard", "Spock"],
+        static::assertSame(
+            ['pierre', 'feuille', 'ciseaux', 'lézard', 'Spock'],
             $this->getInternalAPI()->get('/entite/1/connecteur/12/externalData/external_data')
         );
     }

@@ -8,16 +8,16 @@ class HttpApiTest extends PastellTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $apiAuthetication = $this->createMock('ApiAuthentication');
-        $apiAuthetication->method("getUtilisateurId")->willReturn(1);
-        $this->getObjectInstancier()->setInstance('ApiAuthentication', $apiAuthetication);
+        $apiAuthetication = $this->createMock(ApiAuthentication::class);
+        $apiAuthetication->method('getUtilisateurId')->willReturn(1);
+        $this->getObjectInstancier()->setInstance(ApiAuthentication::class, $apiAuthetication);
     }
 
     private function getCall($ressource, $method = 'GET')
     {
         $this->http_api = new HttpApi($this->getObjectInstancier());
         $this->http_api->setServerArray(['REQUEST_METHOD' => $method]);
-        $this->http_api->setGetArray([HttpApi::PARAM_API_FUNCTION => "$ressource"]);
+        $this->http_api->setGetArray([HttpApi::PARAM_API_FUNCTION => $ressource]);
         $this->http_api->dispatch();
     }
 
@@ -39,14 +39,14 @@ class HttpApiTest extends PastellTestCase
         $this->getCall("/v2/version", "PATCH");
     }
 
-    public function testCallNotAuthenticated()
+    public function testCallNotAuthenticated(): void
     {
-        $apiAuthetication = $this->createMock('ApiAuthentication');
-        $apiAuthetication->method("getUtilisateurId")->willThrowException(new UnauthorizedException());
-        $this->getObjectInstancier()->setInstance('ApiAuthentication', $apiAuthetication);
+        $apiAuthetication = $this->createMock(ApiAuthentication::class);
+        $apiAuthetication->method('getUtilisateurId')->willThrowException(new UnauthorizedException());
+        $this->getObjectInstancier()->setInstance(ApiAuthentication::class, $apiAuthetication);
 
-        $this->expectOutputRegex("#HTTP/1.1 401 Unauthorized#");
-        $this->getCall("/v2/version");
+        $this->expectOutputRegex('#HTTP/1.1 401 Unauthorized#');
+        $this->getCall('/v2/version');
     }
 
 

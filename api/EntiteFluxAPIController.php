@@ -5,24 +5,13 @@ use Pastell\Service\Droit\DroitService;
 
 class EntiteFluxAPIController extends BaseAPIController
 {
-    private $entiteSQL;
-    private $actionPossible;
-    private $fluxEntiteSQL;
-    private $actionExecutorFactory;
-    private $connecteurAssociationService;
-
     public function __construct(
-        EntiteSQL $entiteSQL,
-        ActionPossible $actionPossible,
-        FluxEntiteSQL $fluxEntiteSQL,
-        ActionExecutorFactory $actionExecutorFactory,
-        ConnecteurAssociationService $connecteurAssociationService
+        private readonly EntiteSQL $entiteSQL,
+        private readonly ActionPossible $actionPossible,
+        private readonly FluxEntiteSQL $fluxEntiteSQL,
+        private readonly ActionExecutorFactory $actionExecutorFactory,
+        private readonly ConnecteurAssociationService $connecteurAssociationService,
     ) {
-        $this->entiteSQL = $entiteSQL;
-        $this->actionPossible = $actionPossible;
-        $this->fluxEntiteSQL = $fluxEntiteSQL;
-        $this->actionExecutorFactory = $actionExecutorFactory;
-        $this->connecteurAssociationService = $connecteurAssociationService;
     }
 
     /**
@@ -80,7 +69,15 @@ class EntiteFluxAPIController extends BaseAPIController
 
         $this->checkDroit($id_e, "entite:lecture");
 
-        return $this->fluxEntiteSQL->getAllFluxEntite($id_e, $flux, $type);
+        $associations = $this->fluxEntiteSQL->getAllFluxEntite($id_e, $flux, $type);
+
+        foreach ($associations as &$association) {
+            $association['id_fe'] = (string)$association['id_fe'];
+            $association['id_e'] = (string)$association['id_e'];
+            $association['id_ce'] = (string)$association['id_ce'];
+        }
+
+        return $associations;
     }
 
     /**

@@ -58,7 +58,11 @@ class DocumentCount
         }
 
         foreach ($result as $id_e => $info) {
-            $result[$id_e]['info'] = $this->entiteSQL->getInfo($id_e);
+            $entity = $this->entiteSQL->getInfo($id_e);
+            $entity['id_e'] = (string)$entity['id_e'];
+            $entity['centre_de_gestion'] = (string)$entity['centre_de_gestion'];
+            $entity['is_active'] = (bool)$entity['is_active'];
+            $result[$id_e]['info'] = $entity;
         }
 
         return $result;
