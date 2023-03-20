@@ -199,7 +199,7 @@ class DaemonControler extends PastellControler
         $process = new Process(['kill', '-9', $info['pid']]);
         $process->run();
         if (!$process->isSuccessful()) {
-            $this->setLastError("Le processus n'a pas été tué : " / $process->getErrorOutput());
+            $this->setLastError("Le processus n'a pas été tué : " . $process->getErrorOutput());
             $this->redirect($return_url);
         }
         $this->getWorkerSQL()->error($info['id_worker'], "Processus tué manuellement");
