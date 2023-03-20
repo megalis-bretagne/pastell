@@ -948,7 +948,7 @@ class UtilisateurControler extends PastellControler
     {
         $this->setViewParameter('pages_without_left_menu', true);
         $this->setViewParameter('utilisateur_info', $this->getUtilisateur()->getInfo($this->getId_u()));
-        $this->setViewParameter('page_title', 'Ajouter un jeton d\'authenticiation');
+        $this->setViewParameter('page_title', 'Ajouter un jeton d\'authentification');
         $this->setViewParameter('template_milieu', 'UtilisateurToken');
         $this->renderDefault();
     }
