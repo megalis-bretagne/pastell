@@ -155,6 +155,10 @@
 - Les dates sont enregistrées en heure locale (TIMEZONE), de fait, il n'est pas possible de changer de fuseau horaire après une installation initiale
 - Le connecteur *Récupération dossiers iparapheur* ne fonctionne qu'avec la version 5.0.7 d'iparapheur.
 
+## Dépréciations
+
+- Le support de la version 0.2 du SEDA est déprécié. 
+
 # [3.1.19] - 2023-02-06
 
 ***Cette version nécessite une modification de la base de données***
