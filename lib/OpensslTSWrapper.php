@@ -40,7 +40,7 @@ class OpensslTSWrapper
     public function getTimestampQuery($data)
     {
         $dataFilePath = $this->getTmpFile($data);
-        $result = $this->execute($this->opensslPath . " ts -query -{$this->hash_algorithm} -data $dataFilePath -cert");
+        $result = $this->execute($this->opensslPath . " ts -query -{$this->hash_algorithm} -data $dataFilePath -cert 2>/dev/null");
         unlink($dataFilePath);
         return $result;
     }
@@ -48,7 +48,7 @@ class OpensslTSWrapper
     public function getTimestampQueryString($timestampQuery)
     {
         $timestampQueryFilePath = $this->getTmpFile($timestampQuery);
-        $result =  $this->execute($this->opensslPath . " ts -query -in $timestampQueryFilePath -text ");
+        $result =  $this->execute($this->opensslPath . " ts -query -in $timestampQueryFilePath -text 2>/dev/null");
         unlink($timestampQueryFilePath);
         return $result;
     }
@@ -56,7 +56,7 @@ class OpensslTSWrapper
     public function getTimestampReplyString($timestampReply)
     {
         $timestampReplyFilePath = $this->getTmpFile($timestampReply);
-        $commande = $this->opensslPath . " ts -reply -in $timestampReplyFilePath -text " ;
+        $commande = $this->opensslPath . " ts -reply -in $timestampReplyFilePath -text 2>/dev/null" ;
         $result =  $this->execute($commande);
         unlink($timestampReplyFilePath);
         return $result;
@@ -76,7 +76,7 @@ class OpensslTSWrapper
                     " -in $timestampReplyFilePath " .
                     " -CAfile $CAFilePath" .
                     " -untrusted $certFilePath " .
-                    " -config $configFile";
+                    " -config $configFile  2>/dev/null";
 
         $result =  trim($this->execute($command . ' > /dev/null ; echo $?'));
 
@@ -90,8 +90,13 @@ class OpensslTSWrapper
         return $result === '0';
     }
 
-    public function createTimestampReply($timestampRequest, $signerCertificate, $signerKey, $signerKeyPassword, $configFile)
-    {
+    public function createTimestampReply(
+        $timestampRequest,
+        $signerCertificate,
+        $signerKey,
+        $signerKeyPassword,
+        $configFile
+    ) {
         $timestampRequestFile = $this->getTmpFile($timestampRequest);
         $timestampReplyFile = $this->getTmpFile("");
 
