@@ -22,6 +22,7 @@
 - Les valeurs "true" ou "false" ne sont plus remplacées par "1" ou "0" sur les champs texte #303
 - Quand un document est supprimé ou mis en état erreur fatale, les jobs associés sont supprimés #1723
 - A l'édition d'un utilisateur, son mot de passe n'est plus écrasé #1725
+- Il n'était pas possible de créer un flux studio avec plusieurs étapes SAR #1820
 
 ## Ajouts
 

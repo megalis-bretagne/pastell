@@ -2,12 +2,8 @@
 
 declare(strict_types=1);
 
-use Pastell\Helpers\SedaHelper;
-
 class SAEValider extends ConnecteurTypeActionExecutor
 {
-    public const ARCHIVE_TRANSFER_REPLY = 'ArchiveTransferReply';
-
     /**
      * @return bool
      * @throws Exception

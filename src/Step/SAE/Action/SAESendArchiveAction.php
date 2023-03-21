@@ -19,9 +19,14 @@ final class SAESendArchiveAction extends ConnecteurTypeActionExecutor
      */
     public function go()
     {
-        $bordereau = $this->getDonneesFormulaire()->getFileContent(SAEFieldsEnum::SAE_BORDEREAU->value);
-        $archivePath = $this->getDonneesFormulaire()->getFilePath(SAEFieldsEnum::SAE_ARCHIVE->value);
+        $bordereau = $this->getDonneesFormulaire()->getFileContent(
+            $this->getMappingValue(SAEFieldsEnum::SAE_BORDEREAU->value)
+        );
+        $archivePath = $this->getDonneesFormulaire()->getFilePath(
+            $this->getMappingValue(SAEFieldsEnum::SAE_ARCHIVE->value)
+        );
         $saeTransfertId = $this->getMappingValue(SAEFieldsEnum::SAE_TRANSFERT_ID->value);
+        $sendArchiveErrorState = $this->getMappingValue(SAEActionsEnum::SEND_ARCHIVE_ERROR->value);
 
         /** @var SAEConnecteur $sae */
         $sae = $this->getConnecteur('SAE');
@@ -30,8 +35,8 @@ final class SAESendArchiveAction extends ConnecteurTypeActionExecutor
             $transfertId = $sae->sendSIP($bordereau, $archivePath);
         } catch (\Exception $exception) {
             $message = $exception->getMessage() . " - L'envoi du bordereau a échoué : " . $sae->getLastError();
-            $this->changeAction(SAEActionsEnum::SEND_ARCHIVE_ERROR->value, $message);
-            $this->notify(SAEActionsEnum::SEND_ARCHIVE_ERROR->value, $this->type, $message);
+            $this->changeAction($sendArchiveErrorState, $message);
+            $this->notify($sendArchiveErrorState, $this->type, $message);
             return false;
         }
 

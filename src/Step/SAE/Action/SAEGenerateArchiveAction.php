@@ -25,14 +25,15 @@ final class SAEGenerateArchiveAction extends ConnecteurTypeActionExecutor
      */
     public function go()
     {
+        $generateSipErrorState = $this->getMappingValue(SAEActionsEnum::GENERATE_SIP_ERROR->value);
         $tmpFolder = new TmpFolder();
         $tmp_folder = $tmpFolder->create();
         $result = false;
         try {
             $result = $this->goInternal($tmp_folder);
         } catch (UnrecoverableException $e) {
-            $this->changeAction(SAEActionsEnum::GENERATE_SIP_ERROR->value, $e->getMessage());
-            $this->notify(SAEActionsEnum::GENERATE_SIP_ERROR->value, $this->type, $e->getMessage());
+            $this->changeAction($generateSipErrorState, $e->getMessage());
+            $this->notify($generateSipErrorState, $this->type, $e->getMessage());
         } finally {
             $tmpFolder->delete($tmp_folder);
         }
