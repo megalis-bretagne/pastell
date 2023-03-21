@@ -50,23 +50,15 @@ action:
     test-tedetis:
         name: 'Tester la connectivité'
         action-class: TestConnexion
-        rule:
-            droit_id_u: 'entite:edition'
     test-rgs-connexion:
         name: 'Tester la redirection sur S²Low'
         action-class: TestConnexionSurSlow
-        rule:
-            droit_id_u: 'entite:edition'
     demande-classification:
         name: 'Envoyer une demande de classification à la préfecture'
         action-class: EnvoieDemandeClassification
-        rule:
-            droit_id_u: 'entite:edition'
     recup-classification:
         name: 'Récupérer la classification'
         action-class: RecupClassification
-        rule:
-            droit_id_u: 'entite:edition'
     update-certificate:
         name: 'Mettre à jour les certificats'
         rule:
@@ -87,10 +79,6 @@ action:
     recup-pes-retour:
         name: 'Récupérer les PES retour'
         action-class: RecupPESRetour
-        rule:
-            droit_id_u: 'entite:edition'
     recup-reponse-prefecture:
         name: 'Récupérer les réponses de la préfecture'
         action-class: RecupReponsePrefecture
-        rule:
-            droit_id_u: 'entite:edition'

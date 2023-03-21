@@ -21,5 +21,3 @@ action:
     cloudooo-test:
         name: 'Convertir le document de test'
         action-class: CloudoooTest
-        rule:
-            droit_id_u: 'entite:edition'

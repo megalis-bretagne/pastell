@@ -438,7 +438,7 @@ class ConnecteurControler extends PastellControler
     {
         $id_e = $this->getGetInfo()->getInt('id_e');
 
-        $this->verifDroit($id_e, "entite:edition");
+        $this->verifDroit($id_e, "connecteur:edition");
 
         $this->setViewParameter('id_e', $id_e);
         $this->setViewParameter('all_connecteur_dispo', $this->getConnecteurDefinitionFile()->getAllByIdE($id_e));
@@ -607,6 +607,8 @@ class ConnecteurControler extends PastellControler
         $action = $recuperateur->get('action');
         $id_ce = $recuperateur->getInt('id_ce', 0);
 
+        $this->verifDroitOnConnecteur($id_ce);
+
         $actionPossible = $this->getActionPossible();
 
         if (! $actionPossible->isActionPossibleOnConnecteur($id_ce, $this->getId_u(), $action)) {
@@ -640,8 +642,7 @@ class ConnecteurControler extends PastellControler
         $connecteur_info = $this->getConnecteurEntiteSQL()->getInfo($id_ce);
         $id_e = $connecteur_info['id_e'];
         $this->setDroitLectureOnUtilisateur($id_e);
-
-        $this->verifDroit($id_e, "entite:edition", "/Connecteur/editionModif?id_ce=$id_ce");
+        $this->verifDroitOnConnecteur($id_ce);
 
         $documentType = $this->getDocumentTypeFactory()->getDocumentType($id_e, $connecteur_info['id_connecteur']);
 
@@ -665,14 +666,12 @@ class ConnecteurControler extends PastellControler
         }
     }
 
-    private function addExternalData(int $entityId, string $field, bool $from_api = false): bool
+    private function addExternalData(int $id_ce, string $field, bool $from_api = false): bool
     {
-        $connecteur_info = $this->getConnecteurEntiteSQL()->getInfo($entityId);
-        $id_e  = $connecteur_info['id_e'];
-        $this->verifDroit($id_e, "entite:edition", "/Connecteur/edition?id_ce=$entityId");
+        $this->verifDroitOnConnecteur($id_ce);
 
         return $this->getConnecteurModificationService()->addExternalData(
-            $entityId,
+            $id_ce,
             $field,
             $this->getId_u(),
             "L'external data $field a été modifié",

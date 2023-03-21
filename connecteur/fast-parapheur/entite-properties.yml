@@ -50,5 +50,3 @@ action:
     test-connection:
         name: 'Tester la connexion'
         action-class: FastParapheurTestConnection
-        rule:
-            droit_id_u: 'entite:edition'

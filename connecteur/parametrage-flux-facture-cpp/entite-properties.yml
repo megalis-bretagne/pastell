@@ -39,6 +39,4 @@ action:
     supprimer-factures:
         name: 'Déclencher la suppression automatique des dossiers Facture Chorus Pro'
         action-class: ParametrageFluxFactureCPPSupprimer
-        rule:
-            droit_id_u: 'entite:edition'
         action-automatique: supprimer-factures

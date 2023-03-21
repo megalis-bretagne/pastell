@@ -12,13 +12,9 @@ action:
     recup-classification:
         name: 'Récupérer la classification pour toutes les collectivités'
         action-class: FastTdtRecupClassificationGlobal
-        rule:
-            droit_id_u: 'entite:edition'
         action-automatique: recup-classification
     redirect-to-update-list-certificate:
         name: 'Mettre à jour les certificats'
-        rule:
-            droit_id_u: 'entite:edition'
         action-class: StandardAction
         connecteur-type: utilities
         connecteur-type-action: RedirectToGlobalUpdateCertificate

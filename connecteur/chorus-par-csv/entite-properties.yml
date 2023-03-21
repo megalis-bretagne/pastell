@@ -44,16 +44,10 @@ action:
     interprete-csv:
         name: 'Interpréter le fichier CSV'
         action-class: ChorusParCSVInterpreteCSV
-        rule:
-            droit_id_u: 'entite:edition'
     list-facture:
         name: 'Lister les factures disponibles'
         action-class: ChorusParCSVListeFacture
-        rule:
-            droit_id_u: 'entite:edition'
     import-facture-par-csv:
         name: 'Récupérer et synchroniser les factures'
         action-class: ChorusParCSVImporterFacture
-        rule:
-            droit_id_u: 'entite:edition'
         action-automatique: import-facture-par-csv
