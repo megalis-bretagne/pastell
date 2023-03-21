@@ -5,7 +5,9 @@ formulaire:
     onglet:
         schema_rng:
             name: 'Profil SEDA (RelaxNG)'
-            commentaire: 'Fichier de profil SEDA relaxNG produit par Agape'
+            commentaire: |
+                Fichier de profil SEDA relaxNG produit par Agape.
+                Attention la version 0.2 du SEDA ne sera plus supportée dans une prochaine version.
             type: file
         profil_agape:
             name: 'Profil SEDA (Fichier Agape)'
