@@ -1,5 +1,7 @@
 <?php
 
+use Symfony\Component\Process\Process;
+
 class DaemonControler extends PastellControler
 {
     public const NB_JOB_DISPLAYING = 50;
@@ -194,7 +196,12 @@ class DaemonControler extends PastellControler
         }
 
         $this->getJobQueueSQL()->lock($info['id_job']);
-        posix_kill($info['pid'], SIGKILL);
+        $process = new Process(['kill', '-9', $info['pid']]);
+        $process->run();
+        if (!$process->isSuccessful()) {
+            $this->setLastError("Le processus n'a pas été tué : " . $process->getErrorOutput());
+            $this->redirect($return_url);
+        }
         $this->getWorkerSQL()->error($info['id_worker'], "Processus tué manuellement");
 
         $this->setLastMessage("Le processus a été tué");
