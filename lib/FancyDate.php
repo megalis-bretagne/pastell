@@ -80,7 +80,7 @@ class FancyDate
 
     private function getFormattedTime($time, $format): string
     {
-        $currentLocale = setlocale(LC_TIME, 0);
+        $currentLocale = setlocale(LC_TIME, '0');
         $formatter = new IntlDateFormatter(
             $currentLocale,
             IntlDateFormatter::LONG,

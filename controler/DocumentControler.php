@@ -605,7 +605,7 @@ class DocumentControler extends PastellControler
     public function exportAction()
     {
         $recuperateur = new Recuperateur($_GET);
-        $id_e = $recuperateur->get('id_e', 0);
+        $id_e = $recuperateur->getInt('id_e', 0);
         $type = $recuperateur->get('type');
         $search = $recuperateur->get('search');
 

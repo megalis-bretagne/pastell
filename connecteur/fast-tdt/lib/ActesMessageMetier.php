@@ -59,7 +59,7 @@ class ActesMessageMetier
         $actesElement->appendChild($documentElement);
 
         $annexesElement = $this->domDocument->createElement('actes:Annexes');
-        $annexesElement->setAttribute('actes:Nombre', count($this->acte->annexes));
+        $annexesElement->setAttribute('actes:Nombre', (string)count($this->acte->annexes));
         if ($this->acte->annexes) {
             $this->addAnnexes($annexesElement, $this->acte->annexes);
         }

@@ -203,7 +203,7 @@ class DonneesFormulaire
 
     /**
      * @param $item
-     * @param bool|false $default
+     * @param mixed $default
      * @return string|array|bool
      */
     public function get($item, $default = false)
@@ -909,15 +909,12 @@ class DonneesFormulaire
         return $path_parts['dirname'] . DIRECTORY_SEPARATOR . $new_filename;
     }
 
-    /**
-     * @param $field_name
-     * @param $folder_destination
-     * @param int $num
-     * @param bool $new_filename sans l'extension !
-     * @return bool|string
-     */
-    public function copyFile($field_name, $folder_destination, $num = 0, $new_filename = false)
-    {
+    public function copyFile(
+        string $field_name,
+        string $folder_destination,
+        int $num = 0,
+        ?string $new_filename = null
+    ): string|false {
         $file_name = $this->get($field_name);
         if (! $file_name) {
             return false;
@@ -929,7 +926,7 @@ class DonneesFormulaire
         }
 
         $destination = "$folder_destination/$file_name";
-        if ($new_filename) {
+        if ($new_filename !== null) {
             $extension = $this->extensionByMimeType($file_path, $file_name);
             $destination = $this->renameFilename($destination, $new_filename . $extension);
         }

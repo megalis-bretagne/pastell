@@ -23,8 +23,7 @@ class S2lowReponsePrefectureTest extends PastellTestCase
 
         $this->getObjectInstancier()->setInstance(CurlWrapperFactory::class, $curlWrapperFactory);
 
-
-        $info = $this->createConnector('s2low', "S2LOW", "1");
+        $info = $this->createConnector('s2low', 'S2LOW');
 
         $collectiviteProperties = $this->getDonneesFormulaireFactory()->getConnecteurEntiteFormulaire($info['id_ce']);
         $collectiviteProperties->addFileFromCopy("classification_file", "classification.xml", __DIR__ . "/fixtures/classification-exemple.xml");

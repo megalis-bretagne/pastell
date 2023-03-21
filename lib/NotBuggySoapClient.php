@@ -250,7 +250,7 @@ class NotBuggySoapClient extends SoapClient
         }
     }
 
-    public function soapErrorHandler(int $errno, string $errstr, $errfile, $errline, $errcontext): bool
+    public function soapErrorHandler(int $errno, string $errstr, $errfile, $errline): bool
     {
         $this->soapErrorException = $this->soapErrorAdd($errstr, $errno);
         return false;

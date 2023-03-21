@@ -48,14 +48,14 @@ class Purge extends Connecteur
                 $connecteur_info['id_e'],
                 $this->connecteurConfig->get('document_type'),
                 $this->connecteurConfig->get('document_etat'),
-                $this->connecteurConfig->get('nb_days')
+                (int)$this->connecteurConfig->get('nb_days')
             );
         } else {
             return $this->documentActionEntite->getDocumentOlderThanDay(
                 $connecteur_info['id_e'],
                 $this->connecteurConfig->get('document_type'),
                 $this->connecteurConfig->get('document_etat'),
-                $this->connecteurConfig->get('nb_days')
+                (int)$this->connecteurConfig->get('nb_days')
             );
         }
     }

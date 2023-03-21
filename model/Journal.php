@@ -36,7 +36,7 @@ class Journal extends SQL
         private readonly DocumentSQL $documentSQL,
         private readonly DocumentTypeFactory $documentTypeFactory,
         private readonly Logger $logger,
-        private readonly string $disable_journal_horodatage,
+        private readonly bool $disable_journal_horodatage,
     ) {
         parent::__construct($sqlQuery);
     }

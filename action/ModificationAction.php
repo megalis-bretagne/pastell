@@ -23,19 +23,19 @@ class ModificationAction extends ActionExecutor
 
         if ($delete_file) {
             $field_name = $recuperateur->get('field');
-            $field_num = $recuperateur->get('num', 0);
+            $field_num = $recuperateur->getInt('num', 0);
             $this->verifFieldIsEditable($this->id_e, $this->id_d, $field_name);
             $this->getDonneesFormulaire()->removeFile($field_name, $field_num);
         } elseif ($add_file) {
             $field_name = $recuperateur->get('field_name');
-            $field_num = $recuperateur->get('field_num', 0);
+            $field_num = $recuperateur->getInt('field_num', 0);
             $file_name = $recuperateur->get('file_name');
             $file_path = $recuperateur->get('file_path');
             $this->verifFieldIsEditable($this->id_e, $this->id_d, $field_name);
             $this->getDonneesFormulaire()->addFileFromCopy($field_name, $file_name, $file_path, $field_num);
         } else {
             if (! $this->from_api) {
-                $page = $recuperateur->get('page');
+                $page = $recuperateur->getInt('page');
                 $this->getDonneesFormulaire()->saveTab($recuperateur, $fileUploader, $page);
             } else {
                 $this->getDonneesFormulaire()->setTabDataVerif($recuperateur->getAll());

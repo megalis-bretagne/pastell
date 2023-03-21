@@ -2,19 +2,18 @@
 
 class ManifestReaderTest extends PHPUnit\Framework\TestCase
 {
-    private function getManifestReader()
+    private function getManifestReader(): ManifestReader
     {
         $manifest = [
-        'nom' => 'Glaneur',
-                            'id' => 'glaneur',
-                            'revision' => '$Rev: 9 $',
-                            'version' => 4,
-                            'last_changed_date' => '$LastChangedDate: 2015-08-12 11:02:27 +0200 (mer., 12 août 2015) $',
-                            'extensions_versions_accepted' => [2,3],
-                            'extension_needed' => ['pastell-megalis' => ['version' => 1],'pastell-mnesys' => ['version' => 2]]
+            'nom' => 'Glaneur',
+            'id' => 'glaneur',
+            'revision' => '$Rev: 9 $',
+            'version' => 4,
+            'last_changed_date' => '$LastChangedDate: 2015-08-12 11:02:27 +0200 (mer., 12 août 2015) $',
+            'extensions_versions_accepted' => [2, 3],
+            'extension_needed' => ['pastell-megalis' => ['version' => 1], 'pastell-mnesys' => ['version' => 2]]
         ];
-        $manifestReader = new ManifestReader($manifest);
-        return $manifestReader;
+        return new ManifestReader($manifest);
     }
 
     public function testGetInfo()
@@ -60,7 +59,7 @@ class ManifestReaderTest extends PHPUnit\Framework\TestCase
     public function testManifestEmpy()
     {
         $manifestReader = new ManifestReader([]);
-        $this->assertFalse($manifestReader->isVersionOK(12));
+        $this->assertFalse($manifestReader->isVersionOK('12'));
     }
 
     public function testGetId()

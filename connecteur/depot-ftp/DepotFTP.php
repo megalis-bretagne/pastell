@@ -42,8 +42,8 @@ class DepotFTP extends DepotConnecteur
         $this->ftpClient->close();
         $this->ftpClient->connect(
             $this->connecteurConfig->get(self::DEPOT_FTP_HOST),
-            (bool) $this->connecteurConfig->get(self::DEPOT_FTP_SSL),
-            $this->connecteurConfig->get(self::DEPOT_FTP_PORT) ?: self::DEPOT_FTP_PORT_DEFAULT
+            (bool)$this->connecteurConfig->get(self::DEPOT_FTP_SSL),
+            (int)$this->connecteurConfig->get(self::DEPOT_FTP_PORT) ?: self::DEPOT_FTP_PORT_DEFAULT
         );
         $this->ftpClient->login(
             $this->connecteurConfig->get(self::DEPOT_FTP_LOGIN),

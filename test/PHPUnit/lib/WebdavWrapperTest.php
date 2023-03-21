@@ -153,17 +153,18 @@ class WebdavWrapperTest extends PHPUnit\Framework\TestCase
     public function testGet()
     {
         $client = $this->createMock(Client::class);
+        $response = new Response(200);
+        $response->setBody('content');
 
         $client
             ->method('send')
-            ->willReturn(new Response(200, [], 'content'));
+            ->willReturn($response);
 
         $webdavClientFactory = $this->createMock(WebdavClientFactory::class);
         $webdavClientFactory
             ->method('getInstance')
             ->willReturn($client);
 
-        /** @var WebdavClientFactory $webdavClientFactory */
         $webdavWrapper = new WebdavWrapper();
         $webdavWrapper->setWebdavClientFactory($webdavClientFactory);
         $webdavWrapper->setDataConnexion('https://domain.tld', '', '');

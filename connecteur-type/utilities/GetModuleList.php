@@ -30,10 +30,13 @@ class GetModuleList extends ConnecteurTypeChoiceActionExecutor
 
     public function display()
     {
-        $this->setViewParameter('moduleType', $this->getConnecteurProperties()->get($this->getMappingValue(self::MODULE_TYPE_FIELD)));
+        $this->setViewParameter(
+            'moduleType',
+            $this->getConnecteurProperties()->get($this->getMappingValue(self::MODULE_TYPE_FIELD))
+        );
         $modules = $this->displayAPI();
 
-        $currentLocale = setlocale(LC_COLLATE, 0);
+        $currentLocale = setlocale(LC_COLLATE, '0');
         setlocale(LC_COLLATE, 'fr_FR.utf8');
         uasort($modules, static function (array $a, array $b) {
             return strcoll($a['nom'], $b['nom']);

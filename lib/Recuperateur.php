@@ -33,7 +33,7 @@ class Recuperateur
 
     /**
      * @param $name
-     * @param string $default
+     * @param mixed $default
      * @return string|array
      */
     public function get($name, $default = '')

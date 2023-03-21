@@ -39,9 +39,10 @@ class FtpClientWrapper extends \FtpClient\FtpClient
     private function callFileSystemFunction(callable $function)
     {
         set_error_handler(
-            function ($errno, $errstr) {
+            function ($errno, $errstr): bool {
                 $this->last_errno = $errno;
                 $this->last_error = $errstr;
+                return true;
             }
         );
         $result = call_user_func($function);
