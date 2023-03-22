@@ -34,12 +34,12 @@
 - La constante PASSWORD_MIN_ENTROPY passe par défaut à 80 suivant les recommandations de l'ANSSI
 - Studio: La génération du bordereau et de l'archive est indépendant de l'envoi au SAE grâce à un nouvel état
   intermédiaire : "Paquet d'archive (SIP) généré" #1357
-- La bibliothèque de lecture YAML Spyc est remplacé par la bibliothèque Symfony YAML plus performante.
+- La bibliothèque de lecture YAML Spyc est remplacée par la bibliothèque Symfony YAML plus performante.
   Le script console dev:fix-yaml permet de modifier ce qui était permis (de manière incorrect) par Spyc #1515
 - Possibilité de supprimer ou de désactiver un utilisateur #112
 - Ajout du connecteur help-url qui permet de définir l'URL dune page d'aide #1547
 - Modification du vocabulaire concernant les transferts au SAE #1552
-- Possibilité de revenir en arrière sur les flux studio sur les étapes non réalisés #1539
+- Possibilité de revenir en arrière sur les flux studio sur les étapes non réalisées #1539
 - Possibilité de retamponner les actes et les annexes (flux studio, actes generique et automatique ) #627
 - SAEConnecteur::sendArchive() devient SAEConnecteur:sendSIP()
 - Amélioration de la présentation de l'association des connecteurs #1607
@@ -67,7 +67,7 @@
 - Les éléments texte (multi-ligne) sont disponibles à la sélection de l'objet pour l'envoi à la préfecture dans le studio #1690
 - Les ancêtres d'une entité sont indiqués dans les rôles de la liste des utilisateurs et les ancêtres restent visibles
   dans la recherche d'une entité pour l'ajout d'un rôle à un utilisateur #1680
-- La possibilité de se connecter via un certificat X509 client est une fonctionnalité activable désactivée par défaut #
+- La possibilité de se connecter via un certificat X509 client est une fonctionnalité activable désactivée par défaut
 
 ## Suppressions
 
@@ -122,7 +122,7 @@
   SignatureConnecteur::sendDossier()
 - Suppression de la classe d'action `FournisseurCommandeEnvoieIparapheur`
 - L'envoi au iparapheur du flux Commande générique est standardisé avec les autres flux
-- Suppression de la plupart des scripts dans batch/ installation/ et script/. Ceux qui restent ne devrait plus être utilisé car ils doivent être remplacés par un script console
+- Suppression de la plupart des scripts dans batch/ installation/ et script/. Ceux qui restent ne devrait plus être utilisés car ils doivent être remplacés par un script console
 - La méthode SEDAConnecteur::getBordereau() prend la signature de SEDAConnecteur::getBordereauNG() qui est supprimée
 - Suppression de DAEMON_USER, DAEMON_LOG_FILE, PID_FILE
 - Suppression de la fonction util.php::mail_wrapper(), utilisé symfony/mailer à la place
@@ -139,11 +139,11 @@
   - ReponsePrefectureLinkVisionneuse devient Pastell\Viewer\ReponsePrefectureLinkViewer
   - GedIdDocumentsVisionneuse devient Pastell\Viewer\GedIdDocumentsViewer
 - Suppression de la fonction SEDAConnecteur::getInfoARActes()
-- Suppression du script script/plateform-update/database-update.php, remplacer par un script console app:database:update
-- Suppression du script installation/filedbupdate.php, remplacer par un script console dev:database:update-definition
+- Suppression du script script/plateform-update/database-update.php, remplacé par un script console app:database:update
+- Suppression du script installation/filedbupdate.php, remplacé par un script console dev:database:update-definition
 - Suppression de la constante DATABASE_FILE
 - Suppression de la possibilité de mettre la règle 'role_id_e: no-role' sur les connecteurs. Il faut remplacer par la règle 'automatique: true' pour obtenir le même comportement
-- Suppression des élements relatifs au centre de gestions sur la version standard. Il est possible de les remettre avec la feature flag CDGFeature.
+- Suppression des éléments relatifs au centre de gestion sur la version standard. Il est possible de les remettre avec la feature flag CDGFeature.
 - Suppression de l'URL dans l'onglet de retour du SAE
 - Suppression du support MySQL. La seule base supportée est MariaDB.
 - Suppression de la création d'une entité par API via PATCH avec le paramètre 'create' et suppression du test 'testCreateWithEditAction()'
