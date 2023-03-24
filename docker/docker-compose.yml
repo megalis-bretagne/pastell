@@ -2,11 +2,12 @@ name: pastell
 
 services:
     web:
-        image: registry.libriciel.fr:443/public/plateforme/pastell:canary
+        image: 'registry.libriciel.fr:443/public/plateforme/pastell:canary'
+        restart: unless-stopped
         read_only: true
         stop_grace_period: 60s
         stop_signal: SIGTERM
-        links:
+        depends_on:
             - db
             - redis
         tmpfs:
@@ -67,7 +68,8 @@ services:
         user: "${UID:-33}:${GID:-33}"
 
     db:
-        image: hubdocker.libriciel.fr/mariadb:10.11.2-jammy
+        image: 'hubdocker.libriciel.fr/mariadb:10.11.2-jammy'
+        restart: unless-stopped
         command:
             - "--character-set-server=utf8mb4"
             - "--collation-server=utf8mb4_unicode_ci"
@@ -80,7 +82,8 @@ services:
             - ${MARIADB_DATADIR:-mariadb_datadir}:/var/lib/mysql/
 
     redis:
-        image: hubdocker.libriciel.fr/redis:7.0.5
+        image: 'hubdocker.libriciel.fr/redis:7.0.5'
+        restart: unless-stopped
 
     seda-generator:
         image: 'registry.libriciel.fr:443/public/plateforme/seda-generator:1.0.0'
@@ -89,12 +92,12 @@ services:
             - '/etc/localtime:/etc/localtime:ro'
 
     cloudooo:
-        restart: unless-stopped
         image: 'registry.libriciel.fr/public/actes/cloudooo:7.1.0'
+        restart: unless-stopped
 
     pes-viewer:
-        restart: unless-stopped
         image: 'registry.libriciel.fr/public/signature/pes-viewer:2.0.2'
+        restart: unless-stopped
         deploy:
             resources:
                 limits:
