@@ -8,25 +8,27 @@ class HealthCheckItem
     private const INFO = 'info';
     private const SUCCESS = 'success';
 
-    /** @var string */
-    public $label;
-    /** @var string */
-    public $result;
-    /** @var string */
-    private $level;
-    /** @var string|null */
-    public $expectedValue;
+    public string $label;
+    public string $result;
+    public ?string $description;
+    private string $level;
+    public ?string $expectedValue;
     /** @var HealthCheckItem[]|null */
-    private $details;
+    private ?array $details;
 
-    public function __construct(string $label, string $result, ?string $expectedValue = null)
-    {
+    public function __construct(
+        string $label,
+        string $result,
+        ?string $expectedValue = null,
+        ?string $description = null
+    ) {
         $this->label = $label;
         $this->result = $result;
         $this->level = self::INFO;
         if (isset($expectedValue)) {
             $this->expectedValue = $expectedValue;
         }
+        $this->description = $description;
     }
 
     public function isInfo(): bool

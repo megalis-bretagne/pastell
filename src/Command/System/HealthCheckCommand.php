@@ -161,10 +161,12 @@ class HealthCheckCommand extends Command
         $table = new Table($output);
         $table
             ->setHeaderTitle('Éléments attendus')
-            ->setHeaders(['Élément', 'Attendu', 'Trouvé']);
+            ->setHeaders(['Élément', 'Attendu', 'Trouvé', 'Description']);
         foreach ($this->healthCheck->check(HealthCheck::EXPECTED_ELEMENTS_CHECK) as $expectedElement) {
             $result = $this->getResult($expectedElement);
-            $table->addRow([$expectedElement->label, $expectedElement->expectedValue, $result]);
+            $table->addRow(
+                [$expectedElement->label, $expectedElement->expectedValue, $result, $expectedElement->description]
+            );
         }
 
         $table->render();

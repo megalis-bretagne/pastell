@@ -165,7 +165,11 @@
             </tr>
             {% for expectedElement in checkExpectedElements %}
                 <tr>
-                    <th scope="row">{{ expectedElement.label }}</th>
+                    <th scope="row">{{ expectedElement.label }}
+                        {% if expectedElement.description is not null %}
+                            <p class="form_commentaire">{{ expectedElement.description }}</p>
+                        {% endif %}
+                    </th>
                     <td>{{ expectedElement.expectedValue }}</td>
                     <td>
                         <strong style='color:{{ expectedElement.isSuccess() ? 'green' : 'red' }}'>
