@@ -39,7 +39,7 @@ class Journal extends SQL
         private readonly Logger $logger,
         private readonly bool $disable_journal_horodatage,
         private readonly bool $use_external_storage_for_journal_proof,
-        private readonly StorageInterface $storage,
+        private StorageInterface $storage,
     ) {
         parent::__construct($sqlQuery);
     }
