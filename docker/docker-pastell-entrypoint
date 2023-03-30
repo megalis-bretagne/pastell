@@ -6,9 +6,9 @@ set -e
 # Certbot
 if [ "$LETSENCRYPT_DOMAIN" ] ; then
     if [ -f "/data/certificate/fullchain.pem" ] ; then
-            certbot  --logs-dir /data/log/ --work-dir /data/run --http-01-port 8080 renew
+            certbot  --logs-dir /data/log/ --work-dir /data/run --http-01-port 80 renew
     else
-        certbot --http-01-port 8080 --logs-dir /data/log/ --work-dir /data/run --standalone --noninteractive --agree-to --preferred-challenges http -d ${LETSENCRYPT_DOMAIN} -m ${LETSENCRYPT_EMAIL} certonly
+        certbot --http-01-port 80 --logs-dir /data/log/ --work-dir /data/run --standalone --noninteractive --agree-to --preferred-challenges http -d ${LETSENCRYPT_DOMAIN} -m ${LETSENCRYPT_EMAIL} certonly
         ln -s /etc/letsencrypt/live/${LETSENCRYPT_DOMAIN}/fullchain.pem /data/certificate/
         ln -s /etc/letsencrypt/live/${LETSENCRYPT_DOMAIN}/privkey.pem /data/certificate/
     fi
