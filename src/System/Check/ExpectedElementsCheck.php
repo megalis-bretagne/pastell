@@ -6,26 +6,17 @@ use Pastell\Service\Crypto;
 use Pastell\System\CheckInterface;
 use Pastell\System\HealthCheckItem;
 
-class ExpectedElementsCheck implements CheckInterface
+final class ExpectedElementsCheck implements CheckInterface
 {
-    /**
-     * @var \VerifEnvironnement
-     */
-    private $verifEnvironnement;
-    /**
-     * @var \SQLQuery
-     */
-    private $sqlQuery;
-
-    public function __construct(\VerifEnvironnement $verifEnvironnement, \SQLQuery $sqlQuery)
-    {
-        $this->verifEnvironnement = $verifEnvironnement;
-        $this->sqlQuery = $sqlQuery;
+    public function __construct(
+        private readonly \VerifEnvironnement $verifEnvironnement,
+        private readonly \SQLQuery $sqlQuery,
+    ) {
     }
 
     public function check(): array
     {
-        if (function_exists('curl_version')) {
+        if (\function_exists('curl_version')) {
             $curlVersion = curl_version()['ssl_version'];
         } else {
             $curlVersion = "La fonction curl_version() n'existe pas !";
@@ -37,7 +28,7 @@ class ExpectedElementsCheck implements CheckInterface
                 $this->verifEnvironnement->checkPHP()['environnement_value']
             ],
             'OpenSSL est en version 1 ou 3' => [
-                "#^OpenSSL [13]\.#",
+                '#^OpenSSL [13]\.#',
                 shell_exec(OPENSSL_PATH . ' version')
             ],
             'Curl est compilé avec OpenSSL' => [
@@ -45,9 +36,9 @@ class ExpectedElementsCheck implements CheckInterface
                 $curlVersion
             ],
             'La base de données est accédée en UTF-8' => [
-                "#^utf8mb4#",
+                '#^utf8mb4#',
                 $this->sqlQuery->getClientEncoding()
-            ]
+            ],
         ];
 
         $elements = [];
@@ -59,12 +50,19 @@ class ExpectedElementsCheck implements CheckInterface
         $elements[] = (new HealthCheckItem(
             'Libsodium est en version >=' . Crypto::LIBSODIUM_MINIMUM_VERSION_EXPECTED,
             SODIUM_LIBRARY_VERSION,
-            ">= " . Crypto::LIBSODIUM_MINIMUM_VERSION_EXPECTED
+            '>= ' . Crypto::LIBSODIUM_MINIMUM_VERSION_EXPECTED
         ))->setSuccess(version_compare(
             SODIUM_LIBRARY_VERSION,
             Crypto::LIBSODIUM_MINIMUM_VERSION_EXPECTED,
             '>='
         ));
+
+        $elements[] = (new HealthCheckItem(
+            'Niveau de sécurité OpenSSL',
+            \getenv('OPENSSL_CIPHER_STRING_SECURITY_LEVEL'),
+            '>= 2',
+            'https://www.openssl.org/docs/man3.0/man3/SSL_CTX_set_security_level.html'
+        ))->setSuccess(\getenv('OPENSSL_CIPHER_STRING_SECURITY_LEVEL') >= 2);
 
         return $elements;
     }

@@ -1,3 +1,9 @@
+# [4.0.1]
+
+## Ajouts
+
+- Variable d'environnement `OPENSSL_CIPHER_STRING_SECURITY_LEVEL` qui permet de définir le niveau de sécurité d'OpenSSL #1782
+
 # [4.0.0] - 2023-03-21
 
 ***Cette version nécessite une modification de la base de données***
