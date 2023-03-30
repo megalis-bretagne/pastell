@@ -168,7 +168,9 @@ class JournalControler extends PastellControler
                 $this->getViewParameterOrObject('limit'),
                 $this->getViewParameterOrObject('recherche'),
                 $this->getViewParameterOrObject('date_debut'),
-                $this->getViewParameterOrObject('date_fin')
+                $this->getViewParameterOrObject('date_fin'),
+                false,
+                false,
             )
         );
         $this->setViewParameter('liste_collectivite', $liste_collectivite);
