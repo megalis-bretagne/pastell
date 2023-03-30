@@ -39,9 +39,11 @@ chown "${USERNAME}": /var/www/pastell/vendor/
 # Apache configuration
 sed -e "s/%USERNAME%/$USERNAME/g"  -e "s/%GROUPNAME%/$GROUPNAME/g" /var/www/pastell/docker/apache/envvars > /etc/apache2/envvars
 cp /var/www/pastell/docker/apache/site-available/pastell-apache-config.conf /etc/apache2/sites-available/pastell-apache-config.conf
+cp /var/www/pastell/docker/apache/site-available/pastell-mailsec-apache-config.conf /etc/apache2/sites-available/pastell-mailsec-apache-config.conf
 cp /var/www/pastell/docker/apache/conf-available/libriciel-security.conf /etc/apache2/conf-available/libriciel-security.conf
 a2enconf libriciel-security
 a2ensite pastell-apache-config.conf
+a2ensite pastell-mailsec-apache-config.conf
 a2dissite 000-default.conf
 mkdir /data/run/apache2
 mkdir -p /data/lock/apache2

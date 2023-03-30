@@ -30,7 +30,10 @@ services:
             REDIS_SERVER: ${REDIS_HOST:-redis}
             REDIS_PORT: ${REDIS_PORT:-6379}
             PLATEFORME_MAIL: ${PLATEFORME_MAIL:-noreply@paste.ll}
-            WEBSEC_BASE: ${WEBSEC_BASE:-https://localhost:8443/mailsec/}
+            PASTELL_SITE_BASE: ${PASTELL_SITE_BASE:-https://localhost:8443}
+            WEBSEC_BASE: ${WEBSEC_BASE:-https://127.0.0.1:8443/}
+            PASTELL_HOST: ${PASTELL_HOST:-localhost}
+            WEBSEC_HOST: ${WEBSEC_HOST:-127.0.0.1}
             PASTELL_ADMIN_LOGIN: ${PASTELL_ADMIN_LOGIN:-admin}
             PASTELL_ADMIN_EMAIL: ${PASTELL_ADMIN_EMAIL:-test@libriciel.net}
             MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-123456}
@@ -38,7 +41,6 @@ services:
             MYSQL_PASSWORD: ${MYSQL_PASSWORD:-user}
             MYSQL_DATABASE: ${MYSQL_DATABASE:-pastell}
             MYSQL_HOST: db
-            PASTELL_SITE_BASE: ${PASTELL_SITE_BASE:-https://localhost:8443}
             MYSQL_HOST_TEST: ${MYSQL_HOST_TEST:-db_test}
             LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL:-}
             LETSENCRYPT_DOMAIN: ${LETSENCRYPT_DOMAIN:-}
