@@ -19,7 +19,6 @@
 - A l'édition d'un utilisateur, son mot de passe n'est plus écrasé #1725
 - Les actions de connecteurs sont toutes accessibles uniquement avec le droit `connecteur:edition` (au lieu de `entite:edition`) #1818
 - L'ajout de connecteur est possible avec uniquement `connecteur:edition`
-- Le menu d'administration s'affiche avec le droit `entite:lecture` ou `annuaire:lecture` (au lieu de `entite:edition` ou `annuaire:edition`)
 
 ## Ajouts
 
