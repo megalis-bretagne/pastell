@@ -11,8 +11,6 @@ formulaire:
 action:
     redirect-to-update-list-certificate:
         name: 'Mettre à jour les certificats'
-        rule:
-            droit_id_u: 'entite:edition'
         action-class: StandardAction
         connecteur-type: utilities
         connecteur-type-action: RedirectToGlobalUpdateCertificate

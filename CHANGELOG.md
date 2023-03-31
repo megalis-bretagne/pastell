@@ -1,5 +1,10 @@
 # [4.0.1]
 
+## Corrections
+
+- Les actions de connecteurs sont toutes accessibles uniquement avec le droit `connecteur:edition` (au lieu de `entite:edition`) #1818
+- L'ajout de connecteur est possible avec uniquement `connecteur:edition`
+
 ## Ajouts
 
 - Variable d'environnement `OPENSSL_CIPHER_STRING_SECURITY_LEVEL` qui permet de définir le niveau de sécurité d'OpenSSL #1782

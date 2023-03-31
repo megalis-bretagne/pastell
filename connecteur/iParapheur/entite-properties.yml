@@ -49,18 +49,12 @@ action:
     test-iparapheur:
         name: 'Tester la connexion'
         action-class: IParapheurTest
-        rule:
-            droit_id_u: 'entite:edition'
     test-iparapheur-send:
         name: 'Créer un document test'
         action-class: IParapheurTestSend
-        rule:
-            droit_id_u: 'entite:edition'
     display-sous-type:
         name: 'Voir les sous-types'
         action-class: DisplaySousType
-        rule:
-            droit_id_u: 'entite:edition'
     iparapheur-type:
         name: 'Liste des types iparapheur'
         rule:

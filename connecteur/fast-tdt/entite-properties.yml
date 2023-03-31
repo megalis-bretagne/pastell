@@ -63,10 +63,6 @@ action:
     test-connection:
         name: 'Tester la connexion'
         action-class: FastTdtTestConnection
-        rule:
-            droit_id_u: 'entite:edition'
     recup-classification:
         name: 'Récupérer la classification'
         action-class: FastTdtRecupClassification
-        rule:
-            droit_id_u: 'entite:edition'

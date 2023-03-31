@@ -77,37 +77,25 @@ action:
     test-cpp:
         name: 'Tester la connectivité'
         action-class: CPPTestConnexion
-        rule:
-            droit_id_u: 'entite:edition'
     liste-structure:
         name: 'Lister les structures'
         action-class: CPPListeStructure
-        rule:
-            droit_id_u: 'entite:edition'
     update-structure:
         name: "Mettre à jour l'identifiant CPP de la structure"
         action-class: CPPUpdateStructure
     list-facture:
         name: 'Lister les factures reçues disponibles'
         action-class: CPPListeFacture
-        rule:
-            droit_id_u: 'entite:edition'
     list-facture-travaux:
         name: 'Lister les factures de travaux MOA, MOE'
         action-class: CPPListeFactureTravaux
-        rule:
-            droit_id_u: 'entite:edition'
     import-facture:
         name: 'Récupérer et synchroniser les factures'
         action-class: CPPImporterFacture
-        rule:
-            droit_id_u: 'entite:edition'
         action-automatique: import-facture
     import-facture-asynchrone:
         name: 'Récupérer et synchroniser les factures en asynchrone'
         action-class: CPPImporterFactureAsynchrone
-        rule:
-            droit_id_u: 'entite:edition'
     choix-service:
         name: 'Choix du service'
         rule:
