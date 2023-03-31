@@ -1,5 +1,10 @@
 # [4.0.1]
 
+## Corrections
+
+- Les actions de connecteurs sont toutes accessibles uniquement avec le droit `connecteur:edition` (au lieu de `entite:edition`) #1818
+- L'ajout de connecteur est possible avec uniquement `connecteur:edition`
+
 ## Ajouts
 
 - Variable d'environnement `OPENSSL_CIPHER_STRING_SECURITY_LEVEL` qui permet de définir le niveau de sécurité d'OpenSSL #1782
@@ -17,8 +22,6 @@
 - Les valeurs "true" ou "false" ne sont plus remplacées par "1" ou "0" sur les champs texte #303
 - Quand un document est supprimé ou mis en état erreur fatale, les jobs associés sont supprimés #1723
 - A l'édition d'un utilisateur, son mot de passe n'est plus écrasé #1725
-- Les actions de connecteurs sont toutes accessibles uniquement avec le droit `connecteur:edition` (au lieu de `entite:edition`) #1818
-- L'ajout de connecteur est possible avec uniquement `connecteur:edition`
 
 ## Ajouts
 
