@@ -177,6 +177,15 @@ action:
         connecteur-type: SAE
         connecteur-type-action: Pastell\Step\SAE\Action\SAEGenerateArchiveAction
         action-automatique: send-archive
+        connecteur-type-mapping:
+            generate-sip-error: generate-sip-error
+            sae_show: sae_show
+            sae_bordereau: sae_bordereau
+            sae_archive: sae_archive
+            journal: journal
+            date_journal_debut: date_journal_debut
+            date_cloture_journal: date_cloture_journal
+            date_cloture_journal_iso8601: date_cloture_journal_iso8601
     generate-sip-error:
         name: "Erreur lors de la génération de l'archive"
         rule:
@@ -193,6 +202,11 @@ action:
         connecteur-type: SAE
         connecteur-type-action: Pastell\Step\SAE\Action\SAESendArchiveAction
         action-automatique: verif-sae
+        connecteur-type-mapping:
+            sae_transfert_id: sae_transfert_id
+            sae_bordereau: sae_bordereau
+            sae_archive: sae_archive
+            erreur-envoie-sae: erreur-envoie-sae
     erreur-envoie-sae:
         name: "Erreur lors de l'envoi au SAE"
         rule:
@@ -207,6 +221,14 @@ action:
         action-class: StandardAction
         connecteur-type: SAE
         connecteur-type-action: SAEVerifier
+        connecteur-type-mapping:
+            sae_transfert_id: sae_transfert_id
+            ar_sae: ar_sae
+            ar-recu-sae: ar-recu-sae
+            verif-sae-erreur: verif-sae-erreur
+            sae_ack_comment: sae_ack_comment
+            sae_bordereau: sae_bordereau
+            ack-not-provided: ack-not-provided
     verif-sae-erreur:
         name: "Erreur lors de la récupération de l'AR"
         rule:
@@ -232,6 +254,16 @@ action:
         action-class: StandardAction
         connecteur-type: SAE
         connecteur-type-action: SAEValider
+        connecteur-type-mapping:
+            sae_transfert_id: sae_transfert_id
+            reply_sae: reply_sae
+            erreur-envoie-sae: erreur-envoie-sae
+            validation-sae-erreur: validation-sae-erreur
+            accepter-sae: accepter-sae
+            rejet-sae: rejet-sae
+            sae_atr_comment: sae_atr_comment
+            sae_archival_identifier: sae_archival_identifier
+            sae_bordereau: sae_bordereau
     validation-sae-erreur:
         name: 'Erreur lors de la vérification de la validité du transfert'
         rule:

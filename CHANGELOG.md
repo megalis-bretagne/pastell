@@ -4,6 +4,7 @@
 
 - Les actions de connecteurs sont toutes accessibles uniquement avec le droit `connecteur:edition` (au lieu de `entite:edition`) #1818
 - L'ajout de connecteur est possible avec uniquement `connecteur:edition`
+- Il n'était pas possible de créer un flux studio avec plusieurs étapes SAE #1820
 
 ## Ajouts
 
