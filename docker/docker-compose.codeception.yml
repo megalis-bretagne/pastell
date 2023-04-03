@@ -7,6 +7,6 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD_TEST:-user}
       MYSQL_DATABASE: ${MYSQL_DATABASE_TEST:-pastell_test}
       MYSQL_HOST: db_test
-      PASTELL_SITE_BASE: ${PASTELL_SITE_BASE_CODECEPTION:-https://localhost:4443/}
+      PASTELL_SITE_BASE: ${PASTELL_SITE_BASE_CODECEPTION:-https://localhost/}
 volumes:
   tmp_app_workspace:

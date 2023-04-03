@@ -39,7 +39,7 @@ ENV PHP_OPCACHE_VALIDATE_TIMESTAMPS="0" \
     PHP_OPCACHE_MEMORY_CONSUMPTION="192" \
     PHP_OPCACHE_MAX_WASTED_PERCENTAGE="10"
 
-EXPOSE 4443 8080
+EXPOSE 443 80
 
 WORKDIR /var/www/pastell/
 ENV PATH="${PATH}:/var/www/pastell/vendor/bin/"
@@ -74,7 +74,7 @@ RUN composer dump-autoload --no-dev --optimize
 
 USER "${USERNAME}"
 
-HEALTHCHECK CMD curl --fail -k https://localhost:4443/ || exit 1
+HEALTHCHECK CMD curl --fail -k https://localhost/ || exit 1
 
 ENTRYPOINT ["docker-pastell-entrypoint"]
 CMD ["/usr/bin/supervisord"]
