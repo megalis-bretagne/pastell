@@ -103,6 +103,7 @@ acceptance_test:
         REDIS_SERVER: redis
         REDIS_PORT: 6379
         PASTELL_SITE_BASE: https://localhost/
+        WEBSEC_BASE: https://127.0.0.1/
         PACK_TEST: "true"
     image :  "$CONTAINER_IMAGE"
     services:

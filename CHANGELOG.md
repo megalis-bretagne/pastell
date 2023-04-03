@@ -9,7 +9,10 @@
 ## Ajouts
 
 - Variable d'environnement `OPENSSL_CIPHER_STRING_SECURITY_LEVEL` qui permet de définir le niveau de sécurité d'OpenSSL #1782
-- Variables d'environnement `PASTELL_HOST` et `MAILSEC_HOST` #1822
+
+## Évolutions
+
+- La partie mails sécurisés doit utiliser une entrée DNS différente de Pastell #1822
 
 # [4.0.0] - 2023-03-21
 

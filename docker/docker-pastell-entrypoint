@@ -27,4 +27,6 @@ if [ -z "$DONT_INIT_DATABASE" ] ; then
   /var/www/pastell/bin/console app:bootstrap -vv
 fi
 
+export PASTELL_HOST=`echo $PASTELL_SITE_BASE | awk -F[/:] '{print $4}'`
+export WEBSEC_HOST=`echo $WEBSEC_BASE | awk -F[/:] '{print $4}'`
 exec "$@"
