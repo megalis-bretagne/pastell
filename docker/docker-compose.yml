@@ -26,7 +26,7 @@ services:
             - ${LOGS_PATH:-logs_datadir}:/data/log
             - ${TMP_PATH:-tmp_datadir}:/tmp
             - ${UPLOAD_CHUNK_PATH:-upload_chunk_datadir}:/data/upload_chunk
-            - ${CACERTS_PATH}:/etc/ssl/certs/
+            - ${CACERTS_PATH:-cacerts}:/etc/ssl/certs/
 
         environment:
             REDIS_SERVER: ${REDIS_HOST:-redis}
@@ -110,8 +110,8 @@ services:
     cacerts:
         image: registry.libriciel.fr:443/public/libriciel:0.1.0
         volumes:
-            - ${CACERTS_PATH}:/etc/ssl/certs/
-            - ${LOCAL_CACERTS_PATH}:/usr/local/share/ca-certificates
+            - ${CACERTS_PATH:-cacerts}:/etc/ssl/certs/
+            - ${LOCAL_CACERTS_PATH:-local_cacerts}:/usr/local/share/ca-certificates
 
 volumes:
     mariadb_datadir:
