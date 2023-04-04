@@ -108,7 +108,7 @@ services:
             - ${PES_PJ_PATH:-/data/pesPJ}:/pesPJ/
 
     cacerts:
-        image: registry.libriciel.fr:443/public/libriciel:0.1.0
+        image: registry.libriciel.fr:443/public/libriciel/ls-docker-cacerts:0.1.0
         volumes:
             - ${CACERTS_PATH:-cacerts}:/etc/ssl/certs/
             - ${LOCAL_CACERTS_PATH:-local_cacerts}:/usr/local/share/ca-certificates
