@@ -13,6 +13,7 @@
 - La génération d'un bordereau de test SEDA ne génère plus une page d'erreur si celui-ci contient un fichier zip #1800
 - Lorsque la liste des contacts des groupes hérités dépasse trois contacts, l'excédent est masqué et la liste est dépliable #1501
 - Lors d'un ajout d'un élément à un flux studio, si l'identifiant a été oublié, l'utilisateur est alerté avant l'envoi des données #1316
+- Le connecteur LDAP n'utilisait pas les certificats de l'OS en LDAPS #1844
 
 ## Ajouts
 

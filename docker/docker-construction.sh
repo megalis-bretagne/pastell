@@ -12,7 +12,7 @@ mkdir -p /data/certificate/
 # Supervisord configuration
 cp  /var/www/pastell/docker/supervisord/supervisord.conf /etc/supervisor/supervisord.conf
 
-
+mkdir /etc/ldap && cp /var/www/pastell/docker/ldap/ldap.conf /etc/ldap/ldap.conf
 cp /var/www/pastell/docker/logrotate.d/*.conf /etc/logrotate.d/
 
 # Crond configuration
