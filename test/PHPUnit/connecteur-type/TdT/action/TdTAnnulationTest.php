@@ -48,8 +48,10 @@ class TdTAnnulationTest extends PastellTestCase
         $this->mockCurl([
             '/admin/users/api-list-login.php' => true,
             '/modules/actes/actes_transac_cancel.php' => "OK\n1234",
-            '/modules/actes/actes_transac_get_status.php?transaction=1234' => "OK\n4"
+            '/modules/actes/actes_transac_get_status.php?transaction=1234' =>
+                "OK\n4\n" . file_get_contents(__DIR__ . '/../fixtures/ACTE-ar-annulation.xml')
         ]);
+
         $this->assertTrue(
             $this->triggerActionOnDocument($id_d, 'annulation-tdt')
         );
@@ -59,6 +61,10 @@ class TdTAnnulationTest extends PastellTestCase
 
         $this->assertTrue(
             $this->triggerActionOnDocument($id_d, 'verif-annulation-tdt')
+        );
+        $this->assertStringEqualsFile(
+            __DIR__ . '/../fixtures/ACTE-ar-annulation.xml',
+            $donneesFormulaire->getFileContent('aractes_annulation')
         );
         $this->assertLastMessage("L'acquittement pour l'annulation de l'acte a été reçu.");
     }

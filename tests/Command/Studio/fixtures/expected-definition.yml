@@ -266,6 +266,11 @@ formulaire:
         tedetis_annulation_id:
             name: "Identifiant de la transaction d'annulation"
             read-only: true
+        aractes_annulation:
+            name: "Accusé de réception d'annulation"
+            type: file
+            commentaire: 'Accusé de réception (XML) envoyé par la préfecture'
+            read-only: true
     'Mail sécurisé':
         to:
             name: Destinataire(s)
@@ -805,6 +810,8 @@ action:
             tedetis_annulation_id: tedetis_annulation_id
             has_annulation: has_annulation
             annulation-tdt: annulation-tdt
+            numero_de_lacte: numero_de_lacte
+            aractes_annulation: aractes_annulation
         action-automatique: verif-annulation-tdt
         warning: "Attention cette action n'est pas réversible"
     tamponner-tdt:

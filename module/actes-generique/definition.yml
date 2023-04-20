@@ -290,6 +290,14 @@ formulaire:
             no-show: true
         tedetis_annulation_id:
             name: "Identifiant de la transaction d'annulation"
+        aractes_annulation:
+            name: "Accusé de réception d'annulation"
+            type: file
+            commentaire: 'Accusé de réception (XML) envoyé par la préfecture'
+        date_ar_annulation:
+            name: "Date de l'accusé de réception d'annulation"
+            type: date
+            read-only: true
     'Réponses de la préfecture':
         has_reponse_prefecture:
             no-show: true
@@ -624,6 +632,13 @@ action:
         action-class: StandardAction
         connecteur-type: TdT
         connecteur-type-action: TdTRecupAnnulation
+        connecteur-type-mapping:
+            tedetis_transaction_id: tedetis_transaction_id
+            tdt-error: tdt-error
+            annuler-tdt: annuler-tdt
+            numero_de_lacte: numero_de_lacte
+            date_ar_annulation: date_ar_annulation
+            aractes_annulation: aractes_annulation
     annuler-tdt:
         name: 'Transaction annulée'
         rule:

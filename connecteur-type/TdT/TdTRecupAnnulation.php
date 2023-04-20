@@ -13,6 +13,8 @@ class TdTRecupAnnulation extends ConnecteurTypeActionExecutor
         $tdt_error = $this->getMappingValue('tdt-error');
         $annuler_tdt = $this->getMappingValue('annuler-tdt');
         $date_ar_annulation = $this->getMappingValue('date_ar_annulation');
+        $numero_de_lacte_element = $this->getMappingValue('numero_de_lacte');
+        $aractes_annulation = $this->getMappingValue('aractes_annulation');
 
         /** @var TdtConnecteur $tdT */
         $tdT = $this->getConnecteur('TdT');
@@ -35,12 +37,26 @@ class TdTRecupAnnulation extends ConnecteurTypeActionExecutor
             return false;
         }
         if ($status != TdtConnecteur::STATUS_ACQUITTEMENT_RECU) {
-            $this->setLastMessage("La transaction d'annulation a comme statut : " . TdtConnecteur::getStatusString($status));
+            $this->setLastMessage(
+                "La transaction d'annulation a comme statut : " . TdtConnecteur::getStatusString($status)
+            );
             return true;
         }
-        $actionCreator->addAction($this->id_e, 0, $annuler_tdt, "L'acte a été annulé par le contrôle de légalité");
+        $actionCreator->addAction(
+            $this->id_e,
+            0,
+            $annuler_tdt,
+            "L'acte a été annulé par le contrôle de légalité"
+        );
 
-        $this->getDonneesFormulaire()->setData($date_ar_annulation, $tdT->getDateAR($tedetis_annulation_id_element));
+        $donneesFormulaire = $this->getDonneesFormulaire();
+        $donneesFormulaire->setData($date_ar_annulation, $tdT->getDateAR($tedetis_annulation_id_element));
+        $numero_de_lacte = $donneesFormulaire->get($numero_de_lacte_element);
+        $donneesFormulaire->addFileFromData(
+            $aractes_annulation,
+            "$numero_de_lacte-ar-annulation.xml",
+            $tdT->getARActes()
+        );
 
         $message = "L'acquittement pour l'annulation de l'acte a été reçu.";
         $this->notify($annuler_tdt, $this->type, $message);

@@ -18,6 +18,7 @@
 
 - Variable d'environnement `OPENSSL_CIPHER_STRING_SECURITY_LEVEL` qui permet de définir le niveau de sécurité d'OpenSSL #1782
 - Ajout d'un conteneur cacerts permettant d'ajouter des certificats locaux au magasin du conteneur web #1827
+- Récupération de l'Accusé de réception dans le cas d'annulation de transaction TDT préfecture #639
 
 ## Évolutions
 

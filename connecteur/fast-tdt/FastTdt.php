@@ -467,6 +467,7 @@ class FastTdt extends TdtConnecteur
             $status = TdtConnecteur::STATUS_ERREUR;
         }
         if ($acteFlux === self::ACTES_FLUX_CANCELLATION_ACKNOWLEDGMENT) {
+            $this->setArActes($fileContent);
             $this->arActeDate = (string)$xmlDocument->xpath('//actes:ARAnnulation/@actes:DateReception')[0];
             $status = TdtConnecteur::STATUS_ACQUITTEMENT_RECU;
         }
