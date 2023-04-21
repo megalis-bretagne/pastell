@@ -75,7 +75,7 @@ class CPPVerifConnectiviteTest extends ExtensionCppTestCase
         $last_message .= '<br />' . "\n";
         $last_message .= 'Connecteurs Chorus Pro par CSV:<br />' . "\n";
         $last_message .= '<br />' . "\n";
-        $last_message .= 'Bourg-en-Bresse - ChorusParCSV : ' . SITE_BASE . 'Connecteur/edition?id_ce=16<br />' . "\n";
+        $last_message .= 'Bourg-en-Bresse - ChorusParCSV : ' . $this->getSiteBase() . '/Connecteur/edition?id_ce=16<br />' . "\n";
         $last_message .= 'Nombre de connexions Chorus Pro par CSV ok: 1<br />' . "\n";
         $last_message .= 'Nombre de connexions Chorus Pro par CSV en erreur : 1<br />' . "\n";
         $last_message .= '<br />' . "\n";

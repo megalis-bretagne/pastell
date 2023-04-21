@@ -20,7 +20,7 @@ $objectInstancier->setInstance(Logger::class, $logger);
 $objectInstancier->setInstance('log_level', LOG_LEVEL);
 $objectInstancier->setInstance('pastell_path', PASTELL_PATH);
 $objectInstancier->setInstance(PastellTimer::class, new PastellTimer());
-$objectInstancier->setInstance('site_base', SITE_BASE);
+$objectInstancier->setInstance('site_base', \rtrim(SITE_BASE, '/'));
 $objectInstancier->setInstance('websec_base', WEBSEC_BASE);
 $objectInstancier->setInstance('list_pack', LIST_PACK);
 

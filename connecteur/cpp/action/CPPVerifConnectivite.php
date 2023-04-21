@@ -69,7 +69,7 @@ class CPPVerifConnectivite extends ActionExecutor
                 continue;
             }
 
-            $path = SITE_BASE . "Connecteur/edition?id_ce=" . $connecteur['id_ce'];
+            $path = $this->getSiteBase() . '/Connecteur/edition?id_ce=' . $connecteur['id_ce'];
 
             /** @var CPP $cpp */
             $cpp = $this->getConnecteurFactory()->getConnecteurById($connecteur['id_ce']);
@@ -124,7 +124,7 @@ class CPPVerifConnectivite extends ActionExecutor
                 continue;
             }
 
-            $path = SITE_BASE . "Connecteur/edition?id_ce=" . $connecteur['id_ce'];
+            $path = $this->getSiteBase() . '/Connecteur/edition?id_ce=' . $connecteur['id_ce'];
             $result_cpp['data'] .= $connecteur['denomination'] . " - " . $connecteur['libelle'] . " : " . $path . "\n";
 
             /** @var DonneesFormulaire $chorusParCsvConfig */

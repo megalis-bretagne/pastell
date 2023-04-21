@@ -5,7 +5,7 @@
 use Pastell\Mailer\Mailer;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 
-require_once(__DIR__ . "/../init.php");
+require_once __DIR__ . '/../init.php';
 
 $objectInstancier = ObjectInstancierFactory::getObjetInstancier();
 
@@ -37,12 +37,13 @@ if (! $last_try) {
 $nb_second_since_last_try = time() - strtotime($last_try);
 
 $pastellMailer = $objectInstancier->getInstance(Mailer::class);
+$siteBase = $objectInstancier->getInstance('site_base');
 
 
 if ($nb_second_since_last_try > 3600) {
     $message = sprintf(
         "Le démon sur le site %s/Daemon semble arrêté depuis plus d'une heure",
-        SITE_BASE
+        $siteBase
     );
     $templatedEmail = (new TemplatedEmail())
         ->to(ADMIN_EMAIL)
@@ -59,7 +60,7 @@ if ($nb_lock) {
     $message = sprintf(
         "%s connecteur(s) Pastell semble suspendus sur le site %s depuis plus d'une heure !",
         $nb_lock,
-        SITE_BASE
+        $siteBase
     );
     $templatedEmail = (new TemplatedEmail())
         ->to(ADMIN_EMAIL)

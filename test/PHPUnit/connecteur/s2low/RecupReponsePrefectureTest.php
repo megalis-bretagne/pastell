@@ -39,7 +39,7 @@ class RecupReponsePrefectureTest extends PastellTestCase
         $reponsePrefectureDocument = $this->getDonneesFormulaireFactory()->get($reponsePrefectureIdDocument);
 
         $this->assertSame(
-            sprintf("%s/Document/detail?id_d=%s&id_e=%s", SITE_BASE, $acteDocument['id_d'], $acte_id_e),
+            sprintf('%s/Document/detail?id_d=%s&id_e=%s', $this->getSiteBase(), $acteDocument['id_d'], $acte_id_e),
             $reponsePrefectureDocument->get('url_acte')
         );
 

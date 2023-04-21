@@ -23,7 +23,13 @@ class TdtTeletransmettre extends ActionExecutor
 
         $this->changeAction("teletransmission-tdt", "La télétransmission a été ordonnée depuis Pastell");
 
-        $url_retour = SITE_BASE . "/Document/action?id_d={$this->id_d}&id_e={$this->id_e}&action={$return_teletransmission_tdt}&error=%%ERROR%%&message=%%MESSAGE%%";
+        $url_retour = \sprintf(
+            '%s/Document/action?id_d=%s&id_e=%s&action=%s&error=%%%%ERROR%%%%&message=%%%%MESSAGE%%%%',
+            $this->getSiteBase(),
+            $this->id_d,
+            $this->id_e,
+            $return_teletransmission_tdt
+        );
 
         $to = $redirect_url . "?id={$tedetis_transaction_id}" ;
         if ($nounce_param) {
@@ -62,7 +68,15 @@ class TdtTeletransmettre extends ActionExecutor
 
         $this->setJobManagerForLot($all_id_d);
 
-        $url_retour = SITE_BASE . "/Document/retourTeletransmission?{$lst_id_d}type={$this->type}&id_e={$this->id_e}&id_u={$this->id_u}&action={$return_teletransmission_tdt}";
+        $url_retour = sprintf(
+            '%s/Document/retourTeletransmission?%stype=%s&id_e=%s&id_u=%s&action=%s',
+            $this->getSiteBase(),
+            $lst_id_d,
+            $this->type,
+            $this->id_e,
+            $this->id_u,
+            $return_teletransmission_tdt
+        );
         $to = $redirect_url . "?{$lst_id_transaction}";
         if ($nounce_param) {
             $to .= "&" . $nounce_param;

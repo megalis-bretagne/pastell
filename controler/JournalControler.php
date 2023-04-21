@@ -115,7 +115,7 @@ class JournalControler extends PastellControler
         $liste_collectivite = $this->getRoleUtilisateur()->getEntite($this->getId_u(), 'journal:lecture');
 
         if (! $liste_collectivite) {
-            header("Location: " . SITE_BASE);
+            header('Location: ' . $this->getSiteBase());
             exit;
         }
 

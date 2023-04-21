@@ -719,8 +719,8 @@ class S2low extends TdtConnecteur
         if ($acteDocumentId) {
             $acteDocument = $this->objectInstancier->getInstance(DonneesFormulaireFactory::class)->get($acteDocumentId);
             $acteEntite = $this->objectInstancier->getInstance(DocumentEntite::class)->getEntite($acteDocumentId);
-            $url = sprintf("/Document/detail?id_d=%s&id_e=%s", $acteDocumentId, $acteEntite[0]['id_e']);
-            $donneesFormulaire->setData('url_acte', SITE_BASE . $url);
+            $url = sprintf('/Document/detail?id_d=%s&id_e=%s', $acteDocumentId, $acteEntite[0]['id_e']);
+            $donneesFormulaire->setData('url_acte', $this->objectInstancier->getInstance('site_base') . $url);
 
             $linksToDocuments = [];
             if ($acteDocument->get('reponse_prefecture_file')) {

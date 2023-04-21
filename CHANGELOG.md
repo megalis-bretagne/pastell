@@ -5,6 +5,7 @@
 - Il n'est plus possible de créer un document par API sur une entité désactivée #1702
 - La création d'un rôle nécessite une valeur dans les champs rôle et libellé #1816
 - Il n'était pas possible de créer un utilisateur à partir d'une entité #1833
+- La variable d'environnement `PASTELL_SITE_BASE` ne nécessite plus de terminer par un / #1830
 
 ## Ajouts
 

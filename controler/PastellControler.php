@@ -570,4 +570,9 @@ class PastellControler extends Controler
     {
         return $this->getInstance(Logger::class);
     }
+
+    public function getSiteBase(): string
+    {
+        return $this->getObjectInstancier()->getInstance('site_base');
+    }
 }

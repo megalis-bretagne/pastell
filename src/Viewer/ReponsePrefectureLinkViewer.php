@@ -30,23 +30,22 @@ final class ReponsePrefectureLinkViewer implements Viewer
                 <th>Type de réponse</th>
                 <th>URL</th>
             </tr>
-            <?php
-            foreach ($json as $type_reponse => $url) : ?>
+            <?php foreach ($json as $type_reponse => $uri) : ?>
                 <tr>
                     <td>
-                        <?php
-                        \hecho(TdtConnecteur::getTransactionNameFromNumber($type_reponse) ?? 'ERREUR') ?>
+                        <?php \hecho(TdtConnecteur::getTransactionNameFromNumber($type_reponse) ?? 'ERREUR') ?>
                     </td>
                     <td>
-                        <a href=<?php
-                        \hecho(SITE_BASE . $url); ?>>
-                            <?php
-                            \hecho(SITE_BASE . $url); ?>
+                        <?php
+                        //FIXME: SITE_BASE should be injected
+                        $url = \rtrim(\SITE_BASE, '/') . '/' . \ltrim($uri, '/');
+                        ?>
+                        <a href=<?php \hecho($url); ?>>
+                            <?php \hecho($url); ?>
                         </a>
                     </td>
                 </tr>
-                <?php
-            endforeach; ?>
+            <?php endforeach; ?>
         </table>
         <?php
     }

@@ -258,7 +258,15 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1) {
                         />
                     <?php elseif ($field->getType() == 'link') : ?>
                         <?php if ($donneesFormulaire->isEditable($field->getName())) : ?>
-                            <a href='<?php echo SITE_BASE . $field->getProperties('script')?>?id_e=<?php echo $id_e?>'><?php echo $field->getProperties('link_name')?></a>
+                            <?php
+                            $url = \sprintf(
+                                '%s/%s?id_e=%s',
+                                $this->getSiteBase(),
+                                \ltrim($field->getProperties('script'), '/'),
+                                $id_e
+                            );
+                            ?>
+                            <a href='<?php echo $url; ?>'><?php echo $field->getProperties('link_name'); ?></a>
                         <?php else : ?>
                             <?php echo $field->getProperties('link_name')?>
                         <?php endif;?>
