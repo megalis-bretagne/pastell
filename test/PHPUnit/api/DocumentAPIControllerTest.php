@@ -484,5 +484,4 @@ class DocumentAPIControllerTest extends PastellTestCase
         $this->expectExceptionMessage("L'entité 1 est désactivée");
         $this->createTestDocument();
     }
-
 }
