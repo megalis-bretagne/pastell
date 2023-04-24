@@ -34,9 +34,9 @@ class MoveProofToMinio extends Command
             $sql = "SELECT preuve FROM journal WHERE id_j = ?";
             $proof = $this->journal->query($sql, $proofId['id_j'])[0];
             $this->journal->saveProof($proofId['id_j'], $proof['preuve']);
+            $sql = "UPDATE journal SET preuve = '' WHERE id_j = ?";
+            $this->journal->query($sql, $proofId['id_j']);
         }
-        $sql = "UPDATE journal SET preuve = ''";
-        $this->journal->query($sql);
         return Command::SUCCESS;
     }
 }
