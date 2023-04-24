@@ -10,7 +10,6 @@ declare(strict_types=1);
  * @var int $id_u
  * @var array $notification_list
  * @var array $arbre
- * @var bool $utilisateur_edition
  * @var array $all_module
  * @var array $tokens
  */
@@ -153,7 +152,6 @@ use Pastell\Utilities\Certificate;
                 </td>
 
                 <td>
-                    <?php if ($utilisateur_edition) : ?>
                         <a
                                 class="btn btn-primary"
                                 href='Utilisateur/notification?from_me=true&id_u=<?php
@@ -170,13 +168,10 @@ use Pastell\Utilities\Certificate;
                         >
                             <i class="fa fa-trash"></i>&nbsp;Supprimer
                         </a>
-                    <?php endif; ?>
                 </td>
             </tr>
         <?php endforeach; ?>
     </table>
-    <?php
-    if ($utilisateur_edition) : ?>
         <h3>Ajouter une notification</h3>
         <form action='Utilisateur/notificationAjout' method='post' class='form-inline'>
             <?php $this->displayCSRFInput(); ?>
@@ -201,7 +196,6 @@ use Pastell\Utilities\Certificate;
 
             <button type='submit' class='btn btn-primary'><i class="fa fa-plus-circle"></i>&nbsp;Ajouter</button>
         </form>
-    <?php endif; ?>
 </div>
 
 
