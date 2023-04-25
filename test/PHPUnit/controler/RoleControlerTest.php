@@ -77,12 +77,10 @@ class RoleControlerTest extends ControlerTestCase
 
     public function testEditionActionNoInput(): void
     {
-        $message = '';
         try {
             $this->roleControler->doEditionAction();
         } catch (LastErrorException $e) {
-            $message = $e->getMessage();
+            static::assertStringContainsString('Les deux champs sont obligatoires', $e->getMessage());
         }
-        static::assertStringContainsString('Les deux champs sont obligatoires', $message);
     }
 }
