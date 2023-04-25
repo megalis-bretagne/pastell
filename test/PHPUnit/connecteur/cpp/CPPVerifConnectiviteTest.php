@@ -93,7 +93,7 @@ class CPPVerifConnectiviteTest extends ExtensionCppTestCase
         $last_message .= '<br />' . "\n";
         $last_message .= '<br />' . "\n";
         $last_message .= '<br />' . "\n";
-        $last_message .= ' mail envoyé à ' . ADMIN_EMAIL;
+        $last_message .= ' mail envoyé à ' . \implode(',', $this->getObjectInstancier()->getInstance('admin_email'));
 
         return $last_message;
     }

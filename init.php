@@ -89,7 +89,6 @@ if (PHP_SAPI !== 'cli' || $objectInstancier->getInstance(SQLQuery::class)->isCon
 
 
 $objectInstancier->setInstance('journal_max_age_in_months', JOURNAL_MAX_AGE_IN_MONTHS);
-$objectInstancier->setInstance('admin_email', ADMIN_EMAIL);
 $objectInstancier->setInstance('database_file', DatabaseUpdater::DATABASE_FILE);
 $objectInstancier->setInstance('rgpd_page_path', RGPD_PAGE_PATH);
 
@@ -105,7 +104,7 @@ $objectInstancier->setInstance('mailer_dsn', MAILER_DSN);
 $objectInstancier->setInstance('email_template_path', __DIR__ . '/templates/email/');
 $objectInstancier->setInstance('plateforme_mail', PLATEFORME_MAIL);
 
-$objectInstancier->setInstance('admin_email', ADMIN_EMAIL);
+$objectInstancier->setInstance('admin_email', \explode(',', ADMIN_EMAIL));
 
 $objectInstancier->setInstance('pastell_admin_login', PASTELL_ADMIN_LOGIN);
 $objectInstancier->setInstance('pastell_admin_email', PASTELL_ADMIN_EMAIL);
