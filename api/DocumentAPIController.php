@@ -230,16 +230,6 @@ class DocumentAPIController extends BaseAPIController
     }
 
     /**
-     * @throws ForbiddenException
-     */
-    private function checkedEntiteActivated(int $id_e): void
-    {
-        if (!$this->entiteSQL->isActive($id_e)) {
-            throw new ForbiddenException("L'entité $id_e est désactivée");
-        }
-    }
-
-    /**
      * @return array|mixed
      * @throws ForbiddenException
      * @throws NotFoundException
@@ -248,7 +238,6 @@ class DocumentAPIController extends BaseAPIController
     public function post()
     {
         $id_e = $this->checkedEntite();
-        $this->checkedEntiteActivated($id_e);
 
         $id_d = $this->getFromQueryArgs(2);
         if ($id_d) {

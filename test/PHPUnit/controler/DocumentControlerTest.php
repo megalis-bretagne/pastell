@@ -403,4 +403,11 @@ Lignes',
         }
         static::assertFalse($jobQueueSQL->hasDocumentJob(self::ID_E_COL, $id_d));
     }
+
+    public function testCreateDocumentOnDeactivatedEntity(): void
+    {
+        $this->getInternalAPI()->post('/entite/1/deactivate');
+        $this->expectExceptionMessage("L'entité 1 est désactivée");
+        $this->createDocument('test');
+    }
 }
