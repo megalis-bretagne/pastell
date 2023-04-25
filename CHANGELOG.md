@@ -3,6 +3,7 @@
 ## Corrections
 
 - Il n'est plus possible de créer un document par API sur une entité désactivée #1702
+- La création d'un rôle necessite une valeur dans les champs rôle et libellé #1816
 
 # [4.0.1] - 2023-04-10
 
