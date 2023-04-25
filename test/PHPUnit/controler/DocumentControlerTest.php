@@ -407,6 +407,7 @@ Lignes',
     public function testCreateDocumentOnDeactivatedEntity(): void
     {
         $this->getInternalAPI()->post('/entite/1/deactivate');
+        $this->expectException(ForbiddenException::class);
         $this->expectExceptionMessage("L'entité 1 est désactivée");
         $this->createDocument('test');
     }
