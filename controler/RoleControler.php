@@ -74,6 +74,12 @@ class RoleControler extends PastellControler
         $role = $this->getPostInfo()->get('role');
         $role = preg_replace("/\s+/", "_", $role);
         $libelle = $this->getPostInfo()->get('libelle');
+
+        if (empty($libelle) || empty($role)) {
+            $this->setLastError("Les deux champs sont obligatoires");
+            $this->redirect("/Role/edition");
+        }
+
         $this->getRoleSQL()->edit($role, $libelle);
         if ($this->getPostInfo()->get('nouveau')) {
             $this->getRoleSQL()->addDroit($role, 'journal:lecture');

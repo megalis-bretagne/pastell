@@ -74,4 +74,15 @@ class RoleControlerTest extends ControlerTestCase
 
         $this->assertEquals(['entite:lecture' => 1, 'journal:lecture' => 1], $this->roleControler->getRoleSQL()->getDroit([], 'test'));
     }
+
+    public function testEditionActionNoInput(): void
+    {
+        $message = '';
+        try {
+            $this->roleControler->doEditionAction();
+        } catch (LastErrorException $e) {
+            $message = $e->getMessage();
+        }
+        static::assertStringContainsString('Les deux champs sont obligatoires', $message);
+    }
 }
