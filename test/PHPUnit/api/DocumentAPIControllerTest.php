@@ -477,4 +477,12 @@ class DocumentAPIControllerTest extends PastellTestCase
         $this->getInternalAPI()->delete("/entite/1/document/$documentId");
         $this->expectOutputRegex('/HTTP\/1.1 204 No Content/');
     }
+
+    public function testCreateDocumentOnDeactivatedEntity(): void
+    {
+        $this->getInternalAPI()->post('/entite/1/deactivate');
+        $this->expectException(ForbiddenException::class);
+        $this->expectExceptionMessage("L'entité 1 est désactivée");
+        $this->createTestDocument();
+    }
 }

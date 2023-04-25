@@ -238,6 +238,7 @@ class DocumentAPIController extends BaseAPIController
     public function post()
     {
         $id_e = $this->checkedEntite();
+
         $id_d = $this->getFromQueryArgs(2);
         if ($id_d) {
             return $this->postFile($id_e, $id_d);
