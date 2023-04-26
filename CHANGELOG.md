@@ -12,6 +12,7 @@
 ## Ajouts
 
 - Récupération de l'Accusé de réception dans le cas d'annulation de transaction TDT préfecture #639
+- Gestion de l'état "RejetSignataireExterne" d'iparapheur v5 #1776
 
 # [4.0.1] - 2023-04-10
 
