@@ -1,9 +1,10 @@
-# [4.0.2] - 2023-
+# [4.0.2] - 2023-05-08
 
 ## Corrections
 
 - Il n'est plus possible de créer un document par API sur une entité désactivée #1702
-- La création d'un rôle necessite une valeur dans les champs rôle et libellé #1816
+- La création d'un rôle nécessite une valeur dans les champs rôle et libellé #1816
+- Il n'était pas possible de créer un utilisateur à partir d'une entité #1833
 
 # [4.0.1] - 2023-04-10
 
