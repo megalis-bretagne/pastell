@@ -51,7 +51,6 @@ class TdTAnnulationTest extends PastellTestCase
             '/modules/actes/actes_transac_get_status.php?transaction=1234' =>
                 "OK\n4\n" . file_get_contents(__DIR__ . '/../fixtures/ACTE-ar-annulation.xml')
         ]);
-
         $this->assertTrue(
             $this->triggerActionOnDocument($id_d, 'annulation-tdt')
         );
