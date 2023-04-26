@@ -15,10 +15,11 @@
 
 <form action='Utilisateur/doNotificationEdit' method='post'>
     <?php $this->displayCSRFInput() ?>
-    <input type='hidden' name='id_u' value='<?php hecho($id_u); ?>'/>
+    <?php if (!$page_moi) :?>
+        <input type='hidden' name='id_u' value='<?php hecho($id_u); ?>'/>
+    <?php endif ?>
     <input type='hidden' name='id_e' value='<?php hecho($id_e); ?>'/>
     <input type='hidden' name='type' value='<?php hecho($type); ?>'/>
-    <input type='hidden' name='moi' value='<?php hecho($page_moi); ?>'/>
 
 
 
