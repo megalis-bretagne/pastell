@@ -6,6 +6,10 @@
 - La création d'un rôle nécessite une valeur dans les champs rôle et libellé #1816
 - Il n'était pas possible de créer un utilisateur à partir d'une entité #1833
 
+## Ajouts
+
+- Récupération de l'Accusé de réception dans le cas d'annulation de transaction TDT préfecture #639
+
 # [4.0.1] - 2023-04-10
 
 ## Corrections
@@ -18,7 +22,6 @@
 
 - Variable d'environnement `OPENSSL_CIPHER_STRING_SECURITY_LEVEL` qui permet de définir le niveau de sécurité d'OpenSSL #1782
 - Ajout d'un conteneur cacerts permettant d'ajouter des certificats locaux au magasin du conteneur web #1827
-- Récupération de l'Accusé de réception dans le cas d'annulation de transaction TDT préfecture #639
 
 ## Évolutions
 
