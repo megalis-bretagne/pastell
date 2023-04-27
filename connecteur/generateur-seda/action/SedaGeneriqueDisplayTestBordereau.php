@@ -32,6 +32,15 @@ class SedaGeneriqueDisplayTestBordereau extends ActionExecutor
             }
         }
 
+        foreach ($file_list as $file => $value) {
+            if (str_contains($value, 'ZIP')) {
+                $this->setLastMessage(
+                    "La génération d'un bordereau de test est impossible si celui-ci comporte un fichier ZIP"
+                );
+                return false;
+            }
+        }
+
         $fluxDataTest->addFileList($file_list);
 
         $date_list = [];

@@ -10,6 +10,7 @@
 - Un utilisateur peut ajouter et supprimer ses propres notifications en toutes circonstances et modifier celles dont il a les droits #1834
 - Les entités dans le Breadcrumb sont affichées par ordre alphabétique #1658
 - Il n'était plus possible d'avoir plusieurs adresses emails pour les notifications système #1842
+- La génération d'un bordereau de test SEDA ne génère plus une page d'erreur si celui-ci contient un fichier zip #1800
 
 ## Ajouts
 
