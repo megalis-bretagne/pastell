@@ -426,7 +426,7 @@ action:
         rule:
             role_id_e: no-role
     recu-iparapheur:
-        name: 'Signature récuperée'
+        name: 'Signature récupérée'
         rule:
             role_id_e: no-role
         editable-content:
