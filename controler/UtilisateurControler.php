@@ -784,6 +784,7 @@ class UtilisateurControler extends PastellControler
     /**
      * @throws LastErrorException
      * @throws LastMessageException
+     * @deprecated 4.0.0
      */
     public function notificationToogleDailyDigestAction()
     {
