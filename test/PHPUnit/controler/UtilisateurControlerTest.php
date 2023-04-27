@@ -278,4 +278,237 @@ class UtilisateurControlerTest extends ControlerTestCase
         $userUpdated = $utilisateurSQL->getInfo(3);
         self::assertSame($userCreated['password'], $userUpdated['password']);
     }
+
+    public function testNotificationAjoutActionByAdmin(): void
+    {
+        $this->setPostInfo([
+            'id_u' => 2,
+            'id_e' => 1,
+            'type' => 'actes-generique',
+        ]);
+        try {
+            $this->getUtilisateurControler()->notificationAjoutAction();
+        } catch (LastMessageException $e) {
+            static::assertStringContainsString(
+                'Utilisateur/notification?id_u=2&id_e=1&type=actes-generique:',
+                $e->getMessage()
+            );
+        } catch (LastErrorException|NotFoundException $e) {
+            /** Nothing to do */
+        }
+    }
+
+    /**
+     * @throws UnrecoverableException
+     * @throws NotFoundException
+     * @throws ConflictException
+     * @throws LastErrorException
+     */
+    public function testNotificationAjoutActionBySelf(): void
+    {
+        $utilisateurControler = $this->getUtilisateurControler();
+        $id_u = $this->authenticateNewUserWithPermission(
+            ['entite:lecture', 'actes-generique:edition', 'actes-generique:lecture'],
+            1
+        );
+        $this->setPostInfo([
+            'id_e' => 1,
+            'type' => 'actes-generique',
+        ]);
+        try {
+            $utilisateurControler->notificationAjoutAction();
+        } catch (LastMessageException $e) {
+            static::assertEquals(3, $id_u);
+            static::assertStringContainsString(
+                'Utilisateur/notification?id_e=1&type=actes-generique:',
+                $e->getMessage()
+            );
+        }
+    }
+
+    public function testNotificationAjoutActionByAdminWithoutType(): void
+    {
+        $this->setPostInfo([
+            'id_u' => 2,
+            'id_e' => 1,
+            'type' => '',
+        ]);
+        try {
+            $this->getUtilisateurControler()->notificationAjoutAction();
+        } catch (LastErrorException $e) {
+            static::assertStringContainsString("Vous n'avez selectionné aucun type de dossier", $e->getMessage());
+        } catch (LastMessageException|NotFoundException $e) {
+            /** Nothing to do */
+        }
+    }
+
+    public function testNotificationAjoutActionBySelfWithoutType(): void
+    {
+        $this->setPostInfo([
+            'id_e' => 1,
+            'type' => '',
+        ]);
+        try {
+            $this->getUtilisateurControler()->notificationAjoutAction();
+        } catch (LastErrorException $e) {
+            static::assertStringContainsString("Vous n'avez selectionné aucun type de dossier", $e->getMessage());
+        } catch (LastMessageException|NotFoundException $e) {
+            /** Nothing to do */
+        }
+    }
+
+    /**
+     * @throws LastErrorException
+     */
+    public function testNotificationByAdminSuppressionActionBySelf(): void
+    {
+        $utilisateurControler = $this->getUtilisateurControler();
+        $utilisateurControler->getNotification()->add(
+            2,
+            1,
+            'actes-generique',
+            Notification::ALL_TYPE,
+            false
+        );
+        $this->getObjectInstancier()->getInstance(Authentification::class)->connexion('eric', 2);
+
+        $this->setPostInfo([
+            'id_n' => 1,
+            'id_e' => 1,
+            'type' => 'actes-generique',
+        ]);
+
+        try {
+            $this->getUtilisateurControler()->notificationSuppressionAction();
+        } catch (LastMessageException $e) {
+            static::assertStringContainsString(
+                'La notification a été supprimée',
+                $e->getMessage()
+            );
+        }
+    }
+
+    /**
+     * @throws UnrecoverableException
+     * @throws NotFoundException
+     * @throws LastMessageException
+     * @throws LastErrorException
+     */
+    public function testNotificationModifBySelf(): void
+    {
+        $utilisateurControler = $this->getUtilisateurControler();
+        $utilisateurControler->getNotification()->add(
+            2,
+            1,
+            'actes-generique',
+            Notification::ALL_TYPE,
+            false
+        );
+        $this->getObjectInstancier()->getInstance(Authentification::class)->connexion('eric', 2);
+
+        $this->setPostInfo([
+            'id_e' => 1,
+            'type' => 'actes-generique',
+        ]);
+
+        \ob_start();
+        $this->getUtilisateurControler()->notificationAction();
+        \ob_get_clean();
+        static::assertEquals(
+            'UtilisateurNotification',
+            $utilisateurControler->getViewParameterByKey('template_milieu')
+        );
+    }
+
+    /**
+     * @throws UnrecoverableException
+     * @throws NotFoundException
+     * @throws LastMessageException
+     * @throws LastErrorException
+     */
+    public function testNotificationModifByAdmin(): void
+    {
+        $utilisateurControler = $this->getUtilisateurControler();
+        $utilisateurControler->getNotification()->add(
+            2,
+            1,
+            'actes-generique',
+            Notification::ALL_TYPE,
+            false
+        );
+
+        $this->setPostInfo([
+            'id_u' => 2,
+            'id_e' => 1,
+            'type' => 'actes-generique',
+        ]);
+
+        \ob_start();
+        $this->getUtilisateurControler()->notificationAction();
+        \ob_get_clean();
+        static::assertEquals(
+            'UtilisateurNotification',
+            $utilisateurControler->getViewParameterByKey('template_milieu')
+        );
+    }
+
+    /**
+     * @throws LastMessageException
+     * @throws UnrecoverableException
+     * @throws LastErrorException
+     * @throws NotFoundException
+     */
+    public function testDoNotificationModifBySelf(): void
+    {
+        $utilisateurControler = $this->getUtilisateurControler();
+        $utilisateurControler->getNotification()->add(
+            2,
+            1,
+            'actes-generique',
+            'creation',
+            false
+        );
+        $this->getObjectInstancier()->getInstance(Authentification::class)->connexion('eric', 2);
+        \ob_start();
+        $utilisateurControler->moiAction();
+        \ob_get_clean();
+
+        $this->setPostInfo([
+            'id_e' => 1,
+            'type' => 'actes-generique',
+            'modification' => [
+                'name' => 'modification',
+                'type' => 'checkbox',
+                'value' => 'on',
+                'checked' => true,
+            ]
+        ]);
+
+        try {
+            $this->getUtilisateurControler()->doNotificationEditAction();
+        } catch (LastMessageException $e) {
+            static::assertStringContainsString(
+                'Les notifications ont été modifiées',
+                $e->getMessage()
+            );
+        }
+
+        \ob_start();
+        $utilisateurControler->moiAction();
+        \ob_get_clean();
+        static::assertEquals(
+            [ '1-actes-generique' => [
+                'id_n' => 2,
+                'id_u' => 1,
+                'id_e' => 1,
+                'type' => 'actes-generique',
+                'action' => [
+                  0 => 'En cours de rédaction'
+                ],
+                'daily_digest' => 0,
+                'denomination' => 'Bourg-en-Bresse'
+              ]],
+            $utilisateurControler->getViewParameterByKey('notification_list')
+        );
+    }
 }
