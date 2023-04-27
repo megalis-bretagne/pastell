@@ -293,7 +293,7 @@ class UtilisateurControlerTest extends ControlerTestCase
                 'Utilisateur/notification?id_u=2&id_e=1&type=actes-generique:',
                 $e->getMessage()
             );
-        } catch (LastErrorException|NotFoundException $e) {
+        } catch (LastErrorException | NotFoundException $e) {
             /** Nothing to do */
         }
     }
@@ -337,7 +337,7 @@ class UtilisateurControlerTest extends ControlerTestCase
             $this->getUtilisateurControler()->notificationAjoutAction();
         } catch (LastErrorException $e) {
             static::assertStringContainsString("Vous n'avez selectionné aucun type de dossier", $e->getMessage());
-        } catch (LastMessageException|NotFoundException $e) {
+        } catch (LastMessageException | NotFoundException $e) {
             /** Nothing to do */
         }
     }
@@ -352,7 +352,7 @@ class UtilisateurControlerTest extends ControlerTestCase
             $this->getUtilisateurControler()->notificationAjoutAction();
         } catch (LastErrorException $e) {
             static::assertStringContainsString("Vous n'avez selectionné aucun type de dossier", $e->getMessage());
-        } catch (LastMessageException|NotFoundException $e) {
+        } catch (LastMessageException | NotFoundException $e) {
             /** Nothing to do */
         }
     }
@@ -497,7 +497,8 @@ class UtilisateurControlerTest extends ControlerTestCase
         $utilisateurControler->moiAction();
         \ob_get_clean();
         static::assertEquals(
-            [ '1-actes-generique' => [
+            [
+                '1-actes-generique' => [
                 'id_n' => 2,
                 'id_u' => 1,
                 'id_e' => 1,
@@ -507,7 +508,8 @@ class UtilisateurControlerTest extends ControlerTestCase
                 ],
                 'daily_digest' => 0,
                 'denomination' => 'Bourg-en-Bresse'
-              ]],
+                ]
+            ],
             $utilisateurControler->getViewParameterByKey('notification_list')
         );
     }
