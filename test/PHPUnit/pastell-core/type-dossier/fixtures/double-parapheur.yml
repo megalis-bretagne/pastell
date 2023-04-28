@@ -366,7 +366,7 @@ action:
             role_id_e: no-role
         num-same-connecteur: '0'
     recu-iparapheur_1:
-        name: 'Signature récuperée #1'
+        name: 'Signature récupérée #1'
         rule:
             role_id_e: no-role
         action-automatique: orientation
@@ -481,7 +481,7 @@ action:
             role_id_e: no-role
         num-same-connecteur: '1'
     recu-iparapheur_2:
-        name: 'Signature récuperée #2'
+        name: 'Signature récupérée #2'
         rule:
             role_id_e: no-role
         action-automatique: orientation

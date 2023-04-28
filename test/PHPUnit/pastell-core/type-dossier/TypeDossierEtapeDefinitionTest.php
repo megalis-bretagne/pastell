@@ -400,7 +400,7 @@ Uniquement avec le mode "circuit à la volée"',
                     ],
                 ],
                 'recu-iparapheur_2' => [
-                    'name' => 'Signature récuperée #2',
+                    'name' => 'Signature récupérée #2',
                     'rule' => [
                         'role_id_e' => 'no-role',
                     ],

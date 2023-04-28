@@ -16,7 +16,7 @@ formulaire:
             name: Identifiant de l'entité iparapheur
             read-only: true
         tenant_name:
-            name: Nom du l'entité iparapheur
+            name: Nom de l'entité iparapheur
             type: externalData
             choice-action: tenant_name
             link_name: "Sélectionner l'entité"
