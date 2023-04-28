@@ -6,7 +6,7 @@ class IParapheur extends SignatureConnecteur
 
     public const ARCHIVAGE_ACTION_EFFACER = "EFFACER";
 
-    private const REJECTED_STATE = ['RejetVisa', 'RejetSignataire','RejetCachet', 'RejetMailSecPastell'];
+    private const REJECTED_STATE = ['RejetVisa', 'RejetSignataire','RejetCachet', 'RejetMailSecPastell', 'RejetSignataireExterne'];
 
     private $wsdl;
     private $login_http;
