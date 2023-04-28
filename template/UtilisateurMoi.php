@@ -10,9 +10,9 @@ declare(strict_types=1);
  * @var int $id_u
  * @var array $notification_list
  * @var array $arbre
- * @var bool $utilisateur_edition
  * @var array $all_module
  * @var array $tokens
+ * @var bool $droit_entite_racine
  */
 
 use Pastell\Utilities\Certificate;
@@ -153,38 +153,32 @@ use Pastell\Utilities\Certificate;
                 </td>
 
                 <td>
-                    <?php if ($utilisateur_edition) : ?>
-                        <a
-                                class="btn btn-primary"
-                                href='Utilisateur/notification?from_me=true&id_u=<?php
-                                echo $infoNotification['id_u']; ?>&id_e=<?php
-                                echo $infoNotification['id_e']; ?>&type=<?php
-                                echo $infoNotification['type']; ?>&moi=true'
-                        >
+                    <a
+                        class="btn btn-primary"
+                        href='Utilisateur/notification?id_e=<?php
+                        echo $infoNotification['id_e']; ?>&type=<?php
+                        echo $infoNotification['type']; ?>'
+                    >
                             <i class="fa fa-pencil"></i>&nbsp;Modifier
                         </a>
 
                         <a class='btn btn-danger'
-                           href='Utilisateur/notificationSuppression?id_n=<?php
-                            echo $infoNotification['id_n']; ?>&moi=true'
+                           href='Utilisateur/notificationSuppression?id_n=<?php echo $infoNotification['id_n']; ?>'
                         >
                             <i class="fa fa-trash"></i>&nbsp;Supprimer
                         </a>
-                    <?php endif; ?>
                 </td>
             </tr>
         <?php endforeach; ?>
     </table>
-    <?php
-    if ($utilisateur_edition) : ?>
         <h3>Ajouter une notification</h3>
         <form action='Utilisateur/notificationAjout' method='post' class='form-inline'>
             <?php $this->displayCSRFInput(); ?>
-            <input type='hidden' name='id_u' value='<?php echo $id_u; ?>'/>
-            <input type='hidden' name='moi' value='true'/>
 
             <select name='id_e' class='select2_entite'>
-                <option value='0'>Entité racine</option>
+                <?php if ($droit_entite_racine) : ?>
+                    <option value='0'>Entité racine</option>
+                <?php endif; ?>
                 <?php foreach ($arbre as $entiteInfo) : ?>
                     <option value='<?php echo $entiteInfo['id_e']; ?>'>
                         <?php echo str_repeat("-", $entiteInfo['profondeur']); ?>
@@ -201,7 +195,6 @@ use Pastell\Utilities\Certificate;
 
             <button type='submit' class='btn btn-primary'><i class="fa fa-plus-circle"></i>&nbsp;Ajouter</button>
         </form>
-    <?php endif; ?>
 </div>
 
 

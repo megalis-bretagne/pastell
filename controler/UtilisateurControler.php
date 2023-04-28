@@ -402,8 +402,8 @@ class UtilisateurControler extends PastellControler
 
         $this->setViewParameter('roleInfo', $this->getRoleUtilisateur()->getRole($id_u));
         $this->setViewParameter(
-            'utilisateur_edition',
-            $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "utilisateur:edition", $info['id_e'])
+            'droit_entite_racine',
+            $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "entite:lecture", 0)
         );
 
         if ($info['id_e']) {
@@ -538,18 +538,17 @@ class UtilisateurControler extends PastellControler
      * @param $id_u
      * @param $id_e
      * @param $type
-     * @param bool $page_moi
      * @return bool
      * @throws LastErrorException
      * @throws LastMessageException
      */
-    private function verifEditNotification($id_u, $id_e, $type, $page_moi = false): bool
+    private function verifEditNotification($id_u, $id_e, $type): bool
     {
         $utilisateur_info = $this->getUtilisateur()->getInfo($id_u);
 
-        if ($type === 0) {
-            $this->setLastError("Vous n'avez selectionné aucun type de dossier");
-            $this->redirectToPageUtilisateur($id_u, $page_moi);
+        if ($type === null) {
+            $this->setLastError("Vous n'avez sélectionné aucun type de dossier");
+            $this->redirectToPageUtilisateur($id_u);
             return false;
         }
 
@@ -561,13 +560,34 @@ class UtilisateurControler extends PastellControler
             return true;
         }
 
+        $this->setLastError("Vous n'avez pas les droits nécessaires pour accéder à cette page");
+        $this->redirectToPageUtilisateur($id_u);
+        return false;
+    }
+
+    /**
+     * @throws LastMessageException
+     * @throws LastErrorException
+     */
+    private function verifEditMesNotifications(int $id_e, ?string $type): bool
+    {
+        $id_u = $this->getId_u();
+
+        if ($type === null) {
+            $this->setLastError("Vous n'avez sélectionné aucun type de dossier");
+            $this->redirectToPageUtilisateur($id_u, true);
+            return false;
+        }
+
+        if ($this->getRoleUtilisateur()->hasDroit($id_u, 'entite:edition', $id_e)) {
+            return true;
+        }
+
         if (
-            $id_u == $this->getId_u()
-            &&
-            $this->getRoleUtilisateur()->hasDroit($this->getId_u(), 'entite:lecture', $id_e)
+            $this->getRoleUtilisateur()->hasDroit($id_u, 'entite:lecture', $id_e)
             &&
             $this->getDroitService()->hasDroit(
-                $this->getId_u(),
+                $id_u,
                 $this->getDroitService()->getDroitLecture($type),
                 $id_e
             )
@@ -576,7 +596,7 @@ class UtilisateurControler extends PastellControler
         }
 
         $this->setLastError("Vous n'avez pas les droits nécessaires pour accéder à cette page");
-        $this->redirectToPageUtilisateur($id_u, $page_moi);
+        $this->redirectToPageUtilisateur($id_u, true);
         return false;
     }
 
@@ -598,7 +618,6 @@ class UtilisateurControler extends PastellControler
     /**
      * @throws LastErrorException
      * @throws LastMessageException
-     * @throws NotFoundException
      */
     public function notificationAjoutAction(): void
     {
@@ -606,14 +625,21 @@ class UtilisateurControler extends PastellControler
 
         $id_u = $recuperateur->getInt('id_u');
         $id_e = $recuperateur->getInt('id_e', 0);
-        $type = $recuperateur->get('type', 0);
+        $type = $recuperateur->get('type', null);
         $daily_digest = $recuperateur->getInt('daily_digest', 0);
-        $page_moi = $recuperateur->get('moi', false);
+        $url = '/Utilisateur/notification?';
 
-        $this->verifEditNotification($id_u, $id_e, $type, $page_moi);
+        if ($id_u === 0) {
+            $this->verifEditMesNotifications($id_e, $type);
+            $id_u = $this->getId_u();
+        } else {
+            $this->verifEditNotification($id_u, $id_e, $type);
+            $url .= "id_u=$id_u&";
+        }
+
         $this->getNotification()->add($id_u, $id_e, $type, 0, $daily_digest);
 
-        $this->redirect("/Utilisateur/notification?from_me=true&id_u=$id_u&id_e=$id_e&type=$type&moi=true");
+        $this->redirect($url . "id_e=$id_e&type=$type");
     }
 
     /**
@@ -628,16 +654,24 @@ class UtilisateurControler extends PastellControler
         $id_u = $recuperateur->getInt('id_u');
         $id_e = $recuperateur->getInt('id_e');
         $type = $recuperateur->get('type');
-        $from_me = $recuperateur->get('from_me', false);
-        $page_moi = $recuperateur->get('moi', false);
-        $this->setViewParameter('page_moi', $page_moi);
 
-        if ($page_moi) {
+        if ($id_u === 0) {
+            $this->verifEditMesNotifications($id_e, $type);
+
             $this->setViewParameter('pages_without_left_menu', true);
+            $this->setViewParameter('page_moi', true);
+            $this->setViewParameter('cancel_url', '/Utilisateur/moi');
+
+            $id_u = $this->getId_u();
+        } else {
+            $this->verifEditNotification($id_u, $id_e, $type);
+
+            $this->setViewParameter('page_moi', false);
+            $this->setViewParameter('id_u', $id_u);
+            $this->setViewParameter('cancel_url', "/Utilisateur/detail?id_u=$id_u&id_e=$id_e");
         }
 
         $utilisateur_info = $this->getUtilisateur()->getInfo($id_u);
-        $this->verifEditNotification($id_u, $id_e, $type, $page_moi);
 
         $this->setViewParameter('has_daily_digest', $this->getNotification()->hasDailyDigest($id_u, $id_e, $type));
 
@@ -652,16 +686,8 @@ class UtilisateurControler extends PastellControler
             'action_list',
             $this->getNotification()->getNotificationActionList($id_u, $id_e, $type, $action_list)
         );
-        $this->setViewParameter('id_u', $id_u);
         $this->setViewParameter('id_e', $id_e);
         $this->setViewParameter('type', $type);
-
-        if ($from_me) {
-            $this->setViewParameter('cancel_url', '/Utilisateur/moi');
-        } else {
-            $this->setViewParameter('cancel_url', "/Utilisateur/detail?id_u=$id_u&id_e=$id_e");
-        }
-
         $this->setViewParameter(
             'page_title',
             get_hecho($utilisateur_info['login']) . ' - abonnement aux actions des documents '
@@ -679,14 +705,19 @@ class UtilisateurControler extends PastellControler
         $recuperateur = $this->getPostInfo();
 
         $id_n = $recuperateur->get('id_n');
-        $page_moi = $recuperateur->get('moi', false);
+        $page_moi = false;
 
         $infoNotification = $this->getNotification()->getInfo($id_n);
         $id_u = $infoNotification['id_u'];
         $id_e = $infoNotification['id_e'];
         $type = $infoNotification['type'];
 
-        $this->verifEditNotification($id_u, $id_e, $type, $page_moi);
+        if ($id_u === $this->getId_u()) {
+            $page_moi = true;
+        } else {
+            $this->verifEditNotification($id_u, $id_e, $type);
+        }
+
         $this->getNotification()->removeAll($id_u, $id_e, $type);
         $this->setLastMessage("La notification a été supprimée");
         $this->redirectToPageUtilisateur($id_u, $page_moi);
@@ -703,10 +734,17 @@ class UtilisateurControler extends PastellControler
         $id_e = $recuperateur->getInt('id_e');
         $type = $recuperateur->get('type');
         $daily_digest = $recuperateur->get('has_daily_digest');
-        $page_moi = $recuperateur->get('moi', false);
+        $page_moi = false;
 
         $this->getUtilisateur()->getInfo($id_u);
-        $this->verifEditNotification($id_u, $id_e, $type, $page_moi);
+        if ($id_u === 0) {
+            $this->verifEditMesNotifications($id_e, $type);
+
+            $id_u = $this->getId_u();
+            $page_moi = true;
+        } else {
+            $this->verifEditNotification($id_u, $id_e, $type);
+        }
 
         $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($type);
 
@@ -744,18 +782,24 @@ class UtilisateurControler extends PastellControler
     /**
      * @throws LastErrorException
      * @throws LastMessageException
+     * @deprecated 4.0.0
      */
     public function notificationToogleDailyDigestAction()
     {
         $recuperateur = $this->getPostInfo();
         $id_n = $recuperateur->getInt('id_n');
-        $page_moi = $recuperateur->get('moi', false);
+        $page_moi = false;
         $infoNotification = $this->getNotification()->getInfo($id_n);
         $id_u = $infoNotification['id_u'];
         $id_e = $infoNotification['id_e'];
         $type = $infoNotification['type'];
 
-        $this->verifEditNotification($id_u, $id_e, $type, $page_moi);
+        if ($id_u === $this->getId_u()) {
+            $this->verifEditMesNotifications($id_e, $type);
+            $page_moi = true;
+        } else {
+            $this->verifEditNotification($id_u, $id_e, $type);
+        }
         $this->getNotification()->toogleDailyDigest($id_u, $id_e, $type);
         $this->setLastMessage("La notification a été modifié");
         $this->redirectToPageUtilisateur($id_u, $page_moi);
