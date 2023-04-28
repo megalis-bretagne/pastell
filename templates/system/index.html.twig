@@ -369,37 +369,47 @@
     <div class='box'>
         <h2 id="desc-send-mail-table">Envoi de mail</h2>
         <div class='alert alert-info'>Permet d'envoyer un <strong>email de test</strong></div>
-        <form action='{{ path('app.legacy.system_mailTest') }}' method='post'>
-            {{ gabarit.displayCSRFInput() }}
-            <table class='table table-striped' aria-labelledby="desc-send-mail-table">
-                <tr>
+        <table class='table table-striped' aria-labelledby="desc-send-mail-table">
+            <tr>
+                <form action='{{ path('app.legacy.system_mailTest') }}' method='post'>
+                    {{ gabarit.displayCSRFInput() }}
                     <th class="w200" scope="row">ADMIN_EMAIL</th>
-                    <td>{{ constant('ADMIN_EMAIL') }}</td>
-                </tr>
-                <tr>
-                    <th class="w200" scope="row">PLATEFORME_MAIL</th>
-                    <td>{{ constant('PLATEFORME_MAIL') }}</td>
-                </tr>
-                <tr>
-                    <th class="w200" scope="row">
-                        <label for='email'>Email</label>
-                    </th>
+                    <td class="w400">{{ constant('ADMIN_EMAIL') }}</td>
+                    <input type="hidden" name="email" value="{{ constant('ADMIN_EMAIL') }}">
                     <td>
-                        <input
-                                class="form-control col-md-4"
-                                style='width:200px'
-                                type='text'
-                                name='email'
-                                id="email"
-                                value=''
-                        />
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa fa-paper-plane"></i>&nbsp;Envoyer
+                        </button>
                     </td>
-                </tr>
-            </table>
-            <button type="submit" class="btn btn-primary">
-                <i class="fa fa-paper-plane"></i>&nbsp;Envoyer
-            </button>
-        </form>
+                </form>
+            </tr>
+            <tr>
+                <th class="w200" scope="row">PLATEFORME_MAIL</th>
+                <td>{{ constant('PLATEFORME_MAIL') }}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <form action='{{ path('app.legacy.system_mailTest') }}' method='post'>
+                    {{ gabarit.displayCSRFInput() }}
+                <th class="w200" scope="row">
+                    <label for='email'>Email</label>
+                </th>
+                <td>
+                    <input
+                            class="form-control col-md-4"
+                            style='width:200px'
+                            type='text'
+                            name='email'
+                            id="email"
+                            value=''
+                    />
+                </td>
+                    <td><button type="submit" class="btn btn-primary">
+                            <i class="fa fa-paper-plane"></i>&nbsp;Envoyer
+                        </button></td>
+                </form>
+            </tr>
+        </table>
     </div>
 
     <div class='box'>
