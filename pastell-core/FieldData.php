@@ -120,7 +120,10 @@ class FieldData
             return $this->value;
         }
         if ($this->field->getType() == 'link') {
-            return SITE_BASE . $this->field->getProperties('script') . $separator . "id_e=$id_e";
+            //FIXME: SITE_BASE should be injected
+            return \rtrim(SITE_BASE . '/') . '/' .
+                \ltrim($this->field->getProperties('script'), '/') .
+                $separator . "id_e=$id_e";
         }
     }
 

@@ -76,8 +76,8 @@ abstract class ChoiceActionExecutor extends ActionExecutor
     public function redirectToFormulaire(): never
     {
         $url = sprintf(
-            '%sDocument/edition?id_d=%s&id_e=%s&page=%s',
-            rtrim(SITE_BASE, '/') . '/',
+            '%s/Document/edition?id_d=%s&id_e=%s&page=%s',
+            $this->getSiteBase(),
             $this->id_d,
             $this->id_e,
             $this->page
@@ -92,8 +92,8 @@ abstract class ChoiceActionExecutor extends ActionExecutor
     public function redirectToConnecteurFormulaire(): void
     {
         $url = sprintf(
-            '%sConnecteur/editionModif?id_ce=%s',
-            rtrim(SITE_BASE, '/') . '/',
+            '%s/Connecteur/editionModif?id_ce=%s',
+            $this->getSiteBase(),
             $this->id_ce
         );
         header_wrapper("Location: $url");

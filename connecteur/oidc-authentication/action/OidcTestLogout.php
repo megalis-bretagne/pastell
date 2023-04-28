@@ -10,7 +10,7 @@ class OidcTestLogout extends ActionExecutor
     {
         /** @var OidcAuthentication $oidc */
         $oidc = $this->getMyConnecteur();
-        $oidc->logout(SITE_BASE);
+        $oidc->logout($this->getSiteBase());
         $this->setLastMessage('Déconnecté avec succès');
         return true;
     }

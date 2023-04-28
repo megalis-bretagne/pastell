@@ -27,7 +27,7 @@ class GlaneurLancerGlanage extends ActionExecutor
             $message = $e->getMessage();
             $this->setLastMessage($message);
 
-            $url = sprintf('%s/Connecteur/edition?id_ce=%d', SITE_BASE, $this->id_ce);
+            $url = sprintf('%s/Connecteur/edition?id_ce=%d', $this->getSiteBase(), $this->id_ce);
 
             #TODO revoir la gestion des erreurs des connecteurs afin de ne pas envoyer de mail à ce moment-là
             $templatedEmail = (new TemplatedEmail())

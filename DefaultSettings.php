@@ -82,9 +82,8 @@ if (!defined("OPENSSL_PATH")) {
 //Racine du site Pastell
 //ex : http://pastell.libriciel.coop/
 //ex : http://pastell.libriciel.coop/pastell/
-//Toujours finir l'adresse par un /
-if (!defined("SITE_BASE")) {
-    define("SITE_BASE", "http://localhost/pastell/web/");
+if (!defined('SITE_BASE')) {
+    define('SITE_BASE', 'https://127.0.0.1');
 }
 
 if (!defined("WEBSEC_BASE")) {

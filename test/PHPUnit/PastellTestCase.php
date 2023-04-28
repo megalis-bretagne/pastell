@@ -22,7 +22,7 @@ abstract class PastellTestCase extends TestCase
     public const ID_U_ADMIN = 1;
 
     private ObjectInstancier $objectInstancier;
-
+    private InternalAPI $internalAPI;
     private $emulated_disk;
 
     public static function getSQLQuery()
@@ -40,7 +40,7 @@ abstract class PastellTestCase extends TestCase
         $this->objectInstancier = new ObjectInstancier();
         ObjectInstancierFactory::setObjectInstancier($this->objectInstancier);
 
-        $this->objectInstancier->setInstance('site_base', 'https://localhost:8443/');
+        $this->objectInstancier->setInstance('site_base', 'https://localhost:8443');
         $this->objectInstancier->setInstance('websec_base', 'https://localhost:8443');
 
         $this->objectInstancier->setInstance('daemon_command', "/bin/date");
@@ -164,6 +164,11 @@ iparapheur_retour: Archive',
         ObjectInstancierFactory::setObjectInstancier($this->getObjectInstancier());
     }
 
+    protected function getSiteBase(): string
+    {
+        return $this->objectInstancier->getInstance('site_base');
+    }
+
     /**
      * @return Journal
      */
@@ -207,9 +212,6 @@ iparapheur_retour: Archive',
         }
         return $factory->getInstance($controllerName, $id_u);
     }
-
-    /** @var  InternalAPI */
-    private $internalAPI;
 
     protected function getInternalAPI()
     {

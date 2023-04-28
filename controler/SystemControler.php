@@ -313,7 +313,7 @@ class SystemControler extends PastellControler
             ->to(new Address($email))
             ->subject('[Pastell] Mail de test')
             ->htmlTemplate('test_system.html.twig')
-            ->context(['SITE_BASE' => SITE_BASE])
+            ->context(['SITE_BASE' => $this->getSiteBase()])
             ->attachFromPath(
                 __DIR__ . '/../connecteur/iParapheur/data-exemple/test-pastell-i-parapheur.pdf'
             );

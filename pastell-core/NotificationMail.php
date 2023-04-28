@@ -13,6 +13,7 @@ class NotificationMail
         private readonly NotificationDigestSQL $notificationDigestSQL,
         private readonly EntiteSQL $entiteSQL,
         private readonly DocumentSQL $documentSQL,
+        private readonly string $site_base,
     ) {
     }
 
@@ -39,7 +40,7 @@ class NotificationMail
         $entityInfo = $this->entiteSQL->getInfo($id_e);
         $documentInfo = $this->documentSQL->getInfo($id_d);
 
-        $url = sprintf('%s/Document/detail?id_d=%s&id_e=%d', SITE_BASE, $id_d, $id_e);
+        $url = sprintf('%s/Document/detail?id_d=%s&id_e=%d', $this->site_base, $id_d, $id_e);
         $templatedEmail = (new TemplatedEmail())
             ->to($mail)
             ->subject('[Pastell] Notification')
@@ -51,7 +52,7 @@ class NotificationMail
                 'url' => $url,
                 'action' => $action,
                 'type' => $type,
-                'SITE_BASE' => SITE_BASE
+                'SITE_BASE' => $this->site_base,
             ]);
         foreach ($attachment as $filename => $filepath) {
             $templatedEmail->attachFromPath($filepath, $filename);
@@ -82,7 +83,7 @@ class NotificationMail
                 ->to($email)
                 ->subject('[Pastell] Notification (résumé journalier)')
                 ->htmlTemplate('notification-daily-digest.html.twig')
-                ->context(['info' => $all_info, 'SITE_BASE' => SITE_BASE]);
+                ->context(['info' => $all_info, 'SITE_BASE' => $this->site_base]);
             $this->mailer->send($templatedEmail);
             $this->journal->addActionAutomatique(
                 Journal::NOTIFICATION,

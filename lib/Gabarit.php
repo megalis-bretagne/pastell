@@ -89,9 +89,9 @@ class Gabarit
         include("{$this->template_path}/SuivantPrecedent.php");
     }
 
-    public function url(string $route = ""): void
+    public function url(string $route = ''): void
     {
-        echo rtrim(SITE_BASE, "/") . "/" . ltrim($route, "/");
+        echo $this->getSiteBase() . '/' . ltrim($route, '/');
     }
 
     public function url_mailsec($route = "")
@@ -141,5 +141,10 @@ class Gabarit
     public function getFancyDate(): FancyDate
     {
         return $this->objectInstancier->getInstance(FancyDate::class);
+    }
+
+    public function getSiteBase(): string
+    {
+        return $this->objectInstancier->getInstance('site_base');
     }
 }

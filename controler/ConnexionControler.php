@@ -56,7 +56,7 @@ class ConnexionControler extends PastellControler
         /** @var AuthenticationConnecteur $authenticationConnecteur */
         $authenticationConnecteur = $this->getConnecteurFactory()->getConnecteurById($id_ce);
         $redirectUri = "/Connexion/externalAuthentication?id_ce=$id_ce";
-        $login = $authenticationConnecteur->testAuthenticate(SITE_BASE . $redirectUri);
+        $login = $authenticationConnecteur->testAuthenticate($this->getSiteBase() . $redirectUri);
         $this->setLastMessage("Authentification avec le login : $login");
         $this->redirect("/Connecteur/edition?id_ce=$id_ce");
     }
@@ -73,7 +73,7 @@ class ConnexionControler extends PastellControler
         /** @var OidcAuthentication $authenticationConnecteur */
         $authenticationConnecteur = $this->getConnecteurFactory()->getConnecteurById($id_ce);
         $info = $authenticationConnecteur->getConnectedUserInfo(
-            SITE_BASE . "/Connexion/externalOIDCInfo?id_ce=$id_ce"
+            $this->getSiteBase() . "/Connexion/externalOIDCInfo?id_ce=$id_ce"
         );
         $this->setLastMessage(
             "Propriété de l'utilisateur connecté : <pre>" .
@@ -104,7 +104,7 @@ class ConnexionControler extends PastellControler
         if ($redirect) {
             $redirectUrl = sprintf(
                 '%s/%s?request_uri=%s',
-                SITE_BASE,
+                $this->getSiteBase(),
                 $this->getGetInfo()->get('page_request'),
                 urlencode($this->getGetInfo()->get('request_uri'))
             );
@@ -573,7 +573,7 @@ class ConnexionControler extends PastellControler
 
         $link = sprintf(
             '%s/Connexion/changementMdp?mail_verif=%s',
-            SITE_BASE,
+            $this->getSiteBase(),
             $mailVerifPassword
         );
         $templatedEmail = (new TemplatedEmail())

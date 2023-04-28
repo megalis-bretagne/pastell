@@ -134,7 +134,7 @@ class UtilisateurControler extends PastellControler
 
         $password = $this->getUtilisateurNewEmailSQL()->add($this->getId_u(), $email);
 
-        $link = sprintf("%s/Utilisateur/modifEmailConfirm?password=%s", SITE_BASE, $password);
+        $link = sprintf('%s/Utilisateur/modifEmailConfirm?password=%s', $this->getSiteBase(), $password);
         $templatedEmail = (new TemplatedEmail())
             ->to($email)
             ->subject('[Pastell] Changement de mail sur Pastell')

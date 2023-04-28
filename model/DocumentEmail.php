@@ -17,6 +17,7 @@ class DocumentEmail extends SQL
         private readonly SQLQuery $sqlQuery,
         private readonly Journal $journal,
         private readonly NotificationMail $notificationMail,
+        private readonly string $site_base,
     ) {
         parent::__construct($sqlQuery);
     }
@@ -133,7 +134,12 @@ class DocumentEmail extends SQL
         if ($next_action == 'reception') {
             $message .= "\n\nTous les destinataires ont consulté le message";
         }
-        $message .= "\n\nConsulter le détail du document : " . SITE_BASE . "Document/detail?id_d={$result['id_d']}&id_e=$id_e";
+        $message .= \sprintf(
+            "\n\nConsulter le détail du document : %s/Document/detail?id_d=%s&id_e=%s",
+            $this->site_base,
+            $result['id_d'],
+            $id_e
+        );
 
         $this->notificationMail->notify($id_e, $result['id_d'], $next_action, $infoDocument['type'], $message);
 

@@ -25,9 +25,16 @@ abstract class ActionExecutor
 
     private InternalAPI $internalAPI;
 
+    abstract public function go();
+
     public function __construct(ObjectInstancier $objectInstancier)
     {
         $this->objectInstancier = $objectInstancier;
+    }
+
+    public function getSiteBase(): string
+    {
+        return $this->objectInstancier->getInstance('site_base');
     }
 
     public function setEntiteId($id_e)
@@ -367,16 +374,20 @@ abstract class ActionExecutor
         $this->getNotificationMail()->notify($this->id_e, $this->id_d, $actionName, $type, $message);
     }
 
-    public function redirect($to)
+    /**
+     * @throws Exception
+     */
+    public function redirect(string $to)
     {
         if (! $this->from_api) {
-            $location = SITE_BASE . ltrim($to, "/");
+            $location = $this->getSiteBase() . '/' . \ltrim($to, '/');
             header_wrapper("Location: $location");
             exit_wrapper();
         }
     }
 
     /**
+     * @deprecated since 4.0, no alternative
      * @param $object
      * @param $intf
      * @return bool
@@ -514,11 +525,6 @@ abstract class ActionExecutor
         return $connecteurTypeActionExecutor;
     }
 
-    abstract public function go();
-
-    /**
-     * @return bool
-     */
     private function isConnectorAction(): bool
     {
         return is_null($this->id_d) && $this->id_ce;

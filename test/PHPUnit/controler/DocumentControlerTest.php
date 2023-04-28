@@ -144,7 +144,7 @@ class DocumentControlerTest extends ControlerTestCase
     {
         $this->expectException(LastMessageException::class);
         $site_base = $this->getObjectInstancier()->getInstance('site_base');
-        $this->expectExceptionMessage("Redirection vers " .  "{$site_base}Document/index?id_e=0&type=actes-generique");
+        $this->expectExceptionMessage('Redirection vers ' . $site_base . '/Document/index?id_e=0&type=actes-generique');
         $documentController = $this->getControlerInstance(DocumentControler::class);
         $this->setGetInfo([
             'type' => 'actes-generique',

@@ -82,8 +82,8 @@ class TdTRecupActe extends ConnecteurTypeActionExecutor
         );
 
         $message .= \sprintf(
-            "\n\nConsulter le détail de l'acte : %sDocument/detail?id_d=%s&id_e=%s",
-            SITE_BASE,
+            "\n\nConsulter le détail de l'acte : %s/Document/detail?id_d=%s&id_e=%s",
+            $this->getSiteBase(),
             $this->id_d,
             $this->id_e
         );

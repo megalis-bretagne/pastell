@@ -10,7 +10,7 @@ class CASTestTicket extends ActionExecutor
     {
         /** @var CASAuthentication $cas */
         $cas = $this->getMyConnecteur();
-        $login = $cas->authenticate(SITE_BASE . "/Connexion/externalAuthentication?id_ce={$this->id_ce}");
+        $login = $cas->authenticate($this->getSiteBase() . "/Connexion/externalAuthentication?id_ce={$this->id_ce}");
         if (!$login) {
             $this->setLastMessage("Aucune session en cours");
             return false;
