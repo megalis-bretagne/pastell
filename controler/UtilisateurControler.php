@@ -546,8 +546,8 @@ class UtilisateurControler extends PastellControler
     {
         $utilisateur_info = $this->getUtilisateur()->getInfo($id_u);
 
-        if ($type === 0) {
-            $this->setLastError("Vous n'avez selectionné aucun type de dossier");
+        if ($type === null) {
+            $this->setLastError("Vous n'avez sélectionné aucun type de dossier");
             $this->redirectToPageUtilisateur($id_u);
             return false;
         }
@@ -566,16 +566,15 @@ class UtilisateurControler extends PastellControler
     }
 
     /**
-     * @param $type
      * @throws LastMessageException
      * @throws LastErrorException
      */
-    private function verifEditMesNotifications(int $id_e, $type): bool
+    private function verifEditMesNotifications(int $id_e, ?string $type): bool
     {
         $id_u = $this->getId_u();
 
-        if ($type === 0) {
-            $this->setLastError("Vous n'avez selectionné aucun type de dossier");
+        if ($type === null) {
+            $this->setLastError("Vous n'avez sélectionné aucun type de dossier");
             $this->redirectToPageUtilisateur($id_u, true);
             return false;
         }
@@ -619,7 +618,6 @@ class UtilisateurControler extends PastellControler
     /**
      * @throws LastErrorException
      * @throws LastMessageException
-     * @throws NotFoundException
      */
     public function notificationAjoutAction(): void
     {
@@ -627,7 +625,7 @@ class UtilisateurControler extends PastellControler
 
         $id_u = $recuperateur->getInt('id_u');
         $id_e = $recuperateur->getInt('id_e', 0);
-        $type = $recuperateur->get('type', 0);
+        $type = $recuperateur->get('type', null);
         $daily_digest = $recuperateur->getInt('daily_digest', 0);
         $url = '/Utilisateur/notification?';
 

@@ -293,8 +293,6 @@ class UtilisateurControlerTest extends ControlerTestCase
                 'Utilisateur/notification?id_u=2&id_e=1&type=actes-generique:',
                 $e->getMessage()
             );
-        } catch (LastErrorException | NotFoundException $e) {
-            /** Nothing to do */
         }
     }
 
@@ -318,7 +316,7 @@ class UtilisateurControlerTest extends ControlerTestCase
         try {
             $utilisateurControler->notificationAjoutAction();
         } catch (LastMessageException $e) {
-            static::assertEquals(3, $id_u);
+            static::assertSame(3, $id_u);
             static::assertStringContainsString(
                 'Utilisateur/notification?id_e=1&type=actes-generique:',
                 $e->getMessage()
@@ -336,9 +334,7 @@ class UtilisateurControlerTest extends ControlerTestCase
         try {
             $this->getUtilisateurControler()->notificationAjoutAction();
         } catch (LastErrorException $e) {
-            static::assertStringContainsString("Vous n'avez selectionné aucun type de dossier", $e->getMessage());
-        } catch (LastMessageException | NotFoundException $e) {
-            /** Nothing to do */
+            static::assertStringContainsString("Vous n'avez sélectionné aucun type de dossier", $e->getMessage());
         }
     }
 
@@ -351,9 +347,7 @@ class UtilisateurControlerTest extends ControlerTestCase
         try {
             $this->getUtilisateurControler()->notificationAjoutAction();
         } catch (LastErrorException $e) {
-            static::assertStringContainsString("Vous n'avez selectionné aucun type de dossier", $e->getMessage());
-        } catch (LastMessageException | NotFoundException $e) {
-            /** Nothing to do */
+            static::assertStringContainsString("Vous n'avez sélectionné aucun type de dossier", $e->getMessage());
         }
     }
 
@@ -414,7 +408,7 @@ class UtilisateurControlerTest extends ControlerTestCase
         \ob_start();
         $this->getUtilisateurControler()->notificationAction();
         \ob_get_clean();
-        static::assertEquals(
+        static::assertSame(
             'UtilisateurNotification',
             $utilisateurControler->getViewParameterByKey('template_milieu')
         );
@@ -446,7 +440,7 @@ class UtilisateurControlerTest extends ControlerTestCase
         \ob_start();
         $this->getUtilisateurControler()->notificationAction();
         \ob_get_clean();
-        static::assertEquals(
+        static::assertSame(
             'UtilisateurNotification',
             $utilisateurControler->getViewParameterByKey('template_milieu')
         );

@@ -7,6 +7,7 @@
 - Il n'était pas possible de créer un utilisateur à partir d'une entité #1833
 - La variable d'environnement `PASTELL_SITE_BASE` ne nécessite plus de terminer par un / #1830
 - Le paramétrage des notifications de l'utilisateur n'est plus soumis au droit `utilisateur:edition` #1834
+- Un utilisateur peut ajouter et supprimer ses propres notifications en toutes circonstances et modifier celles dont il a les droits #1834
 
 ## Ajouts
 
