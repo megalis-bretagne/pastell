@@ -26,24 +26,14 @@
         <th>Contact</th>
         <th>Partagé ?</th>
     </tr>
-<?php foreach ($listGroupe as $groupe) :
-    $nbUtilisateur = $annuaireGroupe->getNbUtilisateur($groupe['id_g']);
-    $utilisateur = $annuaireGroupe->getUtilisateur($groupe['id_g'], 0, 3);
-    $r = [];
-    foreach ($utilisateur as $u) {
-        $r[] = htmlentities('"' . $u['description'] . '"' . " <" . $u['email'] . ">", ENT_QUOTES, "utf-8");
-    }
-    $utilisateur = implode(",<br/>", $r);
-
-
-    ?>
+<?php foreach ($listGroupe as $groupe) : ?>
     <tr>
         <td><input type='checkbox' name='id_g[]' value='<?php echo $groupe['id_g'] ?>'/>
             <a href='MailSec/groupe?id_e=<?php echo $id_e?>&id_g=<?php echo $groupe['id_g']?>'><?php hecho($groupe['nom']); ?></a></td>
-        <td><?php if ($nbUtilisateur) : ?>
-                <?php echo $utilisateur;?>
-                <?php if ($nbUtilisateur > 3) :?>
-                <br/> et <a href='MailSec/groupe?id_e=<?php echo $id_e?>&id_g=<?php echo $groupe['id_g']?>'><?php echo ($nbUtilisateur - 3) ?> autres</a>
+        <td><?php if ($groupe['contactsInfo']['nb_contacts']) : ?>
+                <?php echo $groupe['contactsInfo']['contacts'];?>
+                <?php if ($groupe['contactsInfo']['nb_contacts'] > 3) :?>
+                <br/> et <a href='MailSec/groupe?id_e=<?php echo $id_e?>&id_g=<?php echo $groupe['id_g']?>'><?php echo ($groupe['contactsInfo']['nb_contacts'] - 3) ?> autres</a>
 
                 <?php endif;?>
             <?php else : ?>
@@ -97,41 +87,25 @@
         <th style="width: 50%">Contact</th>
     </tr>
 
-    <?php foreach ($groupe_herited as $groupe) :
-        $nbUtilisateur = $annuaireGroupe->getNbUtilisateur($groupe['id_g']);
-        $utilisateur = $annuaireGroupe->getUtilisateur($groupe['id_g'], 0, 3);
-        $utilisateurPlus = $annuaireGroupe->getUtilisateur($groupe['id_g'], 4);
-        $r = [];
-        foreach ($utilisateur as $u) {
-            $r[] = htmlentities('"' . $u['description'] . '"' . " <" . $u['email'] . ">", ENT_QUOTES, "utf-8");
-        }
-        $utilisateur = implode(",<br/>", $r);
-        $r = [];
-        foreach ($utilisateurPlus as $u) {
-            $r[] = htmlentities('"' . $u['description'] . '"' . " <" . $u['email'] . ">", ENT_QUOTES, "utf-8");
-        }
-        $utilisateurPlus = implode(",<br/>", $r);
-
-    ?>
+    <?php foreach ($groupe_herited as $groupe) :?>
     <tr>
         <td><?php hecho($groupe['denomination']); ?></td>
-        <td>
-            <?php hecho($groupe['nom']); ?></td>
+        <td><?php hecho($groupe['nom']); ?></td>
         <td data-toggle="collapse" data-target="#collapse-more-contacts" aria-expanded="false"
             aria-controls="collapse-more-contacts" onclick="hideMoreUsers()">
-            <?php if ($nbUtilisateur) : ?>
-                <?php echo $utilisateur;?>
-
-                <?php if ($nbUtilisateur > 3) :?>
-                <br>
-                    <div id="more-contacts">
+            <?php if ($groupe['contactsInfo']['contacts']) : ?>
+                <?php echo $groupe['contactsInfo']['contacts'];?>
+                <?php if ($groupe['contactsInfo']['nb_contacts']) :?>
+                    <br>
+                    <div id="more-contacts-info">
                         et <span style="color:#53599a"
                                  onmouseover="this.style.color='#7076b8'; this.style.cursor='pointer';"
-                                 onmouseout="this.style.color='#53599a';"> <?php echo ($nbUtilisateur - 3) ?> autres
+                                 onmouseout="this.style.color='#53599a';">
+                            <?php echo ($groupe['contactsInfo']['nb_contacts'] - 3) ?> autres
                         </span>
                     </div>
                     <div id="collapse-more-contacts" class="collapse">
-                            <?php echo $utilisateurPlus;?>
+                            <?php echo $groupe['contactsInfo']['more_contacts'];?>
                         <p style="color:#53599a"
                            onmouseover="this.style.color='#7076b8'; this.style.cursor='pointer';"
                            onmouseout="this.style.color='#53599a';"
@@ -140,7 +114,6 @@
                         </p>
                     </div>
                 <?php endif;?>
-
             <?php else : ?>
                 Ce groupe est vide
             <?php endif;?>
@@ -156,7 +129,7 @@
 <script>
     function hideMoreUsers() {
         var collapseDiv = document.querySelector('#collapse-more-contacts');
-        var moreUsersLink = document.querySelector('#more-contacts');
+        var moreUsersLink = document.querySelector('#more-contacts-info');
         if (collapseDiv.classList.contains('show')) {
             moreUsersLink.style.display = 'inline';
         } else {
