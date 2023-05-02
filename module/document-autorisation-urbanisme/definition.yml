@@ -372,6 +372,7 @@ champs-recherche-avancee:
     - last_state_begin
     - etatTransit
     - state_begin
+    - notEtatTransit
     - search
     - id_document_externe
 page-condition:

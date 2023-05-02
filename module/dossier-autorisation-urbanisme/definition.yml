@@ -84,6 +84,7 @@ champs-recherche-avancee:
     - last_state_begin
     - etatTransit
     - state_begin
+    - notEtatTransit
     - search
     - id_dossier_externe
 page-condition:
