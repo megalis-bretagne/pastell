@@ -92,29 +92,59 @@
 
 <table  class="table table-striped">
     <tr>
-        <th>Entité</th>
-        <th>Nom</th>
-        <th>Contact</th>
+        <th style="width: 25%">Entité</th>
+        <th style="width: 25%">Nom</th>
+        <th style="width: 50%">Contact</th>
     </tr>
+
     <?php foreach ($groupe_herited as $groupe) :
         $nbUtilisateur = $annuaireGroupe->getNbUtilisateur($groupe['id_g']);
-        $utilisateur = $annuaireGroupe->getUtilisateur($groupe['id_g']);
+        $utilisateur = $annuaireGroupe->getUtilisateur($groupe['id_g'], 0, 3);
+        $utilisateurPlus = $annuaireGroupe->getUtilisateur($groupe['id_g'], 4);
         $r = [];
         foreach ($utilisateur as $u) {
             $r[] = htmlentities('"' . $u['description'] . '"' . " <" . $u['email'] . ">", ENT_QUOTES, "utf-8");
         }
         $utilisateur = implode(",<br/>", $r);
-        ?>
+        $r = [];
+        foreach ($utilisateurPlus as $u) {
+            $r[] = htmlentities('"' . $u['description'] . '"' . " <" . $u['email'] . ">", ENT_QUOTES, "utf-8");
+        }
+        $utilisateurPlus = implode(",<br/>", $r);
+
+    ?>
     <tr>
         <td><?php hecho($groupe['denomination']); ?></td>
         <td>
             <?php hecho($groupe['nom']); ?></td>
-        <td><?php if ($nbUtilisateur) : ?>
+        <td data-toggle="collapse" data-target="#collapse-more-contacts" aria-expanded="false"
+            aria-controls="collapse-more-contacts" onclick="hideMoreUsers()">
+            <?php if ($nbUtilisateur) : ?>
                 <?php echo $utilisateur;?>
+
+                <?php if ($nbUtilisateur > 3) :?>
+                <br>
+                    <div id="more-contacts">
+                        et <span style="color:#53599a"
+                                 onmouseover="this.style.color='#7076b8'; this.style.cursor='pointer';"
+                                 onmouseout="this.style.color='#53599a';"> <?php echo ($nbUtilisateur - 3) ?> autres
+                        </span>
+                    </div>
+                    <div id="collapse-more-contacts" class="collapse">
+                            <?php echo $utilisateurPlus;?>
+                        <p style="color:#53599a"
+                           onmouseover="this.style.color='#7076b8'; this.style.cursor='pointer';"
+                           onmouseout="this.style.color='#53599a';"
+                        >
+                            afficher moins
+                        </p>
+                    </div>
+                <?php endif;?>
+
             <?php else : ?>
                 Ce groupe est vide
-            <?php endif;?>  
-
+            <?php endif;?>
+        </td>
     </tr>
     <?php endforeach;?>
 
@@ -122,3 +152,15 @@
 </div>
 
 <?php endif;?>
+
+<script>
+    function hideMoreUsers() {
+        var collapseDiv = document.querySelector('#collapse-more-contacts');
+        var moreUsersLink = document.querySelector('#more-contacts');
+        if (collapseDiv.classList.contains('show')) {
+            moreUsersLink.style.display = 'inline';
+        } else {
+            moreUsersLink.style.display = 'none';
+        }
+    }
+</script>
