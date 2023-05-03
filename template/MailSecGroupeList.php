@@ -91,20 +91,27 @@
     <tr>
         <td><?php hecho($groupe['denomination']); ?></td>
         <td><?php hecho($groupe['nom']); ?></td>
-        <td data-toggle="collapse" data-target="#collapse-more-contacts" aria-expanded="false"
-            aria-controls="collapse-more-contacts" onclick="hideMoreUsers()">
+        <td
+            data-toggle="collapse"
+            data-target="#collapse-more-contacts-<?php hecho(str_replace(' ', '-', $groupe['nom'])) ?>"
+            aria-expanded="false"
+            aria-controls="collapse-more-contacts-<?php hecho(str_replace(' ', '-', $groupe['nom'])) ?>"
+            onclick="hideMoreUsers(
+                '#collapse-more-contacts-<?php hecho(str_replace(' ', '-', $groupe['nom'])) ?>',
+                '#more-contacts-info-<?php hecho(str_replace(' ', '-', $groupe['nom'])) ?>')"
+        >
             <?php if ($groupe['contactsInfo']['contacts']) : ?>
                 <?php echo $groupe['contactsInfo']['contacts'];?>
-                <?php if ($groupe['contactsInfo']['nb_contacts']) :?>
+                <?php if ($groupe['contactsInfo']['nb_contacts'] > 3) :?>
                     <br>
-                    <div id="more-contacts-info">
+                    <div id="more-contacts-info-<?php hecho(str_replace(' ', '-', $groupe['nom'])) ?>">
                         et <span style="color:#53599a"
                                  onmouseover="this.style.color='#7076b8'; this.style.cursor='pointer';"
                                  onmouseout="this.style.color='#53599a';">
                             <?php echo ($groupe['contactsInfo']['nb_contacts'] - 3) ?> autres
                         </span>
                     </div>
-                    <div id="collapse-more-contacts" class="collapse">
+                    <div id="collapse-more-contacts-<?php hecho(str_replace(' ', '-', $groupe['nom'])) ?>" class="collapse">
                             <?php echo $groupe['contactsInfo']['more_contacts'];?>
                         <p style="color:#53599a"
                            onmouseover="this.style.color='#7076b8'; this.style.cursor='pointer';"
@@ -127,9 +134,9 @@
 <?php endif;?>
 
 <script>
-    function hideMoreUsers() {
-        var collapseDiv = document.querySelector('#collapse-more-contacts');
-        var moreUsersLink = document.querySelector('#more-contacts-info');
+    function hideMoreUsers(collapseId, moreInfoId) {
+        var collapseDiv = document.querySelector(collapseId);
+        var moreUsersLink = document.querySelector(moreInfoId);
         if (collapseDiv.classList.contains('show')) {
             moreUsersLink.style.display = 'inline';
         } else {

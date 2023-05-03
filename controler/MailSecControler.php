@@ -137,7 +137,7 @@ class MailSecControler extends PastellControler
         $contactsInfo['contacts'] = $contactsString;
 
         if ($nbContacts > 3) {
-            $moreContacts = $annuaireGroupe->getUtilisateur($groupe['id_g'], 4);
+            $moreContacts = $annuaireGroupe->getUtilisateur($groupe['id_g'], 3);
             $moreContactsString = $this->convertContactsToString($moreContacts);
             $contactsInfo['more_contacts'] = $moreContactsString;
         }
