@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 // TODO a mettre dans le HEALTHCHECK (arrêt du démon) et revoir la gestion des connecteurs suspendus
 
 use Pastell\Mailer\Mailer;
@@ -9,14 +11,13 @@ require_once __DIR__ . '/../init.php';
 
 $objectInstancier = ObjectInstancierFactory::getObjetInstancier();
 
-
 $modenagios = false;
 $message = "OK";
 $retour = 0;
 
 #print_r($argv);
 if ((isset($argv[1])) && ($argv[1] === 'nagios')) {
-        $modenagios = true;
+    $modenagios = true;
 }
 
 $next_try = date("Y-m-d H:i:s", strtotime("-1hour"));
@@ -25,20 +26,20 @@ $sql = "SELECT MAX(last_try) FROM job_queue WHERE next_try<? AND nb_try > 0";
 
 $last_try = $objectInstancier->getInstance(SQLQuery::class)->queryOne($sql, $next_try);
 
-if (! $last_try) {
-        //la job queue est vide
+if (!$last_try) {
+    //la job queue est vide
     if ($modenagios) {
         echo 'OK la job queue est vide';
     }
 
-        exit(0);
+    exit(0);
 }
 
 $nb_second_since_last_try = time() - strtotime($last_try);
 
 $pastellMailer = $objectInstancier->getInstance(Mailer::class);
 $siteBase = $objectInstancier->getInstance('site_base');
-
+$tos = $objectInstancier->getInstance('admin_email');
 
 if ($nb_second_since_last_try > 3600) {
     $message = sprintf(
@@ -46,7 +47,7 @@ if ($nb_second_since_last_try > 3600) {
         $siteBase
     );
     $templatedEmail = (new TemplatedEmail())
-        ->to(ADMIN_EMAIL)
+        ->to(...$tos)
         ->subject('[PASTELL] Le démon semble arrêté')
         ->text($message);
     $pastellMailer->send($templatedEmail);
@@ -63,7 +64,7 @@ if ($nb_lock) {
         $siteBase
     );
     $templatedEmail = (new TemplatedEmail())
-        ->to(ADMIN_EMAIL)
+        ->to(...$tos)
         ->subject('[PASTELL] Des connecteurs sont suspendus')
         ->text($message);
     $pastellMailer->send($templatedEmail);
@@ -71,6 +72,6 @@ if ($nb_lock) {
 }
 
 if ($modenagios) {
-        echo $message;
-        exit($retour);
+    echo $message;
+    exit($retour);
 }

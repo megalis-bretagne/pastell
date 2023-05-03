@@ -9,6 +9,7 @@
 - Le paramétrage des notifications de l'utilisateur n'est plus soumis au droit `utilisateur:edition` #1834
 - Un utilisateur peut ajouter et supprimer ses propres notifications en toutes circonstances et modifier celles dont il a les droits #1834
 - Les entités dans le Breadcrumb sont affichées par ordre alphabétique #1658
+- Il n'était plus possible d'avoir plusieurs adresses emails pour les notifications système #1842
 
 ## Ajouts
 

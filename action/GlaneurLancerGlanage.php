@@ -31,7 +31,7 @@ class GlaneurLancerGlanage extends ActionExecutor
 
             #TODO revoir la gestion des erreurs des connecteurs afin de ne pas envoyer de mail à ce moment-là
             $templatedEmail = (new TemplatedEmail())
-                ->to(ADMIN_EMAIL)
+                ->to(...$this->objectInstancier->getInstance('admin_email'))
                 ->subject("[Pastell] Le traitement d'un glaneur est passé à 'NON'")
                 ->htmlTemplate('glaneur_lancer_glanage.html.twig')
                 ->context(['url' => $url, 'message' => $message]);
