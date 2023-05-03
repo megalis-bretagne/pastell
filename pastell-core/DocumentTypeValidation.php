@@ -95,7 +95,7 @@ class DocumentTypeValidation
         $all_champs_affiche = $this->getList($typeDefinition, 'champs-recherche-avancee');
         $all_element_name = $this->getAllElementIndexed($typeDefinition);
         foreach ($all_champs_affiche as $champs) {
-            if (in_array($champs, ['type','id_e','lastetat','last_state_begin','etatTransit','state_begin','search','tri'])) {
+            if (in_array($champs, ['type','id_e','lastetat','last_state_begin','etatTransit','state_begin','notEtatTransit','search','tri'])) {
                 continue;
             }
             if (in_array($champs, $all_element_name)) {

@@ -129,6 +129,7 @@ champs-recherche-avancee:
     - last_state_begin
     - etatTransit
     - state_begin
+    - notEtatTransit
     - search
 page-condition:
     Transformation:

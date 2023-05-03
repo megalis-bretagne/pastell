@@ -259,6 +259,7 @@ champs-recherche-avancee:
     - last_state_begin
     - etatTransit
     - state_begin
+    - notEtatTransit
     - search
     - prenom_agent
     - nom_agent
