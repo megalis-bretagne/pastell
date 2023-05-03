@@ -111,7 +111,8 @@
                             <?php echo ($groupe['contactsInfo']['nb_contacts'] - 3) ?> autres
                         </span>
                     </div>
-                    <div id="collapse-more-contacts-<?php hecho(str_replace(' ', '-', $groupe['nom'])) ?>" class="collapse">
+                    <div id="collapse-more-contacts-<?php hecho(str_replace(' ', '-', $groupe['nom'])) ?>"
+                        class="collapse">
                             <?php echo $groupe['contactsInfo']['more_contacts'];?>
                         <p style="color:#53599a"
                            onmouseover="this.style.color='#7076b8'; this.style.cursor='pointer';"
@@ -135,8 +136,8 @@
 
 <script>
     function hideMoreUsers(collapseId, moreInfoId) {
-        var collapseDiv = document.querySelector(collapseId);
-        var moreUsersLink = document.querySelector(moreInfoId);
+        const collapseDiv = document.querySelector(collapseId);
+        const moreUsersLink = document.querySelector(moreInfoId);
         if (collapseDiv.classList.contains('show')) {
             moreUsersLink.style.display = 'inline';
         } else {

@@ -149,11 +149,7 @@ class MailSecControler extends PastellControler
     {
         $r = [];
         foreach ($contacts as $u) {
-            $r[] = htmlentities(
-                '"' . $u['description'] . '"' . ' <' . $u['email'] . '>',
-                ENT_QUOTES,
-                'utf-8'
-            );
+            $r[] = get_hecho('"' . $u['description'] . '"' . ' <' . $u['email'] . '>');
         }
         return implode(',<br/>', $r);
     }
