@@ -354,8 +354,8 @@ champs-recherche-avancee:
     - lastetat
     - last_state_begin
     - etatTransit
-    - notEtatTransit
     - state_begin
+    - notEtatTransit
     - search
     - matricule_agent
 page-condition:

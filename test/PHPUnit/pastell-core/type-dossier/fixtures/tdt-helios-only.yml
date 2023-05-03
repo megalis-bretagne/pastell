@@ -102,6 +102,7 @@ champs-recherche-avancee:
     - last_state_begin
     - etatTransit
     - state_begin
+    - notEtatTransit
     - search
     - id_coll
     - dte_str

@@ -32,8 +32,8 @@ champs-recherche-avancee:
     - lastetat
     - last_state_begin
     - etatTransit
-    - notEtatTransit
     - state_begin
+    - notEtatTransit
     - search
 action:
     creation:
