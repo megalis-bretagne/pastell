@@ -303,26 +303,37 @@ class SystemControler extends PastellControler
     {
         $this->verifDroit(0, DroitService::getDroitLecture(DroitService::DROIT_SYSTEM));
 
-        $email = $this->getPostInfo()->get('email');
-        if (! $email) {
+        $emails = $this->getPostInfo()->get('email');
+        if (! $emails) {
             $this->setLastError('Merci de spécifier un email');
             $this->redirect(self::SYSTEM_INDEX_PAGE);
         }
 
-        $templatedEmail = (new TemplatedEmail())
-            ->to(new Address($email))
-            ->subject('[Pastell] Mail de test')
-            ->htmlTemplate('test_system.html.twig')
-            ->context(['SITE_BASE' => $this->getSiteBase()])
-            ->attachFromPath(
-                __DIR__ . '/../connecteur/iParapheur/data-exemple/test-pastell-i-parapheur.pdf'
-            );
-        try {
-            $pastellMailer = $this->getObjectInstancier()->getInstance(Mailer::class);
-            $pastellMailer->send($templatedEmail);
-            $this->setLastMessage(sprintf("Un email a été envoyé à l'adresse  : %s", get_hecho($email)));
-        } catch (TransportExceptionInterface $e) {
-            $this->setLastError(sprintf("Impossible d'envoyer le mail : %s", $e->getMessage()));
+        $emailSent = '';
+        $emailNotSent = '';
+        $emails = \explode(',', $emails);
+        foreach ($emails as $email) {
+            $templatedEmail = (new TemplatedEmail())
+                ->to(new Address($email))
+                ->subject('[Pastell] Mail de test')
+                ->htmlTemplate('test_system.html.twig')
+                ->context(['SITE_BASE' => $this->getSiteBase()])
+                ->attachFromPath(
+                    __DIR__ . '/../connecteur/iParapheur/data-exemple/test-pastell-i-parapheur.pdf'
+                );
+            try {
+                $pastellMailer = $this->getObjectInstancier()->getInstance(Mailer::class);
+                $pastellMailer->send($templatedEmail);
+                $emailSent .= "Un email a été envoyé à l'adresse  : " . get_hecho($email) . '<br>';
+            } catch (TransportExceptionInterface $e) {
+                $emailNotSent .= "Impossible d'envoyer le mail : " . $e->getMessage() . '<br>';
+            }
+        }
+        if ($emailSent != '') {
+            $this->setLastMessage($emailSent);
+        }
+        if ($emailNotSent != '') {
+            $this->setLastError($emailNotSent);
         }
         $this->redirect(self::SYSTEM_INDEX_PAGE);
     }
