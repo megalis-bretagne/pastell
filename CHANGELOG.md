@@ -11,6 +11,7 @@
 - Les entités dans le Breadcrumb sont affichées par ordre alphabétique #1658
 - Il n'était plus possible d'avoir plusieurs adresses emails pour les notifications système #1842
 - La génération d'un bordereau de test SEDA ne génère plus une page d'erreur si celui-ci contient un fichier zip #1800
+- Lorsque la liste des contacts des groupes hérités dépasse trois contacts, l'excédent est masqué et la liste est dépliable #1501
 
 ## Ajouts
 

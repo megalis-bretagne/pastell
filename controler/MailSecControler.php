@@ -95,26 +95,63 @@ class MailSecControler extends PastellControler
     {
         $recuperateur = new Recuperateur($_GET);
         $id_e = (int)$recuperateur->getInt('id_e');
-        $this->verifDroit($id_e, "annuaire:lecture");
-        $this->setViewParameter('can_edit', $this->hasDroit($id_e, "annuaire:edition"));
+        $this->verifDroit($id_e, 'annuaire:lecture');
+        $this->setViewParameter('can_edit', $this->hasDroit($id_e, 'annuaire:edition'));
         $annuaireGroupe = new AnnuaireGroupe($this->getSQLQuery(), $id_e);
-        $this->setViewParameter('listGroupe', $annuaireGroupe->getGroupe());
 
+        $listGroupe = $annuaireGroupe->getGroupe();
+        foreach ($listGroupe as $key => $groupe) {
+            $listGroupe[$key]['contactsInfo'] = $this->getContactsInfo($annuaireGroupe, $groupe);
+        }
+        $this->setViewParameter('listGroupe', $listGroupe);
 
         $infoEntite = $this->getEntiteSQL()->getInfo($id_e);
         if ($id_e === 0) {
-            $infoEntite = ["denomination" => "Annuaire global"];
+            $infoEntite = ['denomination' => 'Annuaire global'];
         }
 
         $all_ancetre = $this->getEntiteSQL()->getAncetreId($id_e);
-        $this->setViewParameter('groupe_herited', $annuaireGroupe->getGroupeHerite($all_ancetre));
+        $groupe_herited = $annuaireGroupe->getGroupeHerite($all_ancetre);
+        foreach ($groupe_herited as $key => $groupe) {
+            $groupe_herited[$key]['contactsInfo'] = $this->getContactsInfo($annuaireGroupe, $groupe);
+        }
+        $this->setViewParameter('groupe_herited', $groupe_herited);
         $this->setViewParameter('annuaireGroupe', $annuaireGroupe);
         $this->setViewParameter('infoEntite', $infoEntite);
         $this->setViewParameter('id_e', $id_e);
         $this->setViewParameter('page', "Carnet d'adresses");
         $this->setViewParameter('page_title', $infoEntite['denomination'] . " - Carnet d'adresses");
-        $this->setViewParameter('template_milieu', "MailSecGroupeList");
+        $this->setViewParameter('template_milieu', 'MailSecGroupeList');
         $this->renderDefault();
+    }
+
+    private function getContactsInfo(AnnuaireGroupe $annuaireGroupe, array $groupe): array
+    {
+        $contactsInfo = [];
+
+        $nbContacts = $annuaireGroupe->getNbUtilisateur($groupe['id_g']);
+        $contactsInfo['nb_contacts'] = $nbContacts;
+
+        $contacts = $annuaireGroupe->getUtilisateur($groupe['id_g'], 0, 3);
+        $contactsString = $this->convertContactsToString($contacts);
+        $contactsInfo['contacts'] = $contactsString;
+
+        if ($nbContacts > 3) {
+            $moreContacts = $annuaireGroupe->getUtilisateur($groupe['id_g'], 3);
+            $moreContactsString = $this->convertContactsToString($moreContacts);
+            $contactsInfo['more_contacts'] = $moreContactsString;
+        }
+
+        return $contactsInfo;
+    }
+
+    private function convertContactsToString(array $contacts): string
+    {
+        $r = [];
+        foreach ($contacts as $u) {
+            $r[] = get_hecho('"' . $u['description'] . '"' . ' <' . $u['email'] . '>');
+        }
+        return implode(',<br/>', $r);
     }
 
     public function groupeAction()
