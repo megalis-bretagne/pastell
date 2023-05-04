@@ -115,6 +115,7 @@
 </ul>
 
 <script>
+    // TO-DO : hotfix javacript (en attente version 3.7.0)
     $(document).on('select2:open', () => {
         let allFound = document.querySelectorAll('.select2-container--open .select2-search__field');
         allFound[allFound.length - 1].focus();
