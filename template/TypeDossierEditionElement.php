@@ -33,6 +33,7 @@
                             name='element_id'
                             id="element_id"
                             value='<?php hecho($formulaireElement->element_id)?>'
+                            required
                     />
                 </td>
             </tr>
