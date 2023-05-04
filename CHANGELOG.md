@@ -27,6 +27,7 @@
 - Lors d'un ajout d'un élément à un flux studio, si l'identifiant a été oublié, l'utilisateur est alerté avant l'envoi des données #1316
 - Le connecteur LDAP n'utilisait pas les certificats de l'OS en LDAPS #1844
 - Permettre l'utilisation d'un certificat et d'une clé différente pour le domaine mail sécurisé #1826
+- Lors du paramétrage d'un dossier associé à un connecteur parapheur, si il n'y a aucun sous type, une exception n'est plus levée #1631
 
 ## Ajouts
 
