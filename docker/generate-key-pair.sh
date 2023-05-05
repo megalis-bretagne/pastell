@@ -2,16 +2,27 @@
 
 SITE_HOST_NAME=$1
 CREATED_FILE_PATH=$2
-
+KEY_NAME=$3
+CERT_NAME=$4
 
 if [ -z ${CREATED_FILE_PATH} ]
 then
 CREATED_FILE_PATH=/etc/apache2/ssl
 fi
 
+if [ -z ${KEY_NAME} ]
+then
+KEY_NAME=privkey.pem
+fi
 
-PRIVKEY_PATH=${CREATED_FILE_PATH}/privkey.pem
-CERTIFICATE_PATH=${CREATED_FILE_PATH}/fullchain.pem
+if [ -z ${CERT_NAME} ]
+then
+CERT_NAME=fullchain.pem
+fi
+
+
+PRIVKEY_PATH=${CREATED_FILE_PATH}/${KEY_NAME}
+CERTIFICATE_PATH=${CREATED_FILE_PATH}/${CERT_NAME}
 
 if [ -z ${SITE_HOST_NAME} ]
 then

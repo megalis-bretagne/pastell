@@ -12,7 +12,16 @@ if [ "$LETSENCRYPT_DOMAIN" ] ; then
         ln -s /etc/letsencrypt/live/${LETSENCRYPT_DOMAIN}/fullchain.pem /data/certificate/
         ln -s /etc/letsencrypt/live/${LETSENCRYPT_DOMAIN}/privkey.pem /data/certificate/
     fi
+fi
 
+if [ "$LETSENCRYPT_MAILSEC_DOMAIN" ] ; then
+    if [ -f "/data/certificate/mailsec_fullchain.pem" ] ; then
+            certbot  --logs-dir /data/log/ --work-dir /data/run --http-01-port 80 renew
+    else
+        certbot --http-01-port 80 --logs-dir /data/log/ --work-dir /data/run --standalone --noninteractive --agree-to --preferred-challenges http -d ${LETSENCRYPT_MAILSEC_DOMAIN} -m ${LETSENCRYPT_EMAIL} certonly
+        ln -s /etc/letsencrypt/live/${LETSENCRYPT_MAILSEC_DOMAIN}/mailsec_fullchain.pem /data/certificate/
+        ln -s /etc/letsencrypt/live/${LETSENCRYPT_MAILSEC_DOMAIN}/mailsec_privkey.pem /data/certificate/
+    fi
 fi
 
 if [ -z "$DONT_RETRIEVE_VALIDCA" ] ; then
