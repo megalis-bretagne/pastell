@@ -24,6 +24,7 @@ variables:
     MYSQL_HOST: 'mariadb'
     MYSQL_PORT: '3306'
     PASTELL_SITE_BASE: 'https://localhost/'
+    WEBSEC_BASE: https://127.0.0.1/
 
 build:
   stage: build
