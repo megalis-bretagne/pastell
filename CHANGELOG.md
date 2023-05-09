@@ -1,4 +1,4 @@
-# [4.0.2] - 2023-05-08
+# [4.0.2] - 2023-05-15
 
 ## Corrections
 
@@ -21,7 +21,7 @@
 - Récupération de l'Accusé de réception dans le cas d'annulation de transaction TDT préfecture #639
 - Gestion de l'état "RejetSignataireExterne" d'iparapheur V5.0.12 #1776
 - Dans les recherches avancées, le champ `Non passé par l'état` est disponible pour tous les types de dossier #1851
-- Envoie d'un email de test vers ADMIN_EMAIL dans les paramètres système #1838
+- Envoi d'un email de test vers ADMIN_EMAIL dans les paramètres système #1838
 
 # [4.0.1] - 2023-04-10
 
