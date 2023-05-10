@@ -4,6 +4,10 @@
 
 - Le démon et les workers sont lancés par une commande Symfony #1854
 
+## Corrections
+
+- Le job programmé des actions ne devant pas lancer l'action automatique suivante (updateJobQueueAfterExecution à false) n'était pas supprimé après l'execution (ex: traitement par lot de réouverture) #1828
+
 # [4.0.2] - 2023-05-15
 
 ## Corrections
