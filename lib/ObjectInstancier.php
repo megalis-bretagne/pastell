@@ -10,7 +10,7 @@ class ObjectInstancier
         $this->objects = ['ObjectInstancier' => $this];
     }
 
-    public function getInstance($class_name)
+    public function getInstance($class_name): mixed
     {
         if (! isset($this->objects[$class_name])) {
             $this->objects[$class_name] =  $this->newInstance($class_name);

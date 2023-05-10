@@ -1,3 +1,9 @@
+# [4.0.3] - 2023-06-12
+
+## Évolutions
+
+- Le démon et les workers sont lancés par une commande Symfony #1854
+
 # [4.0.2] - 2023-05-15
 
 ## Corrections
