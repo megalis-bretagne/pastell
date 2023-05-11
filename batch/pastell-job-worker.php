@@ -1,5 +1,9 @@
 <?php
 
+/** @deprecated Since 4.0.3, Use app:daemon:start-worker command instead */
+
+trigger_error('Since 4.0.3, Use app:daemon:start-worker command instead', E_USER_DEPRECATED);
+
 /**
  * @var ObjectInstancier $objectInstancier
  */

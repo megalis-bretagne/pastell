@@ -1,33 +1,33 @@
 <?php
 
-use JetBrains\PhpStorm\NoReturn;
 use Monolog\Logger;
+use Symfony\Component\Process\Process;
 
 class PastellDaemon
 {
     public function __construct(
-        private WorkerSQL $workerSQL,
-        private JobQueueSQL $jobQueueSQL,
-        private ActionExecutorFactory $actionExecutorFactory,
-        private DocumentSQL $document,
-        private NotificationMail $notificationMail,
-        private Logger $logger,
+        private readonly WorkerSQL $workerSQL,
+        private readonly JobQueueSQL $jobQueueSQL,
+        private readonly ActionExecutorFactory $actionExecutorFactory,
+        private readonly DocumentSQL $document,
+        private readonly NotificationMail $notificationMail,
+        private readonly Logger $logger,
         private readonly string $unlock_job_error_at_startup,
     ) {
     }
 
-    public function jobMaster()
+    public function jobMaster(): never
     {
         $this->logger->info('Daemon starting');
 
+        // Ajout d'un flag "UNLOK_JOB_ERROR_AT_STARTUP" pour ne pas verrouiller les jobs qui ne se sont pas
+        // terminés correctement suite à un arrêt brutal du serveur
+        // (ex: restart apache sans avoir arrêté le daemon avec des worker actifs). (r1992)
         if ($this->unlock_job_error_at_startup) {
-            //ajout d'un flag "UNLOK_JOB_ERROR_AT_STARTUP" pour ne pas verrouiller les jobs qui ne se sont pas terminés correctement.
-            //suite à un arrêt brutal du serveur (ex: restart apache sans avoir arrêté le daemon avec des worker actifs). (r1992)
-            $workerSQL = $this->workerSQL;
-            foreach ($workerSQL->getAllRunningWorker() as $info) {
+            foreach ($this->workerSQL->getAllRunningWorker() as $info) {
                 if (! posix_getpgid($info['pid'])) {
-                    $workerSQL->success($info['id_worker']); // supprime le worker
-                    $this->logger->alert("Daemon detects and cleans a worker that did not end correctly", $info);
+                    $this->workerSQL->success($info['id_worker']); // supprime le worker
+                    $this->logger->alert('Daemon detects and cleans a worker that did not end correctly', $info);
                 }
             }
         }
@@ -41,64 +41,10 @@ class PastellDaemon
         }
     }
 
-    public function runningWorker()
-    {
-        try {
-            $this->runningWorkerThrow();
-        } catch (Exception $e) {
-            $this->logger->error("Worker ends with an error : " . $e->getMessage());
-            return;
-        }
-        $this->logger->info("Worker " . getmypid() . " exits normally");
-    }
-
-    private function runningWorkerThrow()
-    {
-        $id_job = get_argv(1);
-        if (! $id_job) {
-            global $argv;
-            echo "Usage : {$argv[0]} id_job";
-            return;
-        }
-        $this->logger->pushProcessor(function ($record) use ($id_job) {
-            $record['extra']['id_job'] = $id_job;
-            return $record;
-        });
-        $this->launchJob($id_job);
-    }
-
-
-    private function launchWorker($id_job)
-    {
-        $job = $this->jobQueueSQL->getJob($id_job);
-        if (! $job) {
-            return;
-        }
-
-        if (! $job->isTypeOK()) {
-            throw new Exception("Ce type de job n'est pas traité par ce worker");
-        }
-
-        $workerSQL = $this->workerSQL;
-        $another_worker_info = $workerSQL->getRunningWorkerInfo($id_job);
-        if ($another_worker_info) {
-            throw new Exception("Le job $id_job est déjà attaché au worker  #{$another_worker_info['id_worker']}");
-        }
-
-        //Le master lock le job jusqu'à ce que son worker le délock pour éviter que le master ne sélectionne à nouveau ce job (si le lancement du worker est plus lent que la boucle du master)
-        $this->jobQueueSQL->lock($id_job);
-
-        $script = realpath(__DIR__ . "/../batch/pastell-job-worker.php");
-        $command = "nohup " . PHP_PATH . " $script $id_job >/dev/null 2>&1 &";
-        $this->logger->info("Daemon starts worker for job #$id_job : " . json_encode($job));
-        exec($command);
-    }
-
     /**
-     * @return void
      * @throws Exception
      */
-    private function jobMasterOneRun()
+    private function jobMasterOneRun(): void
     {
         $workerSQL = $this->workerSQL;
 
@@ -128,9 +74,80 @@ class PastellDaemon
         }
     }
 
-    private function launchJob($id_job)
+    /**
+     * @throws Exception
+     */
+    private function launchWorker($id_job): void
     {
-        $this->logger->info("Worker " . getmypid() . " looks for job $id_job");
+        $job = $this->jobQueueSQL->getJob($id_job);
+        if (! $job) {
+            return;
+        }
+
+        if (! $job->isTypeOK()) {
+            throw new Exception("Ce type de job n'est pas traité par ce worker");
+        }
+
+        $another_worker_info = $this->workerSQL->getRunningWorkerInfo($id_job);
+        if ($another_worker_info) {
+            throw new Exception("Le job $id_job est déjà attaché au worker  #{$another_worker_info['id_worker']}");
+        }
+
+        //Le master lock le job jusqu'à ce que son worker le délock pour éviter que le master ne sélectionne à nouveau
+        // ce job (si le lancement du worker est plus lent que la boucle du master)
+        $this->jobQueueSQL->lock($id_job);
+
+        $process = Process::fromShellCommandline(
+            \sprintf(
+                'nohup %s %s %s > /dev/null 2>&1 &',
+                PHP_PATH,
+                dirname(__DIR__) . '/bin/console app:daemon:start-worker',
+                $id_job
+            )
+        );
+        $process->start();
+        $this->logger->info("Daemon starts worker for job #$id_job : " . json_encode($job, JSON_THROW_ON_ERROR));
+    }
+
+    public function runningWorker(?string $jobId = null): void
+    {
+        try {
+            $this->runningWorkerThrow($jobId);
+        } catch (Exception $e) {
+            $this->logger->error('Worker ends with an error : ' . $e->getMessage());
+            return;
+        }
+        $this->logger->info(sprintf('Worker %s exits normally', getmypid()));
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function runningWorkerThrow(?string $jobId = null): void
+    {
+        if ($jobId === null) {
+            /** @deprecated 4.0.3: Remove this global state and make jobId required */
+            $jobId = get_argv(1);
+            if (! $jobId) {
+                global $argv;
+                echo "Usage : {$argv[0]} id_job";
+                return;
+            }
+        }
+
+        $this->logger->pushProcessor(function ($record) use ($jobId) {
+            $record['extra']['id_job'] = $jobId;
+            return $record;
+        });
+        $this->launchJob($jobId);
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function launchJob($id_job): void
+    {
+        $this->logger->info(sprintf('Worker %s looks for job %s', getmypid(), $id_job));
         $job = $this->jobQueueSQL->getJob($id_job);
         if (! $job) {
             throw new Exception("Aucun job trouvé pour l'id_job $id_job");
@@ -157,10 +174,28 @@ class PastellDaemon
         $workerSQL->attachJob($id_worker, $id_job);
         $this->jobQueueSQL->unlock($id_job);
 
-        if ($job->type == Job::TYPE_DOCUMENT) {
-            $this->actionExecutorFactory->executeOnDocument($job->id_e, $job->id_u, $job->id_d, $job->etat_cible, [], true, [], $id_worker);
-        } elseif ($job->type == Job::TYPE_TRAITEMENT_LOT) {
-            $result = $this->actionExecutorFactory->executeOnDocument($job->id_e, $job->id_u, $job->id_d, $job->etat_cible, [], true, [], $id_worker);
+        if ($job->type === Job::TYPE_DOCUMENT) {
+            $this->actionExecutorFactory->executeOnDocument(
+                $job->id_e,
+                $job->id_u,
+                $job->id_d,
+                $job->etat_cible,
+                [],
+                true,
+                [],
+                $id_worker
+            );
+        } elseif ($job->type === Job::TYPE_TRAITEMENT_LOT) {
+            $result = $this->actionExecutorFactory->executeOnDocument(
+                $job->id_e,
+                $job->id_u,
+                $job->id_d,
+                $job->etat_cible,
+                [],
+                true,
+                [],
+                $id_worker
+            );
             if (!$result) {
                 $info = $this->document->getInfo($job->id_d);
                 $message = "Echec de l'execution de l'action dans la cadre d'un traitement par lot : " .
@@ -168,8 +203,15 @@ class PastellDaemon
                 $this->logger->error($message . ' ' . $job->asString());
                 $this->notificationMail->notify($job->id_e, $job->id_d, $job->etat_cible, $info['type'], $message);
             }
-        } elseif ($job->type == Job::TYPE_CONNECTEUR) {
-            $this->actionExecutorFactory->executeOnConnecteur($job->id_ce, $job->id_u, $job->etat_cible, true, [], $id_worker);
+        } elseif ($job->type === Job::TYPE_CONNECTEUR) {
+            $this->actionExecutorFactory->executeOnConnecteur(
+                $job->id_ce,
+                $job->id_u,
+                $job->etat_cible,
+                true,
+                [],
+                $id_worker
+            );
         } else {
             throw new Exception("Type de job {$job->type} inconnu");
         }
