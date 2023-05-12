@@ -82,6 +82,18 @@ class JobManager
         return $id_job;
     }
 
+    public function deleteJobForDocument(int $id_e, string $id_d, string $action_name = null): void
+    {
+        if (isset($action_name)) {
+            $id_job = $this->jobQueueSQL->getJobIdForDocumentAndAction($id_e, $id_d, $action_name);
+        } else {
+            $id_job = $this->jobQueueSQL->getJobIdForDocument($id_e, $id_d);
+        }
+        if ($id_job) {
+            $this->jobQueueSQL->deleteJob($id_job);
+        }
+    }
+
     public function setTraitementLot($id_e, $id_d, $id_u, $action, string $verrou = '')
     {
         if ($this->disable_job_queue) {

@@ -202,6 +202,8 @@ class ActionExecutorFactory
             (isset($this->lastActionClass) && $this->lastActionClass->updateJobQueueAfterExecution())
         ) {
             $this->getJobManager()->setJobForDocument($id_e, $id_d, $this->getLastMessageString(), $action_name);
+        } else {
+            $this->getJobManager()->deleteJobForDocument($id_e, $id_d, $action_name);
         }
         $this->getLogger()->info(
             "executeOnDocument - fin - id_e=$id_e,id_d=$id_d,id_u=$id_u,action_name=$action_name - " .
