@@ -485,4 +485,48 @@ class DocumentAPIControllerTest extends PastellTestCase
         $this->expectExceptionMessage("L'entité 1 est désactivée");
         $this->createTestDocument();
     }
+
+    private function configureTestPatchExternalDataIParapheurSousTypeWithFastSignature(): int
+    {
+        $connector = $this->createConnector('fast-parapheur', 'fastSign');
+        $id_co = $connector['id_ce'];
+        $this->configureConnector($id_co, ['circuits' => 'TEST'], 1);
+        $this->associateFluxWithConnector($id_co, 'actes-generique', 'signature');
+
+        $document = $this->createDocument('actes-generique');
+        return $document['id_d'];
+    }
+
+    public function testPatchExternalDataIParapheurSousTypeWithFastSignatureFailedWrongValue(): void
+    {
+        $id_d = $this->configureTestPatchExternalDataIParapheurSousTypeWithFastSignature();
+        $this->expectExceptionMessage(
+            "Le circuit test n'existe pas ou est mal orthographié, il doit être écrit en majuscule"
+        );
+        $this->getInternalAPI()->patch(
+            "entite/1/document/$id_d/externalData/fast_parapheur_circuit",
+            ['fast_parapheur_circuit' => 'test']
+        );
+    }
+
+    public function testPatchExternalDataIParapheurSousTypeWithFastSignatureFailedWrongKey(): void
+    {
+        $id_d = $this->configureTestPatchExternalDataIParapheurSousTypeWithFastSignature();
+        $this->expectExceptionMessage("Clé erronée ou valeur vide (clé attendue : 'fast_parapheur_circuit')");
+        $this->getInternalAPI()->patch(
+            "entite/1/document/$id_d/externalData/fast_parapheur_circuit",
+            ['fast_parapheur_circui' => 'foo']
+        );
+    }
+
+    public function testPatchExternalDataIParapheurSousTypeWithFastSignatureFailedEmptyValue(): void
+    {
+        $id_d = $this->configureTestPatchExternalDataIParapheurSousTypeWithFastSignature();
+        $this->expectExceptionMessage("Clé erronée ou valeur vide (clé attendue : 'fast_parapheur_circuit')");
+        $this->getInternalAPI()->patch(
+            "entite/1/document/$id_d/externalData/fast_parapheur_circuit",
+            ['fast_parapheur_circuit' => '']
+        );
+    }
+
 }
