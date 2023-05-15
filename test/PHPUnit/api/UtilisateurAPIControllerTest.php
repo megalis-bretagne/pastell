@@ -315,35 +315,49 @@ class UtilisateurAPIControllerTest extends PastellTestCase
 
     public function testCreateToken(): void
     {
-        $this->getInternalAPI()->post("utilisateur/token", ['nom' => 'test']);
+        $this->getInternalAPI()->post('utilisateur/token', ['nom' => 'test']);
         self::assertSame(
             [[
-                "id" => 1,
-                "id_u" => 1,
-                "name" => "test",
-                "created_at" => date('Y-m-d H:i:s'),
-                "expired_at" => null,
-                "is_expired" => false,
+                'id' => 1,
+                'id_u' => 1,
+                'name' => 'test',
+                'created_at' => date('Y-m-d H:i:s'),
+                'expired_at' => null,
+                'is_expired' => false,
             ]],
-            $this->getInternalAPI()->get("utilisateur/token")
+            $this->getInternalAPI()->get('utilisateur/token')
         );
     }
 
     public function testCreateTokenWithoutName(): void
     {
         $this->expectExceptionMessage('Le nom du token est obligatoire');
-        $this->getInternalAPI()->post("utilisateur/token");
+        $this->getInternalAPI()->post('utilisateur/token');
     }
 
     public function testCreateTokenWithWrongDate(): void
     {
         $this->expectExceptionMessage("La date d'expiration est fausse, format attendu : 2020-03-31");
-        $this->getInternalAPI()->post("utilisateur/token", ['nom' => 'test', 'expiration' => '2024']);
+        $this->getInternalAPI()->post('utilisateur/token', ['nom' => 'test', 'expiration' => '2024']);
     }
 
     public function testCreateTokenWithPriorDate(): void
     {
         $this->expectExceptionMessage("La date d'expiration est antérieure à la date d'aujourd'hui");
-        $this->getInternalAPI()->post("utilisateur/token", ['nom' => 'test', 'expiration' => '2022-04-23']);
+        $this->getInternalAPI()->post('utilisateur/token', ['nom' => 'test', 'expiration' => '2022-04-23']);
+    }
+
+    public function testDeleteToken(): void
+    {
+        $this->getInternalAPI()->post('utilisateur/token', ['nom' => 'test']);
+        $token = $this->getInternalAPI()->get('utilisateur/token');
+        $this->getInternalAPI()->delete('utilisateur/token/1');
+        self::assertNotEquals($token[0], $this->getInternalAPI()->get('utilisateur/token'));
+    }
+
+    public function testDeleteTokenFail(): void
+    {
+        self::expectExceptionMessage('Impossible de supprimer ce jeton');
+        $this->getInternalAPI()->delete('utilisateur/token/1');
     }
 }
