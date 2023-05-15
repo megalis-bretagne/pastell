@@ -1,10 +1,11 @@
 <?php
 
-use Pastell\Service\PasswordEntropy;
-use Pastell\Service\TokenGenerator;
+//use Pastell\Service\PasswordEntropy;
+//use Pastell\Service\TokenGenerator;
 use Pastell\Service\Utilisateur\UserCreationService;
 use Pastell\Service\Utilisateur\UserUpdateService;
 use Pastell\Service\Utilisateur\UtilisateurDeletionService;
+use Pastell\Service\Utilisateur\UserTokenService;
 
 class UtilisateurAPIController extends BaseAPIController
 {
@@ -14,6 +15,8 @@ class UtilisateurAPIController extends BaseAPIController
         private readonly UserCreationService $userCreationService,
         private readonly UserUpdateService $userUpdateService,
         private readonly UtilisateurDeletionService $utilisateurDeletionService,
+        private readonly UserTokenService $userTokenService,
+        private readonly ApiAuthentication $apiAuthentication,
     ) {
     }
 
@@ -39,7 +42,11 @@ class UtilisateurAPIController extends BaseAPIController
     public function get()
     {
         if ($this->getFromQueryArgs(0)) {
-            return $this->detail();
+            if ($this->getFromQueryArgs(0) === 'token') {
+                return $this->getUserToken();
+            } else {
+                return $this->detail();
+            }
         }
 
         $id_e = $this->getFromRequest('id_e', 0);
@@ -109,6 +116,9 @@ class UtilisateurAPIController extends BaseAPIController
      */
     public function post(): array
     {
+        if ($this->getFromQueryArgs(0) === 'token') {
+            return $this->postUserToken();
+        }
         $id_e = $this->getFromRequest('id_e', 0);
         $id_u = $this->getFromQueryArgs(0);
 
@@ -225,5 +235,39 @@ class UtilisateurAPIController extends BaseAPIController
 
         $result['result'] = self::RESULT_OK;
         return $result;
+    }
+
+    /**
+     * @throws UnauthorizedException
+     */
+    private function getUserToken()
+    {
+        $id_u = $this->apiAuthentication->getUtilisateurId();
+        return $this->userTokenService->getTokens($id_u);
+    }
+
+    /**
+     * @throws UnrecoverableException
+     * @throws UnauthorizedException
+     */
+    private function postUserToken(): array
+    {
+        $id_u = $this->apiAuthentication->getUtilisateurId();
+        $name = $this->getFromRequest('nom') ?: null;
+        $expiration = $this->getFromRequest('expiration') ?: null;
+
+        if ($name === null) {
+            throw new Exception("Le nom du token est obligatoire");
+        }
+
+        if ($expiration !== null) {
+            $date = DateTime::createFromFormat('Y-m-d', $expiration);
+            if (!$date || ($date->format('Y-m-d') !== $expiration)) {
+                throw new Exception("La date d'expiration est fausse, format attendu : 2020-03-31");
+            }
+        }
+
+        $token = $this->userTokenService->createToken($id_u, $name, $expiration);
+        return [$token];
     }
 }
