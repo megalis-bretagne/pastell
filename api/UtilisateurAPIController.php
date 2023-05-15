@@ -224,6 +224,10 @@ class UtilisateurAPIController extends BaseAPIController
      */
     public function delete()
     {
+        if ($this->getFromQueryArgs(0) === 'token') {
+            return $this->deleteUserToken();
+        }
+
         $data['id_u'] = $this->getFromQueryArgs(0);
         $data['login'] = $this->getFromRequest('login');
 
@@ -269,5 +273,17 @@ class UtilisateurAPIController extends BaseAPIController
 
         $token = $this->userTokenService->createToken($id_u, $name, $expiration);
         return [$token];
+    }
+
+    private function deleteUserToken()
+    {
+        $id_u = $this->apiAuthentication->getUtilisateurId();
+        $tokenId = $this->getFromQueryArgs(1);
+        $user = $this->userTokenService->getUser($tokenId);
+        if ($user !== $id_u) {
+            throw new Exception('Impossible de supprimer ce jeton');
+        }
+        $this->userTokenService->deleteToken($tokenId);
+        return ["Le token $tokenId a été supprimé"];
     }
 }
