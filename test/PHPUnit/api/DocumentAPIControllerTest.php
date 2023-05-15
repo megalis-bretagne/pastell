@@ -568,7 +568,7 @@ class DocumentAPIControllerTest extends PastellTestCase
     {
         $id_d = $this->configureTestPatchExternalDataIParapheurSousType('fakeIparapheur', 'iparapheur_sous_type');
         $this->expectExceptionMessage(
-            "Le circuit test n'existe pas ou est mal orthographié, il doit être écrit en majuscule"
+            "Le sous-type test n'existe pas pour le type configuré"
         );
         $this->getInternalAPI()->patch(
             "entite/1/document/$id_d/externalData/fast_parapheur_circuit",
