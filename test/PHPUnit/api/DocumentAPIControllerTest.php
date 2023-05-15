@@ -486,22 +486,11 @@ class DocumentAPIControllerTest extends PastellTestCase
         $this->createTestDocument();
     }
 
-    private function configureTestPatchExternalDataIParapheurSousTypeWithFastSignature(): string
-    {
-        $connector = $this->createConnector('fast-parapheur', 'fastSign');
-        $id_co = $connector['id_ce'];
-        $this->configureConnector($id_co, ['circuits' => 'TEST'], 1);
-        $this->associateFluxWithConnector($id_co, 'actes-generique', 'signature');
-
-        $document = $this->createDocument('actes-generique');
-        return $document['id_d'];
-    }
-
     private function configureTestPatchExternalDataIParapheurSousType(
         string $id_connecteur,
         string $key_sous_type
-    ): string
-    {
+    ): string {
+
         $connector = $this->createConnector($id_connecteur, $id_connecteur);
         $id_co = $connector['id_ce'];
         $this->configureConnector($id_co, [$key_sous_type => 'TEST'], 1);
