@@ -1,7 +1,5 @@
 <?php
 
-//use Pastell\Service\PasswordEntropy;
-//use Pastell\Service\TokenGenerator;
 use Pastell\Service\Utilisateur\UserCreationService;
 use Pastell\Service\Utilisateur\UserUpdateService;
 use Pastell\Service\Utilisateur\UtilisateurDeletionService;
@@ -244,15 +242,15 @@ class UtilisateurAPIController extends BaseAPIController
     /**
      * @throws UnauthorizedException
      */
-    private function getUserToken()
+    private function getUserToken(): array
     {
         $id_u = $this->apiAuthentication->getUtilisateurId();
         return $this->userTokenService->getTokens($id_u);
     }
 
     /**
-     * @throws UnrecoverableException
      * @throws UnauthorizedException
+     * @throws Exception
      */
     private function postUserToken(): array
     {
@@ -265,7 +263,7 @@ class UtilisateurAPIController extends BaseAPIController
         $expiration = $this->getFromRequest('expiration') ?: null;
 
         if ($name === null) {
-            throw new Exception("Le nom du token est obligatoire");
+            throw new Exception('Le nom du token est obligatoire');
         }
 
         if ($expiration !== null) {
@@ -279,7 +277,11 @@ class UtilisateurAPIController extends BaseAPIController
         return [$token];
     }
 
-    private function deleteUserToken()
+    /**
+     * @throws UnauthorizedException
+     * @throws Exception
+     */
+    private function deleteUserToken(): array
     {
         $id_u = $this->apiAuthentication->getUtilisateurId();
         $tokenId = $this->getFromQueryArgs(1);
@@ -291,7 +293,11 @@ class UtilisateurAPIController extends BaseAPIController
         return ["Le token $tokenId a été supprimé"];
     }
 
-    private function renewUserToken()
+    /**
+     * @throws UnauthorizedException
+     * @throws Exception
+     */
+    private function renewUserToken(): array
     {
         $id_u = $this->apiAuthentication->getUtilisateurId();
         $tokenId = $this->getFromQueryArgs(1);
