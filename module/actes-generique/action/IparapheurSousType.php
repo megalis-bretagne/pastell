@@ -21,7 +21,7 @@ class IparapheurSousType extends ChoiceActionExecutor
             $fast_parapheur_circuit = $recuperateur->get('fast_parapheur_circuit');
 
             if ($fast_parapheur_circuit === '') {
-                throw new UnrecoverableException("Clé erronée ou valeur vide (clé attendue : 'fast_parapheur_circuit')");
+                throw new UnrecoverableException("Clé différente de 'fast_parapheur_circuit' ou valeur vide");
             }
 
             $circuitPossible = $this->getSousType();
@@ -37,7 +37,7 @@ class IparapheurSousType extends ChoiceActionExecutor
             $sous_type_iparapheur = $recuperateur->get('iparapheur_sous_type');
 
             if ($sous_type_iparapheur === '') {
-                throw new UnrecoverableException("Clé erronée (attendue : 'iparapheur_sous_type') ou valeur vide");
+                throw new UnrecoverableException("Clé différente de 'iparapheur_sous_type' ou valeur vide");
             }
 
             $sousTypePossible = $this->getSousType() ? : [];
