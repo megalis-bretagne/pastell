@@ -36,7 +36,7 @@ class FactureCPPIparapheurSousType extends ChoiceActionExecutor
      */
     public function display()
     {
-        $this->setViewParameter('sous_type', $this->getSousType());
+        $this->setViewParameter('sous_type', $this->getSousType() ? : []);
         $this->renderPage("Choix d'un type de dossier", PASTELL_PATH . "/connecteur/iParapheur/template/IparapheurSousType.php");
     }
 
