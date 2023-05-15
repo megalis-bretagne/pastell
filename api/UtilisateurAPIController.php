@@ -14,7 +14,6 @@ class UtilisateurAPIController extends BaseAPIController
         private readonly UserUpdateService $userUpdateService,
         private readonly UtilisateurDeletionService $utilisateurDeletionService,
         private readonly UserTokenService $userTokenService,
-        private readonly ApiAuthentication $apiAuthentication,
     ) {
     }
 
@@ -244,7 +243,7 @@ class UtilisateurAPIController extends BaseAPIController
      */
     private function getUserToken(): array
     {
-        $id_u = $this->apiAuthentication->getUtilisateurId();
+        $id_u = $this->getUtilisateurId();
         return $this->userTokenService->getTokens($id_u);
     }
 
@@ -258,7 +257,7 @@ class UtilisateurAPIController extends BaseAPIController
             return $this->renewUserToken();
         }
 
-        $id_u = $this->apiAuthentication->getUtilisateurId();
+        $id_u = $this->getUtilisateurId();
         $name = $this->getFromRequest('nom') ?: null;
         $expiration = $this->getFromRequest('expiration') ?: null;
 
@@ -270,6 +269,9 @@ class UtilisateurAPIController extends BaseAPIController
             $date = DateTime::createFromFormat('Y-m-d', $expiration);
             if (!$date || ($date->format('Y-m-d') !== $expiration)) {
                 throw new Exception("La date d'expiration est fausse, format attendu : 2020-03-31");
+            }
+            if ($date->format('Y-m-d') === $expiration && $expiration < date('Y-m-d H:i:s')) {
+                throw new Exception("La date d'expiration est antérieure à la date d'aujourd'hui");
             }
         }
 
@@ -283,7 +285,7 @@ class UtilisateurAPIController extends BaseAPIController
      */
     private function deleteUserToken(): array
     {
-        $id_u = $this->apiAuthentication->getUtilisateurId();
+        $id_u = $this->getUtilisateurId();
         $tokenId = $this->getFromQueryArgs(1);
         $user = $this->userTokenService->getUser($tokenId);
         if ($user !== $id_u) {
@@ -299,7 +301,7 @@ class UtilisateurAPIController extends BaseAPIController
      */
     private function renewUserToken(): array
     {
-        $id_u = $this->apiAuthentication->getUtilisateurId();
+        $id_u = $this->getUtilisateurId();
         $tokenId = $this->getFromQueryArgs(1);
         $user = $this->userTokenService->getUser($tokenId);
         if ($user !== $id_u) {
