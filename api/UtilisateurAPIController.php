@@ -256,6 +256,10 @@ class UtilisateurAPIController extends BaseAPIController
      */
     private function postUserToken(): array
     {
+        if ($this->getFromQueryArgs(2) === 'renew') {
+            return $this->renewUserToken();
+        }
+
         $id_u = $this->apiAuthentication->getUtilisateurId();
         $name = $this->getFromRequest('nom') ?: null;
         $expiration = $this->getFromRequest('expiration') ?: null;
@@ -285,5 +289,16 @@ class UtilisateurAPIController extends BaseAPIController
         }
         $this->userTokenService->deleteToken($tokenId);
         return ["Le token $tokenId a été supprimé"];
+    }
+
+    private function renewUserToken()
+    {
+        $id_u = $this->apiAuthentication->getUtilisateurId();
+        $tokenId = $this->getFromQueryArgs(1);
+        $user = $this->userTokenService->getUser($tokenId);
+        if ($user !== $id_u) {
+            throw new Exception('Impossible de renouveller ce jeton');
+        }
+        return [$this->userTokenService->renewToken($tokenId)];
     }
 }
