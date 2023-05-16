@@ -317,14 +317,16 @@ class UtilisateurAPIControllerTest extends PastellTestCase
     {
         $this->getInternalAPI()->post('utilisateur/token', ['nom' => 'test']);
         self::assertSame(
-            [[
-                'id' => 1,
-                'id_u' => 1,
-                'name' => 'test',
-                'created_at' => date('Y-m-d H:i:s'),
-                'expired_at' => null,
-                'is_expired' => false,
-            ]],
+            [
+                [
+                    'id' => 1,
+                    'id_u' => 1,
+                    'name' => 'test',
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'expired_at' => null,
+                    'is_expired' => false,
+                ]
+            ],
             $this->getInternalAPI()->get('utilisateur/token')
         );
     }
@@ -359,5 +361,18 @@ class UtilisateurAPIControllerTest extends PastellTestCase
     {
         self::expectExceptionMessage('Impossible de supprimer ce jeton');
         $this->getInternalAPI()->delete('utilisateur/token/1');
+    }
+
+    public function testRenewToken(): void
+    {
+        $this->getInternalAPI()->post('utilisateur/token', ['nom' => 'test']);
+        $token = $this->getInternalAPI()->post('utilisateur/token/1/renew');
+        self::assertSame(43, strlen($token[0]));
+    }
+
+    public function testRenewTokenFail(): void
+    {
+        self::expectExceptionMessage('Impossible de renouveller ce jeton');
+        $this->getInternalAPI()->post('utilisateur/token/1/renew');
     }
 }

@@ -238,9 +238,6 @@ class UtilisateurAPIController extends BaseAPIController
         return $result;
     }
 
-    /**
-     * @throws UnauthorizedException
-     */
     private function getUserToken(): array
     {
         $id_u = $this->getUtilisateurId();
@@ -248,7 +245,6 @@ class UtilisateurAPIController extends BaseAPIController
     }
 
     /**
-     * @throws UnauthorizedException
      * @throws Exception
      */
     private function postUserToken(): array
@@ -280,7 +276,6 @@ class UtilisateurAPIController extends BaseAPIController
     }
 
     /**
-     * @throws UnauthorizedException
      * @throws Exception
      */
     private function deleteUserToken(): array
@@ -296,7 +291,6 @@ class UtilisateurAPIController extends BaseAPIController
     }
 
     /**
-     * @throws UnauthorizedException
      * @throws Exception
      */
     private function renewUserToken(): array
