@@ -859,6 +859,7 @@ action:
             - facture_numero_engagement
             - facture_numero_marche
             - recup_par_gf
+            - envoi_sae
     supression:
         name-action: Supprimer
         name: Supprimé

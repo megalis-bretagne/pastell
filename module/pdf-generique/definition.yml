@@ -178,6 +178,7 @@ action:
                 - modification
                 - importation
                 - recu-iparapheur
+                - termine
     supression:
         name-action: Supprimer
         name: Supprimé
@@ -476,3 +477,5 @@ action:
         name: 'Traitement terminé'
         rule:
             role_id_e: no-role
+        editable-content:
+            - envoi_sae
