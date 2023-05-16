@@ -103,6 +103,6 @@ class PDFGeneriqueTest extends PastellTestCase
         $id_d = $this->createDocument('pdf-generique')['id_d'];
         $actionChange = $this->getObjectInstancier()->getInstance(ActionChange::class);
         $actionChange->addAction($id_d, 1, 0, "termine", "test");
-        $this->assertActionPossible(['supression'], $id_d);
+        $this->assertActionPossible(['modification', 'supression'], $id_d);
     }
 }
