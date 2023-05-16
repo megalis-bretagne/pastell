@@ -3,7 +3,7 @@
 ## Évolutions
 
 - Le démon et les workers sont lancés par une commande Symfony #1854
-- Lorsqu'un dossier est dans l'état traitement terminé, la modification reste possible pour envoi au SAE #1840
+- Lorsqu'une facture chorus pro ou un document pdf générique est dans l'état traitement terminé, la modification reste possible pour envoi au SAE #1840
 
 ## Corrections
 
