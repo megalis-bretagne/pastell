@@ -395,7 +395,7 @@ action:
                         envoi_signature_fast: false
                         has_signature_locale: false
                 and_2:
-                    last-action:
+                    has-action:
                         - recu-iparapheur
         action-class: TedetisEnvoieHelios
         action-automatique: verif-tdt
