@@ -8,7 +8,7 @@
 
 - Le job programmé des actions ne devant pas lancer l'action automatique suivante (updateJobQueueAfterExecution à false) n'était pas supprimé après l'execution (ex: traitement par lot de réouverture) #1828 
 - L'action `Transmettre au TdT` n'était pas possible lorsque l'on cochait l'étape dans le formulaire après réception de la signature sur `Helios générique` #1740
-- Le bouton Verser à la GED est disponible à un second état En cours de rédaction d'un document hélios générique #1736
+- L'action `Verser à la GED` n'était pas possible lorsque l'on cochait l'étape dans le formulaire après transmission au Tdt sur `Helios générique` #1736
 
 # [4.0.2] - 2023-05-15
 
