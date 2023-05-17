@@ -459,9 +459,11 @@ action:
                     content:
                         envoi_tdt: false
                 and_3:
-                    last-action:
+                    has-action:
                         - acquiter-tdt
                         - info-tdt
+                and_4:
+                    last-action:
                         - error-ged
         editable-content:
             - envoi_sae
