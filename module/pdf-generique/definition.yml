@@ -402,8 +402,17 @@ action:
         name-action: 'Verser au SAE'
         name: 'Versé au SAE'
         rule:
-            last-action:
-                - preparation-send-sae
+            content:
+                envoi_sae: true
+            or_1:
+                and_1:
+                    last-action:
+                        - preparation-send-sae
+                and_2:
+                    last-action:
+                        - termine
+                    no-action:
+                        - send-archive
         connecteur-type: SAE
         action-class: PDFGeneriqueEnvoiSAE
         action-automatique: verif-sae
@@ -479,3 +488,4 @@ action:
             role_id_e: no-role
         editable-content:
             - envoi_sae
+        modification-no-change-etat: true
