@@ -46,9 +46,9 @@ class MailsecEnvoyer extends ConnecteurTypeActionExecutor
     {
         $numberOfRecipients = 0;
         foreach (['to', 'cc', 'bcc'] as $type) {
-            $type = $this->getMappingValue($type);
+            $typeMapped = $this->getMappingValue($type);
 
-            $mail_to_send = $this->getMailToSend($type);
+            $mail_to_send = $this->getMailToSend($typeMapped);
 
             foreach ($mail_to_send as $mail) {
                 $this->add2SendEmail($mail, $type);
