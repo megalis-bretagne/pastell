@@ -2,7 +2,6 @@
 
 class TypeDossierMailSecEtape implements TypeDossierEtapeSetSpecificInformation
 {
-
     public function setSpecificInformation(
         TypeDossierEtapeProperties $typeDossierEtape,
         array $result,
