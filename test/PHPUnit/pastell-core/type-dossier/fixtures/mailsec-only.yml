@@ -164,6 +164,7 @@ action:
             cc: cc
             bcc: bcc
             sent_mail_number: sent_mail_number
+            send-mailsec-error: send-mailsec-error
         action-automatique: mailsec-relance
     send-mailsec-error:
         name: "Erreur d'envoi d'un mail sécurisé"
