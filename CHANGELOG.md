@@ -6,6 +6,8 @@
 - Lorsqu'une facture chorus pro ou un document pdf générique est dans l'état traitement terminé, la modification reste possible pour envoi au SAE #1840
 - L'utilisateur peut gérer ses tokens via l'API #1785
 - L'url des générateurs SEDA de la 3.1 sont remplacés par l'adresse http://seda-generator #1853
+- Sur un flux avec une étape de mail sécurisé, le champ `Destinataire(s)` n'est plus obligatoire, 
+  il faut au minimum remplir un des champs suivant : `Destinataire(s)`, `Copie à` ou `Copie cachée à` #1629
 
 ## Corrections
 
