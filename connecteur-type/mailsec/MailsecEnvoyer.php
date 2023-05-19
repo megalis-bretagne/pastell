@@ -50,28 +50,34 @@ class MailsecEnvoyer extends ConnecteurTypeActionExecutor
 
             $mail_to_send = $this->getMailToSend($type);
 
-            if ($type == 'to' && !$mail_to_send) {
-                throw new UnrecoverableException(
-                    "Impossible d'envoyer le document car il n'y a pas de destinataires (groupe ou role vide)"
-                );
-            }
             foreach ($mail_to_send as $mail) {
                 $this->add2SendEmail($mail, $type);
                 ++$numberOfRecipients;
             }
         }
 
-        $this->getDonneesFormulaire()->setData($this->getMappingValue(self::SENT_MAIL_NUMBER_FIELD), $numberOfRecipients);
+        if (!$numberOfRecipients) {
+            $this->changeAction(
+                $this->getMappingValue('send-mailsec-error'),
+                "Impossible d'envoyer le document car il n'y a pas de destinataires (groupe ou role vide)"
+            );
+            return false;
+        }
+
+        $this->getDonneesFormulaire()->setData(
+            $this->getMappingValue(self::SENT_MAIL_NUMBER_FIELD),
+            $numberOfRecipients
+        );
         $this->getMailSecConnecteur()->sendAllMail($this->id_e, $this->id_d);
 
         $this->getActionCreator()->addAction(
             $this->id_e,
             $this->id_u,
             $this->action,
-            "Le document a été envoyé"
+            'Le document a été envoyé'
         );
 
-        $this->setLastMessage("Le document a été envoyé au(x) destinataire(s)");
+        $this->setLastMessage('Le document a été envoyé au(x) destinataire(s)');
 
         return true;
     }
