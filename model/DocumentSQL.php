@@ -86,6 +86,11 @@ class DocumentSQL extends SQL
         $sql = "DELETE FROM document_index WHERE id_d=?";
         $this->query($sql, $id_d);
 
+        $sql = 'DELETE document_email_reponse FROM document_email_reponse' .
+            ' JOIN document_email ON document_email.id_de = document_email_reponse.id_de ' .
+            ' WHERE document_email.id_d=? ';
+        $this->query($sql, $id_d);
+
         $sql = "DELETE FROM document_email WHERE id_d=?";
         $this->query($sql, $id_d);
     }
