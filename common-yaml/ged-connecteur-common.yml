@@ -46,7 +46,7 @@ formulaire:
             name: 'Nettoyage des noms de fichiers et de répertoire'
             commentaire: "Une expression régulière dont tout ce qui correspond sera remplacé par des tirets (-).\nL'expression par défaut est #[\\\\\\\\/]# (exlusion du caractère de séparation des répertoire)\nLes noms de fichiers ne sont pas remplacés dans les métadonnées !\n"
         depot_filename_preg_match:
-            name: 'Expressions pour modifier le nom des fichiers'
+            name: 'Expressions régulières pour définir le nom des fichiers déposés'
             type: textarea
             commentaire: "Une expression par ligne identifiant_fichier: expression\nPossibilité d'utiliser les éléments du type de dossier avec %identifiant_element%\n"
         depot_creation_fichier_termine:
