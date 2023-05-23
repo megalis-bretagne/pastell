@@ -41,9 +41,8 @@ class UtilisateurAPIController extends BaseAPIController
         if ($this->getFromQueryArgs(0)) {
             if ($this->getFromQueryArgs(0) === 'token') {
                 return $this->getUserToken();
-            } else {
-                return $this->detail();
             }
+            return $this->detail();
         }
 
         $id_e = $this->getFromRequest('id_e', 0);
@@ -241,7 +240,18 @@ class UtilisateurAPIController extends BaseAPIController
     private function getUserToken(): array
     {
         $id_u = $this->getUtilisateurId();
-        return $this->userTokenService->getTokens($id_u);
+        $tokens = $this->userTokenService->getTokens($id_u);
+        foreach ($tokens as $key => $token) {
+            $tokens[$key] = $this->changeIdToString($token);
+        }
+        return $tokens;
+    }
+
+    private function changeIdToString(array $token): array
+    {
+        $token['id'] = strval($token['id']);
+        $token['id_u'] = strval($token['id_u']);
+        return $token;
     }
 
     /**
@@ -254,7 +264,7 @@ class UtilisateurAPIController extends BaseAPIController
         }
 
         $id_u = $this->getUtilisateurId();
-        $name = $this->getFromRequest('nom') ?: null;
+        $name = $this->getFromRequest('name') ?: null;
         $expiration = $this->getFromRequest('expiration') ?: null;
 
         if ($name === null) {
@@ -272,11 +282,11 @@ class UtilisateurAPIController extends BaseAPIController
         }
 
         $token = $this->userTokenService->createToken($id_u, $name, $expiration);
-        return [$token];
+        return $this->getTokenInfo($token);
     }
 
     /**
-     * @throws Exception
+     * @throws ForbiddenException
      */
     private function deleteUserToken(): array
     {
@@ -284,14 +294,15 @@ class UtilisateurAPIController extends BaseAPIController
         $tokenId = $this->getFromQueryArgs(1);
         $user = $this->userTokenService->getUser($tokenId);
         if ($user !== $id_u) {
-            throw new Exception('Impossible de supprimer ce jeton');
+            throw new ForbiddenException('Impossible de supprimer ce jeton');
         }
         $this->userTokenService->deleteToken($tokenId);
-        return ["Le token $tokenId a été supprimé"];
+        header_wrapper('HTTP/1.1 204 No Content');
+        return ['result' => self::RESULT_OK];
     }
 
     /**
-     * @throws Exception
+     * @throws ForbiddenException
      */
     private function renewUserToken(): array
     {
@@ -299,8 +310,16 @@ class UtilisateurAPIController extends BaseAPIController
         $tokenId = $this->getFromQueryArgs(1);
         $user = $this->userTokenService->getUser($tokenId);
         if ($user !== $id_u) {
-            throw new Exception('Impossible de renouveller ce jeton');
+            throw new ForbiddenException('Impossible de renouveller ce jeton');
         }
-        return [$this->userTokenService->renewToken($tokenId)];
+        $token = $this->userTokenService->renewToken($tokenId);
+        return $this->getTokenInfo($token);
+    }
+
+    private function getTokenInfo($token): array
+    {
+        $info = $this->userTokenService->getTokenInfo($token);
+        $info['token'] = $token;
+        return $this->changeIdToString($info);
     }
 }

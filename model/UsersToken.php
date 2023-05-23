@@ -86,4 +86,11 @@ EOT;
         $query = 'SELECT * FROM users_token WHERE id=?';
         return $this->queryOne($query, $tokenId);
     }
+
+    public function getTokenInfoByToken(string $token): array
+    {
+        $token = $this->getHashedToken($token);
+        $query = 'SELECT * FROM users_token WHERE token=?';
+        return $this->queryOne($query, $token);
+    }
 }

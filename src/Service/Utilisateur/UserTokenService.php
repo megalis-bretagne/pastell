@@ -100,4 +100,9 @@ final class UserTokenService
     {
         return (new UriSafeTokenGenerator())->generateToken();
     }
+
+    public function getTokenInfo(string $token): array
+    {
+        return $this->usersToken->getTokenInfoByToken($token);
+    }
 }
