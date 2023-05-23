@@ -13,6 +13,7 @@
 - L'action `Verser à la GED` n'était pas possible lorsque l'on cochait l'étape dans le formulaire après transmission au Tdt sur `Helios générique` #1736
 - Lors du paramétrage d'un dossier associé à un connecteur parapheur, si il n'y a aucun sous type, une exception n'est plus levée #1631
 - L'API externalData renvoie une erreur si le sous-type du parapheur est invalide #1805
+- A la suppression d'un dossier dont le cheminement contient une étape de mailsec avec réponse, les réponses sont également supprimées #1728
 
 # [4.0.2] - 2023-05-15
 
