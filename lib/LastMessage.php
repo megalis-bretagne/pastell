@@ -65,7 +65,7 @@ class LastMessage
         if (empty($this->lastPost[$inputName])) {
             return false;
         }
-        return htmlentities($this->lastPost[$inputName], $this->encoding);
+        return htmlspecialchars($this->lastPost[$inputName], $this->encoding);
     }
 
     public function deleteLastInput()
