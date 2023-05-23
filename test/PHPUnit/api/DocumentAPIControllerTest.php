@@ -503,8 +503,9 @@ class DocumentAPIControllerTest extends PastellTestCase
     public function testPatchExternalDataIParapheurSousTypeWithFastSignatureFailedWrongValue(): void
     {
         $id_d = $this->configureTestPatchExternalDataIParapheurSousType('fast-parapheur', 'circuits');
+        $this->expectException(UnrecoverableException::class);
         $this->expectExceptionMessage(
-            "Le circuit test n'existe pas ou est mal orthographié, il doit être écrit en majuscule"
+            "Le circuit \"test\" n'existe pas ou est mal orthographié"
         );
         $this->getInternalAPI()->patch(
             "entite/1/document/$id_d/externalData/fast_parapheur_circuit",
@@ -515,7 +516,8 @@ class DocumentAPIControllerTest extends PastellTestCase
     public function testPatchExternalDataIParapheurSousTypeWithFastSignatureFailedWrongKey(): void
     {
         $id_d = $this->configureTestPatchExternalDataIParapheurSousType('fast-parapheur', 'circuits');
-        $this->expectExceptionMessage("Clé différente de 'fast_parapheur_circuit' ou valeur vide");
+        $this->expectException(UnrecoverableException::class);
+        $this->expectExceptionMessage("Le circuit \"\" n'existe pas ou est mal orthographié");
         $this->getInternalAPI()->patch(
             "entite/1/document/$id_d/externalData/fast_parapheur_circuit",
             ['fast_parapheur_circui' => 'foo']
@@ -525,7 +527,8 @@ class DocumentAPIControllerTest extends PastellTestCase
     public function testPatchExternalDataIParapheurSousTypeWithFastSignatureFailedEmptyValue(): void
     {
         $id_d = $this->configureTestPatchExternalDataIParapheurSousType('fast-parapheur', 'circuits');
-        $this->expectExceptionMessage("Clé différente de 'fast_parapheur_circuit' ou valeur vide");
+        $this->expectException(UnrecoverableException::class);
+        $this->expectExceptionMessage("Le circuit \"\" n'existe pas ou est mal orthographié");
         $this->getInternalAPI()->patch(
             "entite/1/document/$id_d/externalData/fast_parapheur_circuit",
             ['fast_parapheur_circuit' => '']
@@ -535,8 +538,8 @@ class DocumentAPIControllerTest extends PastellTestCase
     public function testPatchExternalDataIParapheurSousTypeFailedWrongKey(): void
     {
         $id_d = $this->configureTestPatchExternalDataIParapheurSousType('fakeIparapheur', 'iparapheur_sous_type');
-
-        $this->expectExceptionMessage("Clé différente de 'iparapheur_sous_type' ou valeur vide");
+        $this->expectException(UnrecoverableException::class);
+        $this->expectExceptionMessage("Le sous-type \"\" n'existe pas pour le type configuré");
         $this->getInternalAPI()->patch(
             "entite/1/document/$id_d/externalData/iparapheur_sous_type",
             ['iparapheur_sous_typ' => 'foo']
@@ -546,7 +549,8 @@ class DocumentAPIControllerTest extends PastellTestCase
     public function testPatchExternalDataIParapheurSousTypeFailedEmptyValue(): void
     {
         $id_d = $this->configureTestPatchExternalDataIParapheurSousType('fakeIparapheur', 'iparapheur_sous_type');
-        $this->expectExceptionMessage("Clé différente de 'iparapheur_sous_type' ou valeur vide");
+        $this->expectException(UnrecoverableException::class);
+        $this->expectExceptionMessage("Le sous-type \"\" n'existe pas pour le type configuré");
         $this->getInternalAPI()->patch(
             "entite/1/document/$id_d/externalData/iparapheur_sous_type",
             ['iparapheur_sous_type' => '']
@@ -557,7 +561,7 @@ class DocumentAPIControllerTest extends PastellTestCase
     {
         $id_d = $this->configureTestPatchExternalDataIParapheurSousType('fakeIparapheur', 'iparapheur_sous_type');
         $this->expectExceptionMessage(
-            "Le sous-type test n'existe pas pour le type configuré"
+            "Le sous-type \"test\" n'existe pas pour le type configuré"
         );
         $this->getInternalAPI()->patch(
             "entite/1/document/$id_d/externalData/fast_parapheur_circuit",
