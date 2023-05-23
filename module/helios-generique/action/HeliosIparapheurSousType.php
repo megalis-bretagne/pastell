@@ -3,8 +3,8 @@
 
 /**
  * @deprecated Since 4.0.3, Use IparapheurSousType
- *
  */
+
 class HeliosIparapheurSousType extends ChoiceActionExecutor
 {
     /**
