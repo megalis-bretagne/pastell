@@ -315,12 +315,12 @@ class UtilisateurAPIControllerTest extends PastellTestCase
 
     public function testCreateToken(): void
     {
-        $this->getInternalAPI()->post('utilisateur/token', ['nom' => 'test']);
+        $this->getInternalAPI()->post('utilisateur/token', ['name' => 'test']);
         self::assertSame(
             [
                 [
-                    'id' => 1,
-                    'id_u' => 1,
+                    'id' => '1',
+                    'id_u' => '1',
                     'name' => 'test',
                     'created_at' => date('Y-m-d H:i:s'),
                     'expired_at' => null,
@@ -340,18 +340,18 @@ class UtilisateurAPIControllerTest extends PastellTestCase
     public function testCreateTokenWithWrongDate(): void
     {
         $this->expectExceptionMessage("La date d'expiration est fausse, format attendu : 2020-03-31");
-        $this->getInternalAPI()->post('utilisateur/token', ['nom' => 'test', 'expiration' => '2024']);
+        $this->getInternalAPI()->post('utilisateur/token', ['name' => 'test', 'expiration' => '2024']);
     }
 
     public function testCreateTokenWithPriorDate(): void
     {
         $this->expectExceptionMessage("La date d'expiration est antérieure à la date d'aujourd'hui");
-        $this->getInternalAPI()->post('utilisateur/token', ['nom' => 'test', 'expiration' => '2022-04-23']);
+        $this->getInternalAPI()->post('utilisateur/token', ['name' => 'test', 'expiration' => '2022-04-23']);
     }
 
     public function testDeleteToken(): void
     {
-        $this->getInternalAPI()->post('utilisateur/token', ['nom' => 'test']);
+        $this->getInternalAPI()->post('utilisateur/token', ['name' => 'test']);
         $token = $this->getInternalAPI()->get('utilisateur/token');
         $this->getInternalAPI()->delete('utilisateur/token/1');
         self::assertNotEquals($token[0], $this->getInternalAPI()->get('utilisateur/token'));
@@ -365,9 +365,9 @@ class UtilisateurAPIControllerTest extends PastellTestCase
 
     public function testRenewToken(): void
     {
-        $this->getInternalAPI()->post('utilisateur/token', ['nom' => 'test']);
+        $this->getInternalAPI()->post('utilisateur/token', ['name' => 'test']);
         $token = $this->getInternalAPI()->post('utilisateur/token/1/renew');
-        self::assertSame(43, strlen($token[0]));
+        self::assertSame(43, strlen($token['token']));
     }
 
     public function testRenewTokenFail(): void
