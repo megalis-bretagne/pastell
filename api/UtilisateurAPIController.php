@@ -1,10 +1,9 @@
 <?php
 
-use Pastell\Service\PasswordEntropy;
-use Pastell\Service\TokenGenerator;
 use Pastell\Service\Utilisateur\UserCreationService;
 use Pastell\Service\Utilisateur\UserUpdateService;
 use Pastell\Service\Utilisateur\UtilisateurDeletionService;
+use Pastell\Service\Utilisateur\UserTokenService;
 
 class UtilisateurAPIController extends BaseAPIController
 {
@@ -14,6 +13,7 @@ class UtilisateurAPIController extends BaseAPIController
         private readonly UserCreationService $userCreationService,
         private readonly UserUpdateService $userUpdateService,
         private readonly UtilisateurDeletionService $utilisateurDeletionService,
+        private readonly UserTokenService $userTokenService,
     ) {
     }
 
@@ -39,6 +39,9 @@ class UtilisateurAPIController extends BaseAPIController
     public function get()
     {
         if ($this->getFromQueryArgs(0)) {
+            if ($this->getFromQueryArgs(0) === 'token') {
+                return $this->getUserToken();
+            }
             return $this->detail();
         }
 
@@ -109,6 +112,9 @@ class UtilisateurAPIController extends BaseAPIController
      */
     public function post(): array
     {
+        if ($this->getFromQueryArgs(0) === 'token') {
+            return $this->postUserToken();
+        }
         $id_e = $this->getFromRequest('id_e', 0);
         $id_u = $this->getFromQueryArgs(0);
 
@@ -214,6 +220,10 @@ class UtilisateurAPIController extends BaseAPIController
      */
     public function delete()
     {
+        if ($this->getFromQueryArgs(0) === 'token') {
+            return $this->deleteUserToken();
+        }
+
         $data['id_u'] = $this->getFromQueryArgs(0);
         $data['login'] = $this->getFromRequest('login');
 
@@ -225,5 +235,91 @@ class UtilisateurAPIController extends BaseAPIController
 
         $result['result'] = self::RESULT_OK;
         return $result;
+    }
+
+    private function getUserToken(): array
+    {
+        $id_u = $this->getUtilisateurId();
+        $tokens = $this->userTokenService->getTokens($id_u);
+        foreach ($tokens as $key => $token) {
+            $tokens[$key] = $this->changeIdToString($token);
+        }
+        return $tokens;
+    }
+
+    private function changeIdToString(array $token): array
+    {
+        $token['id'] = strval($token['id']);
+        $token['id_u'] = strval($token['id_u']);
+        return $token;
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function postUserToken(): array
+    {
+        if ($this->getFromQueryArgs(2) === 'renew') {
+            return $this->renewUserToken();
+        }
+
+        $id_u = $this->getUtilisateurId();
+        $name = $this->getFromRequest('name') ?: null;
+        $expiration = $this->getFromRequest('expiration') ?: null;
+
+        if ($name === null) {
+            throw new Exception('Le nom du token est obligatoire');
+        }
+
+        if ($expiration !== null) {
+            $date = DateTime::createFromFormat('Y-m-d', $expiration);
+            if (!$date || ($date->format('Y-m-d') !== $expiration)) {
+                throw new Exception("La date d'expiration est fausse, format attendu : 2020-03-31");
+            }
+            if ($date->format('Y-m-d') === $expiration && $expiration < date('Y-m-d H:i:s')) {
+                throw new Exception("La date d'expiration est antérieure à la date d'aujourd'hui");
+            }
+        }
+
+        $token = $this->userTokenService->createToken($id_u, $name, $expiration);
+        return $this->getTokenInfo($token);
+    }
+
+    /**
+     * @throws ForbiddenException
+     */
+    private function deleteUserToken(): array
+    {
+        $id_u = $this->getUtilisateurId();
+        $tokenId = $this->getFromQueryArgs(1);
+        $user = $this->userTokenService->getUser($tokenId);
+        if ($user !== $id_u) {
+            throw new ForbiddenException('Impossible de supprimer ce jeton');
+        }
+        $this->userTokenService->deleteToken($tokenId);
+        header_wrapper('HTTP/1.1 204 No Content');
+        return ['result' => self::RESULT_OK];
+    }
+
+    /**
+     * @throws ForbiddenException
+     */
+    private function renewUserToken(): array
+    {
+        $id_u = $this->getUtilisateurId();
+        $tokenId = $this->getFromQueryArgs(1);
+        $user = $this->userTokenService->getUser($tokenId);
+        if ($user !== $id_u) {
+            throw new ForbiddenException('Impossible de renouveller ce jeton');
+        }
+        $token = $this->userTokenService->renewToken($tokenId);
+        return $this->getTokenInfo($token);
+    }
+
+    private function getTokenInfo($token): array
+    {
+        $info = $this->userTokenService->getTokenInfo($token);
+        $info['token'] = $token;
+        return $this->changeIdToString($info);
     }
 }
