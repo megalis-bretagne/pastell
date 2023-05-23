@@ -20,10 +20,25 @@ class IparapheurSousType extends ChoiceActionExecutor
         if ($signature->isFastSignature()) {
             $fast_parapheur_circuit = $recuperateur->get('fast_parapheur_circuit');
 
+            $circuitPossible = $this->getSousType();
+            if (!in_array($fast_parapheur_circuit, $circuitPossible, true)) {
+                throw new UnrecoverableException(
+                    "Le circuit \"$fast_parapheur_circuit\" n'existe pas ou est mal orthographié"
+                );
+            }
+
             $donneesFormulaire = $this->getDonneesFormulaire();
             $donneesFormulaire->setData($fast_parapheur_circuit_element, $fast_parapheur_circuit);
         } else {
             $sous_type_iparapheur = $recuperateur->get('iparapheur_sous_type');
+
+            $sousTypePossible = $this->getSousType() ? : [];
+            if (!in_array($sous_type_iparapheur, $sousTypePossible, true)) {
+                throw new UnrecoverableException(
+                    "Le sous-type \"$sous_type_iparapheur\" n'existe pas pour le type configuré"
+                );
+            }
+
             $signature_config = $this->getConnecteurConfigByType('signature');
             $type_iparapheur = $signature_config->get('iparapheur_type');
 

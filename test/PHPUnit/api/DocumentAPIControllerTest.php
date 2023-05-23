@@ -485,4 +485,87 @@ class DocumentAPIControllerTest extends PastellTestCase
         $this->expectExceptionMessage("L'entité 1 est désactivée");
         $this->createTestDocument();
     }
+
+    private function configureTestPatchExternalDataIParapheurSousType(
+        string $id_connecteur,
+        string $key_sous_type
+    ): string {
+
+        $connector = $this->createConnector($id_connecteur, $id_connecteur);
+        $id_co = $connector['id_ce'];
+        $this->configureConnector($id_co, [$key_sous_type => 'TEST'], 1);
+        $this->associateFluxWithConnector($id_co, 'actes-generique', 'signature');
+
+        $document = $this->createDocument('actes-generique');
+        return $document['id_d'];
+    }
+
+    public function testPatchExternalDataIParapheurSousTypeWithFastSignatureFailedWrongValue(): void
+    {
+        $id_d = $this->configureTestPatchExternalDataIParapheurSousType('fast-parapheur', 'circuits');
+        $this->expectException(UnrecoverableException::class);
+        $this->expectExceptionMessage(
+            "Le circuit \"test\" n'existe pas ou est mal orthographié"
+        );
+        $this->getInternalAPI()->patch(
+            "entite/1/document/$id_d/externalData/fast_parapheur_circuit",
+            ['fast_parapheur_circuit' => 'test']
+        );
+    }
+
+    public function testPatchExternalDataIParapheurSousTypeWithFastSignatureFailedWrongKey(): void
+    {
+        $id_d = $this->configureTestPatchExternalDataIParapheurSousType('fast-parapheur', 'circuits');
+        $this->expectException(UnrecoverableException::class);
+        $this->expectExceptionMessage("Le circuit \"\" n'existe pas ou est mal orthographié");
+        $this->getInternalAPI()->patch(
+            "entite/1/document/$id_d/externalData/fast_parapheur_circuit",
+            ['fast_parapheur_circui' => 'foo']
+        );
+    }
+
+    public function testPatchExternalDataIParapheurSousTypeWithFastSignatureFailedEmptyValue(): void
+    {
+        $id_d = $this->configureTestPatchExternalDataIParapheurSousType('fast-parapheur', 'circuits');
+        $this->expectException(UnrecoverableException::class);
+        $this->expectExceptionMessage("Le circuit \"\" n'existe pas ou est mal orthographié");
+        $this->getInternalAPI()->patch(
+            "entite/1/document/$id_d/externalData/fast_parapheur_circuit",
+            ['fast_parapheur_circuit' => '']
+        );
+    }
+
+    public function testPatchExternalDataIParapheurSousTypeFailedWrongKey(): void
+    {
+        $id_d = $this->configureTestPatchExternalDataIParapheurSousType('fakeIparapheur', 'iparapheur_sous_type');
+        $this->expectException(UnrecoverableException::class);
+        $this->expectExceptionMessage("Le sous-type \"\" n'existe pas pour le type configuré");
+        $this->getInternalAPI()->patch(
+            "entite/1/document/$id_d/externalData/iparapheur_sous_type",
+            ['iparapheur_sous_typ' => 'foo']
+        );
+    }
+
+    public function testPatchExternalDataIParapheurSousTypeFailedEmptyValue(): void
+    {
+        $id_d = $this->configureTestPatchExternalDataIParapheurSousType('fakeIparapheur', 'iparapheur_sous_type');
+        $this->expectException(UnrecoverableException::class);
+        $this->expectExceptionMessage("Le sous-type \"\" n'existe pas pour le type configuré");
+        $this->getInternalAPI()->patch(
+            "entite/1/document/$id_d/externalData/iparapheur_sous_type",
+            ['iparapheur_sous_type' => '']
+        );
+    }
+
+    public function testPatchExternalDataIParapheurSousTypeFailedWrongValue(): void
+    {
+        $id_d = $this->configureTestPatchExternalDataIParapheurSousType('fakeIparapheur', 'iparapheur_sous_type');
+        $this->expectExceptionMessage(
+            "Le sous-type \"test\" n'existe pas pour le type configuré"
+        );
+        $this->getInternalAPI()->patch(
+            "entite/1/document/$id_d/externalData/fast_parapheur_circuit",
+            ['iparapheur_sous_type' => 'test']
+        );
+    }
 }
