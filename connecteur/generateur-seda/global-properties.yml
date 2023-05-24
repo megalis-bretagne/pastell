@@ -5,7 +5,7 @@ formulaire:
     onglet:
         seda_generator_url:
             name: 'URL du générateur de SEDA'
-            commentaire: 'http://localhost:8021 (http://seda-generator si installation complète en docker)'
+            commentaire: 'http://seda-generator'
 action:
     test-connexion:
         name: 'Tester la connexion'
