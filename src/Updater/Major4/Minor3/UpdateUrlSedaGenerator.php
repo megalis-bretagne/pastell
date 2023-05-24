@@ -4,13 +4,41 @@ declare(strict_types=1);
 
 namespace Pastell\Updater\Major4\Minor3;
 
+use ConnecteurEntiteSQL;
+use DonneesFormulaireFactory;
 use Pastell\Updater\Version;
 
 final class UpdateUrlSedaGenerator implements Version
 {
+    public function __construct(
+        private readonly DonneesFormulaireFactory $donneesFormulaireFactory,
+        private readonly ConnecteurEntiteSQL $connecteurEntiteSQL,
+    ) {
+    }
 
+    /**
+     * @throws \Exception
+     */
     public function update(): void
     {
-        // TODO: Implement update() method.
+        $connecteurSedaGlobaux = $this->connecteurEntiteSQL->getAllByConnecteurId('generateur-seda', true);
+        foreach ($connecteurSedaGlobaux as $connecteurSedaGlobal) {
+            $donneeFormulaire = $this->donneesFormulaireFactory
+                ->getConnecteurEntiteFormulaire($connecteurSedaGlobal['id_ce']);
+            $donneeFormulaire->setData('seda_generator_url', 'http://seda-generator');
+        }
+
+        $id_connecteurs = ['generateur-seda-asalae-1.0', 'generateur-seda-asalae-2.1'];
+        foreach ($id_connecteurs as $id_connecteur) {
+            $connecteurSEDAs = $this->connecteurEntiteSQL->getAllByConnecteurId($id_connecteur);
+            foreach ($connecteurSEDAs as $connecteurSeda) {
+                $donneeFormulaire = $this->donneesFormulaireFactory
+                    ->getConnecteurEntiteFormulaire($connecteurSeda['id_ce']);
+                $sedaGeneratorUrl = $donneeFormulaire->get('seda_generator_url');
+                if ($sedaGeneratorUrl !== '' && $sedaGeneratorUrl !== 'http://seda-generator') {
+                    $donneeFormulaire->setData('seda_generator_url', 'http://seda-generator');
+                }
+            }
+        }
     }
 }
