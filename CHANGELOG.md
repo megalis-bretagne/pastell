@@ -5,6 +5,7 @@
 - Le démon et les workers sont lancés par une commande Symfony #1854
 - Lorsqu'une facture chorus pro ou un document pdf générique est dans l'état traitement terminé, la modification reste possible pour envoi au SAE #1840
 - L'utilisateur peut gérer ses tokens via l'API #1785
+- Les générateurs SEDA se connectent à l'adresse http://seda-generator #1853
 
 ## Corrections
 
