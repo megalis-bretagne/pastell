@@ -33,7 +33,7 @@ class DocumentDeletionService
         $id_e = $this->documentEntite->getEntite($id_d)[0]['id_e'];
         $info = $this->documentSQL->getInfo($id_d);
 
-        foreach ($this->documentEmailReponseSQL->getAllReponse($id_d) as $reponse) {
+        foreach ($this->documentEmailReponseSQL->getAllReponse($id_d, false) as $reponse) {
             $this->delete($reponse['id_d_reponse']);
         }
         $this->donneesFormulaireFactory->get($id_d)->delete();

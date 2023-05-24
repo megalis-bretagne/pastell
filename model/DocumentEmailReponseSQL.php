@@ -34,15 +34,15 @@ class DocumentEmailReponseSQL extends SQL
         $this->query($sql, $id_de);
     }
 
-    public function getAllReponse($id_d)
+    public function getAllReponse($id_d, $validated = true): array
     {
         $sql = "SELECT document_email_reponse.id_de,document_email_reponse.id_d_reponse, is_lu, document_email_reponse.date_reponse,document_email_reponse.has_date_reponse, document.titre FROM document_email " .
             " JOIN document_email_reponse ON document_email.id_de = document_email_reponse.id_de " .
             " JOIN document ON document_email_reponse.id_d_reponse=document.id_d " .
-            " WHERE document_email.id_d=? AND document_email_reponse.has_reponse=true";
+            " WHERE document_email.id_d=? AND document_email_reponse.has_reponse=?";
 
         $result = [];
-        foreach ($this->query($sql, $id_d) as $line) {
+        foreach ($this->query($sql, $id_d, $validated) as $line) {
             $result[$line['id_de']] = $line;
         }
         return $result;
