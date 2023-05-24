@@ -68,7 +68,10 @@ class DocumentDeletionServiceTest extends PastellTestCase
         $documentEmailResponse->validateReponse($id_de);
 
         self::assertNotEmpty($documentEmailResponse->getInfo($id_de));
+        self::assertNotEmpty($this->getObjectInstancier()->getInstance(DocumentSQL::class)->getInfo($id_d_reponse));
         $this->getDocumentDeletionService()->delete($id_d);
+        DocumentSQL::clearCache();
         self::assertEmpty($documentEmailResponse->getInfo($id_de));
+        self::assertEmpty($this->getObjectInstancier()->getInstance(DocumentSQL::class)->getInfo($id_d_reponse));
     }
 }
