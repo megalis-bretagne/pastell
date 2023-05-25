@@ -457,8 +457,6 @@ class DonneesFormulaire
                 if ($allField[$field_name]->getType() === 'file') {
                     throw new Exception("Ajout de fichier via le champ '$field_name' impossible sur un PATCH");
                 }
-
-
                 if (! $this->isEditable($field_name)) {
                     continue;
                 }
