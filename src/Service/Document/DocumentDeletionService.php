@@ -2,6 +2,7 @@
 
 namespace Pastell\Service\Document;
 
+use DocumentEmailReponseSQL;
 use DocumentEntite;
 use DocumentSQL;
 use DonneesFormulaireFactory;
@@ -17,6 +18,7 @@ class DocumentDeletionService
         private readonly DocumentEntite $documentEntite,
         private readonly JobManager $jobManager,
         private readonly Journal $journal,
+        private readonly DocumentEmailReponseSQL $documentEmailReponseSQL,
     ) {
     }
 
@@ -31,6 +33,14 @@ class DocumentDeletionService
         $id_e = $this->documentEntite->getEntite($id_d)[0]['id_e'];
         $info = $this->documentSQL->getInfo($id_d);
 
+        $reponses = array_merge(
+            $this->documentEmailReponseSQL->getAllReponse($id_d),
+            $this->documentEmailReponseSQL->getAllReponse($id_d, false)
+        );
+
+        foreach ($reponses as $reponse) {
+            $this->delete($reponse['id_d_reponse']);
+        }
         $this->donneesFormulaireFactory->get($id_d)->delete();
         $this->documentSQL->delete($id_d);
         $this->jobManager->deleteDocumentForAllEntities($id_d);

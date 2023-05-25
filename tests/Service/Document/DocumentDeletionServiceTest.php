@@ -10,12 +10,17 @@ use PastellTestCase;
 
 class DocumentDeletionServiceTest extends PastellTestCase
 {
+    private function getDocumentDeletionService(): DocumentDeletionService
+    {
+        return $this->getObjectInstancier()->getInstance(DocumentDeletionService::class);
+    }
+
     /**
      * @throws NotFoundException
      */
     public function testDelete()
     {
-        $documentDeletionService = $this->getObjectInstancier()->getInstance(DocumentDeletionService::class);
+        $documentDeletionService = $this->getDocumentDeletionService();
         $documentSQL = $this->getObjectInstancier()->getInstance(DocumentSQL::class);
 
         $id_d = $this->createDocument('test')['id_d'];
@@ -43,7 +48,30 @@ class DocumentDeletionServiceTest extends PastellTestCase
         $this->triggerActionOnDocument($id_d, 'action-auto');
         $jobQueueSQL = $this->getObjectInstancier()->getInstance(JobQueueSQL::class);
         static::assertTrue($jobQueueSQL->hasDocumentJob(self::ID_E_COL, $id_d));
-        $this->getObjectInstancier()->getInstance(DocumentDeletionService::class)->delete($id_d);
+        $this->getDocumentDeletionService()->delete($id_d);
         static::assertFalse($jobQueueSQL->hasDocumentJob(self::ID_E_COL, $id_d));
+    }
+
+    /**
+     * @throws NotFoundException
+     */
+    public function testDeleteNoMailLeft(): void
+    {
+        $id_d = $this->createDocument('mailsec-bidir')['id_d'];
+
+        $documentEmail = $this->getObjectInstancier()->getInstance(\DocumentEmail::class);
+        $key = $documentEmail->add($id_d, 'foo@bar.com', 'to');
+        $id_de = $documentEmail->getInfoFromKey($key)['id_de'];
+        $id_d_reponse = $this->createDocument('test')['id_d'];
+        $documentEmailResponse = $this->getObjectInstancier()->getInstance(\DocumentEmailReponseSQL::class);
+        $documentEmailResponse->addDocumentReponseId($id_de, $id_d_reponse);
+        $documentEmailResponse->validateReponse($id_de);
+
+        self::assertNotEmpty($documentEmailResponse->getInfo($id_de));
+        self::assertNotEmpty($this->getObjectInstancier()->getInstance(DocumentSQL::class)->getInfo($id_d_reponse));
+        $this->getDocumentDeletionService()->delete($id_d);
+        DocumentSQL::clearCache();
+        self::assertEmpty($documentEmailResponse->getInfo($id_de));
+        self::assertEmpty($this->getObjectInstancier()->getInstance(DocumentSQL::class)->getInfo($id_d_reponse));
     }
 }
