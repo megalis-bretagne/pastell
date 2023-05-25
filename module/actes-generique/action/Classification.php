@@ -15,10 +15,16 @@ class Classification extends ChoiceActionExecutor
         return $classificationActes->getAll();
     }
 
+    /**
+     * @throws NotFoundException
+     */
     public function display()
     {
         $this->setViewParameter('classificationActes', $this->getClassificationActes());
-        $this->renderPage("Choix de la classification en matière et sous matière", __DIR__ . "/../template/ChoixClassification.php");
+        $this->renderPage(
+            'Choix de la classification en matière et sous matière',
+            'module/actes/ChoixClassification'
+        );
         return true;
     }
 

@@ -16,6 +16,9 @@ class FakeNomemclatureListe extends ChoiceActionExecutor
     {
     }
 
+    /**
+     * @throws NotFoundException
+     */
     public function display()
     {
         $id_e_cdg = $this->objectInstancier->getInstance(EntiteSQL::class)->getCDG($this->id_e);
@@ -28,13 +31,13 @@ class FakeNomemclatureListe extends ChoiceActionExecutor
 
         if (!$donneesFormulaire) {
             throw new Exception(
-                "Aucun connecteur classification-cdg (flux actes-cdg) trouvé pour le centre de gestion de cette entité"
+                'Aucun connecteur classification-cdg (flux actes-cdg) trouvé pour le centre de gestion de cette entité'
             );
         }
 
-        $this->setViewParameter('classifCDG', $donneesFormulaire->get("classification_cdg"));
+        $this->setViewParameter('classifCDG', $donneesFormulaire->get('classification_cdg'));
 
-        $this->renderPage("Fichier de nomemclauture", __DIR__ . "/../../s2low/template/NomemclatureListeSelect.php");
+        $this->renderPage('Fichier de nomemclature', 'connector/s2low/NomemclatureListeSelect');
         return true;
     }
 }

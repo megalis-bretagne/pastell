@@ -53,6 +53,9 @@ class GlobalUpdateCertificate extends ConnecteurTypeChoiceActionExecutor
         return [];
     }
 
+    /**
+     * @throws NotFoundException
+     */
     public function display()
     {
         $pageTitle = $this->getMappingValue('page_title');
@@ -60,12 +63,15 @@ class GlobalUpdateCertificate extends ConnecteurTypeChoiceActionExecutor
         $limit = self::DISPLAY_LIMIT;
 
         $connecteurEntiteSQL = $this->objectInstancier->getInstance(ConnecteurEntiteSQL::class);
-        $this->setViewParameter('connectors', $connecteurEntiteSQL->getAllEntiteConnectorById($this->type, $offset, $limit));
+        $this->setViewParameter(
+            'connectors',
+            $connecteurEntiteSQL->getAllEntiteConnectorById($this->type, $offset, $limit)
+        );
         $this->setViewParameter('count', $connecteurEntiteSQL->getCountAllEntiteConnectorById($this->type));
         $this->setViewParameter('offset', $offset);
         $this->setViewParameter('limit', $limit);
 
-        $this->renderPage($pageTitle, __DIR__ . '/template/GlobalUpdateCertificate.php');
+        $this->renderPage($pageTitle, 'connectorType/utilities/GlobalUpdateCertificate');
         return true;
     }
 

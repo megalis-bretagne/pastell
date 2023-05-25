@@ -33,7 +33,6 @@ class SedaNGConnecteurInfo extends ChoiceActionExecutor
      */
     public function display()
     {
-
         /** @var SedaNG $sedaNG */
         $sedaNG = $this->getMyConnecteur();
         $properties = array_fill_keys($sedaNG->getProprietePastellConnecteur(), '');
@@ -49,7 +48,10 @@ class SedaNGConnecteurInfo extends ChoiceActionExecutor
         }
         $this->setViewParameter('properties', $properties);
 
-        $this->renderPage("Propriétés « pastell:connecteur » du profil", __DIR__ . "/../template/SedaNGConnecteurProperties.php");
+        $this->renderPage(
+            'Propriétés « pastell:connecteur » du profil',
+            'connector/sedaNg/SedaNGConnecteurProperties'
+        );
         return true;
     }
 

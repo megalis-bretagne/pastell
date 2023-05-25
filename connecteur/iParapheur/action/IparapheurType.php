@@ -17,10 +17,13 @@ class IparapheurType extends ChoiceActionExecutor
         return $this->getType();
     }
 
+    /**
+     * @throws NotFoundException
+     */
     public function display()
     {
         $this->setViewParameter('type_iparapheur', $this->getType());
-        $this->renderPage("Choix du type iparapheur", __DIR__ . "/../template/IparapheurType.php");
+        $this->renderPage('Choix du type iparapheur', 'connector/iparapheur/IparapheurType');
         return true;
     }
 

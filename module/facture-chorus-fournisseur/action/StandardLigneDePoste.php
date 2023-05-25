@@ -43,6 +43,9 @@ class StandardLigneDePoste extends ChoiceActionExecutor
         return $ligne_de_poste;
     }
 
+    /**
+     * @throws NotFoundException
+     */
     public function display()
     {
 
@@ -50,7 +53,7 @@ class StandardLigneDePoste extends ChoiceActionExecutor
         $this->setViewParameter('info', $document_info);
 
         $this->setViewParameter('ligne_de_poste', $this->getLigneDePoste());
-        $this->renderPage("Edition des lignes de poste", __DIR__ . "/../template/StandardLigneDePoste.php");
+        $this->renderPage('Edition des lignes de poste', 'module/factureChorusFournisseur/StandardLigneDePoste');
     }
 
 

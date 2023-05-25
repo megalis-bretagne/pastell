@@ -28,6 +28,9 @@ class GetModuleList extends ConnecteurTypeChoiceActionExecutor
         return true;
     }
 
+    /**
+     * @throws NotFoundException
+     */
     public function display()
     {
         $this->setViewParameter(
@@ -46,7 +49,7 @@ class GetModuleList extends ConnecteurTypeChoiceActionExecutor
         $this->setViewParameter('moduleList', $modules);
         $this->renderPage(
             $this->getMappingValue(self::PAGE_TITLE),
-            __DIR__ . '/template/GetModuleList.php'
+            'connectorType/utilities/GetModuleList'
         );
         return true;
     }
