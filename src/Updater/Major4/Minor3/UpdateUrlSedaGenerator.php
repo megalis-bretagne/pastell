@@ -25,7 +25,10 @@ final class UpdateUrlSedaGenerator implements Version
         foreach ($connecteurSedaGlobaux as $connecteurSedaGlobal) {
             $donneeFormulaire = $this->donneesFormulaireFactory
                 ->getConnecteurEntiteFormulaire($connecteurSedaGlobal['id_ce']);
+            $url = $donneeFormulaire->get('seda_generator_url');
             $donneeFormulaire->setData('seda_generator_url', 'http://seda-generator');
+            $newUrl = $donneeFormulaire->get('seda_generator_url');
+            dump('Connecteur global : ' . $connecteurSedaGlobal['id_ce'] . ', Url : ' . $url . ' -> ' . $newUrl);
         }
 
         $id_connecteurs = ['generateur-seda-asalae-1.0', 'generateur-seda-asalae-2.1'];
@@ -34,9 +37,11 @@ final class UpdateUrlSedaGenerator implements Version
             foreach ($connecteurSEDAs as $connecteurSeda) {
                 $donneeFormulaire = $this->donneesFormulaireFactory
                     ->getConnecteurEntiteFormulaire($connecteurSeda['id_ce']);
-                $sedaGeneratorUrl = $donneeFormulaire->get('seda_generator_url');
-                if ($sedaGeneratorUrl !== '' && $sedaGeneratorUrl !== 'http://seda-generator') {
+                $url = $donneeFormulaire->get('seda_generator_url');
+                if ($url === 'http://localhost:8021' || $url === 'http://127.0.0.1:8021') {
                     $donneeFormulaire->setData('seda_generator_url', 'http://seda-generator');
+                    $newUrl = $donneeFormulaire->get('seda_generator_url');
+                    dump('Connecteur : ' . $connecteurSeda['id_ce'] . ', Url : ' . $url . ' -> ' . $newUrl);
                 }
             }
         }
