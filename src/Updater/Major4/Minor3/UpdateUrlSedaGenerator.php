@@ -7,12 +7,14 @@ namespace Pastell\Updater\Major4\Minor3;
 use ConnecteurEntiteSQL;
 use DonneesFormulaireFactory;
 use Pastell\Updater\Version;
+use PastellLogger;
 
 final class UpdateUrlSedaGenerator implements Version
 {
     public function __construct(
         private readonly DonneesFormulaireFactory $donneesFormulaireFactory,
         private readonly ConnecteurEntiteSQL $connecteurEntiteSQL,
+        private readonly PastellLogger $logger,
     ) {
     }
 
@@ -21,7 +23,7 @@ final class UpdateUrlSedaGenerator implements Version
      */
     public function update(): void
     {
-        dump('Mise à jour des urls des générateurs SEDA de la 3.1');
+        $this->logger->info('Mise à jour des urls des générateurs SEDA de la 3.1');
         $connecteurSedaGlobaux = $this->connecteurEntiteSQL->getAllByConnecteurId('generateur-seda', true);
         foreach ($connecteurSedaGlobaux as $connecteurSedaGlobal) {
             $donneeFormulaire = $this->donneesFormulaireFactory
@@ -29,7 +31,8 @@ final class UpdateUrlSedaGenerator implements Version
             $url = $donneeFormulaire->get('seda_generator_url');
             $donneeFormulaire->setData('seda_generator_url', 'http://seda-generator');
             $newUrl = $donneeFormulaire->get('seda_generator_url');
-            dump('Connecteur global : ' . $connecteurSedaGlobal['id_ce'] . ', Url : ' . $url . ' -> ' . $newUrl);
+            $this->logger->info('Connecteur global : ' . $connecteurSedaGlobal['id_ce']
+                . ', Url : ' . $url . ' -> ' . $newUrl);
         }
 
         $id_connecteurs = ['generateur-seda-asalae-1.0', 'generateur-seda-asalae-2.1'];
@@ -42,7 +45,8 @@ final class UpdateUrlSedaGenerator implements Version
                 if ($url === 'http://localhost:8021' || $url === 'http://127.0.0.1:8021') {
                     $donneeFormulaire->setData('seda_generator_url', 'http://seda-generator');
                     $newUrl = $donneeFormulaire->get('seda_generator_url');
-                    dump('Connecteur : ' . $connecteurSeda['id_ce'] . ', Url : ' . $url . ' -> ' . $newUrl);
+                    $this->logger->info('Connecteur : ' . $connecteurSeda['id_ce']
+                        . ', Url : ' . $url . ' -> ' . $newUrl);
                 }
             }
         }
