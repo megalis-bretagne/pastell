@@ -155,6 +155,9 @@ class FieldData
             if (! $mail) {
                 continue;
             }
+            if (preg_match('/<([^>]+)>/', $mail, $matche)) {
+                $mail = $matche[1];
+            }
             if (! $this->isMail(trim($mail))) {
                 return false;
             }
