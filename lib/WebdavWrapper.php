@@ -24,7 +24,7 @@ class WebdavWrapper
     public function setDataConnexion(string $url, string $user, string $password): void
     {
         $settings = [
-            'baseUri' => $url,
+            'baseUri' => rtrim($url, '/') . '/',
             'userName' => $user,
             'password' => $password,
         ];
