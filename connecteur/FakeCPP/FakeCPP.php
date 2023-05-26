@@ -36,6 +36,18 @@ class FakeCPP extends PortailFactureConnecteur
     }
 
     /**
+     * @inheritDoc
+     */
+    protected function rechercheFactureTravaux(
+        string $periodeDateHeureEtatCourantDu = "",
+        string $periodeDateHeureEtatCourantAu = ""
+    ) {
+        return [
+            'listeFactures' => []
+        ];
+    }
+
+    /**
      * @param $idFacture
      * @param int $nbResultatsMaximum
      * @return false|mixed|string
@@ -45,11 +57,15 @@ class FakeCPP extends PortailFactureConnecteur
     {
         $HistoStatutFactureCPP = file_get_contents(__DIR__ . "/fixtures/CPPHistoStatutFacture.json");
         if (!$HistoStatutFactureCPP) {
-            throw new CPPException("Problème lors de la récuperation de l'historique statut de la facture cpp " . $idFacture);
+            throw new CPPException(
+                "Problème lors de la récuperation de l'historique statut de la facture cpp " . $idFacture
+            );
         }
         $HistoStatutFactureCPP = json_decode($HistoStatutFactureCPP, true);
         if (!$HistoStatutFactureCPP) {
-            throw new CPPException("L'historique statut de la facture cpp n'est pas lisible. Identifiant facture: " . $idFacture);
+            throw new CPPException(
+                "L'historique statut de la facture cpp n'est pas lisible. Identifiant facture: " . $idFacture
+            );
         }
         return $HistoStatutFactureCPP;
     }
@@ -62,10 +78,10 @@ class FakeCPP extends PortailFactureConnecteur
      */
     protected function telechargerGroupeFacture($format, $idFacture)
     {
-        list($id_e,$numFacture) = explode("-", $idFacture);
+        list($id_e, $numFacture) = explode("-", $idFacture);
 
         $PathFichierFactureCPP = __DIR__ . "/fixtures/facture_{$numFacture}.xml";
-        if (! file_exists($PathFichierFactureCPP)) {
+        if (!file_exists($PathFichierFactureCPP)) {
             throw new CPPException("Problème lors de la récuperation du fichier de la facture cpp " . $idFacture);
         }
         return file_get_contents($PathFichierFactureCPP);
@@ -87,7 +103,9 @@ class FakeCPP extends PortailFactureConnecteur
         }
         $ResultStatutFactureCPP = json_decode($ResultStatutFactureCPP, true);
         if (!$ResultStatutFactureCPP) {
-            throw new CPPException("Le résultat du changement de statut de la facture cpp " . $idFacture . " n'est pas lisible.");
+            throw new CPPException(
+                'Le résultat du changement de statut de la facture cpp ' . $idFacture . " n'est pas lisible."
+            );
         }
         return $ResultStatutFactureCPP;
     }
@@ -113,13 +131,8 @@ class FakeCPP extends PortailFactureConnecteur
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
-    protected function rechercheFactureTravaux(
-        string $periodeDateHeureEtatCourantDu = "",
-        string $periodeDateHeureEtatCourantAu = ""
-    ) {
-        // TODO: Implement rechercheFactureTravaux() method.
+    public function getDateJusquAu(): string
+    {
+        return '';
     }
 }
