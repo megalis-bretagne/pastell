@@ -16,6 +16,7 @@
 - L'API externalData renvoie une erreur si le sous-type du parapheur est invalide #1805
 - A la suppression d'un dossier dont le cheminement contient une étape de mailsec avec réponse, les réponses sont également supprimées #1728
 - Une URL webdav ne finissant pas par un `/` dépose aussi les fichiers dans le répertoire attendu #1603
+- Les descriptions des destinataires d'un mailsec peuvent contenir un `@` #1588
 
 # [4.0.2] - 2023-05-15
 
