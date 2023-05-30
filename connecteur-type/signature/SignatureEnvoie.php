@@ -36,7 +36,6 @@ class SignatureEnvoie extends ConnecteurTypeActionExecutor
         $json_metadata = $this->getMappingValue('json_metadata');
         $iparapheur_dossier_id = $this->getMappingValue('iparapheur_dossier_id');
 
-
         $fileToSign = new FileToSign();
         $fileToSign->type = $donneesFormulaire->get($iparapheur_type_element);
         $fileToSign->sousType = $donneesFormulaire->get($iparapheur_sous_type_element);

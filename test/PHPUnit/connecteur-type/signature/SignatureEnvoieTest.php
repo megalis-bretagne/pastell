@@ -62,6 +62,4 @@ class SignatureEnvoieTest extends PastellTestCase
 
         $this->assertLastMessage('Le document a été envoyé au parapheur électronique');
     }
-
-
 }
