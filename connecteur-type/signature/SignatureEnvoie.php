@@ -36,18 +36,6 @@ class SignatureEnvoie extends ConnecteurTypeActionExecutor
         $json_metadata = $this->getMappingValue('json_metadata');
         $iparapheur_dossier_id = $this->getMappingValue('iparapheur_dossier_id');
 
-        if (
-            $signature->isFastSignature() &&
-            !$donneesFormulaire->get($fast_parapheur_circuit_configuration) &&
-            !$donneesFormulaire->get($fast_parapheur_circuit)
-        ) {
-            $this->changeAction(
-                $this->getMappingValue('send-signature-error'),
-                "Le formulaire est incomplet : le champ 'Circuit sur le parapheur' 
-                ou le champ 'Configuration du circuit à la volée' est obligatoire"
-            );
-            return false;
-        }
 
         $fileToSign = new FileToSign();
         $fileToSign->type = $donneesFormulaire->get($iparapheur_type_element);
