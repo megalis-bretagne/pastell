@@ -158,9 +158,11 @@ class FastParapheur extends SignatureConnecteur
      */
     public function sendDossier(FileToSign $file)
     {
-        if (!$file->circuit && $file->circuit_configuration->filename === null) {
-            throw new SignatureException("Le formulaire est incomplet : le champ 'Circuit sur le parapheur'
-                ou le champ 'Configuration du circuit à la volée' est obligatoire");
+        if (!$file->circuit && $file->circuit_configuration->content === null) {
+            throw new SignatureException(
+                "Le formulaire est incomplet : le champ 'Circuit sur le parapheur'" .
+                " ou le champ 'Configuration du circuit à la volée' est obligatoire"
+            );
         }
         $temporaryDirectory = $this->tmpFolder->create();
         try {
