@@ -291,7 +291,6 @@ action:
                 - non-recu
                 - send-ged
                 - send-signature-error
-                - preparation-send-iparapheur
     supression:
         name-action: Supprimer
         name: Supprimé
@@ -405,9 +404,6 @@ action:
         rule:
             role_id_e: no-role
         action-automatique: send-iparapheur
-        editable-content:
-            - fast_parapheur_circuit
-            - fast_parapheur_circuit_configuration
     send-iparapheur:
         name-action: 'Transmettre au parapheur'
         name: 'Transmis au parapheur'
