@@ -21,19 +21,23 @@ class SedaGeneriqueVisionneuse extends ConnectorViewer
         $connector = $this->getConnector();
         $pastell2Seda = $connector->getPastellToSeda();
         $content = \json_decode(\file_get_contents($filepath), true, 512, \JSON_THROW_ON_ERROR);
-        ?>
-        <table class="table table-striped" aria-label="Données du bordereau">
-            <?php
-            foreach ($content as $key => $value) : ?>
-                <tr>
-                    <th class="w500"><?php
-                        \hecho($pastell2Seda[$key]['libelle'] ?? $key); ?></th>
-                    <td><?php
-                        echo \nl2br(\get_hecho($value)); ?></td>
-                </tr>
-                <?php
-            endforeach; ?>
-        </table>
-        <?php
+
+        $str = '';
+        foreach ($content as $key => $value) {
+            $header = \get_hecho($pastell2Seda[$key]['libelle'] ?? $key);
+            $cell = \nl2br(\get_hecho($value));
+            $str .= <<<EOT
+<tr>
+    <th class="w500">$header</th>
+    <td>$cell</td>
+</tr>
+EOT;
+        }
+
+        echo <<<EOT
+<table class="table table-striped" aria-label="Données du bordereau">
+$str
+</table>
+EOT;
     }
 }

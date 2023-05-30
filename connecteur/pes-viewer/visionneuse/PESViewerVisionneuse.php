@@ -16,15 +16,9 @@ class PESViewerVisionneuse extends ConnectorViewer
         if ($visionneusePES) {
             /** @var PESViewer $visionneusePES */
             $result = $visionneusePES->getURL($filepath);
-            ?>
-            <iframe title="Contenu du PES ALLER" src="<?php echo $result ?>" height="600" width="100%"></iframe>
-            <?php
+            echo '<iframe title="Contenu du PES ALLER" src="' . $result . '" height="600" width="100%"></iframe>';
         } else {
-            ?>Non disponible<?php
+            echo 'Non disponible';
         }
-
-
-
-        \exit_wrapper();
     }
 }

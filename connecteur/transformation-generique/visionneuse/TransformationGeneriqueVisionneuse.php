@@ -21,19 +21,23 @@ class TransformationGeneriqueVisionneuse implements Viewer
         }
 
         $content = \json_decode(\file_get_contents($filepath), true, 512, \JSON_THROW_ON_ERROR);
-        ?>
-        <table class="table table-striped" aria-label="Définition de l'extraction">
-            <?php
-            foreach ($content as $element_id => $expression) : ?>
-                <tr>
-                    <th class="w500"><?php
-                        \hecho($element_id); ?></th>
-                    <td><?php
-                        echo \nl2br(\get_hecho($expression)); ?></td>
-                </tr>
-                <?php
-            endforeach; ?>
-        </table>
-        <?php
+
+        $rows = '';
+        foreach ($content as $elementId => $expression) {
+            $header = \get_hecho($elementId);
+            $cell = \nl2br(\get_hecho($expression));
+            $rows .= <<<EOT
+<tr>
+    <th class="w500">$header</th>
+    <td>$cell</td>
+</tr>
+EOT;
+        }
+
+        echo <<<EOT
+<table class="table table-striped" aria-label="Définition de l'extraction">
+    $rows
+</table>
+EOT;
     }
 }
