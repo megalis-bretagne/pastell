@@ -86,7 +86,7 @@ CREATE TABLE `connecteur_frequence` (
 	PRIMARY KEY (`id_cf`)
 )  ENGINE=MyISAM  ;
 CREATE TABLE `document` (
-	`id_d` varchar(32) NOT NULL,
+	`id_d` varchar(64) NOT NULL,
 	`type` varchar(64) NOT NULL,
 	`titre` varchar(256) NOT NULL,
 	`creation` datetime NOT NULL,
@@ -97,7 +97,7 @@ CREATE TABLE `document` (
 )  ENGINE=MyISAM  ;
 CREATE TABLE `document_action` (
 	`id_a` int(11) NOT NULL AUTO_INCREMENT,
-	`id_d` varchar(16) NOT NULL,
+	`id_d` varchar(64) NOT NULL,
 	`action` varchar(64) NOT NULL,
 	`date` datetime NOT NULL,
 	`id_e` int(11) NOT NULL,
@@ -114,7 +114,7 @@ CREATE TABLE `document_action_entite` (
 CREATE TABLE `document_email` (
 	`id_de` int(11) NOT NULL AUTO_INCREMENT,
 	`key` varchar(32) NOT NULL,
-	`id_d` varchar(32) NOT NULL,
+	`id_d` varchar(64) NOT NULL,
 	`email` varchar(256) NOT NULL,
 	`lu` tinyint(1) NOT NULL,
 	`date_envoie` datetime NOT NULL,
@@ -140,7 +140,7 @@ CREATE TABLE `document_email_reponse` (
 	PRIMARY KEY (`id_reponse`)
 )  ENGINE=MyISAM  ;
 CREATE TABLE `document_entite` (
-	`id_d` varchar(8) NOT NULL,
+	`id_d` varchar(64) NOT NULL,
 	`id_e` int(11) NOT NULL,
 	`role` varchar(16) NOT NULL,
 	`last_action` varchar(64) NOT NULL,
@@ -243,7 +243,7 @@ CREATE TABLE `journal` (
 	`type` int(11) NOT NULL,
 	`id_e` int(11) NOT NULL,
 	`id_u` int(11) NOT NULL,
-	`id_d` varchar(16) NOT NULL,
+	`id_d` varchar(64) NOT NULL,
 	`action` varchar(64) NOT NULL,
 	`message` mediumtext NOT NULL,
 	`date` datetime NOT NULL,
@@ -268,7 +268,7 @@ CREATE TABLE `journal_historique` (
 	`type` int(11) NOT NULL,
 	`id_e` int(11) NOT NULL,
 	`id_u` int(11) NOT NULL,
-	`id_d` varchar(16) NOT NULL,
+	`id_d` varchar(64) NOT NULL,
 	`action` varchar(64) NOT NULL,
 	`message` mediumtext NOT NULL,
 	`date` datetime NOT NULL,
@@ -296,7 +296,7 @@ CREATE TABLE `notification_digest` (
 	`id_nd` int(11) NOT NULL AUTO_INCREMENT,
 	`mail` varchar(255) NOT NULL,
 	`id_e` int(11) NOT NULL,
-	`id_d` varchar(32) NOT NULL,
+	`id_d` varchar(64) NOT NULL,
 	`action` varchar(32) NOT NULL,
 	`type` varchar(64) NOT NULL,
 	`message` mediumtext NOT NULL,
