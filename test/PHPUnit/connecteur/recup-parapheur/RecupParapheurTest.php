@@ -60,7 +60,7 @@ class RecupParapheurTest extends PastellTestCase
         $this->triggerActionOnConnector($id_ce, 'recup_one');
         $lastMessage = $this->getObjectInstancier()->getInstance(ActionExecutorFactory::class)->getLastMessage();
         self::assertMatchesRegularExpression("#^Création des documents : #", $lastMessage);
-        preg_match("#: ([a-zA-Z0-9]*)#", $lastMessage, $matches);
+        preg_match("#: (.*)$#", $lastMessage, $matches);
         $id_d = $matches[1];
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
         self::assertEquals('TEST 1', $donneesFormulaire->getTitre());

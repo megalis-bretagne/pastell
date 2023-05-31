@@ -6,6 +6,8 @@ use org\bovigo\vfs\vfsStream;
 use Pastell\Service\Connecteur\ConnecteurAssociationService;
 use Pastell\Service\Pack\PackService;
 use Pastell\Tests\SymfonyContainerFactory;
+use Pastell\Utilities\Identifier\IdentifierInterface;
+use Pastell\Utilities\Identifier\Uuid;
 use PHPUnit\Framework\TestCase;
 use Pastell\Service\TypeDossier\TypeDossierImportService;
 use Symfony\Component\Lock\LockFactory;
@@ -84,7 +86,7 @@ abstract class PastellTestCase extends TestCase
         $this->objectInstancier->setInstance('disable_job_queue', false);
         $this->objectInstancier->setInstance('cache_ttl_in_seconds', 10);
         $this->objectInstancier->setInstance('rgpd_page_path', RGPD_PAGE_PATH);
-
+        $this->objectInstancier->setInstance(IdentifierInterface::class, new PasswordGenerator());
         $this->objectInstancier->setInstance(Logger::class, new  Logger('PHPUNIT'));
         $this->objectInstancier->setInstance('log_level', Logger::DEBUG);
         $testHandler = new TestHandler();
