@@ -34,4 +34,12 @@ class FieldDataTest extends PHPUnit\Framework\TestCase
 
         static::assertSame($expected, $fieldData->getURL($url, 0, 1));
     }
+
+    public function testisMail(): void
+    {
+        $field = new Field('to', ['type' => 'mail-list']);
+        $fieldData = new FieldData($field, '"a@a.aa" <a@a.aa>');
+
+        static::assertTrue($fieldData->isMailList());
+    }
 }

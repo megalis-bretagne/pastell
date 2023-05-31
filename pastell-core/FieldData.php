@@ -164,6 +164,10 @@ class FieldData
 
     public function isMail($mail)
     {
+        if (preg_match('/<([^>]+)>/', $mail, $matche)) {
+            $mail = $matche[1];
+        }
+
         if (preg_match('/^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/iu', $mail)) {
             return true;
         }
