@@ -132,7 +132,7 @@ CREATE TABLE `document_email` (
 CREATE TABLE `document_email_reponse` (
 	`id_reponse` int(11) NOT NULL AUTO_INCREMENT,
 	`id_de` int(11) NOT NULL,
-	`id_d_reponse` varchar(32) NOT NULL,
+	`id_d_reponse` varchar(64) NOT NULL,
 	`is_lu` tinyint(1) NOT NULL DEFAULT '0',
 	`has_reponse` tinyint(1) NOT NULL,
 	`date_reponse` datetime NOT NULL DEFAULT '1970-01-01 00:00:00',
