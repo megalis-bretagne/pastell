@@ -65,6 +65,7 @@ services:
             TOGGLE_CDGFeature: ${TOGGLE_CDGFeature:-false}
             TOGGLE_CertificateAuthentication: ${TOGGLE_CertificateAuthentication:-false}
             OPENSSL_CIPHER_STRING_SECURITY_LEVEL: ${OPENSSL_CIPHER_STRING_SECURITY_LEVEL:-2}
+            USE_UUID_FOR_DOCUMENT: ${USE_UUID_FOR_DOCUMENT:-false}
         ports:
             - "${WEB_HTTP_PORT:-8000}:80"
             - "${WEB_HTTPS_PORT:-8443}:443"
