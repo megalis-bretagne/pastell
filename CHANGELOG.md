@@ -17,6 +17,8 @@
 - A la suppression d'un dossier dont le cheminement contient une étape de mailsec avec réponse, les réponses sont également supprimées #1728
 - Une URL webdav ne finissant pas par un `/` dépose aussi les fichiers dans le répertoire attendu #1603
 - Les descriptions des destinataires d'un mailsec peuvent contenir un `@` #1588
+- Si envoi en signature FAST sans circuit ou configuration du circuit à la volée, le dossier rentre dans l'état `Erreur lors de l'envoi du dossier à la signature`
+et l'utilisateur peut modifier les champs manquants #1850
 
 # [4.0.2] - 2023-05-15
 

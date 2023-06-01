@@ -614,4 +614,20 @@ class FastParapheurTest extends PastellTestCase
         $this->expectExceptionMessage("Erreur 118 : Le type d'étape est incorrect (Invalid step type)");
         $this->fastParapheur->sendDossier($file);
     }
+
+    public function testSendDossierWithoutCircuit()
+    {
+        $this->fastParapheur = $this->getFastParapheur();
+        $file = new FileToSign();
+        $file->document = new Fichier();
+        $file->document->filepath = __DIR__ . '/fixtures/empty.txt';
+        $file->circuit_configuration = new Fichier();
+
+        $this->expectException(SignatureException::class);
+        $this->expectExceptionMessage(
+            "Le formulaire est incomplet : le champ 'Circuit sur le parapheur'" .
+            " ou le champ 'Configuration du circuit à la volée' est obligatoire"
+        );
+        $this->fastParapheur->sendDossier($file);
+    }
 }

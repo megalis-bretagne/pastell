@@ -414,6 +414,7 @@ action:
             - fast_parapheur_agents
         rule:
             role_id_e: no-role
+        modification-no-change-etat: true
     verif-iparapheur:
         name-action: 'Vérifier le statut de signature'
         name: 'Vérification de la signature'
