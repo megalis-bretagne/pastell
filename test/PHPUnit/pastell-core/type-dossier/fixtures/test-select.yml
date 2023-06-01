@@ -351,6 +351,7 @@ action:
                 - termine
                 - fatal-error
                 - rejet-iparapheur
+                - send-mailsec-error
                 - annuler-tdt
         action-class: Supprimer
         warning: 'Êtes-vous sûr ?'

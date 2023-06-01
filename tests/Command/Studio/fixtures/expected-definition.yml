@@ -436,6 +436,7 @@ action:
                 - transformation-error
                 - rejet-iparapheur
                 - annuler-tdt
+                - send-mailsec-error
                 - rejet-sae
         action-class: Supprimer
         warning: 'Êtes-vous sûr ?'
