@@ -152,3 +152,4 @@ action:
             - bcc
         rule:
             role_id_e: no-role
+        modification-no-change-etat: true
