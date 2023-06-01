@@ -3,6 +3,7 @@
 class MailsecEnvoyer extends ConnecteurTypeActionExecutor
 {
     private const SENT_MAIL_NUMBER_FIELD = 'sent_mail_number';
+    private const SEND_MAILSEC_ERROR = 'send-mailsec-error';
 
     private function getDocumentEmail(): DocumentEmail
     {
@@ -56,9 +57,9 @@ class MailsecEnvoyer extends ConnecteurTypeActionExecutor
             }
         }
 
-        if (!$numberOfRecipients) {
+        if ($numberOfRecipients === 0) {
             $this->changeAction(
-                $this->getMappingValue('send-mailsec-error'),
+                $this->getMappingValue(self::SEND_MAILSEC_ERROR),
                 "Impossible d'envoyer le document car il n'y a pas de destinataires (groupe ou role vide)"
             );
             return false;

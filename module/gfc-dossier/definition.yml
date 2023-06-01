@@ -350,6 +350,7 @@ action:
                 - termine
                 - fatal-error
                 - rejet-iparapheur
+                - send-mailsec-error
                 - rejet-sae
         action-class: Supprimer
         warning: 'Êtes-vous sûr ?'
