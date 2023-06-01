@@ -436,7 +436,8 @@ Uniquement avec le mode "circuit à la volée"',
                     ],
                     'rule' => [
                         'role_id_e' => 'no-role',
-                    ]
+                    ],
+                    'modification-no-change-etat' => true
                 ]
             ],
             $action_list

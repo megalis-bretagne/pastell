@@ -331,6 +331,7 @@ action:
             - fast_parapheur_agents_1
         rule:
             role_id_e: no-role
+        modification-no-change-etat: true
         num-same-connecteur: '0'
     verif-iparapheur_1:
         name-action: 'Vérifier le statut de signature #1'
@@ -446,6 +447,7 @@ action:
             - fast_parapheur_agents_2
         rule:
             role_id_e: no-role
+        modification-no-change-etat: true
         num-same-connecteur: '1'
     verif-iparapheur_2:
         name-action: 'Vérifier le statut de signature #2'
