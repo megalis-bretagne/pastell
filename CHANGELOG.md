@@ -25,6 +25,7 @@
 et l'utilisateur peut modifier les champs manquants #1850
 - La récupération des factures avec le connecteur FakeCPP ne fonctionnait plus #1715
 - Les rattachements sur des unités d'archives de sous-niveau ne fonctionnaient pas avec le SAE Vitam
+- L'action `Extraction de l'archive` étant automatique, le bouton n'est plus visible pour le flux `Pièces de marchés par étapes` #1835
 
 # [4.0.2] - 2023-05-15
 

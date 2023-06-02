@@ -155,6 +155,7 @@ action:
         name: 'Archive extraite'
         name-action: "Extraction de l'archive"
         rule:
+            role_id_e: no-role
             last-action:
                 - extraction-prepare
                 - extraction
