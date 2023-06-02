@@ -3,7 +3,7 @@
 ## Évolutions
 
 - Le démon et les workers sont lancés par une commande Symfony #1854
-- Lorsqu'une facture chorus pro ou un document pdf générique est dans l'état traitement terminé, la modification reste possible pour envoi au SAE #1840
+- Lorsqu'un document pdf générique est dans l'état traitement terminé, la modification reste possible pour envoi au SAE #1840
 - L'utilisateur peut gérer ses tokens via l'API #1785
 - L'url des générateurs SEDA de la 3.1 sont remplacés par l'adresse http://seda-generator #1853
 - Sur un flux avec une étape de mail sécurisé, le champ `Destinataire(s)` n'est plus obligatoire, 
@@ -14,13 +14,14 @@
 - Le job programmé des actions ne devant pas lancer l'action automatique suivante (updateJobQueueAfterExecution à false) n'était pas supprimé après l'execution (ex: traitement par lot de réouverture) #1828 
 - L'action `Transmettre au TdT` n'était pas possible lorsque l'on cochait l'étape dans le formulaire après réception de la signature sur `Helios générique` #1740
 - L'action `Verser à la GED` n'était pas possible lorsque l'on cochait l'étape dans le formulaire après transmission au Tdt sur `Helios générique` #1736
-- Lors du paramétrage d'un dossier associé à un connecteur parapheur, si il n'y a aucun sous type, une exception n'est plus levée #1631
+- Lors du paramétrage d'un dossier associé à un connecteur parapheur, s'il n'y a aucun sous type, une exception n'est plus levée #1631
 - L'API externalData renvoie une erreur si le sous-type du parapheur est invalide #1805
-- A la suppression d'un dossier dont le cheminement contient une étape de mailsec avec réponse, les réponses sont également supprimées #1728
+- À la suppression d'un dossier dont le cheminement contient une étape de mailsec avec réponse, les réponses sont également supprimées #1728
 - Une URL webdav ne finissant pas par un `/` dépose aussi les fichiers dans le répertoire attendu #1603
 - Les descriptions des destinataires d'un mailsec peuvent contenir un `@` #1588
 - Si envoi en signature FAST sans circuit ou configuration du circuit à la volée, le dossier rentre dans l'état `Erreur lors de l'envoi du dossier à la signature`
 et l'utilisateur peut modifier les champs manquants #1850
+- La récupération des factures avec le connecteur FakeCPP ne fonctionnait plus #1715
 
 # [4.0.2] - 2023-05-15
 
