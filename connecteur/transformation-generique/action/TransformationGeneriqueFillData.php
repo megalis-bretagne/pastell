@@ -40,6 +40,7 @@ class TransformationGeneriqueFillData extends ChoiceActionExecutor
 
     /**
      * @return bool
+     * @throws NotFoundException
      */
     public function display()
     {
@@ -60,8 +61,8 @@ class TransformationGeneriqueFillData extends ChoiceActionExecutor
         $this->setViewParameter('transformation_data', $transformation_data);
 
         $this->renderPage(
-            "Données de transformation",
-            __DIR__ . "/../template/TransformationGeneriqueFillData.php"
+            'Données de transformation',
+            'connector/transformation/TransformationGeneriqueFillData'
         );
         return true;
     }

@@ -14,9 +14,12 @@ class PastellCoreConnecteurTestExternalData extends ChoiceActionExecutor
         return true;
     }
 
+    /**
+     * @throws NotFoundException
+     */
     public function display()
     {
-        $this->renderPage("Choix", __DIR__ . "/../template/TestChoix.php");
+        $this->renderPage('Choix', 'connector/test/TestChoix');
         return true;
     }
 

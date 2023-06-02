@@ -24,7 +24,7 @@ class PieceMarcheParEtapeTypePiece extends ChoiceActionExecutor
 
         $this->setViewParameter('type_pj_selection', $type_pj_selection);
 
-        $this->renderPage("Choix des types de pièces", __DIR__ . "/../template/PieceMarcheLotTypePiece.php");
+        $this->renderPage('Choix des types de pièces', 'module/pieceMarcheParEtape/PieceMarcheLotTypePiece');
     }
 
     /**

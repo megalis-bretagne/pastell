@@ -51,7 +51,8 @@ class Libersign extends SignatureConnecteur
     public function __construct(
         ConnecteurFactory $connecteurFactory,
         ConnecteurEntiteSQL $connecteurEntiteSql,
-        CryptoClientFactory $cryptoClientFactory
+        CryptoClientFactory $cryptoClientFactory,
+        private readonly string $pastell_path,
     ) {
         $this->connecteurFactory = $connecteurFactory;
         $this->connecteurEntiteSql = $connecteurEntiteSql;
@@ -133,7 +134,7 @@ class Libersign extends SignatureConnecteur
         // Variables included in template
         $libersign_applet_url = $this->collectiviteProperties->get('libersign_applet_url');
         $libersign_extension_update_url = $this->collectiviteProperties->get('libersign_extension_update_url');
-        include_once __DIR__ . '/template/LibersignJS.php';
+        include_once $this->pastell_path . '/template/connector/libersign/LibersignJS.php';
     }
 
     public function isFinalState(string $lastState): bool

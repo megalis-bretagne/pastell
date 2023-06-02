@@ -24,6 +24,9 @@ abstract class DictionnaryChoice extends ChoiceActionExecutor
         return true;
     }
 
+    /**
+     * @throws NotFoundException
+     */
     public function display()
     {
         $this->setViewParameter('dictionnary', $this->displayAPI());
@@ -31,7 +34,7 @@ abstract class DictionnaryChoice extends ChoiceActionExecutor
         $this->setViewParameter('selected_id', $this->getConnecteurProperties()->get($this->getElementId()));
         $this->renderPage(
             $this->getTitle(),
-            __DIR__ . '/template/DictionnaryChoice.php'
+            'connectorType/utilities/DictionnaryChoice'
         );
         return true;
     }

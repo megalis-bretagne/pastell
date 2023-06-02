@@ -22,16 +22,22 @@ class GetEntityList extends ConnecteurTypeChoiceActionExecutor
         return true;
     }
 
+    /**
+     * @throws NotFoundException
+     */
     public function display()
     {
         $this->setViewParameter('entityList', $this->objectInstancier
             ->getInstance(RoleUtilisateur::class)
             ->getArbreFille($this->id_u, 'entite:edition'));
 
-        $this->setViewParameter('selectedEntity', $this->getConnecteurProperties()->get($this->getMappingValue(self::ENTITY_ID)));
+        $this->setViewParameter(
+            'selectedEntity',
+            $this->getConnecteurProperties()->get($this->getMappingValue(self::ENTITY_ID))
+        );
         $this->renderPage(
             $this->getMappingValue(self::PAGE_TITLE),
-            __DIR__ . '/template/GetEntityList.php'
+            'connectorType/utilities/GetEntityList'
         );
         return true;
     }

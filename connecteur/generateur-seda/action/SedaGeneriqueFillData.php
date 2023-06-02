@@ -56,7 +56,7 @@ class SedaGeneriqueFillData extends ChoiceActionExecutor
 
         $this->renderPage(
             'Sélection des métadonnées du bordereau',
-            __DIR__ . '/../template/SedaGeneriqueFillData.php'
+            'connector/sedaGenerator/SedaGeneriqueFillData'
         );
         return true;
     }

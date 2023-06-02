@@ -113,7 +113,7 @@ class SedaGeneriqueFillFiles extends ChoiceActionExecutor
 
         $this->renderPage(
             "Gestion des fichiers de l'archive",
-            __DIR__ . '/../template/SedaGeneriqueFillFiles.php'
+            'connector/sedaGenerator/SedaGeneriqueFillFiles'
         );
         return true;
     }

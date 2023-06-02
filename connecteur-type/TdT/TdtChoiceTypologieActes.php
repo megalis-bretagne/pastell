@@ -43,7 +43,7 @@ class TdtChoiceTypologieActes extends ConnecteurTypeChoiceActionExecutor
 
         $this->setViewParameter('type_pj_selection', $type_pj_selection);
 
-        $this->renderPage("Choix des types de pièces", __DIR__ . "/template/TdtChoiceTypologieActesTemplate.php");
+        $this->renderPage('Choix des types de pièces', 'connectorType/tdt/TdtChoiceTypologieActesTemplate');
     }
 
     /**

@@ -68,13 +68,13 @@ class HeliosIparapheurSousType extends ChoiceActionExecutor
             $this->setViewParameter('circuits', $this->getSousType());
             $this->renderPage(
                 "Choix d'un type de dossier",
-                __DIR__ . "/../../../connecteur/fast-parapheur/templates/FastParapheurCircuit.php"
+                'connector/fastParapheur/FastParapheurCircuit'
             );
         } else {
             $this->setViewParameter('sous_type', $this->getSousType() ? : []);
             $this->renderPage(
                 "Choix d'un type de dossier",
-                __DIR__ . "/../../../connecteur/iParapheur/template/IparapheurSousType.php"
+                'connector/iparapheur/IparapheurSousType'
             );
         }
         return true;
