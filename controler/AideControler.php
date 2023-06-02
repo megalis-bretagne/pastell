@@ -46,7 +46,7 @@ class AideControler extends PastellControler
     {
         $this->setViewParameter('page_title', "À propos");
         $this->setViewParameter('template_milieu', "AideAPropos");
-        $this->setViewParameter('changelog', $this->parsedown(__DIR__ . "/../CHANGELOG.md"));
+        $this->setViewParameter('changelog', $this->parsedown($this->getInstance('pastell_path') . '/CHANGELOG.md'));
         $this->setViewParameter('manifest_info', $this->getManifestFactory()->getPastellManifest()->getInfo());
 
         /** @var PackService $packService */

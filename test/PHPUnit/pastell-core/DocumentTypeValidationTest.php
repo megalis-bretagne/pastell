@@ -6,7 +6,10 @@ class DocumentTypeValidationTest extends PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->documentTypeValidation = new DocumentTypeValidation(new YMLLoader(new MemoryCacheNone()));
+        $this->documentTypeValidation = new DocumentTypeValidation(
+            new YMLLoader(new MemoryCacheNone()),
+            __DIR__ . '/../../../data'
+        );
         $this->documentTypeValidation->setListPack(["pack_chorus_pro" => false, "pack_marche" => false]);
         $this->documentTypeValidation->setConnecteurTypeList(['mailsec']);
         $this->documentTypeValidation->setEntiteTypeList([]);
@@ -56,23 +59,39 @@ class DocumentTypeValidationTest extends PHPUnit\Framework\TestCase
     public function testConnecteurTypeMappingFailed()
     {
         $this->documentTypeValidation->setConnecteurTypeList(["signature"]);
-        $this->assertFalse($this->documentTypeValidation->validate(__DIR__ . "/fixtures/definition-with-connecteur-type-failed.yml"));
-        $this->assertEquals("action:<b>test</b>:connecteur-type-mapping:document:<b>toto</b> n'est pas un élément du formulaire", $this->documentTypeValidation->getLastError()[0]);
+        $this->assertFalse(
+            $this->documentTypeValidation->validate(__DIR__ . "/fixtures/definition-with-connecteur-type-failed.yml")
+        );
+        $this->assertEquals(
+            "action:<b>test</b>:connecteur-type-mapping:document:<b>toto</b> n'est pas un élément du formulaire",
+            $this->documentTypeValidation->getLastError()[0]
+        );
     }
 
     public function testModifiationNoChangeEtat()
     {
-        $this->assertTrue($this->documentTypeValidation->validate(__DIR__ . "/fixtures/definition-with-modification-no-change-etat.yml"));
+        $this->assertTrue(
+            $this->documentTypeValidation->validate(
+                __DIR__ . "/fixtures/definition-with-modification-no-change-etat.yml"
+            )
+        );
     }
 
     public function testRestrictionPack()
     {
-        $this->assertTrue($this->documentTypeValidation->validate(__DIR__ . "/fixtures/definition-with-restriction-pack.yml"));
+        $this->assertTrue(
+            $this->documentTypeValidation->validate(__DIR__ . "/fixtures/definition-with-restriction-pack.yml")
+        );
     }
 
     public function testRestrictionPackAbsent()
     {
-        $this->assertFalse($this->documentTypeValidation->validate(__DIR__ . "/fixtures/definition-with-wrong_restriction-pack.yml"));
-        $this->assertEquals("restriction_pack:<b>pack_wrong_pack</b> n'est pas défini dans la liste des packs", $this->documentTypeValidation->getLastError()[0]);
+        $this->assertFalse(
+            $this->documentTypeValidation->validate(__DIR__ . "/fixtures/definition-with-wrong_restriction-pack.yml")
+        );
+        $this->assertEquals(
+            "restriction_pack:<b>pack_wrong_pack</b> n'est pas défini dans la liste des packs",
+            $this->documentTypeValidation->getLastError()[0]
+        );
     }
 }
