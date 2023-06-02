@@ -7,7 +7,6 @@ formulaire:
         to:
             name: Destinataire(s)
             commentaire: 'Plusieurs emails possibles séparés par une virgule'
-            requis: true
             type: mail-list
             autocomplete: MailSec/getContactAjax
         cc:
@@ -67,6 +66,7 @@ action:
         rule:
             last-action:
                 - preparation-send-mailsec
+                - send-mailsec-error
         action-class: StandardAction
         connecteur-type: mailsec
         connecteur-type-action: MailsecEnvoyer
@@ -75,7 +75,17 @@ action:
             cc: cc
             bcc: bcc
             sent_mail_number: sent_mail_number
+            send-mailsec-error: send-mailsec-error
         action-automatique: mailsec-relance
+    send-mailsec-error:
+        name: "Erreur d'envoi d'un mail sécurisé"
+        editable-content:
+            - to
+            - cc
+            - bcc
+        rule:
+            role_id_e: no-role
+        modification-no-change-etat: true
     mailsec-relance:
         name: Relancé
         name-action: 'Relancer si nécessaire'

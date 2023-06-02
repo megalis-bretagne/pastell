@@ -4,7 +4,6 @@ formulaire:
     Message:
         to:
             name: Destinataire(s)
-            requis: true
         cc:
             name: 'Copie à'
         objet:

@@ -75,7 +75,7 @@ class MailsecEnvoyerTest extends PastellTestCase
      * @return string
      * @throws NotFoundException
      */
-    private function prepareAndEnvoiMail(string $to): string
+    private function prepareAndEnvoiMail(string $to, string $cc = ''): string
     {
         $id_ce = $this->createConnector(
             MailSec::CONNECTEUR_ID,
@@ -92,10 +92,39 @@ class MailsecEnvoyerTest extends PastellTestCase
 
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
         $donneesFormulaire->setTabData([
-            'to' => $to
+            'to' => $to,
+            'cc' => $cc,
         ]);
 
         $this->triggerActionOnDocument($id_d, 'envoi', 2);
         return $id_d;
+    }
+
+    /**
+     * @throws NotFoundException
+     */
+    public function testEnvoiMailNoRecipientFail(): void
+    {
+        $this->prepareAndEnvoiMail('');
+        $this->assertLastMessage(
+            "Impossible d'envoyer le document car il n'y a pas de destinataires (groupe ou role vide)"
+        );
+    }
+
+    /**
+     * @throws NotFoundException
+     */
+    public function testEnvoiMailWithCcOnly(): void
+    {
+        $this->prepareAndEnvoiMail('', 'a@a.aa');
+        $this->assertLastMessage('Le document a été envoyé au(x) destinataire(s)');
+    }
+
+    public function testEnvoiMailFailActionPossible(): void
+    {
+        $id_d = $this->prepareAndEnvoiMail('');
+        $action = $this->getObjectInstancier()->getInstance(DocumentControler::class)->getActionPossible();
+        $actionPossible = $action->getActionPossible(2, 1, $id_d);
+        self::assertSame([0 => 'modification', 1 => 'supression'], $actionPossible);
     }
 }
