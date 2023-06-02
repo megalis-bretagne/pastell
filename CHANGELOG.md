@@ -1,5 +1,7 @@
 # [4.0.3] - 2023-06-12
 
+***Cette version nécessite une mise à jour du générateur SEDA en 1.0.1***
+
 ## Évolutions
 
 - Le démon et les workers sont lancés par une commande Symfony #1854
@@ -22,6 +24,7 @@
 - Si envoi en signature FAST sans circuit ou configuration du circuit à la volée, le dossier rentre dans l'état `Erreur lors de l'envoi du dossier à la signature`
 et l'utilisateur peut modifier les champs manquants #1850
 - La récupération des factures avec le connecteur FakeCPP ne fonctionnait plus #1715
+- Les rattachements sur des unités d'archives de sous-niveau ne fonctionnaient pas avec le SAE Vitam
 
 # [4.0.2] - 2023-05-15
 
