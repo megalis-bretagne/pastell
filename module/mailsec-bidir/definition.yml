@@ -102,6 +102,7 @@ action:
         rule:
             last-action:
                 - modification
+                - send-mailsec-error
             role_id_e: editeur
             droit_id_u: 'mailsec-bidir:edition'
             document_is_valide: true

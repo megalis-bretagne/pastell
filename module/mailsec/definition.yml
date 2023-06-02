@@ -97,6 +97,7 @@ action:
             last-action:
                 - creation
                 - modification
+                - send-mailsec-error
             role_id_e: editeur
             droit_id_u: 'mailsec:edition'
             document_is_valide: true
