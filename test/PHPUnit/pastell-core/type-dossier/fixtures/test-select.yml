@@ -549,6 +549,7 @@ action:
         rule:
             last-action:
                 - preparation-send-mailsec
+                - send-mailsec-error
         action-class: StandardAction
         connecteur-type: mailsec
         connecteur-type-action: MailsecEnvoyer
