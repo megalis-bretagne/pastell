@@ -71,7 +71,7 @@ services:
         user: "${UID:-33}:${GID:-33}"
 
     db:
-        image: 'hubdocker.libriciel.fr/mariadb:10.11.2-jammy'
+        image: 'hubdocker.libriciel.fr/mariadb:10.11.3-jammy'
         restart: unless-stopped
         command:
             - "--character-set-server=utf8mb4"
@@ -85,7 +85,7 @@ services:
             - ${MARIADB_DATADIR:-mariadb_datadir}:/var/lib/mysql/
 
     redis:
-        image: 'hubdocker.libriciel.fr/redis:7.0.5'
+        image: 'hubdocker.libriciel.fr/redis:7.0.11'
         restart: unless-stopped
 
     seda-generator:
@@ -99,7 +99,7 @@ services:
         restart: unless-stopped
 
     pes-viewer:
-        image: 'registry.libriciel.fr/public/signature/pes-viewer:2.0.2'
+        image: 'registry.libriciel.fr/public/signature/pes-viewer:2.0.5'
         restart: unless-stopped
         deploy:
             resources:
