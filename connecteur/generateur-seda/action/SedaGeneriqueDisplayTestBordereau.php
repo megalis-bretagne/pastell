@@ -1,6 +1,7 @@
 <?php
 
 use Pastell\Connector\AbstractSedaGeneratorConnector;
+use Symfony\Component\Uid\Uuid;
 
 class SedaGeneriqueDisplayTestBordereau extends ActionExecutor
 {
@@ -66,13 +67,13 @@ class SedaGeneriqueDisplayTestBordereau extends ActionExecutor
                 $fakeDonneesFormulaire->addFileFromData(
                     $field->getName(),
                     "nom du fichier pour " . $field->getName(),
-                    uuid_create(UUID_TYPE_RANDOM)
+                    Uuid::v4()->jsonSerialize()
                 );
                 if ($field->isMultiple()) {
                     $fakeDonneesFormulaire->addFileFromData(
                         $field->getName(),
                         "nom du second fichier pour " . $field->getName(),
-                        uuid_create(UUID_TYPE_RANDOM),
+                        Uuid::v4()->jsonSerialize(),
                         1
                     );
                 }
