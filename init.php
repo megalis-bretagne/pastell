@@ -7,8 +7,8 @@
 use Monolog\Logger;
 use Pastell\Database\DatabaseUpdater;
 use Pastell\Service\FeatureToggleService;
-use Pastell\Utilities\Identifier\IdentifierInterface;
-use Pastell\Utilities\Identifier\Uuid;
+use Pastell\Utilities\Identifier\IdentifierGeneratorInterface;
+use Pastell\Utilities\Identifier\UuidGenerator;
 use Symfony\Component\Lock\LockFactory;
 use Symfony\Component\Lock\Store\InMemoryStore;
 use Symfony\Component\Lock\Store\RedisStore;
@@ -56,9 +56,9 @@ $objectInstancier->setInstance('cache_ttl_in_seconds', CACHE_TTL_IN_SECONDS);
 $objectInstancier->setInstance('disable_job_queue', DISABLE_JOB_QUEUE);
 $objectInstancier->setInstance('disable_journal_horodatage', DISABLE_JOURNAL_HORODATAGE);
 
-$objectInstancier->setInstance(IdentifierInterface::class, new PasswordGenerator());
+$objectInstancier->setInstance(IdentifierGeneratorInterface::class, new PasswordGenerator());
 if (USE_UUID_FOR_DOCUMENT) {
-    $objectInstancier->setInstance(IdentifierInterface::class, new Uuid());
+    $objectInstancier->setInstance(IdentifierGeneratorInterface::class, new UuidGenerator());
 }
 
 $id_u_journal = 0;

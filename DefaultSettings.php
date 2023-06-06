@@ -251,3 +251,7 @@ if (!defined("PASSWORD_MIN_ENTROPY")) {
 if (!defined("MAILER_DSN")) {
     define("MAILER_DSN", "null://null");
 }
+
+if (!defined("USE_UUID_FOR_DOCUMENT")) {
+    define("USE_UUID_FOR_DOCUMENT", false);
+}

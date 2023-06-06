@@ -1,8 +1,8 @@
 <?php
 
-use Pastell\Utilities\Identifier\IdentifierInterface;
+use Pastell\Utilities\Identifier\IdentifierGeneratorInterface;
 
-class PasswordGenerator implements IdentifierInterface
+class PasswordGenerator implements IdentifierGeneratorInterface
 {
     public const NB_SIGNE_DEFAULT = 7;
 
@@ -38,7 +38,7 @@ class PasswordGenerator implements IdentifierInterface
         return $this->signe[rand(0, $this->lengthSigne - 1)];
     }
 
-    public function generateId(): string
+    public function generate(): string
     {
         return $this->getPassword();
     }

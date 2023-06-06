@@ -2,8 +2,8 @@
 
 use Mailsec\MailsecManager;
 use Pastell\Service\Utilisateur\UserCreationService;
-use Pastell\Utilities\Identifier\IdentifierInterface;
-use Pastell\Utilities\Identifier\Uuid;
+use Pastell\Utilities\Identifier\IdentifierGeneratorInterface;
+use Pastell\Utilities\Identifier\UuidGenerator;
 use Symfony\Component\HttpFoundation\Request;
 
 class DocumentControlerTest extends ControlerTestCase
@@ -416,10 +416,10 @@ Lignes',
 
     private function setUuidForDocument(): void
     {
-        $this->getObjectInstancier()->setInstance(IdentifierInterface::class, new Uuid());
+        $this->getObjectInstancier()->setInstance(IdentifierGeneratorInterface::class, new UuidGenerator());
         $this->getObjectInstancier()->setInstance(DocumentSQL::class, new DocumentSQL(
             static::getSQLQuery(),
-            $this->getObjectInstancier()->getInstance(IdentifierInterface::class)
+            $this->getObjectInstancier()->getInstance(IdentifierGeneratorInterface::class)
         ));
     }
 

@@ -62,7 +62,7 @@ define("NB_JOB_PAR_VERROU", "${NB_JOB_PAR_VERROU:-1}");
 define("HTTP_PROXY_URL", "${HTTP_PROXY_URL:-}");
 define("NO_PROXY", "${NO_PROXY:-localhost,127.0.0.1,::1,seda-generator}");
 
-define("USE_UUID_FOR_DOCUMENT", "${USE_UUID_FOR_DOCUMENT:-false}");
+define("USE_UUID_FOR_DOCUMENT", ${USE_UUID_FOR_DOCUMENT:-false});
 
 EOF
 

@@ -1,6 +1,6 @@
 <?php
 
-use Pastell\Utilities\Identifier\IdentifierInterface;
+use Pastell\Utilities\Identifier\IdentifierGeneratorInterface;
 
 class DocumentSQL extends SQL
 {
@@ -10,7 +10,7 @@ class DocumentSQL extends SQL
 
     public function __construct(
         SQLQuery $sqlQuery,
-        private readonly IdentifierInterface $identifier,
+        private readonly IdentifierGeneratorInterface $identifier,
     ) {
         parent::__construct($sqlQuery);
     }
@@ -22,7 +22,7 @@ class DocumentSQL extends SQL
     public function getNewId(): string
     {
         for ($i = 0; $i < self::MAX_ESSAI; $i++) {
-            $id_d = $this->identifier->generateId();
+            $id_d = $this->identifier->generate();
             $sql = "SELECT count(*) FROM document WHERE id_d=?";
             $nb = $this->queryOne($sql, $id_d);
 
