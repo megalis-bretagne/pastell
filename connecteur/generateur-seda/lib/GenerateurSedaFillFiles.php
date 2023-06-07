@@ -1,5 +1,7 @@
 <?php
 
+use Symfony\Component\Uid\Uuid;
+
 class GenerateurSedaFillFiles
 {
     /** @var SimpleXMLElement  */
@@ -21,7 +23,7 @@ class GenerateurSedaFillFiles
 
     private function createUUID(): string
     {
-        return uuid_create(UUID_TYPE_RANDOM);
+        return Uuid::v4()->jsonSerialize();
     }
 
     /**

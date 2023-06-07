@@ -1,16 +1,18 @@
 <?php
 
+use Pastell\Utilities\Identifier\IdentifierGeneratorInterface;
+
 class DocumentSQL extends SQL
 {
     public const MAX_ESSAI = 5;
 
-    private $passwordGenerator;
     private static $cache;
 
-    public function __construct(SQLQuery $sqlQuery, PasswordGenerator $passwordGenerator)
-    {
+    public function __construct(
+        SQLQuery $sqlQuery,
+        private readonly IdentifierGeneratorInterface $identifier,
+    ) {
         parent::__construct($sqlQuery);
-        $this->passwordGenerator = $passwordGenerator;
     }
 
     /**
@@ -20,7 +22,7 @@ class DocumentSQL extends SQL
     public function getNewId(): string
     {
         for ($i = 0; $i < self::MAX_ESSAI; $i++) {
-            $id_d = $this->passwordGenerator->getPassword();
+            $id_d = $this->identifier->generate();
             $sql = "SELECT count(*) FROM document WHERE id_d=?";
             $nb = $this->queryOne($sql, $id_d);
 

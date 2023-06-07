@@ -2,6 +2,8 @@
 
 use Mailsec\MailsecManager;
 use Pastell\Service\Utilisateur\UserCreationService;
+use Pastell\Utilities\Identifier\IdentifierGeneratorInterface;
+use Pastell\Utilities\Identifier\UuidGenerator;
 use Symfony\Component\HttpFoundation\Request;
 
 class DocumentControlerTest extends ControlerTestCase
@@ -410,5 +412,30 @@ Lignes',
         $this->expectException(ForbiddenException::class);
         $this->expectExceptionMessage("L'entité 1 est désactivée");
         $this->createDocument('test');
+    }
+
+    private function setUuidForDocument(): void
+    {
+        $this->getObjectInstancier()->setInstance(IdentifierGeneratorInterface::class, new UuidGenerator());
+        $this->getObjectInstancier()->setInstance(DocumentSQL::class, new DocumentSQL(
+            static::getSQLQuery(),
+            $this->getObjectInstancier()->getInstance(IdentifierGeneratorInterface::class)
+        ));
+    }
+
+    public function testCreateDocumentWithUUID(): void
+    {
+        $this->setUuidForDocument();
+        $id_d = $this->createDocument('test')['id_d'];
+        static::assertTrue(strlen($id_d) === 36);
+    }
+
+    public function testGetDocumentWithUUID(): void
+    {
+        $this->setUuidForDocument();
+        $id_d = $this->createDocument('test')['id_d'];
+        $documentSQL = $this->getObjectInstancier()->getInstance(DocumentSQL::class);
+        $info = $documentSQL->getInfo($id_d);
+        static::assertTrue($id_d === $info['id_d'] && 'test' === $info['type']);
     }
 }

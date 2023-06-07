@@ -609,7 +609,7 @@
         "Column": {
             "id_d": {
                 "Field": "id_d",
-                "Type": "varchar(32)",
+                "Type": "varchar(64)",
                 "Null": "NO",
                 "Key": "PRI",
                 "Default": null,
@@ -685,7 +685,7 @@
             },
             "id_d": {
                 "Field": "id_d",
-                "Type": "varchar(16)",
+                "Type": "varchar(64)",
                 "Null": "NO",
                 "Key": "MUL",
                 "Default": null,
@@ -802,7 +802,7 @@
             },
             "id_d": {
                 "Field": "id_d",
-                "Type": "varchar(32)",
+                "Type": "varchar(64)",
                 "Null": "NO",
                 "Key": "",
                 "Default": null,
@@ -935,7 +935,7 @@
             },
             "id_d_reponse": {
                 "Field": "id_d_reponse",
-                "Type": "varchar(32)",
+                "Type": "varchar(64)",
                 "Null": "NO",
                 "Key": "",
                 "Default": null,
@@ -989,7 +989,7 @@
         "Column": {
             "id_d": {
                 "Field": "id_d",
-                "Type": "varchar(8)",
+                "Type": "varchar(64)",
                 "Null": "NO",
                 "Key": "MUL",
                 "Default": null,
@@ -1704,7 +1704,7 @@
             },
             "id_d": {
                 "Field": "id_d",
-                "Type": "varchar(16)",
+                "Type": "varchar(64)",
                 "Null": "NO",
                 "Key": "MUL",
                 "Default": null,
@@ -1880,7 +1880,7 @@
             },
             "id_d": {
                 "Field": "id_d",
-                "Type": "varchar(16)",
+                "Type": "varchar(64)",
                 "Null": "NO",
                 "Key": "MUL",
                 "Default": null,
@@ -2080,7 +2080,7 @@
             },
             "id_d": {
                 "Field": "id_d",
-                "Type": "varchar(32)",
+                "Type": "varchar(64)",
                 "Null": "NO",
                 "Key": "",
                 "Default": null,
