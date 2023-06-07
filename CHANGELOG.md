@@ -1,3 +1,9 @@
+# [4.0.3] - 2023-07-10
+
+## Évolutions
+
+- L'action `Extraction de l'archive` étant automatique, le bouton n'est plus visible pour le flux `Pièces de marchés par étapes` #1835
+
 # [4.0.3] - 2023-06-12
 
 ***Cette version nécessite une mise à jour du générateur SEDA en 1.0.1***
