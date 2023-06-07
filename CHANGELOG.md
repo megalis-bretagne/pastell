@@ -3,7 +3,7 @@
 ## Évolutions
 
 - L'action `Extraction de l'archive` étant automatique, le bouton n'est plus visible pour le flux `Pièces de marchés par étapes` #1835
-- L'utilisateur peut utiliser un `UUID` à la place des 7 caractères générés automatiquement pour l'`id_d` #1098
+- Il est possible de générer des UUID à la place des 7 caractères actuels pour les identifiants des nouveaux dossiers #1098
 
 # [4.0.3] - 2023-06-12
 
