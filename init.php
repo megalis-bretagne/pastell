@@ -9,6 +9,8 @@ use Pastell\Database\DatabaseUpdater;
 use Pastell\Service\FeatureToggleService;
 use Pastell\Utilities\Identifier\IdentifierGeneratorInterface;
 use Pastell\Utilities\Identifier\UuidGenerator;
+use Pastell\Storage\StorageInterfaceDummy;
+use Pastell\Storage\VaultAdapter;
 use Symfony\Component\Lock\LockFactory;
 use Symfony\Component\Lock\Store\InMemoryStore;
 use Symfony\Component\Lock\Store\RedisStore;
@@ -56,11 +58,6 @@ $objectInstancier->setInstance('cache_ttl_in_seconds', CACHE_TTL_IN_SECONDS);
 $objectInstancier->setInstance('disable_job_queue', DISABLE_JOB_QUEUE);
 $objectInstancier->setInstance('disable_journal_horodatage', DISABLE_JOURNAL_HORODATAGE);
 
-$objectInstancier->setInstance(IdentifierGeneratorInterface::class, new PasswordGenerator());
-if (USE_UUID_FOR_DOCUMENT) {
-    $objectInstancier->setInstance(IdentifierGeneratorInterface::class, new UuidGenerator());
-}
-
 $id_u_journal = 0;
 if ($objectInstancier->getInstance(Authentification::class)->isConnected()) {
     $id_u_journal = $objectInstancier->getInstance(Authentification::class)->getId();
@@ -87,7 +84,16 @@ $authentification = $objectInstancier->getInstance(Authentification::class);
 
 $journal = $objectInstancier->getInstance(Journal::class);
 $documentTypeFactory = $objectInstancier->getInstance(DocumentTypeFactory::class);
+$objectInstancier->setInstance('useVaultForPasswordStorage', USE_VAULT_FOR_PASSWORD_STORAGE);
 $donneesFormulaireFactory = $objectInstancier->getInstance(DonneesFormulaireFactory::class);
+
+$objectInstancier->setInstance('vaultUrl', VAULT_URL);
+$objectInstancier->setInstance('vaultToken', VAULT_TOKEN);
+$donneesFormulaireFactory->setPasswordStorage(new StorageInterfaceDummy());
+if (USE_VAULT_FOR_PASSWORD_STORAGE) {
+    $donneesFormulaireFactory->setPasswordStorage(new VaultAdapter(VAULT_URL, VAULT_TOKEN));
+}
+
 $roleUtilisateur = $objectInstancier->getInstance(RoleUtilisateur::class);
 
 if (PHP_SAPI !== 'cli' || $objectInstancier->getInstance(SQLQuery::class)->isConnected()) {

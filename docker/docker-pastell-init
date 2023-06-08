@@ -64,6 +64,10 @@ define("NO_PROXY", "${NO_PROXY:-localhost,127.0.0.1,::1,seda-generator}");
 
 define("USE_UUID_FOR_DOCUMENT", ${USE_UUID_FOR_DOCUMENT:-false});
 
+define("USE_VAULT_FOR_PASSWORD_STORAGE", ${USE_VAULT_FOR_PASSWORD_STORAGE:-false});
+define("VAULT_URL", "${VAULT_URL:-http://0.0.0.0:8200}");
+define("VAULT_TOKEN", "${VAULT_TOKEN:-tdctoken}");
+
 EOF
 
 env | grep '^TOGGLE_' | sed "s/^TOGGLE_\([^=]*\)=\(.*\)/\$feature_toggle[Pastell\\\Service\\\FeatureToggle\\\\\1::class] = \2;/g"
