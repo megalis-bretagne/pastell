@@ -21,6 +21,8 @@ ObjectInstancierFactory::setObjectInstancier($objectInstancier);
 $objectInstancier->setInstance(Logger::class, $logger);
 $objectInstancier->setInstance('log_level', LOG_LEVEL);
 $objectInstancier->setInstance('pastell_path', PASTELL_PATH);
+$objectInstancier->setInstance('data_dir', __DIR__ . '/data');
+
 $objectInstancier->setInstance(PastellTimer::class, new PastellTimer());
 $objectInstancier->setInstance('site_base', \rtrim(SITE_BASE, '/'));
 $objectInstancier->setInstance('websec_base', WEBSEC_BASE);

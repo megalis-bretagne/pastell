@@ -52,14 +52,10 @@ class GenerateBordereauSEDATest extends PHPUnit\Framework\TestCase
         return $generateXMLFromAnnotedRelaxNG->generateFromRelaxNGString($relaxNG_with_annotation);
     }
 
-    /**
-     * @param $bordereau_xml
-     * @param $relax_ng_path
-     */
-    private function validateBordereau($bordereau_xml, $relax_ng_path)
+    private function validateBordereau($bordereau_xml, $relax_ng_path): void
     {
 
-        $sedaValidation = new SedaValidation();
+        $sedaValidation = new SedaValidation(PASTELL_PATH . '/data');
         $is_valide = $sedaValidation->validateRelaxNG($bordereau_xml, $relax_ng_path);
         if (! $is_valide) {
             print_r($sedaValidation->getLastErrors());

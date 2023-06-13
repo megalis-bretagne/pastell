@@ -2,8 +2,6 @@
 
 class ParametrageFluxPieceMarche extends Connecteur
 {
-    private const FICHIER_JSON = __DIR__ . "/lib/parametrage-piece-marche.json";
-
     /** @var  DonneesFormulaire */
     private $connecteurConfig;
 
@@ -13,13 +11,14 @@ class ParametrageFluxPieceMarche extends Connecteur
         $this->connecteurConfig = $connecteurConfig;
     }
 
-    public function setPieceMarcheJsonByDefault()
+    public function setPieceMarcheJsonByDefault(): bool
     {
+        $filePath = $this->getDataDir() . '/connector/paramFluxPieceMarche/parametrage-piece-marche.json';
 
-        if (!file_exists(self::FICHIER_JSON)) {
+        if (!file_exists($filePath)) {
             return false;
         }
-        $this->connecteurConfig->addFileFromCopy('piece_marche_json', "parametrage-piece-marche.json", self::FICHIER_JSON);
+        $this->connecteurConfig->addFileFromCopy('piece_marche_json', 'parametrage-piece-marche.json', $filePath);
         return true;
     }
 

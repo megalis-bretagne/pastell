@@ -26,7 +26,7 @@ class FakeTdT extends TdtAdapter
 
     public function getARActes()
     {
-        return file_get_contents(__DIR__ . "/fixtures/ar-actes.xml");
+        return file_get_contents($this->getDataDir() . '/connector/fakeTdt/ar-actes.xml');
     }
 
     public function getDateAR($id_transaction)
@@ -36,12 +36,12 @@ class FakeTdT extends TdtAdapter
 
     public function getBordereau($id_transaction)
     {
-        return file_get_contents(__DIR__ . "/fixtures/vide.pdf");
+        return file_get_contents($this->getDataDir() . '/_shared/vide.pdf');
     }
 
     public function getActeTamponne($id_transaction, string $date_affichage = null): ?string
     {
-        return file_get_contents(__DIR__ . '/fixtures/vide.pdf');
+        return file_get_contents($this->getDataDir() . '/_shared/vide.pdf');
     }
 
     public function getListReponsePrefecture($transaction_id)
@@ -66,7 +66,7 @@ class FakeTdT extends TdtAdapter
 
     public function getFichierRetour($tedetis_transaction_id)
     {
-        return file_get_contents(__DIR__ . "/fixtures/pes_acquit.xml");
+        return file_get_contents($this->getDataDir() . '/connector/fakeTdt/pes_acquit.xml');
     }
 
     public function getAnnexesTamponnees(string $transaction_id, ?string $date_publication = null): array

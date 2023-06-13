@@ -16,7 +16,9 @@ class FakeCPP extends PortailFactureConnecteur
         string $periodeDateHeureEtatCourantDu = "",
         string $periodeDateHeureEtatCourantAu = ""
     ) {
-        $ListeFacturesCPP = file_get_contents(__DIR__ . "/fixtures/CPPListeFactures.json");
+        $ListeFacturesCPP = file_get_contents(
+            $this->getDataDir() . '/connector/fakeCpp/CPPListeFactures.json'
+        );
         if (!$ListeFacturesCPP) {
             throw new CPPException("Problème lors de la récuperation de la liste des factures cpp");
         }
@@ -55,7 +57,10 @@ class FakeCPP extends PortailFactureConnecteur
      */
     protected function consulterHistoriqueFacture($idFacture, $nbResultatsMaximum = 50)
     {
-        $HistoStatutFactureCPP = file_get_contents(__DIR__ . "/fixtures/CPPHistoStatutFacture.json");
+        $HistoStatutFactureCPP = file_get_contents(
+            $this->getDataDir() . '/connector/fakeCpp/CPPHistoStatutFacture.json'
+        );
+
         if (!$HistoStatutFactureCPP) {
             throw new CPPException(
                 "Problème lors de la récuperation de l'historique statut de la facture cpp " . $idFacture
@@ -80,7 +85,7 @@ class FakeCPP extends PortailFactureConnecteur
     {
         list($id_e, $numFacture) = explode("-", $idFacture);
 
-        $PathFichierFactureCPP = __DIR__ . "/fixtures/facture_{$numFacture}.xml";
+        $PathFichierFactureCPP = $this->getDataDir() . "/connector/fakeCpp/facture_{$numFacture}.xml";
         if (!file_exists($PathFichierFactureCPP)) {
             throw new CPPException("Problème lors de la récuperation du fichier de la facture cpp " . $idFacture);
         }
@@ -97,7 +102,9 @@ class FakeCPP extends PortailFactureConnecteur
      */
     protected function traiterFactureRecue($idFacture, $idNouveauStatut, $motif = "", $numeroMandat = "")
     {
-        $ResultStatutFactureCPP = file_get_contents(__DIR__ . "/fixtures/CPPResultStatutOK.json");
+        $ResultStatutFactureCPP = file_get_contents(
+            $this->getDataDir() . '/connector/fakeCpp/CPPResultStatutOK.json'
+        );
         if (!$ResultStatutFactureCPP) {
             throw new CPPException("Problème lors du changement de statut de la facture cpp " . $idFacture);
         }

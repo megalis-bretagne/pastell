@@ -134,7 +134,7 @@ class SedaNG extends SEDAConnecteur
     public function validateBordereau(string $bordereau): bool
     {
         $relax_ng_path = $this->getSchemaRngPath();
-        $sedaValidation = new SedaValidation();
+        $sedaValidation = new SedaValidation($this->getDataDir());
         if (!$sedaValidation->validateRelaxNG($bordereau, $relax_ng_path)) {
             $this->last_validation_error = $sedaValidation->getLastErrors();
             throw new Exception("Erreur lors de la validation du bordereau (validation du schéma RelaxNG)");

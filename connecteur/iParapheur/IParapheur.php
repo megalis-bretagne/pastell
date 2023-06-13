@@ -525,14 +525,16 @@ class IParapheur extends SignatureConnecteur
 
         $sous_type = $this->getSousType();
         if (! $sous_type) {
-            throw new UnrecoverableException("Le type {$this->iparapheur_type} ne contient aucun sous-type. Impossible de faire un test d'envoi.");
+            throw new UnrecoverableException(
+                "Le type {$this->iparapheur_type} ne contient aucun sous-type. Impossible de faire un test d'envoi."
+            );
         }
 
         $fileToSign = new FileToSign();
 
         $fileToSign->document = new Fichier();
         $fileToSign->document->filename = 'test-pastell-i-parapheur.pdf';
-        $fileToSign->document->filepath = __DIR__ . "/data-exemple/test-pastell-i-parapheur.pdf";
+        $fileToSign->document->filepath = $this->getDataDir() . '/connector/iparapheur/test-pastell-i-parapheur.pdf';
         $fileToSign->document->content = file_get_contents($fileToSign->document->filepath);
         $fileToSign->document->contentType = 'application/pdf';
 
@@ -555,7 +557,7 @@ class IParapheur extends SignatureConnecteur
          * du coup, on teste d'abord avec du PDF et si ca marche pas, on envoie du XML
          */
         $fileToSign->document->filename = 'test-pastell-i-parapheur.xml';
-        $fileToSign->document->filepath = __DIR__ . "/data-exemple/PES_ex.xml";
+        $fileToSign->document->filepath = $this->getDataDir() . '/connector/iparapheur/PES_ex.xml';
         $fileToSign->document->content = file_get_contents($fileToSign->document->filepath);
         $fileToSign->document->contentType = 'application/xml';
 

@@ -11,7 +11,7 @@ class FakeSEDA extends SEDAConnecteur
 
     public function getBordereau(FluxData $fluxData): string
     {
-        return file_get_contents(__DIR__ . '/fixtures/bordereau.xml');
+        return file_get_contents($this->getDataDir() . '/connector/fakeSeda/bordereau.xml');
     }
 
     public function validateBordereau(string $bordereau): bool

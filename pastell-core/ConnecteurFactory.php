@@ -4,11 +4,8 @@ use Monolog\Logger;
 
 class ConnecteurFactory
 {
-    private $objectInstancier;
-
-    public function __construct(ObjectInstancier $objectInstancier)
+    public function __construct(private readonly ObjectInstancier $objectInstancier)
     {
-        $this->objectInstancier = $objectInstancier;
     }
 
     /**
@@ -59,22 +56,25 @@ class ConnecteurFactory
     }
 
     /**
-     * @param $connecteur_info
-     * @return bool|Connecteur
+     * @param array $connecteur_info
+     * @return Connecteur|false
      * @throws Exception
      */
-    private function getConnecteurObjet($connecteur_info)
+    private function getConnecteurObjet($connecteur_info): Connecteur|false
     {
         if (!$connecteur_info) {
             return false;
         }
         $this->controleRestriction($connecteur_info);
-        $class_name = $this->objectInstancier->getInstance(ConnecteurDefinitionFiles::class)->getConnecteurClass($connecteur_info['id_connecteur']);
+        $class_name = $this->objectInstancier
+            ->getInstance(ConnecteurDefinitionFiles::class)
+            ->getConnecteurClass($connecteur_info['id_connecteur']);
         /** @var Connecteur $connecteurObject */
         $connecteurObject = $this->objectInstancier->newInstance($class_name);
         $connecteurObject->setConnecteurInfo($connecteur_info);
         $connecteurObject->setLogger($this->objectInstancier->getInstance(Logger::class));
         $connecteurObject->setConnecteurConfig($this->getConnecteurConfig($connecteur_info['id_ce']));
+        $connecteurObject->setDataDir($this->objectInstancier->getInstance('data_dir'));
         return $connecteurObject;
     }
 

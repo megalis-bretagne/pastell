@@ -10,6 +10,10 @@ class SedaValidation
 
     private $last_errors;
 
+    public function __construct(private readonly string $data_dir)
+    {
+    }
+
     public function getLastErrors()
     {
         return $this->last_errors;
@@ -18,8 +22,8 @@ class SedaValidation
     public function getSchemaPath($xmlns)
     {
         $all_schema =  [
-            self::SEDA_V_0_2_NS => __DIR__ . "/../xsd/seda_v0-2/seda_v0-2.xsd",
-            self::SEDA_V_1_0_NS => __DIR__ . "/../xsd/seda_v1-0/seda_v1-0.xsd",
+            self::SEDA_V_0_2_NS => $this->data_dir . '/connector/sedaNg/xsd/seda_v0-2/seda_v0-2.xsd',
+            self::SEDA_V_1_0_NS => $this->data_dir . '/connector/sedaNg/xsd/seda_v1-0/seda_v1-0.xsd',
         ];
 
         if (empty($all_schema[$xmlns])) {

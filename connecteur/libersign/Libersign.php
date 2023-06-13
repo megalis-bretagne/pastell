@@ -358,7 +358,7 @@ class Libersign extends SignatureConnecteur
     private function getStamp(string $signatory, string $signatureDateTime): array
     {
         // It could probably be cleaner in PHP 8 with nullsafe operator
-        $stampLocation = __DIR__ . '/fixtures/default-stamp.png';
+        $stampLocation = $this->getDataDir() . '/connector/libersign/default-stamp.png';
         if ($this->collectiviteProperties->get('libersign_stamp_image')) {
             $stampLocation = $this->collectiviteProperties->getFilePath('libersign_stamp_image');
         } elseif ($this->globalConnectorConfig !== null && $this->globalConnectorConfig->get('libersign_stamp_image')) {
@@ -407,7 +407,9 @@ class Libersign extends SignatureConnecteur
                     'y' => 12,
                     'width' => 2,
                     'height' => 24,
-                    'value' => base64_encode(file_get_contents(__DIR__ . '/fixtures/vertical-bar.png'))
+                    'value' => base64_encode(
+                        file_get_contents($this->getDataDir() . '/connector/libersign/vertical-bar.png')
+                    )
                 ],
             ]
         ];
