@@ -319,12 +319,12 @@ class SystemControler extends PastellControler
                 ->htmlTemplate('test_system.html.twig')
                 ->context(['SITE_BASE' => $this->getSiteBase()])
                 ->attachFromPath(
-                    __DIR__ . '/../connecteur/iParapheur/data-exemple/test-pastell-i-parapheur.pdf'
+                    $this->getInstance('data_dir') . '/connector/iparapheur/test-pastell-i-parapheur.pdf'
                 );
             try {
                 $pastellMailer = $this->getObjectInstancier()->getInstance(Mailer::class);
                 $pastellMailer->send($templatedEmail);
-                $emailSent .= "Un email a été envoyé à l'adresse  : " . get_hecho($email) . '<br>';
+                $emailSent .= "Un email a été envoyé à l'adresse : " . get_hecho($email) . '<br>';
             } catch (TransportExceptionInterface $e) {
                 $emailNotSent .= "Impossible d'envoyer le mail : " . $e->getMessage() . '<br>';
             }
