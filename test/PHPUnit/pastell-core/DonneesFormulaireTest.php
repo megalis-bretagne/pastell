@@ -1,5 +1,8 @@
 <?php
 
+use Pastell\Storage\StorageInterface;
+use Pastell\Utilities\Identifier\UuidGenerator;
+
 class DonneesFormulaireTest extends PastellTestCase
 {
     /**
@@ -94,7 +97,14 @@ class DonneesFormulaireTest extends PastellTestCase
         $module_definition = $ymlLoader->getArray($path_to_yaml_definition);
         $documentType = new DocumentType("test-fichier", $module_definition);
 
-        return new DonneesFormulaire($filePath, $documentType);
+        return new DonneesFormulaire(
+            $filePath,
+            $documentType,
+            null,
+            false,
+            $this->getObjectInstancier()->getInstance(StorageInterface::class),
+            $this->getObjectInstancier()->getInstance(UuidGenerator::class),
+        );
     }
 
     public function testModifOngletCache()
@@ -334,7 +344,14 @@ class DonneesFormulaireTest extends PastellTestCase
     public function testEmptyForms()
     {
         $documentType = new DocumentType("test", []);
-        $donneesFormulaire = new DonneesFormulaire("/tmp/toto.yml", $documentType);
+        $donneesFormulaire = new DonneesFormulaire(
+            "/tmp/toto.yml",
+            $documentType,
+            null,
+            false,
+            $this->getObjectInstancier()->getInstance(StorageInterface::class),
+            $this->getObjectInstancier()->getInstance(UuidGenerator::class),
+        );
         $donneesFormulaire->setDocumentIndexor(new DocumentIndexor(new DocumentIndexSQL($this->getSQLQuery()), '1'));
         $donneesFormulaire->saveTab(new Recuperateur(), new FileUploader(), 0);
         $this->assertTrue(true);

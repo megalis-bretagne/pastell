@@ -1058,4 +1058,39 @@ class DonneesFormulaire
         }
         return $fieldSize;
     }
+
+    public function checkPasswordFieldToSave(): void
+    {
+        if (
+            $this->useVaultForPasswordStorage &&
+            str_contains($this->id_d, DonneesFormulaireFactory::ID_CONNECTEUR)
+        ) {
+            foreach ($this->getFormulaire()->getFields() as $field) {
+                if (
+                    $field->getType() === 'password' &&
+                    ($value = $this->get($field->getName())) !== ''
+                ) {
+                    $passwordId = $this->fichierCleValeur->getYmlInfo()[$field->getName()];
+                    if ($this->passwordStorage->read($passwordId) === '404 : Bad status received from Vault') {
+                        $passwordId = $this->uuidGenerator->generate();
+                    }
+                    $this->passwordStorage->write($passwordId, $value);
+                    $this->fichierCleValeur->set($field->getName(), $passwordId);
+                }
+            }
+        }
+    }
+
+    public function checkPasswordValueToGet(): void
+    {
+        foreach ($this->getFormulaire()->getFields() as $field) {
+            if ($field->getType() === 'password') {
+                $passwordId = $this->fichierCleValeur->getYmlInfo()[$field->getName()] ?? '';
+                $password = $this->passwordStorage->read($passwordId);
+                if ($password !== '404 : Bad status received from Vault') {
+                    $this->fichierCleValeur->set($field->getName(), $password);
+                }
+            }
+        }
+    }
 }

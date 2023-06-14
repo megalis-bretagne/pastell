@@ -5,8 +5,11 @@ use Monolog\Logger;
 use org\bovigo\vfs\vfsStream;
 use Pastell\Service\Connecteur\ConnecteurAssociationService;
 use Pastell\Service\Pack\PackService;
+use Pastell\Storage\StorageInterface;
+use Pastell\Storage\StorageInterfaceFake;
 use Pastell\Tests\SymfonyContainerFactory;
 use Pastell\Utilities\Identifier\IdentifierGeneratorInterface;
+use Pastell\Utilities\Identifier\UuidGenerator;
 use PHPUnit\Framework\TestCase;
 use Pastell\Service\TypeDossier\TypeDossierImportService;
 use Symfony\Component\Lock\LockFactory;
@@ -40,6 +43,10 @@ abstract class PastellTestCase extends TestCase
         parent::__construct($name, $data, $dataName);
         $this->objectInstancier = new ObjectInstancier();
         ObjectInstancierFactory::setObjectInstancier($this->objectInstancier);
+
+        $this->objectInstancier->setInstance('useVaultForPasswordStorage', false);
+        $this->objectInstancier->setInstance(StorageInterface::class, new StorageInterfaceFake());
+        $this->objectInstancier->setInstance(UuidGenerator::class, new UuidGenerator());
 
         $this->objectInstancier->setInstance('site_base', 'https://localhost:8443');
         $this->objectInstancier->setInstance('websec_base', 'https://localhost:8443');
