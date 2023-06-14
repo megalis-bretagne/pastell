@@ -97,6 +97,7 @@ $objectInstancier->setInstance('vaultToken', VAULT_TOKEN);
 $donneesFormulaireFactory->setPasswordStorage(new StorageInterfaceDummy());
 if (USE_VAULT_FOR_PASSWORD_STORAGE) {
     $donneesFormulaireFactory->setPasswordStorage(new VaultAdapter(VAULT_URL, VAULT_TOKEN));
+    $donneesFormulaireFactory->setUuidGenerator(new UuidGenerator());
 }
 
 $roleUtilisateur = $objectInstancier->getInstance(RoleUtilisateur::class);

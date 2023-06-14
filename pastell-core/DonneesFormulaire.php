@@ -1,6 +1,8 @@
 <?php
 
 use Pastell\Configuration\ElementType;
+use Pastell\Storage\StorageInterface;
+use Pastell\Utilities\Identifier\UuidGenerator;
 
 /**
  * Gestion des données de formulaire à partir d'un fichier YML de type clé:valeur
@@ -34,8 +36,14 @@ class DonneesFormulaire
      * @param DocumentType $documentType
      * @param YMLLoader|null $ymlLoader
      */
-    public function __construct($filePath, DocumentType $documentType, YMLLoader $ymlLoader = null)
-    {
+    public function __construct(
+        $filePath,
+        DocumentType $documentType,
+        YMLLoader $ymlLoader = null,
+        private readonly bool $useVaultForPasswordStorage,
+        private readonly StorageInterface $passwordStorage,
+        private readonly UuidGenerator $uuidGenerator,
+    ) {
         $this->filePath = $filePath;
         $this->documentType = $documentType;
         $this->onChangeAction = [];
