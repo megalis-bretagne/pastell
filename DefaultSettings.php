@@ -276,3 +276,16 @@ if (!defined("S3_BUCKET_JOURNAL")) {
 if (!defined("USE_EXTERNAL_STORAGE_FOR_JOURNAL_PROOF")) {
     define("USE_EXTERNAL_STORAGE_FOR_JOURNAL_PROOF", false);
 }
+
+// Password storage configuration for Vault
+if (!defined('USE_VAULT_FOR_PASSWORD_STORAGE')) {
+    define('USE_VAULT_FOR_PASSWORD_STORAGE', false);
+}
+
+if (!defined('VAULT_URL')) {
+    define('VAULT_URL', 'http://vault:8200');
+}
+
+if (!defined('VAULT_TOKEN')) {
+    define('VAULT_TOKEN', 'tdctoken');
+}

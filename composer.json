@@ -29,6 +29,7 @@
     "ext-zip": "^1.19",
     "apereo/phpcas": "^1.4",
     "aws/aws-sdk-php": "^3.263",
+    "csharpru/vault-php": "^4.3",
     "dragonmantank/cron-expression": "^3.1",
     "erusev/parsedown": "^1.7",
     "ezyang/htmlpurifier": "^4.13",
