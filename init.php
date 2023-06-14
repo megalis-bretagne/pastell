@@ -58,6 +58,11 @@ $objectInstancier->setInstance('cache_ttl_in_seconds', CACHE_TTL_IN_SECONDS);
 $objectInstancier->setInstance('disable_job_queue', DISABLE_JOB_QUEUE);
 $objectInstancier->setInstance('disable_journal_horodatage', DISABLE_JOURNAL_HORODATAGE);
 
+$objectInstancier->setInstance(IdentifierGeneratorInterface::class, new PasswordGenerator());
+if (USE_UUID_FOR_DOCUMENT) {
+    $objectInstancier->setInstance(IdentifierGeneratorInterface::class, new UuidGenerator());
+}
+
 $id_u_journal = 0;
 if ($objectInstancier->getInstance(Authentification::class)->isConnected()) {
     $id_u_journal = $objectInstancier->getInstance(Authentification::class)->getId();
