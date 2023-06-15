@@ -58,7 +58,7 @@ class PastellDaemon
                 $this->jobQueueSQL->lock($info['id_job']);
                 $workerSQL->error(
                     $info['id_worker'],
-                    "Message du job master : ce worker ne s'est pas terminé correctement"
+                    "Message du gestionnaire de tâches : ce travail ne s'est pas terminé correctement"
                 );
                 $this->logger->error('Daemon detects a dead worker', $info);
             }
@@ -85,12 +85,12 @@ class PastellDaemon
         }
 
         if (! $job->isTypeOK()) {
-            throw new Exception("Ce type de job n'est pas traité par ce worker");
+            throw new Exception("Ce type de travail n'est pas traité par tâche automatique");
         }
 
         $another_worker_info = $this->workerSQL->getRunningWorkerInfo($id_job);
         if ($another_worker_info) {
-            throw new Exception("Le job $id_job est déjà attaché au worker  #{$another_worker_info['id_worker']}");
+            throw new Exception("Le travail $id_job est déjà attaché à la tâche automatique  #{$another_worker_info['id_worker']}");
         }
 
         //Le master lock le job jusqu'à ce que son worker le délock pour éviter que le master ne sélectionne à nouveau
@@ -150,11 +150,11 @@ class PastellDaemon
         $this->logger->info(sprintf('Worker %s looks for job %s', getmypid(), $id_job));
         $job = $this->jobQueueSQL->getJob($id_job);
         if (! $job) {
-            throw new Exception("Aucun job trouvé pour l'id_job $id_job");
+            throw new Exception("Aucun travail trouvé pour l'id_job $id_job");
         }
 
         if (! $job->isTypeOK()) {
-            throw new Exception("Ce type de job n'est pas traité par ce worker");
+            throw new Exception("Ce type de travail n'est pas traité par tâche automatique");
         }
 
         $this->logger->pushProcessor(function ($record) use ($job) {
@@ -166,7 +166,7 @@ class PastellDaemon
 
         $another_worker_info = $workerSQL->getRunningWorkerInfo($id_job);
         if ($another_worker_info) {
-            throw new Exception("Le job $id_job est déjà attaché au worker  #{$another_worker_info['id_worker']}");
+            throw new Exception("Le travail $id_job est déjà attaché à la tâche automatique  #{$another_worker_info['id_worker']}");
         }
 
         $pid = getmypid();
@@ -213,7 +213,7 @@ class PastellDaemon
                 $id_worker
             );
         } else {
-            throw new Exception("Type de job {$job->type} inconnu");
+            throw new Exception("Type de travail {$job->type} inconnu");
         }
 
         $workerSQL->success($id_worker);

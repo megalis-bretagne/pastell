@@ -41,7 +41,7 @@ class MissingModulesCheck implements CheckInterface
     private function checkMissingModules(): HealthCheckItem
     {
         $missingModules = $this->getMissingModules();
-        $result = empty($missingModules) ? 'aucun' : implode(', ', $missingModules);
+        $result = empty($missingModules) ? 'Aucun' : implode(', ', $missingModules);
         return (new HealthCheckItem('Type(s) de dossier manquant(s)', $result))
             ->setSuccess(empty($missingModules));
     }

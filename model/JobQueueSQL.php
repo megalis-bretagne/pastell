@@ -151,10 +151,17 @@ class JobQueueSQL extends SQL
         return $info;
     }
 
-    public function getNbLockSinceOneHour()
+    public function getNbLockSinceOneHour(): ?int
     {
         $last_hour = date("Y-m-d H:i:s", strtotime("-1 hour"));
         $sql = "SELECT count(*) FROM job_queue WHERE is_lock=1 AND lock_since < ?";
+        return $this->queryOne($sql, $last_hour);
+    }
+
+    public function getMaxLastTryOneHourLate(): ?string
+    {
+        $last_hour = date("Y-m-d H:i:s", strtotime("-1hour"));
+        $sql = "SELECT MAX(last_try) FROM job_queue WHERE next_try < ? AND nb_try > 0 AND is_lock=0";
         return $this->queryOne($sql, $last_hour);
     }
 

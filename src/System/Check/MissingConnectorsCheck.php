@@ -26,7 +26,7 @@ class MissingConnectorsCheck implements CheckInterface
     private function checkMissingConnectors(): HealthCheckItem
     {
         $missingConnectors = $this->connecteurFactory->getManquant();
-        $result = empty($missingConnectors) ? 'aucun' : implode(', ', $missingConnectors);
+        $result = empty($missingConnectors) ? 'Aucun' : implode(', ', $missingConnectors);
         return (new HealthCheckItem('Connecteur(s) manquant(s)', $result))
             ->setSuccess(empty($missingConnectors));
     }

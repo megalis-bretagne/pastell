@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+/** @deprecated Since 4.0.3, Use app:daemon:notify-check command instead */
+trigger_error('Since 4.0.3, Use app:daemon:notify-check', E_USER_DEPRECATED);
+
 // TODO a mettre dans le HEALTHCHECK (arrêt du démon) et revoir la gestion des connecteurs suspendus
 
 use Pastell\Mailer\Mailer;
