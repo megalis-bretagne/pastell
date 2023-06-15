@@ -33,7 +33,7 @@ class DaemonCheck implements CheckInterface
                 $daemonResult = sprintf(
                     "%d %s depuis plus d'une heure.",
                     $nbLock,
-                    $nbLock > 1 ? 'travaux semblent suspendus' : 'travail semble suspendu'
+                    $nbLock > 1 ? 'travaux sont suspendus' : 'travail est suspendu'
                 );
                 $success = false;
             }

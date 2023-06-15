@@ -338,13 +338,7 @@
             </tr>
             <tr>
                 <th scope="row">{{ checkDaemon.label }}</th>
-                <td>
-                    {% if checkDaemon.isSuccess() %}
-                        <strong style='color:green'>{{ checkDaemon.result }}</strong>
-                    {% else %}
-                        <strong style='color:red'>{{ checkDaemon.result }}</strong>
-                    {% endif %}
-                </td>
+                <td>{{ checkDaemon.result }}</td>
             </tr>
             <tr>
                 <th scope="row">{{ checkMissingConnectors.label }}</th>
