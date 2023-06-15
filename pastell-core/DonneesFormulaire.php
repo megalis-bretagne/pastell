@@ -1092,7 +1092,6 @@ class DonneesFormulaire
             str_contains($this->id_d, DonneesFormulaireFactory::ID_CONNECTEUR)
         ) {
             foreach ($this->getFormulaire()->getFields() as $field) {
-
                 if ($field->getType() === 'password' && ($value = $this->get($field->getName())) !== '') {
                     $passwordId = $this->fichierCleValeur->getYmlInfo()[$field->getName()];
                     if ($toSave) {
