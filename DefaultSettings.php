@@ -287,5 +287,9 @@ if (!defined('VAULT_URL')) {
 }
 
 if (!defined('VAULT_TOKEN')) {
-    define('VAULT_TOKEN', 'tdctoken');
+    define('VAULT_TOKEN', 'vaultToken');
+}
+
+if (!defined('VAULT_UNSEAL_KEY')) {
+    define('VAULT_UNSEAL_KEY', 'vaultUnsealKey');
 }
