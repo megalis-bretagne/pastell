@@ -568,4 +568,12 @@ class DocumentAPIControllerTest extends PastellTestCase
             ['iparapheur_sous_type' => 'test']
         );
     }
+
+    public function testEditActionWithFileInputWithStringValue()
+    {
+        $id_d = $this->createTestDocument();
+        $this->expectException('DonneesFormulaireException');
+        $this->expectExceptionMessage("Le champ 'fichier' n'est pas autorisé sur un PATCH");
+        $this->getInternalAPI()->patch("entite/1/document/$id_d", ['fichier' => 'toto']);
+    }
 }

@@ -449,11 +449,18 @@ class DonneesFormulaire
         $this->saveDataFile();
     }
 
+    /**
+     * @throws DonneesFormulaireException
+     */
     public function setTabDataVerif(array $input_field)
     {
         $allField = $this->getFormulaire()->getFieldsList();
         foreach ($input_field as $field_name => $value) {
             if (isset($allField[$field_name])) {
+                if ($allField[$field_name]->getType() === 'file') {
+                    $this->lastError = "Le champ '$field_name' n'est pas autorisé sur un PATCH";
+                    throw new DonneesFormulaireException($this->lastError);
+                }
                 if (! $this->isEditable($field_name)) {
                     continue;
                 }

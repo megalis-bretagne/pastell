@@ -5,6 +5,10 @@
 - L'action `Extraction de l'archive` étant automatique, le bouton n'est plus visible pour le flux `Pièces de marchés par étapes` #1835
 - Il est possible de générer des UUID à la place des 7 caractères actuels pour les identifiants des nouveaux dossiers #1098
 
+## Corrections
+
+- La saisie de texte dans un champ de type `fichier` à la création d'un dossier sur API provoque un message d'erreur #1780
+
 # [4.0.3] - 2023-06-12
 
 ***Cette version nécessite une mise à jour du générateur SEDA en 1.0.1***
