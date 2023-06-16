@@ -7,7 +7,6 @@ class IParapheurUnitTest extends PastellTestCase
     public const REPONSE_ARCHIVE_KO = '{"MessageRetour":{"codeRetour":"KO","message":"Dossier 201806111713 TESTA introuvable.","severite":"ERROR"}}';
 
 
-
     /** @var  DonneesFormulaire */
     private $donneesFormulaire;
 
@@ -23,11 +22,11 @@ class IParapheurUnitTest extends PastellTestCase
     }
 
 
-    private function getIParapheurConnecteur($soapClient = null)
+    private function getIParapheurConnecteur(SoapClient $soapClient = null): IParapheur
     {
         $soapClientFactory = $this->createMock(SoapClientFactory::class);
 
-        if (! $soapClient) {
+        if ($soapClient === null) {
             $soapClient = $this->createMock(SoapClient::class);
 
             $soapClient->expects($this->any())
@@ -48,6 +47,7 @@ class IParapheurUnitTest extends PastellTestCase
         $collectiviteProperties->setData('iparapheur_wsdl', "http://test");
         $collectiviteProperties->setData('iparapheur_type', "Actes");
         $iParapheur->setConnecteurConfig($collectiviteProperties);
+        $iParapheur->setDataDir($this->getObjectInstancier()->getInstance('data_dir'));
 
         $iParapheur->setLogger($this->getLogger());
         return $iParapheur;
@@ -82,7 +82,7 @@ class IParapheurUnitTest extends PastellTestCase
 
     public function testMetadataMultipleValue()
     {
-        $this->assertEquals(['bar' => 'value','buz' => 'value'], $this->callWithMetadata("foo:bar,baz:buz"));
+        $this->assertEquals(['bar' => 'value', 'buz' => 'value'], $this->callWithMetadata("foo:bar,baz:buz"));
     }
 
     public function testMetadataFailded()
@@ -152,7 +152,6 @@ class IParapheurUnitTest extends PastellTestCase
 
     public function sendDossierProvider()
     {
-
         $fileToSign = new FileToSign();
         $fileToSign->type = 'TYPE';
         $fileToSign->sousType = 'SOUS-TYPE';
@@ -171,7 +170,9 @@ class IParapheurUnitTest extends PastellTestCase
         $fileToSign2->document = new Fichier();
         $fileToSign2->document->filename = 'nom fichier principal';
         $fileToSign2->document->filepath = '/path/to/file';
-        $fileToSign2->document->content = file_get_contents(__DIR__ . '/../../module/helios-generique/fixtures/HELIOS_SIMU_ALR2_1496987735_826268894.xml');
+        $fileToSign2->document->content = file_get_contents(
+            __DIR__ . '/../../module/helios-generique/fixtures/HELIOS_SIMU_ALR2_1496987735_826268894.xml'
+        );
         $fileToSign2->document->contentType = 'application/xml';
         $fileToSign2->visualPdf = new Fichier();
         $fileToSign2->visualPdf->content = 'visual pdf content';
@@ -183,8 +184,8 @@ class IParapheurUnitTest extends PastellTestCase
         $annexe1->contentType = 'application/pdf';
         $fileToSign2->annexes[] = $annexe1;
         $fileToSign2->metadata = [
-          'metadata_iparapheur' => 'value pastell',
-          'metadata_iparapheur2' => 'value pastell2',
+            'metadata_iparapheur' => 'value pastell',
+            'metadata_iparapheur2' => 'value pastell2',
         ];
 
         return [
@@ -209,7 +210,9 @@ class IParapheurUnitTest extends PastellTestCase
                     'SousType' => 'SOUS-TYPE',
                     'DossierID' => '1234-abcd',
                     'DocumentPrincipal' => [
-                        '_' => file_get_contents(__DIR__ . '/../../module/helios-generique/fixtures/HELIOS_SIMU_ALR2_1496987735_826268894.xml'),
+                        '_' => file_get_contents(
+                            __DIR__ . '/../../module/helios-generique/fixtures/HELIOS_SIMU_ALR2_1496987735_826268894.xml'
+                        ),
                         'contentType' => 'application/xml'
                     ],
                     'Visibilite' => 'SERVICE',
@@ -260,7 +263,11 @@ class IParapheurUnitTest extends PastellTestCase
             ->method('__call')
             ->willReturnCallback(function ($soapMethod, $arguments) use ($expectedDataArray) {
                 $this->assertSame([$expectedDataArray], $arguments);
-                return json_decode(json_encode(['MessageRetour' => ['severite' => 'severite', 'message' => 'message', 'codeRetour' => 'OK']]));
+                return json_decode(
+                    json_encode(
+                        ['MessageRetour' => ['severite' => 'severite', 'message' => 'message', 'codeRetour' => 'OK']]
+                    )
+                );
             });
         $iParapheur = $this->getIParapheurConnecteur($soapClient);
 
@@ -274,11 +281,11 @@ class IParapheurUnitTest extends PastellTestCase
             ->method('__call')
             ->willReturnCallback(function ($soapMethod, $arguments) {
                 $this->assertSame('GetListeSousTypes', $soapMethod);
-                return json_decode(json_encode(['SousType' => ['BJ','Bordereau depense']]));
+                return json_decode(json_encode(['SousType' => ['BJ', 'Bordereau depense']]));
             });
         $iParapheur = $this->getIParapheurConnecteur($soapClient);
 
-        $this->assertEquals(['BJ','Bordereau depense'], $iParapheur->getSousType());
+        $this->assertEquals(['BJ', 'Bordereau depense'], $iParapheur->getSousType());
     }
 
     public function testGestSousTypeFailed()
@@ -299,18 +306,20 @@ class IParapheurUnitTest extends PastellTestCase
     /**
      * @throws UnrecoverableException
      */
-    public function testSendDocumentTest()
+    public function testSendDocumentTest(): void
     {
         $soapClient = $this->createMock(SoapClient::class);
         $soapClient->expects($this->any())
             ->method('__call')
             ->willReturnCallback(function ($soapMethod, $arguments) {
-                if ($soapMethod == "GetListeSousTypes") {
-                    return json_decode(json_encode(['SousType' => ['Deliberation','document']]));
+                if ($soapMethod === 'GetListeSousTypes') {
+                    return json_decode(json_encode(['SousType' => ['Deliberation', 'document']]));
                 }
-                if ($soapMethod == "CreerDossier") {
+                if ($soapMethod === 'CreerDossier') {
                     $this->assertStringEqualsFile(
-                        __DIR__ . "/../../../../connecteur/iParapheur/data-exemple/test-pastell-i-parapheur.pdf",
+                        $this->getObjectInstancier()->getInstance(
+                            'data_dir'
+                        ) . '/connector/iparapheur/test-pastell-i-parapheur.pdf',
                         $arguments[0]['DocumentPrincipal']['_']
                     );
                     $this->assertSame("Deliberation", $arguments[0]['SousType']);

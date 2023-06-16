@@ -4,8 +4,8 @@ class TypeDossierTdtActesTest extends PastellTestCase
 {
     public const TDT_ACTES_ONLY = 'tdt-actes-only';
 
-    /** @var TypeDossierLoader */
-    private $typeDossierLoader;
+    private TypeDossierLoader $typeDossierLoader;
+    private string $dataDir;
 
     /**
      * @throws Exception
@@ -14,6 +14,7 @@ class TypeDossierTdtActesTest extends PastellTestCase
     {
         parent::setUp();
         $this->typeDossierLoader = $this->getObjectInstancier()->getInstance(TypeDossierLoader::class);
+        $this->dataDir = $this->getObjectInstancier()->getInstance('data_dir');
     }
 
     protected function tearDown(): void
@@ -23,21 +24,28 @@ class TypeDossierTdtActesTest extends PastellTestCase
     }
 
     /**
+     * @throws TypeDossierException
+     * @throws NotFoundException
+     * @throws DonneesFormulaireException
      * @throws Exception
      */
-    public function testEtapeTdtActes()
+    public function testEtapeTdtActes(): void
     {
         $this->typeDossierLoader->createTypeDossierDefinitionFile(self::TDT_ACTES_ONLY);
 
+        $info_connecteur = $this->createConnector('fakeTdt', 'Bouchon Tdt');
 
-        $info_connecteur = $this->createConnector("fakeTdt", "Bouchon Tdt");
+        $connecteurInfo = $this->getDonneesFormulaireFactory()->getConnecteurEntiteFormulaire(
+            $info_connecteur['id_ce']
+        );
 
-        $connecteurInfo = $this->getDonneesFormulaireFactory()->getConnecteurEntiteFormulaire($info_connecteur['id_ce']);
+        $connecteurInfo->addFileFromCopy(
+            'classification_file',
+            'classifiction.xml',
+            $this->dataDir . '/connector/fakeTdt/classification.xml'
+        );
 
-        $connecteurInfo->addFileFromCopy('classification_file', 'classifiction.xml', __DIR__ . "/../../../../connecteur/fakeTdt/fixtures/classification.xml");
-
-
-        $this->associateFluxWithConnector($info_connecteur['id_ce'], self::TDT_ACTES_ONLY, "TdT");
+        $this->associateFluxWithConnector($info_connecteur['id_ce'], self::TDT_ACTES_ONLY, 'TdT');
 
         $info = $this->createDocument(self::TDT_ACTES_ONLY);
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($info['id_d']);

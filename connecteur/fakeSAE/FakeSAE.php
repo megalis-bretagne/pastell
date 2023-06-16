@@ -8,7 +8,6 @@ use Pastell\Seda\AsalaeSedaHelper;
 class FakeSAE extends SAEConnecteur
 {
     public const CONNECTEUR_ID = 'fakeSAE';
-    private const FIXTURE = __DIR__ . '/fixtures/%s/';
     private const SEDA_VERSION = [
         1 => 'seda-1.0',
         2 => 'seda-2.1',
@@ -36,8 +35,12 @@ class FakeSAE extends SAEConnecteur
 
     private function getFixture(string $name): string
     {
-        return sprintf(self::FIXTURE, self::SEDA_VERSION[$this->sedaVersion])
-            . '/' . self::FILENAME[$name];
+        return \sprintf(
+            '%s/connector/fakeSae/%s/%s',
+            $this->getDataDir(),
+            self::SEDA_VERSION[$this->sedaVersion],
+            self::FILENAME[$name]
+        );
     }
 
     /**

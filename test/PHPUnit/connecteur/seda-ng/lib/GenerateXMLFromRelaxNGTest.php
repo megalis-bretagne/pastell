@@ -56,11 +56,11 @@ class GenerateXMLFromRelaxNGTest extends TestCase
         $this->assertEquals('AttributeValue', $domElement->getAttribute("AttributeKey"));
     }
 
-    public function testBigFile()
+    public function testBigFile(): void
     {
-        $relaxng_path = __DIR__ . "/../fixtures/EMEG_PROFIL_PES_0002_v1_schema.rng";
+        $relaxng_path = __DIR__ . '/../fixtures/EMEG_PROFIL_PES_0002_v1_schema.rng';
         $xml = $this->relaxNgGenerateXML->generateFromRelaxNG($relaxng_path);
-        $sedaValidation = new SedaValidation();
+        $sedaValidation = new SedaValidation(PASTELL_PATH . '/data');
         $result = $sedaValidation->validateRelaxNG($xml, $relaxng_path);
         $last_errors = $sedaValidation->getLastErrors();
         $this->assertEmpty($last_errors);

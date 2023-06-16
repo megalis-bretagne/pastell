@@ -77,7 +77,7 @@ class SystemControlerTest extends ControlerTestCase
             self::fail();
         } catch (LastMessageException $e) {
             self::assertStringContainsString(
-                " Un email a été envoyé à l'adresse  : test@libriciel.net",
+                " Un email a été envoyé à l'adresse : test@libriciel.net",
                 $e->getMessage()
             );
         }

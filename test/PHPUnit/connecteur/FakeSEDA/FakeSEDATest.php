@@ -8,12 +8,13 @@ class FakeSEDATest extends PastellTestCase
     public function testCoverAll(): void
     {
         $fakeSEDA = new FakeSEDA();
+        $fakeSEDA->setDataDir($this->getObjectInstancier()->getInstance('data_dir'));
         $donnesFormulaire = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
         $fakeSEDA->setConnecteurConfig($donnesFormulaire);
         $fluxData = new FluxDataSedaDefault($donnesFormulaire);
 
         $this->assertStringEqualsFile(
-            PASTELL_PATH . '/connecteur/FakeSEDA/fixtures/bordereau.xml',
+            $this->getObjectInstancier()->getInstance('data_dir') . '/connector/fakeSeda/bordereau.xml',
             $fakeSEDA->getBordereau($fluxData)
         );
 

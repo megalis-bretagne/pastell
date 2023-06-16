@@ -20,14 +20,26 @@ class HorodateurPastell extends Horodateur
     {
         $this->opensslTSWrapper->setHashAlgorithm('sha256');
         $timestampRequest = $this->opensslTSWrapper->getTimestampQuery($data);
-        $config_file = __DIR__ . "/data/openssl-tsa.cnf";
-        return $this->opensslTSWrapper->createTimestampReply($timestampRequest, $this->signerCertificate, $this->signerKey, $this->signerKeyPassword, $config_file);
+        $config_file = $this->getDataDir() . '/connector/horodateur/openssl-tsa.cnf';
+        return $this->opensslTSWrapper->createTimestampReply(
+            $timestampRequest,
+            $this->signerCertificate,
+            $this->signerKey,
+            $this->signerKeyPassword,
+            $config_file
+        );
     }
 
     public function verify($data, $token)
     {
-        $config_file = __DIR__ . "/data/openssl-tsa.cnf";
-        $result = $this->opensslTSWrapper->verify($data, $token, $this->ca_certificate, $this->signerCertificate, $config_file);
+        $config_file = $this->getDataDir() . '/connector/horodateur/openssl-tsa.cnf';
+        $result = $this->opensslTSWrapper->verify(
+            $data,
+            $token,
+            $this->ca_certificate,
+            $this->signerCertificate,
+            $config_file
+        );
         if (!$result) {
             throw new Exception($this->opensslTSWrapper->getLastError());
         }

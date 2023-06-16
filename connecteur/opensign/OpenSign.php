@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @deprecated 4.0.4, will be removed in 5.0
+ */
 class OpenSign extends Horodateur
 {
     public const DEFAULT_TIMEOUT = 2;
@@ -49,7 +52,10 @@ class OpenSign extends Horodateur
 
     private function getSoapClient()
     {
-        $soapClient = $this->soapClientFactory->getInstance($this->wsdl, ['connection_timeout' => $this->opensign_timeout]);
+        $soapClient = $this->soapClientFactory->getInstance(
+            $this->wsdl,
+            ['connection_timeout' => $this->opensign_timeout]
+        );
         return $soapClient;
     }
 
@@ -65,9 +71,15 @@ class OpenSign extends Horodateur
 
     public function verify($data, $token)
     {
-        $config_file = __DIR__ . "/data/openssl-tsa.cnf";
-        $result = $this->opensslTSWrapper->verify($data, $token, $this->opensign_ca, $this->opensign_x509, $config_file);
-        if (! $result) {
+        $config_file = $this->getDataDir() . '/connector/horodateur/openssl-tsa.cnf';
+        $result = $this->opensslTSWrapper->verify(
+            $data,
+            $token,
+            $this->opensign_ca,
+            $this->opensign_x509,
+            $config_file
+        );
+        if (!$result) {
             throw new Exception($this->opensslTSWrapper->getLastError());
         }
         return $result;

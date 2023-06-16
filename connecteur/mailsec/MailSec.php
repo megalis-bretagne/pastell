@@ -56,12 +56,10 @@ class MailSec extends MailsecConnecteur
     public function processMessageItem(string $message, string $link): string
     {
         $docDonneesFormulaire = $this->getDocDonneesFormulaire();
-        if ($docDonneesFormulaire) {
-            $titre = $docDonneesFormulaire->getTitre();
-            $message = $this->replace(self::TITRE_REPLACEMENT_REGEXP, $titre, $message);
-            $message = $this->replace(self::LINK_REPLACEMENT_REGEXP, $link, $message);
-            $message = $this->replaceFluxElement($message);
-        }
+        $titre = $docDonneesFormulaire->getTitre();
+        $message = $this->replace(self::TITRE_REPLACEMENT_REGEXP, $titre, $message);
+        $message = $this->replace(self::LINK_REPLACEMENT_REGEXP, $link, $message);
+        $message = $this->replaceFluxElement($message);
         $connecteur_info = $this->getConnecteurInfo();
         $entite_info = $this->entiteSQL->getInfo($connecteur_info['id_e'] ?? 0);
 
@@ -191,7 +189,7 @@ class MailSec extends MailsecConnecteur
                 ->context([]);
         } else {
             // Hugly hack
-            if (! str_contains($message, $link) && $mailPastellId) {
+            if (!str_contains($message, $link) && $mailPastellId) {
                 $message .= "\n$link";
             }
             $templatedEmail->text($message);
