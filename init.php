@@ -93,8 +93,8 @@ if (USE_VAULT_FOR_PASSWORD_STORAGE) {
     $donneesFormulaireFactory->setPasswordStorage(new VaultAdapter(
         VAULT_URL,
         VAULT_UNSEAL_KEY,
-        VAULT_TOKEN)
-    );
+        VAULT_TOKEN
+    ));
 }
 
 try {
