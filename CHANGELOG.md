@@ -1,3 +1,9 @@
+# [4.0.4] - 2023-06-23
+
+## Corrections
+
+- Gestion des URL non standards des mails sécurisés de Pastell v3
+
 # [4.0.3] - 2023-06-12
 
 ***Cette version nécessite une mise à jour du générateur SEDA en 1.0.1***
