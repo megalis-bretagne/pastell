@@ -8,6 +8,7 @@
 ## Corrections
 
 - La saisie de texte dans un champ de type `fichier` à la création d'un dossier sur API provoque un message d'erreur #1780
+- Il n'était pas possible d'envoyer un fichier de métadonnées JSON à iparapheur avec le flux `Document PDF` #1868
 
 # [4.0.3] - 2023-06-12
 
