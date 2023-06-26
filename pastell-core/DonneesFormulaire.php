@@ -1116,7 +1116,7 @@ class DonneesFormulaire
         $value = $this->get($field->getName());
         if ($value !== '' && $value !== false) {
             $passwordId = '';
-            if (in_array($field->getName(), $this->fichierCleValeur->getYmlInfo())) {
+            if (array_key_exists($field->getName(), $this->fichierCleValeur->getYmlInfo())) {
                 $passwordId = $this->fichierCleValeur->getYmlInfo()[$field->getName()];
             }
             if ($action === 'save') {
