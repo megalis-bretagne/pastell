@@ -40,7 +40,7 @@ class DonneesFormulaire
         $filePath,
         DocumentType $documentType,
         YMLLoader $ymlLoader = null,
-        private readonly bool $useVaultForPasswordStorage = false,
+        private readonly bool $useExternalStorageForPasswordConnector = false,
         private readonly ?StorageInterface $passwordStorage = null,
         private readonly ?UuidGenerator $uuidGenerator = null,
     ) {
@@ -1088,7 +1088,7 @@ class DonneesFormulaire
     private function checkPasswordFieldsToSaveOrDelete(bool $toSave): void
     {
         if (
-            $this->useVaultForPasswordStorage &&
+            $this->useExternalStorageForPasswordConnector &&
             str_contains($this->id_d, DonneesFormulaireFactory::ID_CONNECTEUR)
         ) {
             foreach ($this->getFormulaire()->getFields() as $field) {
@@ -1114,7 +1114,7 @@ class DonneesFormulaire
     private function checkPasswordValueToGet(): void
     {
         if (
-            $this->useVaultForPasswordStorage &&
+            $this->useExternalStorageForPasswordConnector &&
             str_contains($this->filePath, DonneesFormulaireFactory::ID_CONNECTEUR)
         ) {
             foreach ($this->getFormulaire()->getFields() as $field) {

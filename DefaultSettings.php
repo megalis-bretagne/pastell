@@ -278,8 +278,8 @@ if (!defined("USE_EXTERNAL_STORAGE_FOR_JOURNAL_PROOF")) {
 }
 
 // Password storage configuration for Vault
-if (!defined('USE_VAULT_FOR_PASSWORD_STORAGE')) {
-    define('USE_VAULT_FOR_PASSWORD_STORAGE', false);
+if (!defined('USE_EXTERNAL_STORAGE_FOR_PASSWORD_CONNECTOR')) {
+    define('USE_EXTERNAL_STORAGE_FOR_PASSWORD_CONNECTOR', false);
 }
 
 if (!defined('VAULT_URL')) {
