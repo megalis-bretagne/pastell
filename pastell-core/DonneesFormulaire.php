@@ -1097,7 +1097,7 @@ class DonneesFormulaire
     {
         if (
             $this->useExternalStorageForPasswordConnector &&
-            str_contains($this->id_d, DonneesFormulaireFactory::ID_CONNECTEUR)
+            str_contains($this->filePath, DonneesFormulaireFactory::ID_CONNECTEUR)
         ) {
             foreach ($this->getFormulaire()->getFields() as $field) {
                 if ($field->getType() === 'password') {
