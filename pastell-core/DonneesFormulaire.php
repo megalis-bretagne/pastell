@@ -29,12 +29,17 @@ class DonneesFormulaire
 
     private DocumentIndexor $documentIndexor;
 
+    private const SAVE = 'save';
+    private const DELETE = 'delete';
+    public const FETCH = 'fetch';
+
     /**
      * DonneesFormulaire constructor.
      * @param $filePath string emplacement vers un fichier YML
      *                  contenant les données du document sous la forme de ligne clé:valeur
      * @param DocumentType $documentType
      * @param YMLLoader|null $ymlLoader
+     * @throws Exception
      */
     public function __construct(
         $filePath,
@@ -48,7 +53,7 @@ class DonneesFormulaire
         $this->documentType = $documentType;
         $this->onChangeAction = [];
         $this->fichierCleValeur = new FichierCleValeur($filePath, $ymlLoader);
-        $this->checkPasswordValueToGet();
+        $this->checkConnectorFieldsWithPassword(self::FETCH);
         $this->setOnglet();
         /** @var Field $field */
         foreach ($this->getFormulaire()->getAllFields() as $field) {
@@ -600,9 +605,9 @@ class DonneesFormulaire
 
     private function saveDataFile($setModifiedToFalse = true)
     {
-        $this->checkPasswordFieldsToSaveOrDelete(true);
+        $this->checkConnectorFieldsWithPassword(self::SAVE);
         $this->fichierCleValeur->save();
-        $this->checkPasswordValueToGet();
+        $this->checkConnectorFieldsWithPassword(self::FETCH);
         if ($setModifiedToFalse) {
             $this->isModified = false;
         }
@@ -827,7 +832,7 @@ class DonneesFormulaire
     public function delete(): void
     {
         $file_to_delete = glob($this->filePath . '*');
-        $this->checkPasswordFieldsToSaveOrDelete(false);
+        $this->checkConnectorFieldsWithPassword(self::DELETE);
         foreach ($file_to_delete as $file) {
             unlink($file);
         }
@@ -1085,46 +1090,61 @@ class DonneesFormulaire
         return $fieldSize;
     }
 
-    private function checkPasswordFieldsToSaveOrDelete(bool $toSave): void
+    /**
+     * @throws Exception
+     */
+    private function checkConnectorFieldsWithPassword(string $action): void
     {
         if (
             $this->useExternalStorageForPasswordConnector &&
             str_contains($this->id_d, DonneesFormulaireFactory::ID_CONNECTEUR)
         ) {
             foreach ($this->getFormulaire()->getFields() as $field) {
-                if ($field->getType() === 'password' && ($value = $this->get($field->getName())) !== '') {
-                    $passwordId = $this->fichierCleValeur->getYmlInfo()[$field->getName()];
-                    if ($toSave) {
-                        if ($this->passwordStorage->read($passwordId) === '404 : Bad status received from Vault') {
-                            $passwordId = $this->uuidGenerator->generate();
-                        }
-                        $response = $this->passwordStorage->write($passwordId, $value);
-                        $this->fichierCleValeur->set($field->getName(), $passwordId);
-                    } else {
-                        $response = $this->passwordStorage->delete($passwordId);
-                    }
-                    if ($response === '404 : Bad status received from Vault') {
-                        throw new Exception("Problème d'accès au Vault");
+                if ($field->getType() === 'password') {
+                    if ($action === 'save' || $action === 'delete') {
+                        $this->checkPasswordFieldsToSaveOrDelete($action, $field);
+                    } elseif ($action === 'fetch') {
+                        $this->checkPasswordFieldsToFetch($field);
                     }
                 }
             }
         }
     }
 
-    private function checkPasswordValueToGet(): void
+    private function checkPasswordFieldsToSaveOrDelete(string $action, Field $field): void
     {
-        if (
-            $this->useExternalStorageForPasswordConnector &&
-            str_contains($this->filePath, DonneesFormulaireFactory::ID_CONNECTEUR)
-        ) {
-            foreach ($this->getFormulaire()->getFields() as $field) {
-                if ($field->getType() === 'password') {
-                    $passwordId = $this->fichierCleValeur->getYmlInfo()[$field->getName()] ?? '';
-                    $password = $this->passwordStorage->read($passwordId);
-                    if ($password !== '404 : Bad status received from Vault') {
-                        $this->fichierCleValeur->set($field->getName(), $password);
-                    }
+        $value = $this->get($field->getName());
+        if ($value !== '' && $value !== false) {
+            $passwordId = '';
+            if (in_array($field->getName(), $this->fichierCleValeur->getYmlInfo())) {
+                $passwordId = $this->fichierCleValeur->getYmlInfo()[$field->getName()];
+            }
+            if ($action === 'save') {
+                if (
+                    $passwordId === ''
+                    || $this->passwordStorage->read($passwordId) === '404 : Bad status received from Vault'
+                ) {
+                    $passwordId = $this->uuidGenerator->generate();
                 }
+                $response = $this->passwordStorage->write($passwordId, $value);
+                $this->fichierCleValeur->set($field->getName(), $passwordId);
+            } else {
+                $response = $this->passwordStorage->delete($passwordId);
+            }
+            if ($response === '404 : Bad status received from Vault') {
+                throw new Exception("Problème d'accès au Vault");
+            }
+        }
+    }
+
+    private function checkPasswordFieldsToFetch($field): void
+    {
+        $info = $this->fichierCleValeur->getYmlInfo();
+        if ($info) {
+            $passwordId = $info[$field->getName()];
+            $password = $this->passwordStorage->read($passwordId);
+            if ($password !== '404 : Bad status received from Vault') {
+                $this->fichierCleValeur->set($field->getName(), $password);
             }
         }
     }
