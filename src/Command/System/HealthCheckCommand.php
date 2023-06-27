@@ -221,6 +221,7 @@ class HealthCheckCommand extends Command
         $databaseSchema = $this->healthCheck->check(HealthCheck::DATABASE_SCHEMA_CHECK)[0];
         $encodingDatabase = $this->healthCheck->check(HealthCheck::DATABASE_ENCODING_CHECK)[0];
         $crashedTables = $this->healthCheck->check(HealthCheck::CRASHED_TABLES_CHECK)[0];
+        $daemonHealth = $this->healthCheck->check(HealthCheck::DAEMON_CHECK)[0];
         $missingConnectors = $this->healthCheck->check(HealthCheck::MISSING_CONNECTORS_CHECK)[0];
         $missingModules = $this->healthCheck->check(HealthCheck::MISSING_MODULES_CHECK)[0];
 
@@ -228,6 +229,7 @@ class HealthCheckCommand extends Command
             ->addRow([$databaseSchema->label, $this->getResult($databaseSchema)])
             ->addRow([$encodingDatabase->label, $this->getResult($encodingDatabase)])
             ->addRow([$crashedTables->label, $this->getResult($crashedTables)])
+            ->addRow([$daemonHealth->label, $this->getResult($daemonHealth)])
             ->addRow([$missingConnectors->label, $this->getResult($missingConnectors)])
             ->addRow([$missingModules->label, $this->getResult($missingModules)]);
 

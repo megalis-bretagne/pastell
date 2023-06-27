@@ -19,6 +19,7 @@ class HealthCheck
     public const DATABASE_SCHEMA_CHECK = 'DATABASE_SCHEMA_CHECK';
     public const DATABASE_ENCODING_CHECK = 'DATABASE_ENCODING_CHECK';
     public const CRASHED_TABLES_CHECK = 'CRASHED_TABLES_CHECK';
+    public const DAEMON_CHECK = 'DAEMON_CHECK';
     public const MISSING_CONNECTORS_CHECK = 'MISSING_CONNECTORS_CHECK';
     public const MISSING_MODULES_CHECK = 'MISSING_MODULES_CHECK';
 
@@ -46,6 +47,7 @@ class HealthCheck
             self::DATABASE_SCHEMA_CHECK => Check\DatabaseSchemaCheck::class,
             self::DATABASE_ENCODING_CHECK => Check\DatabaseEncodingCheck::class,
             self::CRASHED_TABLES_CHECK => Check\CrashedTablesCheck::class,
+            self::DAEMON_CHECK => Check\DaemonCheck::class,
             self::MISSING_CONNECTORS_CHECK => Check\MissingConnectorsCheck::class,
             self::MISSING_MODULES_CHECK => Check\MissingModulesCheck::class,
             self::DATETIME_CHECK => Check\DatetimeCheck::class

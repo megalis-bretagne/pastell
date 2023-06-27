@@ -54,6 +54,7 @@ class SystemControler extends PastellControler
         $this->setViewParameter('checkDatabaseSchema', $healthCheck->check(HealthCheck::DATABASE_SCHEMA_CHECK)[0]);
         $this->setViewParameter('checkDatabaseEncoding', $healthCheck->check(HealthCheck::DATABASE_ENCODING_CHECK)[0]);
         $this->setViewParameter('checkCrashedTables', $healthCheck->check(HealthCheck::CRASHED_TABLES_CHECK)[0]);
+        $this->setViewParameter('checkDaemon', $healthCheck->check(HealthCheck::DAEMON_CHECK)[0]);
         $this->setViewParameter(
             'checkMissingConnectors',
             $healthCheck->check(HealthCheck::MISSING_CONNECTORS_CHECK)[0]
