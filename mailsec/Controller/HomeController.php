@@ -16,4 +16,10 @@ final class HomeController extends AbstractController
     {
         return $this->redirectToRoute('mailsec_recipient_index', ['key' => $request->get('key')]);
     }
+
+    #[Route('/{path}/index.php', name: 'mailsec_custom_url_path', methods: ['GET'])]
+    public function customUrlPath(Request $request): RedirectResponse
+    {
+        return $this->index($request);
+    }
 }
