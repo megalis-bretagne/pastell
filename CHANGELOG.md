@@ -1,4 +1,4 @@
-# [4.0.4] - 2023-07-10
+# [4.0.5] - 2023-07-10
 
 ## Évolutions
 
@@ -10,6 +10,12 @@
 
 - La saisie de texte dans un champ de type `fichier` à la création d'un dossier sur API provoque un message d'erreur #1780
 - Il n'était pas possible d'envoyer un fichier de métadonnées JSON à iparapheur avec le flux `Document PDF` #1868
+
+# [4.0.4] - 2023-06-23
+
+## Corrections
+
+- Gestion des URL non standards des mails sécurisés de Pastell v3
 
 # [4.0.3] - 2023-06-12
 
