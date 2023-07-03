@@ -52,7 +52,7 @@ final class NotifyCheck extends BaseCommand
             );
             $templatedEmail = (new TemplatedEmail())
                 ->to(...$this->objectInstancier->getInstance('admin_email'))
-                ->subject('[PASTELL] Tâches automatiques')
+                ->subject('[PASTELL] Alerte tâches automatiques')
                 ->text($message);
             $this->pastellMailer->send($templatedEmail);
             if ($this->getIO()->isVerbose()) {
