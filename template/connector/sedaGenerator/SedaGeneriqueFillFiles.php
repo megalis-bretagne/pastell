@@ -52,7 +52,7 @@ if ($node_id) {
                 <i class='fa fa-plus-circle'></i>&nbsp;Ajouter
             </button>
 
-                <table  class="table table-striped">
+                <table class="table table-striped">
                     <tr>
                         <th>Description</th>
                         <th>Expression</th>
@@ -60,7 +60,7 @@ if ($node_id) {
                     </tr>
 
                         <?php foreach ($generateurSedaFillFiles->getFiles($node_id) as $file) : ?>
-                            <tr >
+                            <tr>
                                 <td>
                                     <textarea
                                             name='description_<?php hecho($file['id']) ?>'
@@ -103,14 +103,13 @@ if ($node_id) {
                 </table>
         </div>
 
-
             <div class="box">
                 <h2>Liste des objets d'archives</h2>
                 <button type="submit" class="btn btn-primary inline" name="add-unit" value="root">
                     <i class='fa fa-plus-circle'></i>&nbsp;Ajouter
                 </button>
 
-                <table  class="table table-striped">
+                <table class="table table-striped">
                     <tr>
                         <th>Nom</th>
                         <th>Expression</th>
@@ -124,26 +123,33 @@ if ($node_id) {
                                         name='description_<?php hecho($file['id']) ?>'
                                         id='description_<?php hecho($file['id']) ?>'
                                         cols="40"
-                                        rows="<?php echo max(1, substr_count($file['description'], "\n") + 1); ?>" class="form-control "><?php hecho($file['description']); ?></textarea>
+                                        rows="<?php echo max(1, substr_count($file['description'], "\n") + 1); ?>"
+                                        class="form-control "><?php hecho($file['description']); ?></textarea>
                             </td>
                             <td>
                                 <textarea
                                         name='expression_<?php hecho($file['id']) ?>'
                                         id='expression_<?php hecho($file['id']); ?>'
                                         cols="40"
-                                        rows="<?php echo max(1, substr_count($file['field_expression'], "\n") + 1); ?>" class="form-control"><?php hecho($file['field_expression']); ?></textarea>
+                                        rows="<?php echo max(1, substr_count($file['field_expression'], "\n") + 1); ?>"
+                                        class="form-control"><?php hecho($file['field_expression']); ?></textarea>
                             </td>
                             <td>
-                                <button type="submit" class="btn btn-primary inline" name="up" value="<?php hecho($file['id']) ?>">
+                                <button type="submit" class="btn btn-primary inline" name="up"
+                                        value="<?php hecho($file['id']) ?>">
                                     <em class="fa  fa-caret-square-o-up"></em>
                                 </button>
-                                <button type="submit" class="btn btn-primary inline" name="down" value="<?php hecho($file['id']) ?>">
+                                <button type="submit" class="btn btn-primary inline" name="down"
+                                        value="<?php hecho($file['id']) ?>">
                                     <em class="fa  fa-caret-square-o-down"></em>
                                 </button>
-                                <button type="submit" class="btn btn-primary inline" name="unit-content" value="<?php hecho($file['id']) ?>">
-                                    <em class="fa fa-folder-open"></em>&nbsp;Contenu (<?php echo $generateurSedaFillFiles->countChildNode($file['id']) ?>)
+                                <button type="submit" class="btn btn-primary inline" name="unit-content"
+                                        value="<?php hecho($file['id']) ?>">
+                                    <em class="fa fa-folder-open"></em>&nbsp;Contenu
+                                    (<?php echo $generateurSedaFillFiles->countChildNode($file['id']) ?>)
                                 </button>
-                                <button type="submit" class="btn btn-danger inline" name="delete-unit" value="<?php hecho($file['id']) ?>">
+                                <button type="submit" class="btn btn-danger inline" name="delete-unit"
+                                        value="<?php hecho($file['id']) ?>">
                                     <em class="fa fa-trash"></em>&nbsp;Supprimer
                                 </button>
                             </td>
@@ -156,19 +162,19 @@ if ($node_id) {
             <?php if ($node_id) : ?>
                 <div class="box">
                     <a class="collapse-link" data-toggle="collapse" href="#collapseProperties">
-                        <h2> <i class="fa fa-plus-square"></i>Propriétés spécifiques des objets d'archives</h2>
+                        <h2><i class="fa fa-plus-square"></i>Propriétés spécifiques des objets d'archives</h2>
                     </a>
 
-                    <div class="collapse"   id="collapseProperties">
-                        <table  class="table table-striped">
+                    <div class="collapse" id="collapseProperties">
+                        <table class="table table-striped">
                             <?php foreach ($generateurSedaFillFiles->getArchiveUnitSpecificInfoDefinition() as $specificInfoId => $specifInfo) : ?>
                                 <tr>
                                     <th class="w500">
                                         <?php hecho($specifInfo['libelle']) ?>
                                         <p class="form_commentaire">
-                                        <?php if (!empty($specifInfo['commentaire'])) {
-                                            echo $this->getHTMLPurifier()->purify($specifInfo['commentaire']);
-                                        }?>
+                                            <?php if (!empty($specifInfo['commentaire'])) {
+                                                echo $this->getHTMLPurifier()->purify($specifInfo['commentaire']);
+                                            } ?>
                                         </p>
                                     </th>
                                     <td>
@@ -176,9 +182,8 @@ if ($node_id) {
                                                 class="form-control col-md-12"
                                                 name="<?php hecho($specificInfoId) ?>"
                                                 cols="40"
-                                                rows="<?php echo max(1, substr_count($specific_info[$specificInfoId], "\n") + 1); ?>">
-                                            <?php hecho($specific_info[$specificInfoId])?>
-                                        </textarea>
+                                                rows="<?php echo max(1, substr_count($specific_info[$specificInfoId], "\n") + 1); ?>"
+                                        ><?php hecho($specific_info[$specificInfoId]); ?></textarea>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -199,14 +204,12 @@ if ($node_id) {
 </div>
 
 <?php if ($flux) : ?>
-    <div class="box" >
+    <div class="box">
         <a class="collapse-link" data-toggle="collapse" href="#collapseExample">
-            <h2> <i class="fa fa-plus-square"></i>Liste des éléments du flux <b><?php hecho($flux) ?></b> possibles</h2>
+            <h2><i class="fa fa-plus-square"></i>Liste des éléments du flux <b><?php hecho($flux) ?></b> possibles</h2>
         </a>
 
-        <div class="collapse"   id="collapseExample">
-
-
+        <div class="collapse" id="collapseExample">
             <table class="table table-striped ">
                 <tr>
                     <th class="w200">Identifiant</th>
@@ -227,7 +230,9 @@ if ($node_id) {
         </div>
     </div>
 <?php else : ?>
-    <div class="alert alert-warning">Associer ce connecteur à un seul flux de l'entité pour avoir la liste des éléments disponibles sur ce flux</div>
+    <div class="alert alert-warning">Associer ce connecteur à un seul flux de l'entité pour avoir la liste des éléments
+        disponibles sur ce flux
+    </div>
 <?php endif; ?>
 
 <?php include __DIR__ . "/SedaGeneriqueFillTwigExplanation.php" ?>
