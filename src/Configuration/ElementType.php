@@ -15,4 +15,5 @@ enum ElementType: string
     case TEXTAREA = 'textarea';
     case DATE = 'date';
     case URL = 'url';
+    case MAIL_LIST = 'mail-list';
 }
