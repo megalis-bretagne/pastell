@@ -98,6 +98,7 @@ class DocumentTypeValidation
         $this->validateChamps($typeDefinition, DocumentTypeConfiguration::CHAMPS_RECHERCHE_AVANCEE);
         $this->validateChamps($typeDefinition, DocumentTypeConfiguration::CHAMPS_AFFICHES);
         $this->validateActionConnecteurType($typeDefinition);
+        $this->validateValueWithType($typeDefinition);
 
         if (count($this->errorList) > 0) {
             throw new UnrecoverableException();
@@ -498,6 +499,22 @@ class DocumentTypeValidation
                         $this->errorList[] =  "action:<b>$actionName</b>:connecteur-type-mapping:$key:" .
                             "<b>$elementName</b> n'est pas un élément du formulaire";
                     }
+                }
+            }
+        }
+    }
+
+    private function validateValueWithType(array $typeDefinition)
+    {
+        $formulaireElements = $this->getValues($typeDefinition, DocumentTypeConfiguration::FORMULAIRE);
+        foreach ($formulaireElements as $element) {
+            foreach ($element as $champs) {
+                if (
+                    count($champs[DocumentTypeConfiguration::VALUE]) > 0
+                    && $champs[DocumentTypeConfiguration::TYPE] !== ElementType::SELECT->value
+                ) {
+                    $this->errorList[] =
+                        'La propriété <b>value</b> est réservé pour les éléments de type <b>select</b>';
                 }
             }
         }
