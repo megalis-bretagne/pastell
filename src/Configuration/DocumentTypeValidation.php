@@ -68,6 +68,9 @@ class DocumentTypeValidation
         return $this->errorList;
     }
 
+    /**
+     * @throws UnrecoverableException
+     */
     private function validate(array $typeDefinition): void
     {
         $this->errorList = [];
@@ -81,22 +84,19 @@ class DocumentTypeValidation
         $this->validateOnChange($typeDefinition);
         $this->validateIsEqual($typeDefinition);
         $this->validateReadOnlyContent($typeDefinition);
-        $this->validateRuleAction($typeDefinition, DocumentTypeConfiguration::LAST_ACTION);
-        $this->validateRuleAction($typeDefinition, DocumentTypeConfiguration::NO_ACTION);
-        $this->validateRuleAction($typeDefinition, DocumentTypeConfiguration::HAS_ACTION);
-        $this->validateActionProperties($typeDefinition, DocumentTypeConfiguration::ACTION_AUTOMATIQUE);
-        $this->validateActionProperties(
-            $typeDefinition,
-            DocumentTypeConfiguration::ACCUSE_DE_RECEPTION_ACTION,
-        );
+        $this->validateRuleAction($typeDefinition, RuleElement::LAST_ACTION->value);
+        $this->validateRuleAction($typeDefinition, RuleElement::NO_ACTION->value);
+        $this->validateRuleAction($typeDefinition, RuleElement::HAS_ACTION->value);
+        $this->validateActionProperties($typeDefinition, ActionElement::ACTION_AUTOMATIQUE->value);
+        $this->validateActionProperties($typeDefinition, ActionElement::ACCUSE_DE_RECEPTION_ACTION->value);
         $this->validateEditableContent($typeDefinition);
         $this->validateDepend($typeDefinition);
         $this->validateRuleContent($typeDefinition);
         $this->validateActionSelection($typeDefinition);
         $this->validateRuleTypeIdE($typeDefinition);
         $this->validateActionClass($typeDefinition);
-        $this->validateChamps($typeDefinition, DocumentTypeConfiguration::CHAMPS_RECHERCHE_AVANCEE);
-        $this->validateChamps($typeDefinition, DocumentTypeConfiguration::CHAMPS_AFFICHES);
+        $this->validateChamps($typeDefinition, ModuleElement::CHAMPS_RECHERCHE_AVANCEE->value);
+        $this->validateChamps($typeDefinition, ModuleElement::CHAMPS_AFFICHES->value);
         $this->validateActionConnecteurType($typeDefinition);
         $this->validateValueWithType($typeDefinition);
 
@@ -108,7 +108,7 @@ class DocumentTypeValidation
     private function getAllFormulaireElements(array $typeDefinition): array
     {
         $result = [];
-        foreach ($this->getValues($typeDefinition, DocumentTypeConfiguration::FORMULAIRE) as $onglet => $elementList) {
+        foreach ($this->getValues($typeDefinition, ModuleElement::FORMULAIRE->value) as $onglet => $elementList) {
             if (! $elementList) {
                 $this->errorList[] = 'formulaire:onglet: est vide';
                 continue;
@@ -122,11 +122,11 @@ class DocumentTypeValidation
 
     private function validateOneTitle(array $typeDefinition): void
     {
-        if (!empty($typeDefinition[DocumentTypeConfiguration::FORMULAIRE])) {
+        if (!empty($typeDefinition[ModuleElement::FORMULAIRE->value])) {
             $title = [];
-            foreach ($typeDefinition[DocumentTypeConfiguration::FORMULAIRE] as $onglet => $formulaireProperties) {
+            foreach ($typeDefinition[ModuleElement::FORMULAIRE->value] as $onglet => $formulaireProperties) {
                 foreach ($formulaireProperties as $elementName => $elementProperties) {
-                    if (isset($elementProperties[DocumentTypeConfiguration::TITLE])) {
+                    if (isset($elementProperties[FormulaireElement::TITLE->value])) {
                         $title[] = $elementName;
                     }
                 }
@@ -142,15 +142,15 @@ class DocumentTypeValidation
     {
         $allPageConditionKeys = array_keys($this->getValues(
             $typeDefinition,
-            DocumentTypeConfiguration::PAGE_CONDITION
+            ModuleElement::PAGE_CONDITION->value
         ));
-        $allPageKeys = array_keys($this->getValues($typeDefinition, DocumentTypeConfiguration::FORMULAIRE));
+        $allPageKeys = array_keys($this->getValues($typeDefinition, ModuleElement::FORMULAIRE->value));
         foreach ($allPageConditionKeys as $pageCondition) {
             if (! in_array($pageCondition, $allPageKeys)) {
                 $this->errorList[] = "page-condition:<b>$pageCondition</b> n'est pas une clé de <b>formulaire</b>";
                 continue;
             }
-            foreach ($typeDefinition[DocumentTypeConfiguration::PAGE_CONDITION][$pageCondition] as $element => $test) {
+            foreach ($typeDefinition[ModuleElement::PAGE_CONDITION->value][$pageCondition] as $element => $test) {
                 if (!in_array($element, $this->allFormulaireElements)) {
                     $this->errorList[] = "page-condition:<b>$pageCondition:$element</b> n'est pas "
                         . 'un élément du <b>formulaire</b>';
@@ -171,8 +171,8 @@ class DocumentTypeValidation
     {
         $choiceActionList = $this->getPropertiesValue(
             $typeDefinition,
-            DocumentTypeConfiguration::CHOICE_ACTION,
-            DocumentTypeConfiguration::FORMULAIRE
+            FormulaireElement::CHOICE_ACTION->value,
+            ModuleElement::FORMULAIRE->value
         );
         $this->checkIsAction($typeDefinition, $choiceActionList);
     }
@@ -184,10 +184,10 @@ class DocumentTypeValidation
         }
         $propertiesList = [];
         foreach ($typeDefinition[$element] as $onglet => $properties) {
-            if ($element === DocumentTypeConfiguration::ACTION && !empty($properties[$property])) {
+            if ($element === ModuleElement::ACTION && !empty($properties[$property])) {
                 $propertiesList[] = $this->canonicalizeValue($properties[$property]);
             }
-            if ($element === DocumentTypeConfiguration::FORMULAIRE) {
+            if ($element === ModuleElement::FORMULAIRE) {
                 foreach ($properties as $elementName => $elementProperties) {
                     if (isset($elementProperties[$property])) {
                         $propertiesList[] = $this->canonicalizeValue($elementProperties[$property]);
@@ -208,7 +208,7 @@ class DocumentTypeValidation
 
     private function checkIsAction(array $typeDefinition, array $actionListToCheck): void
     {
-        $allPossibleActionKeys = array_keys($this->getValues($typeDefinition, DocumentTypeConfiguration::ACTION));
+        $allPossibleActionKeys = array_keys($this->getValues($typeDefinition, ModuleElement::ACTION->value));
         $fatalErrorKey = $this->canonicalizeValue(ActionPossible::FATAL_ERROR_ACTION);
         if (! array_key_exists($fatalErrorKey, $allPossibleActionKeys)) {
             $allPossibleActionKeys[] = $fatalErrorKey;
@@ -222,7 +222,7 @@ class DocumentTypeValidation
 
     private function validateRestrictionPack(array $typeDefinition): void
     {
-        $allRestrictionPack = $this->getValues($typeDefinition, DocumentTypeConfiguration::RESTRICTION_PACK);
+        $allRestrictionPack = $this->getValues($typeDefinition, ModuleElement::RESTRICTION_PACK->value);
         foreach ($allRestrictionPack as $restrictionPack) {
             if (!array_key_exists($restrictionPack, $this->packService->getListPack())) {
                 $this->errorList[] = "restriction_pack:<b>$restrictionPack</b> "
@@ -233,7 +233,7 @@ class DocumentTypeValidation
 
     private function validateConnecteur(array $typeDefinition): void
     {
-        $allConnecteur = $this->getValues($typeDefinition, DocumentTypeConfiguration::CONNECTEUR);
+        $allConnecteur = $this->getValues($typeDefinition, ModuleElement::CONNECTEUR->value);
         foreach ($allConnecteur as $connecteur) {
             if (!in_array($connecteur, $this->connecteurDefinitionFiles->getAllType())) {
                 $this->errorList[] = "connecteur:<b>$connecteur</b> n'est défini dans aucun connecteur du système";
@@ -245,8 +245,8 @@ class DocumentTypeValidation
     {
         $onChangeList = $this->getPropertiesValue(
             $typeDefinition,
-            DocumentTypeConfiguration::ONCHANGE,
-            DocumentTypeConfiguration::FORMULAIRE
+            FormulaireElement::ONCHANGE->value,
+            ModuleElement::FORMULAIRE->value
         );
         $this->checkIsAction($typeDefinition, $onChangeList);
     }
@@ -255,8 +255,8 @@ class DocumentTypeValidation
     {
         $isEqualList = $this->getPropertiesValue(
             $typeDefinition,
-            DocumentTypeConfiguration::IS_EQUAL,
-            DocumentTypeConfiguration::FORMULAIRE
+            FormulaireElement::IS_EQUAL->value,
+            ModuleElement::FORMULAIRE->value
         );
         foreach ($isEqualList as $isEqual) {
             if (! in_array($isEqual, $this->allFormulaireElements)) {
@@ -269,8 +269,8 @@ class DocumentTypeValidation
     {
         $readOnlyContentList = $this->getPropertiesValue(
             $typeDefinition,
-            DocumentTypeConfiguration::READ_ONLY_CONTENT,
-            DocumentTypeConfiguration::FORMULAIRE,
+            FormulaireElement::READ_ONLY_CONTENT->value,
+            ModuleElement::FORMULAIRE->value,
         );
         foreach ($readOnlyContentList as $readOnlyContentElement) {
             foreach ($readOnlyContentElement as $name => $prop) {
@@ -290,20 +290,20 @@ class DocumentTypeValidation
 
     private function getElementRuleValue($typeDefinition, $ruleName): array
     {
-        if (empty($typeDefinition[DocumentTypeConfiguration::ACTION])) {
+        if (empty($typeDefinition[ModuleElement::ACTION->value])) {
             return [];
         }
         $propertiesList = [];
 
-        foreach ($typeDefinition[DocumentTypeConfiguration::ACTION] as $actionName => $actionProperties) {
-            if (!empty($actionProperties[DocumentTypeConfiguration::RULE])) {
-                $ruleProperty = $this->findRule($actionProperties[DocumentTypeConfiguration::RULE], $ruleName);
+        foreach ($typeDefinition[ModuleElement::ACTION->value] as $actionName => $actionProperties) {
+            if (!empty($actionProperties[ActionElement::RULE->value])) {
+                $ruleProperty = $this->findRule($actionProperties[ActionElement::RULE->value], $ruleName);
                 if ($ruleProperty) {
                     $propertiesList = array_merge($propertiesList, $ruleProperty);
                 }
             }
         }
-        if ($ruleName !== DocumentTypeConfiguration::CONTENT) {
+        if ($ruleName !== RuleElement::CONTENT->value) {
             foreach ($propertiesList as $key => $value) {
                 $propertiesList[$key] = $this->canonicalizeValue($value);
             }
@@ -331,21 +331,21 @@ class DocumentTypeValidation
 
     private function validateActionProperties(array $typeDefinition, string $properties): void
     {
-        $actionList = $this->getPropertiesValue($typeDefinition, $properties, DocumentTypeConfiguration::ACTION);
+        $actionList = $this->getPropertiesValue($typeDefinition, $properties, ModuleElement::ACTION->value);
         $this->checkIsAction($typeDefinition, $actionList);
     }
 
     private function validateEditableContent(array $typeDefinition): void
     {
         $editableContentList = [];
-        $allAction = $this->getValues($typeDefinition, DocumentTypeConfiguration::ACTION);
+        $allAction = $this->getValues($typeDefinition, ModuleElement::ACTION->value);
         foreach ($allAction as $action) {
-            if (empty($action[DocumentTypeConfiguration::EDITABLE_CONTENT])) {
+            if (empty($action[ActionElement::EDITABLE_CONTENT->value])) {
                 continue;
             }
             $editableContentList = array_merge(
                 $editableContentList,
-                $action[DocumentTypeConfiguration::EDITABLE_CONTENT]
+                $action[ActionElement::EDITABLE_CONTENT->value]
             );
         }
         foreach ($editableContentList as $editableContent) {
@@ -358,15 +358,15 @@ class DocumentTypeValidation
 
     private function validateDepend(array $typeDefinition): void
     {
-        $allFormulaire = $this->getValues($typeDefinition, DocumentTypeConfiguration::FORMULAIRE);
+        $allFormulaire = $this->getValues($typeDefinition, ModuleElement::FORMULAIRE->value);
         foreach ($allFormulaire as $onglet => $elementList) {
             foreach ($elementList as $name => $property) {
-                if (empty($property[DocumentTypeConfiguration::DEPEND])) {
+                if (empty($property[FormulaireElement::DEPEND->value])) {
                     continue;
                 }
                 if (! in_array($property['depend'], $this->allFormulaireElements)) {
                     $this->errorList[] =
-                        "<b>formulaire:$onglet:$name:depend:{$property[DocumentTypeConfiguration::DEPEND]}</b> "
+                        "<b>formulaire:$onglet:$name:depend:{$property[FormulaireElement::DEPEND->value]}</b> "
                         . "n'est pas un élément du formulaire";
                 }
             }
@@ -375,7 +375,7 @@ class DocumentTypeValidation
 
     private function validateRuleContent($typeDefinition): void
     {
-        $contentList = $this->getElementRuleValue($typeDefinition, DocumentTypeConfiguration::CONTENT);
+        $contentList = $this->getElementRuleValue($typeDefinition, RuleElement::CONTENT->value);
         foreach ($contentList as $key => $content) {
             if (! in_array($key, $this->allFormulaireElements)) {
                 $this->errorList[] = "action:xx:rule:content:<b>$key</b> n'est pas défini dans le formulaire";
@@ -385,12 +385,12 @@ class DocumentTypeValidation
 
     private function validateActionSelection(array $typeDefinition): void
     {
-        $allAction = $this->getValues($typeDefinition, DocumentTypeConfiguration::ACTION);
+        $allAction = $this->getValues($typeDefinition, ModuleElement::ACTION->value);
         foreach ($allAction as $actionName => $action) {
-            if (empty($action[DocumentTypeConfiguration::ACTION_SELECTION])) {
+            if (empty($action[ActionElement::ACTION_SELECTION->value])) {
                 continue;
             }
-            if (!in_array($action[DocumentTypeConfiguration::ACTION_SELECTION], array_keys(EntiteSQL::getAllType()))) {
+            if (!in_array($action[ActionElement::ACTION_SELECTION->value], array_keys(EntiteSQL::getAllType()))) {
                 $this->errorList[] = "action:$actionName:action-selection:<b>{$action['action-selection']}</b> "
                     . "n'est pas un type d'entité du système";
             }
@@ -399,7 +399,7 @@ class DocumentTypeValidation
 
     private function validateRuleTypeIdE($typeDefinition): void
     {
-        $allType = $this->getElementRuleValue($typeDefinition, DocumentTypeConfiguration::TYPE_ID_E);
+        $allType = $this->getElementRuleValue($typeDefinition, ActionElement::TYPE_ID_E->value);
         foreach ($allType as $type) {
             if (! in_array($type, array_keys(EntiteSQL::getAllType()))) {
                 $this->errorList[] = "action:*:rule:type_id_e:<b>$type</b></b> n'est pas un type d'entité du système";
@@ -409,22 +409,22 @@ class DocumentTypeValidation
 
     private function validateActionClass(array $typeDefinition): void
     {
-        $allAction = $this->getValues($typeDefinition, DocumentTypeConfiguration::ACTION);
+        $allAction = $this->getValues($typeDefinition, ModuleElement::ACTION->value);
         foreach ($allAction as $actionName => $action) {
-            if (empty($action[DocumentTypeConfiguration::ACTION_CLASS])) {
+            if (empty($action[ActionElement::ACTION_CLASS->value])) {
                 continue;
             }
-            if (!class_exists($action[DocumentTypeConfiguration::ACTION_CLASS])) {
+            if (!class_exists($action[ActionElement::ACTION_CLASS->value])) {
                 $this->errorList[] = sprintf(
                     "action:%s:action-class:<b>%s</b> n'est pas disponible sur le système",
                     $actionName,
                     $action['action-class']
                 );
-            } elseif (!is_subclass_of($action[DocumentTypeConfiguration::ACTION_CLASS], ActionExecutor::class)) {
+            } elseif (!is_subclass_of($action[ActionElement::ACTION_CLASS->value], ActionExecutor::class)) {
                 $this->errorList[] = sprintf(
                     "action:%s:action-class:<b>%s</b> n'étend pas %s",
                     $actionName,
-                    $action[DocumentTypeConfiguration::ACTION_CLASS],
+                    $action[ActionElement::ACTION_CLASS->value],
                     ActionExecutor::class,
                 );
             }
@@ -437,9 +437,9 @@ class DocumentTypeValidation
         foreach ($allChamps as $champs) {
             if (
                 in_array($champs, array_column(SearchField::cases(), 'value'))
-                && $keyName === DocumentTypeConfiguration::CHAMPS_RECHERCHE_AVANCEE
+                && $keyName === ModuleElement::CHAMPS_RECHERCHE_AVANCEE->value
                 || in_array($champs, array_column(DisplayedField::cases(), 'value'))
-                && $keyName === DocumentTypeConfiguration::CHAMPS_AFFICHES
+                && $keyName === ModuleElement::CHAMPS_AFFICHES->value
             ) {
                 continue;
             }
@@ -453,43 +453,43 @@ class DocumentTypeValidation
 
     private function validateActionConnecteurType(array $typeDefinition): void
     {
-        if (!empty($typeDefinition[DocumentTypeConfiguration::ACTION])) {
-            $allActionKeys = array_keys($this->getValues($typeDefinition, DocumentTypeConfiguration::ACTION));
+        if (!empty($typeDefinition[ModuleElement::ACTION->value])) {
+            $allActionKeys = array_keys($this->getValues($typeDefinition, ModuleElement::ACTION->value));
 
-            foreach ($typeDefinition[DocumentTypeConfiguration::ACTION] as $actionName => $actionProperties) {
-                if (empty($actionProperties[DocumentTypeConfiguration::CONNECTEUR_TYPE])) {
+            foreach ($typeDefinition[ModuleElement::ACTION->value] as $actionName => $actionProperties) {
+                if (empty($actionProperties[ActionElement::CONNECTEUR_TYPE->value])) {
                     continue;
                 }
                 if (
                     !in_array(
-                        $actionProperties[DocumentTypeConfiguration::CONNECTEUR_TYPE],
+                        $actionProperties[ActionElement::CONNECTEUR_TYPE->value],
                         $this->connecteurDefinitionFiles->getAllType()
                     )
                 ) {
                     $this->errorList[] = "action:<b>$actionName</b>:connecteur-type:" .
-                        "<b>{$actionProperties[DocumentTypeConfiguration::CONNECTEUR_TYPE]}</b> "
+                        "<b>{$actionProperties[ActionElement::CONNECTEUR_TYPE->value]}</b> "
                         . "n'est pas un connecteur du système";
                 }
-                if (empty($actionProperties[DocumentTypeConfiguration::CONNECTEUR_TYPE_ACTION])) {
+                if (empty($actionProperties[ActionElement::CONNECTEUR_TYPE_ACTION->value])) {
                     continue;
                 }
                 if (
                     !is_subclass_of(
-                        $actionProperties[DocumentTypeConfiguration::CONNECTEUR_TYPE_ACTION],
+                        $actionProperties[ActionElement::CONNECTEUR_TYPE_ACTION->value],
                         ActionExecutor::class
                     )
                 ) {
                     $this->errorList[] = "action:<b>$actionName</b>:connecteur-type-action:" .
-                        "<b>{$actionProperties[DocumentTypeConfiguration::CONNECTEUR_TYPE_ACTION]}</b> "
+                        "<b>{$actionProperties[ActionElement::CONNECTEUR_TYPE_ACTION->value]}</b> "
                         . "n'est pas une classe d'action du système";
                 }
 
-                if (empty($actionProperties[DocumentTypeConfiguration::CONNECTEUR_TYPE_MAPPING])) {
+                if (empty($actionProperties[ActionElement::CONNECTEUR_TYPE_MAPPING->value])) {
                     continue;
                 }
 
                 foreach (
-                    $actionProperties[DocumentTypeConfiguration::CONNECTEUR_TYPE_MAPPING] as $key => $elementName
+                    $actionProperties[ActionElement::CONNECTEUR_TYPE_MAPPING->value] as $key => $elementName
                 ) {
                     $elementName = $this->canonicalizeValue($elementName);
                     if (
@@ -504,14 +504,14 @@ class DocumentTypeValidation
         }
     }
 
-    private function validateValueWithType(array $typeDefinition)
+    private function validateValueWithType(array $typeDefinition): void
     {
-        $formulaireElements = $this->getValues($typeDefinition, DocumentTypeConfiguration::FORMULAIRE);
+        $formulaireElements = $this->getValues($typeDefinition, ModuleElement::FORMULAIRE->value);
         foreach ($formulaireElements as $element) {
             foreach ($element as $champs) {
                 if (
-                    count($champs[DocumentTypeConfiguration::VALUE]) > 0
-                    && $champs[DocumentTypeConfiguration::TYPE] !== ElementType::SELECT->value
+                    count($champs[FormulaireElement::VALUE->value]) > 0
+                    && $champs[SearchField::TYPE->value] !== ElementType::SELECT->value
                 ) {
                     $this->errorList[] =
                         'La propriété <b>value</b> est réservé pour les éléments de type <b>select</b>';
