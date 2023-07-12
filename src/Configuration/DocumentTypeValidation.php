@@ -99,6 +99,7 @@ class DocumentTypeValidation
         $this->validateChamps($typeDefinition, ModuleElement::CHAMPS_AFFICHES->value);
         $this->validateActionConnecteurType($typeDefinition);
         $this->validateValueWithType($typeDefinition);
+        $this->validateRuleElement($typeDefinition);
 
         if (count($this->errorList) > 0) {
             throw new UnrecoverableException();
@@ -184,10 +185,10 @@ class DocumentTypeValidation
         }
         $propertiesList = [];
         foreach ($typeDefinition[$element] as $onglet => $properties) {
-            if ($element === ModuleElement::ACTION && !empty($properties[$property])) {
+            if ($element === ModuleElement::ACTION->value && !empty($properties[$property])) {
                 $propertiesList[] = $this->canonicalizeValue($properties[$property]);
             }
-            if ($element === ModuleElement::FORMULAIRE) {
+            if ($element === ModuleElement::FORMULAIRE->value) {
                 foreach ($properties as $elementName => $elementProperties) {
                     if (isset($elementProperties[$property])) {
                         $propertiesList[] = $this->canonicalizeValue($elementProperties[$property]);
@@ -313,16 +314,25 @@ class DocumentTypeValidation
 
     private function findRule(array $ruleArray, $ruleName): array
     {
+        $newRuleArray = [];
+        foreach ($ruleArray as $key => $value) {
+            $newKey = $this->canonicalizeValue($key);
+            $newRuleArray[$newKey] = $value;
+        }
+
         $result = [];
-        if (isset($ruleArray[$ruleName])) {
-            if (! is_array($ruleArray[$ruleName])) {
-                $result = [$ruleArray[$ruleName]];
+        if (isset($newRuleArray[$ruleName])) {
+            if (! is_array($newRuleArray[$ruleName])) {
+                $result = [$newRuleArray[$ruleName]];
             } else {
-                $result = $ruleArray[$ruleName];
+                $result = $newRuleArray[$ruleName];
             }
         }
-        foreach ($ruleArray as $r_name => $r_properties) {
-            if (mb_substr($r_name, 0, 3) == 'or_' || mb_substr($r_name, 0, 4) == 'and_') {
+        foreach ($newRuleArray as $r_name => $r_properties) {
+            if (
+                mb_substr($r_name, 0, 3) == RuleElement::OR->value
+                || mb_substr($r_name, 0, 4) == RuleElement::AND->value
+            ) {
                 $result = array_merge($result, $this->findRule($r_properties, $ruleName));
             }
         }
@@ -516,6 +526,40 @@ class DocumentTypeValidation
                     $this->errorList[] =
                         'La propriété <b>value</b> est réservé pour les éléments de type <b>select</b>';
                 }
+            }
+        }
+    }
+
+    private function validateRuleElement(array $typeDefinition): void
+    {
+        $allAction = $typeDefinition[ModuleElement::ACTION->value];
+        foreach ($allAction as $key => $action) {
+            if (is_array($action) && isset($action[ActionElement::RULE->value])) {
+                $this->getAllRule($action[ActionElement::RULE->value], $key . ActionElement::RULE->value);
+            }
+        }
+    }
+
+    private function getAllRule(array $ruleList, $path): void
+    {
+        foreach ($ruleList as $rulekey => $rulevalue) {
+            if (
+                str_contains($rulekey, RuleElement::NO->value)
+                || str_contains($rulekey, RuleElement::AND->value)
+                || str_contains($rulekey, RuleElement::OR->value)
+            ) {
+                $this->getAllRule($rulevalue, $path . ':' . $rulekey);
+            }
+            $rulekey = $this->canonicalizeValue($rulekey);
+            if (
+                !in_array($rulekey, array_column(RuleElement::cases(), 'value'))
+                && !(
+                    str_contains($rulekey, RuleElement::NO->value)
+                    || str_contains($rulekey, RuleElement::AND->value)
+                    || str_contains($rulekey, RuleElement::OR->value)
+                    )
+            ) {
+                $this->errorList[] = "<b>$path</b>: la clé <b>$rulekey</b> n'est pas attendu";
             }
         }
     }
