@@ -76,8 +76,10 @@ class DocumentTypeConfiguration implements ConfigurationInterface
         $treeBuilder->getRootNode()
             ->info("Définition du formulaire permettant la création et l'évolution du dossier")
             ->defaultValue(['pas de formulaire'])
+            ->normalizeKeys(false)
             ->arrayPrototype()
                 ->info("le formulaire est composé d'un ensemble d'onglets")
+                ->normalizeKeys(false)
                 ->arrayPrototype()
                     ->info("un onglet est composé d'élement de formulaire")
                     ->normalizeKeys(false)
@@ -180,6 +182,7 @@ class DocumentTypeConfiguration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder(FormulaireElement::VALUE->value);
         $treeBuilder->getRootNode()
             ->info('uniquement pour le type select')
+            ->normalizeKeys(false)
             ->scalarPrototype()
             ->end();
         return $treeBuilder->getRootNode();
@@ -190,6 +193,7 @@ class DocumentTypeConfiguration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder(ModuleElement::PAGE_CONDITION->value);
         $treeBuilder->getRootNode()
             ->info('Détermine les règles permettant de savoir si une page doit être affiché ou non')
+            ->normalizeKeys(false)
             ->arrayPrototype()
                 ->booleanPrototype()
                 ->end()
@@ -204,6 +208,7 @@ class DocumentTypeConfiguration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder(ModuleElement::ACTION->value);
         $treeBuilder->getRootNode()
             ->info("Définition de l'ensemble des actions qui peuvent être déclenché sur le dossier")
+            ->normalizeKeys(false)
             ->defaultValue(["pas d'action"])
             ->arrayPrototype()
             ->normalizeKeys(false)
@@ -278,6 +283,7 @@ class DocumentTypeConfiguration implements ConfigurationInterface
         $treeBuilder->getRootNode()
             ->info("Permet de spécifier le mapping entre les noms des élements du document\n"
                     . "et les noms des élements attendu par l'action du connecteur type")
+            ->normalizeKeys(false)
             ->scalarPrototype()
             ->end();
         return $treeBuilder->getRootNode();

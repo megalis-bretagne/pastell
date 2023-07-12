@@ -9,7 +9,6 @@ use ActionPossible;
 use ConnecteurDefinitionFiles;
 use EntiteSQL;
 use Exception;
-use Field;
 use Pastell\Service\Pack\PackService;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Yaml\Yaml;
@@ -21,7 +20,7 @@ use function sprintf;
 
 class DocumentTypeValidation
 {
-    private array $errorList;
+    private array $errorList = [];
     private array $allFormulaireElements;
 
     public function __construct(
@@ -186,12 +185,12 @@ class DocumentTypeValidation
         $propertiesList = [];
         foreach ($typeDefinition[$element] as $onglet => $properties) {
             if ($element === ModuleElement::ACTION->value && !empty($properties[$property])) {
-                $propertiesList[] = $this->canonicalizeValue($properties[$property]);
+                $propertiesList[] = $properties[$property];
             }
             if ($element === ModuleElement::FORMULAIRE->value) {
                 foreach ($properties as $elementName => $elementProperties) {
                     if (isset($elementProperties[$property])) {
-                        $propertiesList[] = $this->canonicalizeValue($elementProperties[$property]);
+                        $propertiesList[] = $elementProperties[$property];
                     }
                 }
             }
@@ -199,20 +198,11 @@ class DocumentTypeValidation
         return $propertiesList;
     }
 
-    private function canonicalizeValue($value): string
-    {
-        if (!str_contains($value, '_')) {
-            $value = Field::Canonicalize($value);
-        }
-        return $value;
-    }
-
     private function checkIsAction(array $typeDefinition, array $actionListToCheck): void
     {
         $allPossibleActionKeys = array_keys($this->getValues($typeDefinition, ModuleElement::ACTION->value));
-        $fatalErrorKey = $this->canonicalizeValue(ActionPossible::FATAL_ERROR_ACTION);
-        if (! array_key_exists($fatalErrorKey, $allPossibleActionKeys)) {
-            $allPossibleActionKeys[] = $fatalErrorKey;
+        if (! in_array(ActionPossible::FATAL_ERROR_ACTION, $allPossibleActionKeys)) {
+            $allPossibleActionKeys[] = ActionPossible::FATAL_ERROR_ACTION;
         }
         foreach ($actionListToCheck as $action) {
             if (! in_array($action, $allPossibleActionKeys)) {
@@ -283,60 +273,42 @@ class DocumentTypeValidation
         }
     }
 
-    private function validateRuleAction($typeDefinition, $ruleName): void
+    private function validateRuleAction($typeDefinition, string $ruleName): void
     {
-        $allAction = $this->getElementRuleValue($typeDefinition, $ruleName);
-        $this->checkIsAction($typeDefinition, $allAction);
-    }
-
-    private function getElementRuleValue($typeDefinition, $ruleName): array
-    {
-        if (empty($typeDefinition[ModuleElement::ACTION->value])) {
-            return [];
-        }
-        $propertiesList = [];
-
-        foreach ($typeDefinition[ModuleElement::ACTION->value] as $actionName => $actionProperties) {
-            if (!empty($actionProperties[ActionElement::RULE->value])) {
-                $ruleProperty = $this->findRule($actionProperties[ActionElement::RULE->value], $ruleName);
-                if ($ruleProperty) {
-                    $propertiesList = array_merge($propertiesList, $ruleProperty);
+        $allActionRule = [];
+        if (!empty($typeDefinition['action'])) {
+            $allRule = [];
+            foreach ($typeDefinition[ModuleElement::ACTION->value] as $key => $action) {
+                if (is_array($action) && isset($action[ActionElement::RULE->value])) {
+                    $allRule[] = $action[ActionElement::RULE->value];
                 }
             }
-        }
-        if ($ruleName !== RuleElement::CONTENT->value) {
-            foreach ($propertiesList as $key => $value) {
-                $propertiesList[$key] = $this->canonicalizeValue($value);
+            foreach ($allRule as $rule) {
+                $allActionRule = array_merge($allActionRule, $this->getElementRuleValue($rule, $ruleName));
             }
         }
-        return $propertiesList;
+        $this->checkIsAction($typeDefinition, $allActionRule);
     }
 
-    private function findRule(array $ruleArray, $ruleName): array
+    private function getElementRuleValue(array $ruleList, string $ruleName): array
     {
-        $newRuleArray = [];
-        foreach ($ruleArray as $key => $value) {
-            $newKey = $this->canonicalizeValue($key);
-            $newRuleArray[$newKey] = $value;
-        }
-
-        $result = [];
-        if (isset($newRuleArray[$ruleName])) {
-            if (! is_array($newRuleArray[$ruleName])) {
-                $result = [$newRuleArray[$ruleName]];
-            } else {
-                $result = $newRuleArray[$ruleName];
+        $array = [];
+        foreach ($ruleList as $rulekey => $rulevalue) {
+            if ($rulekey === $ruleName) {
+                if (!is_array($rulevalue)) {
+                    $rulevalue = [$rulevalue];
+                }
+                $array = array_merge($array, $rulevalue);
             }
-        }
-        foreach ($newRuleArray as $r_name => $r_properties) {
             if (
-                mb_substr($r_name, 0, 3) == RuleElement::OR->value
-                || mb_substr($r_name, 0, 4) == RuleElement::AND->value
+                str_contains($rulekey, RuleElement::NO->value)
+                || str_contains($rulekey, RuleElement::AND->value)
+                || str_contains($rulekey, RuleElement::OR->value)
             ) {
-                $result = array_merge($result, $this->findRule($r_properties, $ruleName));
+                $array = array_merge($array, $this->getElementRuleValue($rulevalue, $ruleName));
             }
         }
-        return $result;
+        return $array;
     }
 
     private function validateActionProperties(array $typeDefinition, string $properties): void
@@ -501,7 +473,6 @@ class DocumentTypeValidation
                 foreach (
                     $actionProperties[ActionElement::CONNECTEUR_TYPE_MAPPING->value] as $key => $elementName
                 ) {
-                    $elementName = $this->canonicalizeValue($elementName);
                     if (
                         !in_array($elementName, $this->allFormulaireElements)
                         && !in_array($elementName, $allActionKeys)
@@ -550,7 +521,6 @@ class DocumentTypeValidation
             ) {
                 $this->getAllRule($rulevalue, $path . ':' . $rulekey);
             }
-            $rulekey = $this->canonicalizeValue($rulekey);
             if (
                 !in_array($rulekey, array_column(RuleElement::cases(), 'value'))
                 && !(
