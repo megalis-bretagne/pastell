@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pastell\Configuration\Validators;
 
 use Pastell\Configuration\DocumentTypeValidation;

@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Pastell\Configuration\Validators;
 
-use Pastell\Configuration\ActionElement;
 use Pastell\Configuration\DocumentTypeValidation;
-use Pastell\Configuration\ModuleElement;
 use Pastell\Configuration\RuleElement;
 
 class RuleActionValidator implements ValidatorInterface

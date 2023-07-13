@@ -15,7 +15,7 @@ class OneTitleValidator implements ValidatorInterface
         $this->errors = [];
         if (!empty($typeDefinition[ModuleElement::FORMULAIRE->value])) {
             $title = [];
-            foreach ($typeDefinition[ModuleElement::FORMULAIRE->value] as $onglet => $formulaireProperties) {
+            foreach ($typeDefinition[ModuleElement::FORMULAIRE->value] as $formulaireProperties) {
                 foreach ($formulaireProperties as $elementName => $elementProperties) {
                     if (isset($elementProperties[FormulaireElement::TITLE->value])) {
                         $title[] = $elementName;

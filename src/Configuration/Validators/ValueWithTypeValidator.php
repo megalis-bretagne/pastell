@@ -17,14 +17,15 @@ class ValueWithTypeValidator implements ValidatorInterface
     {
         $this->errors = [];
         $formulaireElements = $typeDefinition[ModuleElement::FORMULAIRE->value];
-        foreach ($formulaireElements as $onglet =>$element) {
+        foreach ($formulaireElements as $onglet => $element) {
             foreach ($element as $name => $champs) {
                 if (
                     count($champs[FormulaireElement::VALUE->value]) > 0
                     && $champs[SearchField::TYPE->value] !== ElementType::SELECT->value
                 ) {
                     $this->errors[] =
-                        "La propriété <b>value</b> pour <b>$onglet:$name</b> est réservé pour les éléments de type <b>select</b>";
+                        "La propriété <b>value</b> pour <b>$onglet:$name</b> "
+                        . 'est réservé pour les éléments de type <b>select</b>';
                 }
             }
         }

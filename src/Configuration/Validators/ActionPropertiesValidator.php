@@ -45,7 +45,7 @@ class ActionPropertiesValidator implements ValidatorInterface
             return [];
         }
         $propertiesList = [];
-        foreach ($typeDefinition[ModuleElement::ACTION->value] as $onglet => $properties) {
+        foreach ($typeDefinition[ModuleElement::ACTION->value] as $properties) {
             if (!empty($properties[$property])) {
                 $propertiesList[] = $properties[$property];
             }
