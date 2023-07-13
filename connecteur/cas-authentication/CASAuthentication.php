@@ -1,5 +1,9 @@
 <?php
 
+use Monolog\Handler\StreamHandler;
+use Monolog\Level;
+use Monolog\Logger;
+
 final class CASAuthentication extends AuthenticationConnecteur
 {
     private $host;
@@ -26,7 +30,10 @@ final class CASAuthentication extends AuthenticationConnecteur
         $this->proxy = $donneesFormulaire->get('cas_proxy');
         $cas_debug = $donneesFormulaire->get('cas_debug');
         if ($cas_debug) {
-            phpCAS::setDebug($cas_debug);
+            // TODO v5: Have a checkbox in connector to active debugging and log into pastell.log
+            $logger = new Logger('CAS');
+            $logger->pushHandler(new StreamHandler($cas_debug, Level::Info));
+            phpCAS::setLogger($logger);
         }
     }
 
@@ -39,6 +46,9 @@ final class CASAuthentication extends AuthenticationConnecteur
         }
     }
 
+    /**
+     * @deprecated 4.0.6, unused, to be removed in v5
+     */
     public function isSessionAuthenticated()
     {
         $this->setClient();

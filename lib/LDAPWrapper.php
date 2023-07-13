@@ -48,10 +48,10 @@ class LDAPWrapper
         string $base_dn,
         string $filter,
         array $attributes = [],
-        int $attrsonly = null,
-        int $sizelimit = null,
-        int $timelimit = null,
-        int $deref = null
+        int $attrsonly = 0,
+        int $sizelimit = -1,
+        int $timelimit = -1,
+        int $deref = 0
     ): Result|array|false {
         return ldap_search(
             $link_identifier,
