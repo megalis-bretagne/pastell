@@ -136,6 +136,8 @@ class ExtensionsTest extends PastellTestCase
 
     public function testExecuteActionsOnConnector(): void
     {
+        $this->getObjectInstancier()->getInstance(MemoryCache::class)->flushAll();
+
         $this->getObjectInstancier()
             ->getInstance(ExtensionLoader::class)
             ->loadExtension([$this->getExtensionTestPath()]);
