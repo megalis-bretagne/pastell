@@ -75,7 +75,6 @@ class DocumentTypeConfiguration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder(ModuleElement::FORMULAIRE->value);
         $treeBuilder->getRootNode()
             ->info("Définition du formulaire permettant la création et l'évolution du dossier")
-            ->defaultValue(['pas de formulaire'])
             ->normalizeKeys(false)
             ->arrayPrototype()
                 ->info("le formulaire est composé d'un ensemble d'onglets")
@@ -209,7 +208,6 @@ class DocumentTypeConfiguration implements ConfigurationInterface
         $treeBuilder->getRootNode()
             ->info("Définition de l'ensemble des actions qui peuvent être déclenché sur le dossier")
             ->normalizeKeys(false)
-            ->defaultValue(["pas d'action"])
             ->arrayPrototype()
             ->normalizeKeys(false)
             ->children()

@@ -1,6 +1,7 @@
 <?php
 
 use Pastell\Configuration\ConnectorValidation;
+use Pastell\Configuration\DocumentTypeValidation;
 use Pastell\Mailer\Mailer;
 use Pastell\Service\Connecteur\MissingConnecteurService;
 use Pastell\Service\Droit\DroitService;
@@ -97,14 +98,14 @@ class SystemControler extends PastellControler
         $all_flux = [];
         $all_flux_restricted = [];
 
-        $documentTypeValidation = $this->getDocumentTypeValidation();
         foreach ($this->getFluxDefinitionFiles()->getAll() as $id_flux => $flux) {
             $documentType = $this->getDocumentTypeFactory()->getFluxDocumentType($id_flux);
             $all_flux[$id_flux]['nom'] = $documentType->getName();
             $all_flux[$id_flux]['type'] = $documentType->getType();
             $all_flux[$id_flux]['list_restriction_pack'] = $documentType->getListRestrictionPack();
             $definition_path = $this->getFluxDefinitionFiles()->getDefinitionPath($id_flux);
-            $all_flux[$id_flux]['is_valide'] = $documentTypeValidation->validate($definition_path);
+            $all_flux[$id_flux]['is_valide'] =
+                $this->getDocumentTypeValidation()->isDefinitionFileValid($definition_path);
         }
         $this->setViewParameter('all_flux', $all_flux);
 
@@ -125,15 +126,7 @@ class SystemControler extends PastellControler
 
     private function getDocumentTypeValidation(): DocumentTypeValidation
     {
-        $list_pack = $this->getInstance(PackService::class)->getListPack();
-        $all_connecteur_type = $this->getConnecteurDefinitionFiles()->getAllType();
-        $all_type_entite = array_keys(EntiteSQL::getAllType());
-
-        $documentTypeValidation = $this->getObjectInstancier()->getInstance(DocumentTypeValidation::class);
-        $documentTypeValidation->setListPack($list_pack);
-        $documentTypeValidation->setConnecteurTypeList($all_connecteur_type);
-        $documentTypeValidation->setEntiteTypeList($all_type_entite);
-        return $documentTypeValidation;
+        return $this->getObjectInstancier()->getInstance(DocumentTypeValidation::class);
     }
 
     private function getAllActionInfo(DocumentType $documentType): array
@@ -191,15 +184,16 @@ class SystemControler extends PastellControler
         try {
             $document_type_is_validate = $this->isDocumentTypeValid($id);
         } catch (Exception $e) {
-            $validation_error = $this->getDocumentTypeValidation()->getLastError();
+            $definitionFile = $this->getFluxDefinitionFiles()->getDefinitionPath($id);
+            $validation_error = $this->getDocumentTypeValidation()->getErrorList($definitionFile);
         }
 
         $this->setViewParameter('document_type_is_validate', $document_type_is_validate);
         $this->setViewParameter('validation_error', $validation_error);
 
         $this->setViewParameter('page_title', "Détail du type de dossier « $name » ($id)");
-        $this->setViewParameter('template_milieu', "SystemFluxDetail");
-        $this->setViewParameter('menu_gauche_select', "System/flux");
+        $this->setViewParameter('template_milieu', 'SystemFluxDetail');
+        $this->setViewParameter('menu_gauche_select', 'System/flux');
 
         $this->renderDefault();
     }
@@ -210,9 +204,9 @@ class SystemControler extends PastellControler
     public function definitionAction()
     {
         $this->setViewParameter('flux_definition', $this->getDocumentTypeValidation()->getModuleDefinition());
-        $this->setViewParameter('page_title', "Définition des types de dossier");
-        $this->setViewParameter('template_milieu', "SystemFluxDef");
-        $this->setViewParameter('menu_gauche_select', "System/definition");
+        $this->setViewParameter('page_title', 'Définition des types de dossier');
+        $this->setViewParameter('template_milieu', 'SystemFluxDef');
+        $this->setViewParameter('menu_gauche_select', 'System/definition');
         $this->renderDefault();
     }
 
@@ -290,8 +284,8 @@ class SystemControler extends PastellControler
     public function isDocumentTypeValidByDefinitionPath($definition_path): bool
     {
         $documentTypeValidation = $this->getDocumentTypeValidation();
-        if (! $documentTypeValidation->validate($definition_path)) {
-            throw new UnrecoverableException(implode("\n", $this->getDocumentTypeValidation()->getLastError())) ;
+        if (! $documentTypeValidation->isDefinitionFileValid($definition_path)) {
+            throw new UnrecoverableException(implode("\n", $documentTypeValidation->getErrorList($definition_path))) ;
         }
         return true;
     }
