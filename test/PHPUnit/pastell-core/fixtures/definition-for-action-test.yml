@@ -4,7 +4,7 @@ connecteur:
     - signature
 formulaire:
     Message:
-        test: ''
+        test: []
 action:
     modification:
         name-action: Modifier
@@ -15,5 +15,5 @@ action:
             document: test
         rule:
             droit_id_u: 'test:lecture'
-    action-without-name: ''
-    fatal-error: ''
+    action-without-name: []
+    fatal-error: []

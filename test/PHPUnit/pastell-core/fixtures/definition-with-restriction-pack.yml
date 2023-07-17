@@ -4,4 +4,4 @@ restriction_pack:
     - pack_marche
 formulaire:
     Message:
-        test: ''
+        test: []

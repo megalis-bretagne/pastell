@@ -1,78 +1,88 @@
 <?php
 
-class DocumentTypeValidationTest extends PHPUnit\Framework\TestCase
+use Pastell\Configuration\DocumentTypeValidation;
+
+class DocumentTypeValidationTest extends PastellTestCase
 {
     private DocumentTypeValidation $documentTypeValidation;
 
     protected function setUp(): void
     {
-        $this->documentTypeValidation = new DocumentTypeValidation(new YMLLoader(new MemoryCacheNone()));
-        $this->documentTypeValidation->setListPack(["pack_chorus_pro" => false, "pack_marche" => false]);
-        $this->documentTypeValidation->setConnecteurTypeList(['mailsec']);
-        $this->documentTypeValidation->setEntiteTypeList([]);
+        $this->documentTypeValidation =
+            $this->getObjectInstancier()->getInstance(DocumentTypeValidation::class);
     }
 
     public function testValidate()
     {
-        $result = $this->documentTypeValidation->validate(PASTELL_PATH . "/module/mailsec/definition.yml");
-        //print_r($this->documentTypeValidation->getLastError());
-        $this->assertTrue($result);
+        static::assertTrue(
+            $this->documentTypeValidation->isDefinitionFileValid(PASTELL_PATH . '/module/mailsec/definition.yml')
+        );
     }
 
     public function testGetModuleDefinition()
     {
-        $this->assertNotEmpty($this->documentTypeValidation->getModuleDefinition());
+        static::assertNotEmpty($this->documentTypeValidation->getModuleDefinition());
     }
 
     public function testGetLastError()
     {
-        $this->assertFalse($this->documentTypeValidation->validate(""));
-        $this->assertEquals("Fichier definition.yml absent", $this->documentTypeValidation->getLastError()[0]);
+        static::assertFalse($this->documentTypeValidation->isDefinitionFileValid(''));
+        static::assertEquals('File "" does not exist.', $this->documentTypeValidation->getErrorList('')[0]);
     }
 
     public function testConnecteurType(): void
     {
-        $this->documentTypeValidation->setConnecteurTypeList(["signature"]);
-        $this->assertTrue(
-            $this->documentTypeValidation->validate(__DIR__ . "/fixtures/definition-for-action-test.yml")
-        );
+        static::assertTrue($this->documentTypeValidation->isDefinitionFileValid(
+            __DIR__ . '/fixtures/definition-for-action-test.yml'
+        ));
     }
 
     public function testConnecteurTypeAbsent(): void
     {
-        $this->assertFalse(
-            $this->documentTypeValidation->validate(__DIR__ . "/fixtures/definition-with-connecteur-type.yml")
+        $filePath = __DIR__ . '/fixtures/definition-with-connecteur-type.yml';
+        static::assertFalse($this->documentTypeValidation->isDefinitionFileValid($filePath));
+        static::assertEquals(
+            "action:<b>test</b>:connecteur-type:<b>signatures</b> n'est pas un connecteur du système",
+            $this->documentTypeValidation->getErrorList($filePath)[0]
         );
-        $this->assertEquals(
-            "action:<b>test</b>:connecteur-type:<b>signature</b> n'est pas un connecteur du système",
-            $this->documentTypeValidation->getLastError()[1]
-        );
-        $this->assertEquals(
-            "action:<b>test</b>:connecteur-type-action:<b>FakeSignatureEnvoie</b> n'est pas une classe d'action du système",
-            $this->documentTypeValidation->getLastError()[2]
+        static::assertEquals(
+            'action:<b>test</b>:connecteur-type-action:<b>FakeSignatureEnvoie</b> '
+            . "n'est pas une classe d'action du système",
+            $this->documentTypeValidation->getErrorList($filePath)[1]
         );
     }
 
     public function testConnecteurTypeMappingFailed()
     {
-        $this->documentTypeValidation->setConnecteurTypeList(["signature"]);
-        $this->assertFalse($this->documentTypeValidation->validate(__DIR__ . "/fixtures/definition-with-connecteur-type-failed.yml"));
-        $this->assertEquals("action:<b>test</b>:connecteur-type-mapping:document:<b>toto</b> n'est pas un élément du formulaire", $this->documentTypeValidation->getLastError()[0]);
+        $filePath = __DIR__ . '/fixtures/definition-with-connecteur-type-failed.yml';
+        static::assertFalse($this->documentTypeValidation->isDefinitionFileValid($filePath));
+        static::assertEquals(
+            "action:<b>test</b>:connecteur-type-mapping:document:<b>toto</b> n'est pas un élément du formulaire",
+            $this->documentTypeValidation->getErrorList($filePath)[0]
+        );
     }
 
     public function testModifiationNoChangeEtat()
     {
-        $this->assertTrue($this->documentTypeValidation->validate(__DIR__ . "/fixtures/definition-with-modification-no-change-etat.yml"));
+        static::assertTrue($this->documentTypeValidation->isDefinitionFileValid(
+            __DIR__ . '/fixtures/definition-with-modification-no-change-etat.yml'
+        ));
     }
 
     public function testRestrictionPack()
     {
-        $this->assertTrue($this->documentTypeValidation->validate(__DIR__ . "/fixtures/definition-with-restriction-pack.yml"));
+        static::assertTrue($this->documentTypeValidation->isDefinitionFileValid(
+            __DIR__ . '/fixtures/definition-with-restriction-pack.yml'
+        ));
     }
 
     public function testRestrictionPackAbsent()
     {
-        $this->assertFalse($this->documentTypeValidation->validate(__DIR__ . "/fixtures/definition-with-wrong_restriction-pack.yml"));
-        $this->assertEquals("restriction_pack:<b>pack_wrong_pack</b> n'est pas défini dans la liste des packs", $this->documentTypeValidation->getLastError()[0]);
+        $filePath = __DIR__ . '/fixtures/definition-with-wrong_restriction-pack.yml';
+        static::assertFalse($this->documentTypeValidation->isDefinitionFileValid($filePath));
+        static::assertEquals(
+            "restriction_pack:<b>pack_wrong_pack</b> n'est pas défini dans la liste des packs",
+            $this->documentTypeValidation->getErrorList($filePath)[0]
+        );
     }
 }

@@ -2,7 +2,7 @@ nom: 'Flux de test'
 description: 'Ceci est un flux de test'
 formulaire:
     Message:
-        test: ''
+        test: []
 action:
     creation:
         name-action: Créer
