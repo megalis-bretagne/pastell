@@ -59,4 +59,16 @@ class TypeDossierEtapeManagerTest extends PastellTestCase
         $result = $this->getTypeDossierEtapeManager()->setSpecificData($etape, $initial_result);
         $this->assertEquals($initial_result, $result);
     }
+
+    public function testTwoSameTypeSteps()
+    {
+        $typeDossierEtapeManager = $this->getTypeDossierEtapeManager();
+        $typeDossierEtapeProperties = new TypeDossierEtapeProperties();
+        $typeDossierEtapeProperties->num_etape = '1';
+        $typeDossierEtapeProperties->type = 'mailsec';
+        $typeDossierEtapeProperties->num_etape_same_type = 1;
+        $typeDossierEtapeProperties->etape_with_same_type_exists = true;
+        $result = $typeDossierEtapeManager->getFormulaireForEtape($typeDossierEtapeProperties);
+        static::assertSame('password_2', $result['Mail sécurisé #2']['password2_2']['is_equal']);
+    }
 }
