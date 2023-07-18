@@ -18,7 +18,7 @@ class RuleElementValidator implements ValidatorInterface
         $allAction = $typeDefinition[ModuleElement::ACTION->value];
         foreach ($allAction as $key => $action) {
             if (is_array($action) && isset($action[ActionElement::RULE->value])) {
-                $this->checkAllRule($action[ActionElement::RULE->value], $key . ActionElement::RULE->value);
+                $this->checkAllRule($action[ActionElement::RULE->value], $key . ':' . ActionElement::RULE->value);
             }
         }
         if (count($this->errors) > 0) {

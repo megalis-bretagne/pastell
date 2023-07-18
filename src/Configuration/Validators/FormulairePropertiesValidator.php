@@ -15,7 +15,7 @@ class FormulairePropertiesValidator implements ValidatorInterface
     public function __construct(
         private readonly DocumentTypeValidation $documentTypeValidation,
     ) {
-        $properties = [
+        $this->properties = [
             FormulaireElement::CHOICE_ACTION->value,
             FormulaireElement::ONCHANGE->value,
         ];
@@ -31,12 +31,12 @@ class FormulairePropertiesValidator implements ValidatorInterface
             );
             foreach ($propertyList as $action) {
                 if (!in_array($action, $this->documentTypeValidation->getAllPossibleAction($typeDefinition))) {
-                    $this->errors[] = "formulaire:xx:<b>$action</b> n'est pas une clé de <b>action</b>";
+                    $this->errors[] = "formulaire:$property:<b>$action</b> n'est pas une clé de <b>action</b>";
                 }
             }
-            if (count($this->errors) > 0) {
-                return false;
-            }
+        }
+        if (count($this->errors) > 0) {
+            return false;
         }
         return true;
     }

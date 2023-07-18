@@ -1,0 +1,11 @@
+nom: 'Flux de test'
+description: 'Ceci est un flux de test'
+formulaire:
+  Bordereau:
+    test:
+      name: Test
+page-condition:
+  Parapheur:
+    envoi: true
+  Bordereau:
+    envoi: true

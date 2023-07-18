@@ -39,7 +39,7 @@ class RuleActionValidator implements ValidatorInterface
 
             foreach ($allActionRule as $action) {
                 if (! in_array($action, $this->documentTypeValidation->getAllPossibleAction($typeDefinition))) {
-                    $this->errors[] = "formulaire:xx:<b>$action</b> n'est pas une clé de <b>action</b>";
+                    $this->errors[] = "formulaire:$actionType:<b>$action</b> n'est pas une clé de <b>action</b>";
                 }
             }
         }

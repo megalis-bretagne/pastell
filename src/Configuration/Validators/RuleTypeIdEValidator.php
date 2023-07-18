@@ -30,7 +30,7 @@ class RuleTypeIdEValidator implements ValidatorInterface
         }
         foreach ($allType as $type) {
             if (! in_array($type, array_keys(EntiteSQL::getAllType()))) {
-                $this->errors[] = "action:*:rule:type_id_e:<b>$type</b></b> n'est pas un type d'entité du système";
+                $this->errors[] = "action:*:rule:type_id_e:<b>$type</b> n'est pas un type d'entité du système";
             }
         }
         if (count($this->errors) > 0) {

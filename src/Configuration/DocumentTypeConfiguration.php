@@ -161,17 +161,26 @@ class DocumentTypeConfiguration implements ConfigurationInterface
                                 . "d'ajouter une barre de progression (systématique a partir de la version 2.1.0)")
                         ->end()
                         ->arrayNode(FormulaireElement::SHOW_ROLE->value)
-                          ->info("N'affiche cette information que pour certain role")
-                          ->end()
-                        ->arrayNode(FormulaireElement::READ_ONLY_CONTENT->value)
-                          ->info("(ne pas utiliser) permet de rendre un champs éditable n'importe quand "
-                                  . "si une valeur est vérifié.\n"
-                                  . "Exemple: \"has_reponse_lettre_courrier_simple: true\".\n"
-                                  . 'Dans la plupart des cas, editable-content sur un état suffit.')
-                          ->end()
+                            ->info("N'affiche cette information que pour certain role")
+                        ->end()
+                        ->append($this->addReadOnlyContentNode())
                         ->append($this->addValueNode())
                     ->end()
                 ->end()
+            ->end();
+        return $treeBuilder->getRootNode();
+    }
+
+    private function addReadOnlyContentNode(): NodeDefinition
+    {
+        $treeBuilder = new TreeBuilder(FormulaireElement::READ_ONLY_CONTENT->value);
+        $treeBuilder->getRootNode()
+            ->info("(ne pas utiliser) permet de rendre un champs éditable n'importe quand "
+                . "si une valeur est vérifié.\n"
+                . "Exemple: \"has_reponse_lettre_courrier_simple: true\".\n"
+                . 'Dans la plupart des cas, editable-content sur un état suffit.')
+            ->normalizeKeys(false)
+            ->arrayPrototype()
             ->end();
         return $treeBuilder->getRootNode();
     }

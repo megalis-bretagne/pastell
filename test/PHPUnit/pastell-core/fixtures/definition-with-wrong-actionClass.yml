@@ -1,0 +1,9 @@
+nom: 'Flux de test'
+description: 'Ceci est un flux de test'
+formulaire: []
+
+action:
+  test:
+    name-action: Modifier
+    name: 'En cours de rédaction'
+    action-class: Supprime
