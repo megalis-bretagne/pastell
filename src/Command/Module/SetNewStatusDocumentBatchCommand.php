@@ -18,10 +18,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class SetNewStatusDocumentBatchCommand extends Command
 {
-    private const ID_E = 'id_e';
-    private const TYPE = 'type';
-    private const OLD_STATUS = 'old_status';
-    private const NEW_STATUS = 'new_status';
+    public const ID_E = 'id_e';
+    public const TYPE = 'type';
+    public const OLD_STATUS = 'old_status';
+    public const NEW_STATUS = 'new_status';
 
     public function __construct(
         private readonly \JobManager $jobManager,

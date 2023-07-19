@@ -6,6 +6,7 @@
 - Les types de dossiers sont triés par pack dans la configuration (association) d'un nouveau type de dossier #1802
 - Le script `installation/force-delete-module.php` est remplacé par la commande `app:module:force-delete-module`. Les associations aux connecteurs sont maintenant bien supprimées même s'il n'existe pas de document pour le type de dossier #1284
 - Seul l'utilisateur peut gérer ses notifications, l'administrateur n'a plus les droits #1886
+- Le script de changement d'état d'un ensemble de document (3.1) est disponible en commande Symfony `SetNewStatusDocumentBatchCommand` #1893
 
 ## Corrections
 
@@ -265,13 +266,6 @@ et l'utilisateur peut modifier les champs manquants #1850
 ## Dépréciations
 
 - Le support de la version 0.2 du SEDA est déprécié. 
-
-# [3.1.20] - 2023-07-27
-
-## Corrections
-
-- Statut Facture Chorus Pro: le statut ```04 : Rejetée par lordonnateur pour erreur données acheminement``` correspond au statut A_RECYCLER #1866
-- Modification de statut CPP: Le motif du statut cible était mal encodé #1863
 
 # [3.1.19] - 2023-02-06
 
