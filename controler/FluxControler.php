@@ -64,9 +64,10 @@ class FluxControler extends PastellControler
             }
 
             $possibleFluxList = $this->apiGet('/flux');
+            $possiblePackList = [];
             foreach ($possibleFluxList as $fluxId => $fluxInfo) {
-                if (empty($fluxList[$fluxId]['connecteur'])) {
-                    unset($possibleFluxList[$fluxId]);
+                if (!empty($fluxList[$fluxId]['connecteur'])) {
+                    $possiblePackList[$fluxInfo['type']][] = $fluxInfo;
                 }
             }
             foreach ($fluxList as $fluxId => $fluxInfo) {
@@ -104,7 +105,7 @@ class FluxControler extends PastellControler
             }
 
             $this->setViewParameter('flux_list', $fluxList);
-            $this->setViewParameter('possible_flux_list', $possibleFluxList);
+            $this->setViewParameter('possible_pack_list', $possiblePackList);
             $this->setViewParameter('droitConnecteurEdition', $this->hasDroit($id_e, 'connecteur:edition'));
             $this->setViewParameter('template_milieu', "FluxList");
         } else {
