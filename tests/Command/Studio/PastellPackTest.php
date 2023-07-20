@@ -18,7 +18,7 @@ class PastellPackTest extends PastellTestCase
         'dossier-autorisation-urba-draft' => [
             'pack_urbanisme',
             'dossier-autorisation-urbanisme',
-            "Archivage des dossiers d'autorisation d'urbanisme"
+            "Dossiers d'autorisation d'urbanisme (archivage)"
         ],
         'document-autorisation-urba-draft' => [
             'pack_urbanisme',
@@ -53,17 +53,17 @@ class PastellPackTest extends PastellTestCase
         'draft-rh-archivage-dossier-agent' => [
             'pack_rh',
             'rh-archivage-dossier-agent',
-            "Archivage des éléments du dossier individuel de l'agent"
+            "Eléments du dossier individuel de l'agent (archivage)"
         ],
         'draft-rh-archivage-collectif' => [
             'pack_rh',
             'rh-archivage-collectif',
-            'Archivage des données de gestion collective (fichier unitaire)'
+            'Données de gestion collective (fichier unitaire) (archivage)'
         ],
         'draft-rh-archivage-collectif-zip' => [
             'pack_rh',
             'rh-archivage-collectif-zip',
-            'Archivage des données de gestion collective (fichier compressé)'
+            'Données de gestion collective (fichier compressé) (archivage)'
         ],
         'ls-actes-publication-draft' => [
             '',
