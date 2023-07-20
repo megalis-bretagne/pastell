@@ -38,17 +38,24 @@
     </tr>
     <?php endif;?>
 <tr>
-<th><label for="denomination">Nom<span class='obl'>*</span></label>
-<p class='form_commentaire'>128 caractères maximum</p>
-</th>
-
-<td><input class="form-control col-md-4" type="text" maxlength="128" name="denomination" id="denomination" value='<?php echo $infoEntite['denomination'] ?>'/></td>
+    <th class="w300">
+        <label for="denomination">Nom<span class='obl'>*</span></label>
+        <p class='form_commentaire'>128 caractères maximum</p>
+    </th>
+    <td>
+        <input class="form-control col-md-4" type="text" maxlength="128" name="denomination"
+               id="denomination" value='<?php echo $infoEntite['denomination'] ?>'/>
+    </td>
 </tr>
 <tr>
-<th><label for="siren">SIREN</label>
-<p class='form_commentaire'>9 chiffres ou champ vide</p>
-<td>
-    <input class="form-control col-md-4" type="text" maxlength="9" name="siren" id="siren" value='<?php echo $infoEntite['siren']?>'/></td>
+    <th>
+        <label for="siren">SIREN</label>
+        <p class='form_commentaire'>9 chiffres ou champ vide</p>
+    </th>
+    <td>
+        <input class="form-control col-md-4" type="text" maxlength="9"
+               name="siren" id="siren" value='<?php echo $infoEntite['siren']?>'/>
+    </td>
 </tr>
     <?php if ($cdg_feature) : ?>
 <tr>

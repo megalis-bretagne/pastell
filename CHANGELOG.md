@@ -11,6 +11,7 @@
 - Problème d'affichage des métadonnées dans les propriétés spécifiques des générateurs SEDA #1879
 - Des dépréciations pouvaient s'afficher par API lors de l'utilisation de CAS en mode debug #1881
 - Correction d'une faute d'orthographe dans le message après avoir re-tamponné un acte #1875
+- Uniformisation du formulaire de création d'entité avec le formulaire de création d'utilisateur #1681
 
 # [4.0.5] - 2023-07-10
 
@@ -263,13 +264,6 @@ et l'utilisateur peut modifier les champs manquants #1850
 ## Dépréciations
 
 - Le support de la version 0.2 du SEDA est déprécié. 
-
-# [3.1.20] - 2023-07-27
-
-## Corrections
-
-- Statut Facture Chorus Pro: le statut ```04 : Rejetée par lordonnateur pour erreur données acheminement``` correspond au statut A_RECYCLER #1866
-- Modification de statut CPP: Le motif du statut cible était mal encodé #1863
 
 # [3.1.19] - 2023-02-06
 
@@ -1144,7 +1138,7 @@ Le script script/bug/set-database-encoding-to-utf8.php permet de palier au probl
 - Connecteur Mail sécurisé : Gérer la substitution des mots clés référençant des données dans un fichier json lors de la création des mail (body & subject) #454
 - Flux PDF générique : ajout d'un fichier de méta-données pour l'envoi au mail sécurisé
 - Script permettant de récupérer une preuve au format texte d'une entrée du `journal_historique` #476
-- Ajout de l'action commune ./action/CommonExtractionAction.class.php et de la librairie ExtractZipStructure.class.php #483
+- Ajout de l'action commune ./action/CommonExtractionAction.php et de la librairie ExtractZipStructure.php #483
 
 # [2.0.8] - 2018-08-21
 
