@@ -68,7 +68,7 @@ class TdTRestamp extends ConnecteurTypeActionExecutor
             }
         }
 
-        $this->setLastMessage("L'acte et les annexes ont été re-tamponné");
+        $this->setLastMessage("L'acte et les annexes ont été re-tamponnés");
         return true;
     }
 

@@ -4,6 +4,7 @@
 
 - Problème d'affichage des métadonnées dans les propriétés spécifiques des générateurs SEDA #1879
 - Des dépréciations pouvaient s'afficher par API lors de l'utilisation de CAS en mode debug #1881
+- Correction d'une faute d'orthographe dans le message après avoir re-tamponné un acte #1875
 
 # [4.0.5] - 2023-07-10
 
