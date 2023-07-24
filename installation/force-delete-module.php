@@ -1,7 +1,6 @@
 #! /usr/bin/php
 <?php
-
-/**
+/** @deprecated since 4.0.6 use command instead
  * @var ObjectInstancier $objectInstancier
  */
 
