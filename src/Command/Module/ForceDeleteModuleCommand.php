@@ -14,10 +14,16 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
     name: 'app:module:force-delete-module',
-    description: 'Add a short description for your command',
+    description: 'Delete documents and associations in database and workspace of a deleted module',
 )]
 class ForceDeleteModuleCommand extends Command
 {
+    private const ID_E = 'id_e';
+    public const ID_D = 'id_d';
+    public const MODULE = 'module';
+    private const TITRE = 'titre';
+    private const ID_FE = 'id_fe';
+
     public function __construct(
         private readonly \DocumentEntite $documentEntite,
         private readonly \JobQueueSQL $jobQueueSQL,
@@ -32,7 +38,7 @@ class ForceDeleteModuleCommand extends Command
     protected function configure(): void
     {
         $this
-            ->addArgument('module', InputArgument::REQUIRED, 'Module name')
+            ->addArgument(self::MODULE, InputArgument::REQUIRED, 'module name')
         ;
     }
 
@@ -42,17 +48,17 @@ class ForceDeleteModuleCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $flux = $input->getArgument('module');
+        $flux = $input->getArgument(self::MODULE);
 
         $documents = $this->documentSQL->getAllByType($flux);
         if (!$documents) {
             $io->warning(sprintf("Il n'y a pas de document de type %s\n", $flux));
         } else {
             foreach ($documents as $document) {
-                $id_d = $document['id_d'];
+                $id_d = $document[self::ID_D];
                 $docEntityInformation = $this->documentEntite->getEntite($id_d);
                 foreach ($docEntityInformation as $entite) {
-                    $id_e = $entite['id_e'];
+                    $id_e = $entite[self::ID_E];
 
                     $io->note(sprintf('Entite: %s, document: %s\n', $id_e, $id_d));
 
@@ -75,10 +81,10 @@ class ForceDeleteModuleCommand extends Command
         }
         $associationPerEntity = [];
         foreach ($associations as $association) {
-            if (isset($associationPerEntity[$association['id_e']])) {
-                $associationPerEntity[$association['id_e']] ++;
+            if (isset($associationPerEntity[$association[self::ID_E]])) {
+                $associationPerEntity[$association[self::ID_E]] ++;
             } else {
-                $associationPerEntity[$association['id_e']] = 1;
+                $associationPerEntity[$association[self::ID_E]] = 1;
             }
         }
         foreach ($associationPerEntity as $id_e => $value) {
@@ -89,16 +95,16 @@ class ForceDeleteModuleCommand extends Command
             ));
         }
 
-        $answer = $io->ask('Etes-vous sur (o/N) ?');
+        $answer = $io->ask('Etes-vous sûr (o/N) ?');
         if ($answer != 'o') {
             $io->note("Aucun élément n'a été supprimé");
             return Command::SUCCESS;
         }
 
         foreach ($documents as $document) {
-            $id_d = $document['id_d'];
+            $id_d = $document[self::ID_D];
             $docEntityInformation = $this->documentEntite->getEntite($id_d);
-            $id_job = $this->jobQueueSQL->getJobIdForDocument($docEntityInformation[0]['id_e'], $id_d);
+            $id_job = $this->jobQueueSQL->getJobIdForDocument($docEntityInformation[0][self::ID_E], $id_d);
             if ($id_job) {
                 $this->jobQueueSQL->deleteJob($id_job);
             }
@@ -109,14 +115,14 @@ class ForceDeleteModuleCommand extends Command
 
             $message = sprintf(
                 'Le document « %s » (%s) a été supprimé par un administrateur',
-                $info['titre'],
+                $info[self::TITRE],
                 $id_d
             );
             $this->journal->add(Journal::DOCUMENT_ACTION, 0, $id_d, 'suppression', $message);
         }
 
         foreach ($associations as $association) {
-            $this->fluxEntiteSQL->removeConnecteur($association['id_fe']);
+            $this->fluxEntiteSQL->removeConnecteur($association[self::ID_FE]);
         }
 
         $io->success('Les éléments ont été supprimés');
