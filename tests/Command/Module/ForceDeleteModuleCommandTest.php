@@ -80,14 +80,16 @@ class ForceDeleteModuleCommandTest extends \PastellTestCase
         $this->createConnecteurForTypeDossier(self::ACTES_AUTOMATIQUE, 'test');
 
         self::assertSame(
-            [0 => [
-                'id_fe' => 10,
-                'id_e' => 1,
-                'flux' => self::ACTES_AUTOMATIQUE,
-                'id_ce' => 14,
-                'type' => 'test',
-                'num_same_type' => 0
-            ]],
+            [
+                0 => [
+                    'id_fe' => 10,
+                    'id_e' => 1,
+                    'flux' => self::ACTES_AUTOMATIQUE,
+                    'id_ce' => 14,
+                    'type' => 'test',
+                    'num_same_type' => 0
+                ]
+            ],
             $this->fluxEntiteSQL->getAssociations(self::ACTES_AUTOMATIQUE)
         );
 
