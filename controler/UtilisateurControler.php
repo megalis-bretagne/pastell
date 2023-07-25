@@ -331,7 +331,6 @@ class UtilisateurControler extends PastellControler
             $this->getRoleUtilisateur()->getEntite($this->getId_u(), 'entite:edition')
         );
 
-        $this->setViewParameter('notification_list', $this->getNotificationList($id_u));
         if ($this->hasDroit($info['id_e'], 'role:lecture')) {
             $this->setViewParameter('role_authorized', $this->apiGet('role'));
         } else {
