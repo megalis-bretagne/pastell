@@ -4,7 +4,7 @@ connecteur:
     - signature
 formulaire:
     Message:
-        test: []
+        test: ''
 action:
     test:
         name-action: Modifier
