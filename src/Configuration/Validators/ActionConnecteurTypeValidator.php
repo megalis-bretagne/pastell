@@ -29,49 +29,9 @@ class ActionConnecteurTypeValidator implements ValidatorInterface
         $allActionKeys = array_keys($typeDefinition[ModuleElement::ACTION->value]);
 
         foreach ($typeDefinition[ModuleElement::ACTION->value] as $actionName => $actionProperties) {
-            if (empty($actionProperties[ActionElement::CONNECTEUR_TYPE->value])) {
-                continue;
-            }
-            if (
-                !in_array(
-                    $actionProperties[ActionElement::CONNECTEUR_TYPE->value],
-                    $this->connecteurDefinitionFiles->getAllType(),
-                    true
-                )
-            ) {
-                $this->errors[] = "action:<b>$actionName</b>:connecteur-type:" .
-                    "<b>{$actionProperties[ActionElement::CONNECTEUR_TYPE->value]}</b> "
-                    . "n'est pas un connecteur du système";
-            }
-            if (empty($actionProperties[ActionElement::CONNECTEUR_TYPE_ACTION->value])) {
-                continue;
-            }
-            if (
-                !is_subclass_of(
-                    $actionProperties[ActionElement::CONNECTEUR_TYPE_ACTION->value],
-                    ActionExecutor::class
-                )
-            ) {
-                $this->errors[] = "action:<b>$actionName</b>:connecteur-type-action:" .
-                    "<b>{$actionProperties[ActionElement::CONNECTEUR_TYPE_ACTION->value]}</b> "
-                    . "n'est pas une classe d'action du système";
-            }
-
-            if (empty($actionProperties[ActionElement::CONNECTEUR_TYPE_MAPPING->value])) {
-                continue;
-            }
-
-            foreach (
-                $actionProperties[ActionElement::CONNECTEUR_TYPE_MAPPING->value] as $key => $elementName
-            ) {
-                if (
-                    !in_array($elementName, $this->documentTypeValidation->getFormulaireElements(), true)
-                    && !in_array($elementName, $allActionKeys, true)
-                ) {
-                    $this->errors[] =  "action:<b>$actionName</b>:connecteur-type-mapping:$key:" .
-                        "<b>$elementName</b> n'est pas un élément du formulaire";
-                }
-            }
+            $this->validateConnecteurType($actionProperties, $actionName);
+            $this->validateConnecteurTypeAction($actionProperties, $actionName);
+            $this->validateConnecteurTypeMapping($actionProperties, $allActionKeys, $actionName);
         }
         return count($this->errors) === 0;
     }
@@ -79,5 +39,53 @@ class ActionConnecteurTypeValidator implements ValidatorInterface
     public function getErrors(): array
     {
         return $this->errors;
+    }
+
+    private function validateConnecteurType(array $actionProperties, string $actionName): void
+    {
+        if (!isset($actionProperties[ActionElement::CONNECTEUR_TYPE->value])) {
+            return;
+        }
+        if (
+            !in_array(
+                $actionProperties[ActionElement::CONNECTEUR_TYPE->value],
+                $this->connecteurDefinitionFiles->getAllType(),
+                true
+            )
+        ) {
+            $this->errors[] = "action:<b>$actionName</b>:connecteur-type:" .
+                "<b>{$actionProperties[ActionElement::CONNECTEUR_TYPE->value]}</b> n'est pas un connecteur du système";
+        }
+    }
+
+    private function validateConnecteurTypeAction(array $actionProperties, string $actionName): void
+    {
+        if (!isset($actionProperties[ActionElement::CONNECTEUR_TYPE_ACTION->value])) {
+            return;
+        }
+        if (!is_subclass_of($actionProperties[ActionElement::CONNECTEUR_TYPE_ACTION->value], ActionExecutor::class)) {
+            $this->errors[] = "action:<b>$actionName</b>:connecteur-type-action:" .
+                "<b>{$actionProperties[ActionElement::CONNECTEUR_TYPE_ACTION->value]}</b> "
+                . "n'est pas une classe d'action du système";
+        }
+    }
+
+    private function validateConnecteurTypeMapping(
+        array $actionProperties,
+        array $allActionKeys,
+        string $actionName
+    ): void {
+        if (!isset($actionProperties[ActionElement::CONNECTEUR_TYPE_MAPPING->value])) {
+            return;
+        }
+        foreach ($actionProperties[ActionElement::CONNECTEUR_TYPE_MAPPING->value] as $key => $elementName) {
+            if (
+                !in_array($elementName, $this->documentTypeValidation->getFormulaireElements(), true)
+                && !in_array($elementName, $allActionKeys, true)
+            ) {
+                $this->errors[] = "action:<b>$actionName</b>:connecteur-type-mapping:$key:" .
+                    "<b>$elementName</b> n'est pas un élément du formulaire";
+            }
+        }
     }
 }
