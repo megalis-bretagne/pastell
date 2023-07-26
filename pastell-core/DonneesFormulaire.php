@@ -1122,6 +1122,7 @@ class DonneesFormulaire
             if ($action === 'save') {
                 if (
                     $passwordId === ''
+                    || str_contains($passwordId, '#')
                     || $this->passwordStorage->read($passwordId) === '404 : Bad status received from Vault'
                 ) {
                     $passwordId = $this->uuidGenerator->generate();
@@ -1142,7 +1143,7 @@ class DonneesFormulaire
         $info = $this->fichierCleValeur->getYmlInfo();
         if ($info) {
             $passwordId = $info[$field->getName()] ?? '';
-            if ($passwordId !== '' && str_contains($passwordId, '.')) {
+            if ($passwordId !== '' && !str_contains($passwordId, '.')) {
                 $password = $this->passwordStorage->read($passwordId);
                 if ($password !== '404 : Bad status received from Vault') {
                     $this->fichierCleValeur->set($field->getName(), $password);
