@@ -9,7 +9,7 @@ use Pastell\Configuration\FormulaireElement;
 
 class IsEqualValidator implements ValidatorInterface
 {
-    private array $errors = [];
+    private array $errors;
 
     public function __construct(
         private readonly DocumentTypeValidation $documentTypeValidation,
@@ -28,10 +28,7 @@ class IsEqualValidator implements ValidatorInterface
                 $this->errors[] = "formulaire:xx:yy:is_equal:<b>$isEqual</b> n'est pas défini dans le formulaire";
             }
         }
-        if (count($this->errors) > 0) {
-            return false;
-        }
-        return true;
+        return count($this->errors) === 0;
     }
 
     public function getErrors(): array

@@ -11,7 +11,7 @@ use Pastell\Configuration\SearchField;
 
 class ChampsValidator implements ValidatorInterface
 {
-    private array $errors = [];
+    private array $errors;
     private array $fieldKey;
 
     public function __construct(
@@ -29,10 +29,11 @@ class ChampsValidator implements ValidatorInterface
             $allChamps = $typeDefinition[$key];
             foreach ($allChamps as $champs) {
                 if (
-                    in_array($champs, array_column(SearchField::cases(), 'value'))
-                    && $key === ModuleElement::CHAMPS_RECHERCHE_AVANCEE->value
-                    || in_array($champs, array_column(DisplayedField::cases(), 'value'))
-                    && $key === ModuleElement::CHAMPS_AFFICHES->value
+                    (in_array($champs, array_column(SearchField::cases(), 'value'))
+                    && $key === ModuleElement::CHAMPS_RECHERCHE_AVANCEE->value)
+                    ||
+                    (in_array($champs, array_column(DisplayedField::cases(), 'value'))
+                    && $key === ModuleElement::CHAMPS_AFFICHES->value)
                 ) {
                     continue;
                 }
@@ -43,10 +44,7 @@ class ChampsValidator implements ValidatorInterface
                     . 'ou un élément indexé du formulaire';
             }
         }
-        if (count($this->errors) > 0) {
-            return false;
-        }
-        return true;
+        return count($this->errors) === 0;
     }
 
     public function getErrors(): array

@@ -10,7 +10,7 @@ use Pastell\Configuration\ModuleElement;
 
 class ActionPropertiesValidator implements ValidatorInterface
 {
-    private array $errors = [];
+    private array $errors;
     private array $actionType;
 
     public function __construct(
@@ -33,10 +33,7 @@ class ActionPropertiesValidator implements ValidatorInterface
                 }
             }
         }
-        if (count($this->errors) > 0) {
-            return false;
-        }
-        return true;
+        return count($this->errors) === 0;
     }
 
     public function getActionPropertiesValue(array $typeDefinition, string $property): array

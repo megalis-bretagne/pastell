@@ -10,7 +10,7 @@ use Pastell\Configuration\ModuleElement;
 
 class EditableContentValidator implements ValidatorInterface
 {
-    private array $errors = [];
+    private array $errors;
 
     public function __construct(
         private readonly DocumentTypeValidation $documentTypeValidation,
@@ -37,10 +37,7 @@ class EditableContentValidator implements ValidatorInterface
                     . "n'est pas défini dans le formulaire";
             }
         }
-        if (count($this->errors) > 0) {
-            return false;
-        }
-        return true;
+        return count($this->errors) === 0;
     }
 
     public function getErrors(): array

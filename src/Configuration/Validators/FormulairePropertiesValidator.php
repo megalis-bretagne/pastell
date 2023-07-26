@@ -9,8 +9,8 @@ use Pastell\Configuration\FormulaireElement;
 
 class FormulairePropertiesValidator implements ValidatorInterface
 {
-    private array $errors = [];
-    private array $properties = [];
+    private array $errors;
+    private array $properties;
 
     public function __construct(
         private readonly DocumentTypeValidation $documentTypeValidation,
@@ -35,10 +35,7 @@ class FormulairePropertiesValidator implements ValidatorInterface
                 }
             }
         }
-        if (count($this->errors) > 0) {
-            return false;
-        }
-        return true;
+        return count($this->errors) === 0;
     }
 
     public function getErrors(): array

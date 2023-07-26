@@ -9,7 +9,7 @@ use Pastell\Service\Pack\PackService;
 
 class RestrictionPackValidator implements ValidatorInterface
 {
-    private array $errors = [];
+    private array $errors;
 
     public function __construct(
         private readonly PackService $packService,
@@ -26,10 +26,7 @@ class RestrictionPackValidator implements ValidatorInterface
                     . "n'est pas défini dans la liste des packs";
             }
         }
-        if (count($this->errors) > 0) {
-            return false;
-        }
-        return true;
+        return count($this->errors) === 0;
     }
 
     public function getErrors(): array

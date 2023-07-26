@@ -10,7 +10,7 @@ use Pastell\Configuration\ModuleElement;
 
 class ActionSelectionValidator implements ValidatorInterface
 {
-    private array $errors = [];
+    private array $errors;
 
     public function validate(array $typeDefinition): bool
     {
@@ -20,15 +20,12 @@ class ActionSelectionValidator implements ValidatorInterface
             if (empty($action[ActionElement::ACTION_SELECTION->value])) {
                 continue;
             }
-            if (!in_array($action[ActionElement::ACTION_SELECTION->value], array_keys(EntiteSQL::getAllType()))) {
+            if (!array_key_exists($action[ActionElement::ACTION_SELECTION->value], EntiteSQL::getAllType())) {
                 $this->errors[] = "action:$actionName:action-selection:<b>{$action['action-selection']}</b> "
                     . "n'est pas un type d'entité du système";
             }
         }
-        if (count($this->errors) > 0) {
-            return false;
-        }
-        return true;
+        return count($this->errors) === 0;
     }
 
     public function getErrors(): array

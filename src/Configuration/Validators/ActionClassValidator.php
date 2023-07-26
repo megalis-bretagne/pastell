@@ -10,7 +10,7 @@ use Pastell\Configuration\ModuleElement;
 
 class ActionClassValidator implements ValidatorInterface
 {
-    private array $errors = [];
+    private array $errors;
 
     public function validate(array $typeDefinition): bool
     {
@@ -35,10 +35,7 @@ class ActionClassValidator implements ValidatorInterface
                 );
             }
         }
-        if (count($this->errors) > 0) {
-            return false;
-        }
-        return true;
+        return count($this->errors) === 0;
     }
 
     public function getErrors(): array

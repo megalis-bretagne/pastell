@@ -9,7 +9,7 @@ use Pastell\Configuration\ModuleElement;
 
 class OneTitleValidator implements ValidatorInterface
 {
-    private array $errors = [];
+    private array $errors;
     public function validate(array $typeDefinition): bool
     {
         $this->errors = [];
@@ -27,10 +27,7 @@ class OneTitleValidator implements ValidatorInterface
                     . implode(',', $title);
             }
         }
-        if (count($this->errors) > 0) {
-            return false;
-        }
-        return true;
+        return count($this->errors) === 0;
     }
 
     public function getErrors(): array

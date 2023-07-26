@@ -63,7 +63,7 @@ class DocumentTypeConfiguration implements ConfigurationInterface
                     ->scalarPrototype()->end()
                 ->end()
                 ->scalarNode(ModuleElement::STUDIO_DEFINITION->value)
-                    ->info('Permet de préciser le contenu orginal du flux studio qui a permis la création '
+                    ->info('Permet de préciser le contenu original du flux studio qui a permis la création '
                             . 'de ce type de dossier (en JSON)')
                 ->end()
             ->end();
@@ -80,7 +80,7 @@ class DocumentTypeConfiguration implements ConfigurationInterface
                 ->info("le formulaire est composé d'un ensemble d'onglets")
                 ->normalizeKeys(false)
                 ->arrayPrototype()
-                    ->info("un onglet est composé d'élement de formulaire")
+                    ->info("un onglet est composé d'éléments de formulaire")
                     ->normalizeKeys(false)
                     ->children()
                         ->scalarNode(FormulaireElement::NAME->value)->end()
@@ -263,10 +263,10 @@ class DocumentTypeConfiguration implements ConfigurationInterface
                 ->end()
                 ->booleanNode(ActionElement::NO_WORKFLOW->value)->end()
                 ->scalarNode(ActionElement::CONNECTEUR_TYPE->value)
-                    ->info("Pour l'action standard indique dans quel type de connecteur l'action doit-être executée")
+                    ->info("Pour l'action standard indique dans quel type de connecteur l'action doit-être exécutée")
                 ->end()
                 ->scalarNode(ActionElement::CONNECTEUR_TYPE_ACTION->value)
-                    ->info("Permet de spécifier le nom de la classe à executé dans le cadre de l'action standard")
+                    ->info("Permet de spécifier le nom de la classe à exécuté dans le cadre de l'action standard")
                 ->end()
                 ->append($this->addRuleNode())
                 ->append($this->addConnecteurTypeMappingNode())
@@ -288,8 +288,8 @@ class DocumentTypeConfiguration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder(ActionElement::CONNECTEUR_TYPE_MAPPING->value);
         $treeBuilder->getRootNode()
-            ->info("Permet de spécifier le mapping entre les noms des élements du document\n"
-                    . "et les noms des élements attendu par l'action du connecteur type")
+            ->info("Permet de spécifier le mapping entre les noms des éléments du document\n"
+                    . "et les noms des éléments attendu par l'action du connecteur type")
             ->normalizeKeys(false)
             ->scalarPrototype()
             ->end();

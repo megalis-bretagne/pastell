@@ -56,7 +56,7 @@ class DocumentTypeValidation
     /**
      * @throws UnrecoverableException
      */
-    private function getConfiguration(string $filePath): array
+    private function getConfiguration(string $filePath): void
     {
         $ymlData = Yaml::parseFile($filePath);
         $dataProcessed = (new Processor())->processConfiguration(
@@ -64,8 +64,6 @@ class DocumentTypeValidation
             [$ymlData]
         );
         $this->validate($dataProcessed);
-
-        return $dataProcessed;
     }
 
     public function getErrorList(string $filePath): array
@@ -147,9 +145,9 @@ class DocumentTypeValidation
                 $array = array_merge($array, $rulevalue);
             }
             if (
-                str_contains($rulekey, RuleElement::NO->value)
-                || str_contains($rulekey, RuleElement::AND->value)
-                || str_contains($rulekey, RuleElement::OR->value)
+                str_starts_with($rulekey, RuleElement::NO->value)
+                || str_starts_with($rulekey, RuleElement::AND->value)
+                || str_starts_with($rulekey, RuleElement::OR->value)
             ) {
                 $array = array_merge($array, $this->getElementRuleValue($rulevalue, $ruleName));
             }
@@ -160,7 +158,7 @@ class DocumentTypeValidation
     public function getAllPossibleAction(array $typeDefinition): array
     {
         $allPossibleActionKeys = array_keys($typeDefinition[ModuleElement::ACTION->value]);
-        if (! in_array(ActionPossible::FATAL_ERROR_ACTION, $allPossibleActionKeys)) {
+        if (! in_array(ActionPossible::FATAL_ERROR_ACTION, $allPossibleActionKeys, true)) {
             $allPossibleActionKeys[] = ActionPossible::FATAL_ERROR_ACTION;
         }
         return $allPossibleActionKeys;

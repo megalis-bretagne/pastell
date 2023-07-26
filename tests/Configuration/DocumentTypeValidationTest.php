@@ -8,13 +8,6 @@ use Pastell\Configuration\DocumentTypeValidation;
 
 class DocumentTypeValidationTest extends \PastellTestCase
 {
-    private DocumentTypeValidation $documentTypeValidation;
-
-    protected function setUp(): void
-    {
-        $this->documentTypeValidation =
-            $this->getObjectInstancier()->getInstance(DocumentTypeValidation::class);
-    }
     public function dataProvider(): array
     {
         $filePath = __DIR__ . '/fixtures/definition-with-wrong-';
@@ -121,7 +114,9 @@ class DocumentTypeValidationTest extends \PastellTestCase
      */
     public function testValidationFailed(string $filePath, array $expectedError): void
     {
-        static::assertFalse($this->documentTypeValidation->isDefinitionFileValid($filePath));
-        static::assertEquals($expectedError, $this->documentTypeValidation->getErrorList($filePath));
+        $documentTypeValidation =
+            $this->getObjectInstancier()->getInstance(DocumentTypeValidation::class);
+        static::assertFalse($documentTypeValidation->isDefinitionFileValid($filePath));
+        static::assertEquals($expectedError, $documentTypeValidation->getErrorList($filePath));
     }
 }

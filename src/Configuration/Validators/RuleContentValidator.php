@@ -9,7 +9,7 @@ use Pastell\Configuration\RuleElement;
 
 class RuleContentValidator implements ValidatorInterface
 {
-    private array $errors = [];
+    private array $errors;
 
     public function __construct(
         private readonly DocumentTypeValidation $documentTypeValidation,
@@ -32,10 +32,7 @@ class RuleContentValidator implements ValidatorInterface
                 $this->errors[] = "action:xx:rule:content:<b>$key</b> n'est pas défini dans le formulaire";
             }
         }
-        if (count($this->errors) > 0) {
-            return false;
-        }
-        return true;
+        return count($this->errors) === 0;
     }
 
     public function getErrors(): array

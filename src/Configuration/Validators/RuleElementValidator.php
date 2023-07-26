@@ -10,7 +10,7 @@ use Pastell\Configuration\RuleElement;
 
 class RuleElementValidator implements ValidatorInterface
 {
-    private array $errors = [];
+    private array $errors;
 
     public function validate(array $typeDefinition): bool
     {
@@ -21,29 +21,21 @@ class RuleElementValidator implements ValidatorInterface
                 $this->checkAllRule($action[ActionElement::RULE->value], $key . ':' . ActionElement::RULE->value);
             }
         }
-        if (count($this->errors) > 0) {
-            return false;
-        }
-        return true;
+        return count($this->errors) === 0;
     }
 
     private function checkAllRule(array $ruleList, $path): void
     {
         foreach ($ruleList as $rulekey => $rulevalue) {
-            if (
-                str_contains($rulekey, RuleElement::NO->value)
+            $containsNoAndOr = str_contains($rulekey, RuleElement::NO->value)
                 || str_contains($rulekey, RuleElement::AND->value)
-                || str_contains($rulekey, RuleElement::OR->value)
-            ) {
+                || str_contains($rulekey, RuleElement::OR->value);
+            if ($containsNoAndOr) {
                 $this->checkAllRule($rulevalue, $path . ':' . $rulekey);
             }
             if (
                 !in_array($rulekey, array_column(RuleElement::cases(), 'value'))
-                && !(
-                    str_contains($rulekey, RuleElement::NO->value)
-                    || str_contains($rulekey, RuleElement::AND->value)
-                    || str_contains($rulekey, RuleElement::OR->value)
-                    )
+                && !($containsNoAndOr)
             ) {
                 $this->errors[] = "<b>$path</b>: la clé <b>$rulekey</b> n'est pas attendu";
             }
