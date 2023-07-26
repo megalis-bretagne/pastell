@@ -1,3 +1,9 @@
+# [4.0.6] - 2023-08-14
+
+## Corrections
+
+- Problème d'affichage des métadonnées dans les propriétés spécifiques des générateurs SEDA #1879
+
 # [4.0.5] - 2023-07-10
 
 ## Évolutions
