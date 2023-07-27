@@ -263,7 +263,7 @@ et l'utilisateur peut modifier les champs manquants #1850
 
 - Le support de la version 0.2 du SEDA est déprécié. 
 
-# [3.1.20]
+# [3.1.20] - 2023-07-27
 
 ## Corrections
 
