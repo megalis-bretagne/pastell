@@ -28,8 +28,8 @@ class RuleElementValidator implements ValidatorInterface
     {
         foreach ($ruleList as $rulekey => $rulevalue) {
             $containsNoAndOr = str_contains($rulekey, RuleElement::NO->value)
-                || str_contains($rulekey, RuleElement::AND->value)
-                || str_contains($rulekey, RuleElement::OR->value);
+                || str_starts_with($rulekey, RuleElement::AND->value)
+                || str_starts_with($rulekey, RuleElement::OR->value);
             if ($containsNoAndOr) {
                 $this->checkAllRule($rulevalue, $path . ':' . $rulekey);
             }

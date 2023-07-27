@@ -266,7 +266,7 @@ class DocumentTypeConfiguration implements ConfigurationInterface
                     ->info("Pour l'action standard indique dans quel type de connecteur l'action doit-être exécutée")
                 ->end()
                 ->scalarNode(ActionElement::CONNECTEUR_TYPE_ACTION->value)
-                    ->info("Permet de spécifier le nom de la classe à exécuté dans le cadre de l'action standard")
+                    ->info("Permet de spécifier le nom de la classe à exécuter dans le cadre de l'action standard")
                 ->end()
                 ->append($this->addRuleNode())
                 ->append($this->addConnecteurTypeMappingNode())
