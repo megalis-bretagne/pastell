@@ -3,7 +3,7 @@
 ## Évolutions
 
 - Uniformisation des noms de dossiers d'archivage #1802
-- Les types de dossiers sont triés par pack dans la configuration d'un nouveau type de dossier #1802
+- Les types de dossiers sont triés par pack dans la configuration (association) d'un nouveau type de dossier #1802
 
 ## Corrections
 
