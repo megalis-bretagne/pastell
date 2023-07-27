@@ -3,7 +3,7 @@
 /**
  * @var Gabarit $this
  * @var array $flux_list
- * @var array $possible_flux_list
+ * @var array $possible_pack_list
  * @var int $id_e_mere
  * @var array $all_herited
  * @var int $id_e
@@ -81,11 +81,15 @@
                         <label for="module_type">Type de dossier</label>
                     </th>
                     <td>
-                        <select name="flux" id="module_type" class="select2_type_dossier form-control col-md-2">
-                            <?php foreach ($possible_flux_list as $flux_id => $flux_info) : ?>
-                                <option value="<?php hecho($flux_id); ?>">
-                                    <?php hecho($flux_info['nom']); ?>
-                                </option>
+                        <select name="flux" id="module_type" class="select2_type_dossier form-control col-md-3">
+                            <?php foreach ($possible_pack_list as $type => $possible_flux_list) : ?>
+                                <optgroup label="<?php hecho($type) ?>">
+                                <?php foreach ($possible_flux_list as $flux_id => $flux_info) : ?>
+                                    <option value="<?php hecho($flux_id); ?>">
+                                        <?php hecho($flux_info['nom']); ?>
+                                    </option>
+                                <?php endforeach ?>
+                                </optgroup>
                             <?php endforeach ?>
                         </select>
                     </td>

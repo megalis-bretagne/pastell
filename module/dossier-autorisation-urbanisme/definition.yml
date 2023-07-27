@@ -1,4 +1,4 @@
-nom: "Archivage des dossiers d'autorisation d'urbanisme"
+nom: "Dossiers d'autorisation d'urbanisme (archivage)"
 type: 'Pack urbanisme'
 description: "Permet d'envoyer un dossier d'autorisation d'urbanisme dans un système d'archivage électronique"
 connecteur:

@@ -1,5 +1,10 @@
 # [4.0.6] - 2023-08-14
 
+## Évolutions
+
+- Uniformisation des noms de dossiers d'archivage #1802
+- Les types de dossiers sont triés par pack dans la configuration (association) d'un nouveau type de dossier #1802
+
 ## Corrections
 
 - Problème d'affichage des métadonnées dans les propriétés spécifiques des générateurs SEDA #1879
