@@ -27,7 +27,7 @@ class RuleElementValidator implements ValidatorInterface
     private function checkAllRule(array $ruleList, $path): void
     {
         foreach ($ruleList as $rulekey => $rulevalue) {
-            $containsNoAndOr = str_contains($rulekey, RuleElement::NO->value)
+            $containsNoAndOr = str_starts_with($rulekey, RuleElement::NO->value)
                 || str_starts_with($rulekey, RuleElement::AND->value)
                 || str_starts_with($rulekey, RuleElement::OR->value);
             if ($containsNoAndOr) {
