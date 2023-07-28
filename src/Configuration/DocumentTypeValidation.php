@@ -87,7 +87,6 @@ class DocumentTypeValidation
     {
         $this->errorList = [];
         $this->allFormulaireElements = $this->getAllFormulaireElements($typeDefinition);
-        die();
         $validatorClasses = $this->getAllValidatorClasses();
 
         foreach ($validatorClasses as $class) {
