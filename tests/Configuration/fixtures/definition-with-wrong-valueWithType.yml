@@ -1,0 +1,11 @@
+nom: 'Flux de test'
+description: 'Ceci est un flux de test'
+formulaire:
+    Acte:
+        acte_nature:
+            name: "Nature de l'acte"
+            type: text
+            value:
+                3: 'Actes individuels'
+                2: 'Actes réglementaires'
+                6: Autres

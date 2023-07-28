@@ -1,5 +1,7 @@
 <?php
 
+/** @deprecated Since 4.0.4, Use Pastell\Configuration\DocumentTypeValidation instead */
+
 class DocumentTypeValidation
 {
     public const MODULE_DEFINITION = 'module-definition.yml';

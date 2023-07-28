@@ -1,0 +1,16 @@
+nom: 'Flux de test'
+description: 'Ceci est un flux de test'
+formulaire: []
+action:
+  supression:
+        name-action: Supprimer
+        name: Supprimé
+        rule:
+            or_1:
+                and_1:
+                    last-action:
+                        - creation
+                    has-action:
+                        - modification
+                    no-action:
+                      - termine

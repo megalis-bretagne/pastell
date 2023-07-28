@@ -1,0 +1,12 @@
+nom: 'Flux de test'
+description: 'Ceci est un flux de test'
+formulaire:
+    Message:
+        test:
+            name: 'test'
+            type: text
+            title: true
+        test2:
+            name: 'test2'
+            type: text
+            title: true

@@ -1,0 +1,5 @@
+nom: 'Flux de test'
+description: 'Ceci est un flux de test'
+connecteur:
+    - signatures
+formulaire: []

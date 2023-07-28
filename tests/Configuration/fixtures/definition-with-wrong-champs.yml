@@ -1,0 +1,7 @@
+nom: 'Flux de test'
+description: 'Ceci est un flux de test'
+formulaire: []
+champs-affiches:
+    - toto
+champs-recherche-avancee:
+  - toto

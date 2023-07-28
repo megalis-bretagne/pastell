@@ -1,0 +1,7 @@
+nom: 'Flux de test'
+description: 'Ceci est un flux de test'
+formulaire:
+  Message:
+    test:
+      read-only-content:
+        toto: true

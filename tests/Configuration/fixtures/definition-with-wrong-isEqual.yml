@@ -1,0 +1,9 @@
+nom: 'Flux de test'
+description: 'Ceci est un flux de test'
+formulaire:
+    Message:
+        test:
+            name: 'test'
+        test2:
+            name: 'test2'
+            is_equal: test3

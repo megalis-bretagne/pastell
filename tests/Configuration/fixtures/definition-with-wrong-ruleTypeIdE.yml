@@ -1,0 +1,8 @@
+nom: 'Flux de test'
+description: 'Ceci est un flux de test'
+formulaire: []
+action:
+  supression:
+        rule:
+            type_id_e:
+                - collectivites

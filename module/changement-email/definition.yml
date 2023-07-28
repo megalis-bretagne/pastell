@@ -7,8 +7,8 @@ formulaire:
             no-show: true
         login:
             title: true
-        nom: ''
-        prenom: ''
+        nom: []
+        prenom: []
         email_actuel:
             name: 'Email actuel'
         email_demande:

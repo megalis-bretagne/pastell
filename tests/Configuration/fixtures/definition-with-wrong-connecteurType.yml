@@ -1,0 +1,11 @@
+nom: 'Flux de test'
+description: 'Ceci est un flux de test'
+formulaire: []
+action:
+  test:
+    name-action: Modifier
+    name: 'En cours de rédaction'
+    connecteur-type: signatures
+    connecteur-type-action: SignatureEnvoies
+    connecteur-type-mapping:
+      document: toto
