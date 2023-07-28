@@ -64,7 +64,7 @@ class ForceDeleteModuleCommand extends Command
 
                     $id_job = $this->jobQueueSQL->getJobIdForDocument($id_e, $id_d);
                     if ($id_job) {
-                        $io->note(sprintf('Le job: %s sera supprimé pour ce document\n', $id_job));
+                        $io->note(sprintf('Le travail: %s sera supprimé pour ce document\n', $id_job));
                     }
                 }
             }
