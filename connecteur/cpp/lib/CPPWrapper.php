@@ -115,11 +115,9 @@ class CPPWrapper
             $curlWrapper->setProperties(CURLOPT_PROXY, $cppWrapperConfig->proxy);
         }
 
-        $data_to_send = $this->utf8Encoder->encode($data);
+        $this->setJsonPostData($curlWrapper, $data);
 
-        $this->setJsonPostData($curlWrapper, $data_to_send);
-
-        $this->logger->debug($msg_call, [$cppWrapperConfig->user_login,$url,$data_to_send]);
+        $this->logger->debug($msg_call, [$cppWrapperConfig->user_login,$url,$data]);
 
         $begin_chorus_call = microtime(true);
         $result = $curlWrapper->get($url);
