@@ -29,7 +29,9 @@ class DocumentTypeValidation
 
     public function getModuleDefinition(): array
     {
-        $moduleDefinition = $this->ymlLoader->getArray(__DIR__ . '/' . self::MODULE_DEFINITION);
+        $moduleDefinition = $this->ymlLoader->getArray(
+            __DIR__ . '/../../pastell-core/' . self::MODULE_DEFINITION
+        );
         foreach ($moduleDefinition as $part => $properties) {
             if (! isset($properties['info'])) {
                 $moduleDefinition[$part]['info'] = '';
@@ -85,7 +87,7 @@ class DocumentTypeValidation
     {
         $this->errorList = [];
         $this->allFormulaireElements = $this->getAllFormulaireElements($typeDefinition);
-
+        die();
         $validatorClasses = $this->getAllValidatorClasses();
 
         foreach ($validatorClasses as $class) {
