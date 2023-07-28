@@ -4,6 +4,7 @@
 
 - Uniformisation des noms de dossiers d'archivage #1802
 - Les types de dossiers sont triés par pack dans la configuration (association) d'un nouveau type de dossier #1802
+- Le script `installation/force-delete-module.php` est remplacé par la commande `app:module:force-delete-module`. Les associations aux connecteurs sont maintenant bien supprimées même s'il n'existe pas de document pour le type de dossier #1284
 
 ## Corrections
 

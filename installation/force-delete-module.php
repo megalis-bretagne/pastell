@@ -1,7 +1,7 @@
 #! /usr/bin/php
 <?php
-
 /**
+ * @deprecated since 4.0.6 use command app:module:force-delete-module instead
  * @var ObjectInstancier $objectInstancier
  */
 
