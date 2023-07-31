@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace Pastell\Command\Module;
 
 use DocumentActionEntite;
+use Pastell\Configuration\DocumentTypeValidation;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Yaml\Yaml;
 
 #[AsCommand(
     name: 'app:module:set-new-status-document-batch',
@@ -27,10 +29,11 @@ class SetNewStatusDocumentBatchCommand extends Command
         private readonly \JobManager $jobManager,
         private readonly DocumentActionEntite $documentActionEntite,
         private readonly \ActionChange $actionChange,
+        private readonly \FluxDefinitionFiles $fluxDefinitionFiles,
+        private readonly DocumentTypeValidation $documentTypeValidation,
     ) {
         parent::__construct();
     }
-
 
     protected function configure(): void
     {
@@ -52,6 +55,34 @@ class SetNewStatusDocumentBatchCommand extends Command
         $newStatus = $input->getArgument(self::NEW_STATUS);
 
         $documents = $this->documentActionEntite->getDocument($id_e, $type, $oldStatus);
+
+        if (count($documents) === 0) {
+            $io->note(sprintf(
+                "Il n'existe aucun document de type : %s pour l'entité : %s ayant pour statut : %s.",
+                $type,
+                $id_e,
+                $oldStatus
+            ));
+            return Command::SUCCESS;
+        }
+
+        $this->checkExistingAction($type, $newStatus, $io);
+
+        $io->note(sprintf(
+            '%d documents, type : %s et entité : %s, vont passer du statut %s au statut %s.',
+            count($documents),
+            $type,
+            $id_e,
+            $oldStatus,
+            $newStatus
+        ));
+
+        $answer = $io->ask('Etes-vous sûr (o/N) ?');
+        if ($answer != 'o') {
+            $io->note("Aucun document n'a été modifié");
+            return Command::SUCCESS;
+        }
+
         $io->progressStart(count($documents));
 
         foreach ($documents as $document) {
@@ -78,5 +109,22 @@ class SetNewStatusDocumentBatchCommand extends Command
         $io->success('Done.');
 
         return Command::SUCCESS;
+    }
+
+    /**
+     * @param mixed $type
+     * @param mixed $newStatus
+     * @param SymfonyStyle $io
+     * @return void
+     */
+    public function checkExistingAction(mixed $type, mixed $newStatus, SymfonyStyle $io): void
+    {
+        $path = $this->fluxDefinitionFiles->getDefinitionPath($type);
+        $file = Yaml::parseFile($path);
+        $actions = $this->documentTypeValidation->getAllPossibleAction($file);
+
+        if (!in_array($newStatus, $actions)) {
+            $io->warning(sprintf("Le statut %s n'existe pas.", $newStatus));
+        }
     }
 }
