@@ -10,13 +10,15 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Yaml\Yaml;
 
 #[AsCommand(
     name: 'app:module:set-new-status-document-batch',
-    description: 'Set a new status to a document batch having a specific type and status from one entity',
+    description:
+    'Set a new status to a document batch having a specific type and status from one entity (option: sub entities)',
 )]
 class SetNewStatusDocumentBatchCommand extends Command
 {
@@ -24,6 +26,7 @@ class SetNewStatusDocumentBatchCommand extends Command
     public const TYPE = 'type';
     public const OLD_STATUS = 'old_status';
     public const NEW_STATUS = 'new_status';
+    private const INCLUDE_SUB_ENTITIES = 'includeSubEntities';
 
     public function __construct(
         private readonly \JobManager $jobManager,
@@ -31,6 +34,7 @@ class SetNewStatusDocumentBatchCommand extends Command
         private readonly \ActionChange $actionChange,
         private readonly \FluxDefinitionFiles $fluxDefinitionFiles,
         private readonly DocumentTypeValidation $documentTypeValidation,
+        private readonly \EntiteSQL $entiteSQL,
     ) {
         parent::__construct();
     }
@@ -42,6 +46,12 @@ class SetNewStatusDocumentBatchCommand extends Command
             ->addArgument(self::TYPE, InputArgument::REQUIRED, 'document type')
             ->addArgument(self::OLD_STATUS, InputArgument::REQUIRED, 'old status')
             ->addArgument(self::NEW_STATUS, InputArgument::REQUIRED, 'new status')
+            ->addOption(
+                self::INCLUDE_SUB_ENTITIES,
+                'i',
+                InputOption::VALUE_NONE,
+                "Sets '-i' to include sub entities"
+            )
         ;
     }
 
@@ -49,16 +59,17 @@ class SetNewStatusDocumentBatchCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $id_e = $input->getArgument(self::ID_E);
+        $id_e = intval($input->getArgument(self::ID_E));
         $type = $input->getArgument(self::TYPE);
         $oldStatus = $input->getArgument(self::OLD_STATUS);
         $newStatus = $input->getArgument(self::NEW_STATUS);
+        $includeSubEntities = $input->getOption(self::INCLUDE_SUB_ENTITIES) ?? false;
 
-        $documents = $this->documentActionEntite->getDocument($id_e, $type, $oldStatus);
+        $documents = $this->getDocuments($id_e, $type, $oldStatus, $includeSubEntities);
 
         if (count($documents) === 0) {
             $io->note(sprintf(
-                "Il n'existe aucun document de type : %s pour l'entité : %s ayant pour statut : %s.",
+                "Il n'existe aucun document de type : %s pour l'entité : %d ayant pour statut : %s.",
                 $type,
                 $id_e,
                 $oldStatus
@@ -68,14 +79,18 @@ class SetNewStatusDocumentBatchCommand extends Command
 
         $this->checkExistingAction($type, $newStatus, $io);
 
-        $io->note(sprintf(
-            '%d documents, type : %s et entité : %s, vont passer du statut %s au statut %s.',
+        $message = sprintf(
+            '%d documents, type : %s et entité : %d, vont passer du statut %s au statut %s.',
             count($documents),
             $type,
             $id_e,
             $oldStatus,
             $newStatus
-        ));
+        );
+        if ($includeSubEntities) {
+            $message = sprintf('%s (Sous entitées incluses)', $message);
+        }
+        $io->note($message);
 
         $answer = $io->ask('Etes-vous sûr (o/N) ?');
         if ($answer != 'o') {
@@ -111,13 +126,22 @@ class SetNewStatusDocumentBatchCommand extends Command
         return Command::SUCCESS;
     }
 
-    /**
-     * @param mixed $type
-     * @param mixed $newStatus
-     * @param SymfonyStyle $io
-     * @return void
-     */
-    public function checkExistingAction(mixed $type, mixed $newStatus, SymfonyStyle $io): void
+    public function getDocuments(int $id_e, string $type, string $oldStatus, bool $includeSubEntities): array
+    {
+        $documents = $this->documentActionEntite->getDocument($id_e, $type, $oldStatus);
+        if ($includeSubEntities) {
+            $subEntities = $this->entiteSQL->getAllChildren($id_e);
+            foreach ($subEntities as $entity) {
+                $documents = array_merge(
+                    $documents,
+                    $this->documentActionEntite->getDocument($entity['id_e'], $type, $oldStatus)
+                );
+            }
+        }
+        return $documents;
+    }
+
+    public function checkExistingAction(string $type, string $newStatus, SymfonyStyle $io): void
     {
         $path = $this->fluxDefinitionFiles->getDefinitionPath($type);
         $file = Yaml::parseFile($path);

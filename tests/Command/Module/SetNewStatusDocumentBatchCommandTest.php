@@ -26,6 +26,7 @@ class SetNewStatusDocumentBatchCommandTest extends \PastellTestCase
             $this->getObjectInstancier()->getInstance(\ActionChange::class),
             $this->getObjectInstancier()->getInstance(\FluxDefinitionFiles::class),
             $this->getObjectInstancier()->getInstance(DocumentTypeValidation::class),
+            $this->getObjectInstancier()->getInstance(\EntiteSQL::class),
         );
         $this->commandTester = new CommandTester($command);
     }
@@ -58,6 +59,7 @@ class SetNewStatusDocumentBatchCommandTest extends \PastellTestCase
             self::assertSame(self::CREATION, $document[self::LAST_ACTION]);
         }
 
+        $this->commandTester->setInputs(['o']);
         $this->executeCommand(
             self::ID_E_COL,
             self::ACTES_GENERIQUE,
