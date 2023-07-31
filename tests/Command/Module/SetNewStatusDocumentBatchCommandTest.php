@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pastell\Tests\Command\Module;
 
 use Pastell\Command\Module\SetNewStatusDocumentBatchCommand;
+use Pastell\Configuration\DocumentTypeValidation;
 use Symfony\Component\Console\Tester\CommandTester;
 
 class SetNewStatusDocumentBatchCommandTest extends \PastellTestCase
@@ -23,6 +24,8 @@ class SetNewStatusDocumentBatchCommandTest extends \PastellTestCase
             $this->getObjectInstancier()->getInstance(\JobManager::class),
             $this->getObjectInstancier()->getInstance(\DocumentActionEntite::class),
             $this->getObjectInstancier()->getInstance(\ActionChange::class),
+            $this->getObjectInstancier()->getInstance(\FluxDefinitionFiles::class),
+            $this->getObjectInstancier()->getInstance(DocumentTypeValidation::class),
         );
         $this->commandTester = new CommandTester($command);
     }
