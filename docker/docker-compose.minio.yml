@@ -8,7 +8,7 @@ services:
       USE_EXTERNAL_STORAGE_FOR_JOURNAL_PROOF: ${USE_EXTERNAL_STORAGE_FOR_JOURNAL_PROOF:-false}
 
   minio:
-    image: gitlab.libriciel.fr:4567/libriciel/pole-plate-formes/docker/minio:CI
+    image: registry.libriciel.fr:443/public/plateforme/docker/minio:1.0.0
     ports:
       - 9000:9000
       - 9001:9001
