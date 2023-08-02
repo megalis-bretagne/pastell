@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Pastell\Storage;
 
 use Exception;
+use GuzzleHttp\Psr7\Uri;
+use Http\Factory\Guzzle\RequestFactory;
+use Http\Factory\Guzzle\StreamFactory;
 use Psr\Cache\InvalidArgumentException;
 use Psr\Http\Client\ClientExceptionInterface;
+use Symfony\Component\HttpClient\Psr18Client;
 use Vault\AuthenticationStrategies\TokenAuthenticationStrategy;
-use Laminas\Diactoros\RequestFactory;
-use Laminas\Diactoros\StreamFactory;
-use Laminas\Diactoros\Uri;
 use Vault\Client;
 use Vault\Exceptions\RuntimeException;
 
@@ -26,7 +27,7 @@ class VaultAdapter implements StorageInterface
     {
         $this->vaultClient = new Client(
             new Uri($vaultUrl),
-            new \AlexTartan\GuzzlePsr18Adapter\Client(),
+            new Psr18Client(),
             new RequestFactory(),
             new StreamFactory()
         );
