@@ -15,7 +15,7 @@ services:
     environment:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minio-root-user}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minio-root-password}
-      MINIO_DEFAULT_BUCKETS: ${S3_BUCKET_JOURNAL:-first-bucket}
+      MINIO_DEFAULT_BUCKET: ${S3_BUCKET_JOURNAL:-first-bucket}
       MINIO_USER_LOGIN: ${S3_KEY:-minio-user-login}
       MINIO_USER_PASSWORD: ${S3_SECRET:-minio-user-password}
       MINIO_PORT_CONSOLE: ${MINIO_PORT_CONSOLE:-9001}
