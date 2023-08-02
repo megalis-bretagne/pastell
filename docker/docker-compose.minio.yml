@@ -18,6 +18,7 @@ services:
       MINIO_DEFAULT_BUCKETS: ${S3_BUCKET_JOURNAL:-first-bucket}
       MINIO_USER_LOGIN: ${S3_KEY:-minio-user-login}
       MINIO_USER_PASSWORD: ${S3_SECRET:-minio-user-password}
+      MINIO_PORT_CONSOLE: ${MINIO_PORT_CONSOLE:-9001}
     volumes:
       - ${HOME}/minio/data:/data
 
