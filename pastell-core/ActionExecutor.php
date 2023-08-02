@@ -281,11 +281,12 @@ abstract class ActionExecutor
      */
     private function checkValidityConnector(Connecteur $connecteur): void
     {
-        $error = $this->objectInstancier->getInstance(DonneesFormulaireFactory::class)
-            ->getConnecteurEntiteFormulaire($connecteur->getConnecteurInfo()['id_ce'])->getLastError();
-
-        if ($error) {
-            throw new Exception($error);
+        //TODO delete condition when used in prod
+        if ($this->objectInstancier->getInstance('useExternalStorageForPasswordConnector')) {
+            $error = $this->getConnecteurConfig($this->id_ce)->getLastError();
+            if ($error) {
+                throw new UnrecoverableException($error);
+            }
         }
     }
 
@@ -351,9 +352,7 @@ abstract class ActionExecutor
         if (! $this->id_ce) {
             throw new Exception("Cette action n'est pas une action de connecteur.");
         }
-        $connecteur = $this->getConnecteurFactory()->getConnecteurById($this->id_ce);
-        $this->checkValidityConnector($connecteur);
-        return $connecteur;
+        return $this->getConnecteurFactory()->getConnecteurById($this->id_ce);
     }
 
     /**
