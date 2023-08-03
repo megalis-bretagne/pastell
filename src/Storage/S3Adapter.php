@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Pastell\Storage;
 
-use Aws\S3\Exception\S3Exception;
 use Aws\S3\S3Client;
 
 class S3Adapter implements StorageInterface
@@ -39,18 +38,10 @@ class S3Adapter implements StorageInterface
 
     public function read(string $id): string
     {
-        try {
-            $object = $this->aws->getObject([
-                'Bucket' => $this->bucket,
-                'Key'    => $id,
-            ]);
-        } catch (S3Exception $e) {
-            if ($e->getAwsErrorCode() === 'NoSuchKey') {
-                return '';
-            } else {
-                throw $e;
-            }
-        }
+        $object = $this->aws->getObject([
+            'Bucket' => $this->bucket,
+            'Key'    => $id,
+        ]);
         return $object->get('Body')->__toString();
     }
 }

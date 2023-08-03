@@ -1,5 +1,6 @@
 <?php
 
+use Aws\S3\Exception\S3Exception;
 use Monolog\Logger;
 use Pastell\Storage\StorageInterface;
 
@@ -150,7 +151,15 @@ class Journal extends SQL
 
     private function getProof(int $id_j): string
     {
-        return $this->storage->read($id_j . 'preuve.tsa');
+        try {
+            return $this->storage->read($id_j . 'preuve.tsa');
+        } catch (S3Exception $e) {
+            if ($e->getAwsErrorCode() === 'NoSuchKey') {
+                return '';
+            } else {
+                throw $e;
+            }
+        }
     }
 
     public function getAll(
