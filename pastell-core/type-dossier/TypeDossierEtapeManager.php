@@ -138,6 +138,11 @@ class TypeDossierEtapeManager
                 $new_element_id = $stringMapper->get($element_id);
                 $result[$onglet_id][$new_element_id] = $result[$onglet_id][$element_id];
                 unset($result[$onglet_id][$element_id]);
+
+                if (isset($element_properties['is_equal'])) {
+                    $result[$onglet_id][$new_element_id]['is_equal'] =
+                        $stringMapper->get($element_properties['is_equal']);
+                }
             }
             $new_onglet_name = $stringMapper->get($onglet_id);
             $result[$new_onglet_name] = $result[$onglet_id];

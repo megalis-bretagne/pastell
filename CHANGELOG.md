@@ -14,6 +14,7 @@
 - Des dépréciations pouvaient s'afficher par API lors de l'utilisation de CAS en mode debug #1881
 - Correction d'une faute d'orthographe dans le message après avoir re-tamponné un acte #1875
 - Uniformisation du formulaire de création d'entité avec le formulaire de création d'utilisateur #1681
+- Dans un flux studio, la propriété `is_equal` de plusieurs étapes de même type prend en compte le numéro de l'étape #1891
 
 # [4.0.5] - 2023-07-10
 
