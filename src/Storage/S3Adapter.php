@@ -44,14 +44,4 @@ class S3Adapter implements StorageInterface
         ]);
         return $object->get('Body')->__toString();
     }
-
-    public function createBucket(): void
-    {
-        $this->aws->createBucket(['Bucket' => $this->bucket]);
-    }
-
-    public function isBucketSet(): bool
-    {
-        return $this->aws->doesBucketExist($this->bucket);
-    }
 }

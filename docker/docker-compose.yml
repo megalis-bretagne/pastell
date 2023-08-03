@@ -2,11 +2,12 @@ name: pastell
 
 services:
     web:
-        image: registry.libriciel.fr:443/public/plateforme/pastell:canary
+        image: 'registry.libriciel.fr:443/public/plateforme/pastell:canary'
+        restart: unless-stopped
         read_only: true
         stop_grace_period: 60s
         stop_signal: SIGTERM
-        links:
+        depends_on:
             - db
             - redis
         tmpfs:

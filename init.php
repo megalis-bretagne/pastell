@@ -92,8 +92,12 @@ if (USE_EXTERNAL_STORAGE_FOR_JOURNAL_PROOF) {
     if (TESTING_ENVIRONNEMENT) {
         $objectInstancier->setInstance(StorageInterface::class, new StorageInterfaceFake());
     } else {
-        $objectInstancier->setInstance('s3BucketJournal', S3_BUCKET_JOURNAL);
-        $objectInstancier->getInstance(Journal::class)->setInterfaceStorage(new S3Adapter(S3_URL, S3_KEY, S3_SECRET, S3_BUCKET_JOURNAL));
+        $objectInstancier->getInstance(Journal::class)->setInterfaceStorage(new S3Adapter(
+            $objectInstancier->getInstance('s3Url'),
+            $objectInstancier->getInstance('s3Key'),
+            $objectInstancier->getInstance('s3Secret'),
+            S3_BUCKET_JOURNAL,
+        ));
     }
 }
 

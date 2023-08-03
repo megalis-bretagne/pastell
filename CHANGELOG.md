@@ -177,7 +177,6 @@ et l'utilisateur peut modifier les champs manquants #1850
 - Les ancêtres d'une entité sont indiqués dans les rôles de la liste des utilisateurs et les ancêtres restent visibles
   dans la recherche d'une entité pour l'ajout d'un rôle à un utilisateur #1680
 - La possibilité de se connecter via un certificat X509 client est une fonctionnalité activable désactivée par défaut
-- Le stockage des preuves du journal se fait désormais en stockage objets avec MinIO #1684
 
 ## Suppressions
 
