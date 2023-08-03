@@ -104,13 +104,13 @@ class SetNewStatusDocumentBatchCommand extends Command
             $io->write(sprintf("Modification de : %s\n", $document['id_d']));
             $this->actionChange->addAction(
                 $document['id_d'],
-                $id_e,
+                $document['id_e'],
                 0,
                 $newStatus,
                 'Modification via la commande set-new-status-document-batch'
             );
             $this->jobManager->setJobForDocument(
-                $id_e,
+                $document['id_e'],
                 $document['id_d'],
                 'Lancement du job via set-new-status-document-batch'
             );
@@ -119,9 +119,20 @@ class SetNewStatusDocumentBatchCommand extends Command
         }
 
         $io->progressFinish();
-        $io->note(sprintf("%s documents ont été modifiés\n", count($documents)));
 
-        $io->success('Done.');
+        $oldStatusDocuments = $this->getDocuments($id_e, $type, $oldStatus, $includeSubEntities);
+        $modifiedDocumentNb = count($documents) - count($oldStatusDocuments);
+        $io->success(sprintf("%d documents ont été modifiés\n", $modifiedDocumentNb));
+
+        if (count($oldStatusDocuments) > 0) {
+            $warning = "Les documents suivants n'ont pas été modifiés :\n";
+            foreach ($oldStatusDocuments as $document) {
+                $warning .= $document['id_d'] . "\n";
+            }
+            $io->warning($warning);
+        } else {
+            $io->success('Done.');
+        }
 
         return Command::SUCCESS;
     }
