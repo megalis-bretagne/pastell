@@ -135,10 +135,10 @@ class PastellPackTest extends PastellTestCase
             $moduleName
         );
 
-        \file_put_contents(
-            __DIR__ . "/../../../module/$moduleId/definition.yml",
-            \file_get_contents($tmp_folder . "/$moduleId/definition.yml"),
-        );
+//        \file_put_contents(
+//            __DIR__ . "/../../../module/$moduleId/definition.yml",
+//            \file_get_contents($tmp_folder . "/$moduleId/definition.yml"),
+//        );
 
         self::assertFileEquals(
             __DIR__ . "/../../../module/$moduleId/definition.yml",
