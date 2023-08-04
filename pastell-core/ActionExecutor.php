@@ -259,7 +259,6 @@ abstract class ActionExecutor
             ->getProperties($this->action, 'num-same-connecteur') ?: $num_same_connecteur;
 
         if (isset($this->connecteurs[$type_connecteur][$num_same_connecteur])) {
-            $this->checkValidityConnector($this->connecteurs[$type_connecteur][$num_same_connecteur]);
             return $this->connecteurs[$type_connecteur][$num_same_connecteur] ;
         }
 
@@ -352,7 +351,9 @@ abstract class ActionExecutor
         if (! $this->id_ce) {
             throw new Exception("Cette action n'est pas une action de connecteur.");
         }
-        return $this->getConnecteurFactory()->getConnecteurById($this->id_ce);
+        $connecteur = $this->getConnecteurFactory()->getConnecteurById($this->id_ce);
+        $this->checkValidityConnector($connecteur);
+        return $connecteur;
     }
 
     /**
