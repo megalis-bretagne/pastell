@@ -46,14 +46,29 @@ define("ADMIN_EMAIL", "${ADMIN_EMAIL:-test@libriciel.net}");
 define("PASTELL_ADMIN_EMAIL", "${PASTELL_ADMIN_EMAIL:-test@libriciel.net}");
 define("PASTELL_ADMIN_LOGIN", "${PASTELL_ADMIN_LOGIN:-admin}");
 
-define("LIST_PACK", [
-  "pack_chorus_pro" => ${PACK_CHORUS_PRO:-false},
-  "pack_marche" => ${PACK_MARCHE:-false},
-  "pack_urbanisme" => ${PACK_URBANISME:-false},
-  "pack_rh" => ${PACK_RH:-false},
-  "pack_test" => ${PACK_TEST:-false},
-  "pack_libersign" => ${PACK_LIBERSIGN:-false},
-]);
+\$packs = [];
+if (${PACK_CHORUS_PRO:-false}) {
+  \$packs["pack_chorus_pro"]=true;
+}
+if (${PACK_MARCHE:-false}) {
+  \$packs["pack_marche"]=true;
+}
+if (${PACK_URBANISME:-false}) {
+  \$packs["pack_urbanisme"]=true;
+}
+if (${PACK_RH:-false}) {
+  \$packs["pack_rh"]=true;
+}
+if (${PACK_TEST:-false}) {
+  \$packs["pack_test"]=true;
+}
+if (${PACK_LIBERSIGN:-false}) {
+  \$packs["pack_libersign"]=true;
+}
+if (${PACK_DOSSIER_SEANCE:-false}) {
+  \$packs["pack_dossier_seance"]=true;
+}
+define("LIST_PACK", \$packs);
 
 define("NB_WORKERS", "${NB_WORKERS:-5}");
 define("JOURNAL_MAX_AGE_IN_MONTHS", "${JOURNAL_MAX_AGE_IN_MONTHS:-2}");
