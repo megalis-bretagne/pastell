@@ -265,7 +265,7 @@ abstract class ActionExecutor
         $id_ce = $this->getConnecteurId($type_connecteur, $num_same_connecteur);
         $connecteur = $this->getConnecteurFactory()->getConnecteurById($id_ce);
 
-        $this->checkValidityConnector($connecteur);
+        $this->checkValidityConnector();
 
         if ($this->id_d) {
             $connecteur->setDocDonneesFormulaire($this->getDonneesFormulaire());
@@ -352,7 +352,7 @@ abstract class ActionExecutor
             throw new Exception("Cette action n'est pas une action de connecteur.");
         }
         $connecteur = $this->getConnecteurFactory()->getConnecteurById($this->id_ce);
-        $this->checkValidityConnector($connecteur);
+        $this->checkValidityConnector();
         return $connecteur;
     }
 
