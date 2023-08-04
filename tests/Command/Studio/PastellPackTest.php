@@ -71,7 +71,7 @@ class PastellPackTest extends PastellTestCase
             'Actes publication',
         ],
         'ls-dossier-seance-draft' => [
-            'pack_dossier-seance',
+            'pack_dossier_seance',
             'ls-dossier-seance',
             'Dossier de séance (archivage)',
         ],
