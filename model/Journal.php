@@ -156,9 +156,8 @@ class Journal extends SQL
         } catch (S3Exception $e) {
             if ($e->getAwsErrorCode() === 'NoSuchKey') {
                 return '';
-            } else {
-                throw $e;
             }
+            throw $e;
         }
     }
 
