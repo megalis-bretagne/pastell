@@ -278,7 +278,7 @@ abstract class ActionExecutor
     /**
      * @throws Exception
      */
-    private function checkValidityConnector(Connecteur $connecteur): void
+    private function checkValidityConnector(): void
     {
         //TODO delete condition when used in prod
         if ($this->objectInstancier->getInstance('useExternalStorageForPasswordConnector')) {
