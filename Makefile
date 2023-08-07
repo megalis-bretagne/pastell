@@ -85,8 +85,9 @@ module-pack-gfc: docker-compose-up ## Run make-module pack_gfc
 	$(MAKE_MODULE) ./pack-json/pack-gfc/dossier-wgfc.json ./module/ --id gfc-dossier
 	$(MAKE_MODULE) ./pack-json/pack-gfc/dossier-wgfc-destinataire.json ./module/ --id gfc-dossier-destinataire
 
-module-pack-publication: docker-compose-up ## Run make-module pack_publication
-	$(MAKE_MODULE) ./pack-json/pack-publication/ls-actes-publication-draft.json ./module/ --id ls-actes-publication --name "Actes publication"
+module-pack-actes: docker-compose-up ## Run make-module pack_actes
+	$(MAKE_MODULE) ./pack-json/pack-actes/ls-actes-publication-draft.json ./module/ --id ls-actes-publication --name "Actes publication"
+	$(MAKE_MODULE) ./pack-json/pack-actes/ls-dossier-seance-draft.json ./module/ --id ls-dossier-seance --name "Dossier de séance (archivage)" --restriction_pack 'pack_dossier_seance'
 
 module-pack-document: docker-compose-up ## Run make-module pack_document
 	$(MAKE_MODULE) ./pack-json/pack-document/ls-document-pdf-draft.json ./module/ --id ls-document-pdf --name "Document PDF"
@@ -94,7 +95,7 @@ module-pack-document: docker-compose-up ## Run make-module pack_document
 	$(MAKE_MODULE) ./pack-json/pack-document/ls-document-pdf-draft-destinataire.json ./module/ --id ls-document-pdf-destinataire --name "Document PDF (destinataire)"
 
 
-all-module: module-pack-gfc module-pack-urbanisme module-pack-rh module-pack-publication module-pack-document
+all-module: module-pack-gfc module-pack-urbanisme module-pack-rh module-pack-actes module-pack-document
 
 build-extensions: ## Build extensions
 	$(EXEC_COMPOSER) composer install --ignore-platform-reqs --working-dir=./extensions/pastell-depot-cmis/
