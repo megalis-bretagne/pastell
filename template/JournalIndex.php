@@ -122,7 +122,7 @@ $exportUrl = sprintf(
         </td>
 
         <td><?php hecho($ligne['message']) ?></td>
-        <td><?php if ($ligne['preuve']) : ?>
+        <td><?php if (($ligne['date_horodatage'] !== '0000-00-00 00:00:00')) : ?>
             <?php echo time_iso_to_fr($ligne['date_horodatage']) ?>
             <?php else : ?>
             en cours

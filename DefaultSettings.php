@@ -255,3 +255,24 @@ if (!defined("MAILER_DSN")) {
 if (!defined("USE_UUID_FOR_DOCUMENT")) {
     define("USE_UUID_FOR_DOCUMENT", false);
 }
+
+//Pour config object storage sur MinIO
+if (!defined("S3_URL")) {
+    define("S3_URL", "http://minio:9000/");
+}
+
+if (!defined("S3_KEY")) {
+    define("S3_KEY", "minioadmin");
+}
+
+if (!defined("S3_SECRET")) {
+    define("S3_SECRET", "minioadmin");
+}
+
+if (!defined("S3_BUCKET_JOURNAL")) {
+    define("S3_BUCKET_JOURNAL", "journal-preuves");
+}
+
+if (!defined("USE_EXTERNAL_STORAGE_FOR_JOURNAL_PROOF")) {
+    define("USE_EXTERNAL_STORAGE_FOR_JOURNAL_PROOF", false);
+}

@@ -78,7 +78,6 @@ $usernameDisplay = new UsernameDisplayer();
                 <?php echo  $preuve_txt ?>
             </pre>
             <a href='Journal/preuve?id_j=<?php echo $id_j?>' class="btn btn-primary"><i class='fa fa-download'></i>&nbsp;Télécharger</a><br/><br/>
-        </td>
 </tr>
 <tr>
         <th>Vérification</th>

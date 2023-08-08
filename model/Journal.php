@@ -1,6 +1,8 @@
 <?php
 
+use Aws\S3\Exception\S3Exception;
 use Monolog\Logger;
+use Pastell\Storage\StorageInterface;
 
 class Journal extends SQL
 {
@@ -37,10 +39,16 @@ class Journal extends SQL
         private readonly DocumentTypeFactory $documentTypeFactory,
         private readonly Logger $logger,
         private readonly bool $disable_journal_horodatage,
+        private readonly bool $use_external_storage_for_journal_proof,
+        private StorageInterface $storage,
     ) {
         parent::__construct($sqlQuery);
     }
 
+    public function setInterfaceStorage(StorageInterface $storageInterface): void
+    {
+        $this->storage = $storageInterface;
+    }
     public function setHorodateur(Horodateur $horodateur)
     {
         $this->horodateur = $horodateur;
@@ -105,16 +113,24 @@ class Journal extends SQL
             $date_horodatage = $this->horodateur->getTimeStamp($preuve);
 
             if (! $date_horodatage) {
-                $preuve = "";
-                $date_horodatage = "";
+                $preuve = '';
+                $date_horodatage = '';
             }
         }
 
+        if (!$this->use_external_storage_for_journal_proof) {
+            $sql = "INSERT INTO journal(type,id_e,id_u,id_d,action,message,date,message_horodate,date_horodatage,document_type, preuve) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+            $this->query($sql, $type, $id_e, $id_u, $id_d, $action, $message, $now, $message_horodate, $date_horodatage, $document_type, $preuve);
 
-        $sql = "INSERT INTO journal(type,id_e,id_u,id_d,action,message,date,message_horodate,preuve,date_horodatage,document_type) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-        $this->query($sql, $type, $id_e, $id_u, $id_d, $action, $message, $now, $message_horodate, $preuve, $date_horodatage, $document_type);
+            $id_j = $this->lastInsertId();
+        } else {
+            $sql = "INSERT INTO journal(type,id_e,id_u,id_d,action,message,date,message_horodate,date_horodatage,document_type) VALUES (?,?,?,?,?,?,?,?,?,?)";
+            $this->query($sql, $type, $id_e, $id_u, $id_d, $action, $message, $now, $message_horodate, $date_horodatage, $document_type);
 
-        $id_j = $this->lastInsertId();
+            $id_j = $this->lastInsertId();
+
+            $this->saveProof($id_j, $preuve);
+        }
 
         if (
             (! $preuve) &&
@@ -128,7 +144,22 @@ class Journal extends SQL
 
         return $id_j;
     }
+    public function saveProof(int $id_j, string $preuve): void
+    {
+        $this->storage->write($id_j . 'preuve.tsa', $preuve);
+    }
 
+    private function getProof(int $id_j): string
+    {
+        try {
+            return $this->storage->read($id_j . 'preuve.tsa');
+        } catch (S3Exception $e) {
+            if ($e->getAwsErrorCode() === 'NoSuchKey') {
+                return '';
+            }
+            throw $e;
+        }
+    }
 
     public function getAll(
         $id_e = false,
@@ -150,8 +181,10 @@ class Journal extends SQL
             $documentType = $this->documentTypeFactory->getFluxDocumentType($line['document_type']);
             $result[$i]['document_type_libelle'] = $documentType->getName();
             $result[$i]['action_libelle'] = $documentType->getAction()->getActionName($line['action']);
-            if ($with_preuve == false) {
+            if (!$with_preuve) {
                 unset($result[$i]['preuve']);
+            } elseif ($result[$i]['preuve'] === '' && $this->use_external_storage_for_journal_proof) {
+                $result[$i]['preuve'] = $this->getProof($result[$i]['id_j']);
             }
         }
         return $result;
@@ -278,7 +311,13 @@ class Journal extends SQL
     public function getInfo($id_j)
     {
         $sql = "SELECT * FROM journal WHERE id_j=?";
-        return $this->queryOne($sql, $id_j);
+        $result = $this->queryOne($sql, $id_j);
+
+        if ($result['preuve'] === '' && $this->use_external_storage_for_journal_proof) {
+            $result['preuve'] = $this->getProof($result['id_j']);
+        }
+
+        return $result;
     }
 
     public function getAllInfo($id_j)
@@ -298,6 +337,10 @@ class Journal extends SQL
         $result['document_type_libelle'] = $documentType->getName();
         $result['action_libelle'] = $documentType->getAction()->getActionName($result['action']);
 
+        if ($result['preuve'] === '' && $this->use_external_storage_for_journal_proof) {
+            $result['preuve'] = $this->getProof($id_j);
+        }
+
         return $result;
     }
 
@@ -310,13 +353,23 @@ class Journal extends SQL
         $sql = "SELECT id_j FROM journal_attente_preuve";
         $id_j_list = $this->queryOneCol($sql);
 
-        $sql = "UPDATE journal set preuve=?,date_horodatage=? WHERE id_j=?";
+        if (!$this->use_external_storage_for_journal_proof) {
+            $sql = "UPDATE journal set preuve=?,date_horodatage=? WHERE id_j=?";
+        } else {
+            $sql = "UPDATE journal set date_horodatage=? WHERE id_j=?";
+        }
         $sql2 = "DELETE FROM journal_attente_preuve WHERE id_j=?";
+
         foreach ($id_j_list as $id_j) {
             $info = $this->getInfo($id_j);
             $preuve = $this->horodateur->getTimestampReply($info['message_horodate']);
             $date_horodatage = $this->horodateur->getTimeStamp($preuve);
-            $this->query($sql, $preuve, $date_horodatage, $info['id_j']);
+            if (!$this->use_external_storage_for_journal_proof) {
+                $this->query($sql, $preuve, $date_horodatage, $info['id_j']);
+            } else {
+                $this->saveProof($id_j, $preuve);
+                $this->query($sql, $date_horodatage, $info['id_j']);
+            }
             echo "{$info['id_j']} horodaté : $date_horodatage\n";
             $this->query($sql2, $id_j);
         }
