@@ -1,6 +1,7 @@
 <?php
 
 /**
+ * @var Gabarit $this
  * @var TypeDossierProperties $typeDossierProperties
  * @var array $type_de_dossier_info
  * @var string $type_dossier_hash
@@ -94,9 +95,14 @@
                         <?php endif;?>
                     </td>
                     <td>
-                        <a class='btn btn-primary' href="<?php $this->url("/TypeDossier/editionElement?id_t={$id_t}&element_id={$formulaireElement->element_id}") ?>"><i class='fa fa-pencil'></i>&nbsp;Modifier</a>
+                        <?php $queryParams = 'id_t=' . $id_t . '&element_id=' . $formulaireElement->element_id; ?>
+                        <a class='btn btn-primary'
+                           href="<?php $this->url('/TypeDossier/editionElement?' . $queryParams); ?>"
+                        ><i class='fa fa-pencil'></i>&nbsp;Modifier</a>
                         &nbsp;
-                        <a class='btn btn-danger' href="<?php $this->url("/TypeDossier/deleteElement?id_t={$id_t}&element_id={$formulaireElement->element_id}") ?>"><i class='fa fa-trash'></i>&nbsp;Supprimer</a>
+                        <a class='btn btn-danger'
+                           href="<?php $this->url('/TypeDossier/deleteElement?' . $queryParams) ?>"
+                        ><i class='fa fa-trash'></i>&nbsp;Supprimer</a>
                     </td>
                 </tr>
             <?php endforeach;?>

@@ -239,16 +239,33 @@ class TypeDossierControler extends PastellControler
 
     /**
      * @throws NotFoundException
+     * @throws UnrecoverableException
      */
     public function etatAction()
     {
         $this->verifDroit(0, "system:edition");
         $this->setViewParameter('id_t', $this->getPostOrGetInfo()->getInt('id_t'));
-        $this->setViewParameter('page_title', "États du type de dossier personnalisé {$this->getTypeDossierSQL()->getInfo($this->getViewParameterOrObject('id_t'))['id_type_dossier']}");
+        $this->setViewParameter(
+            'page_title',
+            sprintf(
+                'États du type de dossier personnalisé %s',
+                $this->getTypeDossierSQL()->getInfo($this->getViewParameterByKey('id_t'))['id_type_dossier']
+            )
+        );
         $this->setViewParameter('offset', $this->getPostOrGetInfo()->get('offset', 0));
         $this->setViewParameter('limit', 10);
-        $this->setViewParameter('count', $this->getTypeDossierActionService()->countById($this->getViewParameterOrObject('id_t')));
-        $this->setViewParameter('typeDossierAction', $this->getTypeDossierActionService()->getById($this->getViewParameterOrObject('id_t'), $this->getViewParameterOrObject('offset'), $this->getViewParameterOrObject('limit')));
+        $this->setViewParameter(
+            'count',
+            $this->getTypeDossierActionService()->countById($this->getViewParameterByKey('id_t'))
+        );
+        $this->setViewParameter(
+            'typeDossierAction',
+            $this->getTypeDossierActionService()->getById(
+                $this->getViewParameterByKey('id_t'),
+                $this->getViewParameterByKey('offset'),
+                $this->getViewParameterByKey('limit')
+            )
+        );
 
         $this->setViewParameter('template_milieu', "TypeDossierEtat");
         $this->renderDefault();

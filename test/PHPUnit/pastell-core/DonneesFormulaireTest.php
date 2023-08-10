@@ -472,8 +472,10 @@ class DonneesFormulaireTest extends PastellTestCase
 
         $donneesFormulaire->addFileFromData('multiple_file_50_octets', 'file_4', $eleven_octets_string, 4);
         $this->assertFalse($donneesFormulaire->isValidable());
+        $errorMessage = 'L\'ensemble des fichiers du champ multiple «Fichiers multiples dont la somme du poids est ' .
+            'limité à 50 octets» dépasse le poids limite autorisé : 0.00 Mo (50 octets), 0.00 Mo (51 octets) trouvés';
         $this->assertSame(
-            'L\'ensemble des fichiers du champ multiple «Fichiers multiples dont la somme du poids est limité à 50 octets» dépasse le poids limite autorisé : 0.00 Mo (50 octets), 0.00 Mo (51 octets) trouvés',
+            $errorMessage,
             $donneesFormulaire->getLastError()
         );
     }

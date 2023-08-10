@@ -143,6 +143,11 @@ class Gabarit
         return $this->objectInstancier->getInstance(FancyDate::class);
     }
 
+    public function getAuthentification(): Authentification
+    {
+        return $this->objectInstancier->getInstance(Authentification::class);
+    }
+
     public function getSiteBase(): string
     {
         return $this->objectInstancier->getInstance('site_base');

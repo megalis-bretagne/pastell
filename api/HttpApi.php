@@ -252,7 +252,16 @@ class HttpApi
                     'post'
                 ],
 
-            'create-flux-connecteur.php' => ["entite/{$this->getFromRequest('id_e')}/flux/{$this->getFromRequest('flux')}/connecteur/{$this->getFromRequest('id_ce')}?type={$this->getFromRequest('type')}", 'post'],
+            'create-flux-connecteur.php' => [
+                sprintf(
+                    'entite/%s/flux/%s/connecteur/%s?type=%s',
+                    $this->getFromRequest('id_e'),
+                    $this->getFromRequest('flux'),
+                    $this->getFromRequest('id_ce'),
+                    $this->getFromRequest('type')
+                ),
+                'post'
+            ],
             'delete-flux-connecteur.php' => ["entite/{$this->getFromRequest('id_e')}/flux/{$this->getFromRequest('id_fe')}", 'delete'],
 
 
@@ -270,11 +279,29 @@ class HttpApi
             'recherche-document.php' => ["entite/{$this->getFromRequest('id_e')}/document", 'get'],
 
             'external-data.php' => ["entite/{$this->getFromRequest('id_e')}/document/{$this->getFromRequest('id_d')}/externalData/{$this->getFromRequest('field')}", 'get'],
-            'recuperation-fichier.php' => ["entite/{$this->getFromRequest('id_e')}/document/{$this->getFromRequest('id_d')}/file/{$this->getFromRequest('field')}/{$this->getFromRequest('num')}", 'get'],
+            'recuperation-fichier.php' => [
+                sprintf(
+                    'entite/%s/document/%s/file/%s/%s',
+                    $this->getFromRequest('id_e'),
+                    $this->getFromRequest('id_d'),
+                    $this->getFromRequest('field'),
+                    $this->getFromRequest('num')
+                ),
+                'get'
+            ],
 
             ## oops : field => field_name num=>file_number pour faire comme en V1
 
-            'receive-file.php' => ["entite/{$this->getFromRequest('id_e')}/document/{$this->getFromRequest('id_d')}/file/{$this->getFromRequest('field_name')}/{$this->getFromRequest('file_number')}?receive=true", 'get'],
+            'receive-file.php' => [
+                sprintf(
+                    'entite/%s/document/%s/file/%s/%s?receive=true',
+                    $this->getFromRequest('id_e'),
+                    $this->getFromRequest('id_d'),
+                    $this->getFromRequest('field_name'),
+                    $this->getFromRequest('file_number')
+                ),
+                'get'
+            ],
 
             'send-file.php' => ["entite/{$this->getFromRequest('id_e')}/document/{$this->getFromRequest('id_d')}/file/{$this->getFromRequest('field')}/{$this->getFromRequest('num')}", 'post'],
             'action.php' => ["entite/{$this->getFromRequest('id_e')}/document/{$this->getFromRequest('id_d')}/action/{$this->getFromRequest('action')}", 'post'],

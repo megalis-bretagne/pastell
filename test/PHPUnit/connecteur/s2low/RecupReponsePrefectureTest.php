@@ -21,9 +21,21 @@ class RecupReponsePrefectureTest extends PastellTestCase
 
         $this->mockCurl([
             '/admin/users/api-list-login.php' => true,
-            '/modules/actes/api/list_document_prefecture.php' => '[{"id":"3267","type":"2","related_transaction_id":"3266","number":"201908291002","unique_id": "' . $uniqueId . '","last_status_id":"21"}]',
-            '/modules/actes/actes_transac_get_document.php?id=3267' => file_get_contents(__DIR__ . '/fixtures/reponse_prefecture.tar.gz'),
-            '/modules/actes/api/document_prefecture_mark_as_read.php?transaction_id=3267' => true
+            '/modules/actes/api/list_document_prefecture.php' => <<<EOT
+[
+  {
+    "id": "3267",
+    "type": "2",
+    "related_transaction_id": "3266",
+    "number": "201908291002",
+    "unique_id": "$uniqueId",
+    "last_status_id": "21"
+  }
+]
+EOT,
+            '/modules/actes/actes_transac_get_document.php?id=3267' =>
+                file_get_contents(__DIR__ . '/fixtures/reponse_prefecture.tar.gz'),
+            '/modules/actes/api/document_prefecture_mark_as_read.php?transaction_id=3267' => true,
         ]);
 
         $s2low = $this->createConnector('s2low', 's2low');
@@ -61,9 +73,21 @@ class RecupReponsePrefectureTest extends PastellTestCase
         $uniqueId = '034-491011698-20190829-201908291002-AI';
         $this->mockCurl([
             '/admin/users/api-list-login.php' => true,
-            '/modules/actes/api/list_document_prefecture.php' => '[{"id":"3267","type":"2","related_transaction_id":"3266","number":"201908291002","unique_id": "' . $uniqueId . '","last_status_id":"21"}]',
-            '/modules/actes/actes_transac_get_document.php?id=3267' => file_get_contents(__DIR__ . '/fixtures/reponse_prefecture.tar.gz'),
-            '/modules/actes/api/document_prefecture_mark_as_read.php?transaction_id=3267' => true
+            '/modules/actes/api/list_document_prefecture.php' => <<<EOT
+[
+  {
+    "id": "3267",
+    "type": "2",
+    "related_transaction_id": "3266",
+    "number": "201908291002",
+    "unique_id": "$uniqueId",
+    "last_status_id": "21"
+  }
+]
+EOT,
+            '/modules/actes/actes_transac_get_document.php?id=3267' =>
+                file_get_contents(__DIR__ . '/fixtures/reponse_prefecture.tar.gz'),
+            '/modules/actes/api/document_prefecture_mark_as_read.php?transaction_id=3267' => true,
         ]);
 
         $s2low = $this->createConnector('s2low', 's2low');

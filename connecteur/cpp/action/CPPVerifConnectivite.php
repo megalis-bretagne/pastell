@@ -17,7 +17,8 @@ class CPPVerifConnectivite extends ActionExecutor
         $result = $this->traiterCPP();
         if ($result) {
             $data .= "Connecteurs Chorus Pro:\n\n";
-            $data .= "Nombre de connexions Chorus Pro ok : " . $result['nb_ok'] . "\nNombre de connexions Chorus Pro en erreur : " . $result['nb_ko'] . "\n\n" . $result['data'] . "\n\n";
+            $data .= "Nombre de connexions Chorus Pro ok : " . $result['nb_ok'] .
+                "\nNombre de connexions Chorus Pro en erreur : " . $result['nb_ko'] . "\n\n" . $result['data'] . "\n\n";
             $nb_ko += $result['nb_ko'];
         }
 
@@ -46,7 +47,7 @@ class CPPVerifConnectivite extends ActionExecutor
         }
 
         $this->setLastMessage(nl2br($data));
-        return ($nb_ko == 0);
+        return $nb_ko === 0;
     }
 
     /**
@@ -175,7 +176,8 @@ class CPPVerifConnectivite extends ActionExecutor
                 $result_cpp['nb_ko']++;
                 $result_cpp['data'] .= 'Le connecteur est en erreur: ' . $message_erreur . "\n\n";
             } else {
-                $result_cpp['data'] .= "Nombre de connexions Chorus Pro par CSV ok: " . $result_connecteur_ok . "\nNombre de connexions Chorus Pro par CSV en erreur : " . $result_connecteur_ko . "\n\n";
+                $result_cpp['data'] .= "Nombre de connexions Chorus Pro par CSV ok: " . $result_connecteur_ok .
+                    "\nNombre de connexions Chorus Pro par CSV en erreur : " . $result_connecteur_ko . "\n\n";
                 if ($result_connecteur_ko) {
                     $result_cpp['nb_ko'] = $result_cpp['nb_ko'] + $result_connecteur_ko;
                     $result_cpp['data'] .= "Connexions en erreur:\n";

@@ -88,7 +88,10 @@ class TedetisRecupTest extends PastellTestCase
 
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
 
-        $this->assertStringEqualsFile(__DIR__ . "/../fixtures/aractes.xml", $donneesFormulaire->getFileContent('aractes'));
+        $this->assertStringEqualsFile(
+            __DIR__ . "/../fixtures/aractes.xml",
+            $donneesFormulaire->getFileContent('aractes')
+        );
         $this->assertEquals("bordereau content", $donneesFormulaire->getFileContent('bordereau'));
         $this->assertEquals("some pdf stuff tamponne", $donneesFormulaire->getFileContent('acte_tamponne'));
         $this->assertEquals("some annexe tamponne", $donneesFormulaire->getFileContent('annexes_tamponnees'));
@@ -185,8 +188,10 @@ class TedetisRecupTest extends PastellTestCase
         $actionChange = $this->getObjectInstancier()->getInstance(ActionChange::class);
         $actionChange->addAction($id_d, PastellTestCase::ID_E_COL, 0, 'send-tdt', 'phpunit');
 
-        $this->expectException("Exception");
-        $this->expectExceptionMessage("Une erreur est survenue lors de la récupération des annexes tamponnées de S²low L'annexe tamponée ma_premiere_annexe.pdf ne correspond pas avec ma_premiere_annexe_envoy__e.pdf");
+        $this->expectException(Exception::class);
+        $errorMessage = 'Une erreur est survenue lors de la récupération des annexes tamponnées de S²low ' .
+         "L'annexe tamponée ma_premiere_annexe.pdf ne correspond pas avec ma_premiere_annexe_envoy__e.pdf";
+        $this->expectExceptionMessage($errorMessage);
         $this->getInternalAPI()->post(
             "/entite/" . PastellTestCase::ID_E_COL . "/document/{$id_d}/action/verif-tdt"
         );
