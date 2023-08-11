@@ -4,6 +4,7 @@
 
 - Modification des noms des boutons d'actions du connecteur recup-parapheur #1877
 - L'état ```send-tdt-erreur``` permet maintenant la modification du ```Numéro de l'acte``` et la suppression pour les flux studio #1691
+- Il n'était pas possible de supprimer des dossiers en état "Erreur lors de la vérification du statut de signature" #1894
 
 ## Suppressions
 

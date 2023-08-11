@@ -352,6 +352,7 @@ action:
                 - termine
                 - fatal-error
                 - rejet-iparapheur
+                - erreur-verif-iparapheur
                 - send-mailsec-error
                 - send-tdt-erreur
                 - annuler-tdt

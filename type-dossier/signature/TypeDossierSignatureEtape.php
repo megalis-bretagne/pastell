@@ -4,12 +4,16 @@ class TypeDossierSignatureEtape implements TypeDossierEtapeSetSpecificInformatio
 {
     use TypeDossierRemoveFromEditableContent;
 
-    public function setSpecificInformation(TypeDossierEtapeProperties $typeDossierEtape, array $result, StringMapper $stringMapper): array
-    {
+    public function setSpecificInformation(
+        TypeDossierEtapeProperties $typeDossierEtape,
+        array $result,
+        StringMapper $stringMapper
+    ): array {
         $onglet_name = $stringMapper->get('iparapheur');
         $send_iparapheur_action = $stringMapper->get('send-iparapheur');
         $sendSignatureErrorAction = $stringMapper->get('send-signature-error');
         $verif_iparapheur_action = $stringMapper->get('verif-iparapheur');
+        $checkSignatureErrorState = $stringMapper->get('erreur-verif-iparapheur');
         $rejet_iparapheur_action = $stringMapper->get('rejet-iparapheur');
         $has_date_limite_element = $stringMapper->get("has_date_limite");
         $date_limite_element = $stringMapper->get("date_limite");
@@ -63,8 +67,12 @@ class TypeDossierSignatureEtape implements TypeDossierEtapeSetSpecificInformatio
             }
         }
 
-        $result[DocumentType::ACTION]['supression'][Action::ACTION_RULE][Action::ACTION_RULE_LAST_ACTION][] = $rejet_iparapheur_action;
-        $result[DocumentType::ACTION][Action::MODIFICATION][Action::ACTION_RULE][Action::ACTION_RULE_LAST_ACTION][] = $sendSignatureErrorAction;
+        $result[DocumentType::ACTION]['supression'][Action::ACTION_RULE]
+                [Action::ACTION_RULE_LAST_ACTION][] = $rejet_iparapheur_action;
+        $result[DocumentType::ACTION]['supression'][Action::ACTION_RULE]
+                [Action::ACTION_RULE_LAST_ACTION][] = $checkSignatureErrorState;
+        $result[DocumentType::ACTION][Action::MODIFICATION][Action::ACTION_RULE]
+                [Action::ACTION_RULE_LAST_ACTION][] = $sendSignatureErrorAction;
 
         return $result;
     }
