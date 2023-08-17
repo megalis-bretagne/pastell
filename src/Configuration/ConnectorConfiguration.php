@@ -146,7 +146,8 @@ class ConnectorConfiguration implements ConfigurationInterface
                             ->scalarNode(self::ELEMENT_VISIONNEUSE)
                                 ->validate()
                                     ->ifTrue(function (string $className) {
-                                        return ! class_exists($className) || ! is_subclass_of($className, Viewer::class);
+                                        return !class_exists($className) ||
+                                            !is_subclass_of($className, Viewer::class);
                                     })
                                     ->thenInvalid('Invalid element choice action class %s')
                                 ->end()
@@ -183,7 +184,8 @@ class ConnectorConfiguration implements ConfigurationInterface
                         ->scalarNode(self::ACTION_CLASS)
                             ->validate()
                                 ->ifTrue(function (string $className) {
-                                    return ! class_exists($className) || ! is_subclass_of($className, ActionExecutor::class);
+                                    return !class_exists($className) ||
+                                        !is_subclass_of($className, ActionExecutor::class);
                                 })
                                 ->thenInvalid('Invalid connecteur action class %s')
                             ->end()
@@ -205,7 +207,10 @@ class ConnectorConfiguration implements ConfigurationInterface
                                         ->setDeprecated('libriciel/pastell', '4.0.0')
                                     ->end()
                                     ->booleanNode(self::ACTION_RULE_INTERNAL_ACTION)
-                                        ->info("Permet de créer des actions qui se déclenchent automatiquement sur une mise à jour d'un élément. L'action n'est pas disponible ni sur la console ni via l'API")
+                                        ->info(<<<EOT
+Permet de créer des actions qui se déclenchent automatiquement sur une mise à jour d'un élément.
+L'action n'est pas disponible ni sur la console ni via l'API
+EOT)
                                     ->end()
                                 ->end()
                         ->end()

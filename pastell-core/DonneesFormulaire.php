@@ -1043,7 +1043,15 @@ class DonneesFormulaire
                 $limitSizeInMB = number_format($field->getMaxFileSize() / (1000 * 1000), 2);
                 $fileSizeInMB = number_format($filesize / (1000 * 1000), 2);
                 throw new DonneesFormulaireException(
-                    "Le fichier «{$filename}» ({$field->getLibelle()}) dépasse le poids limite autorisé :$limitSizeInMB Mo ({$field->getMaxFileSize()} octets), $fileSizeInMB Mo ($filesize octets) trouvés"
+                    sprintf(
+                        'Le fichier «%s» (%s) dépasse le poids limite autorisé :%s Mo (%s octets), %s Mo (%s octets) trouvés',
+                        $filename,
+                        $field->getLibelle(),
+                        $limitSizeInMB,
+                        $field->getMaxFileSize(),
+                        $fileSizeInMB,
+                        $filesize
+                    )
                 );
             }
             $fieldSize += $filesize;
@@ -1052,7 +1060,14 @@ class DonneesFormulaire
             $limitSizeInMB = number_format($field->getMaxMultipleFileSize() / (1000 * 1000), 2);
             $fieldSizeInMB = number_format($fieldSize / (1000 * 1000), 2);
             throw new DonneesFormulaireException(
-                "L'ensemble des fichiers du champ multiple «{$field->getLibelle()}» dépasse le poids limite autorisé : $limitSizeInMB Mo ({$field->getMaxMultipleFileSize()} octets), $fieldSizeInMB Mo ($fieldSize octets) trouvés"
+                sprintf(
+                    "L'ensemble des fichiers du champ multiple «%s» dépasse le poids limite autorisé : %s Mo (%s octets), %s Mo (%s octets) trouvés",
+                    $field->getLibelle(),
+                    $limitSizeInMB,
+                    $field->getMaxMultipleFileSize(),
+                    $fieldSizeInMB,
+                    $fieldSize
+                )
             );
         }
         return $fieldSize;

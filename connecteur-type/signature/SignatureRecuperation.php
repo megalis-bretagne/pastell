@@ -36,7 +36,10 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor
         $iparapheur_dossier_id = $this->getMappingValue('iparapheur_dossier_id');
 
 
-        if ($donneesFormulaire->getFormulaire()->getField($iparapheur_dossier_id) && $donneesFormulaire->get($iparapheur_dossier_id)) {
+        if (
+            $donneesFormulaire->getFormulaire()->getField($iparapheur_dossier_id) &&
+            $donneesFormulaire->get($iparapheur_dossier_id)
+        ) {
             $dossierID = $donneesFormulaire->get($iparapheur_dossier_id);
         } else { // conservé pour compatibilité
             $filename = $donneesFormulaire->getFileName($document_element);
@@ -56,7 +59,10 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor
 
         if (! $erreur) {
             $array2XML = new Array2XML();
-            $historique_xml = $array2XML->getXML($iparapheur_historique_element, json_decode(json_encode($all_historique), true));
+            $historique_xml = $array2XML->getXML(
+                $iparapheur_historique_element,
+                json_decode(json_encode($all_historique), true)
+            );
 
             $donneesFormulaire->setData($has_historique_element, true);
             $donneesFormulaire->setData($has_signature_element, true); // conservé pour compatibilité
@@ -94,7 +100,12 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor
         $time_action = strtotime($lastAction['date']);
         if (time() - $time_action > $nb_jour_max * 86400) {
             $erreur = "Aucune réponse disponible sur le parapheur depuis $nb_jour_max jours !";
-            $this->getActionCreator()->addAction($this->id_e, $this->id_u, $this->getMappingValue(self::ACTION_NAME_ERROR), $erreur);
+            $this->getActionCreator()->addAction(
+                $this->id_e,
+                $this->id_u,
+                $this->getMappingValue(self::ACTION_NAME_ERROR),
+                $erreur
+            );
             $this->notify($this->getMappingValue(self::ACTION_NAME_ERROR), $this->type, $erreur);
         }
 
@@ -128,7 +139,8 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor
 
             $bordereau = $signature->getBordereauFromSignature($info);
             if ($bordereau) {
-                $this->getDonneesFormulaire()->addFileFromData($bordereau_element, $bordereau->filename, $bordereau->content);
+                $this->getDonneesFormulaire()
+                    ->addFileFromData($bordereau_element, $bordereau->filename, $bordereau->content);
             }
         }
 
@@ -185,16 +197,22 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor
             return false;
         }
 
-        // Traitement des $iparapheur_annexe_sortie_element avant addMultiDocumentSigne (modification de $annexe_element)
+        //Traitement des $iparapheur_annexe_sortie_element avant addMultiDocumentSigne (modification de $annexe_element)
         if ($signature->hasMultiDocumentSigne($info)) {
             // les fichiers annexes ont été envoyés en DocumentsSupplementaires
             $output_annexe = $signature->getOutputAnnexe($info, 0);
         } else {
-            // les fichiers annexes ont été envoyés en DocumentsAnnexes (si le sous-type i-parapheur ne permet pas la Signature multi-document alors les DocumentsSupplementaires ont été reçus en tant que DocumentsAnnexes)
+            // les fichiers annexes ont été envoyés en DocumentsAnnexes(si le sous-type i-parapheur ne permet pas la
+            //Signature multi-document alors les DocumentsSupplementaires ont été reçus en tant que DocumentsAnnexes)
             $output_annexe = $signature->getOutputAnnexe($info, $donneesFormulaire->getFileNumber($annexe_element));
         }
         foreach ($output_annexe as $i => $annexe) {
-            $donneesFormulaire->addFileFromData($iparapheur_annexe_sortie_element, $annexe['nom_document'], $annexe['document'], $i);
+            $donneesFormulaire->addFileFromData(
+                $iparapheur_annexe_sortie_element,
+                $annexe['nom_document'],
+                $annexe['document'],
+                $i
+            );
         }
 
         $donneesFormulaire->setData($has_signature_element, true);
@@ -224,7 +242,11 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor
                     $annexe_element
                 );
             } else {
-                $donneesFormulaire->addFileFromData($document_element, $document_original_name, $signature->getSignedFile($info));
+                $donneesFormulaire->addFileFromData(
+                    $document_element,
+                    $document_original_name,
+                    $signature->getSignedFile($info)
+                );
             }
         }
 
@@ -320,7 +342,12 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor
                 $extension = pathinfo($annexe_original_name, PATHINFO_EXTENSION);
                 $filename_orig = sprintf("%s_orig.%s", $filename, $extension);
                 $filename_orig = $this->getComputedFileName($filename_orig);
-                $donneesFormulaire->addFileFromData($multi_document_original_element, $filename_orig, $annexe_original_data, $num);
+                $donneesFormulaire->addFileFromData(
+                    $multi_document_original_element,
+                    $filename_orig,
+                    $annexe_original_data,
+                    $num
+                );
             }
         }
 
@@ -328,9 +355,18 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor
         $i = 0;
         foreach ($all_document_signe as $document_signe) {
             if ($document_signe['nom_document'] === $document_original_name) {
-                $donneesFormulaire->addFileFromData($document_element, $document_signe['nom_document'], $document_signe['document']);
+                $donneesFormulaire->addFileFromData(
+                    $document_element,
+                    $document_signe['nom_document'],
+                    $document_signe['document']
+                );
             } else {
-                $donneesFormulaire->addFileFromData($annexe_element, $document_signe['nom_document'], $document_signe['document'], $i);
+                $donneesFormulaire->addFileFromData(
+                    $annexe_element,
+                    $document_signe['nom_document'],
+                    $document_signe['document'],
+                    $i
+                );
                 $i++;
             }
         }

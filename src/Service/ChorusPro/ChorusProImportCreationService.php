@@ -96,7 +96,9 @@ class ChorusProImportCreationService
             // La facture existe. Il faut charger l'id_e pour le message d'erreur.
             $donneesEntite = $this->documentEntite->getEntite($id_d);
             $result['id_d'] = $id_d;
-            $result['message'] = "ERREUR: La facture " . $facture_a_creer['id_facture_cpp'] . $nommage_csv . ", id_d = " . $id_d . " est déja présente sur l'entité id_e = " . $donneesEntite[0]['id_e'];
+            $result['message'] = "ERREUR: La facture " . $facture_a_creer['id_facture_cpp'] .
+                $nommage_csv . ", id_d = " . $id_d . " est déja présente sur l'entité id_e = " .
+                $donneesEntite[0]['id_e'];
             $result['resultat'] = false;
         } else {
             $result = $this->creerFacture($facture_a_creer, $nommage_csv);
@@ -154,7 +156,16 @@ class ChorusProImportCreationService
         $this->documentSQL->save($id_d, $authorized_flux);
         $this->documentEntite->addRole($id_d, $this->id_e, "editeur");
 
-        $actionExecutorFactory->executeOnDocumentThrow($id_d, $this->id_e, $this->id_u, 'create-facture', [], false, ['factureCPP' => $factureCPP], 0);
+        $actionExecutorFactory->executeOnDocumentThrow(
+            $id_d,
+            $this->id_e,
+            $this->id_u,
+            'create-facture',
+            [],
+            false,
+            ['factureCPP' => $factureCPP],
+            0
+        );
 
         if ($nommage_csv == ChorusProImportUtilService::NOMMAGE_ID_FACTURE_CSV) {
             $this->valorisationSpecifiqueCSV($factureCPP, $id_d);
@@ -182,10 +193,14 @@ class ChorusProImportCreationService
         $authorizedFlux = $this->removeExcludedFlux($all);
 
         if (empty($authorizedFlux)) {
-            throw new CPPException("Le connecteur n'est associé à aucun type de dossier pour la récupération des factures...");
+            throw new CPPException(
+                "Le connecteur n'est associé à aucun type de dossier pour la récupération des factures..."
+            );
         }
         if (count($authorizedFlux) > 1) {
-            throw new CPPException("Le connecteur est associé à plusieurs type de dossier pour la récupération des factures...");
+            throw new CPPException(
+                'Le connecteur est associé à plusieurs type de dossier pour la récupération des factures...'
+            );
         }
         return $authorizedFlux[0];
     }
@@ -214,7 +229,10 @@ class ChorusProImportCreationService
     {
         $donneesFormulaire = $this->donneesFormulaireFactory->get($id_d);
         $donneesFormulaire->setData('is_cpp', false);
-        $donneesFormulaire->setData('id_facture_cpp', $factureCPP['id_facture_cpp'] . ChorusProImportUtilService::NOMMAGE_ID_FACTURE_CSV);
+        $donneesFormulaire->setData(
+            'id_facture_cpp',
+            $factureCPP['id_facture_cpp'] . ChorusProImportUtilService::NOMMAGE_ID_FACTURE_CSV
+        );
         $donneesFormulaire->setData('utilisateur_technique', $factureCPP['utilisateur_technique']);
         $donneesFormulaire->setData('type_integration', ChorusProImportUtilService::TYPE_INTEGRATION_CSV_CLE);
     }

@@ -114,8 +114,16 @@ class GlaneurActesTest extends PastellTestCase
             "action_ok" => "prepare-iparapheur",
             "action_ko" => "fatal-error",
             "file_preg_match" => "arrete: #^vide1.pdf#\nautre_document_attache:  #^vide2.pdf#",
-            "metadata_static" => "acte_nature: 3\nnumero_de_lacte: 20200520\nobjet: Test typologie\ndate_de_lacte: 2020-05-20\nclassification: 4.2 - Personnel contractuel\ntype_acte: 99_AI\ntype_pj: [\"99_AI\"]\nenvoi_tdt: true",
-
+            'metadata_static' => <<<EOT
+acte_nature: 3
+numero_de_lacte: 20200520
+objet: Test typologie
+date_de_lacte: 2020-05-20
+classification: 4.2 - Personnel contractuel
+type_acte: 99_AI
+type_pj: ["99_AI"]
+envoi_tdt: true
+EOT,
         ]);
         $connecteurDonneesFormulaire = $this->getDonneesFormulaireFactory()->getConnecteurEntiteFormulaire($id_ce);
         $connecteurDonneesFormulaire->addFileFromCopy(

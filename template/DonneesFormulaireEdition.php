@@ -181,7 +181,10 @@ if ($donneesFormulaire->getFormulaire()->getNbPage() > 1) {
                             ?>
                             <?php foreach ($this->donneesFormulaire->get($field->getProperties('depend')) as $i => $file) :  ?>
                                     <br/>
-                                    <?php echo $file ?>  <select class="form-control" name='<?php echo $field->getName() . "_$i";?>' <?php echo $donneesFormulaire->isEditable($field->getName() . "_$i") ?: "disabled='disabled'" ?>>
+                                    <?php echo $file; ?>
+                        <select class="form-control" name='<?php echo $field->getName() . "_$i";?>' <?php
+                        echo $donneesFormulaire->isEditable($field->getName() . "_$i") ?: "disabled='disabled'"
+                        ?>>
                             <option value=''>...</option>
                                 <?php foreach ($field->getSelect() as $value => $name) : ?>
                                 <option <?php

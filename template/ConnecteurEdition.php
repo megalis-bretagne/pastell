@@ -1,29 +1,41 @@
 <?php
 
-/** @var Gabarit $this */
-/** @var ConnecteurFrequence $connecteurFrequence */
-/** @var array $connecteurFrequenceByFlux */
-/** @var string $connecteur_hash */
-/** @var array $usage_flux_list */
-/** @var array $fieldDataList */
-/** @var array $connecteur_entite_info */
-/** @var boolean $has_definition */
-/** @var array $action_possible */
-/** @var array $job_list */
-/** @var string $return_url */
+/**
+ * @var Gabarit $this
+ * @var ConnecteurFrequence $connecteurFrequence
+ * @var array $connecteurFrequenceByFlux
+ * @var string $connecteur_hash
+ * @var array $usage_flux_list
+ * @var array $fieldDataList
+ * @var array $connecteur_entite_info
+ * @var bool $has_definition
+ * @var array $action_possible
+ * @var array $job_list
+ * @var string $return_url
+ * @var int $id_ce
+ * @var Action $action
+ */
+
 ?>
-<a class='btn btn-link' href='Entite/connecteur?id_e=<?php echo $connecteur_entite_info['id_e']?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des connecteurs</a>
+<a class='btn btn-link'
+   href='Entite/connecteur?id_e=<?php echo $connecteur_entite_info['id_e']?>'
+><i class="fa fa-arrow-left"></i>&nbsp;Retour à la liste des connecteurs</a>
 
 <div class="box">
-<h2>Connecteur <?php hecho($connecteur_entite_info['type']) ?> - <?php hecho($connecteur_entite_info['id_connecteur'])?> : <?php hecho($connecteur_entite_info['libelle']) ?>
-
+<h2>
+    Connecteur <?php hecho($connecteur_entite_info['type']) ?> -
+    <?php hecho($connecteur_entite_info['id_connecteur'])?> :
+    <?php hecho($connecteur_entite_info['libelle']) ?>
 </h2>
 <?php
 if ($has_definition) {
-    $this->render("DonneesFormulaireDetail");
+    $this->render('DonneesFormulaireDetail');
 } else {
     ?>
-    <div class="alert alert-danger">Impossible d'afficher les propriétés du connecteur car celui-ci est inconnu sur cette plateforme Pastell (<b><?php hecho($connecteur_entite_info['id_connecteur'])?></b>) </div>
+    <div class="alert alert-danger">
+        Impossible d'afficher les propriétés du connecteur car celui-ci est inconnu sur cette plateforme Pastell
+        (<b><?php hecho($connecteur_entite_info['id_connecteur'])?></b>)
+    </div>
     <?php
 }
 
@@ -50,7 +62,7 @@ if ($has_definition) {
 
 <div class="box">
 <h2>Instance du connecteur</h2>
-    <table class="table table-striped" >
+    <table class="table table-striped">
         <tr >
             <th class="w300">Libellé</th>
             <td><?php hecho($connecteur_entite_info['libelle']) ?></td>
@@ -114,7 +126,8 @@ if ($has_definition) {
         <i class="fa fa-upload"></i>&nbsp;Importer
     </a>
 
-    <a class='btn btn-danger <?php echo $usage_flux_list ? 'disabled' : '' ?>' href="<?php $this->url("Connecteur/delete?id_ce=$id_ce") ?>"
+    <a class='btn btn-danger <?php echo $usage_flux_list ? 'disabled' : '' ?>'
+       href="<?php $this->url("Connecteur/delete?id_ce=$id_ce") ?>"
          >
         <i class="fa fa-trash"></i>&nbsp;Supprimer
     </a>
@@ -148,22 +161,28 @@ if ($has_definition) {
             </td>
             <td>
                 <?php if ($job_info['is_lock']) : ?>
-                    <p class='alert alert-danger'>OUI  <br/>Depuis le <?php echo $this->FancyDate->getDateFr($job_info['lock_since']);?>
-                        <br/>
-                    <a href='<?php $this->url("Daemon/unlock?id_job={$job_info['id_job']}&return_url={$return_url}") ?>' class=" btn-warning btn"> <i class="fa fa-unlock"></i>&nbsp;Reprendre</a></p>
+                    <p class='alert alert-danger'>
+                        OUI  <br/>Depuis le <?php echo $this->getFancyDate()->getDateFr($job_info['lock_since']);?><br/>
+                    <a href='<?php $this->url("Daemon/unlock?id_job={$job_info['id_job']}&return_url={$return_url}") ?>'
+                       class=" btn-warning btn"> <i class="fa fa-unlock"></i>&nbsp;Reprendre</a></p>
                 <?php else : ?>
-                    <p>NON
-                        <br/><a href='<?php $this->url("Daemon/lock?id_job={$job_info['id_job']}&return_url={$return_url}") ?>' class="btn btn-warning"><i class="fa fa-lock"></i>&nbsp;Suspendre</a></p>
+                    <?php
+                    $lockJobUrl = sprintf('Daemon/lock?id_job=%s&return_url=%s', $job_info['id_job'], $return_url);
+                    ?>
+                    <p>
+                        NON<br/>
+                        <a href='<?php $this->url($lockJobUrl); ?>'
+                           class="btn btn-warning"><i class="fa fa-lock"></i>&nbsp;Suspendre</a></p>
                 <?php endif;?>
             </td>
             <td><?php hecho($job_info['etat_cible'])?></td>
-            <td><?php echo $this->FancyDate->getDateFr($job_info['first_try']) ?></td>
-            <td><?php echo $this->FancyDate->getDateFr($job_info['last_try']) ?></td>
+            <td><?php echo $this->getFancyDate()->getDateFr($job_info['first_try']) ?></td>
+            <td><?php echo $this->getFancyDate()->getDateFr($job_info['last_try']) ?></td>
             <td><?php echo $job_info['nb_try'] ?></td>
             <td><?php echo $job_info['last_message'] ?></td>
             <td>
-                <?php echo $this->FancyDate->getDateFr($job_info['next_try']) ?><br/>
-                <?php echo $this->FancyDate->getTimeElapsed($job_info['next_try'])?>
+                <?php echo $this->getFancyDate()->getDateFr($job_info['next_try']) ?><br/>
+                <?php echo $this->getFancyDate()->getTimeElapsed($job_info['next_try'])?>
             </td>
             <td>
                 <?php hecho($job_info['id_verrou']) ?>
@@ -173,7 +192,15 @@ if ($has_definition) {
                 <?php echo $job_info['pid']?>
                 <?php if ($job_info['pid']) : ?>
                     <?php if (! $job_info['termine']) : ?>
-                    <a href='<?php $this->url("Daemon/kill?id_worker={$job_info['id_worker']}&return_url={$return_url}") ?>' class='btn btn-danger'>
+                        <?php
+                        $killJobUrl = sprintf(
+                            'Daemon/kill?id_worker=%s&return_url=%s',
+                            $job_info['id_worker'],
+                            $return_url
+                        );
+                        ?>
+                    <a href='<?php $this->url($killJobUrl); ?>'
+                       class='btn btn-danger'>
                         <i class="fa fa-power-off"></i>&nbsp;
                         Tuer</a>
                     <?php else : ?>
@@ -183,11 +210,16 @@ if ($has_definition) {
             </td>
             <td>
                 <?php if ($job_info['id_worker']) : ?>
-                    <?php echo $this->FancyDate->getDateFr($job_info['date_begin'])?><br/><?php echo $this->FancyDate->getTimeElapsed($job_info['date_begin'])?>
+                    <?php echo $this->getFancyDate()->getDateFr($job_info['date_begin'])?><br/>
+                    <?php echo $this->getFancyDate()->getTimeElapsed($job_info['date_begin'])?>
                 <?php endif;?>
             </td>
             <td>
-                <a href="Daemon/deleteJob?id_job=<?php echo $job_info['id_job'] ?>&id_ce=<?php echo $job_info['id_ce'] ?>" class="btn btn-danger"><i class="fa fa-trash"></i>&nbsp;Supprimer</a>
+                <?php
+                $deleteJobUrl = 'Daemon/deleteJob?id_job=' . $job_info['id_job'] . '&id_ce=' . $job_info['id_ce'];
+                ?>
+                <a href="<?php echo $deleteJobUrl; ?>"
+                   class="btn btn-danger"><i class="fa fa-trash"></i>&nbsp;Supprimer</a>
             </td>
         </tr>
     <?php endforeach;?>
@@ -196,7 +228,9 @@ if ($has_definition) {
 
 <div class="row">
     <div class="col float-right">
-        <a class='btn btn-link' href='Connecteur/etat?id_ce=<?php echo $id_ce ?>'><i class='fa fa-list-alt'></i>&nbsp;Voir les états du connecteur</a>
+        <a class='btn btn-link'
+           href='Connecteur/etat?id_ce=<?php echo $id_ce ?>'><i class='fa fa-list-alt'
+            ></i>&nbsp;Voir les états du connecteur</a>
     </div>
 </div>
 

@@ -50,7 +50,7 @@ class ConnecteurControlerTest extends ControlerTestCase
     public function testEditionAction()
     {
         $this->setGetInfo(['id_ce' => 11]);
-        $this->expectOutputRegex("#Connecteur mailsec - mailsec : Mail securise#");
+        $this->expectOutputRegex("#Connecteur mailsec -\\n(\s*)mailsec :\\n(\s*)Mail securise#");
         $this->connecteurControler->editionAction();
     }
 

@@ -39,7 +39,8 @@
         </tr>
         <tr>
             <th><label for='input_recherche'>Recherche</label> </th>
-             <td> <input type='text' name='recherche' id='input_recherche' class="col-md-3 form-control" value='<?php hecho($recherche) ?>' /></td>
+             <td> <input type='text' name='recherche'
+                         id='input_recherche' class="col-md-3 form-control" value='<?php hecho($recherche) ?>' /></td>
         </tr>
         <tr>
             <th><label for='date_debut'>
@@ -47,7 +48,9 @@
             </label> </th>
              <td>
                  <div class="input-group">
-                     <input type='text' id='date_debut' class="col-md-3 form-control ls-box-input" name='date_debut' value='<?php hecho(date_iso_to_fr($date_debut))?>'/>
+                     <input type='text' id='date_debut'
+                            class="col-md-3 form-control ls-box-input" name='date_debut'
+                            value='<?php hecho(date_iso_to_fr($date_debut))?>'/>
                      <div class="input-group-append">
                          <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                      </div>
@@ -60,7 +63,8 @@
             </label> </th>
              <td>
                  <div class="input-group">
-                     <input type='text' id='date_fin' class="col-md-3 form-control ls-box-input" name='date_fin' value='<?php hecho(date_iso_to_fr($date_fin))?>' />
+                     <input type='text' id='date_fin' class="col-md-3 form-control ls-box-input"
+                            name='date_fin' value='<?php hecho(date_iso_to_fr($date_fin))?>' />
                      <div class="input-group-append">
                          <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                      </div>
@@ -74,10 +78,19 @@
                 <input type="checkbox" id="en_tete_colonne" name="en_tete_colonne" checked="checked"/>
             </td>
         </tr>
-
-
     </table>
-    <a class='btn btn-outline-primary' href='Journal/index?id_e=<?php hecho($id_e); ?>&id_d=<?php hecho($id_d); ?>&id_u=<?php hecho($id_u); ?>&type=<?php hecho($type); ?>&recherche=<?php hecho($recherche)?>'>
+    <?php
+    $journalBackLink = sprintf(
+        '/Journal/index?id_e=%s&id_d=%s&id_u=%s&type=%s&recherche=%s',
+        $id_e,
+        $id_d,
+        $id_u,
+        $type,
+        $recherche
+    );
+    ?>
+    <a class='btn btn-outline-primary'
+       href='<?php hecho($journalBackLink); ?>'>
         <i class="fa fa-times-circle"></i>&nbsp;Annuler
     </a>
 

@@ -1,13 +1,28 @@
 <?php
 
-/** @var Gabarit $this */
+/**
+ * @var Gabarit $this
+ * @var int $id_e
+ * @var string $id_d
+ * @var string $type
+ * @var int $offset
+ */
 
 use Pastell\Helpers\UsernameDisplayer;
 
 $usernameDisplay = new UsernameDisplayer();
 
+$journalBackLink = sprintf(
+    '/Journal/index?id_e=%s&id_d=%s&type=%s&offset=%s',
+    $id_e,
+    $id_d,
+    $type,
+    $offset
+);
 ?>
-<a class='btn btn-link' href='Journal/index?id_e=<?php echo $id_e?>&id_d=<?php echo $id_d?>&type=<?php echo $type?>&offset=<?php echo $offset ?>'><i class="fa fa-arrow-left"></i>&nbsp;Retour au journal </a>
+<a class='btn btn-link'
+   href='<?php echo $journalBackLink; ?>'
+><i class="fa fa-arrow-left"></i>&nbsp;Retour au journal </a>
 
 <div class="box">
 
@@ -22,7 +37,7 @@ $usernameDisplay = new UsernameDisplayer();
         <th>Date</th>
         <td><?php echo time_iso_to_fr($info['date']) ?></td>
 </tr>
-<tr>        
+<tr>
         <th>Type</th>
         <td><?php echo $this->Journal->getTypeAsString($info['type']) ?></td>
 </tr>

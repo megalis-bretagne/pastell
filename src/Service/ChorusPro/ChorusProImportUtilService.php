@@ -67,13 +67,24 @@ class ChorusProImportUtilService
     public function getListeFacturePastell($id_e, $type_integration, $utilisateur_technique = ""): array
     {
         // Chargement des factures cpp présentes sur le Pastell
-        $sql = "SELECT de.id_d, de.id_e, di_id_facture_cpp.field_value AS id_facture_cpp, di_statut_cpp.field_value AS statut_cpp
-                FROM document_entite de
-                INNER JOIN document_index di_id_facture_cpp ON di_id_facture_cpp.id_d = de.id_d AND di_id_facture_cpp.field_name = 'id_facture_cpp'
-                INNER JOIN document_index di_statut_cpp ON de.id_d = di_statut_cpp.id_d AND di_statut_cpp.field_name = 'statut_cpp'
-                INNER JOIN document_index di_type_integration ON de.id_d = di_type_integration.id_d AND di_type_integration.field_name = 'type_integration' AND di_type_integration.field_value =? ";
+        $sql = <<<SQL
+SELECT de.id_d, de.id_e, di_id_facture_cpp.field_value AS id_facture_cpp, di_statut_cpp.field_value AS statut_cpp
+FROM document_entite de
+INNER JOIN document_index di_id_facture_cpp
+    ON di_id_facture_cpp.id_d = de.id_d AND di_id_facture_cpp.field_name = 'id_facture_cpp'
+INNER JOIN document_index di_statut_cpp
+    ON de.id_d = di_statut_cpp.id_d AND di_statut_cpp.field_name = 'statut_cpp'
+INNER JOIN document_index di_type_integration
+    ON de.id_d = di_type_integration.id_d
+           AND di_type_integration.field_name = 'type_integration'
+           AND di_type_integration.field_value =? 
+SQL;
         if ($utilisateur_technique) {
-            $sql .= "INNER JOIN document_index di_utilisateur_technique ON de.id_d = di_utilisateur_technique.id_d AND di_utilisateur_technique.field_name = 'utilisateur_technique' AND di_utilisateur_technique.field_value =? ";
+            $sql .= <<<SQL
+INNER JOIN document_index di_utilisateur_technique ON de.id_d = di_utilisateur_technique.id_d
+      AND di_utilisateur_technique.field_name = 'utilisateur_technique'
+      AND di_utilisateur_technique.field_value =?
+SQL;
         }
         $sql .= "WHERE de.id_e=?";
         if ($utilisateur_technique) {

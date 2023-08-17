@@ -42,14 +42,25 @@ class CppCreation extends ActionExecutor
             $result_synchro = $this->metier();
         } catch (Exception $e) {
             $this->doSuppression($this->id_d);
-            throw new Exception('Une erreur est survenue lors de la création du document. La récupération est annulé: ' . $e->getMessage());
+            throw new Exception(
+                'Une erreur est survenue lors de la création du document. La récupération est annulé: ' . $e->getMessage()
+            );
         }
 
         /** @var PortailFactureConnecteur $portailFactureConnecteur */
         $portailFactureConnecteur = $this->getConnecteur('PortailFacture');
         $synchronisationFacture = new SynchronisationFacture($portailFactureConnecteur);
 
-        $this->objectInstancier->getInstance(Journal::class)->addSQL(Journal::DOCUMENT_ACTION, $this->id_e, $this->id_u, $this->id_d, 'synchroniser-statut', $synchronisationFacture->formatResultSynchro($result_synchro));
+        $this->objectInstancier
+            ->getInstance(Journal::class)
+            ->addSQL(
+                Journal::DOCUMENT_ACTION,
+                $this->id_e,
+                $this->id_u,
+                $this->id_d,
+                'synchroniser-statut',
+                $synchronisationFacture->formatResultSynchro($result_synchro)
+            );
 
         /** @var DonneesFormulaire $donneesFormulaire */
         $donneesFormulaire = $this->objectInstancier->getInstance(DonneesFormulaireFactory::class)->get($this->id_d);
@@ -59,16 +70,22 @@ class CppCreation extends ActionExecutor
 
         //Extraction des donnees pivot
         $this->objectInstancier->getInstance(ExtraireDonneesPivot::class)->getAllPJ($donneesFormulaire);
-        $donnees_facture = $this->objectInstancier->getInstance(ExtraireDonneesPivot::class)->getDonneesFacture($donneesFormulaire);
+        $donnees_facture = $this->objectInstancier
+            ->getInstance(ExtraireDonneesPivot::class)
+            ->getDonneesFacture($donneesFormulaire);
         $donneesFormulaire->setData('facture_numero_engagement', $donnees_facture['facture_numero_engagement']);
         $donneesFormulaire->setData('facture_numero_marche', $donnees_facture['facture_numero_marche']);
         $donneesFormulaire->setData('facture_cadre', strval($donnees_facture['facture_cadre']));
 
         // Valorisation du cheminement d'après les valeurs par défaut définit dans le connecteur PortailFacture associé au flux Facture CPP
-        $parametrageFluxFactureCPP = $this->objectInstancier->getInstance(ConnecteurFactory::class)->getConnecteurByType($this->id_e, $this->type, 'ParametrageFlux');
+        $parametrageFluxFactureCPP = $this->objectInstancier
+            ->getInstance(ConnecteurFactory::class)
+            ->getConnecteurByType($this->id_e, $this->type, 'ParametrageFlux');
         if ($parametrageFluxFactureCPP) {
             /** @var ParametrageFluxFactureCPP $parametrageFluxFactureCPP */
-            $this->objectInstancier->getInstance(CreationFactureCPP::class)->parametrer($this->id_d, $parametrageFluxFactureCPP);
+            $this->objectInstancier
+                ->getInstance(CreationFactureCPP::class)
+                ->parametrer($this->id_d, $parametrageFluxFactureCPP);
         }
 
         // Controle du document
