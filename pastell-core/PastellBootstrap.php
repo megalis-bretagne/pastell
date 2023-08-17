@@ -11,6 +11,7 @@ class PastellBootstrap
     public function __construct(
         private readonly ObjectInstancier $objectInstancier,
         private readonly PastellLogger $pastellLogger,
+        private readonly string $pastell_path,
     ) {
     }
 
@@ -72,7 +73,7 @@ class PastellBootstrap
             return;
         }
 
-        $script = __DIR__ . '/../docker/generate-key-pair.sh';
+        $script = $this->pastell_path . '/docker/generate-key-pair.sh';
 
         exec("$script $hostname /data/certificate $keyName $certName", $output, $return_var);
         $this->pastellLogger->info(implode("\n", $output));
@@ -101,7 +102,13 @@ class PastellBootstrap
         $key_file = $tmpFile->create();
         $cert_file = $tmpFile->create();
 
-        $script = "bash " . __DIR__ . "/../docker/generate-timestamp-certificate.sh $hostname $key_file $cert_file 2>&1";
+        $script = \sprintf(
+            'bash %s/docker/generate-timestamp-certificate.sh %s %s %s 2>&1',
+            $this->pastell_path,
+            $hostname,
+            $key_file,
+            $cert_file
+        );
 
         exec("$script ", $output, $return_var);
         $this->pastellLogger->info(implode("\n", $output));

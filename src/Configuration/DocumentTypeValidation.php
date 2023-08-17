@@ -24,13 +24,14 @@ class DocumentTypeValidation
         private readonly ObjectInstancier $objectInstancier,
         private readonly DocumentTypeConfiguration $documentTypeConfiguration,
         private readonly YMLLoader $ymlLoader,
+        private readonly string $data_dir,
     ) {
     }
 
     public function getModuleDefinition(): array
     {
         $moduleDefinition = $this->ymlLoader->getArray(
-            __DIR__ . '/../../pastell-core/' . self::MODULE_DEFINITION
+            $this->data_dir . '/' . self::MODULE_DEFINITION
         );
         foreach ($moduleDefinition as $part => $properties) {
             if (! isset($properties['info'])) {

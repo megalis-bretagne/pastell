@@ -1,6 +1,5 @@
 <?php
 
-require_once __DIR__ . "/../../../lib/XSDValidator.php";
 use Pastell\Service\ChorusPro\ChorusProXSDStatutPivot;
 
 class StatutFactureCppCreate extends ActionExecutor

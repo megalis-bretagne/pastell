@@ -6,7 +6,6 @@ class DocumentTypeValidation
 {
     public const MODULE_DEFINITION = 'module-definition.yml';
 
-    private $yml_loader;
     private $module_definition;
     private $last_error;
 
@@ -14,10 +13,11 @@ class DocumentTypeValidation
     private $connecteur_type_list = [];
     private $entite_type_list = [];
 
-    public function __construct(YMLLoader $yml_loader)
-    {
-        $this->yml_loader = $yml_loader;
-        $this->module_definition = $yml_loader->getArray(__DIR__ . "/" . self::MODULE_DEFINITION);
+    public function __construct(
+        private readonly YMLLoader $yml_loader,
+        private readonly string $data_dir,
+    ) {
+        $this->module_definition = $yml_loader->getArray($this->data_dir . '/' . self::MODULE_DEFINITION);
     }
 
     public function getLastError()

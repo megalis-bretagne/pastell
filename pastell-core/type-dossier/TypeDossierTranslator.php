@@ -4,15 +4,11 @@ class TypeDossierTranslator
 {
     public const ORIENTATION = 'orientation';
 
-    private $ymlLoader;
-    private $typeDossierEtapeDefinition;
-
     public function __construct(
-        YMLLoader $ymlLoader,
-        TypeDossierEtapeManager $typeDossierEtapeDefinition
+        private readonly YMLLoader $ymlLoader,
+        private readonly TypeDossierEtapeManager $typeDossierEtapeDefinition,
+        private readonly string $data_dir,
     ) {
-        $this->ymlLoader = $ymlLoader;
-        $this->typeDossierEtapeDefinition = $typeDossierEtapeDefinition;
     }
 
     /**
@@ -40,7 +36,7 @@ class TypeDossierTranslator
 
     private function setStarter(TypeDossierProperties $typeDossierData)
     {
-        $result = $this->ymlLoader->getArray(__DIR__ . "/../../type-dossier/type-dossier-starter-kit.yml");
+        $result = $this->ymlLoader->getArray($this->data_dir . '/type-dossier-starter-kit.yml');
         $result[DocumentType::NOM] = $typeDossierData->nom;
         $result[DocumentType::TYPE_FLUX] = $typeDossierData->type;
         $result[DocumentType::DESCRIPTION] = $typeDossierData->description;

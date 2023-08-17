@@ -10,8 +10,8 @@ use UnrecoverableException;
 
 class DatabaseUpdater
 {
-    public const DATABASE_FILE = __DIR__ . '/../../installation/pastell.json';
-    public const DATABASE_SQL_FILE = __DIR__ . '/../../installation/pastell.sql';
+    public const DATABASE_FILE = __DIR__ . '/../../data/pastell.json';
+    public const DATABASE_SQL_FILE = __DIR__ . '/../../data/pastell.sql';
 
     public function __construct(
         private readonly SQLQuery $sqlQuery,

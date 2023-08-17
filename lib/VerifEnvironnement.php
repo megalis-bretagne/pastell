@@ -7,6 +7,7 @@ class VerifEnvironnement
     public function __construct(
         private readonly string $redis_server,
         private readonly int $redis_port,
+        private readonly string $pastell_path,
     ) {
     }
 
@@ -22,7 +23,12 @@ class VerifEnvironnement
 
     private function getExtensionsNedeed()
     {
-        $composer = json_decode(file_get_contents(__DIR__ . "/../composer.json"), true);
+        $composer = json_decode(
+            file_get_contents($this->pastell_path . '/composer.json'),
+            true,
+            512,
+            JSON_THROW_ON_ERROR
+        );
         return
             array_map(
                 function ($a) {

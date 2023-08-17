@@ -13,6 +13,7 @@ class PastellDaemon
         private readonly NotificationMail $notificationMail,
         private readonly Logger $logger,
         private readonly string $unlock_job_error_at_startup,
+        private readonly string $pastell_path,
     ) {
     }
 
@@ -101,7 +102,7 @@ class PastellDaemon
             \sprintf(
                 'nohup %s %s %s > /dev/null 2>&1 &',
                 PHP_PATH,
-                dirname(__DIR__) . '/bin/console app:daemon:start-worker',
+                $this->pastell_path . '/bin/console app:daemon:start-worker',
                 $id_job
             )
         );
