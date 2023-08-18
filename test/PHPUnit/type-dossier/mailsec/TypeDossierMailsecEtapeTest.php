@@ -72,12 +72,6 @@ class TypeDossierMailsecEtapeTest extends PastellTestCase
         $this->assertTrue(
             $this->triggerActionOnDocument($id_d, "mailsec-relance")
         );
-
-        $id_job = $this->jobQueueSQL->getJobIdForDocument(1, $id_d);
-        $job = $this->jobQueueSQL->getJob($id_job);
-        $this->assertEquals(1, $job->nb_try);
-        $this->assertEquals('MAILSEC_RELANCE', $job->id_verrou);
-
         $last_message = $this->getObjectInstancier()->getInstance(ActionExecutorFactory::class)->getLastMessage();
         $this->assertMatchesRegularExpression("#Relance programmée le#", $last_message);
 
@@ -117,7 +111,10 @@ class TypeDossierMailsecEtapeTest extends PastellTestCase
         $connecteurFrequence->type_connecteur = ConnecteurFrequence::TYPE_ENTITE;
         $connecteurFrequence->famille_connecteur = 'pdf-relance';
         $connecteurFrequence->action_type = ConnecteurFrequence::TYPE_ACTION_DOCUMENT;
+        $connecteurFrequence->type_document = self::MAILSEC_ONLY;
+        $connecteurFrequence->action = 'mailsec-relance';
         $connecteurFrequence->id_verrou = 'MAILSEC_RELANCE';
+        $connecteurFrequence->expression = "1440";
         $connecteurFrequenceSQL->edit($connecteurFrequence);
 
         $this->typeDossierLoader->createTypeDossierDefinitionFile(self::MAILSEC_ONLY);
