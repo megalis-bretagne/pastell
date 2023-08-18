@@ -29,8 +29,10 @@ class MailsecRelance extends ConnecteurTypeActionExecutor
             throw new UnrecoverableException("Impossible de trouver la date du passage à send-mailsec");
         }
 
-        if (in_array($last_action, [$send_mailsec_action, $reception_partielle_action]
-            ) && $pdfGeneriqueRelanceConnecteur->mustRelance($date_send_mailsec)) {
+        if (
+            in_array($last_action, [$send_mailsec_action, $reception_partielle_action])
+            && $pdfGeneriqueRelanceConnecteur->mustRelance($date_send_mailsec)
+        ) {
             $message = "Préparation du renvoi du document";
             $this->setLastMessage($message);
             $this->getActionCreator()->addAction($this->id_e, $this->id_u, $prepare_renvoi_action, $message);
