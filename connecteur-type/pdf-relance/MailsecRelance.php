@@ -8,9 +8,8 @@ class MailsecRelance extends ConnecteurTypeActionExecutor
      */
     public function go()
     {
-
         $send_mailsec_action = $this->getMappingValue('send-mailsec');
-        $reception_partielle_action =  $this->getMappingValue('reception-partielle');
+        $reception_partielle_action = $this->getMappingValue('reception-partielle');
         $prepare_renvoi_action = $this->getMappingValue('prepare-renvoi');
         $non_recu_action = $this->getMappingValue('non-recu');
 
@@ -26,11 +25,12 @@ class MailsecRelance extends ConnecteurTypeActionExecutor
                 $date_send_mailsec = $action_info['date'];
             }
         }
-        if (! $date_send_mailsec) {
+        if (!$date_send_mailsec) {
             throw new UnrecoverableException("Impossible de trouver la date du passage à send-mailsec");
         }
 
-        if (in_array($last_action, [$send_mailsec_action,$reception_partielle_action]) && $pdfGeneriqueRelanceConnecteur->mustRelance($date_send_mailsec)) {
+        if (in_array($last_action, [$send_mailsec_action, $reception_partielle_action]
+            ) && $pdfGeneriqueRelanceConnecteur->mustRelance($date_send_mailsec)) {
             $message = "Préparation du renvoi du document";
             $this->setLastMessage($message);
             $this->getActionCreator()->addAction($this->id_e, $this->id_u, $prepare_renvoi_action, $message);
@@ -39,11 +39,16 @@ class MailsecRelance extends ConnecteurTypeActionExecutor
 
         if ($pdfGeneriqueRelanceConnecteur->mustGoToNextState($date_send_mailsec)) {
             $this->setLastMessage("Le document passe en non reçu !");
-            $this->getActionCreator()->addAction($this->id_e, $this->id_u, $non_recu_action, "Le temps de récupération du document est écoulé");
+            $this->getActionCreator()->addAction(
+                $this->id_e,
+                $this->id_u,
+                $non_recu_action,
+                "Le temps de récupération du document est écoulé"
+            );
             return true;
         }
         $message = "";
-        if (in_array($last_action, [$send_mailsec_action,$reception_partielle_action])) {
+        if (in_array($last_action, [$send_mailsec_action, $reception_partielle_action])) {
             $date_relance = $pdfGeneriqueRelanceConnecteur->getDateRelance($date_send_mailsec);
             $message .= "Relance programmée le $date_relance<br/>";
         }

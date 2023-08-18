@@ -7,6 +7,8 @@ class TypeDossierMailsecEtapeTest extends PastellTestCase
     /** @var TypeDossierLoader */
     private $typeDossierLoader;
 
+    /** @var  JobQueueSQL */
+    private $jobQueueSQL;
     /**
      * @throws Exception
      */
@@ -14,6 +16,7 @@ class TypeDossierMailsecEtapeTest extends PastellTestCase
     {
         parent::setUp();
         $this->typeDossierLoader = $this->getObjectInstancier()->getInstance(TypeDossierLoader::class);
+        $this->jobQueueSQL = $this->getObjectInstancier()->getInstance(JobQueueSQL::class);
     }
 
     protected function tearDown(): void
@@ -69,6 +72,12 @@ class TypeDossierMailsecEtapeTest extends PastellTestCase
         $this->assertTrue(
             $this->triggerActionOnDocument($id_d, "mailsec-relance")
         );
+
+        $id_job = $this->jobQueueSQL->getJobIdForDocument(1, $id_d);
+        $job = $this->jobQueueSQL->getJob($id_job);
+        $this->assertEquals(1, $job->nb_try);
+        $this->assertEquals('MAILSEC_RELANCE', $job->id_verrou);
+
         $last_message = $this->getObjectInstancier()->getInstance(ActionExecutorFactory::class)->getLastMessage();
         $this->assertMatchesRegularExpression("#Relance programmée le#", $last_message);
 
@@ -94,6 +103,47 @@ class TypeDossierMailsecEtapeTest extends PastellTestCase
         );
         $this->assertLastMessage("sélection automatique de l'action suivante");
         $this->assertLastDocumentAction('termine', $id_d);
+    }
+
+    /**
+     * @return void
+     * @throws NotFoundException
+     * @throws TypeDossierException
+     */
+    public function testFrequenceRelance()
+    {
+        $connecteurFrequenceSQL = $this->getObjectInstancier()->getInstance(ConnecteurFrequenceSQL::class);
+        $connecteurFrequence = new ConnecteurFrequence();
+        $connecteurFrequence->type_connecteur = ConnecteurFrequence::TYPE_ENTITE;
+        $connecteurFrequence->famille_connecteur = 'pdf-relance';
+        $connecteurFrequence->action_type = ConnecteurFrequence::TYPE_ACTION_DOCUMENT;
+        $connecteurFrequence->id_verrou = 'MAILSEC_RELANCE';
+        $connecteurFrequenceSQL->edit($connecteurFrequence);
+
+        $this->typeDossierLoader->createTypeDossierDefinitionFile(self::MAILSEC_ONLY);
+        $this->createMailsecConnector(self::MAILSEC_ONLY);
+        $id_d = $this->createAndFillDocument(self::MAILSEC_ONLY);
+
+        $this->assertTrue(
+            $this->triggerActionOnDocument($id_d, "orientation")
+        );
+        $this->assertLastMessage("sélection automatique de l'action suivante");
+
+        $this->assertTrue(
+            $this->triggerActionOnDocument($id_d, "send-mailsec")
+        );
+        $this->assertLastMessage("Le document a été envoyé au(x) destinataire(s)");
+
+        $this->assertTrue(
+            $this->triggerActionOnDocument($id_d, "mailsec-relance")
+        );
+        $id_job = $this->jobQueueSQL->getJobIdForDocument(1, $id_d);
+        $job = $this->jobQueueSQL->getJob($id_job);
+        $this->assertEquals(1, $job->nb_try);
+        $this->assertEquals('MAILSEC_RELANCE', $job->id_verrou);
+
+        $last_message = $this->getObjectInstancier()->getInstance(ActionExecutorFactory::class)->getLastMessage();
+        $this->assertMatchesRegularExpression("#Relance programmée le#", $last_message);
     }
 
     /**

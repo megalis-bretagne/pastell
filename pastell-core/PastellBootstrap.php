@@ -311,5 +311,12 @@ class PastellBootstrap
             'type_connecteur' => ConnecteurFrequence::TYPE_GLOBAL,
             'famille_connecteur' => 'UndeliveredMail',
         ];
+        yield 'pdf-relance' => [
+            'expression' => '1440',
+            'type_connecteur' => ConnecteurFrequence::TYPE_ENTITE,
+            'famille_connecteur' => 'pdf-relance',
+            'action_type' => ConnecteurFrequence::TYPE_ACTION_DOCUMENT,
+            'id_verrou' => "MAILSEC_RELANCE",
+        ];
     }
 }
