@@ -67,7 +67,7 @@ class FluxControler extends PastellControler
             $possiblePackList = [];
             foreach ($possibleFluxList as $fluxId => $fluxInfo) {
                 if (!empty($fluxList[$fluxId]['connecteur'])) {
-                    $possiblePackList[$fluxInfo['type']][] = $fluxInfo;
+                    $possiblePackList[$fluxInfo['type']][$fluxId] = $fluxInfo;
                 }
             }
             foreach ($fluxList as $fluxId => $fluxInfo) {
