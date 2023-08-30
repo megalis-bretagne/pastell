@@ -340,6 +340,7 @@ action:
                 - send-signature-error
                 - send-mailsec-error
                 - send-tdt-erreur
+                - acquiter-tdt
                 - termine
     supression:
         name-action: Supprimer

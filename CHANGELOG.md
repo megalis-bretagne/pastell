@@ -12,6 +12,7 @@
 - L'état ```send-tdt-erreur``` permet maintenant la modification du ```Numéro de l'acte``` et la suppression pour les flux studio #1691
 - Il n'était pas possible de supprimer des dossiers en état "Erreur lors de la vérification du statut de signature" #1894
 - La définition de fréquence pour les connecteurs de type pdf-relance (Relance mail sécurisé) est maintenant prise en compte #1442
+- La ```date de publication``` n'était pas modifiable sur les flux studio avec étape ```Envoi à la préfecture``` pour les étapes manuelles #1767
 
 ## Suppressions
 

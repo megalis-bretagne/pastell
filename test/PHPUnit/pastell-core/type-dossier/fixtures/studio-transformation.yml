@@ -280,6 +280,7 @@ action:
                 - recu-iparapheur
                 - send-signature-error
                 - send-tdt-erreur
+                - acquiter-tdt
                 - termine
     supression:
         name-action: Supprimer
