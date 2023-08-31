@@ -192,7 +192,7 @@ class RechercheAvanceFormulaireHTML extends PastellControler
     private function displayEtatTransit()
     {
         $allDroit = $this->getInstance(RoleUtilisateur::class)->getAllDroit($this->getId_u());
-        $listeEtat = $this->getInstance(DocumentTypeFactory::class)->getActionByRole($allDroit);
+        $listeEtat = $this->getDocumentStateList($allDroit);
         $etatTransit = $this->getParameter('etatTransit');
         ?>
         <select name='etatTransit' class="form-control col-md-8">
@@ -223,7 +223,7 @@ class RechercheAvanceFormulaireHTML extends PastellControler
     private function displayNotEtatTransit()
     {
         $allDroit = $this->getInstance(RoleUtilisateur::class)->getAllDroit($this->getId_u());
-        $listeEtat = $this->getInstance(DocumentTypeFactory::class)->getActionByRole($allDroit);
+        $listeEtat = $this->getDocumentStateList($allDroit);
         $notEtatTransit = $this->getParameter('notEtatTransit');
         ?>
         <select name='notEtatTransit' class="form-control col-md-8">
@@ -256,7 +256,7 @@ class RechercheAvanceFormulaireHTML extends PastellControler
     private function displayLastState()
     {
         $allDroit = $this->getInstance(RoleUtilisateur::class)->getAllDroit($this->getId_u());
-        $listeEtat = $this->getInstance(DocumentTypeFactory::class)->getActionByRole($allDroit);
+        $listeEtat = $this->getDocumentStateList($allDroit);
         $lastEtat = $this->getParameter('lastetat');
         ?>
         <select name='lastetat' class="form-control col-md-8">
@@ -353,5 +353,14 @@ class RechercheAvanceFormulaireHTML extends PastellControler
             });
         </script>
         <?php
+    }
+
+    public function getDocumentStateList(array $allDroit): array
+    {
+        $documentStateList = $this->getInstance(DocumentTypeFactory::class)->getActionByRole($allDroit);
+        foreach ($documentStateList as $stateKey => $state) {
+            $documentStateList[$stateKey]['fatal-error'] = 'Erreur fatale';
+        }
+        return $documentStateList;
     }
 }
