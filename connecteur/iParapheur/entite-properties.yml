@@ -1,6 +1,6 @@
 nom: iparapheur
 type: signature
-description: "Connecteur pour le iparapheur de Libriciel"
+description: "Connecteur pour le iparapheur de l'Adullact"
 formulaire:
     page0:
         iparapheur_wsdl:
