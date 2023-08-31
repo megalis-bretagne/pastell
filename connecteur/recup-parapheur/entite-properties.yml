@@ -72,10 +72,10 @@ action:
         action-class: RecupParapheurRecup
 
     recup:
-        name: Lancer la récupération (synchrone)
+        name: Traitement (immédiat)
         action-class: RecupParapheurRecup
         action-automatique: recup
 
     recup-async:
-        name: Lancer la récupération (asynchrone)
+        name: Traitement (par le gestionnaire de tâches)
         action-class: RecupParapheurRecupAsync

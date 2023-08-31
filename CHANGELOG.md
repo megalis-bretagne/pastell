@@ -1,5 +1,9 @@
 # [4.0.7] - 2023-09-11
 
+## Corrections
+
+- Modification des noms des boutons d'actions du connecteur recup-parapheur #1877
+
 ## Suppressions
 
 - Connecteur `Dépôt local` qui n'est plus fonctionnel depuis la 4.0.0 #1861
