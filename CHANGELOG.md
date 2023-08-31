@@ -1,5 +1,9 @@
 # [4.0.7] - 2023-09-11
 
+## Corrections
+
+- Modification de la description du connecteur iparapheur #1674
+
 ## Suppressions
 
 - Connecteur `Dépôt local` qui n'est plus fonctionnel depuis la 4.0.0 #1861
