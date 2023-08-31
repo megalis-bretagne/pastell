@@ -1147,7 +1147,10 @@ class DonneesFormulaire
     {
         $info = $this->fichierCleValeur->getYmlInfo();
         if ($info) {
-            if (array_key_exists($field->getName(), $info)) {
+            if (
+                array_key_exists($field->getName(), $info)
+                && $info[$field->getName()] !== ''
+            ) {
                 try {
                     $response = $this->passwordStorage->read($info[$field->getName()]);
                     $this->fichierCleValeur->set($field->getName(), $response);
