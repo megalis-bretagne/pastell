@@ -1117,7 +1117,7 @@ class DonneesFormulaire
             if (array_key_exists($field->getName(), $this->fichierCleValeur->getYmlInfo())) {
                 $passwordId = $this->fichierCleValeur->getYmlInfo()[$field->getName()];
             }
-            if ($action === self::DELETE && isset($passwordId)) {
+            if ($action === self::DELETE && $passwordId !== '') {
                 $this->passwordStorage->delete($passwordId);
             } elseif ($action === self::SAVE) {
                 $isVaultId = true;
@@ -1129,7 +1129,7 @@ class DonneesFormulaire
                     $this->lastError = $e->getCode() . ' : ' . $e->getMessage();
                     return;
                 }
-                if (!isset($passwordId) || !$isVaultId) {
+                if ($passwordId === '' || !$isVaultId) {
                     $passwordId = $this->uuidGenerator->generate();
                 }
                 try {
