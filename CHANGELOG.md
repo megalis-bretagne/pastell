@@ -278,6 +278,13 @@ et l'utilisateur peut modifier les champs manquants #1850
 
 - Le support de la version 0.2 du SEDA est déprécié. 
 
+# [3.1.20] - 2023-07-27
+
+## Corrections
+
+- Statut Facture Chorus Pro: le statut ```04 : Rejetée par lordonnateur pour erreur données acheminement``` correspond au statut A_RECYCLER #1866
+- Modification de statut CPP: Le motif du statut cible était mal encodé #1863
+
 # [3.1.19] - 2023-02-06
 
 ***Cette version nécessite une modification de la base de données***
