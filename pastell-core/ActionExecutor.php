@@ -281,7 +281,10 @@ abstract class ActionExecutor
     private function checkValidityConnector(): void
     {
         //TODO delete condition when used in prod
-        if ($this->objectInstancier->getInstance('useExternalStorageForPasswordConnector')) {
+        if (
+            $this->objectInstancier->getInstance('useExternalStorageForPasswordConnector')
+            && isset($this->id_ce)
+        ) {
             $error = $this->getConnecteurConfig($this->id_ce)->getLastError();
             if ($error) {
                 throw new UnrecoverableException($error);
