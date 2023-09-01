@@ -787,6 +787,9 @@ action:
         name: 'Acquitté par la préfecture'
         rule:
             role_id_e: no-role
+        editable-content:
+            - acte_publication_date
+        modification-no-change-etat: true
     annulation-tdt:
         name-action: 'Annuler la transaction'
         name: "Demande d'annulation envoyée"
