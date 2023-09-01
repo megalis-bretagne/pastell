@@ -405,6 +405,7 @@ action:
                 - fatal-error
                 - transformation-error
                 - rejet-iparapheur
+                - erreur-verif-iparapheur
                 - send-mailsec-error
                 - rejet-sae
         action-class: Supprimer

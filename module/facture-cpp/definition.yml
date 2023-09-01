@@ -875,6 +875,7 @@ action:
                         - cpp-modif-statut-erreur
                         - recu-iparapheur
                         - rejet-iparapheur
+                        - erreur-verif-iparapheur
                         - send-ged
                         - error-ged
                         - erreur-envoie-sae

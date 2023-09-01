@@ -436,6 +436,7 @@ action:
                 - fatal-error
                 - transformation-error
                 - rejet-iparapheur
+                - erreur-verif-iparapheur
                 - send-tdt-erreur
                 - annuler-tdt
                 - send-mailsec-error

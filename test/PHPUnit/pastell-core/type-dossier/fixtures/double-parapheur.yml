@@ -252,7 +252,9 @@ action:
                 - termine
                 - fatal-error
                 - rejet-iparapheur_1
+                - erreur-verif-iparapheur_1
                 - rejet-iparapheur_2
+                - erreur-verif-iparapheur_2
         action-class: Supprimer
         warning: 'Êtes-vous sûr ?'
     importation:

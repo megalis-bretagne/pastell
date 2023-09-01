@@ -125,6 +125,7 @@ action:
                 - recu-iparapheur
                 - recu-iparapheur-etat
                 - rejet-iparapheur
+                - erreur-verif-iparapheur
                 - send-ged
                 - send-ged-etat
                 - termine

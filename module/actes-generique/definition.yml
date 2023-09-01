@@ -394,6 +394,7 @@ action:
                         - error-ged
                         - send-tdt-erreur
                         - annuler-tdt
+                        - erreur-verif-iparapheur
             role_id_e: editeur
             droit_id_u: 'actes-generique:edition'
         action-class: Supprimer

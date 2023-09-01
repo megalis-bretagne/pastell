@@ -396,6 +396,7 @@ action:
                         - termine
                         - send-tdt-erreur
                         - annuler-tdt
+                        - erreur-verif-iparapheur
                 and_6:
                     has-action:
                         - termine
