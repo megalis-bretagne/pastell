@@ -49,6 +49,14 @@ final class OidcAuthentication extends AuthenticationConnecteur
             $clientSecret
         );
 
+        if ($donneesFormulaire->get('scopes')) {
+            $this->oidc->addScope(
+                \explode(
+                    ',',
+                    \str_replace(' ', '', $donneesFormulaire->get('scopes'))
+                )
+            );
+        }
         if ($donneesFormulaire->get('http_proxy')) {
             $this->oidc->setHttpProxy($donneesFormulaire->get('http_proxy'));
         }
@@ -114,7 +122,7 @@ final class OidcAuthentication extends AuthenticationConnecteur
      */
     private function createUserIfNeeded(array $userInfo): void
     {
-        $login = $userInfo[$this->loginAttribute] ;
+        $login = $userInfo[$this->loginAttribute];
         if ($this->utilisateurSQL->getIdFromLogin($login) !== false) {
             return;
         }

@@ -15,7 +15,14 @@ formulaire:
             requis: true
         client_secret:
             name: 'Client secret'
+            type: password
             requis: true
+        scopes:
+            name: "Scopes supplémentaires"
+            commentaire: "Par défaut, seul le scope 'openid' est utilisé pour la récupération des informations de 
+            l'utilisateur. <br />
+            Les scopes supplémentaires doivent être séparés par des virgules <br />
+            Exemple: profile,email"
         login_attribute:
             name: "Nom de l'attribut utilisé pour le login"
             commentaire: "Cet attribut doit être disponible pour tous les utilisateurs lors de l'appel sur l'endpoint 'userinfo' <br />\nExemple: given_name, email, name, preferred_username, ..."
