@@ -4,11 +4,9 @@ class TypeDossierMailsecEtapeTest extends PastellTestCase
 {
     public const MAILSEC_ONLY = 'mailsec-only';
 
-    /** @var TypeDossierLoader */
-    private $typeDossierLoader;
+    private TypeDossierLoader $typeDossierLoader;
+    private JobQueueSQL $jobQueueSQL;
 
-    /** @var  JobQueueSQL */
-    private $jobQueueSQL;
     /**
      * @throws Exception
      */
@@ -52,7 +50,7 @@ class TypeDossierMailsecEtapeTest extends PastellTestCase
     /**
      * @throws Exception
      */
-    public function testDepot()
+    public function testDepot(): void
     {
         $this->typeDossierLoader->createTypeDossierDefinitionFile(self::MAILSEC_ONLY);
         $this->createMailsecConnector(self::MAILSEC_ONLY);
@@ -104,7 +102,7 @@ class TypeDossierMailsecEtapeTest extends PastellTestCase
      * @throws NotFoundException
      * @throws TypeDossierException
      */
-    public function testFrequenceRelance()
+    public function testFrequenceRelance(): void
     {
         $connecteurFrequenceSQL = $this->getObjectInstancier()->getInstance(ConnecteurFrequenceSQL::class);
         $connecteurFrequence = new ConnecteurFrequence();
@@ -136,8 +134,12 @@ class TypeDossierMailsecEtapeTest extends PastellTestCase
         );
         $id_job = $this->jobQueueSQL->getJobIdForDocument(1, $id_d);
         $job = $this->jobQueueSQL->getJob($id_job);
-        $this->assertEquals(1, $job->nb_try);
-        $this->assertEquals('MAILSEC_RELANCE', $job->id_verrou);
+        $this->assertSame(1, $job->nb_try);
+        $this->assertSame('MAILSEC_RELANCE', $job->id_verrou);
+        $this->assertSame(
+            strtotime($job->next_try) - strtotime($job->last_try),
+            $connecteurFrequence->expression * 60
+        );
 
         $last_message = $this->getObjectInstancier()->getInstance(ActionExecutorFactory::class)->getLastMessage();
         $this->assertMatchesRegularExpression("#Relance programmée le#", $last_message);
