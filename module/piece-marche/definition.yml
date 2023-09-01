@@ -305,6 +305,7 @@ action:
                 - erreur-orientation
                 - recu-iparapheur
                 - rejet-iparapheur
+                - erreur-verif-iparapheur
                 - send-ged
                 - error-ged
                 - termine

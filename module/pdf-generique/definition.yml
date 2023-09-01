@@ -189,6 +189,7 @@ action:
                 - importation
                 - recu-iparapheur
                 - rejet-iparapheur
+                - erreur-verif-iparapheur
                 - send-ged-1
                 - send-ged-2
                 - send-mailsec
