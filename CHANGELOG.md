@@ -1,5 +1,9 @@
 # [4.0.7] - 2023-09-11
 
+## Évolutions
+
+- La recherche avancée permet de chercher avec l'état `Erreur fatale` #1655
+
 ## Corrections
 
 - Modification des noms des boutons d'actions du connecteur recup-parapheur #1877
