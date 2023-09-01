@@ -169,6 +169,7 @@ action:
                 - creation
                 - modification
                 - importation
+                - send-tdt-erreur
                 - acquiter-tdt
                 - termine
     supression:
@@ -181,6 +182,7 @@ action:
                 - importation
                 - termine
                 - fatal-error
+                - send-tdt-erreur
                 - annuler-tdt
         action-class: Supprimer
         warning: 'Êtes-vous sûr ?'
@@ -252,6 +254,8 @@ action:
         name: "Erreur lors de l'envoi des données au TdT"
         rule:
             role_id_e: no-role
+        editable-content:
+            - numero_de_lacte
     document-transmis-tdt:
         name-action: 'Transmettre les documents au TdT'
         name: 'En attente du certificat RGS**'
