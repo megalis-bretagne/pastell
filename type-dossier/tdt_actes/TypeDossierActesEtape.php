@@ -91,8 +91,10 @@ class TypeDossierActesEtape implements TypeDossierEtapeSetSpecificInformation
             $go = true;
 
             if (
-                isset($action_info[Action::ACTION_AUTOMATIQUE])
-                && $action_info[Action::ACTION_AUTOMATIQUE] === TypeDossierTranslator::ORIENTATION
+                in_array(
+                    $action_id,
+                    $result[DocumentType::ACTION][TypeDossierTranslator::ORIENTATION][Action::ACTION_RULE][Action::ACTION_RULE_LAST_ACTION]
+                )
             ) {
                 $this->makeEditable($action_id, $result, $stringMapper);
             }
