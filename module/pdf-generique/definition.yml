@@ -320,7 +320,7 @@ action:
                 - send-mailsec
                 - renvoi
         action-class: StandardAction
-        connecteur-type: mailsec
+        connecteur-type: pdf-relance
         connecteur-type-action: MailsecRelance
         connecteur-type-mapping:
             prepare-renvoi: prepare-renvoi
