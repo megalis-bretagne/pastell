@@ -1,3 +1,9 @@
+# [4.0.8] - 2023-10-09
+
+## Évolutions
+
+- Il n'est plus possible de créer de flux studio commençant par `ls-` #1906
+
 # [4.0.7] - 2023-09-11
 
 ## Évolutions
