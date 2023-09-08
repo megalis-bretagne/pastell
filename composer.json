@@ -125,7 +125,8 @@
       "Utils\\Rector\\": "utils/rector/src"
     },
     "files": [
-      "src/functions.php"
+      "src/functions.php",
+      "util.php"
     ],
     "classmap": [
       "action",

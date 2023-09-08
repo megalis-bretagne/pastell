@@ -2,7 +2,6 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/DefaultSettings.php';
-require_once __DIR__ . '/lib/util.php';
 
 if (!empty(SENTRY_DSN)) {
     Sentry\init([
