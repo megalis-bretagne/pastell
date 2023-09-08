@@ -15,53 +15,54 @@ class TypeDossierEditionServiceTest extends PastellTestCase
         return $this->getObjectInstancier()->getInstance(TypeDossierEditionService::class);
     }
 
-    public function typeDossierIdProvider()
+    public function typeDossierIdProvider(): \Generator
     {
-        return [
-            'Null' =>
-                [
-                    "",
-                    "Aucun identifiant de type de dossier fourni",
-                ],
-            'ExistOnPastell' =>
-                [
-                    "actes-generique",
-                    "Le type de dossier actes-generique existe déjà sur ce Pastell",
-                ],
-            'Pastell-' =>
-                [
-                    "pastell-test",
-                    "L'identifiant du type de dossier ne doit pas commencer par : " . TypeDossierEditionService::TYPE_DOSSIER_ID_PASTELL,
-                ],
-            'RegEx' =>
-                [
-                    "studio_",
-                    "L'identifiant du type de dossier « studio_ » ne respecte pas l'expression rationnelle : " . TypeDossierEditionService::TYPE_DOSSIER_ID_REGEXP,
-                ],
-            'MaxLength' =>
-                [
-                    "123456789-123456789-123456789-123",
-                    "L'identifiant du type de dossier « 123456789-123456789-123456789-123 » ne respecte pas l'expression rationnelle : " . TypeDossierEditionService::TYPE_DOSSIER_ID_REGEXP,
-                ],
+        yield 'empty' => ['', 'Aucun identifiant de type de dossier fourni'];
+        yield 'exists' => ['actes-generique', 'Le type de dossier actes-generique existe déjà sur ce Pastell'];
+        yield 'pastell-' => [
+            'pastell-test',
+            \sprintf(
+                "L'identifiant du type de dossier ne doit pas commencer par : %s ou %s",
+                TypeDossierEditionService::TYPE_DOSSIER_ID_PASTELL,
+                TypeDossierEditionService::TYPE_DOSSIER_ID_LS,
+            ),
+            ];
+        yield 'ls-' => [
+            'ls-test',
+            \sprintf(
+                "L'identifiant du type de dossier ne doit pas commencer par : %s ou %s",
+                TypeDossierEditionService::TYPE_DOSSIER_ID_PASTELL,
+                TypeDossierEditionService::TYPE_DOSSIER_ID_LS,
+            ),
+        ];
+        yield 'regex' => [
+            'studio_',
+            \sprintf(
+                "L'identifiant du type de dossier « studio_ » ne respecte pas l'expression rationnelle : %s",
+                TypeDossierEditionService::TYPE_DOSSIER_ID_REGEXP
+            ),
+        ];
+        yield 'maxLength' => [
+            '123456789-123456789-123456789-123',
+            \sprintf(
+                "L'identifiant du type de dossier « %s » ne respecte pas l'expression rationnelle : %s",
+                '123456789-123456789-123456789-123',
+                TypeDossierEditionService::TYPE_DOSSIER_ID_REGEXP
+            ),
         ];
     }
 
     /**
      * @dataProvider typeDossierIdProvider
-     *
-     * @param $type_dossier_id
-     * @param $exception_message
      */
-    public function testCheckTypeDossierId($type_dossier_id, $exception_message)
+    public function testCheckTypeDossierId(string $type_dossier_id, string $exception_message): void
     {
         $typeDossierProperties = new TypeDossierProperties();
         $typeDossierProperties->id_type_dossier = $type_dossier_id;
         $typeDossierEditionService = $this->getTypeDossierEditionService();
 
         $this->expectException(TypeDossierException::class);
-        $this->expectExceptionMessage(
-            $exception_message
-        );
+        $this->expectExceptionMessage($exception_message);
         $typeDossierEditionService->create($typeDossierProperties);
     }
 
@@ -109,7 +110,7 @@ class TypeDossierEditionServiceTest extends PastellTestCase
                     [],
                 'etape' =>
                     [],
-                'restriction_pack' => ''
+                'restriction_pack' => '',
             ],
             $this->getObjectInstancier()->getInstance(TypeDossierManager::class)->getRawData($id_t)
         );

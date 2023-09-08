@@ -15,45 +15,16 @@ class TypeDossierEditionService
 {
     public const TYPE_DOSSIER_ID_MAX_LENGTH = 45;
     public const TYPE_DOSSIER_ID_REGEXP = "^[0-9a-z-]{1,32}(-destinataire|-reponse)?$";
-    public const TYPE_DOSSIER_ID_PASTELL = "pastell-";
-
-    /**
-     * @var TypeDossierSQL
-     */
-    private $typeDossierSQL;
-
-    /**
-     * @var FluxDefinitionFiles
-     */
-    private $fluxDefinitionFiles;
-
-    /**
-     * @var TypeDossierPersonnaliseDirectoryManager
-     */
-    private $typeDossierPersonnaliseDirectoryManager;
-
-    /**
-     * @var TypeDossierEtapeManager
-     */
-    private $typeDossierEtapeManager;
-
-    /**
-     * @var TypeDossierManager
-     */
-    private $typeDossierManager;
+    public const TYPE_DOSSIER_ID_PASTELL = 'pastell-';
+    public const TYPE_DOSSIER_ID_LS = 'ls-';
 
     public function __construct(
-        TypeDossierSQL $typeDossierSQL,
-        TypeDossierPersonnaliseDirectoryManager $typeDossierPersonnaliseDirectoryManager,
-        TypeDossierEtapeManager $typeDossierEtapeManager,
-        TypeDossierManager $typeDossierManager,
-        FluxDefinitionFiles $fluxDefinitionFiles
+        private readonly TypeDossierSQL $typeDossierSQL,
+        private readonly TypeDossierPersonnaliseDirectoryManager $typeDossierPersonnaliseDirectoryManager,
+        private readonly TypeDossierEtapeManager $typeDossierEtapeManager,
+        private readonly TypeDossierManager $typeDossierManager,
+        private readonly FluxDefinitionFiles $fluxDefinitionFiles
     ) {
-        $this->typeDossierSQL = $typeDossierSQL;
-        $this->typeDossierPersonnaliseDirectoryManager = $typeDossierPersonnaliseDirectoryManager;
-        $this->typeDossierEtapeManager = $typeDossierEtapeManager;
-        $this->typeDossierManager = $typeDossierManager;
-        $this->fluxDefinitionFiles = $fluxDefinitionFiles;
     }
 
     /**
@@ -115,14 +86,13 @@ class TypeDossierEditionService
     }
 
     /**
-     * @param $id_type_dossier
      * @throws TypeDossierException
      */
-    public function checkTypeDossierId($id_type_dossier)
+    public function checkTypeDossierId(string $id_type_dossier): void
     {
-        if (! $id_type_dossier) {
+        if ($id_type_dossier === '') {
             throw new TypeDossierException(
-                "Aucun identifiant de type de dossier fourni"
+                'Aucun identifiant de type de dossier fourni'
             );
         }
         if ($this->fluxDefinitionFiles->getInfo($id_type_dossier)) {
@@ -130,19 +100,34 @@ class TypeDossierEditionService
                 "Le type de dossier $id_type_dossier existe déjà sur ce Pastell"
             );
         }
-        if (substr($id_type_dossier, 0, 8) === self::TYPE_DOSSIER_ID_PASTELL) {
+        if (
+            \str_starts_with($id_type_dossier, self::TYPE_DOSSIER_ID_PASTELL) ||
+            \str_starts_with($id_type_dossier, self::TYPE_DOSSIER_ID_LS)
+        ) {
             throw new TypeDossierException(
-                "L'identifiant du type de dossier ne doit pas commencer par : " . self::TYPE_DOSSIER_ID_PASTELL
+                \sprintf(
+                    "L'identifiant du type de dossier ne doit pas commencer par : %s ou %s",
+                    self::TYPE_DOSSIER_ID_PASTELL,
+                    self::TYPE_DOSSIER_ID_LS
+                )
             );
         }
-        if (!preg_match("#" . self::TYPE_DOSSIER_ID_REGEXP . "#", $id_type_dossier)) {
+        if (!preg_match('#' . self::TYPE_DOSSIER_ID_REGEXP . '#', $id_type_dossier)) {
             throw new TypeDossierException(
-                "L'identifiant du type de dossier « " . get_hecho($id_type_dossier) . " » ne respecte pas l'expression rationnelle : " . self::TYPE_DOSSIER_ID_REGEXP
+                \sprintf(
+                    "L'identifiant du type de dossier « %s » ne respecte pas l'expression rationnelle : %s",
+                    \get_hecho($id_type_dossier),
+                    self::TYPE_DOSSIER_ID_REGEXP
+                )
             );
         }
-        if (strlen($id_type_dossier) > self::TYPE_DOSSIER_ID_MAX_LENGTH) {
+        if (\strlen($id_type_dossier) > self::TYPE_DOSSIER_ID_MAX_LENGTH) {
             throw new TypeDossierException(
-                "L'identifiant du type de dossier « " . get_hecho($id_type_dossier) . " » ne doit pas dépasser " . self::TYPE_DOSSIER_ID_MAX_LENGTH . " caractères"
+                \sprintf(
+                    "L'identifiant du type de dossier « %s » ne doit pas dépasser %d caractères",
+                    \get_hecho($id_type_dossier),
+                    self::TYPE_DOSSIER_ID_MAX_LENGTH
+                )
             );
         }
     }
