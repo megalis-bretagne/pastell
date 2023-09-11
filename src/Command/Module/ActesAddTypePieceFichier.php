@@ -48,7 +48,7 @@ class ActesAddTypePieceFichier extends BaseCommand
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         // Fix Modification de l'affichage de la typologie en version [3.0.0] - 2019-10-14
         // Cf /connecteur-type/TdT/TdtChoiceTypologieActes.php commit 17/07/2019

@@ -18,7 +18,7 @@ class MoveProofToMinio extends Command
         parent::__construct();
         $this->journal = $journal;
     }
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('app:storage:minio:move-proof-to-minio')

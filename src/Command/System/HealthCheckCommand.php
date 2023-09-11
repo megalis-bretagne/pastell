@@ -29,7 +29,7 @@ class HealthCheckCommand extends Command
         $this->healthCheck = $healthCheck;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('app:system:healthcheck')

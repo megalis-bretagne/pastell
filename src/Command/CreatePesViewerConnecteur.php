@@ -25,7 +25,7 @@ class CreatePesViewerConnecteur extends Command
         $this->pastellLogger = $pastellLogger;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('app:create-pes-viewer-connecteur')

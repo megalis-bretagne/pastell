@@ -43,7 +43,7 @@ class ReplaceGedSshWithDepotSftp extends BaseCommand
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('app:connector:replace-ged-ssh-with-depot-sftp')

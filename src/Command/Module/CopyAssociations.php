@@ -28,7 +28,7 @@ class CopyAssociations extends BaseCommand
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('app:module:copy-associations')

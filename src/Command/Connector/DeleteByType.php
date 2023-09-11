@@ -35,7 +35,7 @@ final class DeleteByType extends BaseCommand
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('app:connector:delete-by-type')
