@@ -24,6 +24,8 @@ if [ "$LETSENCRYPT_MAILSEC_DOMAIN" ] ; then
     fi
 fi
 
+/bin/bash /var/www/pastell/docker/wait-for-cacert.sh
+
 if [ -z "$DONT_RETRIEVE_VALIDCA" ] ; then
   if [ ! -d /data/certificate/validca ] ; then
       echo "Récupération des CRL"
