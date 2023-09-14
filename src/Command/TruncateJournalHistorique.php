@@ -23,7 +23,7 @@ class TruncateJournalHistorique extends Command
         $this->journalHistoriqueService = $journalHistoriqueService;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('app:truncate-journal-historique')

@@ -14,7 +14,7 @@ abstract class BaseCommand extends Command
      */
     private $io;
 
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output): void
     {
         $this->io = new SymfonyStyle($input, $output);
         parent::initialize($input, $output);

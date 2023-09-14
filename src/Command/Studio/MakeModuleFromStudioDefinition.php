@@ -19,7 +19,7 @@ class MakeModuleFromStudioDefinition extends BaseCommand
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('app:studio:make-module')

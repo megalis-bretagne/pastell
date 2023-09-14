@@ -32,7 +32,7 @@ class ForceSendGedAndDelete extends BaseCommand
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('app:module:force-send-ged-and-delete')

@@ -25,7 +25,7 @@ class ForceUpdateField extends BaseCommand
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('app:force-update-field')
