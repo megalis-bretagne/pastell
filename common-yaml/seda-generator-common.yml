@@ -11,10 +11,10 @@ formulaire:
             type: file
             visionneuse: Pastell\Viewer\XmlViewer
         fill-data:
-            name: 'Métadonnées du bordereau'
+            name: 'Données du bordereau'
             edit-only: true
             type: externalData
-            link_name: 'Gérer les métadonnées du bordereau'
+            link_name: 'Gérer les données du bordereau'
             choice-action: fill-data
         fill-files:
             name: 'Fichier du bordereau'
