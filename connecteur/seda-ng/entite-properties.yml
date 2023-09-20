@@ -39,7 +39,7 @@ formulaire:
             type: text
             name: 'Nettoyage des noms de fichiers et de répertoires'
             default: '/[^\x20-\x7E]/'
-            commentaire: "Une expression régulière dont tout ce qui correspond sera remplacé par des tirets (-).\nL'expression par défaut est /[^\\x20-\\x7E]/ (exlusion de tous les caractères non ASCII)"
+            commentaire: "Une expression régulière dont tout ce qui correspond sera remplacé par des tirets (-).\nL'expression par défaut est /[^\\x20-\\x7E]/ (exclusion de tous les caractères non ASCII)"
 action:
     test-generate-bordereau:
         name: 'Générer un bordereau de test'
