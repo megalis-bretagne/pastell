@@ -369,6 +369,58 @@ class DonneesFormulaireTest extends PastellTestCase
     }
 
     /**
+     * @dataProvider copyAllFilesProvider
+     * @throws Exception
+     */
+    public function testCopyAllFilesWrongFieldName($filenames)
+    {
+        $tmpFolder = new TmpFolder();
+        $tmp_folder = $tmpFolder->create();
+        $donneesFormulaire = $this->getDonneesFormulaire();
+        for ($i = 0; $i<count($filenames); $i++){
+            $donneesFormulaire->addFileFromData("fichier", $filenames[$i], "bar", $i);
+        }
+        $this->assertEquals($filenames, $donneesFormulaire->get("fichier"));
+        $donneesFormulaire->copyAllFiles('wrongFieldName', $tmp_folder);
+        foreach ($filenames as $i => $filename){
+            $this->assertFileDoesNotExist("$tmp_folder/$filename");
+        }
+        $tmpFolder->delete($tmp_folder);
+    }
+
+    /**
+     * @dataProvider copyAllFilesProvider
+     * @throws Exception
+     */
+    public function testCopyAllFiles($filenames)
+    {
+        $tmpFolder = new TmpFolder();
+        $tmp_folder = $tmpFolder->create();
+        $donneesFormulaire = $this->getDonneesFormulaire();
+        for ($i = 0; $i<count($filenames); $i++){
+            $donneesFormulaire->addFileFromData("fichier", $filenames[$i], "bar", $i);
+        }
+        $this->assertEquals($filenames, $donneesFormulaire->get("fichier"));
+        foreach ($donneesFormulaire->copyAllFiles('fichier', $tmp_folder) as $i => $copiedFileName){
+            $this->assertEquals(
+                "$tmp_folder/$filenames[$i]",$copiedFileName
+            );
+            $this->assertFileExists("$tmp_folder/$filenames[$i]");
+        }
+        $tmpFolder->delete($tmp_folder);
+    }
+
+    public function copyAllFilesProvider()
+    {
+        return [
+            [array('foo.txt','école.txt','toto.txt')],
+            [array('foo.txt','foo.txt')],
+            [array('école.txt')]
+        ];
+    }
+
+
+    /**
      * @throws Exception
      */
     public function testCopyFileFailed()
