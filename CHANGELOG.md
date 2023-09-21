@@ -1,6 +1,6 @@
 # [4.0.8] - 2023-10-09
 
-## Dépréciations
+## Dépréciations 
 La fonction DonneesFormulaire::copyAllFiles() est dépréciée
 
 # [4.0.8] - 2023-10-09
