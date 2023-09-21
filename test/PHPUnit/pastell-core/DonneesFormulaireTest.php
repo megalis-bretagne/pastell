@@ -360,7 +360,7 @@ class DonneesFormulaireTest extends PastellTestCase
         $tmpFolder->delete($tmp_folder);
     }
 
-    public function copyFileProvider()
+    public function copyFileProvider(): array
     {
         return [
             ['foo.txt'],
@@ -372,18 +372,18 @@ class DonneesFormulaireTest extends PastellTestCase
      * @dataProvider copyAllFilesProvider
      * @throws Exception
      */
-    public function testCopyAllFilesWrongFieldName($filenames)
+    public function testCopyAllFilesWrongFieldName(array $filenames): void
     {
         $tmpFolder = new TmpFolder();
         $tmp_folder = $tmpFolder->create();
         $donneesFormulaire = $this->getDonneesFormulaire();
-        for ($i = 0; $i<count($filenames); $i++){
-            $donneesFormulaire->addFileFromData("fichier", $filenames[$i], "bar", $i);
+        foreach ($filenames as $i => $iValue) {
+            $donneesFormulaire->addFileFromData('fichier', $iValue, 'bar', $i);
         }
-        $this->assertEquals($filenames, $donneesFormulaire->get("fichier"));
+        static::assertEquals($filenames, $donneesFormulaire->get('fichier'));
         $donneesFormulaire->copyAllFiles('wrongFieldName', $tmp_folder);
-        foreach ($filenames as $i => $filename){
-            $this->assertFileDoesNotExist("$tmp_folder/$filename");
+        foreach ($filenames as $i => $filename) {
+            static::assertFileDoesNotExist("$tmp_folder/$filename");
         }
         $tmpFolder->delete($tmp_folder);
     }
@@ -392,30 +392,31 @@ class DonneesFormulaireTest extends PastellTestCase
      * @dataProvider copyAllFilesProvider
      * @throws Exception
      */
-    public function testCopyAllFiles($filenames)
+    public function testCopyAllFiles(array $filenames): void
     {
         $tmpFolder = new TmpFolder();
         $tmp_folder = $tmpFolder->create();
         $donneesFormulaire = $this->getDonneesFormulaire();
-        for ($i = 0; $i<count($filenames); $i++){
-            $donneesFormulaire->addFileFromData("fichier", $filenames[$i], "bar", $i);
+        foreach ($filenames as $i => $iValue) {
+            $donneesFormulaire->addFileFromData('fichier', $iValue, 'bar', $i);
         }
-        $this->assertEquals($filenames, $donneesFormulaire->get("fichier"));
-        foreach ($donneesFormulaire->copyAllFiles('fichier', $tmp_folder) as $i => $copiedFileName){
-            $this->assertEquals(
-                "$tmp_folder/$filenames[$i]",$copiedFileName
+        static::assertEquals($filenames, $donneesFormulaire->get('fichier'));
+        foreach ($donneesFormulaire->copyAllFiles('fichier', $tmp_folder) as $i => $copiedFileName) {
+            static::assertEquals(
+                "$tmp_folder/$filenames[$i]",
+                $copiedFileName
             );
-            $this->assertFileExists("$tmp_folder/$filenames[$i]");
+            static::assertFileExists("$tmp_folder/$filenames[$i]");
         }
         $tmpFolder->delete($tmp_folder);
     }
 
-    public function copyAllFilesProvider()
+    public function copyAllFilesProvider(): array
     {
         return [
-            [array('foo.txt','école.txt','toto.txt')],
-            [array('foo.txt','foo.txt')],
-            [array('école.txt')]
+            [['foo.txt', 'école.txt', 'toto.txt']],
+            [['foo.txt', 'foo.txt']],
+            [['école.txt']]
         ];
     }
 
