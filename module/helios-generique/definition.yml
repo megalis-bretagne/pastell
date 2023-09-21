@@ -458,10 +458,14 @@ action:
                         - recu-iparapheur
                     content:
                         envoi_tdt: false
+                    no-action:
+                        - send-ged
                 and_3:
                     has-action:
                         - acquiter-tdt
                         - info-tdt
+                    no-action:
+                        - send-ged
                 and_4:
                     last-action:
                         - error-ged
