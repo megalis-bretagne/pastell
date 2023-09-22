@@ -202,7 +202,10 @@ class MailSec extends MailsecConnecteur
      */
     public function test(): string
     {
-        $mailsec_reply_to = $this->connecteurConfig->get('mailsec_reply_to', $this->plateforme_mail);
+        $mailsec_reply_to = $this->connecteurConfig->get(
+            'mailsec_reply_to',
+            $this->plateforme_mail
+        ) ?: $this->plateforme_mail;
         $this->send($mailsec_reply_to);
         return $mailsec_reply_to;
     }
