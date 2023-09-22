@@ -2,5 +2,11 @@ nom: 'Bouchon de dépôt'
 type: GED
 description: 'Connecteur GED pour les tests'
 formulaire:
-    page0: []
+    page0:
+        ged_envoi_status:
+            name: "Réponse lors de l'envoi en GED"
+            type: select
+            value:
+                ok: 'Accepter le document'
+                error: 'Déclencher une erreur'
 action: []

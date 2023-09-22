@@ -354,6 +354,7 @@ action:
                 - fatal-error
                 - rejet-iparapheur
                 - erreur-verif-iparapheur
+                - error-ged
                 - send-mailsec-error
                 - send-tdt-erreur
                 - annuler-tdt

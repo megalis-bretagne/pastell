@@ -90,6 +90,8 @@ action:
                 - importation
                 - termine
                 - fatal-error
+                - error-ged_1
+                - error-ged_2
         action-class: Supprimer
         warning: 'Êtes-vous sûr ?'
     importation:

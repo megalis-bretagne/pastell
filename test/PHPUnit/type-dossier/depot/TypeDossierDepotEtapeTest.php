@@ -69,4 +69,36 @@ class TypeDossierDepotEtapeTest extends PastellTestCase
         $this->configureDocument($document['id_d'], ['envoi_depot' => false]);
         $this->assertSame('', $this->getDonneesFormulaireFactory()->get($document['id_d'])->get('envoi_depot'));
     }
+
+    /**
+     * @throws Exception
+     */
+    public function testSuppressionApresErreurIrrecuperrable()
+    {
+        $this->typeDossierLoader->createTypeDossierDefinitionFile(self::GED_ONLY);
+
+        $info_connecteur = $this->createConnector('FakeGED', 'Bouchon GED');
+        $this->getDonneesFormulaireFactory()
+            ->getConnecteurEntiteFormulaire($info_connecteur['id_ce'])
+            ->setTabData([
+                'ged_envoi_status' => 'error',
+            ]);
+        $this->associateFluxWithConnector($info_connecteur['id_ce'], self::GED_ONLY, 'GED');
+
+        $info = $this->createDocument(self::GED_ONLY);
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($info['id_d']);
+        $donneesFormulaire->setTabData(['metadata1' => 'Foo']);
+        $donneesFormulaire->addFileFromData('fichier1', 'fichier1.txt', 'bar');
+
+        static::assertTrue(
+            $this->triggerActionOnDocument($info['id_d'], 'orientation')
+        );
+        $this->assertLastMessage("sélection automatique de l'action suivante");
+
+        static::assertFalse(
+            $this->triggerActionOnDocument($info['id_d'], 'send-ged')
+        );
+        $this->assertLastMessage("Erreur irrécupérable déclenchée par le connecteur fake ged (ged_envoi_status configuré à 'error')");
+        $this->assertActionPossible(['supression','send-ged'], $info['id_d']);
+    }
 }

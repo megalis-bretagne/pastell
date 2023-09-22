@@ -227,6 +227,7 @@ action:
                 - transformation-error
                 - send-tdt-erreur
                 - annuler-tdt
+                - error-ged
         action-class: Supprimer
         warning: 'Êtes-vous sûr ?'
     importation:

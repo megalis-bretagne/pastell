@@ -440,6 +440,7 @@ action:
                 - send-tdt-erreur
                 - annuler-tdt
                 - send-mailsec-error
+                - error-ged
                 - rejet-sae
         action-class: Supprimer
         warning: 'Êtes-vous sûr ?'
