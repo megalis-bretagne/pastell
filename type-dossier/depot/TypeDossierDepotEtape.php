@@ -1,7 +1,7 @@
 <?php
+
 class TypeDossierDepotEtape implements TypeDossierEtapeSetSpecificInformation
 {
-
     public function setSpecificInformation(
         TypeDossierEtapeProperties $typeDossierEtape,
         array $result,

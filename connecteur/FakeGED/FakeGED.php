@@ -1,14 +1,11 @@
 <?php
 
-declare(strict_types=1);
-
-/**
- * @property $ged_envoi_status
- */
 class FakeGED extends GEDConnecteur
 {
+    /**
+     * @property $ged_envoi_status
+     */
     private string $ged_envoi_status;
-
     public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire): void
     {
         $this->ged_envoi_status = $donneesFormulaire->get('ged_envoi_status', '');
