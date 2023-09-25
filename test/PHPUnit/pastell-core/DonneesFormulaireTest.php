@@ -414,9 +414,38 @@ class DonneesFormulaireTest extends PastellTestCase
     public function copyAllFilesProvider(): array
     {
         return [
-            [['foo.txt', 'école.txt', 'toto.txt']],
-            [['foo.txt', 'foo.txt']],
-            [['école.txt']]
+            [['foo.txt', 'école.txt', 'toto.txt']]
+        ];
+    }
+
+    /**
+     * @dataProvider copyAllFilesProviderWithNewFileName
+     * @throws Exception
+     */
+    public function testCopyAllFilesNewFileName(array $filenames, string $newFileName): void
+    {
+        $tmpFolder = new TmpFolder();
+        $tmp_folder = $tmpFolder->create();
+        $donneesFormulaire = $this->getDonneesFormulaire();
+        foreach ($filenames as $i => $iValue) {
+            $donneesFormulaire->addFileFromData('fichier', $iValue, 'bar', $i);
+        }
+        static::assertEquals($filenames, $donneesFormulaire->get('fichier'));
+        foreach ($donneesFormulaire->copyAllFiles('fichier', $tmp_folder, $newFileName) as $i => $copiedFileName) {
+            $extension = $donneesFormulaire->extensionByMimeType($tmp_folder, $filenames[$i]);
+            static::assertEquals(
+                "$tmp_folder/$newFileName-$i$extension",
+                $copiedFileName
+            );
+            static::assertFileExists("$tmp_folder/$newFileName-$i$extension");
+        }
+        $tmpFolder->delete($tmp_folder);
+    }
+
+    public function copyAllFilesProviderWithNewFileName(): array
+    {
+        return [
+            [['foo.txt', 'école.txt', 'toto.txt'],'newName']
         ];
     }
 

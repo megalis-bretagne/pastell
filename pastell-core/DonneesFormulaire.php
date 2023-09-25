@@ -934,7 +934,6 @@ class DonneesFormulaire
 
         $destination = "$folder_destination/$file_name";
         if ($new_filename !== null) {
-            dump('no null');
             $extension = $this->extensionByMimeType($file_path, $file_name);
             $destination = $this->renameFilename($destination, $new_filename . $extension);
         }

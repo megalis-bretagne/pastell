@@ -1,10 +1,5 @@
 # [4.0.8] - 2023-10-09
 
-## Dépréciations 
-La fonction DonneesFormulaire::copyAllFiles() est dépréciée
-
-# [4.0.8] - 2023-10-09
-
 ## Évolutions
 
 - Il n'est plus possible de créer de flux studio commençant par `ls-` #1906
