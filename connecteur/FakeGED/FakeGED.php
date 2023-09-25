@@ -2,9 +2,6 @@
 
 class FakeGED extends GEDConnecteur
 {
-    /**
-     * @property $ged_envoi_status
-     */
     private string $ged_envoi_status;
     public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire): void
     {
