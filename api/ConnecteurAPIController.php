@@ -222,6 +222,28 @@ class ConnecteurAPIController extends BaseAPIController
         exit_wrapper(0);
     }
 
+    private function deleteFile(
+        $id_ce
+    ) {
+        $field = $this->getFromQueryArgs(4);
+        $number = $this->getFromQueryArgs(5) ?: 0;
+
+        $donneesFormulaire = $this->donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
+
+        $file_path = $donneesFormulaire->getFilePath($field, $num);
+        $file_name_array = $donneesFormulaire->get($field);
+        if (empty($file_name_array[$num])) {
+            throw new NotFoundException("Ce fichier n'existe pas");
+        }
+        $file_name = $file_name_array[$num];
+
+        if (! file_exists($file_path)) {
+            throw new Exception("Ce fichier n'existe pas");
+        }
+
+        //supprimer le fichier
+    }
+
     /**
      * @throws Exception
      */
@@ -397,6 +419,7 @@ class ConnecteurAPIController extends BaseAPIController
         if ($type == 'action') {
             return $this->postAction($id_e, $id_ce);
         }
+
 
         $field_name = $this->getFromQueryArgs(4);
         $file_number = $this->getFromQueryArgs(5) ?: 0;
