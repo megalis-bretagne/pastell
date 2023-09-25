@@ -73,7 +73,7 @@ class TypeDossierDepotEtapeTest extends PastellTestCase
     /**
      * @throws Exception
      */
-    public function testSuppressionApresErreurIrrecuperrable()
+    public function testSuppressionApresErreurIrrecuperrable(): void
     {
         $this->typeDossierLoader->createTypeDossierDefinitionFile(self::GED_ONLY);
 
