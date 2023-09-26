@@ -12,7 +12,7 @@
     <Name>Application PASTELL</Name>
   </TransferringAgency>
   <Archive>
-    <ArchivalAgreement schemeName="Contrat d'entrée" schemeAgencyName="ADULLACT Projet">ACCORD_ACTES</ArchivalAgreement>
+    <ArchivalAgreement schemeName="Accord de versement" schemeAgencyName="ADULLACT Projet">ACCORD_ACTES</ArchivalAgreement>
     <ArchivalProfile schemeName="Profil de donn&#xE9;es" schemeAgencyName="ADULLACT Projet">Profil_ACTES_AP_v3</ArchivalProfile>
     <DescriptionLanguage listVersionID="edition 2011">fra</DescriptionLanguage>
     <Name languageID="fr">Flux ACTES_Actes individuels de LIBRICIEL SCOP en date du 2018-11-29 , Test2</Name>

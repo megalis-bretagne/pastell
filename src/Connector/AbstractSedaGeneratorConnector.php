@@ -130,7 +130,7 @@ abstract class AbstractSedaGeneratorConnector extends SEDAConnecteur
             'archival_agreement' => [
                 'position' => 50,
                 'seda' => 'ArchivalAgreement',
-                'libelle' => "Identifiant du contrat d'entrée",
+                'libelle' => "Identifiant de l'accord de versement",
                 'commentaire' => 'ArchivalAgreement',
             ],
             'ArchivalProfile' => [
