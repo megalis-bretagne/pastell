@@ -224,24 +224,19 @@ class ConnecteurAPIController extends BaseAPIController
 
     private function deleteFile(
         $id_ce
-    ) {
-        $field = $this->getFromQueryArgs(4);
-        $number = $this->getFromQueryArgs(5) ?: 0;
+    ): void {
+        $this->getFichier($id_ce);
+        $this->donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce)->removeFile($this->getFromQueryArgs(4), $this->getFromQueryArgs(5) ?: 0);
 
-        $donneesFormulaire = $this->donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
+        header_wrapper("Content-type: " . mime_content_type($file_path));
+        header_wrapper("Content-disposition: attachment; filename=\"$file_name\"");
+        header_wrapper("Expires: 0");
+        header_wrapper("Cache-Control: must-revalidate, post-check=0,pre-check=0");
+        header_wrapper("Pragma: public");
 
-        $file_path = $donneesFormulaire->getFilePath($field, $num);
-        $file_name_array = $donneesFormulaire->get($field);
-        if (empty($file_name_array[$num])) {
-            throw new NotFoundException("Ce fichier n'existe pas");
-        }
-        $file_name = $file_name_array[$num];
+        readfile($file_path);
 
-        if (! file_exists($file_path)) {
-            throw new Exception("Ce fichier n'existe pas");
-        }
-
-        //supprimer le fichier
+        exit_wrapper(0);
     }
 
     /**
