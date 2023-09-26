@@ -219,7 +219,7 @@ class ConnecteurAPIController extends BaseAPIController
      * @throws NotFoundException
      * @throws Exception
      */
-    public function readFichier($id_ce): void
+    public function readFichier($id_ce)
     {
         $field = $this->getFromQueryArgs(4);
         $num = $this->getFromQueryArgs(5) ?: 0;
