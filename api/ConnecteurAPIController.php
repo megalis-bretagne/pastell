@@ -109,7 +109,7 @@ class ConnecteurAPIController extends BaseAPIController
         $this->checkConnecteurLecture($id_e);
         $this->checkedConnecteur($id_e, $id_ce);
         if ('file' == $this->getFromQueryArgs(3)) {
-            return $this->getFichier($id_ce);
+            return $this->readFichier($id_ce);
         }
         if ('externalData' == $this->getFromQueryArgs(3)) {
             return $this->getExternalData($id_ce);
@@ -191,13 +191,15 @@ class ConnecteurAPIController extends BaseAPIController
     }
 
     /**
+     * @param $id_ce
+     * @param mixed $field
+     * @param mixed $num
+     * @return array
      * @throws NotFoundException
      * @throws Exception
      */
-    public function getFichier($id_ce)
+    public function getFichier($id_ce, mixed $field, mixed $num): array
     {
-        $field = $this->getFromQueryArgs(4);
-        $num = $this->getFromQueryArgs(5) ?: 0;
         $donneesFormulaire = $this->donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
 
         $file_path = $donneesFormulaire->getFilePath($field, $num);
@@ -207,36 +209,45 @@ class ConnecteurAPIController extends BaseAPIController
         }
         $file_name = $file_name_array[$num];
 
-        if (! file_exists($file_path)) {
+        if (!file_exists($file_path)) {
             throw new Exception("Ce fichier n'existe pas");
         }
+        return [$file_path, $file_name];
+    }
 
-        header_wrapper("Content-type: " . mime_content_type($file_path));
+    /**
+     * @throws NotFoundException
+     * @throws Exception
+     */
+    public function readFichier($id_ce): void
+    {
+        $field = $this->getFromQueryArgs(4);
+        $num = $this->getFromQueryArgs(5) ?: 0;
+        list($file_path, $file_name) = $this->getFichier($id_ce, $field, $num);
+
+        header_wrapper('Content-type: ' . mime_content_type($file_path));
         header_wrapper("Content-disposition: attachment; filename=\"$file_name\"");
-        header_wrapper("Expires: 0");
-        header_wrapper("Cache-Control: must-revalidate, post-check=0,pre-check=0");
-        header_wrapper("Pragma: public");
+        header_wrapper('Expires: 0');
+        header_wrapper('Cache-Control: must-revalidate, post-check=0,pre-check=0');
+        header_wrapper('Pragma: public');
 
         readfile($file_path);
 
         exit_wrapper(0);
     }
 
-    private function deleteFile(
-        $id_ce
+    /**
+     * @throws NotFoundException
+     * @throws DonneesFormulaireException
+     * @throws Exception
+     */
+    private function deleteFichier(
+        $id_ce,
+        $field_name,
+        $file_num
     ): void {
-        $this->getFichier($id_ce);
-        $this->donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce)->removeFile($this->getFromQueryArgs(4), $this->getFromQueryArgs(5) ?: 0);
-
-        header_wrapper("Content-type: " . mime_content_type($file_path));
-        header_wrapper("Content-disposition: attachment; filename=\"$file_name\"");
-        header_wrapper("Expires: 0");
-        header_wrapper("Cache-Control: must-revalidate, post-check=0,pre-check=0");
-        header_wrapper("Pragma: public");
-
-        readfile($file_path);
-
-        exit_wrapper(0);
+        [$file_path, $file_name] = $this->getFichier($id_ce, $field_name, $file_num);
+        $this->donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce)->removeFile($field_name, $file_num);
     }
 
     /**
@@ -276,7 +287,7 @@ class ConnecteurAPIController extends BaseAPIController
      * @throws NotFoundException
      * @throws Exception
      */
-    public function post()
+    public function post(): mixed
     {
         $id_e = $this->checkedEntite();
         $this->checkConnecteurEdition($id_e);
@@ -286,7 +297,6 @@ class ConnecteurAPIController extends BaseAPIController
         if ($id_ce) {
             return $this->postFile($id_e, $id_ce);
         }
-
 
         $libelle = $this->getFromRequest('libelle');
 
@@ -333,8 +343,18 @@ class ConnecteurAPIController extends BaseAPIController
 
         $this->checkedConnecteur($id_e, $id_ce);
         $this->checkConnecteurEdition($id_e);
-        $this->connecteurDeletionService->deleteConnecteur($id_ce);
 
+        $field_name = $this->getFromQueryArgs(4);
+        $file_num = $this->getFromQueryArgs(5) ?: 0;
+        if ($this->getFromQueryArgs(3) === 'file') {
+            if ($field_name) {
+                $this->deleteFichier($id_ce, $field_name, $file_num);
+            } else {
+                throw new Exception('Paramètre manquant');
+            }
+        } else {
+            $this->connecteurDeletionService->deleteConnecteur($id_ce);
+        }
         $result['result'] = self::RESULT_OK;
         return $result;
     }
@@ -411,10 +431,9 @@ class ConnecteurAPIController extends BaseAPIController
     public function postFile($id_e, $id_ce)
     {
         $type = $this->getFromQueryArgs(3);
-        if ($type == 'action') {
+        if ($type === 'action') {
             return $this->postAction($id_e, $id_ce);
         }
-
 
         $field_name = $this->getFromQueryArgs(4);
         $file_number = $this->getFromQueryArgs(5) ?: 0;

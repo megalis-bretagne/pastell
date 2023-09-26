@@ -582,4 +582,70 @@ class ConnecteurAPIControllerTest extends PastellTestCase
             'file_content' => 'test file content'
         ]);
     }
+
+    public function testDeleteFile(): void
+    {
+        $this->getInternalAPI()->post('/entite/1/connecteur/12/file/champs5', [
+            'file_name' => 'test.txt',
+            'file_content' => 'test file content'
+        ]);
+        $result = $this->getInternalAPI()->delete('/entite/1/connecteur/12/file/champs5');
+        static::assertEquals('ok', $result['result']);
+    }
+
+    public function testDeleteMultipleFile(): void
+    {
+        $this->getInternalAPI()->post('/entite/1/connecteur', [
+            'libelle' => 'Connecteur de test',
+            'id_connecteur' => 'mailsec'
+        ]);
+        $this->getInternalAPI()->post('/entite/1/connecteur/14/file/embeded_image/0', [
+            'file_name' => 'img_test_1',
+            'file_content' => 'ExifMM*0100'
+        ]);
+        $this->getInternalAPI()->post('/entite/1/connecteur/14/file/embeded_image/1', [
+            'file_name' => 'img_test_2',
+            'file_content' => 'ExifMM*0100'
+        ]);
+        $result = $this->getInternalAPI()->delete('/entite/1/connecteur/14/file/embeded_image/1');
+        static::assertEquals('ok', $result['result']);
+        $result = $this->getInternalAPI()->delete('/entite/1/connecteur/14/file/embeded_image');
+        static::assertEquals('ok', $result['result']);
+    }
+
+    public function testDeleteMissingFile(): void
+    {
+        $this->expectException(NotFoundException::class);
+        $result = $this->getInternalAPI()->delete('/entite/1/connecteur/12/file/champs5');
+        $this->expectExceptionMessage("Ce fichier n'existe pas");
+    }
+
+    public function testDeleteMissingParameter(): void
+    {
+        $this->expectException(Exception::class);
+        $result = $this->getInternalAPI()->delete('/entite/1/connecteur/12/file/');
+        $this->expectExceptionMessage('Paramètre manquant');
+    }
+
+    public function testDeleteFileWithoutPerm(): void
+    {
+        $this->getInternalAPI()->post('/entite/1/connecteur/12/file/champs5', [
+            'file_name' => 'test.txt',
+            'file_content' => 'test file content'
+        ]);
+
+        $result = $this->getInternalAPI()->delete('/entite/1/connecteur/12/file/champs5');
+        static::assertEquals('ok', $result['result']);
+
+        $roleSql = $this->getObjectInstancier()->getInstance(RoleSQL::class);
+        $roleSql->edit('readonly', 'readonly');
+        $roleSql->addDroit('readonly', 'entite:lecture');
+        $userCreationService = $this->getObjectInstancier()->getInstance(UserCreationService::class);
+        $userId = $userCreationService->create('readonly', 'readonly@example.org', 'user', 'user');
+        $this->getObjectInstancier()->getInstance(RoleUtilisateur::class)->addRole($userId, 'readonly', self::ID_E_COL);
+
+        $this->expectException(ForbiddenException::class);
+        $this->expectExceptionMessage('Acces interdit id_e=1, droit=connecteur:edition,id_u=3');
+        $this->getInternalAPIAsUser($userId)->delete('/entite/1/connecteur/12/file/champs5');
+    }
 }
