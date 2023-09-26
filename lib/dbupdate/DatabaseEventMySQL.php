@@ -22,7 +22,7 @@ class DatabaseEventMySQL
         if ($columnDefinition['Null'] == 'NO') {
             $r .= " NOT NULL";
         }
-        if ($columnDefinition['Default'] !== null) {
+        if (\array_key_exists('Default', $columnDefinition) && $columnDefinition['Default'] !== null) {
             if ($columnDefinition['Type'] == 'timestamp') {
                 $r .= " DEFAULT {$columnDefinition['Default']}";
             } else {
