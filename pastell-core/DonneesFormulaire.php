@@ -941,14 +941,17 @@ class DonneesFormulaire
         return $destination;
     }
 
-    public function copyAllFiles($field_name, $folder_destination, $new_filename = false)
+    /**
+     * @deprecated 4.0.8 unused
+     */
+    public function copyAllFiles($field_name, $folder_destination, $new_filename = null): array
     {
         $result = [];
         if (!$this->get($field_name)) {
             return $result;
         }
         foreach ($this->get($field_name) as $i => $file_name) {
-            $destination = $new_filename ? $new_filename . "-" . $i : false;
+            $destination = $new_filename !== null ? $new_filename . '-' . $i : null;
             $result[] = $this->copyFile($field_name, $folder_destination, $i, $destination);
         }
         return $result;
