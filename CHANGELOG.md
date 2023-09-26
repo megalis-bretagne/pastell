@@ -5,7 +5,12 @@
 - Il n'est plus possible de créer de flux studio commençant par `ls-` #1906
 
 ## Dépréciations
+
 - La fonction DonneesFormulaire::copyAllFiles() est dépréciée #1831
+
+## Corrections
+
+- Il est désormais possible de supprimer un dossier après une erreur irrécupérable lors d'un dépôt GED #1920
 
 
 # [4.0.7] - 2023-09-11

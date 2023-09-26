@@ -6,7 +6,7 @@ class HeliosGeneriqueGEDTest extends PastellTestCase
      * @throws NotFoundException
      * @throws DonneesFormulaireException
      */
-    public function testCasNominal()
+    public function testCasNominal(): void
     {
         $info_connecteur_signature = $this->createConnector('fakeIparapheur', 'Bouchon signature');
         $this->configureConnector($info_connecteur_signature['id_ce'], [
