@@ -54,6 +54,7 @@ final class SedaGeneratorVitam21Connector extends AbstractSedaGeneratorConnector
         $pastellToSeda['DescriptionLanguage']['commentaire'] = 'DescriptionLanguage (forme attendue: fr)';
         $pastellToSeda['StartDate']['commentaire'] = 'StartDate (forme attendue Y-m-d)';
         $pastellToSeda['EndDate']['commentaire'] = 'EndDate (forme attendue Y-m-d)';
+        $pastellToSeda['archival_agreement']['libelle'] = "Identifiant du contrat d'entrée";
 
         return \array_merge(
             $pastellToSeda,
