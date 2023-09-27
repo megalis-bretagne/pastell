@@ -5,7 +5,12 @@
 - Il n'est plus possible de créer de flux studio commençant par `ls-` #1906
 
 ## Dépréciations
+
 - La fonction DonneesFormulaire::copyAllFiles() est dépréciée #1831
+
+## Corrections
+
+- L'action 'verser à la GED' n'est plus indéfiniment possible sur un dossier Hélios générique
 
 
 # [4.0.7] - 2023-09-11

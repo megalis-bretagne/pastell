@@ -444,27 +444,30 @@ action:
         rule:
             content:
                 envoi_ged: true
-            or_1:
-                and_1:
-                    last-action:
-                        - creation
-                        - modification
-                    document_is_valide: true
-                    content:
-                        envoi_signature: false
-                        envoi_tdt: false
-                and_2:
-                    has-action:
-                        - recu-iparapheur
-                    content:
-                        envoi_tdt: false
-                and_3:
-                    has-action:
-                        - acquiter-tdt
-                        - info-tdt
-                and_4:
-                    last-action:
-                        - error-ged
+            and_1:
+                or_1:
+                    and_1:
+                        last-action:
+                            - creation
+                            - modification
+                        document_is_valide: true
+                        content:
+                            envoi_signature: false
+                            envoi_tdt: false
+                    and_2:
+                        has-action:
+                            - recu-iparapheur
+                        content:
+                            envoi_tdt: false
+                    and_3:
+                        has-action:
+                            - acquiter-tdt
+                            - info-tdt
+                    and_4:
+                        last-action:
+                            - error-ged
+                no-action:
+                    - send-ged
         editable-content:
             - envoi_sae
         action-class: StandardAction
