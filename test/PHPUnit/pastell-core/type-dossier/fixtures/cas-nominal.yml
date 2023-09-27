@@ -310,7 +310,9 @@ action:
                 - fatal-error
                 - rejet-iparapheur
                 - erreur-verif-iparapheur
+                - error-ged_1
                 - send-mailsec-error
+                - error-ged_2
                 - rejet-sae
         action-class: Supprimer
         warning: 'Êtes-vous sûr ?'

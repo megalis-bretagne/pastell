@@ -168,6 +168,7 @@ action:
                 - termine
                 - fatal-error
                 - transformation-error
+                - error-ged
                 - rejet-sae
         action-class: Supprimer
         warning: 'Êtes-vous sûr ?'

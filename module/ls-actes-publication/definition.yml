@@ -114,6 +114,7 @@ action:
                 - termine
                 - fatal-error
                 - transformation-error
+                - error-ged
         action-class: Supprimer
         warning: 'Êtes-vous sûr ?'
     importation:

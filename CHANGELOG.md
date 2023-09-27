@@ -10,8 +10,8 @@
 
 ## Corrections
 
-- L'action 'verser à la GED' n'est plus indéfiniment possible sur un dossier Hélios générique
-
+- L'action 'verser à la GED' n'est plus indéfiniment possible sur un dossier Hélios générique #1920
+- Il est désormais possible de supprimer un dossier après une erreur irrécupérable lors d'un dépôt GED #1888
 
 # [4.0.7] - 2023-09-11
 

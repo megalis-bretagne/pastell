@@ -169,7 +169,9 @@ action:
                 - termine
                 - fatal-error
                 - transformation-error
+                - error-ged_1
                 - send-mailsec-error
+                - error-ged_2
         action-class: Supprimer
         warning: 'Êtes-vous sûr ?'
     importation:
