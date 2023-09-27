@@ -322,6 +322,12 @@ action:
                     last-action:
                         - recu-iparapheur
                         - recu-iparapheur-etat
+                and_3:
+                    has-action:
+                        - recu-iparapheur
+                    no-action:
+                        - send-ged
+                        - generate-sip
         editable-content:
             - envoi_ged
             - envoi_sae
@@ -422,6 +428,12 @@ action:
                         - recu-iparapheur
                     content:
                         envoi_mailsec: false
+                    no-action:
+                        - generate-sip
+                and_4:
+                    has-action:
+                        - reception
+                        - non-recu
                     no-action:
                         - generate-sip
         editable-content:
