@@ -216,7 +216,7 @@ class ConnecteurAPIController extends BaseAPIController
      * @throws NotFoundException
      * @throws Exception
      */
-    public function readFichier($id_ce): void
+    public function readFichier($id_ce)
     {
         $field = $this->getFromQueryArgs(4);
         $num = $this->getFromQueryArgs(5) ?: 0;
@@ -231,20 +231,6 @@ class ConnecteurAPIController extends BaseAPIController
         readfile($file_path);
 
         exit_wrapper(0);
-    }
-
-    /**
-     * @throws NotFoundException
-     * @throws DonneesFormulaireException
-     * @throws Exception
-     */
-    private function deleteFichier(
-        $id_ce,
-        $field_name,
-        $file_num
-    ): void {
-        [$file_path, $file_name] = $this->getFichier($id_ce, $field_name, $file_num);
-        $this->donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce)->removeFile($field_name, $file_num);
     }
 
     /**
