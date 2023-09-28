@@ -80,18 +80,20 @@ class ManifestReader
      * @param string $version_attendue
      * @return boolean
      */
-    public function isVersionOK($version_attendue)
+    public function isVersionOK(string $version_attendue): bool
     {
-        $info = $this->getInfo();
-        if (empty($info[self::EXTENSIONS_VERSION_ACCEPTED])) {
-            return false;
-        }
-        foreach ($info[self::EXTENSIONS_VERSION_ACCEPTED] as $version_accepted) {
-            if ($version_accepted == $version_attendue) {
-                return true;
-            }
-        }
-        return false;
+        $expected_versions = explode('.', $version_attendue);
+        $accepted_versions = explode('.', $this->getInfo()[self::VERSION]);
+        $expected_version_format = count($expected_versions);
+        $expected_minor_version = $expected_version_format >= 2 ? $expected_versions[1] : '0';
+        $expected_patch_version = $expected_version_format >= 3 ? $expected_versions[2] : '0';
+        $accepted_version_format = count($accepted_versions);
+        $accepted_minor_version = $accepted_version_format >= 2 ? $accepted_versions[1] : '0';
+        $accepted_patch_version = $accepted_version_format >= 3 ? $accepted_versions[2] : '0';
+        return ($expected_versions[0] === $accepted_versions[0]
+            && ($expected_minor_version < $accepted_minor_version
+                || ($expected_minor_version === $accepted_minor_version
+                    && $expected_patch_version <= $accepted_patch_version)));
     }
 
     public function getExtensionNeeded()

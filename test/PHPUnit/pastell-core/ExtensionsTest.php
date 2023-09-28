@@ -156,4 +156,31 @@ class ExtensionsTest extends PastellTestCase
             'En essayant d\'inclure ExtensionTestActionTestNotLoaded : Class "ExtensionTestActionTestNotLoaded" does not exist'
         );
     }
+
+    /**
+     * @dataProvider versionProvider
+     * @throws Exception
+     */
+    public function testAcceptedVersion(string $expected_version, bool $expectedResult): void
+    {
+        $extension_test_path = $this->getExtensionTestPath();
+        $manifestReader = $this->getObjectInstancier()->getInstance(ManifestFactory::class)->getManifest($extension_test_path);
+        //dump($manifestReader->getInfo($manifestReader::VERSION));
+        static::assertSame($expectedResult, $manifestReader->isVersionOK($expected_version));
+    }
+
+    public function versionProvider(): \Generator
+    {
+        yield ['0.0.1', false];
+        yield ['0.9', false];
+        yield ['1.0.0', false];
+        yield ['1.3.0', false];
+        yield ['4.4.0', false];
+        yield ['4.0.0', true];
+        yield ['4.0', true];
+        yield ['4', true];
+        yield ['3.0', false];
+        yield ['3.0.9999', false];
+        yield ['3.9999', false];
+    }
 }
