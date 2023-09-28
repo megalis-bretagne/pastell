@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pastell\Tests\Command\Connector;
 
 use ConnecteurEntiteSQL;
@@ -10,17 +12,24 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class DissociateTest extends PastellTestCase
 {
-    /**
-     * @var CommandTester
-     */
     private CommandTester $commandTester;
+
+    /**
+     * @throws \UnrecoverableException
+     */
     protected function setUp(): void
     {
         parent::setUp();
-        $this->createConnector('test', 'Test global', 0);
+        $connecteur_test = $this->createConnector('test', 'Test global', 0);
+        $this->getObjectInstancier()->getInstance(ConnecteurAssociationService::class)
+            ->addConnecteurAssociation(
+                0,
+                (int)$connecteur_test['id_ce'],
+                'test'
+            );
         $command = new Dissociate(
-            $this->getObjectInstancier()->getInstance(ConnecteurEntiteSQL::class),
-            $this->getObjectInstancier()->getInstance(ConnecteurAssociationService::class)
+            $this->getObjectInstancier()->getInstance(ConnecteurAssociationService::class),
+            $this->getObjectInstancier()
         );
         $this->commandTester = new CommandTester($command);
     }
@@ -49,7 +58,14 @@ class DissociateTest extends PastellTestCase
     {
         $this->executeCommand('toto', 'yes');
         $output = $this->commandTester->getDisplay();
-        static::assertStringContainsString('Global connector not found', $output);
+        static::assertStringContainsString('Connector type not found', $output);
+    }
+
+    public function testCommandNoAssociation(): void
+    {
+        $this->executeCommand('visionneuse_pes', 'yes');
+        $output = $this->commandTester->getDisplay();
+        static::assertStringContainsString('No global connector associated to this type ', $output);
     }
 
     public function testCommandNoConfirmation(): void

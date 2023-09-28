@@ -1,43 +1,39 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Pastell\Command\Connector;
 
-use ConnecteurEntiteSQL;
+use ConnecteurDefinitionFiles;
+use ConnecteurFactory;
+use Exception;
+use ObjectInstancier;
 use Pastell\Command\BaseCommand;
 use Pastell\Service\Connecteur\ConnecteurAssociationService;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'app:connector:dissociate',
+    description: 'Dissociates a global connector'
+)]
 class Dissociate extends BaseCommand
 {
-    /**
-     * @var ConnecteurAssociationService
-     */
-    private ConnecteurAssociationService $connecteurAssociationService;
-    /**
-     * @var ConnecteurEntiteSQL
-     */
-    private ConnecteurEntiteSQL $connecteurEntiteSql;
-
     public function __construct(
-        ConnecteurEntiteSQL $connecteurEntiteSql,
-        ConnecteurAssociationService $connecteurAssociationService
+        private readonly ConnecteurAssociationService $connecteurAssociationService,
+        private readonly ObjectInstancier $objectInstancier
     ) {
-        $this->connecteurEntiteSql = $connecteurEntiteSql;
-        $this->connecteurAssociationService = $connecteurAssociationService;
         parent::__construct();
     }
 
     protected function configure(): void
     {
         $this
-            ->setName('app:connector:dissociate')
-            ->setDescription('Dissociate a global connector')
             ->addArgument('type', InputArgument::REQUIRED, 'Type of the connector to remove')
-            ->addOption('dry-run', null, InputOption::VALUE_NONE, 'Dry run - will not dissociate anything')
-        ;
+            ->addOption('dry-run', null, InputOption::VALUE_NONE, 'Dry run - will not dissociate anything');
     }
 
     /**
@@ -47,41 +43,47 @@ class Dissociate extends BaseCommand
     {
         $type = $input->getArgument('type');
         $dryRun = $input->getOption('dry-run');
-
-        $connectorExists = count($this->connecteurEntiteSql->getAllByConnecteurId($type, true)) !== 0;
-
-        if ($connectorExists) {
-            if ($dryRun) {
-                $this->getIO()->note('Dry run');
+        $type_exists = \in_array(
+            $type,
+            $this->objectInstancier->getInstance(ConnecteurDefinitionFiles::class)->getAllGlobalType(),
+            true
+        );
+        if ($type_exists) {
+            try {
+                $global_connecteur = $this->objectInstancier->getInstance(ConnecteurFactory::class)->getGlobalConnecteur($type);
+            } catch (Exception $e) {
+                $global_connecteur =  false;
             }
-            if (
-                $input->isInteractive() &&
-                !$this->getIO()->confirm(
-                    sprintf('Are you sure you want to dissociate the `%s` connector ?', $type),
-                    false
-                )
-            ) {
-                return 1;
+            if ($global_connecteur) {
+                if ($dryRun) {
+                    $this->getIO()->note('Dry run');
+                }
+                if (
+                    $input->isInteractive() &&
+                    !$this->getIO()->confirm(
+                        sprintf('Are you sure you want to dissociate the `%s` type ?', $type),
+                        false
+                    )
+                ) {
+                    return self::FAILURE;
+                }
+                if ($this->getIO()->isVerbose()) {
+                    $this->getIO()->writeln('Dissociating type=' . $type);
+                }
+                if (!$dryRun) {
+                    $this->connecteurAssociationService->deleteConnecteurAssociation(
+                        0,
+                        $type,
+                    );
+                }
+                $this->getIO()->newLine();
+                $this->getIO()->success('Successfully dissociated connector');
+            } else {
+                $this->getIO()->success('No global connector associated to this type');
             }
-            $this->getIO()->progressStart(1);
-            if ($this->getIO()->isVerbose()) {
-                $this->getIO()->writeln('Dissociating type=' . $type);
-            }
-            if (!$dryRun) {
-                $this->connecteurAssociationService->deleteConnecteurAssociation(
-                    0,
-                    $type,
-                    0,
-                    '',
-                    0
-                );
-            }
-            $this->getIO()->newLine();
-            $this->getIO()->progressFinish();
-            $this->getIO()->success('Successfully dissociated connector');
         } else {
-            $this->getIO()->success('Global connector not found');
+            $this->getIO()->success('Connector type not found');
         }
-        return 0;
+        return self::SUCCESS;
     }
 }
