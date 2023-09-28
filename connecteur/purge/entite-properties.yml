@@ -20,6 +20,15 @@ formulaire:
             link_name: "Sélectionner l'état source du dossier"
         document_etat:
             no-show: true
+        pas_passepar_l_etat:
+            name: "Ne passe pas par l'état"
+            type: externalData
+            choice-action: document_exclure_etat
+            link_name: "Sélectionner l'état à exclure de la séléction"
+        document_exclure_etat:
+            no-show: true
+        document_etato:
+            no-show: true
         passer_par_l_etat:
             name: 'Type de sélection'
             type: select
@@ -69,6 +78,10 @@ action:
         rule:
             internal-action: true
         action-class: PurgeDocumentEtat
+    document_exclure_etat:
+        rule:
+            internal-action: true
+        action-class: PurgeDocumentExclureEtat
     document_etat_cible:
         rule:
             internal-action: true
