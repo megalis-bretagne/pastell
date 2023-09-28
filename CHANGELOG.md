@@ -16,6 +16,7 @@
 - Il est désormais possible de supprimer un dossier après une erreur irrécupérable lors d'un dépôt GED #1888
 - Les tables spécifiques des extensions étaient supprimées au redémarrage de l'application #1927
 - Connecteur Mail sécurisé, `Tester l'envoi à Reply-To` retournait une erreur #1908
+- Ajout d'une classe CSS `table-break-content` pour forcer le retour à la ligne des contenus de table trop grands #1710
 
 # [4.0.7] - 2023-09-11
 
