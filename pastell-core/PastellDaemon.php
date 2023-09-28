@@ -12,7 +12,7 @@ class PastellDaemon
         private readonly DocumentSQL $document,
         private readonly NotificationMail $notificationMail,
         private readonly Logger $logger,
-        private readonly string $unlock_job_error_at_startup,
+        private readonly bool $unlock_job_error_at_startup,
         private readonly string $pastell_path,
     ) {
     }
