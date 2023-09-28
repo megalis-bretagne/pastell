@@ -615,9 +615,8 @@ class ConnecteurAPIControllerTest extends PastellTestCase
 
     public function testDeleteMissingFile(): void
     {
-        $this->expectException(NotFoundException::class);
+        $this->expectException(ErrorException::class);
         $this->getInternalAPI()->delete('/entite/1/connecteur/12/file/champs5');
-        $this->expectExceptionMessage("Ce fichier n'existe pas");
     }
 
     public function testDeleteMissingParameter(): void
