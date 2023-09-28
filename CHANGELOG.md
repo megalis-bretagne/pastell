@@ -5,6 +5,10 @@
 - Il n'est plus possible de créer de flux studio commençant par `ls-` #1906
 - ```commande-generique```: ajout de l'envoi SAE avec possibilité après l'état termine #1910
 
+## Corrections
+
+- Les tables spécifiques des extensions étaient supprimées au redémarrage de l'application #1927
+
 ## Dépréciations
 
 - La fonction DonneesFormulaire::copyAllFiles() est dépréciée #1831
