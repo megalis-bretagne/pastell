@@ -344,9 +344,9 @@ class ConnecteurAPIController extends BaseAPIController
         $this->checkedConnecteur($id_e, $id_ce);
         $this->checkConnecteurEdition($id_e);
 
-        $field_name = $this->getFromQueryArgs(4);
-        $file_num = $this->getFromQueryArgs(5) ?: 0;
         if ($this->getFromQueryArgs(3) === 'file') {
+            $field_name = $this->getFromQueryArgs(4);
+            $file_num = $this->getFromQueryArgs(5) ?: 0;
             if ($field_name) {
                 $this->deleteFichier($id_ce, $field_name, $file_num);
             } else {
