@@ -38,7 +38,7 @@ class ManifestReaderTest extends PHPUnit\Framework\TestCase
 
     public function testRevisionOk()
     {
-        $this->assertTrue($this->getManifestReader()->isVersionOK('3'));
+        $this->assertTrue($this->getManifestReader()->isVersionOK('4'));
     }
 
     public function testRevisionFailed()
