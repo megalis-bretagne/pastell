@@ -39,6 +39,9 @@ class FournisseurCommandeOrientation extends ActionExecutor
             if ($this->getDonneesFormulaire()->get('envoi_ged')) {
                 return 'prepare-ged';
             }
+            if ($this->getDonneesFormulaire()->get('envoi_sae')) {
+                return 'preparation-send-sae';
+            }
             return "termine";
         }
         if ($action == 'recu-iparapheur') {
@@ -48,11 +51,17 @@ class FournisseurCommandeOrientation extends ActionExecutor
             if ($this->getDonneesFormulaire()->get('envoi_ged')) {
                 return 'prepare-ged';
             }
+            if ($this->getDonneesFormulaire()->get('envoi_sae')) {
+                return 'preparation-send-sae';
+            }
             return "termine";
         }
         if (in_array($action, ['reception','non-recu','erreur'])) {
             if ($this->getDonneesFormulaire()->get('envoi_ged')) {
                 return 'prepare-ged';
+            }
+            if ($this->getDonneesFormulaire()->get('envoi_sae')) {
+                return 'preparation-send-sae';
             }
             return "termine";
         }
@@ -70,6 +79,9 @@ class FournisseurCommandeOrientation extends ActionExecutor
         }
         if (in_array($action, ['reception','non-recu','erreur'])) {
             return "reception-etat";
+        }
+        if ($action == 'send-ged') {
+            return "send-ged-etat";
         }
         throw new Exception("L'action suivante de $action n'est pas défini. Arret du flux");
     }

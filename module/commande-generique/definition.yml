@@ -1,9 +1,11 @@
 nom: 'Commande (générique)'
-description: "Type de dossier permettant l'enregistrement d'une commande au format PDF, puis le passage à la signature,\npuis l'envoi de la facture par mail sécurisé et enfin l'envoi à la GED (facultatif)"
+description: "Type de dossier permettant l'enregistrement d'une commande au format PDF, puis le passage à la signature,\npuis l'envoi de la facture par mail sécurisé, \npuis l'envoi à la GED et au SAE (facultatif)"
 connecteur:
     - signature
     - mailsec
     - GED
+    - 'Bordereau SEDA'
+    - SAE
 formulaire:
     Commande:
         libelle:
@@ -70,6 +72,9 @@ formulaire:
         envoi_ged:
             name: 'Transmission à la GED'
             type: checkbox
+        envoi_sae:
+            name: 'Transmission au SAE'
+            type: checkbox
         envoi_auto:
             name: "Envoyer automatiquement les dossiers d'étape en étape"
             type: checkbox
@@ -134,6 +139,39 @@ formulaire:
             read-only: true
             requis: true
             visionneuse-no-link: true
+    SAE:
+        sae_show:
+            no-show: true
+        journal:
+            name: 'Faisceau de preuves'
+            type: file
+        date_journal_debut:
+            name: 'Date du premier évènement journalisé'
+        date_cloture_journal:
+            name: 'Date de clôture du journal'
+        date_cloture_journal_iso8601:
+            name: 'Date de clôture du journal (iso 8601)'
+        sae_transfert_id:
+            name: 'Identifiant de transfert'
+            index: true
+        sae_bordereau:
+            name: 'Bordereau SEDA'
+            type: file
+        sae_archive:
+            name: "Paquet d'archive (SIP)"
+            type: file
+        ar_sae:
+            type: file
+            name: 'Accusé de réception SAE'
+        sae_ack_comment:
+            name: "Commentaire de l'accusé de réception"
+        reply_sae:
+            type: file
+            name: 'Réponse du SAE'
+        sae_archival_identifier:
+            name: "Identifiant de l'archive sur le SAE"
+        sae_atr_comment:
+            name: 'Commentaire de la réponse du SAE'
 page-condition:
     Parapheur:
         envoi_signature: true
@@ -143,6 +181,8 @@ page-condition:
         has_message: true
     'Retour GED':
         has_ged_document_id: true
+    SAE:
+        sae_show: true
 action:
     creation:
         name-action: Créer
@@ -163,6 +203,7 @@ action:
                 - reception-etat
                 - renvoi
                 - send-ged
+                - send-ged-etat
                 - termine
     supression:
         name-action: Supprimer
@@ -178,6 +219,9 @@ action:
                 - envoi-mail
                 - reception-etat
                 - send-ged
+                - send-ged-etat
+                - accepter-sae
+                - rejet-sae
                 - termine
                 - fatal-error
         action-class: Supprimer
@@ -193,6 +237,7 @@ action:
             role_id_e: no-role
         editable-content:
             - envoi_ged
+            - envoi_sae
     prepare-iparapheur:
         name-action: "Préparation de l'envoi au parapheur"
         name: "Préparation de l'envoi au iparapheur"
@@ -238,6 +283,7 @@ action:
         editable-content:
             - envoi_mailsec
             - envoi_ged
+            - envoi_sae
         action-automatique: orientation
     recu-iparapheur-etat:
         name: 'État signature récupérée'
@@ -246,6 +292,7 @@ action:
         editable-content:
             - envoi_mailsec
             - envoi_ged
+            - envoi_sae
     rejet-iparapheur:
         name: 'Signature refusée'
         rule:
@@ -280,8 +327,10 @@ action:
                         - recu-iparapheur
                     no-action:
                         - send-ged
+                        - generate-sip
         editable-content:
             - envoi_ged
+            - envoi_sae
         action-class: FournisseurCommandeEnvoiMail
         action-automatique: mailsec-attente
     prepare-renvoi:
@@ -320,6 +369,7 @@ action:
             role_id_e: no-role
         editable-content:
             - envoi_ged
+            - envoi_sae
         action-automatique: orientation
     reception-etat:
         name: 'État Mail traité'
@@ -327,6 +377,7 @@ action:
             role_id_e: no-role
         editable-content:
             - envoi_ged
+            - envoi_sae
     renvoi:
         name-action: 'Envoyer à nouveau au fournisseur'
         name: Renvoyé
@@ -337,6 +388,7 @@ action:
             document_is_valide: true
         editable-content:
             - envoi_ged
+            - envoi_sae
         action-class: FournisseurCommandeRenvoyerMail
         action-automatique: mailsec-attente
     prepare-ged:
@@ -356,33 +408,202 @@ action:
             or_1:
                 and_1:
                     last-action:
-                        - envoi-mail
-                        - renvoi
+                        - non-recu
                         - reception
                         - reception-etat
                         - prepare-ged
+                        - error-ged
+                    no-action:
+                        - generate-sip
                 and_2:
                     last-action:
                         - modification
                     content:
                         envoi_mailsec: false
                         envoi_signature: false
+                    no-action:
+                        - generate-sip
                 and_3:
                     has-action:
                         - recu-iparapheur
                     content:
                         envoi_mailsec: false
+                    no-action:
+                        - generate-sip
                 and_4:
                     has-action:
                         - reception
-                        - error-ged
+                        - non-recu
+                    no-action:
+                        - generate-sip
+        editable-content:
+            - envoi_sae
         action-class: StandardAction
         connecteur-type: GED
         connecteur-type-action: GEDEnvoyer
         connecteur-type-mapping:
             fatal-error: error-ged
+        action-automatique: orientation
     error-ged:
         name: 'Erreur irrécupérable lors du dépôt'
+        rule:
+            role_id_e: no-role
+    send-ged-etat:
+        name: 'État Versé à la GED'
+        rule:
+            role_id_e: no-role
+        editable-content:
+            - envoi_sae
+    preparation-send-sae:
+        name: "Préparation de l'envoi au SAE"
+        rule:
+            role_id_e: no-role
+        action-automatique: generate-sip
+    generate-sip:
+        name-action: "Générer le paquet d'archive (SIP) et envoyer au SAE"
+        name: "Paquet d'archive (SIP) généré"
+        rule:
+            content:
+                envoi_sae: true
+            document_is_valide: true
+            or_1:
+                and_1:
+                    last-action:
+                        - preparation-send-sae
+                        - generate-sip-error
+                        - rejet-sae
+                        - erreur-envoie-sae
+                and_2:
+                    last-action:
+                        - modification
+                    content:
+                        envoi_signature: false
+                        envoi_mailsec: false
+                        envoi_ged: false
+                and_3:
+                    has-action:
+                        - recu-iparapheur
+                    content:
+                        envoi_mailsec: false
+                        envoi_ged: false
+                    no-action:
+                        - send-archive
+                and_4:
+                    has-action:
+                        - non-recu
+                        - reception
+                    content:
+                        envoi_ged: false
+                    no-action:
+                        - send-archive
+                and_5:
+                    has-action:
+                        - send-ged
+                        - error-ged
+                    no-action:
+                        - send-archive
+        action-class: StandardAction
+        connecteur-type: SAE
+        connecteur-type-action: Pastell\Step\SAE\Action\SAEGenerateArchiveAction
+        action-automatique: send-archive
+        connecteur-type-mapping:
+            generate-sip-error: generate-sip-error
+            sae_show: sae_show
+            sae_bordereau: sae_bordereau
+            sae_archive: sae_archive
+            journal: journal
+            date_journal_debut: date_journal_debut
+            date_cloture_journal: date_cloture_journal
+            date_cloture_journal_iso8601: date_cloture_journal_iso8601
+    generate-sip-error:
+        name: "Erreur lors de la génération de l'archive"
+        rule:
+            role_id_e: no-role
+    send-archive:
+        name-action: 'Verser au SAE'
+        name: 'Versé au SAE'
+        rule:
+            last-action:
+                - generate-sip
+                - rejet-sae
+                - erreur-envoie-sae
+        action-class: StandardAction
+        connecteur-type: SAE
+        connecteur-type-action: Pastell\Step\SAE\Action\SAESendArchiveAction
+        action-automatique: verif-sae
+        connecteur-type-mapping:
+            sae_transfert_id: sae_transfert_id
+            sae_bordereau: sae_bordereau
+            sae_archive: sae_archive
+            erreur-envoie-sae: erreur-envoie-sae
+    erreur-envoie-sae:
+        name: "Erreur lors de l'envoi au SAE"
+        rule:
+            role_id_e: no-role
+    verif-sae:
+        name-action: "Récupérer l'AR du document sur le SAE"
+        name: "Récuperation de l'AR sur le SAE"
+        rule:
+            last-action:
+                - send-archive
+                - verif-sae-erreur
+        action-class: StandardAction
+        connecteur-type: SAE
+        connecteur-type-action: SAEVerifier
+        connecteur-type-mapping:
+            sae_transfert_id: sae_transfert_id
+            ar_sae: ar_sae
+            ar-recu-sae: ar-recu-sae
+            verif-sae-erreur: verif-sae-erreur
+            sae_ack_comment: sae_ack_comment
+            sae_bordereau: sae_bordereau
+            ack-not-provided: ack-not-provided
+    verif-sae-erreur:
+        name: "Erreur lors de la récupération de l'AR"
+        rule:
+            role_id_e: no-role
+    ar-recu-sae:
+        name: 'AR SAE reçu'
+        rule:
+            role_id_e: no-role
+        action-automatique: validation-sae
+    ack-not-provided:
+        name: 'En attente de la validation par le SAE'
+        rule:
+            role_id_e: no-role
+        action-automatique: validation-sae
+    validation-sae:
+        name-action: "Vérifier l'acceptation par le SAE"
+        name: "Vérification de l'acceptation par le SAE"
+        rule:
+            last-action:
+                - ar-recu-sae
+                - ack-not-provided
+                - validation-sae-erreur
+        action-class: StandardAction
+        connecteur-type: SAE
+        connecteur-type-action: SAEValider
+        connecteur-type-mapping:
+            sae_transfert_id: sae_transfert_id
+            reply_sae: reply_sae
+            erreur-envoie-sae: erreur-envoie-sae
+            validation-sae-erreur: validation-sae-erreur
+            accepter-sae: accepter-sae
+            rejet-sae: rejet-sae
+            sae_atr_comment: sae_atr_comment
+            sae_archival_identifier: sae_archival_identifier
+            sae_bordereau: sae_bordereau
+    validation-sae-erreur:
+        name: 'Erreur lors de la vérification de la validité du transfert'
+        rule:
+            role_id_e: no-role
+    accepter-sae:
+        name: 'Transfert accepté par le SAE'
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+    rejet-sae:
+        name: 'Transfert rejeté par le SAE'
         rule:
             role_id_e: no-role
     iparapheur-sous-type:
