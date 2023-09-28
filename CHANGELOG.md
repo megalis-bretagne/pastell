@@ -5,10 +5,6 @@
 - Il n'est plus possible de créer de flux studio commençant par `ls-` #1906
 - ```commande-generique```: ajout de l'envoi SAE avec possibilité après l'état termine #1910
 
-## Corrections
-
-- Les tables spécifiques des extensions étaient supprimées au redémarrage de l'application #1927
-
 ## Dépréciations
 
 - La fonction DonneesFormulaire::copyAllFiles() est dépréciée #1831
@@ -18,6 +14,8 @@
 - L'action 'verser à la GED' restait possible sans tenir compte de l'état du document Hélios générique 
   (regression 4.0.3 #1736) #1920
 - Il est désormais possible de supprimer un dossier après une erreur irrécupérable lors d'un dépôt GED #1888
+- Les tables spécifiques des extensions étaient supprimées au redémarrage de l'application #1927
+- Connecteur Mail sécurisé, `Tester l'envoi à Reply-To` retournait une erreur #1908
 
 # [4.0.7] - 2023-09-11
 

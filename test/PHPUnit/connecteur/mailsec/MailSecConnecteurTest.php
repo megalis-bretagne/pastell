@@ -349,4 +349,17 @@ class MailSecConnecteurTest extends PastellTestCase
             $mailAsString
         );
     }
+
+    public function testTesterEnvoiReplyTo(): void
+    {
+        $result = $this->createConnector('mailsec', "Connecteur mailsec de test");
+        $id_ce  = $result['id_ce'];
+        $this->configureConnector(
+            $id_ce,
+            ['mailsec_reply_to' => 'test@libriciel.net']
+        );
+        $actionResult = $this->triggerActionOnConnector($id_ce, 'test');
+        $this->assertTrue($actionResult);
+        $this->assertLastMessage('Un email a été envoyé à test@libriciel.net');
+    }
 }
