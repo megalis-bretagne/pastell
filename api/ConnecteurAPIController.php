@@ -27,7 +27,7 @@ class ConnecteurAPIController extends BaseAPIController
     private function verifExists($id_ce)
     {
         $info = $this->connecteurEntiteSQL->getInfo($id_ce);
-        if (! $info) {
+        if (!$info) {
             throw new Exception("Ce connecteur n'existe pas.");
         }
     }
@@ -39,7 +39,7 @@ class ConnecteurAPIController extends BaseAPIController
     private function checkedEntite()
     {
         $id_e = $this->getFromQueryArgs(0) ?: 0;
-        if ($id_e && ! $this->entiteSQL->getInfo($id_e)) {
+        if ($id_e && !$this->entiteSQL->getInfo($id_e)) {
             throw new NotFoundException("L'entité $id_e n'existe pas");
         }
         $this->checkDroit($id_e, "entite:lecture");
@@ -109,7 +109,7 @@ class ConnecteurAPIController extends BaseAPIController
         $this->checkConnecteurLecture($id_e);
         $this->checkedConnecteur($id_e, $id_ce);
         if ('file' == $this->getFromQueryArgs(3)) {
-            return $this->getFichier($id_ce);
+            return $this->readFichier($id_ce);
         }
         if ('externalData' == $this->getFromQueryArgs(3)) {
             return $this->getExternalData($id_ce);
@@ -153,6 +153,7 @@ class ConnecteurAPIController extends BaseAPIController
     }
 
     //TODO assurément c'est pas la bonne place de cette fonction
+
     /**
      * @throws Exception
      */
@@ -194,10 +195,8 @@ class ConnecteurAPIController extends BaseAPIController
      * @throws NotFoundException
      * @throws Exception
      */
-    public function getFichier($id_ce)
+    public function getFichier($id_ce, mixed $field, mixed $num): array
     {
-        $field = $this->getFromQueryArgs(4);
-        $num = $this->getFromQueryArgs(5) ?: 0;
         $donneesFormulaire = $this->donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
 
         $file_path = $donneesFormulaire->getFilePath($field, $num);
@@ -207,15 +206,27 @@ class ConnecteurAPIController extends BaseAPIController
         }
         $file_name = $file_name_array[$num];
 
-        if (! file_exists($file_path)) {
+        if (!file_exists($file_path)) {
             throw new Exception("Ce fichier n'existe pas");
         }
+        return [$file_path, $file_name];
+    }
 
-        header_wrapper("Content-type: " . mime_content_type($file_path));
+    /**
+     * @throws NotFoundException
+     * @throws Exception
+     */
+    public function readFichier($id_ce)
+    {
+        $field = $this->getFromQueryArgs(4);
+        $num = $this->getFromQueryArgs(5) ?: 0;
+        list($file_path, $file_name) = $this->getFichier($id_ce, $field, $num);
+
+        header_wrapper('Content-type: ' . mime_content_type($file_path));
         header_wrapper("Content-disposition: attachment; filename=\"$file_name\"");
-        header_wrapper("Expires: 0");
-        header_wrapper("Cache-Control: must-revalidate, post-check=0,pre-check=0");
-        header_wrapper("Pragma: public");
+        header_wrapper('Expires: 0');
+        header_wrapper('Cache-Control: must-revalidate, post-check=0,pre-check=0');
+        header_wrapper('Pragma: public');
 
         readfile($file_path);
 
@@ -259,7 +270,7 @@ class ConnecteurAPIController extends BaseAPIController
      * @throws NotFoundException
      * @throws Exception
      */
-    public function post()
+    public function post(): mixed
     {
         $id_e = $this->checkedEntite();
         $this->checkConnecteurEdition($id_e);
@@ -269,7 +280,6 @@ class ConnecteurAPIController extends BaseAPIController
         if ($id_ce) {
             return $this->postFile($id_e, $id_ce);
         }
-
 
         $libelle = $this->getFromRequest('libelle');
 
@@ -287,7 +297,7 @@ class ConnecteurAPIController extends BaseAPIController
             throw new Exception("Aucun connecteur du type « $id_connecteur »");
         }
 
-        $id_ce =  $this->connecteurCreationService->createConnecteur(
+        $id_ce = $this->connecteurCreationService->createConnecteur(
             $id_connecteur,
             $connecteur_info['type'],
             $id_e,
@@ -316,8 +326,24 @@ class ConnecteurAPIController extends BaseAPIController
 
         $this->checkedConnecteur($id_e, $id_ce);
         $this->checkConnecteurEdition($id_e);
-        $this->connecteurDeletionService->deleteConnecteur($id_ce);
-
+        if ($this->getFromQueryArgs(3) === 'file') {
+            $field_name = $this->getFromQueryArgs(4);
+            $file_num = $this->getFromQueryArgs(5) ?: 0;
+            if ($field_name) {
+                $this->connecteurModificationService->removeFile(
+                    $id_ce,
+                    $field_name,
+                    $file_num,
+                    $id_e,
+                    $this->getUtilisateurId(),
+                    "Le fichier $field_name a été supprimé"
+                );
+            } else {
+                throw new Exception('Paramètre manquant');
+            }
+        } else {
+            $this->connecteurDeletionService->deleteConnecteur($id_ce);
+        }
         $result['result'] = self::RESULT_OK;
         return $result;
     }
@@ -348,7 +374,7 @@ class ConnecteurAPIController extends BaseAPIController
         $frequence_en_minute = $this->getFromRequest('frequence_en_minute', 1);
         $id_verrou = $this->getFromRequest('id_verrou', '');
 
-        if (! $libelle) {
+        if (!$libelle) {
             throw new Exception("Le libellé est obligatoire.");
         }
         $this->connecteurModificationService->editConnecteurLibelle(
@@ -394,7 +420,7 @@ class ConnecteurAPIController extends BaseAPIController
     public function postFile($id_e, $id_ce)
     {
         $type = $this->getFromQueryArgs(3);
-        if ($type == 'action') {
+        if ($type === 'action') {
             return $this->postAction($id_e, $id_ce);
         }
 
@@ -405,7 +431,7 @@ class ConnecteurAPIController extends BaseAPIController
 
         $fileUploader = $this->getFileUploader();
         $file_content = $fileUploader->getFileContent('file_content');
-        if (! $file_content) {
+        if (!$file_content) {
             $file_content = $this->getFromRequest('file_content');
         }
 
@@ -439,11 +465,11 @@ class ConnecteurAPIController extends BaseAPIController
         $connecteur_entite_info = $this->connecteurEntiteSQL->getInfo($id_ce);
 
         $id_connecteur = $this->connecteurDefinitionFiles->getInfo($connecteur_entite_info['id_connecteur']);
-        if (! $id_connecteur) {
+        if (!$id_connecteur) {
             throw new NotFoundException("Impossible de trouver le connecteur");
         }
 
-        if (! $this->actionPossible->isActionPossibleOnConnecteur($id_ce, $this->getUtilisateurId(), $action_name)) {
+        if (!$this->actionPossible->isActionPossibleOnConnecteur($id_ce, $this->getUtilisateurId(), $action_name)) {
             throw new ForbiddenException(
                 "L'action « $action_name »  n'est pas permise : " . $this->actionPossible->getLastBadRule()
             );
@@ -451,7 +477,7 @@ class ConnecteurAPIController extends BaseAPIController
 
         //Si l'action n'existe pas, alors on isActionPossibleOnConnecteur passe... C'est mal foutu.
         if (
-            ! in_array(
+            !in_array(
                 $action_name,
                 $this->actionPossible->getActionPossibleOnConnecteur($id_ce, $this->getUtilisateurId())
             )
