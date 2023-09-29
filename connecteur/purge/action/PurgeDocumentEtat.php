@@ -20,7 +20,6 @@ class PurgeDocumentEtat extends ChoiceActionExecutor
         );
         return true;
     }
-
     /**
      * @return array|mixed
      * @throws Exception
@@ -33,7 +32,6 @@ class PurgeDocumentEtat extends ChoiceActionExecutor
         }
         return $documentType = $this->objectInstancier->getInstance(DocumentTypeFactory::class)->getFluxDocumentType($document_type)->getTabAction();
     }
-
     /**
      * @return bool
      * @throws Exception
