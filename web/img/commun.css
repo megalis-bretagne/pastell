@@ -640,6 +640,10 @@ html body .ls-on{
   display: block;
 }
 
+.break-table-content>tbody>tr>td{
+    word-break: break-all;
+}
+
 
 
 

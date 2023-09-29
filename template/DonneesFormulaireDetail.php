@@ -19,7 +19,7 @@ $id_e = $inject['id_e'];
     </div>
 <?php endif; ?>
     
-<table class='table table-striped'>
+<table class='table table-striped break-table-content'>
 <?php foreach ($fieldDataList as $num_field => $displayField) :
     if ($displayField->getField()->isEditOnly()) {
         continue;
