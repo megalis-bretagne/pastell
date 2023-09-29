@@ -6,10 +6,6 @@
 - ```commande-generique```: ajout de l'envoi SAE avec possibilité après l'état termine #1910
 - Ajout de la commande API pour supprimer un fichier de connecteur `DELETE entite/:id_c/connecteur/:id_ce/file/:field_name[/:file_num]` #1819
 
-## Dépréciations
-
-- La fonction DonneesFormulaire::copyAllFiles() est dépréciée #1831
-
 ## Corrections
 
 - L'action 'verser à la GED' restait possible sans tenir compte de l'état du document Hélios générique 
@@ -18,6 +14,11 @@
 - Les tables spécifiques des extensions étaient supprimées au redémarrage de l'application #1927
 - Connecteur Mail sécurisé, `Tester l'envoi à Reply-To` retournait une erreur #1908
 - Ajout d'une classe CSS `table-break-content` pour forcer le retour à la ligne des contenus de table trop grands #1710
+- Les jobs exécutés par le daemon devenaient des processus zombies #1922
+
+## Dépréciations
+
+- La fonction DonneesFormulaire::copyAllFiles() est dépréciée #1831
 
 # [4.0.7] - 2023-09-11
 
