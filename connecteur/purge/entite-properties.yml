@@ -82,7 +82,7 @@ action:
             page_title: "Choix de l'état du dossier"
             document_type: document_type
             document_state: document_etat
-            documentS_sate_label: document_etat_libelle
+            document_state_label: document_etat_libelle
     document_exclure_etat:
         rule:
             internal-action: true
@@ -93,7 +93,7 @@ action:
             page_title: "Choix de l'état à exclure du dossier"
             document_type: document_type
             document_state: document_exclure_etat
-            documentS_sate_label: document_exclure_etat_libelle
+            document_state_label: document_exclure_etat_libelle
     document_etat_cible:
         rule:
             internal-action: true

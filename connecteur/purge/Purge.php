@@ -38,26 +38,37 @@ class Purge extends Connecteur
         $this->connecteurConfig = $donneesFormulaire;
     }
 
-    public function listDocument()
+    public function listDocument(): array
     {
         $connecteur_info  = $this->getConnecteurInfo();
 
         $passer_par_letat = $this->connecteurConfig->get('passer_par_l_etat');
-        if ($passer_par_letat == self::GO_TROUGH_STATE) {
-            return $this->documentActionEntite->getDocumentInStateOlderThanDay(
-                $connecteur_info['id_e'],
-                $this->connecteurConfig->get('document_type'),
-                $this->connecteurConfig->get('document_etat'),
-                (int)$this->connecteurConfig->get('nb_days')
-            );
+        $exclure_etat = $this->connecteurConfig->get('document_exclure_etat_libelle');
+
+        if ($passer_par_letat === self::GO_TROUGH_STATE) {
+            $methode = 'getDocumentInStateOlderThanDay';
         } else {
-            return $this->documentActionEntite->getDocumentOlderThanDay(
+            $methode = 'getDocumentOlderThanDay';
+        }
+
+        $selection =  $this->documentActionEntite->$methode(
+            $connecteur_info['id_e'],
+            $this->connecteurConfig->get('document_type'),
+            $this->connecteurConfig->get('document_etat'),
+            (int)$this->connecteurConfig->get('nb_days')
+        );
+        if ($exclure_etat !== '') {
+            $selection_exclure = $this->documentActionEntite->getDocumentInStateOlderThanDay(
                 $connecteur_info['id_e'],
                 $this->connecteurConfig->get('document_type'),
-                $this->connecteurConfig->get('document_etat'),
+                $this->connecteurConfig->get('document_exclure_etat'),
                 (int)$this->connecteurConfig->get('nb_days')
             );
         }
+
+        //soustraire selection_exclure à selection
+
+        return $selection;
     }
 
     public function listDocumentGlobal()
