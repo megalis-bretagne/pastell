@@ -106,7 +106,7 @@ class PastellDaemon
                 $id_job
             )
         );
-        $process->start();
+        $process->run();
         $this->logger->info("Daemon starts worker for job #$id_job : " . json_encode($job, JSON_THROW_ON_ERROR));
     }
 

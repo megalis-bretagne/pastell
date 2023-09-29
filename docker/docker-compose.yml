@@ -3,6 +3,7 @@ name: pastell
 services:
     web:
         image: 'registry.libriciel.fr:443/public/plateforme/pastell:canary'
+        init: true
         restart: unless-stopped
         read_only: true
         stop_grace_period: 60s
