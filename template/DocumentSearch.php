@@ -152,12 +152,12 @@ if ($go = 'go') {
         ?>
 
 
-        <a href="Document/traitementLot?<?php echo $url ?>" class="btn btn-primary">
+        <a href="Document/traitementLot?<?php hecho($url); ?>" class="btn btn-primary">
             <i class='fa fa-cogs'></i>&nbsp;Traitement par lot
         </a>
 
             <a class='btn btn-primary'
-               href='Document/export?<?php echo $url?>'
+               href='Document/export?<?php hecho($url); ?>'
             ><i class='fa fa-download'></i>&nbsp;Exporter</a>
         <?php
     } else {
