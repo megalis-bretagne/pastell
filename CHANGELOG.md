@@ -1,3 +1,9 @@
+# [4.0.9] - 2023-11-13
+
+## Corrections
+
+- Mise à jour des exemples d'URL dans les commentaires des connecteurs CPP #1885
+
 # [4.0.8] - 2023-10-09
 
 ## Évolutions
