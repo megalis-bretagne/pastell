@@ -148,6 +148,16 @@ class Gabarit
         return $this->objectInstancier->getInstance(Authentification::class);
     }
 
+    public function getDocumentTypeFactory(): DocumentTypeFactory
+    {
+        return $this->objectInstancier->getInstance(DocumentTypeFactory::class);
+    }
+
+    public function getDocumentIndexSql(): DocumentIndexSQL
+    {
+        return $this->objectInstancier->getInstance(DocumentIndexSQL::class);
+    }
+
     public function getSiteBase(): string
     {
         return $this->objectInstancier->getInstance('site_base');
