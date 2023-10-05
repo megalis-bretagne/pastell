@@ -51,11 +51,11 @@ formulaire:
             name: 'Répertoire contenant les données à glaner'
             requis: true
         directory_send:
-            name: 'Répertoire où sont déplacés les données'
+            name: 'Répertoire où sont déplacées les données'
             commentaire: "Après leur récupération, les dossiers seront déposés dans le répertoire\net supprimés du répertoire d'origine\n"
             requis: true
         directory_error:
-            name: 'Répertoire où sont déplacés les données en erreur'
+            name: 'Répertoire où sont déplacées les données en erreur'
             commentaire: "Après leur récupération, si le glaneur rencontre un problème,\nles données sont déplacés dans le repertoire d'erreur\n"
             requis: true
         fichier_exemple:
