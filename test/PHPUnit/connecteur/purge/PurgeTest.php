@@ -421,4 +421,41 @@ class PurgeTest extends PastellTestCase
         DocumentSQL::clearCache();
         $this->assertFalse($this->getObjectInstancier()->getInstance(DocumentSQL::class)->getInfo($info_document['id_d']));
     }
+    /**
+     * @throws UnrecoverableException
+     * @throws Exception
+     */
+    public function testPurgeExclureEtat()
+    {
+        $result = $this->getInternalAPI()->post(
+            "/Document/" . PastellTestCase::ID_E_COL,
+            ['type' => 'actes-generique']
+        );
+        $id_d = $result['id_d'];
+
+        $this->getInternalAPI()->patch("/entite/1/document/$id_d", ['objet' => 'test']);
+        $this->getInternalAPI()->post(
+            "/Document/" . PastellTestCase::ID_E_COL,
+            ['type' => 'actes-generique']
+        );
+
+        $purge = $this->getObjectInstancier()->getInstance(Purge::class);
+        $connecteurConfig = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
+        $connecteurConfig->setTabData([
+            'actif' => 1,
+            'document_type' => 'actes-generique',
+            'passer_par_l_etat' => Purge::GO_TROUGH_STATE,
+            'document_etat' => 'creation',
+        ]);
+        $purge->setConnecteurInfo(['id_e' => 1, 'id_ce' => 42]);
+        $purge->setConnecteurConfig($connecteurConfig);
+        static::assertCount(2, $purge->listDocument());
+        $connecteurConfig->setTabData([
+            'document_exclure_etat' => 'modification'
+        ]);
+        static::assertCount(1, $purge->listDocument());
+
+    }
+
 }
+
