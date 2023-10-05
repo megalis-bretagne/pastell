@@ -53,7 +53,6 @@ class ConnecteurCreationService
 
         $donneesFormulaire = $this->donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
         $donneesFormulaire->setTabData($data);
-        $this->setDefaultValue($id_ce);
 
         $this->connecteurActionService->add(
             $id_e,
@@ -107,18 +106,5 @@ class ConnecteurCreationService
         );
 
         return $id_ce;
-    }
-
-    private function setDefaultValue(int $id_ce): void
-    {
-        // TODO: en attente pour implémenter dans prochaine version 4.1
-        /*
-        $donneesFormulaire = $this->donneesFormulaireFactory->getConnecteurEntiteFormulaire($id_ce);
-        foreach ($donneesFormulaire->getFormulaire()->getAllFields() as $field) {
-            if ($field->getDefault()) {
-                $donneesFormulaire->setData($field->getName(), $field->getDefault());
-            }
-        }
-        */
     }
 }
