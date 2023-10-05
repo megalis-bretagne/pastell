@@ -165,7 +165,6 @@ class ExtensionsTest extends PastellTestCase
     {
         $extension_test_path = $this->getExtensionTestPath();
         $manifestReader = $this->getObjectInstancier()->getInstance(ManifestFactory::class)->getManifest($extension_test_path);
-        //dump($manifestReader->getInfo($manifestReader::VERSION));
         static::assertSame($expectedResult, $manifestReader->isVersionOK($expected_version));
     }
 
