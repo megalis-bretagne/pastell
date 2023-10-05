@@ -87,7 +87,6 @@ class PurgeTest extends PastellTestCase
         bool $expected_true,
         string $message
     ) {
-
         $document_info = $this->createDocument($document_type);
         $id_d = $document_info['id_d'];
 
@@ -163,11 +162,13 @@ class PurgeTest extends PastellTestCase
         $purge = $this->getObjectInstancier()->getInstance(Purge::class);
 
         $connecteurConfig = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
-        $connecteurConfig->setTabData([
+        $connecteurConfig->setTabData(
+            [
                 'actif' => 1,
                 'document_type' => 'actes-generique',
                 'document_etat' => 'creation',
-            ] + $aditionnalConnectorConfig);
+            ] + $aditionnalConnectorConfig
+        );
 
 
         $purge->setConnecteurInfo(['id_e' => 1, 'id_ce' => 42]);
@@ -416,11 +417,16 @@ class PurgeTest extends PastellTestCase
         ]);
 
         $purge->setConnecteurConfig($connecteurConfig);
-        $this->assertNotNull($this->getDonneesFormulaireFactory()->get($info_document['id_d'])->getFileContent('arrete'));
+        $this->assertNotNull(
+            $this->getDonneesFormulaireFactory()->get($info_document['id_d'])->getFileContent('arrete')
+        );
         $purge->purgerGlobal();
         DocumentSQL::clearCache();
-        $this->assertFalse($this->getObjectInstancier()->getInstance(DocumentSQL::class)->getInfo($info_document['id_d']));
+        $this->assertFalse(
+            $this->getObjectInstancier()->getInstance(DocumentSQL::class)->getInfo($info_document['id_d'])
+        );
     }
+
     /**
      * @throws UnrecoverableException
      * @throws Exception
@@ -428,7 +434,7 @@ class PurgeTest extends PastellTestCase
     public function testPurgeExclureEtat()
     {
         $result = $this->getInternalAPI()->post(
-            "/Document/" . PastellTestCase::ID_E_COL,
+            '/Document/' . PastellTestCase::ID_E_COL,
             ['type' => 'actes-generique']
         );
         $id_d = $result['id_d'];
@@ -454,7 +460,6 @@ class PurgeTest extends PastellTestCase
             'document_exclure_etat' => 'modification'
         ]);
         static::assertCount(1, $purge->listDocument());
-
     }
 
 }
