@@ -26,11 +26,12 @@ formulaire:
             read-only: true
             default: ls-recup-parapheur
         pastell_module_name:
-            name: Identifiant du type de dossier Pastell
+            name: Nom du type de dossier Pastell
             commentaire: Le dossier doit être un dossier studio. Par défaut, le type de dossier recup-parapheur est selectionné
             type: externalData
             choice-action: pastell_module_name
             link_name: 'Sélectionner le type de dossier'
+            default: Récupération parapheur
         pastell_dictionnary:
             name: Correspondance des identifiants Pastell
             type: textarea

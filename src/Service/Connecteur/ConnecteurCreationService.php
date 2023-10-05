@@ -83,8 +83,12 @@ class ConnecteurCreationService
      * @return int
      * @throws Exception
      */
-    public function createAndAssociateGlobalConnecteur(string $connecteur_id, string $type, string $libelle = '', array $data = []): int
-    {
+    public function createAndAssociateGlobalConnecteur(
+        string $connecteur_id,
+        string $type,
+        string $libelle = '',
+        array $data = []
+    ): int {
         $id_ce = $this->createConnecteur(
             $connecteur_id,
             $type,
