@@ -8,7 +8,7 @@
 ## Corrections
 
 - Mise à jour des exemples d'URL dans les commentaires des connecteurs CPP #1885
-- Précision du libellé de pastell_module_name du connecteur recup-parapheur #1918
+- Glaneur : correction syntaxe noms des champs et commentaires #1921
 
 # [4.0.8] - 2023-10-09
 
