@@ -1,5 +1,9 @@
 # [4.0.9] - 2023-11-13
 
+## Évolutions
+
+- La verification de la compatibilité des versions accepte désormais les versions mineures et patchs supérieurs à la version demandée #1277
+
 ## Corrections
 
 - Mise à jour des exemples d'URL dans les commentaires des connecteurs CPP #1885
@@ -8,10 +12,9 @@
 
 ## Évolutions
 
-- Il n'est plus possible de créer de flux studio commençant par `ls-` #1906
+- Il n'est plus possible de créer des flux studio commençant par `ls-` #1906
 - ```commande-generique```: ajout de l'envoi SAE avec possibilité après l'état termine #1910
-- Ajout de la commande API pour supprimer un fichier de connecteur `DELETE entite/:id_c/connecteur/:id_ce/file/:field_name[/:file_num]` #1819
-- La verification de la compatibilité des versions accepte désormais les versions mineures et patchs supérieurs à la version demandée #1277
+- Ajout de la commande API pour supprimer un fichier de connecteur `DELETE entite/:id_e/connecteur/:id_ce/file/:field_name[/:file_num]` #1819
 
 ## Corrections
 
