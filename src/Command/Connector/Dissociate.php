@@ -49,12 +49,7 @@ class Dissociate extends BaseCommand
             true
         );
         if ($type_exists) {
-            try {
-                $global_connecteur = $this->connecteurFactory->getGlobalConnecteur($type);
-            } catch (Exception $e) {
-                $global_connecteur =  false;
-            }
-            if ($global_connecteur) {
+            if ($this->connecteurFactory->getGlobalConnecteur($type)) {
                 if ($dryRun) {
                     $this->getIO()->note('Dry run');
                 }
