@@ -7,7 +7,6 @@ namespace Pastell\Command\Connector;
 use ConnecteurDefinitionFiles;
 use ConnecteurFactory;
 use Exception;
-use ObjectInstancier;
 use Pastell\Command\BaseCommand;
 use Pastell\Service\Connecteur\ConnecteurAssociationService;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -24,7 +23,8 @@ class Dissociate extends BaseCommand
 {
     public function __construct(
         private readonly ConnecteurAssociationService $connecteurAssociationService,
-        private readonly ObjectInstancier $objectInstancier
+        private readonly ConnecteurFactory $connecteurFactory,
+        private readonly ConnecteurDefinitionFiles $connecteurDefinitionFiles
     ) {
         parent::__construct();
     }
@@ -45,12 +45,12 @@ class Dissociate extends BaseCommand
         $dryRun = $input->getOption('dry-run');
         $type_exists = \in_array(
             $type,
-            $this->objectInstancier->getInstance(ConnecteurDefinitionFiles::class)->getAllGlobalType(),
+            $this->connecteurDefinitionFiles->getAllGlobalType(),
             true
         );
         if ($type_exists) {
             try {
-                $global_connecteur = $this->objectInstancier->getInstance(ConnecteurFactory::class)->getGlobalConnecteur($type);
+                $global_connecteur = $this->connecteurFactory->getGlobalConnecteur($type);
             } catch (Exception $e) {
                 $global_connecteur =  false;
             }

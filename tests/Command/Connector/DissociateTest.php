@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Pastell\Tests\Command\Connector;
 
-use ConnecteurEntiteSQL;
+use ConnecteurDefinitionFiles;
+use ConnecteurFactory;
 use Pastell\Command\Connector\Dissociate;
 use Pastell\Service\Connecteur\ConnecteurAssociationService;
 use PastellTestCase;
@@ -29,7 +30,8 @@ class DissociateTest extends PastellTestCase
             );
         $command = new Dissociate(
             $this->getObjectInstancier()->getInstance(ConnecteurAssociationService::class),
-            $this->getObjectInstancier()
+            $this->getObjectInstancier()->getInstance(ConnecteurFactory::class),
+            $this->getObjectInstancier()->getInstance(ConnecteurDefinitionFiles::class)
         );
         $this->commandTester = new CommandTester($command);
     }
