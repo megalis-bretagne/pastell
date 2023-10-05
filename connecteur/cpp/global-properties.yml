@@ -7,7 +7,7 @@ formulaire:
     page0:
         url_piste_get_token:
             name: 'URL du service PISTE token'
-            commentaire: 'https://sandbox-oauth.aife.economie.gouv.fr/api/oauth/token, https://oauth.aife.economie.gouv.fr/api/oauth/token'
+            commentaire: 'https://sandbox-oauth.piste.gouv.fr/api/oauth/token, https://oauth.piste.gouv.fr/api/oauth/token'
         client_id:
             name: 'Identifiant Oauth Client ID'
         client_secret:
@@ -15,7 +15,7 @@ formulaire:
             type: password
         url_piste_api:
             name: 'URL du service PISTE api'
-            commentaire: 'https://sandbox-api.aife.economie.gouv.fr/, https://api.aife.economie.gouv.fr/'
+            commentaire: 'https://sandbox-api.piste.gouv.fr, https://api.piste.gouv.fr'
         proxy:
             name: Proxy
             commentaire: "Utilisation d'un proxy. Exemple : 10.0.0.1:8080"
