@@ -461,6 +461,4 @@ class PurgeTest extends PastellTestCase
         ]);
         static::assertCount(1, $purge->listDocument());
     }
-
 }
-
