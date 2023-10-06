@@ -9,6 +9,7 @@ formulaire:
             commentaire: 'Ce champ est obligatoire'
             choice-action: entity_list
             link_name: "Sélectionner l'entité"
+            requis: true
         entity_id:
             no-show: true
         include_children:
@@ -20,6 +21,7 @@ formulaire:
             commentaire: 'Ce champ est obligatoire'
             choice-action: module_list
             link_name: 'Sélectionner le type de dossier'
+            requis: true
         module_type:
             no-show: true
         start_date:
@@ -32,6 +34,7 @@ formulaire:
         csv_file:
             name: 'Fichier CSV'
             type: file
+            read-only: true
         csv_generation_date:
             name: 'Date de la dernière génération du fichier CSV'
             type: date
