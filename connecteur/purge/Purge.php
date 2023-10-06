@@ -55,7 +55,7 @@ class Purge extends Connecteur
             $selection = $this->documentActionEntite->$methode(
                 $connecteur_info['id_e'],
                 $this->connecteurConfig->get('document_type'),
-                $this->connecteurConfig->get('document_etat'),
+                $etat_source,
                 (int)$this->connecteurConfig->get('nb_days')
             );
         } elseif ($exclure_etat !== '') {
