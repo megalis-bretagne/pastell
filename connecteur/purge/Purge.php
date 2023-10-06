@@ -63,13 +63,6 @@ class Purge extends Connecteur
                     $nb_days
                 );
             }
-        } elseif ($exclure_etat !== '') {
-            $selection = $this->documentActionEntite->getListDocument(
-                $connecteur_info['id_e'],
-                $type,
-                0,
-                10
-            );
         }
         if ($exclure_etat !== '') {
             $selection_exclure = $this->documentActionEntite->getDocumentInStateOlderThanDay(
@@ -78,7 +71,6 @@ class Purge extends Connecteur
                 $exclure_etat,
                 $nb_days
             );
-
             foreach ($selection_exclure as $select_exclure) {
                 foreach ($selection as $i => $select) {
                     if ($select_exclure['id_d'] === $select['id_d']) {
