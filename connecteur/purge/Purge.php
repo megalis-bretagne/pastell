@@ -45,7 +45,7 @@ class Purge extends Connecteur
         $type = $this->connecteurConfig->get('document_type');
         $nb_days = (int)$this->connecteurConfig->get('nb_days');
         $passer_par_letat = $this->connecteurConfig->get('passer_par_l_etat');
-        $exclure_etat = $this->connecteurConfig->get('document_exclure_etat_libelle');
+        $exclure_etat = $this->connecteurConfig->get('document_exclure_etat');
         $selection = [];
         if ($etat_source) {
             if ($passer_par_letat === self::GO_TROUGH_STATE) {
@@ -75,7 +75,7 @@ class Purge extends Connecteur
             $selection_exclure = $this->documentActionEntite->getDocumentInStateOlderThanDay(
                 $connecteur_info['id_e'],
                 $type,
-                $this->connecteurConfig->get('document_exclure_etat'),
+                $exclure_etat,
                 $nb_days
             );
 
