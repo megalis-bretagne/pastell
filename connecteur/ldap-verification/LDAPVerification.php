@@ -202,5 +202,4 @@ class LDAPVerification extends Connecteur
     {
         return ($this->getUserDN($login));
     }
-
 }
