@@ -4,8 +4,8 @@ use Pastell\Service\Document\DocumentDeletionService;
 
 class Purge extends Connecteur
 {
-    public const GO_TROUGH_STATE = "GO_TROUGH_STATE";
-    public const IN_STATE = "IN_STATE";
+    public const GO_TROUGH_STATE = 'GO_TROUGH_STATE';
+    public const IN_STATE = 'IN_STATE';
 
     private DonneesFormulaire $connecteurConfig;
 
@@ -38,26 +38,49 @@ class Purge extends Connecteur
         $this->connecteurConfig = $donneesFormulaire;
     }
 
-    public function listDocument()
+    public function listDocument(): array
     {
         $connecteur_info  = $this->getConnecteurInfo();
-
+        $etat_source = $this->connecteurConfig->get('document_etat');
+        $type = $this->connecteurConfig->get('document_type');
+        $nb_days = (int)$this->connecteurConfig->get('nb_days');
         $passer_par_letat = $this->connecteurConfig->get('passer_par_l_etat');
-        if ($passer_par_letat == self::GO_TROUGH_STATE) {
-            return $this->documentActionEntite->getDocumentInStateOlderThanDay(
-                $connecteur_info['id_e'],
-                $this->connecteurConfig->get('document_type'),
-                $this->connecteurConfig->get('document_etat'),
-                (int)$this->connecteurConfig->get('nb_days')
-            );
-        } else {
-            return $this->documentActionEntite->getDocumentOlderThanDay(
-                $connecteur_info['id_e'],
-                $this->connecteurConfig->get('document_type'),
-                $this->connecteurConfig->get('document_etat'),
-                (int)$this->connecteurConfig->get('nb_days')
-            );
+        $exclure_etat = $this->connecteurConfig->get('document_exclure_etat');
+        $selection = [];
+        if ($etat_source) {
+            if ($passer_par_letat === self::GO_TROUGH_STATE) {
+                $selection = $this->documentActionEntite->getDocumentInStateOlderThanDay(
+                    $connecteur_info['id_e'],
+                    $type,
+                    $etat_source,
+                    $nb_days
+                );
+            } else {
+                $selection = $this->documentActionEntite->getDocumentOlderThanDay(
+                    $connecteur_info['id_e'],
+                    $type,
+                    $etat_source,
+                    $nb_days
+                );
+            }
         }
+        if ($exclure_etat !== '') {
+            $selection_exclure = $this->documentActionEntite->getDocumentInStateOlderThanDay(
+                $connecteur_info['id_e'],
+                $type,
+                $exclure_etat,
+                $nb_days
+            );
+            foreach ($selection_exclure as $select_exclure) {
+                foreach ($selection as $i => $select) {
+                    if ($select_exclure['id_d'] === $select['id_d']) {
+                        unset($selection[$i]);
+                        break;
+                    }
+                }
+            }
+        }
+        return $selection;
     }
 
     public function listDocumentGlobal()
@@ -76,7 +99,7 @@ class Purge extends Connecteur
         foreach ($this->listDocumentGlobal() as $document_info) {
             $this->documentDeletionService->delete($document_info['id_d'], 'Connecteur de purge global');
         }
-        $this->lastMessage = "Les documents ont été purgés";
+        $this->lastMessage = 'Les documents ont été purgés';
         return true;
     }
 
@@ -97,7 +120,7 @@ class Purge extends Connecteur
         $etat_cible = $this->connecteurConfig->get('document_etat_cible') ?: 'supression';
 
 
-        $this->lastMessage = "Programmation de la purge des dossiers     : ";
+        $this->lastMessage = 'Programmation de la purge des dossiers     : ';
         foreach ($document_list as $document_info) {
             if ($this->connecteurConfig->get('modification')) {
                 $this->modifDocument($document_info['id_e'], $document_info['id_d']);
@@ -166,9 +189,9 @@ class Purge extends Connecteur
         $modification_definition = $this->connecteurConfig->get('modification');
         $modification_list = explode("\n", $modification_definition);
         foreach ($modification_list as $modifiction_item) {
-            $modification_explode = explode(":", $modifiction_item, 2);
-            $modification_key = trim($modification_explode[0] ?? "");
-            $modification_value = trim($modification_explode[1] ?? "");
+            $modification_explode = explode(':', $modifiction_item, 2);
+            $modification_key = trim($modification_explode[0] ?? '');
+            $modification_value = trim($modification_explode[1] ?? '');
             if (! $modification_key) {
                 continue;
             }

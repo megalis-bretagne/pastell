@@ -27,6 +27,13 @@ formulaire:
                 IN_STATE: "Dossiers qui sont dans l'état source"
                 GO_TROUGH_STATE: "Dossiers qui sont passés par l'état source"
             commentaire: "Par défaut, les dossiers qui sont dans l'état source"
+        document_exclure_etat_libelle:
+            name: "N'est pas passé par l'état"
+            type: externalData
+            choice-action: document_exclure_etat
+            link_name: "Sélectionner l'état à exclure de la séléction"
+        document_exclure_etat:
+            no-show: true
         verrou:
             name: Verrou
             commentaire: "Permet d'ajouter un verrou au lancement des jobs qui seront générés par l'action de purge"
@@ -68,7 +75,25 @@ action:
     document_etat:
         rule:
             internal-action: true
-        action-class: PurgeDocumentEtat
+        action-class: StandardChoiceAction
+        connecteur-type: utilities
+        connecteur-type-action: GetDocumentState
+        connecteur-type-mapping:
+            page_title: "Choix de l'état du dossier"
+            document_type: document_type
+            document_state: document_etat
+            document_state_label: document_etat_libelle
+    document_exclure_etat:
+        rule:
+            internal-action: true
+        action-class: StandardChoiceAction
+        connecteur-type: utilities
+        connecteur-type-action: GetDocumentState
+        connecteur-type-mapping:
+            page_title: "Choix de l'état à exclure du dossier"
+            document_type: document_type
+            document_state: document_exclure_etat
+            document_state_label: document_exclure_etat_libelle
     document_etat_cible:
         rule:
             internal-action: true
