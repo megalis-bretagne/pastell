@@ -401,8 +401,14 @@ class ConnexionControler extends PastellControler
         }
         $verificationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur('Vérification');
 
-        if ($verificationConnecteur && $login != 'admin') {
+        if ($verificationConnecteur && $login !== 'admin') {
             /** @var LDAPVerification $verificationConnecteur */
+            if (!$verificationConnecteur->verifLDAP($login)) {
+                $this->getLastError()->setLastError(
+                    "Vous ne pouvez pas vous connecter car vous êtes inconnu sur l'annuaire LDAP"
+                );
+                $this->redirect($redirect_fail);
+            }
             if (!$verificationConnecteur->verifLogin($login, $password)) {
                 $this->getLastError()->setLastError('Login ou mot de passe incorrect. (LDAP)');
                 $this->redirect($redirect_fail);
