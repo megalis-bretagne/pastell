@@ -32,7 +32,7 @@ formulaire:
         file_preg_match:
             name: 'Expressions rationnelles pour associer les fichiers'
             type: textarea
-            commentaire: "une expression par ligne identifiant_fichier:expression rationnelle\nutiliser .* pour attrapper le reste des fichiers\npossibilité d'utiliser $matches[num_ligne][num_parenthese] contenant les élements attrapés\npar les parenthèses des expressions\nprécédentes. Attention, pour les expressions sur les fichiers multiple, c'est le dernier fichier qui est attrapé.\n"
+            commentaire: "Une expression par ligne. identifiant_fichier:expression rationnelle.\nUtiliser .* pour attraper le reste des fichiers.\nPossibilité d'utiliser $matches[num_ligne][num_parenthese] contenant les élements attrapés\npar les parenthèses des expressions\nprécédentes. Attention, pour les expressions sur les fichiers multiples, c'est le dernier fichier qui est attrapé.\n"
         metadata_static:
             name: 'Métadonnées du formulaire'
             commentaire: "Une ligne par métadonnée de la forme clé:valeur, les élements du manifest ont priorité.\nPossibilité d'utiliser le nom des fichiers avec %element_fichier%\nPossibilité d'utiliser $matches[num_ligne][num_parenthese] contenant les élements attrapés\npar les parenthèses des expressions pour associer les fichiers\n"
@@ -51,12 +51,12 @@ formulaire:
             name: 'Répertoire contenant les données à glaner'
             requis: true
         directory_send:
-            name: 'Répertoire où sont déplacés les données'
-            commentaire: "Après leur récupération, les dossiers seront déposés dans le répertoire\net supprimés du répertoire d'origine\n"
+            name: 'Répertoire où sont déplacées les données'
+            commentaire: "Après leur récupération, les données seront déposées dans le répertoire\net supprimées du répertoire d'origine\n"
             requis: true
         directory_error:
-            name: 'Répertoire où sont déplacés les données en erreur'
-            commentaire: "Après leur récupération, si le glaneur rencontre un problème,\nles données sont déplacés dans le repertoire d'erreur\n"
+            name: 'Répertoire où sont déplacées les données en erreur'
+            commentaire: "Après leur récupération, si le glaneur rencontre un problème,\nles données sont déplacées dans le repertoire d'erreur\n"
             requis: true
         fichier_exemple:
             name: 'Fichier exemple'
