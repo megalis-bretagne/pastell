@@ -43,7 +43,7 @@ class Purge extends Connecteur
         $connecteur_info  = $this->getConnecteurInfo();
         $etat_source = $this->connecteurConfig->get('document_etat');
         $passer_par_letat = $this->connecteurConfig->get('passer_par_l_etat');
-        $exclure_etat = $this->connecteurConfig->get('document_exclure_etat_libelle');
+        $exclure_etat = $this->connecteurConfig->get('document_exclure_etat');
         $selection = [];
         if ($etat_source) {
             if ($passer_par_letat === self::GO_TROUGH_STATE) {
