@@ -13,7 +13,7 @@
     <i class="fa fa-arrow-left"></i>&nbsp;Retour au connecteur
 </a>
 <div class="box">
-    <h2 id="desc-module-type-table">Choisissez un type de dossier</h2>
+    <h2 id="desc-module-type-table">Choisissez un état du dossier</h2>
 
     <form action='Connecteur/doExternalData' method='post' enctype="multipart/form-data">
         <?php $this->displayCSRFInput(); ?>
