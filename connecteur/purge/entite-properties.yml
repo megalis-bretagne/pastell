@@ -21,7 +21,7 @@ formulaire:
         document_etat:
             no-show: true
         document_exclure_etat_libelle:
-            name: "Ne passe pas par l'état"
+            name: "N'est pas passé par l'état"
             type: externalData
             choice-action: document_exclure_etat
             link_name: "Sélectionner l'état à exclure de la séléction"
