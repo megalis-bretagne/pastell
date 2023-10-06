@@ -43,21 +43,24 @@ class Purge extends Connecteur
         $connecteur_info  = $this->getConnecteurInfo();
         $etat_source = $this->connecteurConfig->get('document_etat');
         $passer_par_letat = $this->connecteurConfig->get('passer_par_l_etat');
-        $exclure_etat = $this->connecteurConfig->get('document_exclure_etat');
+        $exclure_etat = $this->connecteurConfig->get('document_exclure_etat_libelle');
         $selection = [];
         if ($etat_source) {
             if ($passer_par_letat === self::GO_TROUGH_STATE) {
-                $methode = 'getDocumentInStateOlderThanDay';
+                $selection = $this->documentActionEntite->getDocumentInStateOlderThanDay(
+                    $connecteur_info['id_e'],
+                    $this->connecteurConfig->get('document_type'),
+                    $this->connecteurConfig->get('document_etat'),
+                    (int)$this->connecteurConfig->get('nb_days')
+                );
             } else {
-                $methode = 'getDocumentOlderThanDay';
+                $selection = $this->documentActionEntite->getDocumentOlderThanDay(
+                    $connecteur_info['id_e'],
+                    $this->connecteurConfig->get('document_type'),
+                    $this->connecteurConfig->get('document_etat'),
+                    (int)$this->connecteurConfig->get('nb_days')
+                );
             }
-
-            $selection = $this->documentActionEntite->$methode(
-                $connecteur_info['id_e'],
-                $this->connecteurConfig->get('document_type'),
-                $etat_source,
-                (int)$this->connecteurConfig->get('nb_days')
-            );
         } elseif ($exclure_etat !== '') {
             $selection = $this->documentActionEntite->getListDocument(
                 $connecteur_info['id_e'],
