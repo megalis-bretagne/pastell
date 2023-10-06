@@ -12,6 +12,7 @@
 
 - Mise à jour des exemples d'URL dans les commentaires des connecteurs CPP #1885
 - Précision du libellé de pastell_module_name du connecteur recup-parapheur #1918
+- Redirection sur la page de connexion si l'utilisateur est existant sur pastell mais pas dans le ldap #1859
 - Glaneur : correction syntaxe noms des champs et commentaires #1921
 - Redirection sur la page de connexion si l'utilisateur est existant sur pastell mais pas dans le ldap #1859
 
