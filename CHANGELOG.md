@@ -3,7 +3,7 @@
 ## Évolutions
 
 - La verification de la compatibilité des versions accepte désormais les versions mineures et patchs supérieurs à la version demandée #1277
-- Il est désormais possible, pour la purge des dossiers d'une entité, de sélectionner un état qui ne doit pas avoir été traversé par les dossiers #1574
+- Connecteur de modification en masse: Ajout de la sélection "n'est pas passé par l'état" #1574
 - Ajout de la commande de dissociation d'un connecteur global `app:connector:dissociate --type [--dry-run]` #1865
 
 ## Corrections
