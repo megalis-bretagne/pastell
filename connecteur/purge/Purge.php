@@ -42,6 +42,8 @@ class Purge extends Connecteur
     {
         $connecteur_info  = $this->getConnecteurInfo();
         $etat_source = $this->connecteurConfig->get('document_etat');
+        $type = $this->connecteurConfig->get('document_type');
+        $nb_days = (int)$this->connecteurConfig->get('nb_days');
         $passer_par_letat = $this->connecteurConfig->get('passer_par_l_etat');
         $exclure_etat = $this->connecteurConfig->get('document_exclure_etat_libelle');
         $selection = [];
@@ -49,22 +51,22 @@ class Purge extends Connecteur
             if ($passer_par_letat === self::GO_TROUGH_STATE) {
                 $selection = $this->documentActionEntite->getDocumentInStateOlderThanDay(
                     $connecteur_info['id_e'],
-                    $this->connecteurConfig->get('document_type'),
-                    $this->connecteurConfig->get('document_etat'),
-                    (int)$this->connecteurConfig->get('nb_days')
+                    $type,
+                    $etat_source,
+                    $nb_days
                 );
             } else {
                 $selection = $this->documentActionEntite->getDocumentOlderThanDay(
                     $connecteur_info['id_e'],
-                    $this->connecteurConfig->get('document_type'),
-                    $this->connecteurConfig->get('document_etat'),
-                    (int)$this->connecteurConfig->get('nb_days')
+                    $type,
+                    $etat_source,
+                    $nb_days
                 );
             }
         } elseif ($exclure_etat !== '') {
             $selection = $this->documentActionEntite->getListDocument(
                 $connecteur_info['id_e'],
-                $this->connecteurConfig->get('document_type'),
+                $type,
                 0,
                 10
             );
@@ -72,9 +74,9 @@ class Purge extends Connecteur
         if ($exclure_etat !== '') {
             $selection_exclure = $this->documentActionEntite->getDocumentInStateOlderThanDay(
                 $connecteur_info['id_e'],
-                $this->connecteurConfig->get('document_type'),
+                $type,
                 $this->connecteurConfig->get('document_exclure_etat'),
-                (int)$this->connecteurConfig->get('nb_days')
+                $nb_days
             );
 
             foreach ($selection_exclure as $select_exclure) {
