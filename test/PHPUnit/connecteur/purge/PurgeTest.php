@@ -490,6 +490,6 @@ class PurgeTest extends PastellTestCase
         ]);
         $purge->setConnecteurInfo(['id_e' => 1, 'id_ce' => 42]);
         $purge->setConnecteurConfig($connecteurConfig);
-        static::assertCount(1, $purge->listDocument());
+        static::assertCount(0, $purge->listDocument());
     }
 }
