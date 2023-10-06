@@ -23,7 +23,7 @@
         <table class='table table-striped' aria-labelledby="desc-module-type-table">
             <tr id="tr_type_document">
                 <th class='w200' scope="row">
-                    <label for="module_type">Type de dossier</label>
+                    <label for="module_type">Etat du dossier</label>
                 </th>
                 <td>
                     <select name="document_state" id="document_state" class="form-control col-md-2">
