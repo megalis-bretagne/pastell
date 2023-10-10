@@ -1,0 +1,117 @@
+nom: Récupération dossiers finis iparapheur
+type: recup-fin-parapheur
+description: Connecteur permettant de récupérer les dossiers en fin de circuit d'un iparapheur >=v5
+
+formulaire:
+    page:
+        url:
+            name: URL du parapheur
+            commentaire: "Exemple: https://iparapheur.partenaire.libriciel.fr"
+        username:
+            name: Nom d'utilisateur
+        password:
+            name: Mot de passe
+            type: password
+        pastell_module_id:
+            name: Identifiant du type de dossier Pastell
+            commentaire: Le dossier doit être un dossier studio. Par défaut, le type de dossier recup-parapheur est selectionné
+            read-only: true
+            default: ls-recup-parapheur
+        pastell_module_name:
+            name: Nom du type de dossier Pastell
+            commentaire: Le dossier doit être un dossier studio. Par défaut, le type de dossier recup-parapheur est selectionné
+            type: externalData
+            choice-action: pastell_type_name #pastell_module_name
+            link_name: 'Sélectionner le type de dossier'
+            default: Récupération parapheur
+        tenant_id:
+            name: Identifiant de l'entité iparapheur
+            read-only: true
+        tenant_name:
+            name: Nom de l'entité iparapheur
+            type: externalData
+            choice-action: tenant_name
+            link_name: "Sélectionner l'entité"
+        iparapheur_type_id:
+            name: Identifiant du type de dossier IParapheur
+            commentaire: à définir !
+            read-only: true
+        iparapheur_type_name:
+            name: Nom du type de dossier IParapheur
+            commentaire: à définir !
+            type: externalData
+            choice-action: iparapheur_type_name
+            link_name: 'Sélectionner le type de dossier'
+        iparapheur_subtype_id:
+            name: Identifiant du sous-type de dossier IParapheur
+            commentaire: ! à définir !
+            read-only: true
+        iparapheur_subtype_name:
+            name: Nom du sous-type de dossier IParapheur
+            commentaire: ! à définir !
+            type: externalData
+            choice-action: iparapheur_subtype_name
+            link_name: 'Sélectionner le sous-type de dossier'
+        pastell_dictionnary:
+            name: Correspondance des identifiants Pastell
+            type: textarea
+            commentaire: |
+                Une ligne par correspondance de type: element: id_element_pastell
+                élément à mettre en correspondance : dossier_id, dossier_name, document_signe, annexe, bordereau, premis
+        nb_recup:
+            name: Nombre de dossiers à récupérer pour un passage du travail
+            commentaire: 10 par défaut
+            default: 10
+
+action:
+    tenant_name:
+        action-class: TenantNameAction
+        rule:
+            internal-action: true
+
+    pastell_module_name:
+        rule:
+            internal-action: true
+        action-class: StandardChoiceAction
+        connecteur-type: utilities
+        connecteur-type-action: GetModuleList
+        connecteur-type-mapping:
+            page_title: 'Choix du type de dossier'
+            module_type: pastell_module_id
+            module_type_label: pastell_module_name
+
+    pastell_type_name:
+        action-class: GetTypePastell
+        rule:
+            internal-action: true
+
+    iparapheur_type_name:
+        action-class: GetTypeParapheur
+        rule:
+            internal-action: true
+
+    iparapheur_subtype_name:
+        action-class: GetSubtypeParapheur
+        rule:
+            internal-action: true
+
+    test_connexion:
+        name: Tester la connexion
+        action-class: RecupParapheurTestConnexion
+
+    list_dossier:
+        name: Lister les dossiers à récupérer
+        action-class: GetFinishedFolders
+
+    recup_one:
+        name: Faire une boucle de récupération (synchrone)
+        action-class: RecupParapheurRecup
+
+    recup:
+        name: Traitement (immédiat)
+        action-class: RetrieveFolders
+        action-automatique: recup
+
+    recup-async:
+        name: Traitement (par le gestionnaire de tâches)
+        action-class: RecupParapheurRecupAsync
