@@ -18,7 +18,9 @@ class StatsTest extends PastellTestCase
         $connectorFormulaire = $this->getDonneesFormulaireFactory()->getConnecteurEntiteFormulaire($connector['id_ce']);
         $connectorFormulaire->setTabData([
             'entity_id' => '0',
+            'entity_label' => 'Entité racine',
             'module_type' => 'test',
+            'module_type_label' => 'test',
             'include_children' => true,
             'start_date' => date('Y-m-d'),
             'end_date' => date('Y-m-d', strtotime('+1 day')),
@@ -39,5 +41,28 @@ id_e,Entité,Nombre,"Taille en octet","Taille arrondie",État,"État label"
 
 EOT;
         $this->assertSame($expectedCsvContent, $test->getFileContent('csv_file'));
+    }
+
+    public function testGetStatMissingField(): void
+    {
+        $this->createDocument('test');
+
+        $document = $this->createDocument('test', self::ID_E_SERVICE);
+        $this->getDonneesFormulaireFactory()
+            ->get($document['id_d'])
+            ->addFileFromData('fichier', 'file name', 'data');
+        $connector = $this->createConnector('stats', 'Stats', 0);
+        $connectorFormulaire = $this->getDonneesFormulaireFactory()->getConnecteurEntiteFormulaire($connector['id_ce']);
+        $connectorFormulaire->setTabData([
+            'module_type' => 'test',
+            'module_type_label' => 'test',
+            'include_children' => true,
+            'start_date' => date('Y-m-d'),
+            'end_date' => date('Y-m-d', strtotime('+1 day')),
+        ]);
+
+        $this->triggerActionOnConnector($connector['id_ce'], 'get_stats');
+        $test = $this->getDonneesFormulaireFactory()->getConnecteurEntiteFormulaire($connector['id_ce']);
+        self::assertFalse($test->get('csv_generation_date'));
     }
 }

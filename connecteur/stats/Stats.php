@@ -159,11 +159,11 @@ class Stats extends Connecteur
     public function fieldVerification(): void
     {
         $entity_name = $this->connecteurConfig->get('entity_label');
-        $module_list = $this->connecteurConfig->get('module_type_label');
+        $module_name = $this->connecteurConfig->get('module_type_label');
         if (!$entity_name) {
             throw new \RuntimeException('Veuillez renseigner une entité');
         }
-        if (!$module_list) {
+        if (!$module_name) {
             throw new \RuntimeException('Veuillez renseigner un type de dossier');
         }
     }
