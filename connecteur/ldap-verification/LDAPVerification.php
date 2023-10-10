@@ -84,7 +84,7 @@ class LDAPVerification extends Connecteur
 
         $result =  $this->ldapWrapper->ldap_search($ldap, $this->ldap_root, $filter);
         if (! $result ||  $this->ldapWrapper->ldap_count_entries($ldap, $result) < 1) {
-            return [];
+            return false;
         }
         $entries = $this->ldapWrapper->ldap_get_entries($ldap, $result);
         if (empty($entries[0]['dn'])) {
@@ -191,5 +191,15 @@ class LDAPVerification extends Connecteur
             return false;
         }
         return true;
+    }
+
+    /**
+     * @param $login
+     * @return bool
+     * @throws UnrecoverableException
+     */
+    public function verifLDAP($login): bool
+    {
+        return ($this->getUserDN($login));
     }
 }
