@@ -13,7 +13,7 @@ class Stats extends Connecteur
     public const CSV_FILE_FIELD = 'csv_file';
 
     /** @var DonneesFormulaire */
-    private $connecteurConfig;
+    private DonneesFormulaire $connecteurConfig;
     /**
      * @var DocumentSQL
      */
@@ -151,5 +151,20 @@ class Stats extends Connecteur
             );
         }
         return $entity;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function fieldVerification(): void
+    {
+        $entity_name = $this->connecteurConfig->get('entity_label');
+        $module_list = $this->connecteurConfig->get('module_type_label');
+        if (!$entity_name) {
+            throw new \RuntimeException('Veuillez renseigner une entité');
+        }
+        if (!$module_list) {
+            throw new \RuntimeException('Veuillez renseigner un type de dossier');
+        }
     }
 }

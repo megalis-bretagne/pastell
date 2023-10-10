@@ -2,8 +2,14 @@
 
 class StatsGetAsync extends ActionExecutor
 {
-    public function go()
+    /**
+     * @throws Exception
+     */
+    public function go(): bool
     {
+        /** @var Stats $connector */
+        $connector = $this->getMyConnecteur();
+        $connector->fieldVerification();
         $jobManager = $this->objectInstancier->getInstance(JobManager::class);
         $jobManager->setJobForConnecteur(
             $this->id_ce,
