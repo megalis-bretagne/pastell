@@ -52,6 +52,11 @@ formulaire:
             type: externalData
             choice-action: iparapheur_subtype_name
             link_name: 'Sélectionner le sous-type de dossier'
+        desk_filter:
+            name: Identifiants des bureaux à traiter
+            type: textarea
+            commentaire: |
+                Une ligne par identifiant
         pastell_dictionnary:
             name: Correspondance des identifiants Pastell
             type: textarea

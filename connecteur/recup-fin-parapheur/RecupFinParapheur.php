@@ -87,34 +87,39 @@ class RecupFinParapheur extends Connecteur
         return 'Liste des entités parapheurs : ' . implode(", ", $result);
     }
 
+    /**
+     * @throws Exception
+     */
     public function getFinishedFolders(): array
     {
         $result = [];
-        $pageFolder = (new Folder($this->getAuthentificatedClient()))->listFolders(
-            $this->connecteurConfig->get(self::TENANT_ID),
-            self::DESK_ID,
-            State::FINISHED
-        );
 
         $type = $this->connecteurConfig->get('iparapheur_type_id');
         $subtype = $this->connecteurConfig->get('iparapheur_subtype_id');
-        if ($type !== '') {
-            if ($subtype !== '') {
-                foreach ($pageFolder->content as $folder) {
-                    if (true) { //$folder->type === $subtype      EN ATTENTE DE LAPI TYPE
-                        $result[$folder->id] = $folder->name;
-                    }
-                }
-            } else {
-                foreach ($pageFolder->content as $folder) {
-                    if (true) { //$folder->type === $type         EN ATTENTE DE LAPI TYPE
-                        $result[$folder->id] = $folder->name;
-                    }
-                }
-            }
-        } else {
+        $desk_filter = explode("\r\n", $this->connecteurConfig->get('desk_filter'));
+        $iparapheur_desks = $this->getAllDesks();
+        $selected_desks = array_diff($iparapheur_desks, $desk_filter);
+        $selected_desks = [self::DESK_ID]; // A SUPPRIMER PLUS TARD API IPARAPHEUR
+        if (count($selected_desks) === 0) {
+            throw new Exception('Aucun bureau à traiter');
+        }
+        foreach ($selected_desks as $desk) {
+            $pageFolder = (new Folder($this->getAuthentificatedClient()))->listFolders(
+                $this->connecteurConfig->get(self::TENANT_ID),
+                $desk,
+                State::FINISHED
+            );
+
             foreach ($pageFolder->content as $folder) {
+                //EN ATTENTE DE LAPI IPARAPHEUR
                 $result[$folder->id] = $folder->name;
+                /*
+                if (($type !== '' && $folder->type === $type)
+                    || ($subtype !== '' && $folder->subtype === $subtype)
+                    || ($type === '' && $subtype === '')) {
+                    $result[$folder->id] = $folder->name;
+                }
+                */
             }
         }
         return $result;
@@ -194,5 +199,12 @@ class RecupFinParapheur extends Connecteur
     public function getAllFluxRecup(): array
     {
         return $this->fluxDefinitionFiles->getAll();
+    }
+
+    private function getAllDesks(): array
+    {
+        $desks = [];
+        //EN ATTENTE DE LAPI IPARAPHEUR
+        return $desks;
     }
 }
