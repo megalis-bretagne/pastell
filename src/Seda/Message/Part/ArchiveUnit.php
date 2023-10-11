@@ -42,13 +42,22 @@ final class ArchiveUnit implements \JsonSerializable
      * @param Keyword[] $keywords
      */
     public function setContentDescription(
+        ?string $description,
         ?string $descriptionLevel,
         ?string $language,
         ?string $custodialHistory,
         ?array $keywords
     ): self {
-        if ($keywords !== null || !areNullOrEmptyStrings($descriptionLevel, $language, $custodialHistory)) {
+        if (
+            $keywords !== null || !areNullOrEmptyStrings(
+                $description,
+                $descriptionLevel,
+                $language,
+                $custodialHistory
+            )
+        ) {
             $contentDescription = new ContentDescription();
+            $contentDescription->description = $description;
             $contentDescription->descriptionLevel = $descriptionLevel;
             $contentDescription->language = $language;
             $contentDescription->custodialHistory = $custodialHistory;
