@@ -11,9 +11,7 @@ class Stats extends Connecteur
     public const END_DATE_FIELD = 'end_date';
     public const CSV_GENERATION_DATE_FIELD = 'csv_generation_date';
     public const CSV_FILE_FIELD = 'csv_file';
-
-    /** @var DonneesFormulaire */
-    private $connecteurConfig;
+    private DonneesFormulaire $connecteurConfig;
     /**
      * @var DocumentSQL
      */
@@ -151,5 +149,20 @@ class Stats extends Connecteur
             );
         }
         return $entity;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function fieldVerification(): void
+    {
+        $entity_id = $this->connecteurConfig->get('entity_id');
+        $module_type = $this->connecteurConfig->get('module_type');
+        if ($entity_id === false) {
+            throw new \RuntimeException('Veuillez renseigner une entité');
+        }
+        if (!$module_type) {
+            throw new \RuntimeException('Veuillez renseigner un type de dossier');
+        }
     }
 }
