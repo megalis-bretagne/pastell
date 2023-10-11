@@ -15,12 +15,10 @@ class RecupFinParapheur extends Connecteur
     private const USERNAME = 'username';
     private const PASSWORD = 'password';
     private const URL = 'url';
-    private const NB_RECUP = 'nb_recup';
     private const TENANT_ID = 'tenant_id';
 
     private const DESK_ID = 'bb986f44-4073-47cf-bee1-94a9ecec62fe';
 
-    private const FINISHED_STATE = 'finished';
     private array $elementIdDictionnary;
     private DonneesFormulaire $connecteurConfig;
 
@@ -99,7 +97,7 @@ class RecupFinParapheur extends Connecteur
         $desk_filter = explode("\r\n", $this->connecteurConfig->get('desk_filter'));
         $iparapheur_desks = $this->getAllDesks();
         $selected_desks = array_diff($iparapheur_desks, $desk_filter);
-        $selected_desks = [self::DESK_ID]; // A SUPPRIMER PLUS TARD API IPARAPHEUR
+        //$selected_desks = [self::DESK_ID]; // A SUPPRIMER PLUS TARD API IPARAPHEUR
         if (count($selected_desks) === 0) {
             throw new Exception('Aucun bureau à traiter');
         }
