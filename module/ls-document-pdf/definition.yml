@@ -384,6 +384,8 @@ action:
             - json_metadata
             - has_date_limite
             - date_limite
+            - annotation_publique
+            - annotation_privee
             - envoi_fast
             - fast_parapheur_circuit
             - fast_parapheur_circuit_configuration
@@ -439,10 +441,10 @@ action:
             fast_parapheur_email_cc: fast_parapheur_email_cc
             fast_parapheur_agents: fast_parapheur_agents
             send-signature-error: send-signature-error
-            iparapheur_has_date_limite: has_date_limite
-            iparapheur_date_limite: date_limite
             iparapheur_annotation_publique: annotation_publique
             iparapheur_annotation_privee: annotation_privee
+            iparapheur_has_date_limite: has_date_limite
+            iparapheur_date_limite: date_limite
             objet: libelle
             document: document
             autre_document_attache: annexe
