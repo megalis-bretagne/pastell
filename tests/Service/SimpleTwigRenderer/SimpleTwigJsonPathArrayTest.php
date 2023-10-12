@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 namespace Pastell\Tests\Service\SimpleTwigRenderer;
 
+use Error;
 use Exception;
 use Pastell\Service\SimpleTwigRenderer;
 use Pastell\Service\SimpleTwigRenderer\SimpleTwigJsonPathArray;
-use Pastell\Service\SimpleTwigRenderer\SimpleTwigXpath;
 use PastellTestCase;
 use UnrecoverableException;
 
 class SimpleTwigJsonPathArrayTest extends PastellTestCase
 {
-    private string $xml_file;
+    private string $json_file;
     private string $method;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->xml_file = file_get_contents(__DIR__ . '/test.json');
+        $this->json_file = file_get_contents(__DIR__ . '/test.json');
         $this->method = SimpleTwigJsonPathArray::JSONPATH_ARRAY_FUNCTION;
     }
 
@@ -37,9 +37,9 @@ class SimpleTwigJsonPathArrayTest extends PastellTestCase
         $form = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
 
         $form->addFileFromData(
-            'xml',
-            'test.xml',
-            $this->xml_file
+            'json',
+            'test.json',
+            $this->json_file
         );
         $expression = "
         {% for element in $this->method('json', '$.phoneNumbers') %}
@@ -61,16 +61,15 @@ class SimpleTwigJsonPathArrayTest extends PastellTestCase
         $form = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
 
         $form->addFileFromData(
-            'xml',
-            'test.xml',
-            $this->xml_file
+            'json',
+            'test.json',
+            $this->json_file
         );
 
-        $method = SimpleTwigXpath::XPATH_FUNCTION;
-        $expression = "{{ $method('xml', '/universite/etudiant/') }}";
+        $expression = "{{ $this->method('json', '$.toto') }}";
 
-        $this->expectException(UnrecoverableException::class);
-        $this->expectExceptionMessage('Erreur sur le template');
+        $this->expectException(Error::class);
+        $this->expectExceptionMessage('Object of class Flow\JSONPath\JSONPath could not be converted to string');
         $this->twigRenderer()->render($expression, $form);
     }
 }

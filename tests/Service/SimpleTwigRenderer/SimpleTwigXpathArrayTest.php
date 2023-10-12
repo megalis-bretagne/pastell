@@ -6,7 +6,6 @@ namespace Pastell\Tests\Service\SimpleTwigRenderer;
 
 use Exception;
 use Pastell\Service\SimpleTwigRenderer;
-use Pastell\Service\SimpleTwigRenderer\SimpleTwigXpath;
 use Pastell\Service\SimpleTwigRenderer\SimpleTwigXpathArray;
 use PastellTestCase;
 use UnrecoverableException;
@@ -42,11 +41,11 @@ class SimpleTwigXpathArrayTest extends PastellTestCase
             $this->xml_file
         );
 
-        $expression = "{% set result = $this->method('xml', '/universite/etudiant') %}
-        {% for element in result %}
-            <p>{{ element.nom }}</p>
-            <p>{{ element.matricule }}</p>
-            <p>{{ element.age }}</p>
+        $expression = "
+        {% for element in $this->method('xml', '/universite/etudiant') %}
+            {{ element.nom }}
+            {{ element.matricule }}
+            {{ element.age }}
         {% endfor %}";
 
         self::assertStringContainsStringIgnoringCase('John Doe', $this->twigRenderer()->render($expression, $form));
@@ -67,8 +66,7 @@ class SimpleTwigXpathArrayTest extends PastellTestCase
             $this->xml_file
         );
 
-        $method = SimpleTwigXpath::XPATH_FUNCTION;
-        $expression = "{{ $method('xml', '/universite/etudiant/') }}";
+        $expression = "{{ $this->method('xml', '/universite/etudiant/') }}";
 
         $this->expectException(UnrecoverableException::class);
         $this->expectExceptionMessage('Erreur sur le template');

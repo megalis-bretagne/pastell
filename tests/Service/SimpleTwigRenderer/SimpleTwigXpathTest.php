@@ -60,8 +60,8 @@ class SimpleTwigXpathTest extends \PastellTestCase
             $this->xml_file
         );
 
-        $method = SimpleTwigXpath::XPATH_FUNCTION;
-        $expression = "{{ $method('xml', '/universite/etudiant/') }}";
+
+        $expression = "{{ $this->method('xml', '/universite/etudiant/') }}";
 
         $this->expectException(\UnrecoverableException::class);
         $this->expectExceptionMessage('Erreur sur le template');
