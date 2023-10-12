@@ -6,6 +6,7 @@ namespace Pastell\Seda\Message\Part;
 
 final class ContentDescription implements \JsonSerializable
 {
+    public ?string $description;
     public ?string $descriptionLevel;
     public ?string $language;
     public ?string $custodialHistory;
@@ -15,6 +16,7 @@ final class ContentDescription implements \JsonSerializable
     public function jsonSerialize(): array
     {
         return \array_filter([
+            'Description' => $this->description,
             'DescriptionLevel' => $this->descriptionLevel,
             'Language' => $this->language,
             'CustodialHistory' => $this->custodialHistory,
