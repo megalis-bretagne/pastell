@@ -1,3 +1,9 @@
+# [4.1.0]
+
+## Ajouts
+
+- Ajout de la fonction jsonpath_array pour récuperer des listes de données #1376
+
 # [4.0.9] - 2023-11-13
 
 ## Évolutions
@@ -5,7 +11,6 @@
 - La verification de la compatibilité des versions accepte désormais les versions mineures et patchs supérieurs à la version demandée #1277
 - Connecteur de modification en masse: Ajout de la sélection "n'est pas passé par l'état" #1574
 - Ajout de la commande de dissociation d'un connecteur global `app:connector:dissociate --type [--dry-run]` #1865
-- Ajout de la fonction JsonPathArray pour récuperer des tableaux de données en requête JsonPath #1376
 - Les champs "Entité" et "Type de dossier" sont obligatoires pour valider un connecteur de stats #1549
 - Le champ "Fichier CSV" n'est plus modifiable dans le connecteur de stats #1549
 
