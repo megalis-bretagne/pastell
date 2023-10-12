@@ -163,8 +163,6 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
             'fast_parapheur_agents' => 'fast_parapheur_agents_2',
             'annotation_publique' => 'annotation_publique_2',
             'annotation_privee' => 'annotation_privee_2',
-            'annotation_publique' => 'annotation_publique_2',
-            'annotation_privee' => 'annotation_privee_2',
         ], $mapping);
     }
 
