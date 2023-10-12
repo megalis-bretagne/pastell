@@ -61,6 +61,12 @@ formulaire:
         date_limite_1:
             name: 'Date limite'
             type: date
+        annotation_publique_1:
+            name: 'Annotation publique'
+            type: textarea
+        annotation_privee_1:
+            name: 'Annotation privée'
+            type: textarea
     'Parapheur FAST #1':
         envoi_fast_1:
             no-show: true
@@ -141,6 +147,12 @@ formulaire:
         date_limite_2:
             name: 'Date limite'
             type: date
+        annotation_publique_2:
+            name: 'Annotation publique'
+            type: textarea
+        annotation_privee_2:
+            name: 'Annotation privée'
+            type: textarea
     'Parapheur FAST #2':
         envoi_fast_2:
             no-show: true
@@ -316,6 +328,8 @@ action:
             fast_parapheur_email_cc: fast_parapheur_email_cc_1
             fast_parapheur_agents: fast_parapheur_agents_1
             send-signature-error: send-signature-error_1
+            iparapheur_annotation_publique: annotation_publique_1
+            iparapheur_annotation_privee: annotation_privee_1
             iparapheur_has_date_limite: has_date_limite_1
             iparapheur_date_limite: date_limite_1
             objet: titre
@@ -382,6 +396,8 @@ action:
             - json_metadata_2
             - has_date_limite_2
             - date_limite_2
+            - annotation_publique_2
+            - annotation_privee_2
             - envoi_fast_2
             - fast_parapheur_circuit_2
             - fast_parapheur_circuit_configuration_2
@@ -432,6 +448,8 @@ action:
             fast_parapheur_email_cc: fast_parapheur_email_cc_2
             fast_parapheur_agents: fast_parapheur_agents_2
             send-signature-error: send-signature-error_2
+            iparapheur_annotation_publique: annotation_publique_2
+            iparapheur_annotation_privee: annotation_privee_2
             iparapheur_has_date_limite: has_date_limite_2
             iparapheur_date_limite: date_limite_2
             objet: titre

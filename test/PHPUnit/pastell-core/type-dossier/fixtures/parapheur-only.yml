@@ -39,6 +39,12 @@ formulaire:
             type: externalData
             choice-action: iparapheur-sous-type
             link_name: 'Sélectionner un sous-type'
+        annotation_publique:
+            name: 'Annotation publique'
+            type: textarea
+        annotation_privee:
+            name: 'Annotation privée'
+            type: textarea
     'Parapheur FAST':
         envoi_fast:
             no-show: true
@@ -203,6 +209,8 @@ action:
             fast_parapheur_email_cc: fast_parapheur_email_cc
             fast_parapheur_agents: fast_parapheur_agents
             send-signature-error: send-signature-error
+            iparapheur_annotation_publique: annotation_publique
+            iparapheur_annotation_privee: annotation_privee
             objet: titre
             document: fichier
         action-automatique: verif-iparapheur
