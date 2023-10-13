@@ -37,6 +37,27 @@ class TypeDossierSignatureEtapeTest extends PastellTestCase
         $this->assertArrayNotHasKey('has_date_limite', $result['formulaire']['iparapheur']);
     }
 
+    public function testHasPrimoSignature(): void
+    {
+        $typeDossierTranslator = $this->getObjectInstancier()->getInstance(TypeDossierTranslator::class);
+        $typeDossierData = $this->getDefaultTypeDossierProperties();
+        $typeDossierData->etape[0]->specific_type_info['has_primo_signature'] = 'on';
+
+        $result = $typeDossierTranslator->getDefinition($typeDossierData);
+        static::assertEquals('Primo-signature détachée', $result['formulaire']['iparapheur']['primo_signature_detachee']['name']);
+        static::assertEquals('primo_signature_detachee', $result['action']['send-iparapheur']['connecteur-type-mapping']['primo_signature_detachee']);
+    }
+
+    public function testHasNoPrimoSignature(): void
+    {
+        $typeDossierTranslator = $this->getObjectInstancier()->getInstance(TypeDossierTranslator::class);
+        $typeDossierData = $this->getDefaultTypeDossierProperties();
+
+        $result = $typeDossierTranslator->getDefinition($typeDossierData);
+        static::assertArrayNotHasKey('primo_signature_detachee', $result['formulaire']['iparapheur']);
+        static::assertArrayNotHasKey('primo_signature_detachee', $result['action']['send-iparapheur']['connecteur-type-mapping']);
+    }
+
     public function testGetSpecific()
     {
         $typeDossierTranslator = $this->getObjectInstancier()->getInstance(TypeDossierTranslator::class);
