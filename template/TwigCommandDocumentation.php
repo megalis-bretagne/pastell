@@ -45,6 +45,14 @@ $simpleTwigRendererExemple = new SimpleTwigRendererExemple();
         </td>
     </tr>
     <tr>
+        <td>Expression JSONPath retournant une liste</td>
+        <td> {{ jsonpath_array('parapheur_metadata','$.elements[*].valeur') | join(', ') }}</td>
+        <td>Extrait une liste de valeurs (éléments) à partir du fichier JSON identifié par l'élément parapheur_metadata,
+            en utilisant l'expression JSONPath appropriée. Les résultats sont retournés sous forme de liste et peuvent
+            être concaténés avec un filtre join.
+        </td>
+    </tr>
+    <tr>
         <td>Expression csv</td>
         <td> {{ csvpath('data_csv',1,12) }}</td>
         <td>Extrait le contenu de la seconde colonne de la treizième ligne du fichier CSV identifié par l'élément

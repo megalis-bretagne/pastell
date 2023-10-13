@@ -41,15 +41,24 @@ class SimpleTwigJsonPathArrayTest extends PastellTestCase
             'test.json',
             $this->json_file
         );
-        $expression = "
-        {% for element in $this->method('json', '$.phoneNumbers') %}
-            {% for phoneNumber in element %}
-                Type: {{ phoneNumber.type }}
-                Number: {{ phoneNumber.number }}
-            {% endfor %}
-        {% endfor %}";
-        self::assertStringContainsStringIgnoringCase('iPhone', $this->twigRenderer()->render($expression, $form));
-        self::assertStringContainsStringIgnoringCase('home', $this->twigRenderer()->render($expression, $form));
+        $expression = <<<EOT
+{% for element in $this->method('json', '$.phoneNumbers') %}
+{% for phoneNumber in element %}
+Type: {{ phoneNumber.type }}
+Number: {{ phoneNumber.number }}
+{% endfor %}
+{% endfor %}
+EOT;
+        self::assertSame('Type: iPhone
+Number: 0123-4567-8888
+Type: home
+Number: 0123-4567-8910
+', $this->twigRenderer()->render($expression, $form));
+        self::assertSame('Type: iPhone
+Number: 0123-4567-8888
+Type: home
+Number: 0123-4567-8910
+', $this->twigRenderer()->render($expression, $form));
     }
 
     /**

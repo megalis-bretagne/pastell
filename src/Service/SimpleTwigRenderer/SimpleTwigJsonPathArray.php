@@ -19,7 +19,7 @@ class SimpleTwigJsonPathArray implements ISimpleTwigFunction
     public function getFunction(DonneesFormulaire $donneesFormulaire): TwigFunction
     {
         return new TwigFunction(
-            self::JSONPATH_ARRAY_FUNCTION, // Définissez une nouvelle constante pour cette fonction
+            self::JSONPATH_ARRAY_FUNCTION,
             function ($element_id, $json_path_expression) use ($donneesFormulaire) {
                 $file_content = $donneesFormulaire->getFileContent($element_id);
                 try {
