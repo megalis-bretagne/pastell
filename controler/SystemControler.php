@@ -314,7 +314,7 @@ class SystemControler extends PastellControler
                 ->htmlTemplate('test_system.html.twig')
                 ->context(['SITE_BASE' => $this->getSiteBase()])
                 ->attachFromPath(
-                    $this->getInstance('data_dir') . '/connector/iparapheur/test-pastell-i-parapheur.pdf'
+                    $this->getInstance('data_dir') . '/connector/iparapheur/test.pdf'
                 );
             try {
                 $pastellMailer = $this->getObjectInstancier()->getInstance(Mailer::class);

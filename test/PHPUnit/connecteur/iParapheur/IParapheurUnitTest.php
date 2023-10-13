@@ -319,7 +319,7 @@ class IParapheurUnitTest extends PastellTestCase
                     $this->assertStringEqualsFile(
                         $this->getObjectInstancier()->getInstance(
                             'data_dir'
-                        ) . '/connector/iparapheur/test-pastell-i-parapheur.pdf',
+                        ) . '/connector/iparapheur/test.pdf',
                         $arguments[0]['DocumentPrincipal']['_']
                     );
                     $this->assertSame("Deliberation", $arguments[0]['SousType']);
