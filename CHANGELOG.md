@@ -1,3 +1,7 @@
+# [4.0.9] - 2023-10- 13
+
+- Mise à jour de sécurité : [CVE-2023-38545](https://curl.se/docs/CVE-2023-38545.html)
+
 # [4.0.8] - 2023-10-09
 
 ## Évolutions
