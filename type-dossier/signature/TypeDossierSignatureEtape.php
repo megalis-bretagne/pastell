@@ -19,6 +19,7 @@ class TypeDossierSignatureEtape implements TypeDossierEtapeSetSpecificInformatio
         $date_limite_element = $stringMapper->get("date_limite");
         $json_metadata_element = $stringMapper->get("json_metadata");
         $continue_after_refusal = $stringMapper->get('continue_after_refusal');
+        $primo_signature_element = $stringMapper->get('primo_signature_detachee');
 
         if (empty($result[DocumentType::ACTION][$send_iparapheur_action][Action::CONNECTEUR_TYPE_MAPPING])) {
             $result[DocumentType::ACTION][$send_iparapheur_action][Action::CONNECTEUR_TYPE_MAPPING] = [];
@@ -45,10 +46,23 @@ class TypeDossierSignatureEtape implements TypeDossierEtapeSetSpecificInformatio
         }
 
         if (empty($typeDossierEtape->specific_type_info['has_metadata_in_json'])) {
-            unset($result[DocumentType::FORMULAIRE][$onglet_name][$json_metadata_element]);
-            unset($result[DocumentType::ACTION][$send_iparapheur_action][Action::CONNECTEUR_TYPE_MAPPING]['json_metadata']);
+            unset(
+                $result[DocumentType::FORMULAIRE][$onglet_name][$json_metadata_element],
+                $result[DocumentType::ACTION][$send_iparapheur_action][Action::CONNECTEUR_TYPE_MAPPING]['json_metadata']
+            );
             $this->removeFromEditableContent(
                 ['json_metadata'],
+                $result
+            );
+        }
+        if (empty($typeDossierEtape->specific_type_info['has_primo_signature'])) {
+            unset(
+                $result[DocumentType::FORMULAIRE][$onglet_name][$primo_signature_element],
+                $result[DocumentType::ACTION][$send_iparapheur_action][Action::CONNECTEUR_TYPE_MAPPING]['primo_signature_detachee'],
+            );
+
+            $this->removeFromEditableContent(
+                [$primo_signature_element],
                 $result
             );
         }
