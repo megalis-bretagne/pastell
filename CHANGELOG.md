@@ -1,3 +1,9 @@
+# [4.1.0]
+
+## Ajouts
+
+- Ajout de la fonction jsonpath_array pour récuperer des listes de données #1376
+
 # [4.0.9] - 2023-11-13
 
 ## Évolutions

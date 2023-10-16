@@ -10,7 +10,7 @@ use UnrecoverableException;
 
 class SimpleTwigXpath implements ISimpleTwigFunction
 {
-    private const XPATH_FUNCTION = "xpath";
+    public const XPATH_FUNCTION = 'xpath';
 
     public function getFunctionName(): string
     {
@@ -27,7 +27,7 @@ class SimpleTwigXpath implements ISimpleTwigFunction
                 if (empty($xml_result[0])) {
                     return '';
                 }
-                return strval($xml_result[0]);
+                return (string)$xml_result[0];
             }
         );
     }

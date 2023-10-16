@@ -7,7 +7,7 @@ use Twig\TwigFunction;
 
 class SimpleTwigXpathArray implements ISimpleTwigFunction
 {
-    private const XPATH_ARRAY_FUNCTION = "xpath_array";
+    public const XPATH_ARRAY_FUNCTION = 'xpath_array';
 
     public function getFunctionName(): string
     {
@@ -19,8 +19,7 @@ class SimpleTwigXpathArray implements ISimpleTwigFunction
         return new TwigFunction(
             self::XPATH_ARRAY_FUNCTION,
             function ($element_id, $xpath_expression) use ($donneesFormulaire) {
-                $simpleTwigXpathCommon = new SimpleTwigXpathCommon();
-                return $simpleTwigXpathCommon->doXpath($element_id, $xpath_expression, $donneesFormulaire);
+                return (new SimpleTwigXpathCommon())->doXpath($element_id, $xpath_expression, $donneesFormulaire);
             }
         );
     }

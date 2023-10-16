@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<universite>
+    <etudiant>
+        <nom>John Doe</nom>
+        <matricule>12345</matricule>
+        <age>22</age>
+    </etudiant>
+    <etudiant>
+        <nom>Jane Smith</nom>
+        <matricule>67890</matricule>
+        <age>20</age>
+    </etudiant>
+</universite>
