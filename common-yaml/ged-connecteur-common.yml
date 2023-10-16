@@ -16,7 +16,7 @@ formulaire:
                 3: 'Identifiant du document Pastell'
         depot_titre_expression:
             name: 'Expression pour la construction du nom du répertoire'
-            commentaire: '%metadonnee% est remplacé par le contenu de la métadonnée. Exemple : %objet%-%actes_nature%'
+            commentaire: '%metadonnee% est remplacée par le contenu de la métadonnée. Exemple : %objet%-%actes_nature%'
         depot_metadonnees:
             name: 'Sauvegarde des métadonnées'
             type: select
@@ -44,7 +44,7 @@ formulaire:
             commentaire: "Identifiants des fichiers à déposer, séparés par des virgules, tous les fichiers par défaut.\nExemple: actes, annexe, iparapheur_bordereau\n"
         depot_filename_replacement_regexp:
             name: 'Nettoyage des noms de fichiers et de répertoire'
-            commentaire: "Une expression régulière dont tout ce qui correspond sera remplacé par des tirets (-).\nL'expression par défaut est #[\\\\\\\\/]# (exclusion du caractère de séparation des répertoire)\nLes noms de fichiers ne sont pas remplacés dans les métadonnées !\n"
+            commentaire: "Une expression régulière dont tout ce qui correspond sera remplacé par des tirets (-).\nL'expression par défaut est #[\\\\\\\\/]# (exclusion du caractère de séparation des répertoires)\nLes noms de fichiers ne sont pas remplacés dans les métadonnées !\n"
         depot_filename_preg_match:
             name: 'Expressions régulières pour définir le nom des fichiers déposés'
             type: textarea
