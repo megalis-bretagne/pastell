@@ -533,8 +533,8 @@ class IParapheur extends SignatureConnecteur
         $fileToSign = new FileToSign();
 
         $fileToSign->document = new Fichier();
-        $fileToSign->document->filename = 'test-pastell-i-parapheur.pdf';
-        $fileToSign->document->filepath = $this->getDataDir() . '/connector/iparapheur/test-pastell-i-parapheur.pdf';
+        $fileToSign->document->filename = 'test.pdf';
+        $fileToSign->document->filepath = $this->getDataDir() . '/connector/iparapheur/test.pdf';
         $fileToSign->document->content = file_get_contents($fileToSign->document->filepath);
         $fileToSign->document->contentType = 'application/pdf';
 
@@ -542,8 +542,8 @@ class IParapheur extends SignatureConnecteur
 
         $fileToSign->type = $this->iparapheur_type;
         $fileToSign->sousType = $sous_type[0];
-        $fileToSign->dossierId = date("YmdHis") . mt_rand(0, mt_getrandmax());
-        $fileToSign->dossierTitre = "Test de dépôt Pastell " . date(DATE_ISO8601);
+        $fileToSign->dossierId = date('YmdHis') . mt_rand(0, mt_getrandmax());
+        $fileToSign->dossierTitre = 'Test de dépôt pastell ' . date(DATE_ISO8601);
 
         $result = $this->sendDossier($fileToSign);
         if ($result) {
