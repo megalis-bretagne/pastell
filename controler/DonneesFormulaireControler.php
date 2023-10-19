@@ -156,14 +156,36 @@ class DonneesFormulaireControler extends PastellControler
 
         $this->verifDroitEditionOnDocumentOrConnecteur($id_e, $id_d, $id_ce);
 
+        if (\preg_match('#[^\w-]#', $field)) {
+            throw new UnrecoverableException("Champ `$field` incorrect");
+        }
+
         $config = new Config();
         $config->setTempDir(UPLOAD_CHUNK_DIRECTORY);
 
         $request = new Request();
 
-        $upload_filepath = UPLOAD_CHUNK_DIRECTORY . "/{$id_e}_{$id_d}_{$id_ce}_{$field}" . time() . "_" . mt_rand(0, mt_getrandmax());
+        $upload_filepath = \sprintf(
+            '%s/%s_%s_%s_%s_%s_%s',
+            UPLOAD_CHUNK_DIRECTORY,
+            $id_e,
+            $id_d,
+            $id_ce,
+            $field,
+            time(),
+            mt_rand(0, mt_getrandmax())
+        );
 
-        $this->getLogger()->debug("Chargement partiel du fichier : $upload_filepath dans (id_e={$id_e},id_d={$id_d},id_ce={$id_ce},field={$field}");
+        $this->getLogger()->debug(
+            \sprintf(
+                'Chargement partiel du fichier : %s dans (id_e=%s,id_d=%s,id_ce=%s,field=%s)',
+                $upload_filepath,
+                $id_e,
+                $id_d,
+                $id_ce,
+                $field
+            )
+        );
 
         if (Basic::save($upload_filepath, $config, $request)) {
             $donneesFormulaire = $this->getDonneesFormulaireFactory()->getFromDocumentOrConnecteur($id_d, $id_ce);
@@ -178,9 +200,18 @@ class DonneesFormulaireControler extends PastellControler
 
             foreach ($donneesFormulaire->getOnChangeAction() as $action_on_change) {
                 if ($id_ce) {
-                    $result = $this->getActionExecutorFactory()->executeOnConnecteur($id_ce, $this->getId_u(), $action_on_change);
+                    $result = $this->getActionExecutorFactory()->executeOnConnecteur(
+                        $id_ce,
+                        $this->getId_u(),
+                        $action_on_change
+                    );
                 } else {
-                    $result = $this->getActionExecutorFactory()->executeOnDocument($id_e, $this->getId_u(), $id_d, $action_on_change);
+                    $result = $this->getActionExecutorFactory()->executeOnDocument(
+                        $id_e,
+                        $this->getId_u(),
+                        $id_d,
+                        $action_on_change
+                    );
                 }
                 if (!$result) {
                     $this->setLastError($this->getActionExecutorFactory()->getLastMessage());
@@ -188,14 +219,14 @@ class DonneesFormulaireControler extends PastellControler
                     $this->setLastMessage($this->getActionExecutorFactory()->getLastMessage());
                 }
             }
-            $this->getLogger()->debug("chargement terminé");
+            $this->getLogger()->debug('chargement terminé');
             unlink($upload_filepath);
         }
 
         if (1 == mt_rand(1, 100)) {
             Uploader::pruneChunks(UPLOAD_CHUNK_DIRECTORY);
         }
-        echo "OK";
+        echo 'OK';
         exit_wrapper();
     }
 
