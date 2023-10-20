@@ -37,7 +37,7 @@ class TenantNameActionTest extends PastellTestCase
     public function testGo(): void
     {
         $this->mockParapheur();
-        $id_ce = $this->createConnector('recup-parapheur', 'Recup parapheur')['id_ce'];
+        $id_ce = $this->createConnector('recup-parapheur-corbeille', 'Recup parapheur')['id_ce'];
         $this->configureConnector($id_ce, ['url' => 'https://aaaa.bbb', 'pastell_module_id' => 'ls-recup-parapheur']);
         $_POST = ['tenant_id' => 'bc75c516-7fa6-4edd-8a3e-9318d3263996'];
         $this->triggerActionOnConnector($id_ce, 'tenant_name');
@@ -48,7 +48,7 @@ class TenantNameActionTest extends PastellTestCase
     public function testGoWhenTenantNotExists(): void
     {
         $this->mockParapheur();
-        $id_ce = $this->createConnector('recup-parapheur', 'recup-parapheur')['id_ce'];
+        $id_ce = $this->createConnector('recup-parapheur-corbeille', 'recup-parapheur-corbeille')['id_ce'];
         $this->configureConnector($id_ce, ['url' => 'https://aaaa.bbb', 'pastell_module_id' => 'ls-recup-parapheur']);
         $_POST = ['tenant_id' => 12];
         $this->triggerActionOnConnector($id_ce, 'tenant_name');
@@ -58,7 +58,7 @@ class TenantNameActionTest extends PastellTestCase
     public function testDisplay(): void
     {
         $this->mockParapheur();
-        $id_ce = $this->createConnector('recup-parapheur', 'recup-parapheur')['id_ce'];
+        $id_ce = $this->createConnector('recup-parapheur-corbeille', 'recup-parapheur-corbeille')['id_ce'];
         $this->configureConnector($id_ce, ['url' => 'https://aaaa.bbb', 'pastell_module_id' => 'ls-recup-parapheur']);
         $actionExecutorFatory = $this->getObjectInstancier()->getInstance(ActionExecutorFactory::class);
         $this->expectOutputRegex("#<select name='tenant_id'#");

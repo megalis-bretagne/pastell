@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Pastell\Client\IparapheurV5\ClientFactory;
 use Psr\Http\Client\ClientInterface;
 
-class RecupParapheurTest extends PastellTestCase
+class RecupParapheurCorbeilleTest extends PastellTestCase
 {
     private TmpFolder $tmpFolder;
     private string $workspace_path;
@@ -55,7 +57,7 @@ class RecupParapheurTest extends PastellTestCase
         $clientFactory = $this->getObjectInstancier()->getInstance(ClientFactory::class);
         $clientFactory->setClientInterface($clientInterface);
 
-        $id_ce = $this->createConnector('recup-parapheur', 'Recup parapheur')['id_ce'];
+        $id_ce = $this->createConnector('recup-parapheur-corbeille', 'Recup parapheur')['id_ce'];
         $this->configureConnector($id_ce, ['url' => 'https://aaaa.bbb', 'pastell_module_id' => 'ls-recup-parapheur']);
         $this->triggerActionOnConnector($id_ce, 'recup_one');
         $lastMessage = $this->getObjectInstancier()->getInstance(ActionExecutorFactory::class)->getLastMessage();
