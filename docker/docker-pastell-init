@@ -75,7 +75,7 @@ define("JOURNAL_MAX_AGE_IN_MONTHS", "${JOURNAL_MAX_AGE_IN_MONTHS:-2}");
 define("UNLOK_JOB_ERROR_AT_STARTUP", "${UNLOK_JOB_ERROR_AT_STARTUP:-false}");
 define("NB_JOB_PAR_VERROU", "${NB_JOB_PAR_VERROU:-1}");
 define("HTTP_PROXY_URL", "${HTTP_PROXY_URL:-}");
-define("NO_PROXY", "${NO_PROXY:-localhost,127.0.0.1,::1,seda-generator}");
+define("NO_PROXY", "${NO_PROXY:-localhost,127.0.0.1,::1,seda-generator,pes-viewer}");
 
 define("USE_UUID_FOR_DOCUMENT", ${USE_UUID_FOR_DOCUMENT:-false});
 

@@ -231,7 +231,7 @@ if (!defined("HTTP_PROXY_URL")) {
 
 // Liste de nom d'hôtes séparés pas des virgules qui n'utiliseront pas le proxy
 if (!defined("NO_PROXY")) {
-    define("NO_PROXY", "localhost,127.0.0.1,::1,seda-generator");
+    define("NO_PROXY", "localhost,127.0.0.1,::1,seda-generator,pes-viewer");
 }
 
 if (!defined("LIST_PACK")) {
