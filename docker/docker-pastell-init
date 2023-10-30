@@ -69,8 +69,8 @@ if (${PACK_DOSSIER_SEANCE:-false}) {
   \$packs["pack_dossier_seance"]=true;
 }
 
-if (${RECUP_PARAPHEUR_CORBEILLE_CONNECTOR:-false}) {
-  \$packs["recup_parapheur_corbeille_connector"]=true;
+if (${PACK_RECUP_PARAPHEUR_CORBEILLE_CONNECTOR:-false}) {
+  \$packs["pack_recup_parapheur_corbeille_connector"]=true;
 }
 
 define("LIST_PACK", \$packs);

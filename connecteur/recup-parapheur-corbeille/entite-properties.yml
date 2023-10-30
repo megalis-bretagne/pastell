@@ -2,7 +2,7 @@ nom: Récupération dossiers iparapheur
 type: recup-parapheur-corbeille
 description: Connecteur permettant de récupérer les dossiers en fin de circuit ou les dossiers à la corbeille d'un iparapheur >=v5
 restriction_pack:
-    - recup_parapheur_corbeille_connector
+    - pack_recup_parapheur_corbeille_connector
 
 formulaire:
     page:
