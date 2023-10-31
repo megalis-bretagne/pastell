@@ -1,6 +1,11 @@
 <?php
 
-$elapsedTime = round($this->PastellTimer->getElapsedTime(), 3);
+/**
+* @var Gabarit $this
+ * @var array $manifest_info
+ */
+
+$elapsedTime = round($this->getPastellTimer()->getElapsedTime(), 3);
 
 ?>
 

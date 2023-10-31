@@ -138,6 +138,11 @@ class Gabarit
         return $this->objectInstancier->getInstance(RechercheAvanceFormulaireHTML::class);
     }
 
+    public function getDocumentTypeHtml(): DocumentTypeHTML
+    {
+        return $this->objectInstancier->getInstance(DocumentTypeHTML::class);
+    }
+
     public function getFancyDate(): FancyDate
     {
         return $this->objectInstancier->getInstance(FancyDate::class);
@@ -151,6 +156,21 @@ class Gabarit
     public function getDocumentTypeFactory(): DocumentTypeFactory
     {
         return $this->objectInstancier->getInstance(DocumentTypeFactory::class);
+    }
+
+    public function getRoleUtilisateur(): RoleUtilisateur
+    {
+        return $this->objectInstancier->getInstance(RoleUtilisateur::class);
+    }
+
+    public function getPastellTimer(): PastellTimer
+    {
+        return $this->objectInstancier->getInstance(PastellTimer::class);
+    }
+
+    public function getJournal(): Journal
+    {
+        return $this->objectInstancier->getInstance(Journal::class);
     }
 
     public function getDocumentIndexSql(): DocumentIndexSQL
