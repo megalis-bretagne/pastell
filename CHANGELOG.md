@@ -25,7 +25,6 @@
 - Glaneur : correction syntaxe noms des champs et commentaires #1921
 - Redirection sur la page de connexion si l'utilisateur est existant sur pastell mais pas dans le ldap #1859
 - La description des unités d'archives n'apparaissait pas #1878
-- Contrôle sur les fichiers zip glanés #1645
 
 # [4.0.8] - 2023-10-09
 
