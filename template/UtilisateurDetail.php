@@ -12,6 +12,7 @@
  * @var array $all_module
  * @var int $id_u
  * @var bool $enable_certificate_authentication
+ * @var Authentification $authentification
  */
 
 use Pastell\Utilities\Certificate;
@@ -77,12 +78,16 @@ use Pastell\Utilities\Certificate;
             <tr>
                 <th>Certificat</th>
                 <td>
-                    <a href='Utilisateur/certificat?verif_number=<?php echo $certificat->getMD5() ?>'><?php echo $certificat->getName() ?></a>
+                    <a href='Utilisateur/certificat?verif_number=<?php echo $certificat->getMD5() ?>'
+                    ><?php echo $certificat->getName() ?></a>
                 </td>
             </tr>
         <?php endif; ?>
 
-        <?php if ($this->RoleUtilisateur->hasDroit($authentification->getId(), "journal:lecture", $info['id_e'])) : ?>
+        <?php
+        if (
+            $this->getRoleUtilisateur()->hasDroit($authentification->getId(), 'journal:lecture', $info['id_e'])
+        ) : ?>
             <tr>
                 <th>Dernières actions</th>
                 <td>
@@ -141,20 +146,29 @@ use Pastell\Utilities\Certificate;
             <th>&nbsp;</th>
         </tr>
 
-        <?php foreach ($this->RoleUtilisateur->getRole($id_u) as $infoRole) : ?>
+        <?php foreach ($this->getRoleUtilisateur()->getRole($id_u) as $infoRole) : ?>
             <tr>
                 <td><?php hecho($infoRole['role']); ?></td>
                 <td>
                     <?php if ($infoRole['id_e']) : ?>
-                        <a href='Entite/detail?id_e=<?php echo $infoRole['id_e'] ?>'><?php hecho($infoRole['denomination']); ?></a>
+                        <a href='Entite/detail?id_e=<?php echo $infoRole['id_e'] ?>'
+                        ><?php hecho($infoRole['denomination']); ?></a>
                     <?php else : ?>
                         Toutes les collectivités
                     <?php endif; ?>
                 </td>
                 <td>
                     <?php if ($utilisateur_edition) : ?>
+                        <?php
+                        $deleteRoleUrl = \sprintf(
+                            'Utilisateur/supprimeRole?id_u=%s&role=%s&id_e=%s',
+                            $id_u,
+                            $infoRole['role'],
+                            $infoRole['id_e'],
+                        );
+                        ?>
                         <a class='btn btn-danger'
-                           href='Utilisateur/supprimeRole?id_u=<?php echo $id_u ?>&role=<?php echo $infoRole['role'] ?>&id_e=<?php echo $infoRole['id_e'] ?>'>
+                           href='<?php echo $deleteRoleUrl; ?>'>
                             <i class="fa fa-times-circle"></i>&nbsp;Retirer le rôle
                         </a>
                     <?php endif; ?>
@@ -173,7 +187,9 @@ use Pastell\Utilities\Certificate;
             <select name='role' class='select2_role form-control col-md-1'>
                 <option value=''>...</option>
                 <?php foreach ($role_authorized as $role_info) : ?>
-                    <option value='<?php hecho($role_info['role']); ?>'> <?php hecho($role_info['libelle']); ?> </option>
+                    <option value='<?php hecho($role_info['role']); ?>'>
+                        <?php hecho($role_info['libelle']); ?>
+                    </option>
                 <?php endforeach; ?>
             </select>
 
@@ -232,15 +248,20 @@ use Pastell\Utilities\Certificate;
                 <tr>
                     <td>
                         <?php if ($infoNotification['id_e']) : ?>
-                            <a href='Entite/detail?id_e=<?php echo $infoNotification['id_e'] ?>'><?php hecho($infoNotification['denomination']); ?></a>
+                            <a href='Entite/detail?id_e=<?php echo $infoNotification['id_e'] ?>'
+                            ><?php hecho($infoNotification['denomination']); ?></a>
                         <?php else : ?>
                             Toutes les collectivités
                         <?php endif; ?>
                     </td>
                     <td>
                         <?php if ($infoNotification['type']) : ?>
-                            <?php
-                            hecho($this->DocumentTypeFactory->getFluxDocumentType($infoNotification['type'])->getName());
+                            <?php hecho(
+                                $this
+                                    ->getDocumentTypeFactory()
+                                    ->getFluxDocumentType($infoNotification['type'])
+                                    ->getName()
+                            );
                             ?>
                         <?php else : ?>
                             Tous
@@ -249,20 +270,30 @@ use Pastell\Utilities\Certificate;
                     <td>
                         <ul id='ulNotification'>
                             <?php foreach ($infoNotification['action'] as $action) : ?>
-                                <li><?php echo $action ? $action : 'Toutes' ?></li>
+                                <li><?php echo $action ?: 'Toutes' ?></li>
                             <?php endforeach; ?>
                         </ul>
                     </td>
                     <td>
-                        <?php echo $infoNotification['daily_digest'] ? "Résumé journalier" : "Envoi à chaque événement" ?>
+                        <?php
+                        echo $infoNotification['daily_digest'] ? 'Résumé journalier' : 'Envoi à chaque événement';
+                        ?>
                         <br/>
                     </td>
 
                     <td>
                         <?php if ($utilisateur_edition) : ?>
+                            <?php
+                            $userNotificationUrl = \sprintf(
+                                'Utilisateur/notification?id_u=%s&id_e=%s&type=%s',
+                                $infoNotification['id_u'],
+                                $infoNotification['id_e'],
+                                $infoNotification['type'],
+                            );
+                            ?>
                             <a class="btn btn-primary"
-                               href='Utilisateur/notification?id_u=<?php echo $infoNotification['id_u'] ?>&id_e=<?php echo $infoNotification['id_e'] ?>&type=<?php echo $infoNotification['type'] ?>'><i
-                                        class="fa fa-pencil"></i>&nbsp;Modifier</a>
+                               href='<?php echo $userNotificationUrl; ?>'
+                            ><i class="fa fa-pencil"></i>&nbsp;Modifier</a>
 
                             <a class='btn btn-danger'
                                href='Utilisateur/notificationSuppression?id_n=<?php echo $infoNotification['id_n'] ?>'>
@@ -289,7 +320,7 @@ use Pastell\Utilities\Certificate;
                     <?php endforeach; ?>
                 </select>
 
-                <?php $this->DocumentTypeHTML->displaySelectWithCollectivite($all_module); ?>
+                <?php $this->getDocumentTypeHtml()->displaySelectWithCollectivite($all_module); ?>
                 <select name='daily_digest' class="form-control col-md-2 mr-2">
                     <option value=''>Envoi à chaque événement</option>
                     <option value='1'>Résumé journalier</option>

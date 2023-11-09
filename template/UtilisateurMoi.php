@@ -89,7 +89,7 @@ use Pastell\Utilities\Certificate;
         </tr>
 
         <?php
-        foreach ($this->RoleUtilisateur->getRole($id_u) as $infoRole) : ?>
+        foreach ($this->getRoleUtilisateur()->getRole($id_u) as $infoRole) : ?>
             <tr>
                 <td><?php hecho($infoRole['role']); ?></td>
                 <td>
@@ -132,7 +132,9 @@ use Pastell\Utilities\Certificate;
                 <td>
                     <?php if ($infoNotification['type']) : ?>
                         <?php
-                        hecho($this->DocumentTypeFactory->getFluxDocumentType($infoNotification['type'])->getName());
+                        hecho(
+                            $this->getDocumentTypeFactory()->getFluxDocumentType($infoNotification['type'])->getName()
+                        );
                         ?>
                     <?php else : ?>
                         Tous
@@ -187,7 +189,7 @@ use Pastell\Utilities\Certificate;
                 <?php endforeach; ?>
             </select>
 
-            <?php $this->DocumentTypeHTML->displaySelectWithCollectivite($all_module); ?>
+            <?php $this->getDocumentTypeHtml()->displaySelectWithCollectivite($all_module); ?>
             <select name='daily_digest' class="form-control col-md-2 mr-2">
                 <option value=''>Envoi à chaque événement</option>
                 <option value='1'>Résumé journalier</option>
@@ -224,7 +226,9 @@ use Pastell\Utilities\Certificate;
                     <a
                             class='btn btn-warning'
                             href='Utilisateur/renewToken?id=<?php echo $token['id']; ?>'
-                            onclick="return confirm('Êtes-vous certain de vouloir renouveler ce jeton (l\'ancien token sera perdu) ?')"
+                            onclick="return confirm(
+                                'Êtes-vous certain de vouloir renouveler ce jeton (l\'ancien token sera perdu) ?'
+                                )"
                     >
                         <i class="fa fa-refresh"></i>&nbsp;Renouveler
                     </a>
