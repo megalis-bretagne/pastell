@@ -1,3 +1,9 @@
+# [4.0.10] - 2023-12-11
+
+## Évolutions
+
+- Le titre du dossier est envoyé sur le parapheur Fast #1936
+
 # [4.0.9] - 2023-11-13
 
 ## Évolutions
