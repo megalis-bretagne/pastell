@@ -1,6 +1,6 @@
 <?php
 
-class RecupParapheurRecupAsync extends ActionExecutor
+class RecupParapheurCorbeilleRecupAsync extends ActionExecutor
 {
     public function go()
     {
