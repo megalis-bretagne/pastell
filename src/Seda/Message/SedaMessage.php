@@ -26,10 +26,12 @@ class SedaMessage implements \JsonSerializable
     public ?string $endDate;
     public ?string $description;
     public ?string $descriptionLevel;
+    public ?string $custodialHistory;
     public ?string $serviceLevel;
     public ?string $originatingAgencyIdentifier;
     public ?string $submissionAgencyIdentifier;
     public ?string $transferringAgencyArchiveIdentifier;
+    public ?string $originatingAgencyArchiveIdentifier;
     public ?string $externalReferenceName;
     public ?string $externalReference;
 
@@ -148,12 +150,14 @@ class SedaMessage implements \JsonSerializable
             'Keywords' => $this->keywords,
             'ArchiveUnits' => $this->archiveUnits,
             'Files' => $this->files,
+            'CustodialHistory' => $this->custodialHistory,
             'OriginatingAgency' => $this->originationAgency,
             'ArchivalAgency' => $this->archivalAgency,
             'TransferringAgency' => $this->transferringAgency,
             'OriginatingAgencyIdentifier' => $this->originatingAgencyIdentifier,
             'SubmissionAgencyIdentifier' => $this->submissionAgencyIdentifier,
             'TransferringAgencyArchiveIdentifier' => $this->transferringAgencyArchiveIdentifier,
+            'OriginatingAgencyArchiveIdentifier' => $this->originatingAgencyArchiveIdentifier,
             'ExternalReferenceName' => $this->externalReferenceName,
             'ExternalReference' => $this->externalReference,
         ]);

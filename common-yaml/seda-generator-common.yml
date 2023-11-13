@@ -1,7 +1,7 @@
 formulaire:
     onglet:
         data:
-            name: 'Données du bordereau'
+            name: 'Métadonnées du bordereau'
             read-only: true
             type: file
             visionneuse: SedaGeneriqueVisionneuse
@@ -11,10 +11,10 @@ formulaire:
             type: file
             visionneuse: Pastell\Viewer\XmlViewer
         fill-data:
-            name: 'Données du bordereau'
+            name: 'Métadonnées du bordereau'
             edit-only: true
             type: externalData
-            link_name: 'Gérer les données du bordereau'
+            link_name: 'Gérer les métadonnées du bordereau'
             choice-action: fill-data
         fill-files:
             name: 'Fichier du bordereau'

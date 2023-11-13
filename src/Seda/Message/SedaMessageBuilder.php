@@ -119,6 +119,7 @@ class SedaMessageBuilder
         $this->message->descriptionLanguage = $dataFromBordereau['DescriptionLanguage'] ?? null;
         $this->message->descriptionLevel = $dataFromBordereau['DescriptionLevel'] ?? null;
         $this->message->description = $dataFromBordereau['archiveunits_title'] ?? null;
+        $this->message->custodialHistory = $dataFromBordereau['CustodialHistory'] ?? null;
         $this->message->serviceLevel = $dataFromBordereau['ServiceLevel'] ?? null;
         $this->message->startDate = $dataFromBordereau['StartDate'] ?? null;
         $this->message->endDate = $dataFromBordereau['EndDate'] ?? null;
@@ -126,6 +127,8 @@ class SedaMessageBuilder
         $this->message->submissionAgencyIdentifier = $dataFromBordereau['SubmissionAgencyIdentifier'] ?? null;
         $this->message
             ->transferringAgencyArchiveIdentifier = $dataFromBordereau['TransferringAgencyArchiveIdentifier'] ?? null;
+        $this->message
+            ->originatingAgencyArchiveIdentifier = $dataFromBordereau['OriginatingAgencyArchiveIdentifier'] ?? null;
         $this->message->externalReferenceName = $dataFromBordereau['ArchiveUnit_ExternalReferenceName'] ?? null;
         $this->message->externalReference = $dataFromBordereau['ArchiveUnit_ExternalReference'] ?? null;
 
@@ -286,6 +289,7 @@ class SedaMessageBuilder
                     $specificInfo['AccessRestrictionRule_StartDate'] ?? null,
                 )
                 ->setContentDescription(
+                    $specificInfo['Description'] ?? null,
                     $specificInfo['DescriptionLevel'] ?? null,
                     $specificInfo['Language'] ?? null,
                     $specificInfo['CustodialHistory'] ?? null,
@@ -546,6 +550,7 @@ class SedaMessageBuilder
                     $sedaInfoFromSpecificInfo['AccessRestrictionRule_StartDate'] ?? null,
                 )
                 ->setContentDescription(
+                    $sedaInfoFromSpecificInfo['Description'] ?? null,
                     $sedaInfoFromSpecificInfo['DescriptionLevel'] ?? null,
                     $sedaInfoFromSpecificInfo['Language'] ?? null,
                     $sedaInfoFromSpecificInfo['CustodialHistory'] ?? null,

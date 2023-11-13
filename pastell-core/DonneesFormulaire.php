@@ -295,9 +295,13 @@ class DonneesFormulaire
 
 
     /*fonction sur l'emplacement et le nom des fichiers annexes*/
-    public function getFilePath($field_name, $num = 0)
+    public function getFilePath($field_name, $num = 0): string
     {
-        return  $this->filePath . "_" . $field_name . "_$num";
+        if (\preg_match('#[^\w-]#', $field_name)) {
+            throw new UnrecoverableException("Champ `$field_name` incorrect");
+        }
+
+        return  $this->filePath . '_' . $field_name . "_$num";
     }
 
     /*Fonctions de sauvegarde*/
