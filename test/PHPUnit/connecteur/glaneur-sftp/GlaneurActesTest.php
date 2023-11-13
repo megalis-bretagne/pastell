@@ -68,7 +68,7 @@ class GlaneurActesTest extends PastellTestCase
             $donneesFormulaire->getFileContent('type_piece_fichier')
         );
         $this->assertFileEquals(
-            __DIR__ . "/fixtures/actes-automatique/test-pastell-i-parapheur.pdf",
+            __DIR__ . "/fixtures/actes-automatique/test.pdf",
             $donneesFormulaire->getFilePath('arrete')
         );
 
