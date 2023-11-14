@@ -8,6 +8,7 @@ apt-get update
 
 apt-get install -y --no-install-recommends \
     bash-completion \
+    npm \
     php-pcov \
     php-xdebug
 
