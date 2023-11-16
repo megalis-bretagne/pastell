@@ -280,6 +280,7 @@ class ConnecteurAPIControllerTest extends PastellTestCase
         ]);
         $info = $this->getInternalAPI()->get("/entite/1/connecteur/$id_ce");
         static::assertSame([
+            'iparapheur_nb_jour_max' => '30',
             'iparapheur_wsdl' => 'https://iparapheur.test',
             'iparapheur_login' => 'admin@pastell',
             'iparapheur_password' => 'MOT DE PASSE NON RECUPERABLE',
