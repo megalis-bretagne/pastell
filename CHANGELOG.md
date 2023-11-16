@@ -1,8 +1,11 @@
 # [4.0.10] - 2023-12-11
 
+***Cette version nécessite une mise à jour du générateur SEDA en 1.0.2***
+
 ## Évolutions
 
 - Le titre du dossier est envoyé sur le parapheur Fast #1936
+- Générateurs SEDA: Prise en compte des métadonnées de description au niveau des fichiers #1956
 
 ## Corrections
 

@@ -59,6 +59,10 @@
                                     "Files": [
                                         {
                                             "Id": "NOT_TESTABLE_8",
+                                            "ContentDescription": {
+                                                "CustodialHistory": "toto Nomination du colonel Moutarde 20120718_AU_20120719_President.txt",
+                                                "Language": "fra"
+                                            },
                                             "Filename": "20120718_AU_20120719_President.txt",
                                             "Uri": "7756W3_9\/7756W03_Rencontres_avec_PCG\/7756W03_Annee_2012\/20120718_AU_20120719_President.txt",
                                             "MessageDigest": "634b027b1b69e1242d40d53e312b3b4ac7710f55be81f289b549446ef6778bee",
@@ -68,6 +72,10 @@
                                         },
                                         {
                                             "Id": "NOT_TESTABLE_9",
+                                            "ContentDescription": {
+                                                "CustodialHistory": "toto Nomination du colonel Moutarde 20121001_AU_20121003_President.txt",
+                                                "Language": "fra"
+                                            },
                                             "Filename": "20121001_AU_20121003_President.txt",
                                             "Uri": "7756W3_9\/7756W03_Rencontres_avec_PCG\/7756W03_Annee_2012\/20121001_AU_20121003_President.txt",
                                             "MessageDigest": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3",
@@ -97,6 +105,10 @@
                             "Files": [
                                 {
                                     "Id": "NOT_TESTABLE_12",
+                                    "ContentDescription": {
+                                        "CustodialHistory": "toto Nomination du colonel Moutarde 20131017_AU_20150312_seances_Commission_permanente.pdf",
+                                        "Language": "fra"
+                                    },
                                     "Filename": "20131017_AU_20150312_seances_Commission_permanente.pdf",
                                     "Uri": "7756W3_9\/7756W05_Assemblee_departementale_Groupe_socialiste\/20131017_AU_20150312_seances_Commission_permanente.pdf",
                                     "MessageDigest": "ea243e5457028e97f9bc93b37a72f8e80ea61ae081911bb037765590ee6aa435",
@@ -106,6 +118,10 @@
                                 },
                                 {
                                     "Id": "NOT_TESTABLE_13",
+                                    "ContentDescription": {
+                                        "CustodialHistory": "toto Nomination du colonel Moutarde 20131023_AU_20150323_seances_Conseil_general.pdf",
+                                        "Language": "fra"
+                                    },
                                     "Filename": "20131023_AU_20150323_seances_Conseil_general.pdf",
                                     "Uri": "7756W3_9\/7756W05_Assemblee_departementale_Groupe_socialiste\/20131023_AU_20150323_seances_Conseil_general.pdf",
                                     "MessageDigest": "ea243e5457028e97f9bc93b37a72f8e80ea61ae081911bb037765590ee6aa435",
@@ -127,6 +143,10 @@
                     "Files": [
                         {
                             "Id": "NOT_TESTABLE_15",
+                            "ContentDescription": {
+                                "CustodialHistory": "toto Nomination du colonel Moutarde 7756_Bordereau_versement.pdf",
+                                "Language": "fra"
+                            },
                             "Filename": "7756_Bordereau_versement.pdf",
                             "Uri": "7756W3_9\/7756_Bordereau_versement.pdf",
                             "MessageDigest": "de46bfca3ce1afc7345b5e3b24b3c7c9e98f9f7de62cfd45ba1f6565e3e71da5",
@@ -136,6 +156,10 @@
                         },
                         {
                             "Id": "NOT_TESTABLE_16",
+                            "ContentDescription": {
+                                "CustodialHistory": "toto Nomination du colonel Moutarde fichier.txt",
+                                "Language": "fra"
+                            },
                             "Filename": "fichier.txt",
                             "Uri": "7756W3_9\/fichier.txt",
                             "MessageDigest": "084c799cd551dd1d8d5c5f9a5d593b2e931f5e36122ee5c793c1d08a19839cc0",
