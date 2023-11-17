@@ -3,6 +3,7 @@
 ## Ajouts
 
 - Ajout de la fonction jsonpath_array pour récuperer des listes de données #1376
+- Ajout du flux Dossier de séance (archivage) 'ls-dossier-seance' #1946
 
 # [4.0.9] - 2023-11-13
 

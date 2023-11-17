@@ -65,9 +65,6 @@ if (${PACK_TEST:-false}) {
 if (${PACK_LIBERSIGN:-false}) {
   \$packs["pack_libersign"]=true;
 }
-if (${PACK_DOSSIER_SEANCE:-false}) {
-  \$packs["pack_dossier_seance"]=true;
-}
 define("LIST_PACK", \$packs);
 
 define("NB_WORKERS", "${NB_WORKERS:-5}");

@@ -93,7 +93,7 @@ module-pack-gfc: docker-compose-up ## Run make-module pack_gfc
 
 module-pack-actes: docker-compose-up ## Run make-module pack_actes
 	$(MAKE_MODULE) ./pack-json/pack-actes/ls-actes-publication-draft.json ./module/ --id ls-actes-publication --name "Actes publication"
-	$(MAKE_MODULE) ./pack-json/pack-actes/ls-dossier-seance-draft.json ./module/ --id ls-dossier-seance --name "Dossier de séance (archivage)" --restriction_pack 'pack_dossier_seance'
+	$(MAKE_MODULE) ./pack-json/pack-actes/ls-dossier-seance-draft.json ./module/ --id ls-dossier-seance --name "Dossier de séance (archivage)"
 
 module-pack-document: docker-compose-up ## Run make-module pack_document
 	$(MAKE_MODULE) ./pack-json/pack-document/ls-document-pdf-draft.json ./module/ --id ls-document-pdf --name "Document PDF"
