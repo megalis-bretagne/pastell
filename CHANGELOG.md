@@ -11,6 +11,10 @@
 
 - Contrôle sur les fichiers zip glanés (en cas d'erreur, le fichier est déplacé et le connecteur n'est pas verrouillé) #1645
 
+## Corrections
+
+- Il y avait un caractère \r à la fin des valeurs des champs de type liste déroulante générés via le studio #1890
+
 # [4.0.9] - 2023-11-13
 
 ## Évolutions

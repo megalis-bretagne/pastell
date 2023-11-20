@@ -18,7 +18,7 @@
         "champs_affiches": "on",
         "champs_recherche_avancee": "on",
         "titre": "on",
-        "select_value": "key1:a\nb\nkey2:c\n"
+        "select_value": "key1:a\r\nb\r\nkey2:c\r\n"
       },
       {
         "element_id": "document",
