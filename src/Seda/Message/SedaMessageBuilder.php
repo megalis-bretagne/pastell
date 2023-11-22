@@ -258,13 +258,23 @@ class SedaMessageBuilder
                         false
                     )
                 );
-                $file->setContentDescription(
-                    $sedaInfoFromSpecificInfo['Description'] ?? null,
-                    $sedaInfoFromSpecificInfo['DescriptionLevel'] ?? null,
-                    $sedaInfoFromSpecificInfo['Language'] ?? null,
-                    $sedaInfoFromSpecificInfo['CustodialHistory'] ?? null,
-                    $sedaInfoFromSpecificInfo['Keywords'] ?? null,
-                );
+                $file
+                    ->setAppraisalRule(
+                        $sedaInfoFromSpecificInfo['ArchiveUnit_AppraisalRule_Rule'] ?? null,
+                        $sedaInfoFromSpecificInfo['ArchiveUnit_AppraisalRule_FinalAction'] ?? null,
+                        $sedaInfoFromSpecificInfo['ArchiveUnit_AppraisalRule_StartDate'] ?? null,
+                    )
+                    ->setAccessRestrictionRule(
+                        $sedaInfoFromSpecificInfo['AccessRestrictionRule_AccessRule'] ?? null,
+                        $sedaInfoFromSpecificInfo['AccessRestrictionRule_StartDate'] ?? null,
+                    )
+                    ->setContentDescription(
+                        $sedaInfoFromSpecificInfo['Description'] ?? null,
+                        $sedaInfoFromSpecificInfo['DescriptionLevel'] ?? null,
+                        $sedaInfoFromSpecificInfo['Language'] ?? null,
+                        $sedaInfoFromSpecificInfo['CustodialHistory'] ?? null,
+                        $sedaInfoFromSpecificInfo['Keywords'] ?? null,
+                    );
                 $description = (string)$localFile['description'];
                 $description = \str_replace('#FILE_NUM#', (string)$filenum, $description);
                 $file->title = $this->getStringWithMetatadaReplacement($description);
@@ -606,13 +616,23 @@ class SedaMessageBuilder
                         false
                     )
                 );
-                $file->setContentDescription(
-                    $sedaInfoFromSpecificInfo['Description'] ?? null,
-                    $sedaInfoFromSpecificInfo['DescriptionLevel'] ?? null,
-                    $sedaInfoFromSpecificInfo['Language'] ?? null,
-                    $sedaInfoFromSpecificInfo['CustodialHistory'] ?? null,
-                    $sedaInfoFromSpecificInfo['Keywords'] ?? null,
-                );
+                $file
+                    ->setAppraisalRule(
+                        $sedaInfoFromSpecificInfo['ArchiveUnit_AppraisalRule_Rule'] ?? null,
+                        $sedaInfoFromSpecificInfo['ArchiveUnit_AppraisalRule_FinalAction'] ?? null,
+                        $sedaInfoFromSpecificInfo['ArchiveUnit_AppraisalRule_StartDate'] ?? null,
+                    )
+                    ->setAccessRestrictionRule(
+                        $sedaInfoFromSpecificInfo['AccessRestrictionRule_AccessRule'] ?? null,
+                        $sedaInfoFromSpecificInfo['AccessRestrictionRule_StartDate'] ?? null,
+                    )
+                    ->setContentDescription(
+                        $sedaInfoFromSpecificInfo['Description'] ?? null,
+                        $sedaInfoFromSpecificInfo['DescriptionLevel'] ?? null,
+                        $sedaInfoFromSpecificInfo['Language'] ?? null,
+                        $sedaInfoFromSpecificInfo['CustodialHistory'] ?? null,
+                        $sedaInfoFromSpecificInfo['Keywords'] ?? null,
+                    );
 
                 $fileContentType = new FileContentType();
                 if (!$doNotPutMimeType) {

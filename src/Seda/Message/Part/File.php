@@ -16,6 +16,8 @@ final class File implements \JsonSerializable
     public ?string $mimeType = null;
     public string $title;
     private ?ContentDescription $contentDescription = null;
+    private ?AccessRestrictionRule $accessRestrictionRule = null;
+    private ?AppraisalRule $appraisalRule = null;
 
     public function __construct(
         private readonly string $id,
@@ -34,6 +36,8 @@ final class File implements \JsonSerializable
             'MimeType' => $this->mimeType,
             'Title' => $this->title,
             'ContentDescription' => $this->contentDescription,
+            'AccessRestrictionRule' => $this->accessRestrictionRule,
+            'AppraisalRule' => $this->appraisalRule,
         ]);
     }
 
@@ -63,6 +67,27 @@ final class File implements \JsonSerializable
             $contentDescription->keywords = $keywords;
             $this->contentDescription = $contentDescription;
         }
+        return $this;
+    }
+
+    public function setAccessRestrictionRule(?string $accessRule, ?string $startDate): self
+    {
+        if (!areNullOrEmptyStrings($accessRule, $startDate)) {
+            $accessRestrictionRule = new  AccessRestrictionRule();
+            $accessRestrictionRule->accessRule = $accessRule;
+            $accessRestrictionRule->startDate = $startDate;
+            $this->accessRestrictionRule = $accessRestrictionRule;
+        }
+
+        return $this;
+    }
+
+    public function setAppraisalRule(?string $rule, ?string $finalAction, ?string $startDate): self
+    {
+        if (!areNullOrEmptyStrings($rule, $finalAction, $startDate)) {
+            $this->appraisalRule = new AppraisalRule($rule, $finalAction, $startDate);
+        }
+
         return $this;
     }
 }

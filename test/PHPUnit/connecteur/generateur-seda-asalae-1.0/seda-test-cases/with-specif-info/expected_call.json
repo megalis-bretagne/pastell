@@ -67,6 +67,15 @@
                         ],
                         "Language": "fra"
                     },
+                    "AccessRestrictionRule": {
+                        "AccessRule": "AR038",
+                        "StartDate": "2020-10-12"
+                    },
+                    "AppraisalRule": {
+                        "FinalAction": "detruire",
+                        "Rule": "P10Y",
+                        "StartDate": "2020-10-12"
+                    },
                     "Filename": "aractes.xml",
                     "Uri": "aractes.xml",
                     "MessageDigest": "342b4ca6da58a3de2aeb0bd56483373f90e3906535f12f0c5bfa3d8f31af2812",
@@ -89,6 +98,15 @@
                             }
                         ],
                         "Language": "fra"
+                    },
+                    "AccessRestrictionRule": {
+                        "AccessRule": "AR038",
+                        "StartDate": "2020-10-12"
+                    },
+                    "AppraisalRule": {
+                        "FinalAction": "detruire",
+                        "Rule": "P10Y",
+                        "StartDate": "2020-10-12"
                     },
                     "Filename": "borderau.pdf",
                     "Uri": "borderau.pdf",
