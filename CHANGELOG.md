@@ -4,6 +4,10 @@
 
 - Le titre du dossier est envoyé sur le parapheur Fast #1936
 
+## Corrections
+
+- Contrôle sur les fichiers zip glanés (en cas d'erreur, le fichier est déplacé et le connecteur n'est pas verrouillé) #1645
+
 # [4.0.9] - 2023-11-13
 
 ## Évolutions
