@@ -390,7 +390,7 @@ abstract class GlaneurConnecteur extends Connecteur
         }
         $zip_to_remove = $directory . "/" . $current;
         if ($this->isDir($zip_to_remove)) {
-            $this->last_message[] = $zip_to_remove . " est un répertoire";
+            $this->last_message[] = sprintf('`%s` est un répertoire', $zip_to_remove);
             $this->moveToErrorDirectory([$zip_to_remove]);
             return false;
         }
@@ -399,8 +399,9 @@ abstract class GlaneurConnecteur extends Connecteur
         $zip = new ZipArchive();
         $handle = $zip->open($zip_file);
         if ($handle !== true) {
+            $this->last_message[] = sprintf('Impossible d\'ouvrir le fichier zip `%s`', $zip_to_remove);
             $this->moveToErrorDirectory([$zip_to_remove]);
-            throw new Exception("Impossible d'ouvrir le fichier zip");
+            return false;
         }
         $zip->extractTo($tmp_folder);
         $zip->close();
