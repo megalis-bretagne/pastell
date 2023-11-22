@@ -6,7 +6,7 @@
 
 ## Corrections
 
-- Contrôle sur les fichiers zip glanés #1645
+- Contrôle sur les fichiers zip glanés (en cas d'erreur, le fichier est déplacé et le connecteur n'est pas verrouillé) #1645
 
 # [4.0.9] - 2023-11-13
 
