@@ -8,8 +8,8 @@ class TypeDossierActesEtape implements TypeDossierEtapeSetSpecificInformation
     public const AUTRE_DOCUMENT_ATTACHE = 'autre_document_attache';
     public const OBJET_ACTE = 'objet_acte';
     public const DROIT_SPECIFIQUE = "droit_specifique";
-
     public const DROIT_SPECIFIQUE_TELETRANSMETTRE = 'teletransmettre';
+    public const THRESHOLD_SIZE = '157286400';
 
     public function setSpecificInformation(
         TypeDossierEtapeProperties $typeDossierEtape,
@@ -37,6 +37,8 @@ class TypeDossierActesEtape implements TypeDossierEtapeSetSpecificInformation
                 = $typeDossierEtape->specific_type_info[self::FICHIER_ACTE];
             $result[DocumentType::ACTION][$typologyChangeByApi][Action::CONNECTEUR_TYPE_MAPPING][self::ARRETE]
                 = $typeDossierEtape->specific_type_info[self::FICHIER_ACTE];
+            $result[DocumentType::THRESHOLD_SIZE] = self::THRESHOLD_SIZE;
+            $result[DocumentType::THRESHOLD_FIELDS][] = $typeDossierEtape->specific_type_info[self::FICHIER_ACTE];
         }
         if (!empty($typeDossierEtape->specific_type_info[self::FICHIER_ANNEXE])) {
             $result[DocumentType::ACTION][$typePieceAction][Action::CONNECTEUR_TYPE_MAPPING]
@@ -49,6 +51,7 @@ class TypeDossierActesEtape implements TypeDossierEtapeSetSpecificInformation
                 [self::AUTRE_DOCUMENT_ATTACHE] = $typeDossierEtape->specific_type_info[self::FICHIER_ANNEXE];
             $result[DocumentType::ACTION][$typologyChangeByApi][Action::CONNECTEUR_TYPE_MAPPING]
                 [self::AUTRE_DOCUMENT_ATTACHE] = $typeDossierEtape->specific_type_info[self::FICHIER_ANNEXE];
+            $result[DocumentType::THRESHOLD_FIELDS][] = $typeDossierEtape->specific_type_info[self::FICHIER_ANNEXE];
         }
         if (!empty($typeDossierEtape->specific_type_info[self::OBJET_ACTE])) {
             $result[DocumentType::ACTION][$sendTdtAction][Action::CONNECTEUR_TYPE_MAPPING]['objet']
@@ -93,7 +96,8 @@ class TypeDossierActesEtape implements TypeDossierEtapeSetSpecificInformation
             if (
                 in_array(
                     $action_id,
-                    $result[DocumentType::ACTION][TypeDossierTranslator::ORIENTATION][Action::ACTION_RULE][Action::ACTION_RULE_LAST_ACTION]
+                    $result[DocumentType::ACTION][TypeDossierTranslator::ORIENTATION][Action::ACTION_RULE]
+                    [Action::ACTION_RULE_LAST_ACTION]
                 )
             ) {
                 $this->makeEditable($action_id, $result, $stringMapper);

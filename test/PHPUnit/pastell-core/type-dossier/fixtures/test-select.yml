@@ -896,3 +896,7 @@ action:
             acte_nature: acte_nature
             arrete: document
             autre_document_attache: annexe
+threshold_size: '157286400'
+threshold_fields:
+    - document
+    - annexe

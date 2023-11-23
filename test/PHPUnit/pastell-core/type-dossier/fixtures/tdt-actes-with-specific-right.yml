@@ -423,3 +423,7 @@ action:
             acte_nature: acte_nature
             arrete: actes
             autre_document_attache: annexe
+threshold_size: '157286400'
+threshold_fields:
+    - actes
+    - annexe
