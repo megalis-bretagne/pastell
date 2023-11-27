@@ -4,6 +4,7 @@
 
 - Ajout de la fonction jsonpath_array pour récuperer des listes de données #1376
 - Ajout du flux Dossier de séance (archivage) 'ls-dossier-seance' #1946
+- Ajout des champs annotations publiques et privées pour l'envoi vers iParapheur #1883
 
 # [4.0.9] - 2023-11-13
 

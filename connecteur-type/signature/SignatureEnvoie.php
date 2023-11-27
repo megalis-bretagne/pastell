@@ -35,6 +35,8 @@ class SignatureEnvoie extends ConnecteurTypeActionExecutor
         $primo_signature_detachee = $this->getMappingValue('primo_signature_detachee');
         $json_metadata = $this->getMappingValue('json_metadata');
         $iparapheur_dossier_id = $this->getMappingValue('iparapheur_dossier_id');
+        $iparapheur_annotation_publique = $this->getMappingValue('iparapheur_annotation_publique');
+        $iparapheur_annotation_privee = $this->getMappingValue('iparapheur_annotation_privee');
 
         $fileToSign = new FileToSign();
         $fileToSign->type = $donneesFormulaire->get($iparapheur_type_element);
@@ -85,7 +87,7 @@ class SignatureEnvoie extends ConnecteurTypeActionExecutor
         if ($donneesFormulaire->get($primo_signature_detachee)) {
             $fileToSign->signature_content = $donneesFormulaire->getFileContent($primo_signature_detachee);
             $fileToSign->signature_type = $donneesFormulaire->getContentType($primo_signature_detachee);
-            if ($fileToSign->signature_type != 'application/xml') {
+            if ($fileToSign->signature_type !== 'application/xml') {
                 $fileToSign->signature_type = 'application/pkcs7-signature';
             }
         }
@@ -99,7 +101,7 @@ class SignatureEnvoie extends ConnecteurTypeActionExecutor
 
 
         if ($donneesFormulaire->getFormulaire()->getField($iparapheur_dossier_id)) {
-            $fileToSign->dossierId = date("YmdHis") . mt_rand(0, mt_getrandmax());
+            $fileToSign->dossierId = date("YmdHis") . random_int(0, mt_getrandmax());
         } else { // conservé pour compatibilité
             $fileToSign->dossierId = $signature->getDossierID(
                 $donneesFormulaire->get($objet_element),
@@ -113,6 +115,13 @@ class SignatureEnvoie extends ConnecteurTypeActionExecutor
             $fileToSign->date_limite = $donneesFormulaire->get($iparapheur_date_limite);
         }
 
+        if ($donneesFormulaire->get($iparapheur_annotation_publique)) {
+            $fileToSign->annotationPublic = $donneesFormulaire->get($iparapheur_annotation_publique);
+        }
+
+        if ($donneesFormulaire->get($iparapheur_annotation_privee)) {
+            $fileToSign->annotationPrivee = $donneesFormulaire->get($iparapheur_annotation_privee);
+        }
         try {
             $result = $signature->sendDossier($fileToSign);
         } catch (SignatureException $e) {

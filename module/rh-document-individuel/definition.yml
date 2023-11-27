@@ -199,6 +199,12 @@ formulaire:
         date_limite:
             name: 'Date limite'
             type: date
+        annotation_publique:
+            name: 'Annotation publique'
+            type: textarea
+        annotation_privee:
+            name: 'Annotation privée'
+            type: textarea
     'Parapheur FAST':
         envoi_fast:
             no-show: true
@@ -601,6 +607,8 @@ action:
             - iparapheur_sous_type
             - has_date_limite
             - date_limite
+            - annotation_publique
+            - annotation_privee
             - envoi_fast
             - fast_parapheur_circuit
             - fast_parapheur_circuit_configuration
@@ -664,6 +672,8 @@ action:
             fast_parapheur_email_cc: fast_parapheur_email_cc
             fast_parapheur_agents: fast_parapheur_agents
             send-signature-error: send-signature-error
+            iparapheur_annotation_publique: annotation_publique
+            iparapheur_annotation_privee: annotation_privee
             iparapheur_has_date_limite: has_date_limite
             iparapheur_date_limite: date_limite
             objet: titre_document

@@ -46,6 +46,12 @@ formulaire:
         date_limite:
             name: 'Date limite'
             type: date
+        annotation_publique:
+            name: 'Annotation publique'
+            type: textarea
+        annotation_privee:
+            name: 'Annotation privée'
+            type: textarea
     'Parapheur FAST':
         envoi_fast:
             no-show: true
@@ -137,6 +143,8 @@ action:
             fast_parapheur_email_cc: fast_parapheur_email_cc
             fast_parapheur_agents: fast_parapheur_agents
             send-signature-error: send-signature-error
+            iparapheur_annotation_publique: annotation_publique
+            iparapheur_annotation_privee: annotation_privee
         action-automatique: verif-iparapheur
     send-signature-error:
         name: "Erreur lors de l'envoi du dossier à la signature"
@@ -195,3 +203,4 @@ action:
             iparapheur_type: iparapheur_type
             iparapheur_sous_type: iparapheur_sous_type
             fast_parapheur_circuit: fast_parapheur_circuit
+
