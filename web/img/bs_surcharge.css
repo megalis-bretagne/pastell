@@ -7,9 +7,9 @@ margin: 0 0 0 0;
 
 .breadcrumb {
 padding-left:20px;
-margin-bottom:0px;
+margin-bottom:0;
 border-radius:0;
-background-color: var(--ls-grey-50);
+background-color: var(--bs-ls-grey-50);
 }
 
 /* input, textarea, .uneditable-input {
@@ -146,8 +146,8 @@ html body .input-group-text{
 
 .burger-menu{
   color: white;
-  background-color: none;
-  border-color: none;
+  background-color: transparent;
+  border-color: transparent;
 }
 
 .burger-menu:hover{
@@ -164,6 +164,6 @@ html body .input-group-text{
 /* les boutons Pastell */
 
 html body .btn-link, html body .btn-link{
-  color: var(--ls-primary-600);
+  color: var(--bs-ls-primary-600);
   border: none;
 }
