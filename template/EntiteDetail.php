@@ -148,9 +148,9 @@ $id_e = $entiteExtendedInfo['id_e'];
                 <?php endif; ?>
                 <td>
                     <?php if ($fille['is_active']) :?>
-                        <p class="badge badge-info">Activée</p>
+                        <p class="badge bg-info">Activée</p>
                     <?php else : ?>
-                        <p class="badge badge-danger">Désactivée</p>
+                        <p class="badge bg-danger">Désactivée</p>
                     <?php endif; ?>
                 </td>
             </tr>

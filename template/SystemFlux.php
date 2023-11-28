@@ -21,12 +21,12 @@
         </td>
         <td>
             <?php if ($flux['is_valide']) : ?>
-                <p class="badge badge-success">
+                <p class="badge bg-success">
                     Valide
                 </p>
             <?php else : ?>
                 <a href="<?php $this->url("System/fluxDetail?id=$id_flux")?>">
-                    <p class="badge badge-danger">
+                    <p class="badge bg-danger">
                         Erreur
                     </p>
                 </a>

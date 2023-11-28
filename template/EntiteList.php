@@ -62,11 +62,11 @@ $search = get_hecho($search);
                 <?php endif; ?>
                 <td>
                     <?php if ($info['is_active']) : ?>
-                        <p class="badge badge-info">
+                        <p class="badge bg-info">
                             Activée
                         </p>
                     <?php else : ?>
-                        <p class="badge badge-danger">
+                        <p class="badge bg-danger">
                             Désactivée
                         </p>
                     <?php endif ?>

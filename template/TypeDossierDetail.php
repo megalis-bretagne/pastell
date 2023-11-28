@@ -86,16 +86,16 @@
                     <td><?php hecho(TypeDossierFormulaireElementManager::getTypeElementLibelle($formulaireElement->type)) ?></td>
                     <td>
                         <?php if ($formulaireElement->titre) :?>
-                            <p class="badge badge-primary">Titre du dossier</p>
+                            <p class="badge bg-primary">Titre du dossier</p>
                         <?php endif;?>
                         <?php if ($formulaireElement->requis) :?>
-                            <p class="badge badge-danger">Obligatoire</p>
+                            <p class="badge bg-danger">Obligatoire</p>
                         <?php endif;?>
                         <?php if ($formulaireElement->champs_affiches) :?>
-                            <p class="badge badge-info">Affiché sur la liste</p>
+                            <p class="badge bg-info">Affiché sur la liste</p>
                         <?php endif;?>
                         <?php if ($formulaireElement->champs_recherche_avancee) :?>
-                            <p class="badge badge-info">Recherche avancée</p>
+                            <p class="badge bg-info">Recherche avancée</p>
                         <?php endif;?>
                     </td>
                     <td>
@@ -140,17 +140,17 @@
                     <td><?php hecho($etape->label ?: $all_etape_type[$etape->type]); ?></td>
                     <td>
                         <?php if ($etape->defaultChecked && ! $etape->requis) :?>
-                            <p class="badge badge-info">Par défaut</p>
+                            <p class="badge bg-info">Par défaut</p>
                         <?php endif;?>
                         <?php if ($etape->requis) :?>
-                            <p class="badge badge-danger">Obligatoire</p>
+                            <p class="badge bg-danger">Obligatoire</p>
                         <?php else : ?>
-                            <p class="badge badge-warning">Facultative</p>
+                            <p class="badge bg-warning">Facultative</p>
                         <?php endif;?>
                         <?php if ($etape->automatique) :?>
-                            <p class="badge badge-info">Etape suivante automatique</p>
+                            <p class="badge bg-info">Etape suivante automatique</p>
                         <?php else : ?>
-                            <p class="badge badge-warning">Etape suivante manuelle</p>
+                            <p class="badge bg-warning">Etape suivante manuelle</p>
                         <?php endif;?>
                     </td>
                     <td>

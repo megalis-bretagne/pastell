@@ -152,7 +152,7 @@ if ($infoDocumentEmail) :
                     <td><?php echo $infoEmail['nb_renvoi']; ?></td>
                     <td>
                         <?php if ($infoEmail['lu']) : ?>
-                            <p class="badge badge-success"><?php echo time_iso_to_fr($infoEmail['date_lecture']) ?></p>
+                            <p class="badge bg-success"><?php echo time_iso_to_fr($infoEmail['date_lecture']) ?></p>
                         <?php elseif ($infoEmail['has_error']) : ?>
                             <?php
                             $mailsecErrorUrl = \sprintf(
@@ -163,7 +163,7 @@ if ($infoDocumentEmail) :
                             ?>
                             <a href="<?php hecho($mailsecErrorUrl); ?>"
                                target="_blank">
-                                <p class="badge badge-important">Erreur possible !</p>
+                                <p class="badge bg-important">Erreur possible !</p>
                             </a>
                         <?php else : ?>
                             Non
@@ -184,7 +184,7 @@ if ($infoDocumentEmail) :
                                 $reponse_info = $document_email_reponse_list[$infoEmail['id_de']];
                                 ?>
                                 <?php if ($reponse_info['has_date_reponse']) : ?>
-                                    <p class="badge badge-success">
+                                    <p class="badge bg-success">
                                         <?php echo time_iso_to_fr($reponse_info['date_reponse']) ?>
                                     </p>
                                 <?php endif; ?>
@@ -194,7 +194,7 @@ if ($infoDocumentEmail) :
                                     $id_d,
                                     $reponse_info['id_d_reponse']
                                 )); ?>"
-                                   class="badge <?php echo $reponse_info['is_lu'] ?: 'badge-info' ?>"
+                                   class="badge <?php echo $reponse_info['is_lu'] ?: 'bg-info' ?>"
                                 >
                                     <?php hecho($reponse_info['titre'] ?: 'Voir'); ?>
                                 </a>
