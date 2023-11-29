@@ -29,7 +29,7 @@ class TypeDossierDeletionServiceTest extends PastellTestCase
 
         $journal_raw_data = json_encode(json_decode($journal_export_json, true)['raw_data']);
 
-        //file_put_contents(__DIR__ . "/fixtures/type_dossier_delete_service_journal_message_raw_data.json", $journal_raw_data);
+//        file_put_contents(__DIR__ . "/fixtures/type_dossier_delete_service_journal_message_raw_data.json", $journal_raw_data);
         $this->assertJsonStringEqualsJsonFile(
             __DIR__ . "/fixtures/type_dossier_delete_service_journal_message_raw_data.json",
             $journal_raw_data

@@ -49,6 +49,17 @@ formulaire:
         date_limite:
             name: 'Date limite'
             type: date
+        primo_signature_detachee:
+            name: 'Primo-signature détachée'
+            type: file
+            multiple: true
+            commentaire: 'format XML ou pkcs7'
+        annotation_publique:
+            name: 'Annotation publique'
+            type: textarea
+        annotation_privee:
+            name: 'Annotation privée'
+            type: textarea
     'Parapheur FAST':
         envoi_fast:
             no-show: true
@@ -140,6 +151,9 @@ action:
             fast_parapheur_email_cc: fast_parapheur_email_cc
             fast_parapheur_agents: fast_parapheur_agents
             send-signature-error: send-signature-error
+            primo_signature_detachee: primo_signature_detachee
+            iparapheur_annotation_publique: annotation_publique
+            iparapheur_annotation_privee: annotation_privee
         action-automatique: verif-iparapheur
     send-signature-error:
         name: "Erreur lors de l'envoi du dossier à la signature"

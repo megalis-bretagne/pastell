@@ -231,7 +231,15 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
                         ],
                     'envoi_iparapheur_2' => [
                         'no-show' => true
-                    ]
+                        ],
+                    'annotation_publique_2' => [
+                        'name' => 'Annotation publique',
+                        'type' => 'textarea'
+                    ],
+                    'annotation_privee_2' => [
+                        'name' => 'Annotation privée',
+                        'type' => 'textarea'
+                    ],
                 ],
             'Signature #2' =>
                 [
@@ -365,6 +373,8 @@ Uniquement avec le mode "circuit à la volée"',
                         'fast_parapheur_email_destinataire' => 'fast_parapheur_email_destinataire_2',
                         'fast_parapheur_email_cc' => 'fast_parapheur_email_cc_2',
                         'fast_parapheur_agents' => 'fast_parapheur_agents_2',
+                        'iparapheur_annotation_publique' => 'annotation_publique_2',
+                        'iparapheur_annotation_privee' => 'annotation_privee_2',
                     ],
                     'action-automatique' => 'verif-iparapheur_2',
                 ],

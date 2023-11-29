@@ -27,7 +27,7 @@ class TypeDossierExportServiceTest extends PastellTestCase
         });
 
         $result2 = $typeDossierExportService->export($result['id_t']);
-   //   file_put_contents(self::FIXTURE_FILE,$result2);
+//        file_put_contents(self::FIXTURE_FILE,$result2);
         $this->assertJsonStringEqualsJsonFile(self::FIXTURE_FILE, $result2);
     }
 }
