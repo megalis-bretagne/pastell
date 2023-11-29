@@ -232,14 +232,14 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
                         ],
                     'envoi_iparapheur_2' => [
                         'no-show' => true
-                        ],
+                    ],
                     'annotation_publique_2' => [
                         'name' => 'Annotation publique',
-                        'type' => 'textarea'
+                        'type' => 'textarea',
                     ],
                     'annotation_privee_2' => [
                         'name' => 'Annotation privée',
-                        'type' => 'textarea'
+                        'type' => 'textarea',
                     ],
                     'primo_signature_detachee_2' => [
                         'name' => 'Primo-signature détachée',
