@@ -6,6 +6,7 @@
 
 - Le titre du dossier est envoyé sur le parapheur Fast #1936
 - Générateurs SEDA: Prise en compte AppraisalRule, AccessRestrictionRule et ContentDescription au niveau des fichiers #1956
+- Prise en compte de %ENTITE% (nom de l'entité) pour le nom de l'emetteur du connecteur Mail sécurisé #1971
 
 ## Corrections
 
