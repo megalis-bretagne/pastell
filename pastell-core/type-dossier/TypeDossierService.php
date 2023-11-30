@@ -120,7 +120,7 @@ class TypeDossierService
                 if (count($explodedValue) === 2) {
                     $res[] = $explodedValue[0];
                 } else {
-                    $res[] = $key + 1;
+                    $res[] = strval($key + 1);
                 }
             }
             if (!in_array($recuperateur->get('default_value'), $res, true)) {

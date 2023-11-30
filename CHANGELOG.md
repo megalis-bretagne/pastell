@@ -10,6 +10,9 @@
 ## Corrections
 
 - Contrôle sur les fichiers zip glanés (en cas d'erreur, le fichier est déplacé et le connecteur n'est pas verrouillé) #1645
+- Il y avait un caractère \r à la fin des valeurs des champs de type liste déroulante générés via le studio #1890
+- Définition de studio: 
+il n'était pas possible de sélectionner une valeur par défaut lorsque la liste déroulante était définie sans clés #1890
 
 # [4.0.9] - 2023-11-13
 
