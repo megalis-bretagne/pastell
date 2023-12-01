@@ -293,11 +293,11 @@ class UtilisateurControler extends PastellControler
                 'page_title',
                 'Modification de ' . $infoUtilisateur['prenom'] . ' ' . $infoUtilisateur['nom']
             );
-            $this->setViewParameter('new_user',false);
+            $this->setViewParameter('new_user', false);
         } else {
             $this->verifDroit($infoUtilisateur['id_e'], 'utilisateur:creation');
             $this->setViewParameter('page_title', 'Nouvel utilisateur ');
-            $this->setViewParameter('new_user',true);
+            $this->setViewParameter('new_user', true);
         }
         $this->setViewParameter(
             'enable_certificate_authentication',
