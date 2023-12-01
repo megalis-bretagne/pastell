@@ -2488,6 +2488,14 @@
                 "Key": "",
                 "Default": "1",
                 "Extra": ""
+            },
+            "is_api": {
+                "Field": "is_api",
+                "Type": "int(11)",
+                "Null": "NO",
+                "Key": "",
+                "Default": "0",
+                "Extra": ""
             }
         },
         "Index": {

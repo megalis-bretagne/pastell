@@ -10,6 +10,7 @@
  * @var SQLQuery $sqlQuery
  * @var array $arbre
  * @var int $id_e
+ * @var bool $new_user
  */
 
 use Pastell\Utilities\Certificate;
@@ -32,21 +33,21 @@ use Pastell\Utilities\Certificate;
                            value='<?php hecho($infoUtilisateur['login']); ?>'/>
                 </td>
             </tr>
-            <tr>
+            <tr class="non-api-required">
                 <th><label for='email'>Email<span class='obl'>*</span></label></th>
                 <td>
                     <input class="form-control col-md-4" type='text' name='email'
                            value='<?php hecho($infoUtilisateur['email']); ?>'/>
                 </td>
             </tr>
-            <tr>
+            <tr  class="non-api-required">
                 <th><label for='nom'>Nom<span class='obl'>*</span></label></th>
                 <td>
                     <input class="form-control col-md-4" type='text' name='nom'
                            value='<?php hecho($infoUtilisateur['nom']); ?>'/>
                 </td>
             </tr>
-            <tr>
+            <tr class="non-api-required">
                 <th><label for='prenom'>Prénom<span class='obl'>*</span></label></th>
                 <td>
                     <input class="form-control col-md-4" type='text' name='prenom'
@@ -54,7 +55,7 @@ use Pastell\Utilities\Certificate;
                 </td>
             </tr>
             <?php if ($enable_certificate_authentication) : ?>
-                <tr>
+                <tr  class="non-api-required">
                     <th><label for='certificat'>Certificat (PEM)</label></th>
                     <td><input class="btn btn-outline-primary col-md-4" type='file' name='certificat'/><br/>
                         <?php if ($certificat->isValid()) : ?>
@@ -89,6 +90,15 @@ use Pastell\Utilities\Certificate;
                     </select>
                 </td>
             </tr>
+            <?php if ($new_user) : ?>
+            <tr>
+                <th><label for='api_user'>Utilisateur API</label></th>
+                <td>
+
+                    <input class="" type='checkbox' name='api_user' id='api_user'/>
+                </td>
+            </tr>
+            <?php endif ?>
         </table>
 
         <?php if ($id_u) : ?>
@@ -111,3 +121,20 @@ use Pastell\Utilities\Certificate;
 
     </form>
 </div>
+
+<script>
+    let checkbox = document.getElementById('api_user');
+    let elementsToHide = document.querySelectorAll('.non-api-required');
+    if(checkbox != null)
+    {
+        checkbox.addEventListener('change', function () {
+            for (let i = 0; i < elementsToHide.length; i++) {
+                if (checkbox.checked) {
+                    elementsToHide[i].style.display = 'none';
+                } else {
+                    elementsToHide[i].style.display = '';
+                }
+            }
+        });
+    }
+</script>

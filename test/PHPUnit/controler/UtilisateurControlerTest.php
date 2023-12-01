@@ -2,6 +2,7 @@
 
 use Pastell\Service\Utilisateur\UserCreationService;
 use Pastell\Service\Utilisateur\UserTokenService;
+use Pastell\Service\Entite\EntityCreationService;
 
 class UtilisateurControlerTest extends ControlerTestCase
 {
@@ -184,6 +185,149 @@ class UtilisateurControlerTest extends ControlerTestCase
         self::assertCount(1, $allTokens);
         self::assertNotContains($tokenBefore, $allTokens);
         self::assertEquals('token', $allTokens[0]['name']);
+    }
+
+    private int $api_user_id;
+    private int $admin_inf;
+    private UserTokenService $userTokenService;
+
+    /**
+     * @throws UnrecoverableException
+     * @throws ConflictException
+     */
+    private function setUpRemoteToken(): void
+    {
+        $entiteCreationService = $this->getObjectInstancier()->getInstance(EntityCreationService::class);
+        $id_e1 = $entiteCreationService->create('entite1', '000000000');
+        $id_e2 = $entiteCreationService->create('entite2', '000000000');
+        $userCreationService = $this->getObjectInstancier()->getInstance(UserCreationService::class);
+        $this->api_user_id = $userCreationService->createAPI('api_user', $id_e1);
+        $this->admin_inf = $userCreationService->create('admin_inferieur', 'admin@gmail.com', 'admin', 'admin', $id_e2);
+        $roleUtilisateur = $this->getObjectInstancier()->getInstance(RoleUtilisateur::class);
+        $roleUtilisateur->addRole($this->admin_inf, 'admin', $id_e2);
+        $this->userTokenService = $this->getObjectInstancier()->getInstance(UserTokenService::class);
+    }
+
+    /**
+     * @throws UnrecoverableException
+     * @throws ConflictException
+     */
+    public function testRemoteAddTokenNoRights(): void
+    {
+        $this->setUpRemoteToken();
+        $userController = $this->getUtilisateurControler();
+        $userController->getAuthentification()->connexion('admin_inferieur', $this->admin_inf);
+        $this->setGetInfo(['id_u' => $this->api_user_id]);
+        try {
+            $userController->doAddTokenAction();
+        } catch (Exception $e) {
+            self::assertMatchesRegularExpression(
+                "/Vous n'avez pas les droits nécessaires pour éxecuter cette action/",
+                $e->getMessage()
+            );
+        }
+        static::assertCount(0, $this->userTokenService->getTokens($this->api_user_id));
+    }
+
+    /**
+     * @throws UnrecoverableException
+     * @throws ConflictException
+     */
+    public function testRemoteAddToken(): void
+    {
+        $this->setUpRemoteToken();
+        $this->setGetInfo(['id_u' => $this->api_user_id]);
+        try {
+            $this->getUtilisateurControler()->doAddTokenAction();
+        } catch (Exception $e) {
+            self::assertMatchesRegularExpression(
+                '/Votre jeton est/',
+                $e->getMessage()
+            );
+        }
+        static::assertCount(1, $this->userTokenService->getTokens($this->api_user_id));
+    }
+
+    /**
+     * @throws UnrecoverableException
+     * @throws ConflictException
+     */
+    public function testRemoteRenewTokenNoRights(): void
+    {
+        $this->setUpRemoteToken();
+        $this->userTokenService->createToken($this->api_user_id, 'token');
+        $userController = $this->getUtilisateurControler();
+        $userController->getAuthentification()->connexion('admin_inferieur', $this->admin_inf);
+        $this->setPostInfo(['id' => 1]);
+        try {
+            $userController->renewTokenAction();
+        } catch (Exception $e) {
+            self::assertMatchesRegularExpression(
+                "/Vous n'avez pas les droits nécessaires pour éxecuter cette action/",
+                $e->getMessage()
+            );
+        }
+    }
+
+    /**
+     * @throws UnrecoverableException
+     * @throws ConflictException
+     */
+    public function testRemoteRenewToken(): void
+    {
+        $this->setUpRemoteToken();
+        $this->userTokenService->createToken($this->api_user_id, 'token');
+        $this->setPostInfo(['id' => 1]);
+        try {
+            $this->getUtilisateurControler()->renewTokenAction();
+        } catch (Exception $e) {
+            self::assertMatchesRegularExpression(
+                '/Le jeton a été renouvelé/',
+                $e->getMessage()
+            );
+        }
+    }
+
+    /**
+     * @throws UnrecoverableException
+     * @throws ConflictException
+     */
+    public function testRemoteDeleteTokenNoRights(): void
+    {
+        $this->setUpRemoteToken();
+        $this->userTokenService->createToken($this->api_user_id, 'token');
+        $userController = $this->getUtilisateurControler();
+        $userController->getAuthentification()->connexion('admin_inferieur', $this->admin_inf);
+        $this->setPostInfo(['id' => 1]);
+        try {
+            $userController->deleteTokenAction();
+        } catch (Exception $e) {
+            self::assertMatchesRegularExpression(
+                "/Vous n'avez pas les droits nécessaires pour éxecuter cette action/",
+                $e->getMessage()
+            );
+        }
+        static::assertCount(1, $this->userTokenService->getTokens($this->api_user_id));
+    }
+
+    /**
+     * @throws UnrecoverableException
+     * @throws ConflictException
+     */
+    public function testRemoteDeleteToken(): void
+    {
+        $this->setUpRemoteToken();
+        $token = $this->userTokenService->createToken($this->api_user_id, 'token');
+        $this->setPostInfo(['id' => 1]);
+        try {
+            $this->getUtilisateurControler()->deleteTokenAction();
+        } catch (Exception $e) {
+            self::assertMatchesRegularExpression(
+                '/Le jeton a été supprimé/',
+                $e->getMessage()
+            );
+        }
+        static::assertNull($this->userTokenService->getUserFromToken($token));
     }
 
     public function testDeleteRole(): void
