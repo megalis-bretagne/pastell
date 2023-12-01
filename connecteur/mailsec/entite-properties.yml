@@ -5,6 +5,7 @@ formulaire:
     'Mail sécurisé':
         mailsec_from_description:
             name: "Nom de l'emetteur"
+            commentaire: "Vous pouvez utiliser %ENTITE% (nom de l'entité)"
             default: PASTELL
         mailsec_reply_to:
             name: Reply-To

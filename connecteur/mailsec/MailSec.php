@@ -149,8 +149,10 @@ class MailSec extends MailsecConnecteur
         $sujet = $this->processMessageItem($this->connecteurConfig->getWithDefault('mailsec_subject'), $link);
         $message = $this->processMessageItem($this->connecteurConfig->getWithDefault('mailsec_content'), $link);
         $content_html = $this->processMessageItem($this->connecteurConfig->getFileContent("content_html"), $link);
-
-        $mailsec_from_description = $this->connecteurConfig->getWithDefault('mailsec_from_description');
+        $mailsec_from_description = $this->processMessageItem(
+            $this->connecteurConfig->getWithDefault('mailsec_from_description'),
+            $link
+        );
         $mailsec_reply_to = $this->connecteurConfig->get(
             'mailsec_reply_to',
             $this->plateforme_mail
