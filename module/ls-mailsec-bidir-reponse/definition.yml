@@ -1,0 +1,88 @@
+nom: 'Mail sécurisé avec réponse (réponse)'
+type: 'Mail sécurisé'
+description: 'Réponses des destinataires de Mail sécurisé avec réponse'
+connecteur: {  }
+formulaire:
+    onglet1:
+        reponse:
+            name: Réponse
+            type: textarea
+            requis: true
+            multiple: false
+            commentaire: ''
+        document_attache:
+            name: Document(s)
+            type: file
+            requis: false
+            multiple: true
+            commentaire: ''
+champs-affiches:
+    - titre
+    - dernier_etat
+    - date_dernier_etat
+champs-recherche-avancee:
+    - type
+    - id_e
+    - lastetat
+    - last_state_begin
+    - etatTransit
+    - state_begin
+    - notEtatTransit
+    - search
+action:
+    creation:
+        name-action: Créer
+        name: Créé
+        rule:
+            no-last-action: ''
+    modification:
+        name-action: Modifier
+        name: 'En cours de rédaction'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+    supression:
+        name-action: Supprimer
+        name: Supprimé
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - termine
+                - fatal-error
+        action-class: Supprimer
+        warning: 'Êtes-vous sûr ?'
+    importation:
+        name: 'Importation du document'
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+    orientation:
+        name: 'Envoi du document'
+        name-action: 'Envoyer le document'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+            document_is_valide: true
+        action-class: OrientationTypeDossierPersonnalise
+    termine:
+        name: 'Traitement terminé'
+        rule:
+            role_id_e: no-role
+    reouverture:
+        name: 'Rouvrir le dossier'
+        rule:
+            last-action:
+                - termine
+        action-class: Reopen
+    cheminement-change:
+        no-workflow: true
+        rule:
+            role_id_e: 'no-role,'
+        action-class: CheminementChangeTypeDossierPersonnalise
+studio_definition: ewogICJpZF90eXBlX2Rvc3NpZXIiOiAiZHJhZnQtbWFpbHNlYy1iaWRpci1yZXBvbnNlIiwKICAicGFzdGVsbC12ZXJzaW9uIjogIiVWRVJTSU9OJSIsCiAgInRpbWVzdGFtcCI6IDE3MDE4NzA2MzIsCiAgInJhd19kYXRhIjogewogICAgImlkX3R5cGVfZG9zc2llciI6ICJkcmFmdC1tYWlsc2VjLWJpZGlyLXJlcG9uc2UiLAogICAgIm5vbSI6ICJNYWlsIHNcdTAwZTljdXJpc1x1MDBlOSBhdmVjIHJcdTAwZTlwb25zZSAoclx1MDBlOXBvbnNlKSIsCiAgICAidHlwZSI6ICJNYWlsIHNcdTAwZTljdXJpc1x1MDBlOSIsCiAgICAiZGVzY3JpcHRpb24iOiAiUlx1MDBlOXBvbnNlcyBkZXMgZGVzdGluYXRhaXJlcyBkZSBNYWlsIHNcdTAwZTljdXJpc1x1MDBlOSBhdmVjIHJcdTAwZTlwb25zZSIsCiAgICAibm9tX29uZ2xldCI6ICJvbmdsZXQxIiwKICAgICJyZXN0cmljdGlvbl9wYWNrIjogIiIsCiAgICAiZm9ybXVsYWlyZUVsZW1lbnQiOiBbCiAgICAgIHsKICAgICAgICAiZWxlbWVudF9pZCI6ICJyZXBvbnNlIiwKICAgICAgICAibmFtZSI6ICJSXHUwMGU5cG9uc2UiLAogICAgICAgICJ0eXBlIjogInRleHRhcmVhIiwKICAgICAgICAiY29tbWVudGFpcmUiOiAiIiwKICAgICAgICAicmVxdWlzIjogIm9uIiwKICAgICAgICAiY2hhbXBzX2FmZmljaGVzIjogIiIsCiAgICAgICAgImNoYW1wc19yZWNoZXJjaGVfYXZhbmNlZSI6ICIiLAogICAgICAgICJ0aXRyZSI6ICIiLAogICAgICAgICJzZWxlY3RfdmFsdWUiOiAiIiwKICAgICAgICAicHJlZ19tYXRjaCI6ICIiLAogICAgICAgICJkZWZhdWx0X3ZhbHVlIjogIiIsCiAgICAgICAgInByZWdfbWF0Y2hfZXJyb3IiOiAiIiwKICAgICAgICAiY29udGVudF90eXBlIjogIiIKICAgICAgfSwKICAgICAgewogICAgICAgICJlbGVtZW50X2lkIjogImRvY3VtZW50X2F0dGFjaGUiLAogICAgICAgICJuYW1lIjogIkRvY3VtZW50KHMpIiwKICAgICAgICAidHlwZSI6ICJtdWx0aV9maWxlIiwKICAgICAgICAiY29tbWVudGFpcmUiOiAiIiwKICAgICAgICAicmVxdWlzIjogIiIsCiAgICAgICAgImNoYW1wc19hZmZpY2hlcyI6ICIiLAogICAgICAgICJjaGFtcHNfcmVjaGVyY2hlX2F2YW5jZWUiOiAiIiwKICAgICAgICAidGl0cmUiOiAiIiwKICAgICAgICAic2VsZWN0X3ZhbHVlIjogIiIsCiAgICAgICAgInByZWdfbWF0Y2giOiAiIiwKICAgICAgICAiZGVmYXVsdF92YWx1ZSI6ICIiLAogICAgICAgICJwcmVnX21hdGNoX2Vycm9yIjogIiIsCiAgICAgICAgImNvbnRlbnRfdHlwZSI6ICIiCiAgICAgIH0KICAgIF0sCiAgICAiZXRhcGUiOiBbXQogIH0KfQ==

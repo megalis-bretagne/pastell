@@ -14,6 +14,7 @@
 - Possibilité d'envoyer en mode préparation vers Fast-tdt #1541
 - Permettre la configuration des attributs LDAP : nom, prénom et email #1975
 - Ajustement de la zone de séléction dans la gestion d'éléments studio #1281
+- Remplacement du flux generique "Mail sécurisé avec réponse" 'mailsec-bidir' par le flux studio 'ls-mailsec-bidir' #1978
 
 ## Corrections
 
