@@ -5,7 +5,7 @@ connecteur_type:
 formulaire:
     'Mail sécurisé':
         to:
-            name: Destinataire(s)
+            name: Destinataire (s)
             commentaire: 'Plusieurs emails possibles séparés par une virgule'
             type: mail-list
             autocomplete: MailSec/getContactAjax
@@ -46,6 +46,13 @@ formulaire:
             name: 'Mails répondus'
             default: '0'
             no-show: true
+            read-only: true
+
+    'Accusé de lecture':
+        Accusé de lecture:
+            name: 'Accusé de lecture'
+            commentaire: 'Format pdf'
+            type: file
             read-only: true
 page-condition:
     'Mail sécurisé':
