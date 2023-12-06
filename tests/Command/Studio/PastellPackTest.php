@@ -99,19 +99,19 @@ class PastellPackTest extends PastellTestCase
             'ls-recup-parapheur',
             'Récupération parapheur',
         ],
-        'draft-mailsec-bidir' =>
+        'draft-ls-mailsec-bidir' =>
         [
             '',
             'ls-mailsec-bidir',
             'Mail sécurisé avec réponse',
         ],
-        'draft-mailsec-bidir-destinataire' =>
+        'draft-ls-mailsec-bidir-destinataire' =>
             [
                 '',
                 'ls-mailsec-bidir-destinataire',
                 'Mail sécurisé avec réponse (destinataire)',
             ],
-        'draft-mailsec-bidir-reponse' =>
+        'draft-ls-mailsec-bidir-reponse' =>
             [
                 '',
                 'ls-mailsec-bidir-reponse',
