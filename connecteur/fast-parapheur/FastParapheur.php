@@ -392,11 +392,13 @@ class FastParapheur extends SignatureConnecteur
      */
     public function getBordereauFromSignature($signature): ?Fichier
     {
+        //changer appeller DocapostParapheurSoapClient
         return null;
     }
 
     public function hasBordereau()
     {
+        //changer
         return false;
     }
 
