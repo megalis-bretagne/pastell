@@ -5,6 +5,8 @@
 - Ajout de la fonction jsonpath_array pour récuperer des listes de données #1376
 - Ajout de l'option de co-signature pour les flux studios #684
 - Ajout du flux Dossier de séance (archivage) 'ls-dossier-seance' #1946
+- Ajout des champs annotations publiques et privées pour l'envoi vers iParapheur #1883
+- Ajout d'un accusé de réception pour les mails sécurisés #1128
 - Ajout des champs annotations publiques et privées pour l'envoi vers iParapheur pour les flux studios #1883
 - Studio, étape tdt_actes, ajout du contôle sur le total des fichiers Acte et Annexes < 157.29 MB #1602
 - Studio, étape tdt_helios, ajout du contrôle sur la taille du fichier PES ALLER < 128 MB #1602
