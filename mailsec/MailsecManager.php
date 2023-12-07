@@ -15,6 +15,14 @@ use DocumentTypeFactory;
 use DonneesFormulaireFactory;
 use EntiteSQL;
 use Journal;
+use Libriciel\OfficeClients\Conversion\Client\Configuration\CloudoooServiceConfiguration;
+use Libriciel\OfficeClients\Conversion\Client\Strategy\CloudoooStrategy;
+use Libriciel\OfficeClients\Fusion\Client\Configuration\RestServiceConfiguration;
+use Libriciel\OfficeClients\Fusion\Client\Strategy\RestStrategy;
+use Libriciel\OfficeClients\Fusion\Type\ContentType;
+use Libriciel\OfficeClients\Fusion\Type\FieldType;
+use Libriciel\OfficeClients\Fusion\Type\IterationType;
+use Libriciel\OfficeClients\Fusion\Type\PartType;
 use Mailsec\Exception\InvalidKeyException;
 use Mailsec\Exception\UnavailableMailException;
 use Mailsec\Exception\MissingPasswordException;
@@ -24,6 +32,7 @@ use MailSecInfo;
 use NotFoundException;
 use NotificationMail;
 use ObjectInstancier;
+use phpDocumentor\Reflection\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use UnrecoverableException;
@@ -45,6 +54,8 @@ final class MailsecManager
      * @throws NotFoundException
      * @throws InvalidKeyException
      * @throws UnavailableMailException
+     * @throws \Exception
+     * @throws \Throwable
      */
     public function getMailsecInfo(string $key, Request $request, bool $checkPassword = true): MailSecInfo
     {
@@ -125,6 +136,11 @@ final class MailsecManager
                 $mailSecInfo->donneesFormulaireReponse->getFieldDataList('', 0);
         }
 
+        $odtFile = $this->updateReceipt($mailSecInfo->id_d);
+        $config = new CloudoooServiceConfiguration();
+        $pdfFile = (new CloudoooStrategy($config))->conversion($odtFile);
+        $mailSecInfo->donneesFormulaire->addFileFromData('accuse_lecture', 'accuse_lecture.pdf', $pdfFile);
+        $mailSecInfo->donneesFormulaire->setData('lecture_mail', true);
         return $mailSecInfo;
     }
 
@@ -272,5 +288,48 @@ final class MailsecManager
         $mailSecInfo->id_d_reponse = $responseId;
 
         return $mailSecInfo;
+    }
+
+    public function updateReceipt(string $id_d): string
+    {
+        $documentEmail = $this->objectInstancier->getInstance(DocumentEmail::class);
+        $documentReponse = $this->objectInstancier->getInstance(DocumentEmailReponseSQL::class)->getAllReponse($id_d);
+        $recipient_list = $documentEmail->getAllRecipientIds($id_d);
+        $template_path = $this->objectInstancier->getInstance('data_dir') . '/connector/mailsec/accuse_lecture_template.odt';
+        $main = new PartType();
+        $section = new IterationType('table_destinataires');
+        foreach ($recipient_list as $id_de) {
+            $infoRecipient = $documentEmail->getInfoFromPK($id_de);
+            $part = new PartType();
+            $part->addElement(new FieldType('email', $infoRecipient['email'], 'text'));
+            $part->addElement(new FieldType('type', $infoRecipient['type_destinataire'], 'text'));
+            $part->addElement(new FieldType('date_envoi', $infoRecipient['date_envoie'], 'date'));
+            $part->addElement(new FieldType('dernier_envoi', $infoRecipient['date_renvoi'], 'date'));
+            $part->addElement(new FieldType('nombre_envois', (string)$infoRecipient['nb_renvoi'], 'text'));
+            $part->addElement(
+                new FieldType('lecture', ($infoRecipient['lu'] === 1) ? $infoRecipient['date_lecture'] : 'non', 'text')
+            );
+            $part->addElement(
+                new FieldType(
+                    'date_reponse',
+                    (isset($documentReponse[$id_de]) && $documentReponse[$id_de]['has_date_reponse'] === 1) ? $documentReponse[$id_de]['date_reponse'] : 'non',
+                    'text'
+                )
+            );
+            $section->addPart($part);
+        }
+        $main->addElement($section);
+
+        $main->addElement(new FieldType('date', date('Y-m-d H:i:s'), 'date'));
+        $main->addElement(new ContentType(
+            'odt_content',
+            'accuse_lecture.odt',
+            'application/vnd.oasis.opendocument.text',
+            'binary',
+            file_get_contents($template_path)
+        ));
+
+        $config = new RestServiceConfiguration('http://flow:8080');
+        return (new RestStrategy($config))->fusion($template_path, $main);
     }
 }

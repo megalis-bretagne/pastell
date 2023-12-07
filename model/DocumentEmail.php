@@ -52,6 +52,12 @@ class DocumentEmail extends SQL
         return $this->queryOneCol($sql, $id_d);
     }
 
+    public function getAllRecipientIds($id_d): array
+    {
+        $sql = "SELECT id_de FROM document_email WHERE id_d=? ORDER BY id_de";
+        return $this->queryOneCol($sql, $id_d);
+    }
+
     public function getInfoFromKey($key)
     {
         $sql = "SELECT * FROM document_email WHERE `key`=?";
