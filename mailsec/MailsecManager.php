@@ -14,11 +14,14 @@ use DocumentSQL;
 use DocumentTypeFactory;
 use DonneesFormulaireFactory;
 use EntiteSQL;
+use http\Exception\RuntimeException;
 use Journal;
 use Libriciel\OfficeClients\Conversion\Client\Configuration\CloudoooServiceConfiguration;
 use Libriciel\OfficeClients\Conversion\Client\Strategy\CloudoooStrategy;
+use Libriciel\OfficeClients\Exception\ConnectionException;
 use Libriciel\OfficeClients\Fusion\Client\Configuration\RestServiceConfiguration;
 use Libriciel\OfficeClients\Fusion\Client\Strategy\RestStrategy;
+use Libriciel\OfficeClients\Fusion\Exception\InvalidTemplateException;
 use Libriciel\OfficeClients\Fusion\Type\ContentType;
 use Libriciel\OfficeClients\Fusion\Type\FieldType;
 use Libriciel\OfficeClients\Fusion\Type\IterationType;
@@ -29,6 +32,7 @@ use Mailsec\Exception\MissingPasswordException;
 use Mailsec\Exception\NotEditableResponseException;
 use Mailsec\Exception\UnableToExecuteActionException;
 use MailSecInfo;
+use mysql_xdevapi\Exception;
 use NotFoundException;
 use NotificationMail;
 use ObjectInstancier;
@@ -136,11 +140,15 @@ final class MailsecManager
                 $mailSecInfo->donneesFormulaireReponse->getFieldDataList('', 0);
         }
 
-        $odtFile = $this->updateReceipt($mailSecInfo->id_d);
-        $config = new CloudoooServiceConfiguration();
-        $pdfFile = (new CloudoooStrategy($config))->conversion($odtFile);
-        $mailSecInfo->donneesFormulaire->addFileFromData('accuse_lecture', 'accuse_lecture.pdf', $pdfFile);
-        $mailSecInfo->donneesFormulaire->setData('lecture_mail', true);
+
+        try {
+            $odtFile = $this->updateReceipt($mailSecInfo->id_d);
+            $config = new CloudoooServiceConfiguration();
+            $pdfFile = (new CloudoooStrategy($config))->conversion($odtFile);
+            $mailSecInfo->donneesFormulaire->addFileFromData('accuse_lecture', 'accuse_lecture.pdf', $pdfFile);
+            $mailSecInfo->donneesFormulaire->setData('lecture_mail', true);
+        } catch (ConnectionException) {
+        }
         return $mailSecInfo;
     }
 
@@ -290,12 +298,30 @@ final class MailsecManager
         return $mailSecInfo;
     }
 
+    /**
+     * @throws ConnectionException
+     * @throws InvalidTemplateException
+     */
     public function updateReceipt(string $id_d): string
     {
         $documentEmail = $this->objectInstancier->getInstance(DocumentEmail::class);
-        $documentReponse = $this->objectInstancier->getInstance(DocumentEmailReponseSQL::class)->getAllReponse($id_d);
+        $documentEmailReponseSQL = $this->objectInstancier->getInstance(DocumentEmailReponseSQL::class);
+        $documentReponse = $documentEmailReponseSQL->getAllReponse($id_d);
         $recipient_list = $documentEmail->getAllRecipientIds($id_d);
-        $template_path = $this->objectInstancier->getInstance('data_dir') . '/connector/mailsec/accuse_lecture_template.odt';
+        $use_template_reponse = false;
+        foreach ($recipient_list as $id_de) {
+            if ($documentEmailReponseSQL->getInfo($id_de)) {
+                $use_template_reponse = true;
+            }
+        }
+
+        if ($use_template_reponse) {
+            $template_path = $this->objectInstancier->getInstance('data_dir') . '/connector/mailsec/accuse_lecture_reponse_template.odt';
+        } else {
+            $template_path = $this->objectInstancier->getInstance('data_dir') . '/connector/mailsec/accuse_lecture_simple_template.odt';
+        }
+
+
         $main = new PartType();
         $section = new IterationType('table_destinataires');
         foreach ($recipient_list as $id_de) {
@@ -309,13 +335,15 @@ final class MailsecManager
             $part->addElement(
                 new FieldType('lecture', ($infoRecipient['lu'] === 1) ? $infoRecipient['date_lecture'] : 'non', 'text')
             );
-            $part->addElement(
-                new FieldType(
-                    'date_reponse',
-                    (isset($documentReponse[$id_de]) && $documentReponse[$id_de]['has_date_reponse'] === 1) ? $documentReponse[$id_de]['date_reponse'] : 'non',
-                    'text'
-                )
-            );
+            if ($use_template_reponse) {
+                $part->addElement(
+                    new FieldType(
+                        'date_reponse',
+                        (isset($documentReponse[$id_de]) && $documentReponse[$id_de]['has_date_reponse'] === 1) ? $documentReponse[$id_de]['date_reponse'] : 'non',
+                        'text'
+                    )
+                );
+            }
             $section->addPart($part);
         }
         $main->addElement($section);
