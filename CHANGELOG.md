@@ -11,6 +11,7 @@
 - Studio, étape tdt_actes, ajout du contôle sur le total des fichiers Acte et Annexes < 157.29 MB #1602
 - Studio, étape tdt_helios, ajout du contrôle sur la taille du fichier PES ALLER < 128 MB #1602
 - Studio, étape tdt_helios, ajout de la possibilité de définir le champ "Objet PES ALLER" (prend la valeur NomFic du Fichier PES) #1969
+- Ajout d'un fichier pdf accusé de lecture pour les mails sécurisés #1128
 - Possibilité de créer un utilisateur exclusivement API et de gérer ses tokens via l'administrateur de son entité #1943
 - Possibilité de sélectionner une entité et ses entités filles dans le connecteur de purge global #1704
 - Possibilité d'afficher le contennu d'un type de dossier studio sur un seul onglet #1980
