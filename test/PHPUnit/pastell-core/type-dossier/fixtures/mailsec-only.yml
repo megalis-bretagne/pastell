@@ -29,7 +29,7 @@ formulaire:
             read-only: true
     'Mail sécurisé':
         to:
-            name: Destinataire(s)
+            name: 'Destinataire (s)'
             commentaire: 'Plusieurs emails possibles séparés par une virgule'
             type: mail-list
             autocomplete: MailSec/getContactAjax
@@ -71,6 +71,15 @@ formulaire:
             default: '0'
             no-show: true
             read-only: true
+    'Accusé de lecture':
+        lecture_mail:
+            no-show: true
+            read-only: true
+        accuse_lecture:
+            name: 'Accusé de lecture'
+            commentaire: 'Format pdf'
+            type: file
+            read-only: true
 champs-affiches:
     - titre
     - dernier_etat
@@ -87,6 +96,8 @@ champs-recherche-avancee:
 page-condition:
     'Mail sécurisé':
         envoi_mailsec: true
+    'Accusé de lecture':
+        lecture_mail: true
 action:
     creation:
         name-action: Créer
