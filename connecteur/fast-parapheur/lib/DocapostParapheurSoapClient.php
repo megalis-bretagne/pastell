@@ -115,4 +115,16 @@ class DocapostParapheurSoapClient
     {
         return $this->client->getCircuits(['siren' => $siren])->return;
     }
+
+    /**
+     * @throws DocapostParapheurSoapClientException
+     */
+    public function getFdc(string $documentId)
+    {
+        $fdc = $this->client->getFdc(['documentId' => $documentId]);
+        if (!$fdc->return->content) {
+            throw new DocapostParapheurSoapClientException("Le fichier de circulation n'a pas pu être téléchargé");
+        }
+        return $fdc->return->content;
+    }
 }

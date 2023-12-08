@@ -251,12 +251,11 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor
         }
 
         if ($signature->hasBordereau()) {
-            $bordereau = $signature->getBordereauFromSignature($info);
+            $bordereau = $signature->getBordereauFromSignature($info, $dossierID);
             if ($bordereau) {
                 $donneesFormulaire->addFileFromData($bordereau_element, $bordereau->filename, $bordereau->content);
             }
         }
-
         if (!$signature->archiver($dossierID)) {
             throw new RecoverableException(
                 "Impossible d'archiver la transaction sur le parapheur : " . $signature->getLastError()

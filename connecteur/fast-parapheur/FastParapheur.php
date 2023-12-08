@@ -388,18 +388,25 @@ class FastParapheur extends SignatureConnecteur
      * Workaround because it is embedded in IParapheur::getSignature()
      *
      * @param $signature
-     * @return Fichier
+     * @return ?Fichier
+     * @throws Exception
      */
-    public function getBordereauFromSignature($signature): ?Fichier
+    public function getBordereauFromSignature($signature, $documentId = ''): ?Fichier
     {
-        //changer appeller DocapostParapheurSoapClient
-        return null;
+        try {
+            $return = new Fichier();
+            $return->filename = 'fichier-de-circulation.pdf';
+            $return->content = $this->getClient()->getFdc($documentId);
+        } catch (Exception $e) {
+            $this->lastError = $e->getMessage();
+            return null;
+        }
+        return $return;
     }
 
     public function hasBordereau()
     {
-        //changer
-        return false;
+        return true;
     }
 
     /**

@@ -435,6 +435,57 @@ class FastParapheurTest extends PastellTestCase
         $this->assertSame("Le document n'a pas pu être téléchargé", $this->fastParapheur->getLastError());
     }
 
+    public function testGetBordereauFromSignatureFast()
+    {
+        $this->fastParapheur = $this->getFastParapheur();
+        $signature = $this->fastParapheur->getSignature('1234-abcd');
+        $this->mockSoapClient(
+            function ($soapMethod, $arguments) {
+                if ($soapMethod === 'getFdc') {
+                    return json_decode(
+                        json_encode([
+                            'return' => [
+                                'content' => 'fdc-content',
+                            ]
+                        ])
+                    );
+                }
+                throw new UnrecoverableException("Unexpected call to SOAP method : $soapMethod");
+            }
+        );
+
+        $this->fastParapheur = $this->getFastParapheur();
+
+        $this->assertEquals('fdc-content', $this->fastParapheur->getBordereauFromSignature('signature','1234-abcd')->content);
+    }
+
+    public function testGetBordereauFromSignatureFastDonwloadFail()
+    {
+        $this->fastParapheur = $this->getFastParapheur();
+        $signature = $this->fastParapheur->getSignature('1234-abcd');
+        $this->mockSoapClient(
+            function ($soapMethod, $arguments) {
+                if ($soapMethod === 'getFdc') {
+                    return json_decode(
+                        json_encode([
+                            'return' => [
+                                'content' => '',
+                            ]
+                        ], JSON_THROW_ON_ERROR),
+                        false,
+                        512,
+                        JSON_THROW_ON_ERROR
+                    );
+                }
+                throw new UnrecoverableException("Unexpected call to SOAP method : $soapMethod");
+            }
+        );
+
+        $this->fastParapheur = $this->getFastParapheur();
+        static::assertNull($this->fastParapheur->getBordereauFromSignature('signature','1234-abcd'));
+        $this->assertSame("Le fichier de circulation n'a pas pu être téléchargé", $this->fastParapheur->getLastError());
+    }
+
     public function testMaxNumberDaysInParapheur()
     {
         $connecteurConfig = $this->getDefaultConnectorConfig();
