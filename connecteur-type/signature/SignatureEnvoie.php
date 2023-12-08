@@ -87,7 +87,7 @@ class SignatureEnvoie extends ConnecteurTypeActionExecutor
         if ($donneesFormulaire->get($primo_signature_detachee)) {
             $fileToSign->signature_content = $donneesFormulaire->getFileContent($primo_signature_detachee);
             $fileToSign->signature_type = $donneesFormulaire->getContentType($primo_signature_detachee);
-            if ($fileToSign->signature_type != 'application/xml') {
+            if ($fileToSign->signature_type !== 'application/xml') {
                 $fileToSign->signature_type = 'application/pkcs7-signature';
             }
         }
@@ -101,7 +101,7 @@ class SignatureEnvoie extends ConnecteurTypeActionExecutor
 
 
         if ($donneesFormulaire->getFormulaire()->getField($iparapheur_dossier_id)) {
-            $fileToSign->dossierId = date("YmdHis") . mt_rand(0, mt_getrandmax());
+            $fileToSign->dossierId = date("YmdHis") . random_int(0, mt_getrandmax());
         } else { // conservé pour compatibilité
             $fileToSign->dossierId = $signature->getDossierID(
                 $donneesFormulaire->get($objet_element),
