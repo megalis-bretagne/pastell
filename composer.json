@@ -97,7 +97,7 @@
       "symfony/runtime": true,
       "symfony/flex": true,
       "php-http/discovery": true,
-      "composer/installers": true
+      "composer/installers": false
     }
   },
   "scripts": {
