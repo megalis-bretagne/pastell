@@ -435,10 +435,12 @@ class FastParapheurTest extends PastellTestCase
         $this->assertSame("Le document n'a pas pu être téléchargé", $this->fastParapheur->getLastError());
     }
 
-    public function testGetBordereauFromSignatureFast()
+    /**
+     * @throws Exception
+     */
+    public function testGetBordereauFromSignatureFast(): void
     {
         $this->fastParapheur = $this->getFastParapheur();
-        $signature = $this->fastParapheur->getSignature('1234-abcd');
         $this->mockSoapClient(
             function ($soapMethod, $arguments) {
                 if ($soapMethod === 'getFdc') {
@@ -447,7 +449,10 @@ class FastParapheurTest extends PastellTestCase
                             'return' => [
                                 'content' => 'fdc-content',
                             ]
-                        ])
+                        ], JSON_THROW_ON_ERROR),
+                        false,
+                        512,
+                        JSON_THROW_ON_ERROR
                     );
                 }
                 throw new UnrecoverableException("Unexpected call to SOAP method : $soapMethod");
@@ -456,13 +461,18 @@ class FastParapheurTest extends PastellTestCase
 
         $this->fastParapheur = $this->getFastParapheur();
 
-        $this->assertEquals('fdc-content', $this->fastParapheur->getBordereauFromSignature('signature','1234-abcd')->content);
+        static::assertEquals(
+            'fdc-content',
+            $this->fastParapheur->getBordereauFromSignature('signature', '1234-abcd')->content
+        );
     }
 
-    public function testGetBordereauFromSignatureFastDonwloadFail()
+    /**
+     * @throws Exception
+     */
+    public function testGetBordereauFromSignatureFastDownloadFail(): void
     {
         $this->fastParapheur = $this->getFastParapheur();
-        $signature = $this->fastParapheur->getSignature('1234-abcd');
         $this->mockSoapClient(
             function ($soapMethod, $arguments) {
                 if ($soapMethod === 'getFdc') {
@@ -482,8 +492,8 @@ class FastParapheurTest extends PastellTestCase
         );
 
         $this->fastParapheur = $this->getFastParapheur();
-        static::assertNull($this->fastParapheur->getBordereauFromSignature('signature','1234-abcd'));
-        $this->assertSame("Le fichier de circulation n'a pas pu être téléchargé", $this->fastParapheur->getLastError());
+        static::assertNull($this->fastParapheur->getBordereauFromSignature('signature', '1234-abcd'));
+        static::assertSame("Le fichier de circulation n'a pas pu être téléchargé", $this->fastParapheur->getLastError());
     }
 
     public function testMaxNumberDaysInParapheur()
