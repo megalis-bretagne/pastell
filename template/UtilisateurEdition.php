@@ -92,7 +92,7 @@ use Pastell\Utilities\Certificate;
             </tr>
             <?php if ($new_user) : ?>
             <tr>
-                <th><label for='api_user'>Utilisateur API</label></th>
+                <th><label for='api_user'>Utilisateur exclusivement API</label></th>
                 <td>
 
                     <input class="" type='checkbox' name='api_user' id='api_user'/>
