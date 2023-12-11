@@ -3,6 +3,7 @@
 ## Ajouts
 
 - Ajout de la fonction jsonpath_array pour récuperer des listes de données #1376
+- Ajout de l'option de co-signature pour les flux studios #684
 - Ajout du flux Dossier de séance (archivage) 'ls-dossier-seance' #1946
 - Ajout des champs annotations publiques et privées pour l'envoi vers iParapheur #1883
 

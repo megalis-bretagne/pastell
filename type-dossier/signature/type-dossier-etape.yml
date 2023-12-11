@@ -16,6 +16,9 @@ configuration_etape_formulaire:
     has_date_limite:
         name: "Permettre l'utilisation d'une date limite"
         type: checkbox
+    has_primo_signature:
+        name: "Permettre l'utilisation d'une signature détachée"
+        type: checkbox
     has_metadata_in_json:
         name: "Permettre l'envoi d'un fichier de métadonnées en JSON"
         type: checkbox
@@ -46,6 +49,11 @@ formulaire:
         date_limite:
             name: 'Date limite'
             type: date
+        primo_signature_detachee:
+            name: 'Primo-signature détachée'
+            type: file
+            multiple: true
+            commentaire: 'format XML ou pkcs7'
         annotation_publique:
             name: 'Annotation publique'
             type: textarea
@@ -143,6 +151,7 @@ action:
             fast_parapheur_email_cc: fast_parapheur_email_cc
             fast_parapheur_agents: fast_parapheur_agents
             send-signature-error: send-signature-error
+            primo_signature_detachee: primo_signature_detachee
             iparapheur_annotation_publique: annotation_publique
             iparapheur_annotation_privee: annotation_privee
         action-automatique: verif-iparapheur
@@ -203,4 +212,3 @@ action:
             iparapheur_type: iparapheur_type
             iparapheur_sous_type: iparapheur_sous_type
             fast_parapheur_circuit: fast_parapheur_circuit
-

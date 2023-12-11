@@ -163,6 +163,7 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
             'fast_parapheur_agents' => 'fast_parapheur_agents_2',
             'annotation_publique' => 'annotation_publique_2',
             'annotation_privee' => 'annotation_privee_2',
+            'primo_signature_detachee' => 'primo_signature_detachee_2',
         ], $mapping);
     }
 
@@ -239,6 +240,12 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
                     'annotation_privee_2' => [
                         'name' => 'Annotation privée',
                         'type' => 'textarea',
+                    ],
+                    'primo_signature_detachee_2' => [
+                        'name' => 'Primo-signature détachée',
+                        'type' => 'file',
+                        'multiple' => true,
+                        'commentaire' => 'format XML ou pkcs7',
                     ],
                 ],
             'Signature #2' =>
@@ -375,6 +382,7 @@ Uniquement avec le mode "circuit à la volée"',
                         'fast_parapheur_agents' => 'fast_parapheur_agents_2',
                         'iparapheur_annotation_publique' => 'annotation_publique_2',
                         'iparapheur_annotation_privee' => 'annotation_privee_2',
+                        'primo_signature_detachee' => 'primo_signature_detachee_2',
                     ],
                     'action-automatique' => 'verif-iparapheur_2',
                 ],

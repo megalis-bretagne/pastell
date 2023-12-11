@@ -115,6 +115,7 @@ class SignatureEnvoie extends ConnecteurTypeActionExecutor
             $fileToSign->date_limite = $donneesFormulaire->get($iparapheur_date_limite);
         }
 
+
         if ($donneesFormulaire->get($iparapheur_annotation_publique)) {
             $fileToSign->annotationPublic = $donneesFormulaire->get($iparapheur_annotation_publique);
         }

@@ -96,6 +96,7 @@
         "annexe": "annexe",
         "has_date_limite": "",
         "has_metadata_in_json": "",
+        "has_primo_signature": "",
         "continue_after_refusal": ""
       },
       "num_etape_same_type": 0,
