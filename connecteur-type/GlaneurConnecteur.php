@@ -266,7 +266,7 @@ abstract class GlaneurConnecteur extends Connecteur
         if ($type_depot == self::TYPE_DEPOT_ZIP) {
             return $this->glanerZip($directory, $directory_send, $tmp_folder);
         }
-        throw new UnrecoverableException("Le type de dépot est inconnu");
+        throw new UnrecoverableException("Le type d'éléments à glaner est inconnu");
     }
 
     /**
@@ -388,15 +388,20 @@ abstract class GlaneurConnecteur extends Connecteur
             $this->last_message[] = "Le répertoire est vide";
             return true;
         }
-        $this->copy($directory . "/" . $current, $tmp_folder . "/" . $current);
         $zip_to_remove = $directory . "/" . $current;
+        if ($this->isDir($zip_to_remove)) {
+            $this->last_message[] = sprintf('`%s` est un répertoire', $zip_to_remove);
+            $this->moveToErrorDirectory([$zip_to_remove]);
+            return false;
+        }
+        $this->copy($directory . "/" . $current, $tmp_folder . "/" . $current);
         $zip_file = $tmp_folder . '/' . $current;
         $zip = new ZipArchive();
         $handle = $zip->open($zip_file);
         if ($handle !== true) {
-            $this->moveToErrorDirectory([$zip_file]);
-
-            throw new Exception("Impossible d'ouvrir le fichier zip");
+            $this->last_message[] = sprintf('Impossible d\'ouvrir le fichier zip `%s`', $zip_to_remove);
+            $this->moveToErrorDirectory([$zip_to_remove]);
+            return false;
         }
         $zip->extractTo($tmp_folder);
         $zip->close();

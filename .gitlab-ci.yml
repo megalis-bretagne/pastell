@@ -23,6 +23,7 @@ variables:
     MYSQL_HOST_TEST: 'mariadb'
     MYSQL_HOST: 'mariadb'
     MYSQL_PORT: '3306'
+    PHP_MEMORY_LIMIT: '1000M'
     PASTELL_SITE_BASE: 'https://localhost/'
     WEBSEC_BASE: https://127.0.0.1/
 

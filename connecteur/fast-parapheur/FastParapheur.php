@@ -245,7 +245,8 @@ class FastParapheur extends SignatureConnecteur
                 $this->subscriberNumber,
                 $file->circuit,
                 $file->document->filename,
-                $file->document->content
+                $file->document->content,
+                $file->dossierTitre
             );
         } catch (Exception $e) {
             $this->lastError = $e->getMessage();

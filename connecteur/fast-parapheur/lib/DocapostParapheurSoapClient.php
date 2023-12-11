@@ -10,20 +10,21 @@ class DocapostParapheurSoapClient
     }
 
     /**
-     * @param string $subscriberNumber
-     * @param string $circuit
-     * @param string $filename
-     * @param string $documentContent
      * @return mixed
      * @throws DocapostParapheurSoapClientException
      * @throws Exception
      */
-    public function upload(string $subscriberNumber, string $circuit, string $filename, string $documentContent)
-    {
+    public function upload(
+        string $subscriberNumber,
+        string $circuit,
+        string $filename,
+        string $documentContent,
+        string $label = '',
+    ) {
         $data = [
             'subscriberId' => $subscriberNumber,
             'circuitId' => $circuit,
-            'label' => '',
+            'label' => $label,
             'comment' => '',
             'dataFileVO' => [
                 'filename' => $filename,

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 class TenantNameAction extends DictionnaryChoice
 {
     public function getElementId(): string
@@ -17,9 +19,12 @@ class TenantNameAction extends DictionnaryChoice
         return 'Sélectionner une entité';
     }
 
-    public function displayAPI()
+    /**
+     * @throws Exception
+     */
+    public function displayAPI(): array
     {
-        /** @var RecupParapheur $recupParapheur */
+        /** @var RecupParapheurCorbeille $recupParapheur */
         $recupParapheur = $this->getMyConnecteur();
         return $recupParapheur->getTenantList();
     }

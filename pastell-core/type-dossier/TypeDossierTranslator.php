@@ -89,7 +89,7 @@ class TypeDossierTranslator
                 $values = explode("\n", trim($typeDossierFormulaireElement->select_value, "\n"));
                 $res = [];
                 foreach ($values as $key => $value) {
-                    $explodedValue = explode(':', $value, 2);
+                    $explodedValue = explode(':', trim($value), 2);
                     if (count($explodedValue) === 2) {
                         $res[$explodedValue[0]] = $explodedValue[1];
                     } else {
