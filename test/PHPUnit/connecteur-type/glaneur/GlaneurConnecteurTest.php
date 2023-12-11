@@ -86,7 +86,7 @@ class GlaneurConnecteurTest extends PastellTestCase
         copy(__DIR__ . "/fixtures/foo.txt", $this->tmp_folder . "/" . "test1/foo.txt");
 
         $this->expectException(UnrecoverableException::class);
-        $this->expectExceptionMessage("Le type de dépot est inconnu");
+        $this->expectExceptionMessage("Le type d'éléments à glaner est inconnu");
         $this->glanerWithProperties([
             GlaneurLocalMock::TRAITEMENT_ACTIF => '1',
             GlaneurLocalMock::TYPE_DEPOT => "foo",
@@ -484,9 +484,6 @@ class GlaneurConnecteurTest extends PastellTestCase
     {
         copy(__DIR__ . "/fixtures/foo.txt", $this->tmp_folder . "/pes_exemple.zip");
 
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage("Impossible d'ouvrir le fichier zip");
-
         $this->glanerWithProperties([
             GlaneurLocalMock::TRAITEMENT_ACTIF => '1',
             GlaneurLocalMock::TYPE_DEPOT => GlaneurLocalMock::TYPE_DEPOT_ZIP,
@@ -499,6 +496,7 @@ class GlaneurConnecteurTest extends PastellTestCase
             GlaneurLocalMock::ACTION_OK => 'importation',
             GlaneurLocalMock::ACTION_KO => 'erreur'
         ]);
+        $this->assertMatchesRegularExpression("#Impossible d'ouvrir le fichier zip#", $this->last_message[0]);
     }
 
     /**

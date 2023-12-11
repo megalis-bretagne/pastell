@@ -35,6 +35,9 @@
             "Files": [
                 {
                     "Id": "NOT_TESTABLE_5",
+                    "ContentDescription": {
+                        "CustodialHistory": "Historique de la conservation"
+                    },
                     "Filename": "aractes.xml",
                     "Uri": "aractes.xml",
                     "MessageDigest": "342b4ca6da58a3de2aeb0bd56483373f90e3906535f12f0c5bfa3d8f31af2812",
@@ -45,6 +48,9 @@
                 },
                 {
                     "Id": "NOT_TESTABLE_6",
+                    "ContentDescription": {
+                        "CustodialHistory": "Historique de la conservation"
+                    },
                     "Filename": "borderau.pdf",
                     "Uri": "borderau.pdf",
                     "MessageDigest": "c974edcc822646513cf07a71028847461a1e4fcd11d3c8e55c2764756345a4d3",

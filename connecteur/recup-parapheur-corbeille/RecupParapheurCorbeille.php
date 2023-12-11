@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use IparapheurV5Client\Api\AdminTrashBin;
 use IparapheurV5Client\Api\Tenant;
 use IparapheurV5Client\Client;
@@ -8,7 +10,7 @@ use IparapheurV5Client\TokenQuery;
 use Pastell\Client\IparapheurV5\ClientFactory;
 use Pastell\Client\IparapheurV5\ZipContent;
 
-class RecupParapheur extends Connecteur
+class RecupParapheurCorbeille extends Connecteur
 {
     private const USERNAME = 'username';
     private const PASSWORD = 'password';
@@ -28,7 +30,7 @@ class RecupParapheur extends Connecteur
     {
         $this->connecteurConfig = $donneesFormulaire;
 
-        $pastell_dictionnary = $this->connecteurConfig->get('pastell_dictionnary');
+        $pastell_dictionnary = $this->connecteurConfig->get('pastell_dictionnary', '');
 
         $this->elementIdDictionnary = [
             'dossier_id' => 'dossier_id',
@@ -53,10 +55,10 @@ class RecupParapheur extends Connecteur
     private function getAuthenticatedClient(): Client
     {
         $tokenQuery = new TokenQuery();
-        $tokenQuery->username = $this->connecteurConfig->get(self::USERNAME);
-        $tokenQuery->password = $this->connecteurConfig->get(self::PASSWORD);
+        $tokenQuery->username = $this->connecteurConfig->get(self::USERNAME, '');
+        $tokenQuery->password = $this->connecteurConfig->get(self::PASSWORD, '');
         $client = $this->clientFactory->getInstance();
-        $client->authenticate($this->connecteurConfig->get(self::URL), $tokenQuery);
+        $client->authenticate($this->connecteurConfig->get(self::URL, ''), $tokenQuery);
 
         return $client;
     }
@@ -85,10 +87,10 @@ class RecupParapheur extends Connecteur
         $adminTrashBin = new AdminTrashBin($this->getAuthenticatedClient());
 
         $listTrashBinFolderQuery = new ListTrashBinFoldersQuery();
-        $listTrashBinFolderQuery->size = (int) $this->connecteurConfig->get(self::NB_RECUP);
+        $listTrashBinFolderQuery->size = (int)$this->connecteurConfig->get(self::NB_RECUP);
         $listTrashBinFolderQuery->page = 0;
         $pageFolderRepresentation =  $adminTrashBin->listTrashBinFolders(
-            $this->connecteurConfig->get(self::TENANT_ID),
+            $this->connecteurConfig->get(self::TENANT_ID, ''),
             $listTrashBinFolderQuery
         );
         $result = [];
@@ -101,6 +103,9 @@ class RecupParapheur extends Connecteur
         ];
     }
 
+    /**
+     * @throws UnrecoverableException
+     */
     public function recupOne(): array
     {
         $listDossier = $this->listDossier();
@@ -111,6 +116,10 @@ class RecupParapheur extends Connecteur
         return $id_d;
     }
 
+    /**
+     * @throws UnrecoverableException
+     * @throws Exception
+     */
     private function retrieveOneDossier(string $dossierId): string
     {
         $tmpFolder = new TmpFolder();
@@ -119,7 +128,7 @@ class RecupParapheur extends Connecteur
             $client = $this->getAuthenticatedClient();
             $adminTrashBin = new AdminTrashBin($client);
             $response = $adminTrashBin->downloadTrashBinFolderZip(
-                $this->connecteurConfig->get(self::TENANT_ID),
+                $this->connecteurConfig->get(self::TENANT_ID, ''),
                 $dossierId
             );
             $body = $response->getBody();
@@ -132,7 +141,7 @@ class RecupParapheur extends Connecteur
             $zipContent = new ZipContent();
             $zipContentModel = $zipContent->extract($zipFilePath, $tmp_folder);
             $glaneurLocalDocumentInfo = new GlaneurDocumentInfo($this->getConnecteurInfo()['id_e']);
-            $glaneurLocalDocumentInfo->nom_flux = $this->connecteurConfig->get('pastell_module_id');
+            $glaneurLocalDocumentInfo->nom_flux = $this->connecteurConfig->get('pastell_module_id', '');
             $glaneurLocalDocumentInfo->metadata = [
                 $this->getElementId('dossier_id') => $zipContentModel->id,
                 $this->getElementId('dossier_name') => $zipContentModel->name,
@@ -157,7 +166,7 @@ class RecupParapheur extends Connecteur
         }
 
         $adminTrashBin->deleteTrashBinFolder(
-            $this->connecteurConfig->get(self::TENANT_ID),
+            $this->connecteurConfig->get(self::TENANT_ID, ''),
             $dossierId
         );
 

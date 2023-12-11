@@ -1,10 +1,15 @@
 <?php
 
-class RecupParapheurListDossier extends ActionExecutor
+declare(strict_types=1);
+
+class RecupParapheurCorbeilleListDossier extends ActionExecutor
 {
-    public function go()
+    /**
+     * @throws Exception
+     */
+    public function go(): bool
     {
-        /** @var RecupParapheur $recupParapheur */
+        /** @var RecupParapheurCorbeille $recupParapheur */
         $recupParapheur = $this->getMyConnecteur();
         $listDossier = $recupParapheur->listDossier();
 
@@ -12,7 +17,7 @@ class RecupParapheurListDossier extends ActionExecutor
         foreach ($listDossier['first'] as $dossierId => $dossierName) {
             $message .= "<li>$dossierName ($dossierId)</li>";
         }
-        $message .= "</ul>";
+        $message .= '</ul>';
 
         $this->setLastMessage($message);
         return true;

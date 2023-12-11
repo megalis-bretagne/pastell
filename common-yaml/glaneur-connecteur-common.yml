@@ -4,7 +4,7 @@ formulaire:
             name: 'Traitement activé'
             type: checkbox
         type_depot:
-            name: "Type d'élements à glaner"
+            name: "Type d'éléments à glaner"
             type: select
             value:
                 ZIP: 'Fichiers ZIP'

@@ -30,6 +30,10 @@ services:
             - ${CACERTS_PATH:-cacerts}:/etc/ssl/certs/
 
         environment:
+            PHP_MEMORY_LIMIT: ${PHP_MEMORY_LIMIT:-1000M}
+            PHP_UPLOAD_MAX_FILESIZE: ${PHP_UPLOAD_MAX_FILESIZE:-200M}
+            PHP_POST_MAX_SIZE: ${PHP_POST_MAX_SIZE:-200M}
+            PHP_MAX_EXECUTION_TIME: ${PHP_MAX_EXECUTION_TIME:-600}
             REDIS_SERVER: ${REDIS_HOST:-redis}
             REDIS_PORT: ${REDIS_PORT:-6379}
             PLATEFORME_MAIL: ${PLATEFORME_MAIL:-noreply@paste.ll}
@@ -56,6 +60,7 @@ services:
             PACK_RH: ${PACK_RH:-false}
             PACK_TEST: ${PACK_TEST:-false}
             PACK_LIBERSIGN: ${PACK_LIBERSIGN:-false}
+            PACK_RECUP_PARAPHEUR_CORBEILLE_CONNECTOR: ${PACK_RECUP_PARAPHEUR_CORBEILLE_CONNECTOR:-false}
             TIMEZONE: ${TIMEZONE:-Europe/Paris}
             NB_WORKERS: ${NB_WORKERS:-5}
             JOURNAL_MAX_AGE_IN_MONTHS: ${JOURNAL_MAX_AGE_IN_MONTHS:-2}
@@ -91,7 +96,7 @@ services:
         restart: unless-stopped
 
     seda-generator:
-        image: 'registry.libriciel.fr:443/public/plateforme/seda-generator:1.0.1'
+        image: 'registry.libriciel.fr:443/public/plateforme/seda-generator:1.0.2'
         restart: unless-stopped
         volumes:
             - '/etc/localtime:/etc/localtime:ro'

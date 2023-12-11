@@ -65,6 +65,11 @@ if (${PACK_TEST:-false}) {
 if (${PACK_LIBERSIGN:-false}) {
   \$packs["pack_libersign"]=true;
 }
+
+if (${PACK_RECUP_PARAPHEUR_CORBEILLE_CONNECTOR:-false}) {
+  \$packs["pack_recup_parapheur_corbeille_connector"]=true;
+}
+
 define("LIST_PACK", \$packs);
 
 define("NB_WORKERS", "${NB_WORKERS:-5}");

@@ -6,6 +6,23 @@
 - Ajout du flux Dossier de séance (archivage) 'ls-dossier-seance' #1946
 - Ajout des champs annotations publiques et privées pour l'envoi vers iParapheur #1883
 
+# [4.0.10] - 2023-12-11
+
+***Cette version nécessite une mise à jour du générateur SEDA en 1.0.2***
+
+## Évolutions
+
+- Le titre du dossier est envoyé sur le parapheur Fast #1936
+- Générateurs SEDA: Prise en compte AppraisalRule, AccessRestrictionRule et ContentDescription au niveau des fichiers #1956
+- Prise en compte de %ENTITE% (nom de l'entité) pour le nom de l'emetteur du connecteur Mail sécurisé #1971
+
+## Corrections
+
+- Contrôle sur les fichiers zip glanés (en cas d'erreur, le fichier est déplacé et le connecteur n'est pas verrouillé) #1645
+- Il y avait un caractère \r à la fin des valeurs des champs de type liste déroulante générés via le studio #1890
+- Définition de studio: 
+il n'était pas possible de sélectionner une valeur par défaut lorsque la liste déroulante était définie sans clés #1890
+
 # [4.0.9] - 2023-11-13
 
 ## Évolutions
