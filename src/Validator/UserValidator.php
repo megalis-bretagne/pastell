@@ -48,10 +48,18 @@ final class UserValidator
      * @throws ConflictException
      */
     public function validateNewAPIUser(
-        string $login
+        string $login,
+        string $lastname,
+        string $firstname,
     ): bool {
         if ($login === '') {
             throw new UnrecoverableException('Le login est obligatoire');
+        }
+        if ($lastname === '') {
+            throw new UnrecoverableException('Le nom est obligatoire');
+        }
+        if ($firstname === '') {
+            throw new UnrecoverableException('Le prénom est obligatoire');
         }
         if ($this->utilisateurSQL->getIdFromLogin($login)) {
             throw new ConflictException('Un utilisateur avec le même login existe déjà.');

@@ -40,14 +40,14 @@ use Pastell\Utilities\Certificate;
                            value='<?php hecho($infoUtilisateur['email']); ?>'/>
                 </td>
             </tr>
-            <tr  class="non-api-required">
+            <tr>
                 <th><label for='nom'>Nom<span class='obl'>*</span></label></th>
                 <td>
                     <input class="form-control col-md-4" type='text' name='nom'
                            value='<?php hecho($infoUtilisateur['nom']); ?>'/>
                 </td>
             </tr>
-            <tr class="non-api-required">
+            <tr>
                 <th><label for='prenom'>Prénom<span class='obl'>*</span></label></th>
                 <td>
                     <input class="form-control col-md-4" type='text' name='prenom'
