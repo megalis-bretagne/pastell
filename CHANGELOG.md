@@ -6,7 +6,7 @@
 - Ajout de l'option de co-signature pour les flux studios #684
 - Ajout du flux Dossier de séance (archivage) 'ls-dossier-seance' #1946
 - Ajout des champs annotations publiques et privées pour l'envoi vers iParapheur #1883
-- Possibilité de créer un utilisateur API et de gérer ses tokens via l'administrateur de son entité #1943
+- Possibilité de créer un utilisateur exclusivement API et de gérer ses tokens via l'administrateur de son entité #1943
 
 # [4.0.10] - 2023-12-11
 
