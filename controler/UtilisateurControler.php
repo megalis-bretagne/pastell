@@ -74,17 +74,17 @@ class UtilisateurControler extends PastellControler
      */
     public function modifPasswordAction()
     {
-        $authentificationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur("authentification");
+        $authentificationConnecteur = $this->getConnecteurFactory()->getGlobalConnecteur('authentification');
         if ($authentificationConnecteur) {
             $this->getViewParameterOrObject('LastError')->setLastError(
-                "Vous ne pouvez pas modifier votre mot de passe en dehors du CAS"
+                'Vous ne pouvez pas modifier votre mot de passe en dehors du CAS'
             );
-            $this->redirect("/Utilisateur/moi");
+            $this->redirect('/Utilisateur/moi');
         }
         $this->setViewParameter('pages_without_left_menu', true);
 
-        $this->setViewParameter('page_title', "Modification de votre mot de passe");
-        $this->setViewParameter('template_milieu', "UtilisateurModifPassword");
+        $this->setViewParameter('page_title', 'Modification de votre mot de passe');
+        $this->setViewParameter('template_milieu', 'UtilisateurModifPassword');
         $passwordEntropy = $this->getObjectInstancier()->getInstance(PasswordEntropy::class);
         $this->setViewParameter('password_min_entropy', $passwordEntropy->getEntropyForDisplay());
         $this->renderDefault();
@@ -102,10 +102,10 @@ class UtilisateurControler extends PastellControler
             $this->getViewParameterOrObject('LastError')->setLastError(
                 "Les utilisateurs de l'entité racine ne peuvent pas utiliser cette procédure"
             );
-            $this->redirect("/Utilisateur/moi");
+            $this->redirect('/Utilisateur/moi');
         }
-        $this->setViewParameter('page_title', "Modification de votre email");
-        $this->setViewParameter('template_milieu', "UtilisateurModifEmail");
+        $this->setViewParameter('page_title', 'Modification de votre email');
+        $this->setViewParameter('template_milieu', 'UtilisateurModifEmail');
         $this->renderDefault();
     }
 
@@ -119,15 +119,15 @@ class UtilisateurControler extends PastellControler
         $recuperateur = new Recuperateur($_POST);
         $password = $recuperateur->get('password');
         if (!$this->getUtilisateur()->verifPassword($this->getId_u(), $password)) {
-            $this->getViewParameterOrObject('LastError')->setLastError("Le mot de passe est incorrect.");
-            $this->redirect("/Utilisateur/modifEmail");
+            $this->getViewParameterOrObject('LastError')->setLastError('Le mot de passe est incorrect.');
+            $this->redirect('/Utilisateur/modifEmail');
         }
         $email = $recuperateur->get('email');
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $this->getViewParameterOrObject('LastError')->setLastError(
                 "L'email que vous avez saisi ne semble pas être valide"
             );
-            $this->redirect("/Utilisateur/modifEmail");
+            $this->redirect('/Utilisateur/modifEmail');
         }
 
         $utilisateur_info = $this->getUtilisateur()->getInfo($this->getId_u());
@@ -139,7 +139,7 @@ class UtilisateurControler extends PastellControler
             ->to($email)
             ->subject('[Pastell] Changement de mail sur Pastell')
             ->htmlTemplate('changement-email.html.twig')
-            ->context(["link" => $link]);
+            ->context(['link' => $link]);
         $this->getObjectInstancier()
             ->getInstance(Mailer::class)
             ->send($templatedEmail);
@@ -148,14 +148,14 @@ class UtilisateurControler extends PastellControler
             Journal::MODIFICATION_UTILISATEUR,
             $utilisateur_info['id_e'],
             0,
-            "change-email",
+            'change-email',
             "Demande de changement d'email initiée {$utilisateur_info['email']} -> $email"
         );
 
         $this->setLastMessage(
-            "Un email a été envoyé à votre nouvelle adresse. Merci de le consulter pour la suite de la procédure."
+            'Un email a été envoyé à votre nouvelle adresse. Merci de le consulter pour la suite de la procédure.'
         );
-        $this->redirect("/Utilisateur/moi");
+        $this->redirect('/Utilisateur/moi');
     }
 
     /**
@@ -175,7 +175,7 @@ class UtilisateurControler extends PastellControler
         $this->getUtilisateurNewEmailSQL()->delete($info['id_u']);
         $this->setViewParameter('result', $info);
         $this->setViewParameter('page_title', "Procédure de changement d'email");
-        $this->setViewParameter('template_milieu', "UtilisateurModifEmailConfirm");
+        $this->setViewParameter('template_milieu', 'UtilisateurModifEmailConfirm');
         $this->renderDefault();
     }
 
@@ -239,7 +239,7 @@ class UtilisateurControler extends PastellControler
         );
 
         if (!$this->getViewParameterOrObject('count')) {
-            $this->redirect("/index.php");
+            $this->redirect('/index.php');
         }
 
         $this->setViewParameter(
@@ -247,8 +247,8 @@ class UtilisateurControler extends PastellControler
             new Certificate($this->getViewParameterOrObject('liste')[0]['certificat'])
         );
 
-        $this->setViewParameter('page_title', "Certificat");
-        $this->setViewParameter('template_milieu', "UtilisateurCertificat");
+        $this->setViewParameter('page_title', 'Certificat');
+        $this->setViewParameter('template_milieu', 'UtilisateurCertificat');
         $this->renderDefault();
     }
 
@@ -262,7 +262,7 @@ class UtilisateurControler extends PastellControler
         $recuperateur = $this->getGetInfo();
         $id_u = $recuperateur->get('id_u');
         $id_e = $recuperateur->getInt('id_e');
-
+        $is_api = $recuperateur->getInt('is_api') ?: false;
         $infoUtilisateur = [
             'login' => $this->getLastError()->getLastInput('login'),
             'nom' => $this->getLastError()->getLastInput('nom'),
@@ -270,6 +270,7 @@ class UtilisateurControler extends PastellControler
             'email' => $this->getLastError()->getLastInput('email'),
             'certificat' => '',
             'id_e' => $id_e,
+            'is_api' => $is_api,
         ];
 
         if ($id_u) {
@@ -292,9 +293,13 @@ class UtilisateurControler extends PastellControler
                 'page_title',
                 'Modification de ' . $infoUtilisateur['prenom'] . ' ' . $infoUtilisateur['nom']
             );
+            $this->setViewParameter('new_user', false);
+            $this->setViewParameter('is_api', $infoUtilisateur['is_api']);
         } else {
             $this->verifDroit($infoUtilisateur['id_e'], 'utilisateur:creation');
             $this->setViewParameter('page_title', 'Nouvel utilisateur ');
+            $this->setViewParameter('new_user', true);
+            $this->setViewParameter('is_api', false);
         }
         $this->setViewParameter(
             'enable_certificate_authentication',
@@ -320,18 +325,19 @@ class UtilisateurControler extends PastellControler
         $info = $this->getUtilisateur()->getInfo($id_u);
         if (!$info) {
             $this->setLastError("Utilisateur $id_u inconnu");
-            $this->redirect("index.php");
+            $this->redirect('index.php');
         }
 
+        $this->setViewParameter('id_current_u', $this->getId_u());
         $this->setViewParameter('certificat', new Certificate($info['certificat']));
-        $this->setViewParameter('page_title', "Utilisateur " . $info['prenom'] . " " . $info['nom']);
+        $this->setViewParameter('page_title', 'Utilisateur ' . $info['prenom'] . ' ' . $info['nom']);
         $this->setViewParameter('entiteListe', $this->getEntiteListe());
         $this->setViewParameter(
             'tabEntite',
             $this->getRoleUtilisateur()->getEntite($this->getId_u(), 'entite:edition')
         );
 
-        if ($id_u == $this->getId_u()) {
+        if ($id_u === $this->getId_u()) {
             $this->setViewParameter('notification_list', $this->getNotificationList($id_u));
         }
 
@@ -341,14 +347,25 @@ class UtilisateurControler extends PastellControler
             $this->setViewParameter('role_authorized', []);
         }
 
-        if (!$this->getRoleUtilisateur()->hasDroit($this->getId_u(), "utilisateur:lecture", $info['id_e'])) {
-            $this->setLastError("Vous n'avez pas les droits nécessaires (" . $info['id_e'] . ":utilisateur:lecture) pour accéder à cette page");
+        if (!$this->getRoleUtilisateur()->hasDroit($this->getId_u(), 'utilisateur:lecture', $info['id_e'])) {
+            $this->setLastError("Vous n'avez pas les droits nécessaires (" . $info['id_e'] . ':utilisateur:lecture) pour accéder à cette page');
             $this->redirect();
         }
         $this->setViewParameter(
             'utilisateur_edition',
-            $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "utilisateur:edition", $info['id_e'])
+            $this->getRoleUtilisateur()->hasDroit($this->getId_u(), 'utilisateur:edition', $info['id_e'])
         );
+
+        if (
+            (int) $id_u === $this->getId_u()
+            || ($this->getRoleUtilisateur()->hasDroit($this->getId_u(), 'utilisateur:edition', $info['id_e'])
+                && $info['is_api'])
+        ) {
+            $tokens = $this->getObjectInstancier()
+                ->getInstance(UserTokenService::class)
+                ->getTokens($id_u);
+            $this->setViewParameter('tokens', $tokens);
+        }
 
         if ($info['id_e']) {
             $this->setViewParameter('infoEntiteDeBase', $this->getEntiteSQL()->getInfo($info['id_e']));
@@ -365,9 +382,9 @@ class UtilisateurControler extends PastellControler
         $this->setViewParameter('id_u', $id_u);
         $this->setViewParameter(
             'arbre',
-            $this->getRoleUtilisateur()->getArbreFille($this->getId_u(), "entite:edition")
+            $this->getRoleUtilisateur()->getArbreFille($this->getId_u(), 'entite:edition')
         );
-        $this->setViewParameter('template_milieu', "UtilisateurDetail");
+        $this->setViewParameter('template_milieu', 'UtilisateurDetail');
         $this->renderDefault();
     }
 
@@ -392,7 +409,7 @@ class UtilisateurControler extends PastellControler
         $info = $this->getUtilisateur()->getInfo($id_u);
         $this->setViewParameter('certificat', new Certificate($info['certificat']));
 
-        $this->setViewParameter('page_title', "Espace utilisateur : " . $info['prenom'] . " " . $info['nom']);
+        $this->setViewParameter('page_title', 'Espace utilisateur : ' . $info['prenom'] . ' ' . $info['nom']);
 
         $this->setViewParameter('entiteListe', $this->getEntiteListe());
 
@@ -406,7 +423,7 @@ class UtilisateurControler extends PastellControler
         $this->setViewParameter('roleInfo', $this->getRoleUtilisateur()->getRole($id_u));
         $this->setViewParameter(
             'droit_entite_racine',
-            $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "entite:lecture", 0)
+            $this->getRoleUtilisateur()->hasDroit($this->getId_u(), 'entite:lecture', 0)
         );
 
         if ($info['id_e']) {
@@ -417,14 +434,14 @@ class UtilisateurControler extends PastellControler
         $this->setViewParameter('id_u', $id_u);
         $this->setViewParameter(
             'arbre',
-            $this->getRoleUtilisateur()->getArbreFille($this->getId_u(), "entite:lecture")
+            $this->getRoleUtilisateur()->getArbreFille($this->getId_u(), 'entite:lecture')
         );
 
         $tokens = $this->getObjectInstancier()
             ->getInstance(UserTokenService::class)
             ->getTokens($this->getId_u());
         $this->setViewParameter('tokens', $tokens);
-        $this->setViewParameter('template_milieu', "UtilisateurMoi");
+        $this->setViewParameter('template_milieu', 'UtilisateurMoi');
         $this->setViewParameter('pages_without_left_menu', true);
         $this->renderDefault();
     }
@@ -452,26 +469,45 @@ class UtilisateurControler extends PastellControler
     public function doEditionAction(): void
     {
         $recuperateur = $this->getPostInfo();
-
         $id_e = $recuperateur->getInt('id_e');
         $id_u = $recuperateur->getInt('id_u');
         $login = $recuperateur->get('login');
         $email = $recuperateur->get('email');
         $firstname = $recuperateur->get('prenom');
         $lastname = $recuperateur->get('nom');
+        $is_api = $recuperateur->get('api_user');
         $certficate = $this->getInstance(FileUploader::class)->getFileContent('certificat') ?: null;
 
         try {
             if ($id_u) {
-                $this->getInstance(UserUpdateService::class)->update(
-                    $id_u,
+                $is_api = $this->getInstance(UtilisateurSQL::class)->getInfo($id_u)['is_api'];
+                if ($is_api) {
+                    $this->getInstance(UserUpdateService::class)->updateAPI(
+                        $id_u,
+                        $login,
+                        $firstname,
+                        $lastname,
+                        $id_e,
+                        $certficate,
+                    );
+                } else {
+                    $this->getInstance(UserUpdateService::class)->update(
+                        $id_u,
+                        $login,
+                        $email,
+                        $firstname,
+                        $lastname,
+                        $id_e,
+                        null,
+                        $certficate
+                    );
+                }
+            } elseif ($is_api) {
+                $id_u = $this->getInstance(UserCreationService::class)->createAPI(
                     $login,
-                    $email,
+                    $id_e,
                     $firstname,
                     $lastname,
-                    $id_e,
-                    null,
-                    $certficate
                 );
             } else {
                 $id_u = $this->getInstance(UserCreationService::class)->create(
@@ -502,7 +538,7 @@ class UtilisateurControler extends PastellControler
         $role = $recuperateur->get('role');
         $id_e = $recuperateur->get('id_e', 0);
 
-        $this->verifDroit($id_e, "entite:edition");
+        $this->verifDroit($id_e, 'entite:edition');
         if ($this->getRoleUtilisateur()->hasRole($id_u, $role, $id_e)) {
             $this->setLastError("Ce droit a déjà été attribué à l'utilisateur");
         } elseif ($role) {
@@ -527,7 +563,7 @@ class UtilisateurControler extends PastellControler
         $utilisateur_info = $this->getUtilisateur()->getInfo($id_u);
 
         $this->setLastMessage(
-            \sprintf(
+            sprintf(
                 "Le rôle <i>%s</i> a été retiré de l'utilisateur <i>%s %s</i>",
                 $role_info['libelle'] ?? $role,
                 $utilisateur_info['prenom'],
@@ -612,7 +648,7 @@ class UtilisateurControler extends PastellControler
     private function redirectToPageUtilisateur($id_u, $page_moi = false)
     {
         if ($page_moi) {
-            $this->redirect("/Utilisateur/moi");
+            $this->redirect('/Utilisateur/moi');
         } else {
             $this->redirect("/Utilisateur/detail?id_u=$id_u");
         }
@@ -722,7 +758,7 @@ class UtilisateurControler extends PastellControler
         }
 
         $this->getNotification()->removeAll($id_u, $id_e, $type);
-        $this->setLastMessage("La notification a été supprimée");
+        $this->setLastMessage('La notification a été supprimée');
         $this->redirectToPageUtilisateur($id_u, $page_moi);
     }
 
@@ -804,7 +840,7 @@ class UtilisateurControler extends PastellControler
             $this->verifEditNotification($id_u, $id_e, $type);
         }
         $this->getNotification()->toogleDailyDigest($id_u, $id_e, $type);
-        $this->setLastMessage("La notification a été modifié");
+        $this->setLastMessage('La notification a été modifié');
         $this->redirectToPageUtilisateur($id_u, $page_moi);
     }
 
@@ -818,7 +854,7 @@ class UtilisateurControler extends PastellControler
         $liste = $utilisateurListe->getUtilisateurByCertificat($verif_number, 0, 1);
 
         if (count($liste) < 1) {
-            header("Location: index.php");
+            header('Location: index.php');
             exit;
         }
 
@@ -826,11 +862,11 @@ class UtilisateurControler extends PastellControler
         $certificat = new Certificate($liste[0]['certificat']);
 
 
-        header("Content-type: text/plain");
-        header("Content-disposition: attachment; filename=" . $verif_number . ".pem");
-        header("Expires: 0");
-        header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
-        header("Pragma: public");
+        header('Content-type: text/plain');
+        header('Content-disposition: attachment; filename=' . $verif_number . '.pem');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate, post-check=0,pre-check=0');
+        header('Pragma: public');
 
         echo $certificat->getContent();
     }
@@ -847,14 +883,14 @@ class UtilisateurControler extends PastellControler
         $password = $recuperateur->get('password');
         $password2 = $recuperateur->get('password2');
         if ($password != $password2) {
-            $this->setLastError("Les mots de passe ne correspondent pas");
-            $this->redirect("Utilisateur/modifPassword");
+            $this->setLastError('Les mots de passe ne correspondent pas');
+            $this->redirect('Utilisateur/modifPassword');
         }
 
 
         if (!$this->getUtilisateur()->verifPassword($this->getId_u(), $oldpassword)) {
-            $this->setLastError("Votre ancien mot de passe est incorrecte");
-            $this->redirect("Utilisateur/modifPassword");
+            $this->setLastError('Votre ancien mot de passe est incorrecte');
+            $this->redirect('Utilisateur/modifPassword');
         }
 
         $passwordEntropy = $this->getObjectInstancier()->getInstance(PasswordEntropy::class);
@@ -863,13 +899,13 @@ class UtilisateurControler extends PastellControler
                 "Le mot de passe n'a pas été changé car le nouveau mot de passe n'est pas assez fort.<br/>" .
                 "Essayez de l'allonger ou de mettre des caractères de différents types. La barre de vérification doit être entièrement remplie"
             );
-            $this->redirect("Utilisateur/modifPassword");
+            $this->redirect('Utilisateur/modifPassword');
         }
 
         $this->getUtilisateur()->setPassword($this->getId_u(), $password);
 
-        $this->setLastMessage("Votre mot de passe a été modifié");
-        $this->redirect("/Utilisateur/moi");
+        $this->setLastMessage('Votre mot de passe a été modifié');
+        $this->redirect('/Utilisateur/moi');
     }
 
     /**
@@ -883,7 +919,7 @@ class UtilisateurControler extends PastellControler
 
         $info = $this->getUtilisateur()->getInfo($id_u);
 
-        $this->verifDroit($info['id_e'], "utilisateur:edition");
+        $this->verifDroit($info['id_e'], 'utilisateur:edition');
 
         $this->getUtilisateur()->removeCertificat($id_u);
 
@@ -998,12 +1034,19 @@ class UtilisateurControler extends PastellControler
     }
 
     /**
+     * @throws LastMessageException
+     * @throws LastErrorException
      * @throws NotFoundException
      */
     public function addTokenAction(): void
     {
+        $recupGet = $this->getGetInfo();
+        $id_u = $recupGet->get('id_u') ?: $this->getId_u();
+        $source = $recupGet->get('source') ?: 'moi';
+        $this->verifDroitApi($id_u);
         $this->setViewParameter('pages_without_left_menu', true);
-        $this->setViewParameter('utilisateur_info', $this->getUtilisateur()->getInfo($this->getId_u()));
+        $this->setViewParameter('id_u', $id_u);
+        $this->setViewParameter('source', $source);
         $this->setViewParameter('page_title', 'Ajouter un jeton d\'authentification');
         $this->setViewParameter('template_milieu', 'UtilisateurToken');
         $this->renderDefault();
@@ -1015,11 +1058,15 @@ class UtilisateurControler extends PastellControler
      */
     public function doAddTokenAction(): void
     {
-        $recuperateur = $this->getPostInfo();
 
+        $recuperateur = $this->getPostInfo();
+        $recupGet = $this->getGetInfo();
+        $id_u = $recupGet->get('id_u') ?: $this->getId_u();
+        $source = $recupGet->get('source') ?: 'moi';
+        $this->verifDroitApi($id_u);
         $token = $this->getObjectInstancier()
             ->getInstance(UserTokenService::class)
-            ->createToken($this->getId_u(), $recuperateur->get('name'), $recuperateur->get('expiration') ?: null);
+            ->createToken($id_u, $recuperateur->get('name'), $recuperateur->get('expiration') ?: null);
 
         $message = <<<EOT
 Votre jeton est <strong>$token</strong><br />
@@ -1027,7 +1074,7 @@ Assurez-vous de le sauvegarder, il ne sera plus affiché.
 EOT;
 
         $this->setLastMessage($message);
-        $this->redirect('/Utilisateur/moi');
+        $this->redirectAPIToken($source, $id_u);
     }
 
 
@@ -1037,37 +1084,76 @@ EOT;
      */
     public function deleteTokenAction(): void
     {
+        $userTokenService = $this->getObjectInstancier()->getInstance(UserTokenService::class);
         $recuperateur = $this->getPostInfo();
         $id = $recuperateur->get('id');
-        $userTokenService = $this->getObjectInstancier()->getInstance(UserTokenService::class);
-        $this->verifIsMyToken($id);
+        $recupGet = $this->getGetInfo();
+        $id_u = $userTokenService->getUser($id);
+        $source = $recupGet->get('source') ?: 'moi';
+        $this->verifDroitApi($id_u);
+
         $userTokenService->deleteToken($id);
         $this->setLastMessage('Le jeton a été supprimé');
-        $this->redirect('/Utilisateur/moi');
+        $this->redirectAPIToken($source, $id_u);
     }
 
+    /**
+     * @throws LastMessageException
+     * @throws LastErrorException
+     */
     public function renewTokenAction(): void
     {
+        $userTokenService = $this->getObjectInstancier()->getInstance(UserTokenService::class);
         $recuperateur = $this->getPostInfo();
         $id = $recuperateur->get('id');
-        $userTokenService = $this->getObjectInstancier()->getInstance(UserTokenService::class);
-        $this->verifIsMyToken($id);
+        $recupGet = $this->getGetInfo();
+        $id_u = $userTokenService->getUser($id);
+        $source = $recupGet->get('source') ?: 'moi';
+        $this->verifDroitApi($id_u);
+
         $token = $userTokenService->renewToken($id);
         $message = <<<EOT
 Le jeton a été renouvelé. Sa valeur est <strong>$token</strong><br />
 Assurez-vous de le sauvegarder, il ne sera plus affiché.
 EOT;
         $this->setLastMessage($message);
-        $this->redirect('/Utilisateur/moi');
+        $this->redirectAPIToken($source, $id_u);
     }
 
-    private function verifIsMyToken(string $tokenId): void
-    {
-        $userTokenService = $this->getObjectInstancier()->getInstance(UserTokenService::class);
-        $user = $userTokenService->getUser($tokenId);
 
-        if ($user !== $this->getId_u()) {
-            $this->setLastError('Impossible de supprimer ce jeton');
+    /**
+     * @throws LastMessageException
+     * @throws LastErrorException
+     */
+    private function verifDroitApi(int $id_u): void
+    {
+        $info = $this->getUtilisateur()->getInfo($id_u);
+        $id_e = $info['id_e'];
+        $is_api = $info['is_api'];
+        if (
+            $id_u !== $this->getId_u() &&
+            !($is_api &&
+                $this->getRoleUtilisateur()->hasDroit($this->getId_u(), 'utilisateur:edition', $id_e))
+        ) {
+            if (!$is_api && $id_u !== $this->getId_u()) {
+                $message = 'Action impossible';
+            } else {
+                $message = "Vous n'avez pas les droits nécessaires pour éxecuter cette action";
+            }
+            $this->setLastError($message);
+            $this->redirect();
+        }
+    }
+
+    /**
+     * @throws LastMessageException
+     * @throws LastErrorException
+     */
+    private function redirectAPIToken(string $source, int $id_u)
+    {
+        if ($source === 'detail') {
+            $this->redirect('/Utilisateur/detail?id_u=' . $id_u);
+        } else {
             $this->redirect('/Utilisateur/moi');
         }
     }

@@ -47,6 +47,24 @@ final class UserValidator
      * @throws UnrecoverableException
      * @throws ConflictException
      */
+    public function validateNewAPIUser(
+        string $login,
+        string $lastname,
+        string $firstname,
+        int $id_e,
+    ): bool {
+        $this->validateAPI($login, $lastname, $firstname, $id_e);
+        if ($this->utilisateurSQL->getIdFromLogin($login)) {
+            throw new ConflictException('Un utilisateur avec le même login existe déjà.');
+        }
+
+        return true;
+    }
+
+    /**
+     * @throws UnrecoverableException
+     * @throws ConflictException
+     */
     public function validateExistingUser(
         int $userId,
         string $login,
@@ -67,6 +85,25 @@ final class UserValidator
             throw new ConflictException('Un utilisateur avec le même login existe déjà.');
         }
 
+        return true;
+    }
+
+    /**
+     * @throws UnrecoverableException
+     * @throws ConflictException
+     */
+    public function validateExistingUserAPI(
+        int $userId,
+        string $login,
+        string $firstname,
+        string $lastname,
+        int $entityId,
+    ): bool {
+        $this->validateAPI($login, $lastname, $firstname, $entityId);
+        $userFromLogin = $this->utilisateurSQL->getIdFromLogin($login);
+        if ($userFromLogin && $userFromLogin !== $userId) {
+            throw new ConflictException('Un utilisateur avec le même login existe déjà.');
+        }
         return true;
     }
 
@@ -104,6 +141,29 @@ final class UserValidator
             if (!$certificate->isValid()) {
                 throw new UnrecoverableException('Le certificat ne semble pas être valide');
             }
+        }
+    }
+
+    /**
+     * @throws UnrecoverableException
+     */
+    public function validateAPI(
+        string $login,
+        string $lastname,
+        string $firstname,
+        int $id_e
+    ): void {
+        if ($login === '') {
+            throw new UnrecoverableException('Le login est obligatoire');
+        }
+        if ($lastname === '') {
+            throw new UnrecoverableException('Le nom est obligatoire');
+        }
+        if ($firstname === '') {
+            throw new UnrecoverableException('Le prénom est obligatoire');
+        }
+        if ($id_e !== 0 && !$this->entiteSQL->exists($id_e)) {
+            throw new UnrecoverableException("L'entité $id_e n'existe pas");
         }
     }
 

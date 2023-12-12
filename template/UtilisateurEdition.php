@@ -10,6 +10,8 @@
  * @var SQLQuery $sqlQuery
  * @var array $arbre
  * @var int $id_e
+ * @var bool $new_user
+ * @var bool $is_api
  */
 
 use Pastell\Utilities\Certificate;
@@ -33,7 +35,7 @@ use Pastell\Utilities\Certificate;
                 </td>
             </tr>
             <tr>
-                <th><label for='email'>Email<span class='obl'>*</span></label></th>
+                <th><label for='email'>Email<span class='obl non-api-required'>*</span></label></th>
                 <td>
                     <input class="form-control col-md-4" type='text' name='email'
                            value='<?php hecho($infoUtilisateur['email']); ?>'/>
@@ -89,6 +91,18 @@ use Pastell\Utilities\Certificate;
                     </select>
                 </td>
             </tr>
+            <?php if ($new_user || $is_api) : ?>
+            <tr>
+                <th><label for='api_user'>Utilisateur exclusivement API</label></th>
+                <td>
+
+                    <input class="" type='checkbox' name='api_user' id='api_user' <?php
+                    if ($is_api) :
+                        echo 'disabled checked value="on"';
+                    endif; ?>/>
+                </td>
+            </tr>
+            <?php endif ?>
         </table>
 
         <?php if ($id_u) : ?>
@@ -111,3 +125,25 @@ use Pastell\Utilities\Certificate;
 
     </form>
 </div>
+
+<script>
+    let checkbox = document.getElementById('api_user');
+    let elementsToHide = document.querySelectorAll('.non-api-required');
+    if(checkbox.value === "on")
+    {
+        toggle();
+    }
+    checkbox.addEventListener('change', function () {
+        toggle();
+    });
+
+    function toggle() {
+        for (let i = 0; i < elementsToHide.length; i++) {
+            if (checkbox.checked) {
+                elementsToHide[i].style.opacity = "0";
+            } else {
+                elementsToHide[i].style.opacity = "1";
+            }
+        }
+    }
+</script>

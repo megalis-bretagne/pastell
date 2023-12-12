@@ -355,6 +355,7 @@ CREATE TABLE `utilisateur` (
 	`id_e` int(11) NOT NULL,
 	`password_reset_requested_at` datetime NOT NULL,
 	`is_enabled` tinyint(1) NOT NULL DEFAULT '1',
+	`is_api` int(11) NOT NULL DEFAULT '0',
 	PRIMARY KEY (`id_u`),
 	KEY `id_e` (`id_e`)
 )  ENGINE=MyISAM  ;

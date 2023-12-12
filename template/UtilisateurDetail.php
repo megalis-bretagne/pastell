@@ -11,8 +11,10 @@
  * @var array $notification_list
  * @var array $all_module
  * @var int $id_u
+ * @var int $id_current_u
  * @var bool $enable_certificate_authentication
  * @var Authentification $authentification
+ * @var array $tokens
  */
 
 use Pastell\Utilities\Certificate;
@@ -332,6 +334,61 @@ use Pastell\Utilities\Certificate;
 
     </div>
 <?php } ?>
+
+<?php
+if ($id_u == $id_current_u || ($utilisateur_edition && $info['is_api'])) : ?>
+    <div class="box">
+        <h2 id="desc-token-table">Jetons d'authentification API</h2>
+        <table class='table table-striped' aria-labelledby="desc-token-table">
+            <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Créé le</th>
+                <th scope="col">Expire le</th>
+                <th scope="col">Action</th>
+            </tr>
+
+            <?php foreach ($tokens as $token) : ?>
+                <tr>
+                    <td><?php hecho($token['name']); ?></td>
+                    <td>
+                        <?php hecho($token['created_at']); ?>
+                    </td>
+                    <td>
+                        <?php hecho($token['expired_at'] ?? 'Jamais'); ?>
+                        <?php if ($token['is_expired']) : ?>
+                            <p class="badge badge-danger">Expiré</p>
+                        <?php endif; ?>
+                    </td>
+                    <td>
+                        <a
+                                class='btn btn-warning'
+                                href='Utilisateur/renewToken?id=<?php
+                                echo $token['id'] . '&source=detail'; ?>'
+                                onclick="return confirm(
+                                'Êtes-vous certain de vouloir renouveler ce jeton (l\'ancien token sera perdu) ?'
+                                )"
+                        >
+                            <i class="fa fa-refresh"></i>&nbsp;Renouveler
+                        </a>
+                        <a
+                                class='btn btn-danger'
+                                href='Utilisateur/deleteToken?id=<?php
+                                echo $token['id'] . '&source=detail'; ?>'
+                                onclick="return confirm('Êtes-vous certain de vouloir supprimer définitivement ce jeton ?')"
+                        >
+                            <i class="fa fa-trash"></i>&nbsp;Supprimer
+                        </a>
+
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+
+        <a href='Utilisateur/addToken?<?php
+        echo '&id_u=' . $id_u . '&source=detail' ?>' class='btn btn-primary'><i class="fa fa-pencil"></i>&nbsp;Ajouter
+            un jeton</a>
+    </div>
+<?php endif; ?>
 
 <script>
     $('#entity-selection-for-role').hierarchySelect({

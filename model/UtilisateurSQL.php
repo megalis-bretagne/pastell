@@ -165,4 +165,10 @@ class UtilisateurSQL extends SQL
         $sql = 'SELECT is_enabled FROM utilisateur WHERE id_u = ?';
         return $this->queryOne($sql, $id_u);
     }
+
+    public function setIsAPI(int $id_u, bool $is_api): void
+    {
+        $sql = 'UPDATE utilisateur SET is_api = ? WHERE id_u = ?';
+        $this->query($sql, $is_api, $id_u);
+    }
 }

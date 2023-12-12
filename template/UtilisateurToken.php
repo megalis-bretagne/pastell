@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 /**
+ * @var String $id_u
  * @var Gabarit $this
  */
 
@@ -13,8 +14,14 @@ declare(strict_types=1);
 <div class="box">
 
     <h2>Ajouter un jeton d'authentification</h2>
-    <form action='Utilisateur/doAddToken' method='post'>
-        <?php $this->displayCSRFInput(); ?>
+    <form action='Utilisateur/doAddToken?<?php
+    echo 'id_u=' . $id_u;
+    if (isset($source)) {
+        echo '&source=' . $source;
+    } ?>'
+    ' method='post'>
+    <?php
+    $this->displayCSRFInput(); ?>
 
         <div class="form-group row">
             <label for="name" class="col-sm-2 col-form-label">Nom du jeton<span class='obl'>*</span></label>

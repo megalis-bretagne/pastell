@@ -82,4 +82,41 @@ final class UserCreationService
 
         return $userId;
     }
+
+    /**
+     * @throws UnrecoverableException
+     * @throws ConflictException
+     */
+    public function createAPI(
+        string $login,
+        int $id_e,
+        string $lastname,
+        string $firstname,
+    ): int {
+        $password = $this->tokenGenerator->generate();
+
+        $this->userValidator->validateNewAPIUser($login, $lastname, $firstname, $id_e);
+        $emailPasswordValidation = $this->tokenGenerator->generate();
+        $userId = $this->utilisateurSQL->create($login, $password, '', $emailPasswordValidation);
+        $this->utilisateurSQL->setIsAPI($userId, true);
+        $this->utilisateurSQL->setColBase($userId, $id_e);
+        $this->utilisateurSQL->setLogin($userId, $login);
+        $this->utilisateurSQL->setNomPrenom($userId, $firstname, $lastname);
+        $this->roleUtilisateur->addRole($userId, RoleUtilisateur::AUCUN_DROIT, $id_e);
+
+        $info = \implode('; ', [
+            'prenom : ' . $firstname,
+            'nom : ' . $lastname,
+        ]);
+
+        $this->journal->add(
+            Journal::MODIFICATION_UTILISATEUR,
+            $id_e,
+            0,
+            Journal::ACTION_CREATED,
+            "Création de l'utilisateur API $login ($userId) : $info"
+        );
+
+        return $userId;
+    }
 }
