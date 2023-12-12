@@ -303,7 +303,7 @@ use Pastell\Utilities\Certificate;
                             </a>
                         <?php endif; ?>
                     </td>
-                </tr>Fid_u
+                </tr>
             <?php endforeach; ?>
         </table>
         <?php if ($utilisateur_edition) : ?>
