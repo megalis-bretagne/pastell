@@ -146,7 +146,6 @@ class FastParapheur extends SignatureConnecteur
      */
     public function getSousType()
     {
-        $client = $this->getClient();
         return $this->getClient()->getCircuit($this->subscriberNumber);
     }
 
