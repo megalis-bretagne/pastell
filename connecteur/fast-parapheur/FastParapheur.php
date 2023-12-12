@@ -9,7 +9,6 @@ class FastParapheur extends SignatureConnecteur
 
     private $url;
     private $subscriberNumber;
-    private $circuits;
 
     private $connectionCertificatePassword;
 
