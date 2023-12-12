@@ -90,8 +90,6 @@ class IparapheurSousType extends ChoiceActionExecutor
     {
         /** @var SignatureConnecteur $signature */
         $signature = $this->getConnecteur('signature');
-        dump($signature->getSousType());
-        die();
         return $signature->getSousType();
     }
 
