@@ -140,10 +140,10 @@ class FastParapheur extends SignatureConnecteur
     }
 
     /**
-     * @throws DocapostParapheurSoapClientException
+     * @throws UnrecoverableException
      * @throws Exception
      */
-    public function getSousType()
+    public function getSousType(): array
     {
         return array_column($this->getClient()->getCircuit($this->subscriberNumber), 'circuitId') ;
     }
