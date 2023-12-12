@@ -11,6 +11,7 @@
  * @var array $arbre
  * @var int $id_e
  * @var bool $new_user
+ * @var bool $is_api
  */
 
 use Pastell\Utilities\Certificate;
@@ -33,8 +34,8 @@ use Pastell\Utilities\Certificate;
                            value='<?php hecho($infoUtilisateur['login']); ?>'/>
                 </td>
             </tr>
-            <tr class="non-api-required">
-                <th><label for='email'>Email<span class='obl'>*</span></label></th>
+            <tr>
+                <th><label for='email'>Email<span class='obl non-api-required'>*</span></label></th>
                 <td>
                     <input class="form-control col-md-4" type='text' name='email'
                            value='<?php hecho($infoUtilisateur['email']); ?>'/>
@@ -55,7 +56,7 @@ use Pastell\Utilities\Certificate;
                 </td>
             </tr>
             <?php if ($enable_certificate_authentication) : ?>
-                <tr  class="non-api-required">
+                <tr>
                     <th><label for='certificat'>Certificat (PEM)</label></th>
                     <td><input class="btn btn-outline-primary col-md-4" type='file' name='certificat'/><br/>
                         <?php if ($certificat->isValid()) : ?>
@@ -90,12 +91,15 @@ use Pastell\Utilities\Certificate;
                     </select>
                 </td>
             </tr>
-            <?php if ($new_user) : ?>
+            <?php if ($new_user || $is_api) : ?>
             <tr>
                 <th><label for='api_user'>Utilisateur exclusivement API</label></th>
                 <td>
 
-                    <input class="" type='checkbox' name='api_user' id='api_user'/>
+                    <input class="" type='checkbox' name='api_user' id='api_user' <?php
+                    if ($is_api) :
+                        echo 'disabled checked value="on"';
+                    endif; ?>/>
                 </td>
             </tr>
             <?php endif ?>
@@ -125,16 +129,21 @@ use Pastell\Utilities\Certificate;
 <script>
     let checkbox = document.getElementById('api_user');
     let elementsToHide = document.querySelectorAll('.non-api-required');
-    if(checkbox != null)
+    if(checkbox.value === "on")
     {
-        checkbox.addEventListener('change', function () {
-            for (let i = 0; i < elementsToHide.length; i++) {
-                if (checkbox.checked) {
-                    elementsToHide[i].style.display = 'none';
-                } else {
-                    elementsToHide[i].style.display = '';
-                }
+        toggle();
+    }
+    checkbox.addEventListener('change', function () {
+        toggle();
+    });
+
+    function toggle() {
+        for (let i = 0; i < elementsToHide.length; i++) {
+            if (checkbox.checked) {
+                elementsToHide[i].style.opacity = "0";
+            } else {
+                elementsToHide[i].style.opacity = "1";
             }
-        });
+        }
     }
 </script>

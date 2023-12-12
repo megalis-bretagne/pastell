@@ -69,6 +69,66 @@ final class UserUpdateService
         $newInfo = $this->utilisateurSQL->getInfo($userId);
 
         $infoToRetrieve = ['email', 'login', 'nom', 'prenom'];
+        return $this->addToJournal($infoToRetrieve, $oldInfo, $newInfo, $entityId, $login, $userId);
+    }
+
+    /**
+     * @throws ConflictException
+     * @throws UnrecoverableException
+     */
+    public function updateAPI(
+        int $userId,
+        string $login,
+        string $firstname,
+        string $lastname,
+        int $entityId = 0,
+        ?string $certificateContent = null,
+    ): int {
+        $this->userValidator->validateExistingUserAPI(
+            $userId,
+            $login,
+            $firstname,
+            $lastname,
+            $entityId,
+        );
+
+        $oldInfo = $this->utilisateurSQL->getInfo($userId);
+
+        if ($certificateContent !== null) {
+            $this->utilisateurSQL->setCertificat($userId, new Certificate($certificateContent));
+        }
+        $this->utilisateurSQL->validMailAuto($userId);
+        $this->utilisateurSQL->setNomPrenom($userId, $lastname, $firstname);
+        $this->utilisateurSQL->setLogin($userId, $login);
+        $this->utilisateurSQL->setColBase($userId, $entityId);
+
+        if (!$this->roleUtilisateur->getRole($userId)) {
+            $this->roleUtilisateur->addRole($userId, RoleUtilisateur::AUCUN_DROIT, $entityId);
+        }
+
+        $newInfo = $this->utilisateurSQL->getInfo($userId);
+
+        $infoToRetrieve = ['login', 'nom', 'prenom'];
+        return $this->addToJournal($infoToRetrieve, $oldInfo, $newInfo, $entityId, $login, $userId);
+    }
+
+    /**
+     * @param array $infoToRetrieve
+     * @param mixed $oldInfo
+     * @param mixed $newInfo
+     * @param int $entityId
+     * @param string $login
+     * @param int $userId
+     * @return int
+     */
+    public function addToJournal(
+        array $infoToRetrieve,
+        mixed $oldInfo,
+        mixed $newInfo,
+        int $entityId,
+        string $login,
+        int $userId
+    ): int {
         $infoChanged = [];
         foreach ($infoToRetrieve as $key) {
             if ($oldInfo[$key] !== $newInfo[$key]) {

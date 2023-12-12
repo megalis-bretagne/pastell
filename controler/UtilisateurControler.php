@@ -294,10 +294,12 @@ class UtilisateurControler extends PastellControler
                 'Modification de ' . $infoUtilisateur['prenom'] . ' ' . $infoUtilisateur['nom']
             );
             $this->setViewParameter('new_user', false);
+            $this->setViewParameter('is_api', $infoUtilisateur['is_api']);
         } else {
             $this->verifDroit($infoUtilisateur['id_e'], 'utilisateur:creation');
             $this->setViewParameter('page_title', 'Nouvel utilisateur ');
             $this->setViewParameter('new_user', true);
+            $this->setViewParameter('is_api', false);
         }
         $this->setViewParameter(
             'enable_certificate_authentication',
@@ -335,7 +337,7 @@ class UtilisateurControler extends PastellControler
             $this->getRoleUtilisateur()->getEntite($this->getId_u(), 'entite:edition')
         );
 
-        if ($id_u == $this->getId_u()) {
+        if ($id_u === $this->getId_u()) {
             $this->setViewParameter('notification_list', $this->getNotificationList($id_u));
         }
 
@@ -355,7 +357,7 @@ class UtilisateurControler extends PastellControler
         );
 
         if (
-            $id_u === $this->getId_u()
+            (int) $id_u === $this->getId_u()
             || ($this->getRoleUtilisateur()->hasDroit($this->getId_u(), 'utilisateur:edition', $info['id_e'])
                 && $info['is_api'])
         ) {
@@ -467,7 +469,6 @@ class UtilisateurControler extends PastellControler
     public function doEditionAction(): void
     {
         $recuperateur = $this->getPostInfo();
-
         $id_e = $recuperateur->getInt('id_e');
         $id_u = $recuperateur->getInt('id_u');
         $login = $recuperateur->get('login');
@@ -479,20 +480,34 @@ class UtilisateurControler extends PastellControler
 
         try {
             if ($id_u) {
-                $this->getInstance(UserUpdateService::class)->update(
-                    $id_u,
-                    $login,
-                    $email,
-                    $firstname,
-                    $lastname,
-                    $id_e,
-                    null,
-                    $certficate
-                );
+                $is_api = $this->getInstance(UtilisateurSQL::class)->getInfo($id_u)['is_api'];
+                if ($is_api) {
+                    $this->getInstance(UserUpdateService::class)->updateAPI(
+                        $id_u,
+                        $login,
+                        $firstname,
+                        $lastname,
+                        $id_e,
+                        $certficate,
+                    );
+                } else {
+                    $this->getInstance(UserUpdateService::class)->update(
+                        $id_u,
+                        $login,
+                        $email,
+                        $firstname,
+                        $lastname,
+                        $id_e,
+                        null,
+                        $certficate
+                    );
+                }
             } elseif ($is_api) {
                 $id_u = $this->getInstance(UserCreationService::class)->createAPI(
                     $login,
                     $id_e,
+                    $firstname,
+                    $lastname,
                 );
             } else {
                 $id_u = $this->getInstance(UserCreationService::class)->create(
