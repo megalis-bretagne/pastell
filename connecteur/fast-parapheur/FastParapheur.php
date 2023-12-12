@@ -140,9 +140,14 @@ class FastParapheur extends SignatureConnecteur
         return $this->maxNumberOfDaysInParapheur ?: self::PARAPHEUR_NB_JOUR_MAX_DEFAULT;
     }
 
+    /**
+     * @throws DocapostParapheurSoapClientException
+     * @throws Exception
+     */
     public function getSousType()
     {
-        return explode(';', $this->circuits);
+        $client = $this->getClient();
+        return $this->getClient()->getCircuit($this->subscriberNumber);
     }
 
     public function getDossierID($id, $name)
