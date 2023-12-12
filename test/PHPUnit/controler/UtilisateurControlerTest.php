@@ -201,7 +201,7 @@ class UtilisateurControlerTest extends ControlerTestCase
         $id_e1 = $entiteCreationService->create('entite1', '000000000');
         $id_e2 = $entiteCreationService->create('entite2', '000000000');
         $userCreationService = $this->getObjectInstancier()->getInstance(UserCreationService::class);
-        $this->api_user_id = $userCreationService->createAPI('api_user', $id_e1);
+        $this->api_user_id = $userCreationService->createAPI('api_user', $id_e1, 'api', 'user');
         $this->admin_inf = $userCreationService->create('admin_inferieur', 'admin@gmail.com', 'admin', 'admin', $id_e2);
         $roleUtilisateur = $this->getObjectInstancier()->getInstance(RoleUtilisateur::class);
         $roleUtilisateur->addRole($this->admin_inf, 'admin', $id_e2);
