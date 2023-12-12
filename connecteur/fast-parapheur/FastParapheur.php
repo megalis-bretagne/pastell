@@ -8,6 +8,7 @@ class FastParapheur extends SignatureConnecteur
     public const CIRCUIT_ON_THE_FLY_URI = self::REST_URI . '/documents/ondemand/%s/upload';
 
     private $url;
+
     private $subscriberNumber;
 
     private $connectionCertificatePassword;
@@ -61,7 +62,6 @@ class FastParapheur extends SignatureConnecteur
     {
         $this->url = $donneesFormulaire->get('wsdl');
         $this->subscriberNumber = $donneesFormulaire->get('numero_abonnement');
-        $this->circuits = $donneesFormulaire->get('circuits');
         $this->maxNumberOfDaysInParapheur = $donneesFormulaire->get("parapheur_nb_jour_max");
         $this->doNotDeleteAfterRejection = (bool)$donneesFormulaire->get('parapheur_do_not_delete_on_rejection');
 
