@@ -101,10 +101,15 @@ class FastParapheurTest extends PastellTestCase
     {
         $this->mockSoapClient(
             function (string $soapMethod) {
-                if ($soapMethod === 'getCircuit') {
+                if ($soapMethod === 'getCircuits') {
                     return json_decode(
                         json_encode([
-                            'return' => ['0' => 'CIRCUIT 1', '1' => 'CIRCUIT 2', '2' => 'PES', '3' => 'BUREAUTIQUE']
+                            'return' => [
+                                '0' => ['circuitId' => 'CIRCUIT 1'],
+                                '1' => ['circuitId' => 'CIRCUIT 2'],
+                                '2' => ['circuitId' => 'PES'],
+                                '3' => ['circuitId' => 'BUREAUTIQUE']
+                            ]
                         ], JSON_THROW_ON_ERROR),
                         false,
                         512,
@@ -121,7 +126,8 @@ class FastParapheurTest extends PastellTestCase
 
         $circuits = new stdClass();
         $circuits->return = [0 => 'CIRCUIT 1', 1 => 'CIRCUIT 2', 2 => 'PES', 3 => 'BUREAUTIQUE'];
-        static::assertEquals($circuits, $this->fastParapheur->getSousType());
+        $expected = [0 => 'CIRCUIT 1', 1 => 'CIRCUIT 2', 2 => 'PES', 3 => 'BUREAUTIQUE'];
+        static::assertEquals($expected, $this->fastParapheur->getSousType());
     }
 
     /**
