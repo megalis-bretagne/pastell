@@ -5,6 +5,7 @@ use Pastell\Service\Utilisateur\UserCreationService;
 class DocumentAPIControllerTest extends PastellTestCase
 {
     use SoapUtilitiesTestTrait;
+
     private function createTestDocument()
     {
         $info = $this->createDocument('test');
