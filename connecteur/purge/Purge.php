@@ -1,15 +1,20 @@
 <?php
 
 use Pastell\Service\Document\DocumentDeletionService;
+use function Clue\StreamFilter\append;
 
 class Purge extends Connecteur
 {
+    public const ENTITY_ID_FIELD = 'entity_id';
+    public const INCLUDE_CHILDREN_FIELDS = 'include_children';
     public const GO_TROUGH_STATE = 'GO_TROUGH_STATE';
     public const IN_STATE = 'IN_STATE';
 
     private DonneesFormulaire $connecteurConfig;
 
     private string $lastMessage;
+    private int $entityId;
+    private bool $includeChildren;
 
     public function __construct(
         private readonly DocumentActionEntite $documentActionEntite,
@@ -20,6 +25,7 @@ class Purge extends Connecteur
         private readonly DonneesFormulaireFactory $donneesFormulaireFactory,
         private readonly DocumentEntite $documentEntite,
         private readonly DocumentDeletionService $documentDeletionService,
+        private readonly EntiteSQL $entiteSQL,
     ) {
     }
 
@@ -36,6 +42,8 @@ class Purge extends Connecteur
     public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire)
     {
         $this->connecteurConfig = $donneesFormulaire;
+        $this->entityId = (int)$donneesFormulaire->get(self::ENTITY_ID_FIELD);
+        $this->includeChildren = (bool)$donneesFormulaire->get(self::INCLUDE_CHILDREN_FIELDS);
     }
 
     public function listDocument(): array
@@ -83,12 +91,31 @@ class Purge extends Connecteur
         return $selection;
     }
 
-    public function listDocumentGlobal()
+    public function listDocumentGlobal(): array
     {
-        return $this->documentEntite->getDocumentLastActionOlderThanInDays(
-            $this->connecteurConfig->get('nb_days') ?: 5000,
-            $this->connecteurConfig->get('document_type')
+        $nb_days = (int)$this->connecteurConfig->get('nb_days');
+        $doc_type = $this->connecteurConfig->get('document_type');
+        $documentList = $this->documentEntite->getDocumentLastActionOlderThanInDays(
+            $nb_days,
+            $doc_type,
+            $this->entityId
         );
+        if ($this->includeChildren) {
+            $children_documents = [];
+            foreach ($this->entiteSQL->getAllChildren($this->entityId) as $child) {
+                foreach (
+                    $this->documentEntite->getDocumentLastActionOlderThanInDays(
+                        $nb_days,
+                        $doc_type,
+                        $child['id_e']
+                    ) as $document
+                ) {
+                    $children_documents[] = $document;
+                }
+            }
+            $documentList = array_merge($documentList, $children_documents);
+        }
+        return $documentList;
     }
 
     public function purgerGlobal()

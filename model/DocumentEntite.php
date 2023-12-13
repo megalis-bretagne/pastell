@@ -199,7 +199,7 @@ class DocumentEntite extends SQL
         return $res;
     }
 
-    public function getDocumentLastActionOlderThanInDays($nb_days, $type = ''): array
+    public function getDocumentLastActionOlderThanInDays($nb_days, $type = null, $id_e = null): array
     {
         $date = date("Y-m-d", strtotime($nb_days ? "-$nb_days days" : 'now'));
         $sql = "SELECT * FROM document_entite " .
@@ -208,6 +208,10 @@ class DocumentEntite extends SQL
         if ($type) {
             $sql .= " AND document_entite.last_type=? ";
             $data[] = $type;
+        }
+        if ($id_e) {
+            $sql .= " AND document_entite.id_e=? ";
+            $data[] = $id_e;
         }
         return $this->query($sql, $data);
     }
