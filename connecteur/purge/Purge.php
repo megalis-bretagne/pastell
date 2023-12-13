@@ -1,6 +1,7 @@
 <?php
 
 use Pastell\Service\Document\DocumentDeletionService;
+
 use function Clue\StreamFilter\append;
 
 class Purge extends Connecteur
