@@ -827,4 +827,43 @@ class FastTdtTest extends PastellTestCase
             $this->fastTdt->annulationActes('999-1234-20190515-201905151412-AI')
         );
     }
+
+    /**
+     * @throws Exception
+     */
+    public function testGetActeTamponneeWebdav()
+    {
+        $connecteurConfig = $this->getDefaultConnecteurConfig();
+
+        $webdavWrapper = $this->createMock(WebdavWrapper::class);
+        $webdavWrapper
+            ->method('listFolder')
+            ->willReturn([
+                '999-1234----7-2_1.pdf',
+                '999-1234----7-2_7.pdf',
+                '999-1234----7-2_9.pdf',
+            ]);
+        $webdavWrapper
+            ->method('get')
+            ->willReturn(
+                'file_content',
+            );
+        $webdavWrapper
+            ->method('delete')
+            ->willReturn(['statusCode' => 204]);
+
+        $soapClientFactory = $this->createMock(SoapClientFactory::class);
+
+        /**
+         * @var WebdavWrapper $webdavWrapper
+         * @var SoapClientFactory $soapClientFactory
+         */
+        $this->fastTdt = new FastTdt($webdavWrapper, $soapClientFactory, $this->getJournal());
+        $this->fastTdt->setConnecteurConfig($connecteurConfig);
+
+        $this->assertSame(
+            'file_content',
+            $this->fastTdt->getActeTamponne('999-1234----7-2_1')
+        );
+    }
 }
