@@ -2,6 +2,7 @@ nom: 'Document individuel (destinataire)'
 type: 'Types de dossier personnalisés'
 description: ''
 connecteur: {  }
+affiche_one: false
 formulaire:
     onglet1:
         titre_document:

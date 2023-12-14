@@ -2,6 +2,7 @@ nom: 'Bulletin de salaire (destinataire)'
 type: 'Ressources humaines'
 description: ''
 connecteur: {  }
+affiche_one: false
 formulaire:
     Information:
         titre_document:

@@ -2,6 +2,7 @@ nom: "Document d'autorisation d'urbanisme (destinataire)"
 type: 'Pack urbanisme'
 description: ''
 connecteur: {  }
+affiche_one: false
 formulaire:
     onglet1:
         titre:

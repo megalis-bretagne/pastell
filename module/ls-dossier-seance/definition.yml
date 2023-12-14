@@ -4,6 +4,7 @@ description: "Type de dossier à utiliser pour l'archivage des dossiers de séan
 connecteur:
     - 'Bordereau SEDA'
     - SAE
+affiche_one: false
 formulaire:
     'Informations principales':
         dossier:

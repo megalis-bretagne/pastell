@@ -8,6 +8,7 @@ connecteur:
     - GED
     - 'Bordereau SEDA'
     - SAE
+affiche_one: false
 formulaire:
     Information:
         reference:

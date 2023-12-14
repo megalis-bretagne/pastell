@@ -74,7 +74,7 @@ class TypeDossierEditionService
      * @throws TypeDossierException
      * @throws Exception
      */
-    public function editLibelleInfo($id_t, $nom, $type, $description, $nom_onglet, $affiche_one)
+    public function editLibelleInfo($id_t, $nom, $type, $description, $nom_onglet, $affiche_one = null): void
     {
         $this->checkNomOnglet($nom_onglet);
         $typeDossierProporties = $this->typeDossierManager->getTypeDossierProperties($id_t);
