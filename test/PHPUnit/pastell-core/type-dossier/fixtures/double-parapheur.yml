@@ -4,6 +4,7 @@ description: ''
 connecteur:
     - signature
     - signature
+affiche_one: false
 formulaire:
     Information:
         titre:

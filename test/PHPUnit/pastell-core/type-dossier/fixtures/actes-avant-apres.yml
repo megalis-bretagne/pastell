@@ -5,6 +5,7 @@ connecteur:
     - transformation
     - TdT
     - GED
+affiche_one: false
 formulaire:
     onglet1:
         titre:

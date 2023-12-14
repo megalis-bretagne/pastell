@@ -43,6 +43,7 @@ class TypeDossierTranslator
         $result[DocumentType::FORMULAIRE] = [];
         $result[DocumentType::PAGE_CONDITION] = $result[DocumentType::PAGE_CONDITION] ?: [];
         $result[DocumentType::CONNECTEUR] = $result[DocumentType::CONNECTEUR] ?: [];
+        $result[DocumentType::AFFICHE_ONE] = $typeDossierData->affiche_one;
         if ($typeDossierData->restriction_pack) {
             $result[DocumentType::RESTRICTION_PACK][] = $typeDossierData->restriction_pack;
         }

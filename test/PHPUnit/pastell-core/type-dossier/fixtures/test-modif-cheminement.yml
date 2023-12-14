@@ -7,6 +7,7 @@ connecteur:
     - mailsec
     - pdf-relance
     - GED
+affiche_one: false
 formulaire:
     onglet1:
         titre:
