@@ -20,7 +20,16 @@ formulaire:
             commentaire: 'Exemple: dc=example,dc=com'
         ldap_login_attribute:
             name: "Nom de l'attribut utilisé pour le login"
-            commentaire: "Exemple: uid, cn, samaccountname, sAMAccountName, userPrincipalName, ...\nAttention, sur Active Directory, le nom de l'attribut peut être sensible à la casse !"
+            commentaire: "Exemple: uid, samaccountname, sAMAccountName, userPrincipalName, ...\nAttention, sur Active Directory, le nom de l'attribut peut être sensible à la casse !"
+        ldap_lastname_attribute:
+            name: "Nom de l'attribut utilisé pour le nom"
+            commentaire: "Exemple: sn \n Attention, sur Active Directory, le nom de l'attribut peut être sensible à la casse !"
+        ldap_firstname_attribute:
+            name: "Nom de l'attribut utilisé pour le prénom"
+            commentaire: "Exemple: givenname, samaccountname, sAMAccountName, userPrincipalName, \nAttention, sur Active Directory, le nom de l'attribut peut être sensible à la casse !"
+        ldap_email_attribute:
+            name: "Nom de l'attribut utilisé pour l'email"
+            commentaire: "Exemple: mail \nAttention, sur Active Directory, le nom de l'attribut peut être sensible à la casse !"
         ldap_filter:
             name: 'Filtre LDAP'
             commentaire: 'Filtre en langage LDAP (objectClass=*) ou bien (memberOf=pastell)'
