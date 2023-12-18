@@ -7,7 +7,7 @@
 - Ajout du flux Dossier de séance (archivage) 'ls-dossier-seance' #1946
 - Ajout des champs annotations publiques et privées pour l'envoi vers iParapheur #1883
 - Possibilité de créer un utilisateur exclusivement API et de gérer ses tokens via l'administrateur de son entité #1943
-- Ajout des attributs nom, prénom et email pour le connecteur ldap #1975
+- Permettre la configuration des attributs LDAP : nom, prénom et email #1975
 
 # [4.0.10] - 2023-12-11
 

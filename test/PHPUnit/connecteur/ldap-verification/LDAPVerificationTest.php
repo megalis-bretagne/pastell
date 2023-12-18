@@ -41,12 +41,11 @@ class LDAPVerificationTest extends PastellTestCase
     }
 
     /**
-     * @param string $ldap_filter
      * @throws Exception
      * @dataProvider getLDAPFilter
      * @throws UnrecoverableException
      */
-    public function testGetEntryAllAttribute(string $ldap_filter)
+    public function testGetEntryAllAttribute(string $ldap_filter): void
     {
         $this->setLDAPWrapper($ldap_filter);
         $id_ce = $this->createConnector('ldap-verification', 'LDAP', 0)['id_ce'];
@@ -70,7 +69,7 @@ class LDAPVerificationTest extends PastellTestCase
 
         /** @var LDAPVerification $ldapVerification */
         $ldapVerification = $this->getConnecteurFactory()->getConnecteurById($id_ce);
-        static::assertEquals(
+        static::assertSame(
             [
                 0 => [
                     'login' => 'login',
