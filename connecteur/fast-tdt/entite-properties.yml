@@ -50,14 +50,21 @@ formulaire:
             type: date
             read-only: true
         circuit:
-            name: Identifiant du circuit
+            name: Circuit
+            commentaire: "Obligatoire pour les PES ! <br />\nCircuit sur lequel sera envoyé les PES signés pour être télétransmis par FAST"
             read-only: true
         circuit_name:
             name: Nom du circuit
             type: externalData
             choice-action: circuit
             link_name: "Sélectionner le circuit"
-
+        type_traitement:
+          name: Type de traitement
+          type: select
+          value:
+            TELETRANSMISSION: Télétransmission
+            PREPARATION: Préparation
+          default: 'TELETRANSMISSION'
 action:
     update-certificate:
         name: 'Mettre à jour les certificats'
@@ -72,7 +79,3 @@ action:
     recup-classification:
         name: 'Récupérer la classification'
         action-class: FastTdtRecupClassification
-    circuit:
-        action-class: FastTdtGetCircuits
-        rule:
-            internal-action: true

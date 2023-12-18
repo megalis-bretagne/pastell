@@ -11,6 +11,7 @@
 - Possibilité d'afficher le contennu d'un type de dossier studio sur un seul onglet #1980
 - Ajout de la récupération via l'API Fast des circuits disponibles pour Fast Parapheur #1925
 - Récupération de l'acte tamponné pour les Tdt Fast #1558
+- Possibilité d'envoyer en mode préparation vers Fast-tdt #1541
 - Permettre la configuration des attributs LDAP : nom, prénom et email #1975
 - Ajustement de la zone de séléction dans la gestion d'éléments studio #1281
 
