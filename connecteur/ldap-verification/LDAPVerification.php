@@ -7,6 +7,11 @@ class LDAPVerification extends Connecteur
     private const DEFAULT_HOST = "localhost";
     private const DEFAULT_PORT = 389;
 
+    private const DEFAULT_LOGIN_MAPPING = 'uid';
+    private const DEFAULT_FIRSTNAME_MAPPING = 'givenname';
+    private const DEFAULT_LASTNAME_MAPPING = 's,';
+    private const DEFAULT_EMAIL_MAPPING = 'mail';
+
     private $ldap_host;
     private $ldap_port;
     private $ldap_user;
@@ -32,10 +37,10 @@ class LDAPVerification extends Connecteur
         $this->ldap_password = $donneesFormulaire->get('ldap_password');
         $this->ldap_filter = $donneesFormulaire->get('ldap_filter');
         $this->ldap_root = $donneesFormulaire->get('ldap_root');
-        $this->ldap_login_attribute = $donneesFormulaire->get('ldap_login_attribute') ?: 'uid';
-        $this->ldap_lastname_attribute = $donneesFormulaire->get('ldap_lastname_attribute') ?: 'sn';
-        $this->ldap_firstname_attribute = $donneesFormulaire->get('ldap_firstname_attribute') ?: 'givenname';
-        $this->ldap_email_attribute = $donneesFormulaire->get('ldap_email_attribute') ?: 'mail';
+        $this->ldap_login_attribute = $donneesFormulaire->get('ldap_login_attribute') ?: self::DEFAULT_LOGIN_MAPPING;
+        $this->ldap_lastname_attribute = $donneesFormulaire->get('ldap_lastname_attribute') ?: self::DEFAULT_LASTNAME_MAPPING;
+        $this->ldap_firstname_attribute = $donneesFormulaire->get('ldap_firstname_attribute') ?: self::DEFAULT_FIRSTNAME_MAPPING;
+        $this->ldap_email_attribute = $donneesFormulaire->get('ldap_email_attribute') ?: self::DEFAULT_EMAIL_MAPPING;
     }
 
     /**
