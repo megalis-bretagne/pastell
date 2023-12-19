@@ -32,10 +32,10 @@ class LDAPVerification extends Connecteur
         $this->ldap_password = $donneesFormulaire->get('ldap_password');
         $this->ldap_filter = $donneesFormulaire->get('ldap_filter');
         $this->ldap_root = $donneesFormulaire->get('ldap_root');
-        $this->ldap_login_attribute = $donneesFormulaire->get('ldap_login_attribute');
-        $this->ldap_lastname_attribute = $donneesFormulaire->get('ldap_lastname_attribute');
-        $this->ldap_firstname_attribute = $donneesFormulaire->get('ldap_firstname_attribute');
-        $this->ldap_email_attribute = $donneesFormulaire->get('ldap_email_attribute');
+        $this->ldap_login_attribute = $donneesFormulaire->get('ldap_login_attribute') ?: 'uid';
+        $this->ldap_lastname_attribute = $donneesFormulaire->get('ldap_lastname_attribute') ?: 'sn';
+        $this->ldap_firstname_attribute = $donneesFormulaire->get('ldap_firstname_attribute') ?: 'givenname';
+        $this->ldap_email_attribute = $donneesFormulaire->get('ldap_email_attribute') ?: 'mail';
     }
 
     /**
@@ -125,10 +125,10 @@ class LDAPVerification extends Connecteur
             $dn,
             $filter,
             [
-                $this->ldap_login_attribute ?: 'uid',
-                $this->ldap_lastname_attribute ?: 'sn',
-                $this->ldap_email_attribute ?: 'mail',
-                $this->ldap_firstname_attribute ?: 'givenname'
+                $this->ldap_login_attribute,
+                $this->ldap_lastname_attribute,
+                $this->ldap_email_attribute,
+                $this->ldap_firstname_attribute
             ]
         );
 
@@ -165,13 +165,13 @@ class LDAPVerification extends Connecteur
         unset($entries['count']);
         $result = [];
         foreach ($entries as $entry) {
-            $login = $this->getAttribute($entry, $this->ldap_login_attribute ?: 'uid');
+            $login = $this->getAttribute($entry, $this->ldap_login_attribute);
             if (!$login) {
                 continue;
             }
-            $email = $this->getAttribute($entry, $this->ldap_email_attribute ?: 'mail');
-            $prenom = $this->getAttribute($entry, $this->ldap_firstname_attribute ?: 'givenname');
-            $nom = $this->getAttribute($entry, $this->ldap_lastname_attribute ?: 'sn');
+            $email = $this->getAttribute($entry, $this->ldap_email_attribute);
+            $prenom = $this->getAttribute($entry, $this->ldap_firstname_attribute);
+            $nom = $this->getAttribute($entry, $this->ldap_lastname_attribute);
             $ldap_info = ['login' => $login, 'prenom' => $prenom, 'nom' => $nom, 'email' => $email];
             $id_u = $utilisateur->getIdFromLogin($login);
             if (!$id_u) {
