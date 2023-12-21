@@ -14,7 +14,7 @@ class FastTdt extends TdtConnecteur
     public const ACTE_FIELD = 'arrete';
     public const SIGNATURE_FIELD = 'signature';
     public const ANNEXES_FIELD = 'autre_document_attache';
-    public const CIRCUIT_ID_FIELD = 'circuit_id';
+    public const CIRCUIT_ID_FIELD = 'circuit';
 
     /** @var  WebdavWrapper */
     private $webDavWrapper;

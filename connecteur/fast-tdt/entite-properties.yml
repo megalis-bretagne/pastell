@@ -49,7 +49,7 @@ formulaire:
             name: 'Date de la classification'
             type: date
             read-only: true
-        circuit_id:
+        circuit:
             name: Identifiant du circuit
             read-only: true
         circuit_name:
