@@ -276,7 +276,7 @@ class ExportConfigServiceTest extends PastellTestCase
             ],
             0
         );
-        $this->assertCount($numberOfConnectors, $connecteurEntiteSQL->getAllLocal());
+        static::assertCount($numberOfConnectors, $connecteurEntiteSQL->getAllLocal());
     }
 
     /**
@@ -304,13 +304,16 @@ class ExportConfigServiceTest extends PastellTestCase
             ],
             1
         );
-        $this->assertCount($numberOfConnectors, $connecteurEntiteSQL->getAllLocal());
-        $this->assertEquals(
+        static::assertCount($numberOfConnectors, $connecteurEntiteSQL->getAllLocal());
+        static::assertSame(
             [0 => "Le connecteur global Bar ne peut pas être importé sur une entité fille : il n'a pas été importé."],
             $importConfigService->getLastErrors()
         );
     }
 
+    /**
+     * @throws \DonneesFormulaireException
+     */
     public function testWhenImportOnlyEntiteConnector(): void
     {
         $importConfigService = $this->getObjectInstancier()->getInstance(ImportConfigService::class);
