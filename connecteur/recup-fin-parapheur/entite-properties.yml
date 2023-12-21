@@ -21,7 +21,7 @@ formulaire:
             name: Nom du type de dossier Pastell
             commentaire: Le dossier doit être un dossier studio. Par défaut, le type de dossier recup-parapheur est selectionné
             type: externalData
-            choice-action: pastell_type_name #pastell_module_name
+            choice-action: pastell_module_name
             link_name: 'Sélectionner le type de dossier'
             default: Récupération parapheur
         tenant_id:
@@ -32,31 +32,14 @@ formulaire:
             type: externalData
             choice-action: tenant_name
             link_name: "Sélectionner l'entité"
-        iparapheur_type_id:
-            name: Identifiant du type de dossier IParapheur
-            commentaire: à définir !
+        desk_id:
+            name: Identifiant du bureau iparapheur
             read-only: true
-        iparapheur_type_name:
-            name: Nom du type de dossier IParapheur
-            commentaire: à définir !
+        desk_name:
+            name: Nom du bureau iparapheur
             type: externalData
-            choice-action: iparapheur_type_name
-            link_name: 'Sélectionner le type de dossier'
-        iparapheur_subtype_id:
-            name: Identifiant du sous-type de dossier IParapheur
-            commentaire: ! à définir !
-            read-only: true
-        iparapheur_subtype_name:
-            name: Nom du sous-type de dossier IParapheur
-            commentaire: ! à définir !
-            type: externalData
-            choice-action: iparapheur_subtype_name
-            link_name: 'Sélectionner le sous-type de dossier'
-        desk_filter:
-            name: Identifiants des bureaux à traiter
-            type: textarea
-            commentaire: |
-                Une ligne par identifiant
+            choice-action: desk_name
+            link_name: "Sélectionner le bureau"
         pastell_dictionnary:
             name: Correspondance des identifiants Pastell
             type: textarea
@@ -85,24 +68,14 @@ action:
             module_type: pastell_module_id
             module_type_label: pastell_module_name
 
-    pastell_type_name:
-        action-class: GetTypePastell
-        rule:
-            internal-action: true
-
-    iparapheur_type_name:
-        action-class: GetTypeParapheur
-        rule:
-            internal-action: true
-
-    iparapheur_subtype_name:
-        action-class: GetSubtypeParapheur
+    desk_name:
+        action-class: DeskNameAction
         rule:
             internal-action: true
 
     test_connexion:
         name: Tester la connexion
-        action-class: RecupParapheurTestConnexion
+        action-class: RecupParapheurCorbeilleTestConnexion
 
     list_dossier:
         name: Lister les dossiers à récupérer
@@ -110,7 +83,7 @@ action:
 
     recup_one:
         name: Faire une boucle de récupération (synchrone)
-        action-class: RecupParapheurRecup
+        action-class: RecupParapheurCorbeilleRecup
 
     recup:
         name: Traitement (immédiat)
@@ -119,4 +92,4 @@ action:
 
     recup-async:
         name: Traitement (par le gestionnaire de tâches)
-        action-class: RecupParapheurRecupAsync
+        action-class: RecupParapheurCorbeilleRecupAsync
