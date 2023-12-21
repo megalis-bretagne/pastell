@@ -111,7 +111,7 @@ class DocapostParapheurSoapClient
     }
 
 
-    public function getCircuits(string $siren)
+    public function getCircuits(string $siren): array
     {
         return $this->client->getCircuits(['siren' => $siren])->return;
     }

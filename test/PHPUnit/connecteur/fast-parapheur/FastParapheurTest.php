@@ -96,8 +96,9 @@ class FastParapheurTest extends PastellTestCase
      * When getting subtypes
      *
      * @test
+     * @throws UnrecoverableException
      */
-    public function whenGettingSubtypes()
+    public function whenGettingSubtypes(): void
     {
         $this->mockSoapClient(
             function (string $soapMethod) {
@@ -120,14 +121,9 @@ class FastParapheurTest extends PastellTestCase
             }
         );
         $connecteurConfig = $this->getDefaultConnectorConfig();
-        $connecteurConfig->setData('circuits', 'CIRCUIT 1;CIRCUIT 2;PES;BUREAUTIQUE');
-
         $this->fastParapheur = $this->getFastParapheur($connecteurConfig);
-
-        $circuits = new stdClass();
-        $circuits->return = [0 => 'CIRCUIT 1', 1 => 'CIRCUIT 2', 2 => 'PES', 3 => 'BUREAUTIQUE'];
         $expected = [0 => 'CIRCUIT 1', 1 => 'CIRCUIT 2', 2 => 'PES', 3 => 'BUREAUTIQUE'];
-        static::assertEquals($expected, $this->fastParapheur->getSousType());
+        static::assertSame($expected, $this->fastParapheur->getSousType());
     }
 
     /**
