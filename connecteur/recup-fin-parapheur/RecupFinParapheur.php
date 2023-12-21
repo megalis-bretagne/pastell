@@ -169,7 +169,6 @@ class RecupFinParapheur extends Connecteur
                 fwrite($file, $body->read(1024));
             }
             fclose($file);
-            /* marche pas a cause de premis
             $zipContent = new ZipContent();
             $zipContentModel = $zipContent->extract($zipFilePath, $tmp_folder);
             $glaneurLocalDocumentInfo = new GlaneurDocumentInfo($this->getConnecteurInfo()['id_e']);
@@ -193,14 +192,9 @@ class RecupFinParapheur extends Connecteur
             $glaneurLocalDocumentInfo->action_ok = 'importation';
             $glaneurLocalDocumentInfo->action_ko = 'fatal-error';
             $id_d = $this->glaneurDocumentCreator->create($glaneurLocalDocumentInfo, $tmp_folder);
-            */
         } finally {
             $tmpFolder->delete($tmp_folder);
         }
-        //vTemp
-        $this->removeFolder($dossierId);
-        return $dossierId;
-        //^temp
         return $id_d;
     }
 
