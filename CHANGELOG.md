@@ -1,3 +1,8 @@
+# [4.0.11] - 
+
+## Corrections 
+- Correction d'erreur à l'importation de configuration d'une entité comportant des connecteurs globaux #1961
+
 # [4.0.10] - 2023-12-11
 
 ***Cette version nécessite une mise à jour du générateur SEDA en 1.0.2***
