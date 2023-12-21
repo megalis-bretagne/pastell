@@ -7,14 +7,21 @@ class LDAPVerification extends Connecteur
     private const DEFAULT_HOST = "localhost";
     private const DEFAULT_PORT = 389;
 
+    private const DEFAULT_LOGIN_ATTRIBUTE = 'uid';
+    private const DEFAULT_FIRSTNAME_ATTRIBUTE = 'givenname';
+    private const DEFAULT_LASTNAME_ATTRIBUTE = 'sn';
+    private const DEFAULT_EMAIL_ATTRIBUTE = 'mail';
+
     private $ldap_host;
     private $ldap_port;
     private $ldap_user;
     private $ldap_password;
     private $ldap_filter;
     private $ldap_root;
-    private $ldap_login_attribute;
-
+    private string $ldap_login_attribute;
+    private string $ldap_lastname_attribute = 'sn';
+    private string $ldap_firstname_attribute = 'givenname';
+    private string $ldap_email_attribute = 'mail';
     private $ldapWrapper;
 
     public function __construct(LDAPWrapper $ldapWrapper)
@@ -22,7 +29,7 @@ class LDAPVerification extends Connecteur
         $this->ldapWrapper = $ldapWrapper;
     }
 
-    public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire)
+    public function setConnecteurConfig(DonneesFormulaire $donneesFormulaire): void
     {
         $this->ldap_host = $donneesFormulaire->get('ldap_host') ?: self::DEFAULT_HOST;
         $this->ldap_port = intval($donneesFormulaire->get('ldap_port')) ?: self::DEFAULT_PORT;
@@ -30,7 +37,10 @@ class LDAPVerification extends Connecteur
         $this->ldap_password = $donneesFormulaire->get('ldap_password');
         $this->ldap_filter = $donneesFormulaire->get('ldap_filter');
         $this->ldap_root = $donneesFormulaire->get('ldap_root');
-        $this->ldap_login_attribute = $donneesFormulaire->get('ldap_login_attribute');
+        $this->ldap_login_attribute = $donneesFormulaire->get('ldap_login_attribute') ?: self::DEFAULT_LOGIN_ATTRIBUTE;
+        $this->ldap_lastname_attribute = $donneesFormulaire->get('ldap_lastname_attribute') ?: self::DEFAULT_LASTNAME_ATTRIBUTE;
+        $this->ldap_firstname_attribute = $donneesFormulaire->get('ldap_firstname_attribute') ?: self::DEFAULT_FIRSTNAME_ATTRIBUTE;
+        $this->ldap_email_attribute = $donneesFormulaire->get('ldap_email_attribute') ?: self::DEFAULT_EMAIL_ATTRIBUTE;
     }
 
     /**
@@ -40,7 +50,7 @@ class LDAPVerification extends Connecteur
     public function getConnexion()
     {
         $ldap = $this->getConnexionObject();
-        if (! @ $this->ldapWrapper->ldap_bind($ldap, $this->ldap_user, $this->ldap_password)) {
+        if (!@ $this->ldapWrapper->ldap_bind($ldap, $this->ldap_user, $this->ldap_password)) {
             throw new UnrecoverableException(
                 "Impossible de s'authentifier sur le serveur LDAP : " . $this->ldapWrapper->ldap_error($ldap)
             );
@@ -77,13 +87,13 @@ class LDAPVerification extends Connecteur
         if (!$filter) {
             $filter = "(objectClass=*)";
         }
-        if (! preg_match('#^\(.*\)$#', $filter)) {
+        if (!preg_match('#^\(.*\)$#', $filter)) {
             $filter = "($filter)";
         }
         $filter = "(&$filter($this->ldap_login_attribute=$user_id))";
 
-        $result =  $this->ldapWrapper->ldap_search($ldap, $this->ldap_root, $filter);
-        if (! $result ||  $this->ldapWrapper->ldap_count_entries($ldap, $result) < 1) {
+        $result = $this->ldapWrapper->ldap_search($ldap, $this->ldap_root, $filter);
+        if (!$result || $this->ldapWrapper->ldap_count_entries($ldap, $result) < 1) {
             return false;
         }
         $entries = $this->ldapWrapper->ldap_get_entries($ldap, $result);
@@ -115,7 +125,17 @@ class LDAPVerification extends Connecteur
         if (!$filter) {
             $filter = "(objectClass=*)";
         }
-        $result = @ $this->ldapWrapper->ldap_search($ldap, $dn, $filter, [$this->ldap_login_attribute,'sn','mail','givenname']);
+        $result = @ $this->ldapWrapper->ldap_search(
+            $ldap,
+            $dn,
+            $filter,
+            [
+                $this->ldap_login_attribute,
+                $this->ldap_lastname_attribute,
+                $this->ldap_email_attribute,
+                $this->ldap_firstname_attribute
+            ]
+        );
 
         if ($result === false) {
             $error = $this->ldapWrapper->ldap_error($ldap);
@@ -154,13 +174,12 @@ class LDAPVerification extends Connecteur
             if (!$login) {
                 continue;
             }
-            $email = $this->getAttribute($entry, 'mail');
-            $prenom = $this->getAttribute($entry, 'givenname');
-            $nom = $this->getAttribute($entry, 'sn');
-
-            $ldap_info = ['login' => $login,'prenom' => $prenom,'nom' => $nom,'email' => $email];
+            $email = $this->getAttribute($entry, $this->ldap_email_attribute);
+            $prenom = $this->getAttribute($entry, $this->ldap_firstname_attribute);
+            $nom = $this->getAttribute($entry, $this->ldap_lastname_attribute);
+            $ldap_info = ['login' => $login, 'prenom' => $prenom, 'nom' => $nom, 'email' => $email];
             $id_u = $utilisateur->getIdFromLogin($login);
-            if (! $id_u) {
+            if (!$id_u) {
                 $ldap_info['create'] = true;
                 $ldap_info['synchronize'] = true;
             } else {
@@ -182,12 +201,12 @@ class LDAPVerification extends Connecteur
      */
     public function verifLogin($login, $password): bool
     {
-        if (! $login) {
+        if (!$login) {
             return false;
         }
         $ldap = $this->getConnexionObject();
         $user_id = $this->getUserDN($login);
-        if (! @ $this->ldapWrapper->ldap_bind($ldap, $user_id, $password)) {
+        if (!@ $this->ldapWrapper->ldap_bind($ldap, $user_id, $password)) {
             return false;
         }
         return true;
