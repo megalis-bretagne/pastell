@@ -831,7 +831,7 @@ class FastTdtTest extends PastellTestCase
     /**
      * @throws Exception
      */
-    public function testGetActeTamponneeWebdav()
+    public function testGetActeTamponneeWebdav(): void
     {
         $connecteurConfig = $this->getDefaultConnecteurConfig();
 

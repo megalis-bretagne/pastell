@@ -508,9 +508,9 @@ class FastTdt extends TdtConnecteur
      */
     public function getActeTamponne(string $id_transaction, string $date_affichage = null): ?string
     {
-        $pdf_file = '';
+        $pdf_file = null;
         foreach ($this->webDavWrapper->listFolder('') as $doc) {
-            if (preg_match('/\b' . preg_quote($id_transaction, '/') . '\b/', $doc)) {
+            if (preg_match("/$id_transaction.*\.pdf$/i", $doc)) {
                 $pdf_file = $this->webDavWrapper->get($doc);
                 $this->webDavWrapper->delete('', $doc);
                 break;
