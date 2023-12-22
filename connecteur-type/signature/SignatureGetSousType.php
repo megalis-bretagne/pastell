@@ -8,9 +8,9 @@ class SignatureGetSousType extends DictionnaryChoice
      */
     public function displayAPI()
     {
-        dump($this->getMyConnecteur()->getSousType());
-        die();
-        return $this->getMyConnecteur()->getSousType();
+        /** @var  SignatureConnecteur $connecteur */
+        $connecteur = $this->getMyConnecteur();
+        return $connecteur->getSousType();
     }
 
     public function getElementId(): string
