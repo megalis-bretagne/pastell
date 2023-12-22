@@ -4,7 +4,7 @@ class FastTdtGetCircuits extends DictionnaryChoice
 {
     public function getElementId(): string
     {
-        return 'circuit_id';
+        return 'circuit';
     }
 
     public function getElementName(): string
