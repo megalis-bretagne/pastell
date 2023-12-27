@@ -1,162 +1,161 @@
+# You can override the included template(s) by including variable overrides
+# SAST customization: https://docs.gitlab.com/ee/user/application_security/sast/#customizing-the-sast-settings
+# Secret Detection customization: https://docs.gitlab.com/ee/user/application_security/secret_detection/#customizing-settings
+# Dependency Scanning customization: https://docs.gitlab.com/ee/user/application_security/dependency_scanning/#customizing-the-dependency-scanning-settings
+# Container Scanning customization: https://docs.gitlab.com/ee/user/application_security/container_scanning/#customizing-the-container-scanning-settings
+# Note that environment variables can be set in several places
+# See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
 include:
-  - remote: 'https://api.r2devops.libriciel.fr/job/r/gitlab/libriciel/integration-continue/templates/publish-container-to-registry@1.2.0.yaml?token=r2-bec2c06726.yml'
-  - remote: 'https://api.r2devops.libriciel.fr/job/r/gitlab/libriciel/integration-continue/templates/security-check@1.2.0.yaml?token=r2-de7bd52aa1.yml'
-  - project: "libriciel/integration-continue/templates"
-    ref: publish-compose-to-nexus@0.1.4
-    file: '/jobs/publish-compose-to-nexus/publish-compose-to-nexus.yml'
-
+- remote: https://api.r2devops.libriciel.fr/job/r/gitlab/libriciel/integration-continue/templates/publish-container-to-registry@1.2.0.yaml?token=r2-bec2c06726.yml
+- remote: https://api.r2devops.libriciel.fr/job/r/gitlab/libriciel/integration-continue/templates/security-check@1.2.0.yaml?token=r2-de7bd52aa1.yml
+- project: libriciel/integration-continue/templates
+  ref: publish-compose-to-nexus@0.1.4
+  file: "/jobs/publish-compose-to-nexus/publish-compose-to-nexus.yml"
+- template: Security/Dependency-Scanning.gitlab-ci.yml
 stages:
-    - build
-    - static-analysis
-    - test
-    - quality
-    - staging
-    - deploy
-    - publish
-
+- build
+- static-analysis
+- test
+- quality
+- staging
+- deploy
+- publish
 variables:
-    CONTAINER_IMAGE: "${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_NAME}"
-    MYSQL_DATABASE: pastell_test
-    MYSQL_USER: user
-    MYSQL_PASSWORD: user
-    MYSQL_RANDOM_ROOT_PASSWORD: "yes"
-    MYSQL_HOST_TEST: 'mariadb'
-    MYSQL_HOST: 'mariadb'
-    MYSQL_PORT: '3306'
-    PHP_MEMORY_LIMIT: '1000M'
-    PASTELL_SITE_BASE: 'https://localhost/'
-    WEBSEC_BASE: https://127.0.0.1/
-
+  CONTAINER_IMAGE: "${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_NAME}"
+  MYSQL_DATABASE: pastell_test
+  MYSQL_USER: user
+  MYSQL_PASSWORD: user
+  MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+  MYSQL_HOST_TEST: mariadb
+  MYSQL_HOST: mariadb
+  MYSQL_PORT: '3306'
+  PHP_MEMORY_LIMIT: 1000M
+  PASTELL_SITE_BASE: https://localhost/
+  WEBSEC_BASE: https://127.0.0.1/
 build:
   stage: build
   tags:
-    - docker-build
+  - docker-build
   variables:
     GITHUB_API_TOKEN: "${GITHUB_API_TOKEN}"
   script:
-    - date=$(date)
-    - sed -i "s/%CI_BUILD_ID%/${CI_PIPELINE_ID}/" ./manifest.yml
-    - sed -i "s/%BUILD_DATE%/$date/" ./manifest.yml
-    - sed -i "s/%VERSION%/${CI_COMMIT_REF_NAME}/" ./manifest.yml
-    - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
-    - docker build --build-arg GITHUB_API_TOKEN=$GITHUB_API_TOKEN --target pastell_dev --pull -t ${CONTAINER_IMAGE} .
-    - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
-    - docker push ${CONTAINER_IMAGE}
-
+  - date=$(date)
+  - sed -i "s/%CI_BUILD_ID%/${CI_PIPELINE_ID}/" ./manifest.yml
+  - sed -i "s/%BUILD_DATE%/$date/" ./manifest.yml
+  - sed -i "s/%VERSION%/${CI_COMMIT_REF_NAME}/" ./manifest.yml
+  - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
+  - docker build --build-arg GITHUB_API_TOKEN=$GITHUB_API_TOKEN --target pastell_dev
+    --pull -t ${CONTAINER_IMAGE} .
+  - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
+  - docker push ${CONTAINER_IMAGE}
 lint:
   stage: static-analysis
-  image : "$CONTAINER_IMAGE"
+  image: "$CONTAINER_IMAGE"
   variables:
-    DONT_INIT_DATABASE: "true"
-    DONT_RETRIEVE_VALIDCA: "true"
+    DONT_INIT_DATABASE: 'true'
+    DONT_RETRIEVE_VALIDCA: 'true'
   script:
-    - cd /var/www/pastell
-    - composer phpcs
-
+  - cd /var/www/pastell
+  - composer phpcs
 phpstan:
   stage: static-analysis
-  image : "$CONTAINER_IMAGE"
+  image: "$CONTAINER_IMAGE"
   variables:
-    DONT_INIT_DATABASE: "true"
-    DONT_RETRIEVE_VALIDCA: "true"
+    DONT_INIT_DATABASE: 'true'
+    DONT_RETRIEVE_VALIDCA: 'true'
   script:
-    - cd /var/www/pastell
-    - composer phpstan
-
-#Note: il semble que le fichier entrypoint soit exécuté deux fois !
-# https://gitlab.com/gitlab-org/gitlab-ci-multi-runner/issues/1380
-# Ca permet de tester l'idempotence de fichier entrypoint, mais c'est pas super quand même
-
+  - cd /var/www/pastell
+  - composer phpstan
 unit_test:
-    stage: test
-    image : "$CONTAINER_IMAGE"
-    variables:
-      GIT_STRATEGY: none
-      COMPOSER_PROCESS_TIMEOUT: 1200
-      DONT_RETRIEVE_VALIDCA: "true"
-    services:
-        - name: hubdocker.libriciel.fr/mariadb:10.9.3-jammy
-          alias: mariadb
-    script:
-        - cd /var/www/pastell
-        - php -dpcov.enabled=1 -dpcov.directory=. vendor/bin/phpunit --coverage-text --colors=never --coverage-clover coverage/coverage.xml --log-junit coverage/logfile.xml
-        - cp -rf coverage $CI_PROJECT_DIR
-    coverage: '/^\s*Lines:\s*\d+.\d+\%/'
-    artifacts:
-        paths:
-            - coverage
-        expire_in: 1h
-
+  stage: test
+  image: "$CONTAINER_IMAGE"
+  variables:
+    GIT_STRATEGY: none
+    COMPOSER_PROCESS_TIMEOUT: 1200
+    DONT_RETRIEVE_VALIDCA: 'true'
+  services:
+  - name: hubdocker.libriciel.fr/mariadb:10.9.3-jammy
+    alias: mariadb
+  script:
+  - cd /var/www/pastell
+  - php -dpcov.enabled=1 -dpcov.directory=. vendor/bin/phpunit --coverage-text --colors=never
+    --coverage-clover coverage/coverage.xml --log-junit coverage/logfile.xml
+  - cp -rf coverage $CI_PROJECT_DIR
+  coverage: "/^\\s*Lines:\\s*\\d+.\\d+\\%/"
+  artifacts:
+    paths:
+    - coverage
+    expire_in: 1h
 quality:
   stage: quality
   only:
-    - master
-  image : gitlab.libriciel.fr:4567/docker/sonar-scanner:latest
+  - master
+  image: gitlab.libriciel.fr:4567/docker/sonar-scanner:latest
   script:
-    - mkdir -p /var/www/pastell
-    - cp -rf $CI_PROJECT_DIR/* /var/www/pastell
-    - cd /var/www/pastell
-    - /sonar-scanner -Dsonar.login=$SONAR_LOGIN -Dsonar.host.url=$SONAR_HOST_URL
-
+  - mkdir -p /var/www/pastell
+  - cp -rf $CI_PROJECT_DIR/* /var/www/pastell
+  - cd /var/www/pastell
+  - "/sonar-scanner -Dsonar.login=$SONAR_LOGIN -Dsonar.host.url=$SONAR_HOST_URL"
 acceptance_test:
-    stage: test
-    variables:
-        GIT_STRATEGY: none
-        REDIS_SERVER: redis
-        REDIS_PORT: 6379
-        PASTELL_SITE_BASE: https://localhost/
-        WEBSEC_BASE: https://127.0.0.1/
-        PACK_TEST: "true"
-    image :  "$CONTAINER_IMAGE"
-    services:
-        - name: hubdocker.libriciel.fr/mariadb:10.9.3-jammy
-          alias: mariadb
-        - name: hubdocker.libriciel.fr/redis:7.0.5
-          alias: redis
-    script:
-        - cd /var/www/pastell
-        - mkdir -p test/codeception/tests/output
-        - /bin/bash -c "source /etc/apache2/envvars && exec /usr/sbin/apache2"
-        - composer codecept || { cp -rf test/codeception/tests/output $CI_PROJECT_DIR; cp -rf /data/log $CI_PROJECT_DIR; exit 1; }
-    artifacts:
-        when: on_failure
-        paths:
-            - $CI_PROJECT_DIR
-        expire_in: 1h
-
+  stage: test
+  variables:
+    GIT_STRATEGY: none
+    REDIS_SERVER: redis
+    REDIS_PORT: 6379
+    PASTELL_SITE_BASE: https://localhost/
+    WEBSEC_BASE: https://127.0.0.1/
+    PACK_TEST: 'true'
+  image: "$CONTAINER_IMAGE"
+  services:
+  - name: hubdocker.libriciel.fr/mariadb:10.9.3-jammy
+    alias: mariadb
+  - name: hubdocker.libriciel.fr/redis:7.0.5
+    alias: redis
+  script:
+  - cd /var/www/pastell
+  - mkdir -p test/codeception/tests/output
+  - /bin/bash -c "source /etc/apache2/envvars && exec /usr/sbin/apache2"
+  - composer codecept || { cp -rf test/codeception/tests/output $CI_PROJECT_DIR; cp
+    -rf /data/log $CI_PROJECT_DIR; exit 1; }
+  artifacts:
+    when: on_failure
+    paths:
+    - "$CI_PROJECT_DIR"
+    expire_in: 1h
 security-check:
   allow_failure: true
   before_script:
-    - cp .trivyignore /
-
+  - cp .trivyignore /
 deploy_dev:
-    stage: staging
-    environment:
-        name: pastell-4-0.dev.libriciel.net
-        url: https://pastell-4-0.dev.libriciel.net
-    only:
-        - master
-    variables:
-        PAYLOAD: "payload={\"text\": \"[pastell-4-0.dev.libriciel.net](https://pastell-4-0.dev.libriciel.net) a été mis à jour - [build $CI_PIPELINE_ID]($CI_PROJECT_URL/pipelines/$CI_PIPELINE_ID)\"}"
-    script:
-        - eval $(ssh-agent -s)
-        - ssh-add <(echo "$SSH_PRIVATE_KEY")
-        - mkdir -p ~/.ssh
-        - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-        - scp ./docker/docker-compose.yml gitlab@pastell-4-0.dev.libriciel.net:/data/docker-file/docker-compose.yml
-        - echo "$DEV_ENV_FILE_CONTENT" > /tmp/.env
-        - scp /tmp/.env gitlab@pastell-4-0.dev.libriciel.net:/data/docker-file/
-        - ssh -tt gitlab@pastell-4-0.dev.libriciel.net "docker login -u gitlab-ci-token -p '$CI_JOB_TOKEN' $CI_REGISTRY && cd /data/docker-file/ && docker-compose pull && docker-compose up -d"
-        - curl -i -X POST -d "$PAYLOAD" $MATTERMOST_WEBHOOK
-
+  stage: staging
+  environment:
+    name: pastell-4-0.dev.libriciel.net
+    url: https://pastell-4-0.dev.libriciel.net
+  only:
+  - master
+  variables:
+    PAYLOAD: 'payload={"text": "[pastell-4-0.dev.libriciel.net](https://pastell-4-0.dev.libriciel.net)
+      a été mis à jour - [build $CI_PIPELINE_ID]($CI_PROJECT_URL/pipelines/$CI_PIPELINE_ID)"}'
+  script:
+  - eval $(ssh-agent -s)
+  - ssh-add <(echo "$SSH_PRIVATE_KEY")
+  - mkdir -p ~/.ssh
+  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  - scp ./docker/docker-compose.yml gitlab@pastell-4-0.dev.libriciel.net:/data/docker-file/docker-compose.yml
+  - echo "$DEV_ENV_FILE_CONTENT" > /tmp/.env
+  - scp /tmp/.env gitlab@pastell-4-0.dev.libriciel.net:/data/docker-file/
+  - ssh -tt gitlab@pastell-4-0.dev.libriciel.net "docker login -u gitlab-ci-token
+    -p '$CI_JOB_TOKEN' $CI_REGISTRY && cd /data/docker-file/ && docker-compose pull
+    && docker-compose up -d"
+  - curl -i -X POST -d "$PAYLOAD" $MATTERMOST_WEBHOOK
 publish-container-to-registry:
   before_script:
-    - date=$(date)
-    - sed -i "s/%CI_BUILD_ID%/${CI_PIPELINE_ID}/" ./manifest.yml
-    - sed -i "s/%BUILD_DATE%/$date/" ./manifest.yml
-    - sed -i "s/%VERSION%/${CI_COMMIT_REF_NAME}/" ./manifest.yml
-
+  - date=$(date)
+  - sed -i "s/%CI_BUILD_ID%/${CI_PIPELINE_ID}/" ./manifest.yml
+  - sed -i "s/%BUILD_DATE%/$date/" ./manifest.yml
+  - sed -i "s/%VERSION%/${CI_COMMIT_REF_NAME}/" ./manifest.yml
 publish-compose-to-nexus:
   before_script:
-    - sed -i "s/canary/${CI_COMMIT_REF_NAME}/" docker/docker-compose.yml
-  needs: [ "publish-container-to-registry" ]
+  - sed -i "s/canary/${CI_COMMIT_REF_NAME}/" docker/docker-compose.yml
+  needs:
+  - publish-container-to-registry
