@@ -66,7 +66,7 @@ class RecupParapheurCorbeille extends Connecteur
     public function getTenantList(): array
     {
         $result = [];
-        $pageTenant = (new Tenant($this->getAuthenticatedClient()))->listTenantsForUser();
+        $pageTenant = (new Tenant($this->getAuthenticatedClient()))->listTenants();
         foreach ($pageTenant->content as $tenant) {
             $result[$tenant->id] = $tenant->name;
         }
