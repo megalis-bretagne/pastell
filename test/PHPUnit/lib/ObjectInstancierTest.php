@@ -12,7 +12,7 @@ class ObjectInstancierTest extends TestCase
             public function __construct($thisVarDoesntExistAnywhere_48b2ee87031d176b368c0d31db167352 = 'default')
             {
                 $this->test = $thisVarDoesntExistAnywhere_48b2ee87031d176b368c0d31db167352;
-                $this->test ++;
+                $this->test++;
             }
         };
 
@@ -29,7 +29,7 @@ class ObjectInstancierTest extends TestCase
             public function __construct($thisVarDoesntExistAnywhere_f45c6927364839acc8dbe0a299c971aa)
             {
                 $this->test = $thisVarDoesntExistAnywhere_f45c6927364839acc8dbe0a299c971aa;
-                $this->test ++;
+                $this->test++;
             }
         };
 
