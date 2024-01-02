@@ -2,7 +2,6 @@
 
 class SignatureGetSousType extends DictionnaryChoice
 {
-
     /**
      * @throws Exception
      */
@@ -27,5 +26,4 @@ class SignatureGetSousType extends DictionnaryChoice
     {
         return 'Sélectionner un circuit';
     }
-
 }
