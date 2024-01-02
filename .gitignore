@@ -1,4 +1,5 @@
 /.idea
+/auth.json
 
 /LocalSettings.php
 /temp/
