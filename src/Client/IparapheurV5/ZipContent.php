@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Pastell\Client\IparapheurV5;
 
 use Pastell\Client\IparapheurV5\Model\Premis;
-use Pastell\Client\IparapheurV5\Model\PreservationLevelValue;
+use Pastell\Client\IparapheurV5\Model\SignificantPropertyType;
 use Pastell\Client\IparapheurV5\Model\Type;
 use Pastell\Client\IparapheurV5\Model\ZipContentModel;
 use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
@@ -23,7 +23,7 @@ use Symfony\Component\Serializer\Serializer;
 use UnrecoverableException;
 use ZipArchive;
 
-class ZipContent
+final class ZipContent
 {
     public const PREMIS_FILENAME = 'i_Parapheur_internal_premis.xml';
 
@@ -54,11 +54,13 @@ class ZipContent
                 $zipContentModel->name = $object->originalName;
             }
             if ($object->type === Type::file) {
-                if ($object->preservationLevel->preservationLevelValue === PreservationLevelValue::mainDocument) {
-                    $zipContentModel->documentPrincipaux[] = $object->originalName;
-                }
-                if ($object->preservationLevel->preservationLevelValue === PreservationLevelValue::annex) {
-                    $zipContentModel->annexe[] = $object->originalName;
+                $significantProperty = $object->significantProperties[0];
+                if ($significantProperty->significantPropertiesType === SignificantPropertyType::MAIN_DOCUMENT) {
+                    if ($significantProperty->significantPropertiesValue === 'true') {
+                        $zipContentModel->documentPrincipaux[] = $object->originalName;
+                    } else {
+                        $zipContentModel->annexe[] = $object->originalName;
+                    }
                 }
             }
         }
@@ -77,7 +79,7 @@ class ZipContent
             }
         }
 
-        $zipContentModel->bordereau = $zipContentModel->name . "_bordereau.pdf";
+        $zipContentModel->bordereau = $zipContentModel->name . '_bordereau.pdf';
         return $zipContentModel;
     }
     private function getSerializer(): Serializer
@@ -102,9 +104,7 @@ class ZipContent
             ),
         ];
 
-
-
-        return (new Serializer($normalizers, [new XmlEncoder()]));
+        return new Serializer($normalizers, [new XmlEncoder()]);
     }
 
     private function getPremisFilePath(string $folderPath): string

@@ -17,14 +17,14 @@ class TenantNameActionTest extends PastellTestCase
                     '/auth/realms/api/protocol/openid-connect/token' => new Response(
                         200,
                         ['Content-type' => 'application/json'],
-                        file_get_contents(__DIR__ . "/../fixtures/authenticate_ok.json")
+                        file_get_contents(__DIR__ . '/../fixtures/authenticate_ok.json')
                     ),
-                    '/api/v1/tenant' => new Response(
+                    '/api/standard/v1/tenant' => new Response(
                         200,
                         ['Content-type' => 'application/json'],
-                        file_get_contents(__DIR__ . "/../fixtures/tenant_list.json")
+                        file_get_contents(__DIR__ . '/../fixtures/tenant_list.json')
                     ),
-                    default => throw new UnrecoverableException("Unknown path"),
+                    default => throw new UnrecoverableException('Unknown path : ' . $request->getUri()->getPath()),
                 };
             });
 
