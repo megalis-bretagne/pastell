@@ -15,7 +15,7 @@ class WebdavWrapperTest extends PHPUnit\Framework\TestCase
 
         $client
             ->method('propFind')
-            ->willReturn(true);
+            ->willReturn([]);
 
         $webdavClientFactory = $this->createMock(WebdavClientFactory::class);
         $webdavClientFactory
