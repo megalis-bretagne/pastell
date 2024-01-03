@@ -505,11 +505,15 @@ class PurgeTest extends PastellTestCase
             '/Document/' . PastellTestCase::ID_E_COL,
             ['type' => 'actes-generique']
         );
+
+
         $purge = $this->getObjectInstancier()->getInstance(Purge::class);
         $connecteurConfig = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
         $connecteurConfig->setTabData([
             'actif' => 1,
             'document_type' => 'actes-generique',
+            'document_etat' => 'creation',
+            'nb_days' => 0,
             'entity_id' => 1,
         ]);
         $purge->setConnecteurInfo(['id_e' => 0, 'id_ce' => 42]);
@@ -517,6 +521,7 @@ class PurgeTest extends PastellTestCase
         static::assertCount(2, $purge->listDocumentGlobal());
         $purge->purgerGlobal();
         static::assertCount(0, $purge->listDocumentGlobal());
+
     }
 
     /**
@@ -542,6 +547,7 @@ class PurgeTest extends PastellTestCase
         $connecteurConfig->setTabData([
             'actif' => 1,
             'document_type' => 'actes-generique',
+            'document_etat' => 'creation',
             'nb_days' => 0,
             'entity_id' => 1,
             'include_children' => true,
