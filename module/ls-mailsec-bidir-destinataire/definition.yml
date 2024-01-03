@@ -2,6 +2,7 @@ nom: 'Mail sécurisé avec réponse (destinataire)'
 type: 'Mail sécurisé'
 description: 'Formulaire pour les destinataires de Mail sécurisé avec réponse'
 connecteur: {  }
+affiche_one: false
 formulaire:
     onglet1:
         to:

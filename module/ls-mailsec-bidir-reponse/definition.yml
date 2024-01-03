@@ -2,6 +2,7 @@ nom: 'Mail sécurisé avec réponse (réponse)'
 type: 'Mail sécurisé'
 description: 'Réponses des destinataires de Mail sécurisé avec réponse'
 connecteur: {  }
+affiche_one: false
 formulaire:
     onglet1:
         reponse:
