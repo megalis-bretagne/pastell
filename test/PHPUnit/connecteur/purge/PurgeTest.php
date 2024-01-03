@@ -428,7 +428,6 @@ class PurgeTest extends PastellTestCase
     }
 
     /**
-     * @throws UnrecoverableException
      * @throws Exception
      */
     public function testPurgeExclureEtat()
@@ -441,7 +440,7 @@ class PurgeTest extends PastellTestCase
 
         $this->getInternalAPI()->patch("/entite/1/document/$id_d", ['objet' => 'test']);
         $this->getInternalAPI()->post(
-            "/Document/" . PastellTestCase::ID_E_COL,
+            '/Document/' . PastellTestCase::ID_E_COL,
             ['type' => 'actes-generique']
         );
 
@@ -506,14 +505,11 @@ class PurgeTest extends PastellTestCase
             '/Document/' . PastellTestCase::ID_E_COL,
             ['type' => 'actes-generique']
         );
-
-
         $purge = $this->getObjectInstancier()->getInstance(Purge::class);
         $connecteurConfig = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
         $connecteurConfig->setTabData([
             'actif' => 1,
             'document_type' => 'actes-generique',
-            'nb_days' => 0,
             'entity_id' => 1,
         ]);
         $purge->setConnecteurInfo(['id_e' => 0, 'id_ce' => 42]);
