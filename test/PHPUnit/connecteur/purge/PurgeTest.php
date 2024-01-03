@@ -521,7 +521,6 @@ class PurgeTest extends PastellTestCase
         static::assertCount(2, $purge->listDocumentGlobal());
         $purge->purgerGlobal();
         static::assertCount(0, $purge->listDocumentGlobal());
-
     }
 
     /**

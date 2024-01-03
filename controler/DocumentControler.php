@@ -327,7 +327,6 @@ class DocumentControler extends PastellControler
         }
 
         $liste_collectivite = $this->getRoleUtilisateur()->getEntiteWithSomeDroit($this->getId_u());
-        dump()
         if (! $id_e) {
             if (count($liste_collectivite) == 0) {
                 $this->redirect("/Connexion/nodroit");
