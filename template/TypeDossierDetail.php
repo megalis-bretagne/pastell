@@ -48,6 +48,10 @@
             <th class='w200'>Libellé de l'onglet principal</th>
             <td><?php hecho($typeDossierProperties->nom_onglet)?></td>
         </tr>
+        <tr>
+            <th class='w200'>Affichage sur un seul onglet</th>
+            <td><?php hecho($typeDossierProperties->affiche_one  ? 'oui' : 'non')?></td>
+        </tr>
     </table>
 
     <a class='btn btn-primary inline' href='<?php $this->url("/TypeDossier/editionLibelle?id_t={$id_t}") ?>'>

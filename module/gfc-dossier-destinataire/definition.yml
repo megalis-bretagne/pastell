@@ -2,6 +2,7 @@ nom: 'Dossier GFC (destinataire)'
 type: 'Types de dossier Gestion de Flux Citoyen'
 description: ''
 connecteur: {  }
+affiche_one: false
 formulaire:
     Information:
         reference:

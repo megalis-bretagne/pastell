@@ -162,7 +162,8 @@ class TypeDossierControler extends PastellControler
                 $target_type_dossier_id,
                 TypeDossierUtilService::TYPE_DOSSIER_CLASSEMENT_DEFAULT,
                 "",
-                "onglet1"
+                "onglet1",
+                'false'
             );
             $message = "Le type de dossier personnalisé $target_type_dossier_id a été créé";
             $typeDosssierAction = TypeDossierActionService::ACTION_AJOUTE;
@@ -292,8 +293,9 @@ class TypeDossierControler extends PastellControler
         $type = $this->getPostOrGetInfo()->get('type');
         $description = $this->getPostOrGetInfo()->get('description');
         $nom_onglet = $this->getPostOrGetInfo()->get('nom_onglet');
+        $affiche_one = $this->getPostOrGetInfo()->get('affiche_one');
         try {
-            $this->getTypeDossierEditionService()->editLibelleInfo($this->getViewParameterOrObject('id_t'), $nom, $type, $description, $nom_onglet);
+            $this->getTypeDossierEditionService()->editLibelleInfo($this->getViewParameterOrObject('id_t'), $nom, $type, $description, $nom_onglet, $affiche_one);
         } catch (Exception $e) {
             $this->setLastError($e->getMessage());
             $this->redirect("/TypeDossier/editionLibelle?id_t={$this->getViewParameterOrObject('id_t')}");

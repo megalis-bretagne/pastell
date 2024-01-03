@@ -7,6 +7,7 @@ use Pastell\Service\TypeDossier\TypeDossierManager;
 use PastellTestCase;
 use TypeDossierException;
 use TypeDossierProperties;
+use TypeDossierTranslator;
 
 class TypeDossierEditionServiceTest extends PastellTestCase
 {
@@ -111,8 +112,21 @@ class TypeDossierEditionServiceTest extends PastellTestCase
                 'etape' =>
                     [],
                 'restriction_pack' => '',
+                'affiche_one' => false,
             ],
             $this->getObjectInstancier()->getInstance(TypeDossierManager::class)->getRawData($id_t)
         );
+    }
+
+    public function testAfficheOne(): void
+    {
+        $typeDossierTranslator = $this->getObjectInstancier()->getInstance(TypeDossierTranslator::class);
+        $typeDossierProperties = new TypeDossierProperties();
+        $typeDossierProperties->id_type_dossier = 'test-42';
+        $typeDossierProperties->affiche_one = true;
+        $typeDossierEditionService = $this->getObjectInstancier()->getInstance(TypeDossierEditionService::class);
+        $typeDossierEditionService->create($typeDossierProperties);
+        $result = $typeDossierTranslator->getDefinition($typeDossierProperties);
+        self::assertTrue($result['affiche_one']);
     }
 }

@@ -62,6 +62,16 @@
                     <input class="form-control col-md-8"  type='text' name='nom_onglet' id="nom_onglet" value='<?php hecho($typeDossierProperties->nom_onglet)?>' />
                 </td>
             </tr>
+            <tr>
+                <th class="w400">
+                    <label for="affiche_one" >Affichage sur un seul onglet</label>
+                    <p class='form_commentaire'>Consultation du contenu d'un dossier sur un seul onglet</p>
+                </th>
+                <td>
+                    <input type='checkbox' name='affiche_one' id="affiche_one" <?=
+                    $typeDossierProperties->affiche_one ? 'checked' : '' ?> />
+                </td>
+            </tr>
         </table>
 
         <a class='btn btn-outline-primary' href='<?php $this->url("TypeDossier/detail?id_t={$type_de_dossier_info['id_t']}")?>'>

@@ -3,6 +3,7 @@ type: 'Flux Généraux'
 description: ''
 connecteur:
     - signature
+affiche_one: false
 formulaire:
     onglet1:
         titre:

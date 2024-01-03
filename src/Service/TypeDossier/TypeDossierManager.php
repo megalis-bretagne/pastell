@@ -55,7 +55,7 @@ class TypeDossierManager
     {
         $result = new TypeDossierProperties();
 
-        foreach (['id_type_dossier', 'nom', 'type', 'description', 'nom_onglet'] as $key) {
+        foreach (['id_type_dossier', 'nom', 'type', 'description', 'affiche_one', 'nom_onglet'] as $key) {
             if (isset($info[$key])) {
                 $result->$key = $info[$key];
             }

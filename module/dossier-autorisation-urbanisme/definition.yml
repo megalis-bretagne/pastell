@@ -4,6 +4,7 @@ description: "Permet d'envoyer un dossier d'autorisation d'urbanisme dans un sys
 connecteur:
     - 'Bordereau SEDA'
     - SAE
+affiche_one: false
 formulaire:
     Information:
         titre:

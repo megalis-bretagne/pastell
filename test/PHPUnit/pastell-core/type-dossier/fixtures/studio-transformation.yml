@@ -5,6 +5,7 @@ connecteur:
     - transformation
     - signature
     - TdT
+affiche_one: false
 formulaire:
     onglet1:
         titre:

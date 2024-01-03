@@ -6,6 +6,7 @@ connecteur:
     - GED
     - 'Bordereau SEDA'
     - SAE
+affiche_one: false
 formulaire:
     Information:
         dossier_id:

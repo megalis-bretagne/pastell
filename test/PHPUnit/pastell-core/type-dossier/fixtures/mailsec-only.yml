@@ -4,6 +4,7 @@ description: ''
 connecteur:
     - mailsec
     - pdf-relance
+affiche_one: false
 formulaire:
     onglet1:
         titre:

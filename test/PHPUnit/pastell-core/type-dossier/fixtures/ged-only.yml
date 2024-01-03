@@ -3,6 +3,7 @@ type: 'Flux Généraux'
 description: ''
 connecteur:
     - GED
+affiche_one: false
 formulaire:
     onglet1:
         metadata1:

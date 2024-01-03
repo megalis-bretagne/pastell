@@ -3,6 +3,7 @@ type: 'Types de dossier personnalisés'
 description: ''
 connecteur:
     - TdT
+affiche_one: false
 formulaire:
     onglet1:
         objet:

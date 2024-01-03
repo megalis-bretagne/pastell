@@ -4,6 +4,7 @@ description: ''
 connecteur:
     - transformation
     - transformation
+affiche_one: false
 formulaire:
     Cheminement:
         envoi_transformation_1:

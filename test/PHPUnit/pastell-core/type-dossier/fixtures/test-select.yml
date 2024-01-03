@@ -7,6 +7,7 @@ connecteur:
     - mailsec
     - pdf-relance
     - TdT
+affiche_one: false
 formulaire:
     Information:
         titre:

@@ -4,6 +4,7 @@ description: ''
 connecteur:
     - transformation
     - GED
+affiche_one: false
 formulaire:
     Informations:
         numero_de_lacte:
