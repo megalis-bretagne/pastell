@@ -65,6 +65,7 @@
             <tr>
                 <th class="w400">
                     <label for="affiche_one" >Affichage sur un seul onglet</label>
+                    <p class='form_commentaire'>Consultation du contenu d'un dossier sur un seul onglet</p>
                 </th>
                 <td>
                     <input type='checkbox' name='affiche_one' id="affiche_one" <?=
