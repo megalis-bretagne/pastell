@@ -194,7 +194,7 @@ class RecupFinParapheur extends Connecteur
             $glaneurLocalDocumentInfo->action_ok = 'importation';
             $glaneurLocalDocumentInfo->action_ko = 'fatal-error';
             $id_d = $this->glaneurDocumentCreator->create($glaneurLocalDocumentInfo, $tmp_folder);
-            $this->removeFolder($id_d);
+            $this->removeFolder($dossierId);
             return $id_d;
         } catch (Exception $e) {
             $this->lastError = $e->getMessage();
