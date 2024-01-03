@@ -2,19 +2,28 @@
 
 declare(strict_types=1);
 
+use IparapheurV5Client\Exception\IparapheurV5Exception;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
+
 class GetFinishedFolders extends ActionExecutor
 {
-    public function go()
+    /**
+     * @throws ExceptionInterface
+     * @throws \Http\Client\Exception
+     * @throws IparapheurV5Exception
+     * @throws Exception
+     */
+    public function go(): bool
     {
         /** @var RecupFinParapheur $recupParapheur */
         $recupParapheur = $this->getMyConnecteur();
         $listDossier = $recupParapheur->getFinishedFolders();
 
-        $message = 'Nombre de dossier : {' . count($listDossier) . '}<br/><ul>';
+        $message = 'Nombre de dossiers : ' . count($listDossier) . '<br/><ul>';
         foreach ($listDossier as $dossierId => $dossierName) {
             $message .= "<li>$dossierName ($dossierId)</li>";
         }
-        $message .= "</ul>";
+        $message .= '</ul>';
 
         $this->setLastMessage($message);
         return true;

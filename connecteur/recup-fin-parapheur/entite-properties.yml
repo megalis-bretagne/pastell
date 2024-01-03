@@ -75,7 +75,7 @@ action:
 
     test_connexion:
         name: Tester la connexion
-        action-class: RecupParapheurCorbeilleTestConnexion
+        action-class: RecupFinParapheurTestConnexion
 
     list_dossier:
         name: Lister les dossiers à récupérer
@@ -83,7 +83,7 @@ action:
 
     recup_one:
         name: Faire une boucle de récupération (synchrone)
-        action-class: RecupParapheurCorbeilleRecup
+        action-class: RetrieveFolders
 
     recup:
         name: Traitement (immédiat)
@@ -93,3 +93,4 @@ action:
     recup-async:
         name: Traitement (par le gestionnaire de tâches)
         action-class: RecupParapheurCorbeilleRecupAsync
+

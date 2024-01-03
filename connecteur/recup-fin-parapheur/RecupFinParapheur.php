@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 use IparapheurV5Client\Api\Desk;
 use IparapheurV5Client\Api\Folder;
 use IparapheurV5Client\Api\Tenant;
 use IparapheurV5Client\Client;
 use IparapheurV5Client\Exception\IparapheurV5Exception;
+use IparapheurV5Client\Model\ListFoldersQuery;
 use IparapheurV5Client\TokenQuery;
 use Pastell\Client\IparapheurV5\ClientFactory;
 use Pastell\Client\IparapheurV5\ZipContent;
@@ -18,14 +21,13 @@ class RecupFinParapheur extends Connecteur
     private const URL = 'url';
     private const TENANT_ID = 'tenant_id';
     private const DESK_ID = 'desk_id';
-
+    private const NB_RECUP = 'nb_recup';
     private array $elementIdDictionnary;
     private DonneesFormulaire $connecteurConfig;
 
     public function __construct(
         private readonly GlaneurDocumentCreator $glaneurDocumentCreator,
         private readonly ClientFactory $clientFactory,
-        private readonly FluxDefinitionFiles $fluxDefinitionFiles
     ) {
     }
 
@@ -44,7 +46,7 @@ class RecupFinParapheur extends Connecteur
             'premis' => 'premis'
         ];
         foreach (explode("\n", $pastell_dictionnary) as $line) {
-            $part = explode(":", $line, 2);
+            $part = explode(':', $line, 2);
             if (!isset($part[1])) {
                 continue;
             }
@@ -54,7 +56,6 @@ class RecupFinParapheur extends Connecteur
             $this->elementIdDictionnary[trim($part[0])] = trim($part[1]);
         }
     }
-
 
     /**
      * @throws ExceptionInterface
@@ -86,7 +87,6 @@ class RecupFinParapheur extends Connecteur
         return $result;
     }
 
-
     /**
      * @throws \Http\Client\Exception
      * @throws ExceptionInterface
@@ -96,7 +96,7 @@ class RecupFinParapheur extends Connecteur
     {
         $result = $this->getTenantList();
         if (!$result) {
-            return "La connexion est ok, mais il n'existe aucune entité associée à ce compte";
+            return "Connexion réussie, mais aucune entité n'est associée à ce compte";
         }
         return 'Liste des entités parapheurs : ' . implode(', ', $result);
     }
@@ -109,10 +109,14 @@ class RecupFinParapheur extends Connecteur
     public function getFinishedFolders(): array
     {
         $result = [];
+        $listFolderQuery = new ListFoldersQuery();
+        $listFolderQuery->size = (int)$this->connecteurConfig->get(self::NB_RECUP);
+        $listFolderQuery->page = 0;
         $pageFolder = (new Folder($this->getAuthentificatedClient()))->listFolders(
             $this->connecteurConfig->get(self::TENANT_ID),
             $this->connecteurConfig->get(self::DESK_ID),
-            State::FINISHED
+            State::FINISHED,
+            $listFolderQuery
         );
         foreach ($pageFolder->content as $folder) {
             $result[$folder->id] = $folder->name;
@@ -135,7 +139,6 @@ class RecupFinParapheur extends Connecteur
      * @throws ExceptionInterface
      * @throws \Http\Client\Exception
      * @throws IparapheurV5Exception
-     * @throws UnrecoverableException
      */
     public function recupOne(): array
     {
@@ -149,7 +152,6 @@ class RecupFinParapheur extends Connecteur
 
     /**
      * @throws \Http\Client\Exception
-     * @throws UnrecoverableException
      * @throws ExceptionInterface
      * @throws IparapheurV5Exception
      * @throws Exception
@@ -192,10 +194,14 @@ class RecupFinParapheur extends Connecteur
             $glaneurLocalDocumentInfo->action_ok = 'importation';
             $glaneurLocalDocumentInfo->action_ko = 'fatal-error';
             $id_d = $this->glaneurDocumentCreator->create($glaneurLocalDocumentInfo, $tmp_folder);
+            $this->removeFolder($id_d);
+            return $id_d;
+        } catch (Exception $e) {
+            $this->lastError = $e->getMessage();
+            throw new \RuntimeException($e->getMessage());
         } finally {
             $tmpFolder->delete($tmp_folder);
         }
-        return $id_d;
     }
 
     private function getElementId(string $elementId): string
@@ -206,11 +212,6 @@ class RecupFinParapheur extends Connecteur
     public function getConnecteurConfig(): DonneesFormulaire
     {
         return $this->connecteurConfig;
-    }
-
-    public function getAllFluxRecup(): array
-    {
-        return $this->fluxDefinitionFiles->getAll();
     }
 
     /**
