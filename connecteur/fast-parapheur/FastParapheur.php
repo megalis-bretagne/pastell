@@ -8,8 +8,8 @@ class FastParapheur extends SignatureConnecteur
     public const CIRCUIT_ON_THE_FLY_URI = self::REST_URI . '/documents/ondemand/%s/upload';
 
     private $url;
+
     private $subscriberNumber;
-    private $circuits;
 
     private $connectionCertificatePassword;
 
@@ -62,7 +62,6 @@ class FastParapheur extends SignatureConnecteur
     {
         $this->url = $donneesFormulaire->get('wsdl');
         $this->subscriberNumber = $donneesFormulaire->get('numero_abonnement');
-        $this->circuits = $donneesFormulaire->get('circuits');
         $this->maxNumberOfDaysInParapheur = $donneesFormulaire->get("parapheur_nb_jour_max");
         $this->doNotDeleteAfterRejection = (bool)$donneesFormulaire->get('parapheur_do_not_delete_on_rejection');
 
@@ -140,9 +139,13 @@ class FastParapheur extends SignatureConnecteur
         return $this->maxNumberOfDaysInParapheur ?: self::PARAPHEUR_NB_JOUR_MAX_DEFAULT;
     }
 
-    public function getSousType()
+    /**
+     * @throws UnrecoverableException
+     * @throws Exception
+     */
+    public function getSousType(): array
     {
-        return explode(';', $this->circuits);
+        return array_column($this->getClient()->getCircuits($this->subscriberNumber), 'circuitId') ;
     }
 
     public function getDossierID($id, $name)

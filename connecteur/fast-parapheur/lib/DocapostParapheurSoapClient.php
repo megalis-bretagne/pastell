@@ -109,4 +109,10 @@ class DocapostParapheurSoapClient
     {
         return $this->client->delete(['documentId' => $documentId]);
     }
+
+
+    public function getCircuits(string $siren): array
+    {
+        return $this->client->getCircuits(['siren' => $siren])->return;
+    }
 }

@@ -14,6 +14,7 @@ class FastTdt extends TdtConnecteur
     public const ACTE_FIELD = 'arrete';
     public const SIGNATURE_FIELD = 'signature';
     public const ANNEXES_FIELD = 'autre_document_attache';
+    public const CIRCUIT_ID_FIELD = 'circuit';
 
     /** @var  WebdavWrapper */
     private $webDavWrapper;
@@ -64,7 +65,7 @@ class FastTdt extends TdtConnecteur
         $this->userDn = $donneesFormulaire->get('dn_user');
         $this->classification = $donneesFormulaire->getFilePath('classification_file');
         $this->classificationDate = $donneesFormulaire->get('classification_date');
-        $this->circuit = $donneesFormulaire->get('circuit');
+        $this->circuit = $donneesFormulaire->get(self::CIRCUIT_ID_FIELD);
 
         $this->connectionCertificatePassword = $donneesFormulaire->get('certificat_password');
 
@@ -132,7 +133,7 @@ class FastTdt extends TdtConnecteur
      * @return DocapostParapheurSoapClient
      * @throws Exception
      */
-    protected function getHeliosClient()
+    public function getHeliosClient(): DocapostParapheurSoapClient
     {
         $stream_context = stream_context_create([
             'ssl' => [
@@ -794,5 +795,10 @@ class FastTdt extends TdtConnecteur
         return $numberOfAnnexes > 8
             ? sprintf("%02d", $index)
             : $index;
+    }
+
+    public function getSiren(): string
+    {
+        return $this->subscriberNumber;
     }
 }

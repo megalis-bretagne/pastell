@@ -4,6 +4,8 @@ use Pastell\Service\Utilisateur\UserCreationService;
 
 class DocumentAPIControllerTest extends PastellTestCase
 {
+    use SoapUtilitiesTestTrait;
+
     private function createTestDocument()
     {
         $info = $this->createDocument('test');
@@ -502,6 +504,23 @@ class DocumentAPIControllerTest extends PastellTestCase
 
     public function testPatchExternalDataIParapheurSousTypeWithFastSignatureFailedWrongValue(): void
     {
+        $this->mockSoapClient(
+            function ($soapMethod, $arguments) {
+                if ($soapMethod === 'getCircuits') {
+                    return json_decode(
+                        json_encode([
+                            'return' => [
+                                '0' => ['circuitId' => 'PES'],
+                            ]
+                        ], JSON_THROW_ON_ERROR),
+                        false,
+                        512,
+                        JSON_THROW_ON_ERROR
+                    );
+                }
+                throw new UnrecoverableException("Unexpected call to SOAP method : $soapMethod");
+            }
+        );
         $id_d = $this->configureTestPatchExternalDataIParapheurSousType('fast-parapheur', 'circuits');
         $this->expectException(UnrecoverableException::class);
         $this->expectExceptionMessage(
@@ -515,6 +534,23 @@ class DocumentAPIControllerTest extends PastellTestCase
 
     public function testPatchExternalDataIParapheurSousTypeWithFastSignatureFailedWrongKey(): void
     {
+        $this->mockSoapClient(
+            function ($soapMethod, $arguments) {
+                if ($soapMethod === 'getCircuits') {
+                    return json_decode(
+                        json_encode([
+                            'return' => [
+                                '0' => ['circuitId' => 'PES'],
+                            ]
+                        ], JSON_THROW_ON_ERROR),
+                        false,
+                        512,
+                        JSON_THROW_ON_ERROR
+                    );
+                }
+                throw new UnrecoverableException("Unexpected call to SOAP method : $soapMethod");
+            }
+        );
         $id_d = $this->configureTestPatchExternalDataIParapheurSousType('fast-parapheur', 'circuits');
         $this->expectException(UnrecoverableException::class);
         $this->expectExceptionMessage("Le circuit \"\" n'existe pas ou est mal orthographié");
@@ -526,6 +562,23 @@ class DocumentAPIControllerTest extends PastellTestCase
 
     public function testPatchExternalDataIParapheurSousTypeWithFastSignatureFailedEmptyValue(): void
     {
+        $this->mockSoapClient(
+            function ($soapMethod, $arguments) {
+                if ($soapMethod === 'getCircuits') {
+                    return json_decode(
+                        json_encode([
+                            'return' => [
+                                '0' => ['circuitId' => 'PES'],
+                            ]
+                        ], JSON_THROW_ON_ERROR),
+                        false,
+                        512,
+                        JSON_THROW_ON_ERROR
+                    );
+                }
+                throw new UnrecoverableException("Unexpected call to SOAP method : $soapMethod");
+            }
+        );
         $id_d = $this->configureTestPatchExternalDataIParapheurSousType('fast-parapheur', 'circuits');
         $this->expectException(UnrecoverableException::class);
         $this->expectExceptionMessage("Le circuit \"\" n'existe pas ou est mal orthographié");

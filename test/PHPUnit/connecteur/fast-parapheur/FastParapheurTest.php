@@ -96,21 +96,34 @@ class FastParapheurTest extends PastellTestCase
      * When getting subtypes
      *
      * @test
+     * @throws UnrecoverableException
      */
-    public function whenGettingSubtypes()
+    public function whenGettingSubtypes(): void
     {
+        $this->mockSoapClient(
+            function (string $soapMethod) {
+                if ($soapMethod === 'getCircuits') {
+                    return json_decode(
+                        json_encode([
+                            'return' => [
+                                '0' => ['circuitId' => 'CIRCUIT 1'],
+                                '1' => ['circuitId' => 'CIRCUIT 2'],
+                                '2' => ['circuitId' => 'PES'],
+                                '3' => ['circuitId' => 'BUREAUTIQUE']
+                            ]
+                        ], JSON_THROW_ON_ERROR),
+                        false,
+                        512,
+                        JSON_THROW_ON_ERROR
+                    );
+                }
+                throw new UnrecoverableException("Unexpected call to SOAP method : $soapMethod");
+            }
+        );
         $connecteurConfig = $this->getDefaultConnectorConfig();
-        $connecteurConfig->setData('circuits', 'CIRCUIT 1;CIRCUIT 2;PES;BUREAUTIQUE');
-
         $this->fastParapheur = $this->getFastParapheur($connecteurConfig);
-
-        $expectedData = [
-            'CIRCUIT 1',
-            'CIRCUIT 2',
-            'PES',
-            'BUREAUTIQUE'
-        ];
-        $this->assertSame($expectedData, $this->fastParapheur->getSousType());
+        $expected = [0 => 'CIRCUIT 1', 1 => 'CIRCUIT 2', 2 => 'PES', 3 => 'BUREAUTIQUE'];
+        static::assertSame($expected, $this->fastParapheur->getSousType());
     }
 
     /**
