@@ -113,6 +113,25 @@ final class RecipientController extends AbstractController
 
     /**
      * @throws MissingPasswordException
+     * @throws InvalidKeyException
+     * @throws NotFoundException
+     * @throws UnavailableMailException
+     */
+    #[Route('/mail/{key}/captcha', name: 'mailsec_recipient_index', methods: ['GET'])]
+    public function captcha(string $key, Request $request): Response
+    {
+        $mailSecInfo = $this->mailsecManager->getMailsecInfo($key, $request);
+        return $this->render('websec/captcha.html.twig', [
+            'page_title' => 'Consulter le mail sécurisé',
+            'gabarit' => $this->gabarit,
+            'manifest_info' => $this->manifestFactory->getPastellManifest(),
+            'timer' => $this->pastellTimer,
+            'mail_url' => $this->generateUrl('mailsec_recipient_index', ['key' => $key]),
+        ]);
+    }
+
+    /**
+     * @throws MissingPasswordException
      * @throws NotFoundException
      * @throws InvalidKeyException
      * @throws UnavailableMailException
