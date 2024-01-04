@@ -67,6 +67,8 @@ class RecupParapheurCorbeilleTest extends PastellTestCase
         $lastMessage = $this->getObjectInstancier()->getInstance(ActionExecutorFactory::class)->getLastMessage();
         self::assertMatchesRegularExpression('#^Création des documents : #', $lastMessage);
         preg_match('#: (.*)$#', $lastMessage, $matches);
+        dump($lastMessage);
+        dump($matches);
         $id_d = $matches[1];
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
         self::assertEquals('TEST 1', $donneesFormulaire->getTitre());

@@ -26,7 +26,7 @@ class DeskNameAction extends DictionnaryChoice
      * @throws \Http\Client\Exception
      * @throws Exception
      */
-    public function displayAPI(): string|array
+    public function displayAPI(): array
     {
         /** @var RecupFinParapheur $recupFinParapheur */
         $recupFinParapheur = $this->getMyConnecteur();

@@ -9,7 +9,6 @@ class ObjectInstancierTest extends TestCase
         $objectInstancier = new ObjectInstancier();
         $class = new class {
             private $test;
-
             public function __construct($thisVarDoesntExistAnywhere_48b2ee87031d176b368c0d31db167352 = 'default')
             {
                 $this->test = $thisVarDoesntExistAnywhere_48b2ee87031d176b368c0d31db167352;
@@ -27,7 +26,6 @@ class ObjectInstancierTest extends TestCase
         $objectInstancier = new ObjectInstancier();
         $class = new class (10) {
             private $test;
-
             public function __construct($thisVarDoesntExistAnywhere_f45c6927364839acc8dbe0a299c971aa)
             {
                 $this->test = $thisVarDoesntExistAnywhere_f45c6927364839acc8dbe0a299c971aa;
@@ -44,7 +42,6 @@ class ObjectInstancierTest extends TestCase
         $objectInstancier = new ObjectInstancier();
         $class = new class (10) {
             public $test;
-
             public function __construct($optionalParameter = 'optional value')
             {
                 $this->test = $optionalParameter;

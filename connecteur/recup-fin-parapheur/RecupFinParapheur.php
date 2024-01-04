@@ -35,7 +35,7 @@ class RecupFinParapheur extends Connecteur
     {
         $this->connecteurConfig = $donneesFormulaire;
 
-        $pastell_dictionnary = $this->connecteurConfig->get('pastell_dictionnary');
+        $pastell_dictionnary = $this->connecteurConfig->get('pastell_dictionnary', '');
 
         $this->elementIdDictionnary = [
             'dossier_id' => 'dossier_id',
@@ -65,10 +65,10 @@ class RecupFinParapheur extends Connecteur
     private function getAuthentificatedClient(): Client
     {
         $tokenQuery = new TokenQuery();
-        $tokenQuery->username = $this->connecteurConfig->get(self::USERNAME);
-        $tokenQuery->password = $this->connecteurConfig->get(self::PASSWORD);
+        $tokenQuery->username = $this->connecteurConfig->get(self::USERNAME, '');
+        $tokenQuery->password = $this->connecteurConfig->get(self::PASSWORD, '');
         $client = $this->clientFactory->getInstance();
-        $client->authenticate($this->connecteurConfig->get(self::URL), $tokenQuery);
+        $client->authenticate($this->connecteurConfig->get(self::URL, ''), $tokenQuery);
         return $client;
     }
 
@@ -113,8 +113,8 @@ class RecupFinParapheur extends Connecteur
         $listFolderQuery->size = (int)$this->connecteurConfig->get(self::NB_RECUP);
         $listFolderQuery->page = 0;
         $pageFolder = (new Folder($this->getAuthentificatedClient()))->listFolders(
-            $this->connecteurConfig->get(self::TENANT_ID),
-            $this->connecteurConfig->get(self::DESK_ID),
+            $this->connecteurConfig->get(self::TENANT_ID, ''),
+            $this->connecteurConfig->get(self::DESK_ID, ''),
             State::FINISHED,
             $listFolderQuery
         );
@@ -131,7 +131,11 @@ class RecupFinParapheur extends Connecteur
      */
     public function removeFolder(string $folder_id): void
     {
-        (new Folder($this->getAuthentificatedClient()))->deleteFolder($this->connecteurConfig->get(self::TENANT_ID), $this->connecteurConfig->get(self::DESK_ID), $folder_id);
+        (new Folder($this->getAuthentificatedClient()))->deleteFolder(
+            $this->connecteurConfig->get(self::TENANT_ID, ''),
+            $this->connecteurConfig->get(self::DESK_ID, ''),
+            $folder_id
+        );
     }
 
 
@@ -163,7 +167,11 @@ class RecupFinParapheur extends Connecteur
         try {
             $client = $this->getAuthentificatedClient();
             $folder = new Folder($client);
-            $response = $folder->downloadFolderZip($this->connecteurConfig->get(self::TENANT_ID), self::DESK_ID, $dossierId);
+            $response = $folder->downloadFolderZip(
+                $this->connecteurConfig->get(self::TENANT_ID, ''),
+                self::DESK_ID,
+                $dossierId
+            );
             $body = $response->getBody();
             $zipFilePath = $tmp_folder . '/response.zip';
             $file = fopen($zipFilePath, 'wb');

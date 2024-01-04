@@ -1,6 +1,8 @@
 nom: Récupération dossiers finis iparapheur
 type: recup-fin-parapheur
 description: Connecteur permettant de récupérer les dossiers en fin de circuit d'un iparapheur >=v5
+restriction_pack:
+    - pack_recup_fin_parapheur_connector
 
 formulaire:
     page:
@@ -14,12 +16,12 @@ formulaire:
             type: password
         pastell_module_id:
             name: Identifiant du type de dossier Pastell
-            commentaire: Le dossier doit être un dossier studio. Par défaut, le type de dossier recup-parapheur est selectionné
+            commentaire: Le dossier doit être un dossier studio. Par défaut, le type de dossier ls-recup-parapheur est selectionné
             read-only: true
             default: ls-recup-parapheur
         pastell_module_name:
             name: Nom du type de dossier Pastell
-            commentaire: Le dossier doit être un dossier studio. Par défaut, le type de dossier recup-parapheur est selectionné
+            commentaire: Le dossier doit être un dossier studio. Par défaut, le type de dossier ls-recup-parapheur est selectionné
             type: externalData
             choice-action: pastell_module_name
             link_name: 'Sélectionner le type de dossier'
@@ -92,5 +94,5 @@ action:
 
     recup-async:
         name: Traitement (par le gestionnaire de tâches)
-        action-class: RecupParapheurCorbeilleRecupAsync
+        action-class: RetrieveFoldersAsync
 

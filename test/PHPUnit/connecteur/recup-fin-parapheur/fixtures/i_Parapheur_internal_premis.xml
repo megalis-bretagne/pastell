@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<premis xmlns="http://www.loc.gov/premis/v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3.0" xsi:schemaLocation="http://www.loc.gov/premis/v3 http://www.loc.gov/standards/premis/v3/premis.xsd">
+  <!-- Folder -->
+  <object xsi:type="intellectualEntity">
+    <objectIdentifier>
+      <objectIdentifierType>folderId</objectIdentifierType>
+      <objectIdentifierValue>60124458-8687-11ed-b28f-0242c0a8b013</objectIdentifierValue>
+    </objectIdentifier>
+    <significantProperties>
+      <significantPropertiesType>i_Parapheur_reserved_type</significantPropertiesType>
+      <significantPropertiesValue>Actes</significantPropertiesValue>
+    </significantProperties>
+    <significantProperties>
+      <significantPropertiesType>i_Parapheur_reserved_subtype</significantPropertiesType>
+      <significantPropertiesValue>Arretés</significantPropertiesValue>
+    </significantProperties>
+    <originalName>TEST 1</originalName>
+  </object>
+  <!-- Files -->
+  <object xsi:type="file">
+    <objectIdentifier>
+      <objectIdentifierType>documentId</objectIdentifierType>
+      <objectIdentifierValue>868fe166-50c2-44ab-a5c7-cfcb2270ea4c</objectIdentifierValue>
+    </objectIdentifier>
+    <significantProperties>
+      <significantPropertiesType>i_Parapheur_reserved_mainDocument</significantPropertiesType>
+      <significantPropertiesValue>true</significantPropertiesValue>
+    </significantProperties>
+    <objectCharacteristics>
+      <fixity>
+        <messageDigestAlgorithm>SHA-256</messageDigestAlgorithm>
+        <messageDigest>0DC95BA08C7959815A62D6550600338B3DDDD2A6491E65D746F707987ADFAD7D</messageDigest>
+      </fixity>
+      <size>21445</size>
+      <format>
+        <formatDesignation>
+          <formatName>application/pdf</formatName>
+          <formatVersion>1.3</formatVersion>
+        </formatDesignation>
+      </format>
+    </objectCharacteristics>
+    <originalName>test-pastell-i-parapheur.pdf</originalName>
+  </object>
+  <!-- Events -->
+  <event>
+    <eventIdentifier>
+      <eventIdentifierType>taskId</eventIdentifierType>
+      <eventIdentifierValue>60185e0a-8687-11ed-b28f-0242c0a8b013</eventIdentifierValue>
+    </eventIdentifier>
+    <eventType>START</eventType>
+    <eventDateTime>2022-12-28T08:12:31.967+0000</eventDateTime>
+    <linkingAgentIdentifier>
+      <linkingAgentIdentifierType>userId</linkingAgentIdentifierType>
+      <linkingAgentIdentifierValue>963f3140-ea17-43eb-a193-0227eaa72359</linkingAgentIdentifierValue>
+      <linkingAgentRole>(Bureau supprimé)</linkingAgentRole>
+    </linkingAgentIdentifier>
+  </event>
+  <event>
+    <eventIdentifier>
+      <eventIdentifierType>taskId</eventIdentifierType>
+      <eventIdentifierValue>60d48267-8687-11ed-b28f-0242c0a8b013</eventIdentifierValue>
+    </eventIdentifier>
+    <eventType>READ</eventType>
+    <eventDateTime>2022-12-28T08:12:39.547+0000</eventDateTime>
+    <linkingAgentIdentifier>
+      <linkingAgentIdentifierType>userId</linkingAgentIdentifierType>
+      <linkingAgentIdentifierValue>963f3140-ea17-43eb-a193-0227eaa72359</linkingAgentIdentifierValue>
+      <linkingAgentRole>(Bureau supprimé)</linkingAgentRole>
+    </linkingAgentIdentifier>
+  </event>
+  <event>
+    <eventIdentifier>
+      <eventIdentifierType>taskId</eventIdentifierType>
+      <eventIdentifierValue>60d4826b-8687-11ed-b28f-0242c0a8b013</eventIdentifierValue>
+    </eventIdentifier>
+    <eventType>VISA</eventType>
+    <eventDateTime>2022-12-28T08:12:44.238+0000</eventDateTime>
+    <linkingAgentIdentifier>
+      <linkingAgentIdentifierType>userId</linkingAgentIdentifierType>
+      <linkingAgentIdentifierValue>963f3140-ea17-43eb-a193-0227eaa72359</linkingAgentIdentifierValue>
+      <linkingAgentRole>(Bureau supprimé)</linkingAgentRole>
+    </linkingAgentIdentifier>
+  </event>
+  <event>
+    <eventIdentifier>
+      <eventIdentifierType>taskId</eventIdentifierType>
+      <eventIdentifierValue>6810ed6a-8687-11ed-b28f-0242c0a8b013</eventIdentifierValue>
+    </eventIdentifier>
+    <eventType>READ</eventType>
+    <eventDateTime>2022-12-28T08:12:48.453+0000</eventDateTime>
+    <linkingAgentIdentifier>
+      <linkingAgentIdentifierType>userId</linkingAgentIdentifierType>
+      <linkingAgentIdentifierValue>963f3140-ea17-43eb-a193-0227eaa72359</linkingAgentIdentifierValue>
+      <linkingAgentRole>(Bureau supprimé)</linkingAgentRole>
+    </linkingAgentIdentifier>
+  </event>
+  <event>
+    <eventIdentifier>
+      <eventIdentifierType>taskId</eventIdentifierType>
+      <eventIdentifierValue>6810ed6e-8687-11ed-b28f-0242c0a8b013</eventIdentifierValue>
+    </eventIdentifier>
+    <eventType>ARCHIVE</eventType>
+    <eventDateTime>2022-12-28T08:12:51.310+0000</eventDateTime>
+    <linkingAgentIdentifier>
+      <linkingAgentIdentifierType>userId</linkingAgentIdentifierType>
+      <linkingAgentIdentifierValue>963f3140-ea17-43eb-a193-0227eaa72359</linkingAgentIdentifierValue>
+      <linkingAgentRole>(Bureau supprimé)</linkingAgentRole>
+    </linkingAgentIdentifier>
+  </event>
+  <!-- Users -->
+  <agent>
+    <agentIdentifier>
+      <agentIdentifierType>userId</agentIdentifierType>
+      <agentIdentifierValue>963f3140-ea17-43eb-a193-0227eaa72359</agentIdentifierValue>
+    </agentIdentifier>
+    <agentName>963f3140-ea17-43eb-a193-0227eaa72359</agentName>
+  </agent>
+</premis>

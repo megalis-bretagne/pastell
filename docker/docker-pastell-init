@@ -73,6 +73,10 @@ if (${PACK_RECUP_PARAPHEUR_CORBEILLE_CONNECTOR:-false}) {
   \$packs["pack_recup_parapheur_corbeille_connector"]=true;
 }
 
+if (${PACK_RECUP_FIN_PARAPHEUR_CONNECTOR:-false}) {
+  \$packs["pack_recup_fin_parapheur_connector"]=true;
+}
+
 define("LIST_PACK", \$packs);
 
 define("NB_WORKERS", "${NB_WORKERS:-5}");
