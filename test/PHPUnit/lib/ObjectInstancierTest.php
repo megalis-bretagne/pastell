@@ -61,7 +61,6 @@ class ObjectInstancierTest extends TestCase
         $class = new class () {
             public $param1;
             public $param2;
-
             public function __construct($param1 = false, $param2 = false)
             {
                 $this->param1 = $param1;
