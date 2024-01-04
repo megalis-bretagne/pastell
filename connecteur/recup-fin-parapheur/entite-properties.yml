@@ -2,7 +2,7 @@ nom: Récupération dossiers finis iparapheur
 type: recup-fin-parapheur
 description: Connecteur permettant de récupérer les dossiers en fin de circuit d'un iparapheur >=v5
 restriction_pack:
-    - pack_recup_fin_parapheur_connector
+    - pack_recup_fin_parapheur
 
 formulaire:
     page:
