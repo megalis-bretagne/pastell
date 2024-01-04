@@ -2,6 +2,7 @@ nom: 'Commande (destinataire)'
 type: 'Types de dossier personnalisés'
 description: ''
 connecteur: {  }
+affiche_one: false
 formulaire:
     Information:
         libelle:

@@ -9,6 +9,7 @@ connecteur:
     - GED
     - 'Bordereau SEDA'
     - SAE
+affiche_one: false
 formulaire:
     Commande:
         libelle:
