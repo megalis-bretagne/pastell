@@ -81,7 +81,7 @@
             <tbody id="sortElement" class="type-dossier-sortable">
             <?php foreach ($typeDossierProperties->formulaireElement as $formulaireElement) : ?>
                 <tr id="tr-<?php  hecho($formulaireElement->element_id) ?>">
-                    <td><i class="fa fa-arrows"></i>&nbsp;<?php hecho($formulaireElement->element_id) ?></td>
+                    <td><i class="fa fa-arrows handle"></i>&nbsp;<?php hecho($formulaireElement->element_id) ?></td>
                     <td><?php hecho($formulaireElement->name) ?></td>
                     <td><?php hecho(TypeDossierFormulaireElementManager::getTypeElementLibelle($formulaireElement->type)) ?></td>
                     <td>
@@ -136,7 +136,7 @@
             <tbody id="sortEtape" class="type-dossier-sortable">
             <?php foreach ($typeDossierProperties->etape as $num_etape => $etape) : ?>
                 <tr id="tr-<?php  hecho($num_etape) ?>">
-                    <td><i class="fa fa-arrows"></i>&nbsp;<?php hecho($all_etape_type[$etape->type]) ?></td>
+                    <td><i class="fa fa-arrows handle"></i>&nbsp;<?php hecho($all_etape_type[$etape->type]) ?></td>
                     <td><?php hecho($etape->label ?: $all_etape_type[$etape->type]); ?></td>
                     <td>
                         <?php if ($etape->defaultChecked && ! $etape->requis) :?>
@@ -187,6 +187,8 @@
         });
 
         $('.type-dossier-sortable').sortable({
+                cursor: "grabbing",
+                handle: ".handle",
                 update: function () {
                     var tbody_id = $(this)[0].id;
                     var data =

@@ -644,6 +644,10 @@ html body .ls-on{
     word-break: break-all;
 }
 
+.handle:hover{
+    cursor: grab;
+}
+
 
 
 
