@@ -57,7 +57,6 @@ class RecupFinParapheurTest extends PastellTestCase
                     default => throw new UnrecoverableException('Unknown path : ' . $request->getUri()->getPath()),
                 };
             });
-        /** @var ClientFactory $clientFactory */
         $clientFactory = $this->getObjectInstancier()->getInstance(ClientFactory::class);
         $clientFactory->setClientInterface($clientInterface);
 
@@ -66,11 +65,11 @@ class RecupFinParapheurTest extends PastellTestCase
         $this->triggerActionOnConnector($id_ce, 'recup_one');
         $lastMessage = $this->getObjectInstancier()->getInstance(ActionExecutorFactory::class)->getLastMessage();
         self::assertMatchesRegularExpression('#^Création des documents : #', $lastMessage);
-        preg_match('/: .*?(?:- )(.*?)$/s', $lastMessage, $matches);
+        preg_match('/: .*?- (.*?)$/s', $lastMessage, $matches);
         $id_d = $matches[1];
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
-        self::assertEquals('TEST 1', $donneesFormulaire->getTitre());
-        self::assertEquals('60124458-8687-11ed-b28f-0242c0a8b013', $donneesFormulaire->get('dossier_id'));
+        self::assertSame('TEST 1', $donneesFormulaire->getTitre());
+        self::assertSame('60124458-8687-11ed-b28f-0242c0a8b013', $donneesFormulaire->get('dossier_id'));
         self::assertFileEquals(
             __DIR__ . '/fixtures/i_Parapheur_internal_premis.xml',
             $donneesFormulaire->getFilePath('premis')
