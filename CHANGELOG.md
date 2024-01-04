@@ -12,6 +12,7 @@
 - Ajout de la récupération via l'API Fast des circuits disponibles pour Fast Parapheur #1925
 - Récupération de l'acte tamponné pour les Tdt Fast #1558
 - Permettre la configuration des attributs LDAP : nom, prénom et email #1975
+- Ajustement de la zone de séléction dans la gestion d'éléments studio #1281
 
 # [4.0.10] - 2023-12-11
 
