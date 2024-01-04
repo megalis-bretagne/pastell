@@ -3,6 +3,18 @@ description: "Permet de déclencher la suppresion des documents d'un ou plusieur
 type: Purge
 formulaire:
     Information:
+        entity_label:
+            name: Entité
+            type: externalData
+            commentaire: 'Ce champ est obligatoire'
+            choice-action: entity_list
+            link_name: "Sélectionner l'entité"
+            requis: true
+        entity_id:
+            no-show: true
+        include_children:
+            name: 'Inclure les entités filles'
+            type: checkbox
         actif:
             name: 'Connecteur actif'
             type: checkbox
@@ -39,3 +51,11 @@ action:
             page_title: 'Choix du type de dossier'
             module_type: document_type
             module_type_label: document_type_libelle
+    entity_list:
+        rule:
+            internal-action: true
+        action-class: StandardChoiceAction
+        connecteur-type: utilities
+        connecteur-type-action: GetEntityList
+        connecteur-type-mapping:
+            page_title: "Choix de l'entité"

@@ -428,7 +428,6 @@ class PurgeTest extends PastellTestCase
     }
 
     /**
-     * @throws UnrecoverableException
      * @throws Exception
      */
     public function testPurgeExclureEtat()
@@ -441,7 +440,7 @@ class PurgeTest extends PastellTestCase
 
         $this->getInternalAPI()->patch("/entite/1/document/$id_d", ['objet' => 'test']);
         $this->getInternalAPI()->post(
-            "/Document/" . PastellTestCase::ID_E_COL,
+            '/Document/' . PastellTestCase::ID_E_COL,
             ['type' => 'actes-generique']
         );
 
@@ -491,5 +490,71 @@ class PurgeTest extends PastellTestCase
         $purge->setConnecteurInfo(['id_e' => 1, 'id_ce' => 42]);
         $purge->setConnecteurConfig($connecteurConfig);
         static::assertCount(0, $purge->listDocument());
+    }
+
+    /**
+     * @throws UnrecoverableException
+     */
+    public function testPurgeGlobaleEntite(): void
+    {
+        $this->getInternalAPI()->post(
+            '/Document/' . PastellTestCase::ID_E_COL,
+            ['type' => 'actes-generique']
+        );
+        $this->getInternalAPI()->post(
+            '/Document/' . PastellTestCase::ID_E_COL,
+            ['type' => 'actes-generique']
+        );
+
+
+        $purge = $this->getObjectInstancier()->getInstance(Purge::class);
+        $connecteurConfig = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
+        $connecteurConfig->setTabData([
+            'actif' => 1,
+            'document_type' => 'actes-generique',
+            'document_etat' => 'creation',
+            'nb_days' => 0,
+            'entity_id' => 1,
+        ]);
+        $purge->setConnecteurInfo(['id_e' => 0, 'id_ce' => 42]);
+        $purge->setConnecteurConfig($connecteurConfig);
+        static::assertCount(2, $purge->listDocumentGlobal());
+        $purge->purgerGlobal();
+        static::assertCount(0, $purge->listDocumentGlobal());
+    }
+
+    /**
+     * @throws UnrecoverableException
+     */
+    public function testPurgeEntiteAndChildren(): void
+    {
+        $this->getInternalAPI()->post(
+            '/Document/' . PastellTestCase::ID_E_COL,
+            ['type' => 'actes-generique']
+        );
+        $this->getInternalAPI()->post(
+            '/Document/' . PastellTestCase::ID_E_SERVICE,
+            ['type' => 'actes-generique']
+        );
+        $this->getInternalAPI()->post(
+            '/Document/' . PastellTestCase::ID_E_COL,
+            ['type' => 'actes-generique']
+        );
+
+        $purge = $this->getObjectInstancier()->getInstance(Purge::class);
+        $connecteurConfig = $this->getDonneesFormulaireFactory()->getNonPersistingDonneesFormulaire();
+        $connecteurConfig->setTabData([
+            'actif' => 1,
+            'document_type' => 'actes-generique',
+            'document_etat' => 'creation',
+            'nb_days' => 0,
+            'entity_id' => 1,
+            'include_children' => true,
+        ]);
+        $purge->setConnecteurInfo(['id_e' => 0, 'id_ce' => 42]);
+        $purge->setConnecteurConfig($connecteurConfig);
+        static::assertCount(3, $purge->listDocumentGlobal());
+        $purge->purgerGlobal();
+        static::assertCount(0, $purge->listDocumentGlobal());
     }
 }
