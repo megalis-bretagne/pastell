@@ -14,6 +14,10 @@
 - Permettre la configuration des attributs LDAP : nom, prénom et email #1975
 - Ajustement de la zone de séléction dans la gestion d'éléments studio #1281
 
+## Corrections
+
+- Correction des entités affichées dans la liste déroulantes de l'entête pour les utilisateurs ayant un rôle 'aucun droit' #1919
+
 # [4.0.10] - 2023-12-11
 
 ***Cette version nécessite une mise à jour du générateur SEDA en 1.0.2***
