@@ -117,7 +117,7 @@ final class RecipientController extends AbstractController
      * @throws NotFoundException
      * @throws UnavailableMailException
      */
-    #[Route('/mail/{key}/captcha', name: 'mailsec_recipient_index', methods: ['GET'])]
+    #[Route('/mail/{key}/captcha', name: 'mailsec_recipient_captcha', methods: ['GET'])]
     public function captcha(string $key, Request $request): Response
     {
         $mailSecInfo = $this->mailsecManager->getMailsecInfo($key, $request);
