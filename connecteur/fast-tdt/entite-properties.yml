@@ -59,6 +59,7 @@ formulaire:
             link_name: "Sélectionner le circuit"
         type_traitement:
           name: Type de traitement
+          commentaire: 'Télétransmission par défaut'
           type: select
           value:
             TELETRANSMISSION: Télétransmission
