@@ -140,9 +140,8 @@ final class MailsecManager
                 $mailSecInfo->donneesFormulaireReponse->getFieldDataList('', 0);
         }
 
-
         try {
-            $odtFile = $this->updateReceipt($mailSecInfo->id_d);
+            $odtFile = $this->updateReceipt($mailSecInfo);
             $config = new CloudoooServiceConfiguration();
             $pdfFile = (new CloudoooStrategy($config))->conversion($odtFile);
             $mailSecInfo->donneesFormulaire->addFileFromData('accuse_lecture', 'accuse_lecture.pdf', $pdfFile);
@@ -302,8 +301,9 @@ final class MailsecManager
      * @throws ConnectionException
      * @throws InvalidTemplateException
      */
-    public function updateReceipt(string $id_d): string
+    public function updateReceipt(MailSecInfo $info): string
     {
+        $id_d = $info->id_d;
         $documentEmail = $this->objectInstancier->getInstance(DocumentEmail::class);
         $documentEmailReponseSQL = $this->objectInstancier->getInstance(DocumentEmailReponseSQL::class);
         $documentReponse = $documentEmailReponseSQL->getAllReponse($id_d);
@@ -321,8 +321,10 @@ final class MailsecManager
             $template_path = $this->objectInstancier->getInstance('data_dir') . '/connector/mailsec/accuse_lecture_simple_template.odt';
         }
 
-
         $main = new PartType();
+        $main->addElement(new FieldType('type_document', $info->type_document, 'text'));
+        $main->addElement(new FieldType('titre', $info->donneesFormulaireReponse->getTitre(), 'text'));
+        $main->addElement(new FieldType('entité', $info->denomination_entite, 'text'));
         $section = new IterationType('table_destinataires');
         foreach ($recipient_list as $id_de) {
             $infoRecipient = $documentEmail->getInfoFromPK($id_de);
