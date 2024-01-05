@@ -69,10 +69,6 @@ action:
         name: 'Mettre à jour les certificats'
         rule:
             internal-action: true
-    circuit:
-        action-class: FastTdtGetCircuits
-        rule:
-            internal-action: true
         action-class: StandardAction
         connecteur-type: utilities
         connecteur-type-action: UpdateCertificate
@@ -82,3 +78,7 @@ action:
     recup-classification:
         name: 'Récupérer la classification'
         action-class: FastTdtRecupClassification
+    circuit:
+        action-class: FastTdtGetCircuits
+        rule:
+            internal-action: true
