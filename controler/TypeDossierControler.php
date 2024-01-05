@@ -500,7 +500,6 @@ class TypeDossierControler extends PastellControler
             $id_type_dossier,
             '/TypeDossier/detail?id_t=' . $this->getViewParameterByKey('id_t')
         );
-
         $num_etape = 0;
         try {
             $num_etape = $this->getTypeDossierService()->newEtape(
@@ -532,7 +531,6 @@ class TypeDossierControler extends PastellControler
             TypeDossierActionService::ACTION_MODIFFIE,
             $message
         );
-
         $this->setLastMessage("L'étape a été créée.");
         $this->redirect("/TypeDossier/detail?id_t={$this->getViewParameterByKey('id_t')}");
     }
