@@ -120,9 +120,8 @@ final class RecipientController extends AbstractController
     #[Route('/mail/{key}/captcha', name: 'mailsec_recipient_captcha', methods: ['GET'])]
     public function captcha(string $key, Request $request): Response
     {
-        $mailSecInfo = $this->mailsecManager->getMailsecInfo($key, $request);
         return $this->render('websec/captcha.html.twig', [
-            'page_title' => 'Consulter le mail sécurisé',
+            'page_title' => 'Accéder au mail sécurisé',
             'gabarit' => $this->gabarit,
             'manifest_info' => $this->manifestFactory->getPastellManifest(),
             'timer' => $this->pastellTimer,
