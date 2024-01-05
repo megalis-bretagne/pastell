@@ -1,0 +1,87 @@
+{
+  "content": [
+    {
+      "id": "82bd1f75-8c09-11ed-9e3a-0242ac150013",
+      "name": "Mon dossier",
+      "dueDate": null,
+      "draftCreationDate": "2023-01-04T08:26:39.415+00:00",
+      "type": {
+        "id": "0de8d65d-fc78-43ee-9292-0a6f23d3ba5b",
+        "name": "Actes",
+        "description": "Actes",
+        "signatureFormat": "PADES",
+        "protocol": "NONE",
+        "signatureVisible": true,
+        "signaturePosition": {
+          "x": 50.0,
+          "y": 50.0,
+          "page": 1
+        },
+        "signatureLocation": null,
+        "signatureZipCode": null
+      },
+      "subtype": {
+        "id": "bd18ddf7-4dd0-439d-8457-cb5cbd6a2d6c",
+        "name": "Arretés",
+        "description": "Arretés",
+        "creationWorkflowId": null,
+        "validationWorkflowId": "visa",
+        "workflowSelectionScript": null,
+        "annotationsAllowed": false,
+        "secureMailServerId": null,
+        "sealCertificateId": null,
+        "externalSignatureConfigId": null,
+        "externalSignatureConfig": null,
+        "externalSignatureAutomatic": false,
+        "creationPermittedDeskIds": null,
+        "filterableByDeskIds": null,
+        "subtypeMetadataList": [],
+        "subtypeLayerList": [],
+        "multiDocuments": false,
+        "digitalSignatureMandatory": true,
+        "readingMandatory": false,
+        "sealAutomatic": false,
+        "annexeIncluded": false
+      },
+      "originDesk": {
+        "id": "68e3392d-e63f-4604-b8c5-ff376f75ef28",
+        "name": "Pastell"
+      },
+      "finalDesk": {
+        "id": "68e3392d-e63f-4604-b8c5-ff376f75ef28",
+        "name": "Pastell"
+      },
+      "metadata": {
+        "workflow_internal_steps": "[]",
+        "i_Parapheur_internal_emitter_id": "68e3392d-e63f-4604-b8c5-ff376f75ef28",
+        "action": "i_Parapheur_internal_archive"
+      },
+      "readByCurrentUser": false
+    }
+  ],
+  "pageable": {
+    "sort": {
+      "empty": false,
+      "unsorted": false,
+      "sorted": true
+    },
+    "offset": 0,
+    "pageSize": 10,
+    "pageNumber": 0,
+    "unpaged": false,
+    "paged": true
+  },
+  "last": true,
+  "totalElements": 1,
+  "totalPages": 1,
+  "size": 10,
+  "number": 0,
+  "sort": {
+    "empty": false,
+    "unsorted": false,
+    "sorted": true
+  },
+  "numberOfElements": 1,
+  "first": true,
+  "empty": false
+}
