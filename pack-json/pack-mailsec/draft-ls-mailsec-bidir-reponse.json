@@ -1,13 +1,14 @@
 {
   "id_type_dossier": "draft-ls-mailsec-bidir-reponse",
   "pastell-version": "%VERSION%",
-  "timestamp": 1701879880,
+  "timestamp": 1704450010,
   "raw_data": {
     "id_type_dossier": "draft-ls-mailsec-bidir-reponse",
     "nom": "Mail s\u00e9curis\u00e9 avec r\u00e9ponse (r\u00e9ponse)",
     "type": "Mail s\u00e9curis\u00e9",
     "description": "R\u00e9ponses des destinataires de Mail s\u00e9curis\u00e9 avec r\u00e9ponse",
-    "nom_onglet": "onglet1",
+    "nom_onglet": "R\u00e9ponse",
+    "affiche_one": false,
     "restriction_pack": "",
     "formulaireElement": [
       {

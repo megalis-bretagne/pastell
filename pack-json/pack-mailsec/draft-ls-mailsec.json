@@ -1,9 +1,9 @@
 {
-  "id_type_dossier": "draft-ls-mailsec-bidir",
+  "id_type_dossier": "draft-ls-mailsec",
   "pastell-version": "%VERSION%",
-  "timestamp": 1704450007,
+  "timestamp": 1704450001,
   "raw_data": {
-    "id_type_dossier": "draft-ls-mailsec-bidir",
+    "id_type_dossier": "draft-ls-mailsec",
     "nom": "Mail s\u00e9curis\u00e9 avec r\u00e9ponse",
     "type": "Mail s\u00e9curis\u00e9",
     "description": "Type de dossier permettant d'envoyer des mail s\u00e9curis\u00e9s et de r\u00e9cup\u00e9rer des r\u00e9ponses des destinataires",

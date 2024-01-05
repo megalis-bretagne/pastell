@@ -101,6 +101,8 @@ module-pack-document: docker-compose-up ## Run make-module pack_document
 	$(MAKE_MODULE) ./pack-json/pack-document/ls-recup-parapheur-draft.json ./module/ --id ls-recup-parapheur --name "Récupération parapheur"
 
 module-pack-mailsec: docker-compose-up ## Run make-module pack_mailsec
+	$(MAKE_MODULE) ./pack-json/pack-mailsec/draft-ls-mailsec.json ./module/ --id ls-mailsec --name "Mail sécurisé"
+	$(MAKE_MODULE) ./pack-json/pack-mailsec/draft-ls-mailsec-destinataire.json ./module/ --id ls-mailsec-destinataire --name "Mail sécurisé (destinataire)"
 	$(MAKE_MODULE) ./pack-json/pack-mailsec/draft-ls-mailsec-bidir.json ./module/ --id ls-mailsec-bidir --name "Mail sécurisé avec réponse"
 	$(MAKE_MODULE) ./pack-json/pack-mailsec/draft-ls-mailsec-bidir-destinataire.json ./module/ --id ls-mailsec-bidir-destinataire --name "Mail sécurisé avec réponse (destinataire)"
 	$(MAKE_MODULE) ./pack-json/pack-mailsec/draft-ls-mailsec-bidir-reponse.json ./module/ --id ls-mailsec-bidir-reponse --name "Mail sécurisé avec réponse (réponse)"
