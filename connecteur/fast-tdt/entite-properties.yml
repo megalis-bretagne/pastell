@@ -50,8 +50,7 @@ formulaire:
             type: date
             read-only: true
         circuit:
-            name: Circuit
-            commentaire: "Obligatoire pour les PES ! <br />\nCircuit sur lequel sera envoyé les PES signés pour être télétransmis par FAST"
+            name: Identifiant du circuit
             read-only: true
         circuit_name:
             name: Nom du circuit
@@ -68,6 +67,10 @@ formulaire:
 action:
     update-certificate:
         name: 'Mettre à jour les certificats'
+        rule:
+            internal-action: true
+    circuit:
+        action-class: FastTdtGetCircuits
         rule:
             internal-action: true
         action-class: StandardAction
