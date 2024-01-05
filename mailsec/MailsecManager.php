@@ -154,7 +154,7 @@ final class MailsecManager
     private function getRecipientFlux(string $flux): string
     {
         $recipientFlux = $flux . '-destinataire';
-        if (! $this->objectInstancier->getInstance(DocumentTypeFactory::class)->isTypePresent($recipientFlux)) {
+        if (!$this->objectInstancier->getInstance(DocumentTypeFactory::class)->isTypePresent($recipientFlux)) {
             $recipientFlux = 'mailsec-destinataire';
         }
         return $recipientFlux;
@@ -320,11 +320,16 @@ final class MailsecManager
         } else {
             $template_path = $this->objectInstancier->getInstance('data_dir') . '/connector/mailsec/accuse_lecture_simple_template.odt';
         }
-
         $main = new PartType();
+        $main->addElement(
+            new FieldType(
+                'titre',
+                $info->donneesFormulaire->getFieldData('objet')->getValue()[0] ?: 'sans titre',
+                'text'
+            )
+        );
         $main->addElement(new FieldType('type_document', $info->type_document, 'text'));
-        $main->addElement(new FieldType('titre', $info->donneesFormulaireReponse->getTitre(), 'text'));
-        $main->addElement(new FieldType('entité', $info->denomination_entite, 'text'));
+        $main->addElement(new FieldType('entite', $info->denomination_entite, 'text'));
         $section = new IterationType('table_destinataires');
         foreach ($recipient_list as $id_de) {
             $infoRecipient = $documentEmail->getInfoFromPK($id_de);
@@ -351,13 +356,15 @@ final class MailsecManager
         $main->addElement($section);
 
         $main->addElement(new FieldType('date', date('Y-m-d H:i:s'), 'date'));
-        $main->addElement(new ContentType(
-            'odt_content',
-            'accuse_lecture.odt',
-            'application/vnd.oasis.opendocument.text',
-            'binary',
-            file_get_contents($template_path)
-        ));
+        $main->addElement(
+            new ContentType(
+                'odt_content',
+                'accuse_lecture.odt',
+                'application/vnd.oasis.opendocument.text',
+                'binary',
+                file_get_contents($template_path)
+            )
+        );
 
         $config = new RestServiceConfiguration('http://flow:8080');
         return (new RestStrategy($config))->fusion($template_path, $main);
