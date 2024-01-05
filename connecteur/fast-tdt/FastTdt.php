@@ -67,7 +67,7 @@ class FastTdt extends TdtConnecteur
         $this->classification = $donneesFormulaire->getFilePath('classification_file');
         $this->classificationDate = $donneesFormulaire->get('classification_date');
         $this->circuit = $donneesFormulaire->get(self::CIRCUIT_ID_FIELD);
-        $this->typeTraitement = $donneesFormulaire->get('type_traitement') !== '' ?: 'TELETRANSMISSION';
+        $this->typeTraitement = $donneesFormulaire->get('type_traitement') ?: 'TELETRANSMISSION';
 
         $this->connectionCertificatePassword = $donneesFormulaire->get('certificat_password');
 
