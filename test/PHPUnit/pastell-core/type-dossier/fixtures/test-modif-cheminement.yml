@@ -65,7 +65,7 @@ formulaire:
             visionneuse-no-link: true
     'Mail sécurisé':
         to:
-            name: 'Destinataire (s)'
+            name: Destinataire(s)
             commentaire: 'Plusieurs emails possibles séparés par une virgule'
             type: mail-list
             autocomplete: MailSec/getContactAjax
