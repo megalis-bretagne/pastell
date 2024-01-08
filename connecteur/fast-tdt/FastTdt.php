@@ -41,6 +41,7 @@ class FastTdt extends TdtConnecteur
     private $connectionCertificateKeyCert;
 
     private $arActeDate;
+    private string $typeTraitement;
 
     /**
      * FastTdt constructor.
@@ -66,6 +67,7 @@ class FastTdt extends TdtConnecteur
         $this->classification = $donneesFormulaire->getFilePath('classification_file');
         $this->classificationDate = $donneesFormulaire->get('classification_date');
         $this->circuit = $donneesFormulaire->get(self::CIRCUIT_ID_FIELD);
+        $this->typeTraitement = $donneesFormulaire->get('type_traitement') ?: 'TELETRANSMISSION';
 
         $this->connectionCertificatePassword = $donneesFormulaire->get('certificat_password');
 
@@ -769,7 +771,7 @@ class FastTdt extends TdtConnecteur
     {
         $result = $this->getActesClient()->traiterACTES(
             [
-                'typeTraitement' => 'TELETRANSMISSION',
+                'typeTraitement' => $this->typeTraitement,
                 'DNUtilisateur' => $this->userDn,
                 'SIREN' => $this->subscriberNumber,
                 'fichierACTES' => $messageMetierFilename,

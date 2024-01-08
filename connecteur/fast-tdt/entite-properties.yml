@@ -57,7 +57,14 @@ formulaire:
             type: externalData
             choice-action: circuit
             link_name: "Sélectionner le circuit"
-
+        type_traitement:
+          name: Type de traitement
+          commentaire: 'Télétransmission par défaut'
+          type: select
+          value:
+            TELETRANSMISSION: Télétransmission
+            PREPARATION: Préparation
+          default: 'TELETRANSMISSION'
 action:
     update-certificate:
         name: 'Mettre à jour les certificats'
