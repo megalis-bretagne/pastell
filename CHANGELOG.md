@@ -1,7 +1,9 @@
-# [4.0.11] - 
+# [4.0.11] - 2024-01-15
 
 ## Corrections 
+
 - Correction d'erreur à l'importation de configuration d'une entité comportant des connecteurs globaux #1961
+- Permettre la modification du niveau d'entropie des mots de passe #1985
 
 # [4.0.10] - 2023-12-11
 
