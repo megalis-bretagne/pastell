@@ -14,6 +14,7 @@ use Dkd\PhpCmis\SessionFactory;
 use Dkd\PhpCmis\SessionParameter;
 use GuzzleHttp\Client;
 use GuzzleHttp\Stream\Stream;
+use Pastell\Configuration\ElementType;
 
 class DepotCMIS extends DepotConnecteur
 {
@@ -21,6 +22,8 @@ class DepotCMIS extends DepotConnecteur
     public const DEPOT_CMIS_LOGIN = 'depot_cmis_login';
     public const DEPOT_CMIS_PASSWORD = 'depot_cmis_password';
     public const DEPOT_CMIS_DIRECTORY = 'depot_cmis_directory';
+    public const DEPOT_CMIS_OBJECT_TYPE_ID = 'depot_cmis_object_type_id';
+    public const DEPOT_CMIS_PROPERTIES = 'depot_cmis_properties';
 
     /** @var FolderInterface */
     private $folder;
@@ -32,10 +35,24 @@ class DepotCMIS extends DepotConnecteur
     private string $http_proxy_url;
     private string $no_proxy;
 
-    public function __construct(string $http_proxy_url = '', string $no_proxy = '')
-    {
+    private Client $client;
+
+    private DonneesFormulaireFactory $donneesFormulaireFactory;
+
+    public function __construct(
+        DonneesFormulaireFactory $donneesFormulaireFactory,
+        string $http_proxy_url = '',
+        string $no_proxy = ''
+    ) {
+        $this->donneesFormulaireFactory = $donneesFormulaireFactory;
         $this->http_proxy_url = $http_proxy_url;
         $this->no_proxy = $no_proxy;
+        $this->client = new Client();
+    }
+
+    public function setGuzzleHttpClient(Client $client)
+    {
+        $this->client = $client;
     }
 
     /**
@@ -87,13 +104,17 @@ class DepotCMIS extends DepotConnecteur
     public function saveDocument(string $directory_name, string $filename, string $filepath)
     {
         $this->disableDeprecated();
+
         try {
             $fileContentType = new FileContentType();
             $properties = [
-                PropertyIds::OBJECT_TYPE_ID => 'cmis:document',
+                PropertyIds::OBJECT_TYPE_ID
+                    => $this->connecteurConfig->get(self::DEPOT_CMIS_OBJECT_TYPE_ID) ?: 'cmis:document',
                 PropertyIds::NAME => $filename,
                 PropertyIds::CONTENT_STREAM_MIME_TYPE => $fileContentType->getContentType($filepath),
             ];
+
+            $properties  += $this->getProperties();
 
             $versionningState = new VersioningState(VersioningState::MAJOR);
 
@@ -119,6 +140,57 @@ class DepotCMIS extends DepotConnecteur
             $this->restoreErrorReporting();
         }
         return $directory_name . "/" . $filename;
+    }
+
+    private function getProperties(): array
+    {
+        if ($this->hasDocDonneesFormulaire()) {
+            $docDonneesFormulaire = $this->getDocDonneesFormulaire();
+        } else {
+            $docDonneesFormulaire = $this->donneesFormulaireFactory->getNonPersistingDonneesFormulaire();
+        }
+
+        $properties = [];
+        $expressionPerField = $this->getExpressionsPerField(self::DEPOT_CMIS_PROPERTIES);
+        foreach ($expressionPerField as $propertie_name => $propertie_info) {
+            $propertie_value = $this->getNameFromMetadata($docDonneesFormulaire, $propertie_info['expression']);
+            if ($propertie_info['type'] === 'datetime') {
+                $propertie_value = new DateTime($propertie_value);
+            }
+            $properties[$propertie_name] = $propertie_value;
+        }
+        return $properties;
+    }
+
+    private function getExpressionsPerField(string $connecteur_element_id): array
+    {
+        $expressionPerField = [];
+        foreach (explode("\n", $this->connecteurConfig->get($connecteur_element_id)) as $line) {
+            preg_match('#"([^"]*)":([^:]*):(.*)#', $line, $matches);
+            if (count($matches) < 2) {
+                continue;
+            }
+            $expressionPerField[trim($matches[1])] = [
+                'expression' => trim($matches[3]),
+                'type' => trim($matches[2])
+            ];
+        }
+        return $expressionPerField;
+    }
+
+    private function getNameFromMetadata(DonneesFormulaire $donneesFormulaire, $expression)
+    {
+        return preg_replace_callback(
+            "#%([^%]*)%#",
+            function ($matches) use ($donneesFormulaire) {
+                $field = $donneesFormulaire->getFormulaire()->getField($matches[1]);
+                if ($field && $field->isFile()) {
+                    return pathinfo($donneesFormulaire->getFileName($matches[1]), PATHINFO_FILENAME);
+                }
+                return $donneesFormulaire->get($matches[1]);
+            },
+            $expression
+        );
     }
 
     private function itemExists(string $item_name)
@@ -149,7 +221,7 @@ class DepotCMIS extends DepotConnecteur
         }
         $url = $this->connecteurConfig->get(self::DEPOT_CMIS_URL);
 
-        $httpInvoker = new Client();
+        $httpInvoker = $this->getClient();
 
         $httpInvoker->setDefaultOption(
             'auth',
@@ -185,6 +257,6 @@ class DepotCMIS extends DepotConnecteur
      */
     public function getClient(): Client
     {
-        return new Client();
+        return $this->client;
     }
 }

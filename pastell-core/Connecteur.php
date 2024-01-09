@@ -34,6 +34,11 @@ abstract class Connecteur
         $this->docDonneesFormulaire = $docDonneesFormulaire;
     }
 
+    public function hasDocDonneesFormulaire(): bool
+    {
+        return ! empty($this->docDonneesFormulaire);
+    }
+
     /**
      * @return array information sur le connecteur (id_ce, id_e,...)
      */
