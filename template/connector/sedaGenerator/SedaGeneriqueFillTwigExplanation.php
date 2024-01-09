@@ -7,11 +7,11 @@ declare(strict_types=1);
  */
 ?>
 <div class="box">
-    <a class="collapse-link" data-toggle="collapse" href="#collapse2">
+    <a class="collapse-link" data-bs-toggle="collapse" data-bs-target="#collapseTwigDocumentation">
         <h2><em class="fa fa-plus-square"></em>Explications</h2>
     </a>
 
-    <div class="collapse alert alert-info" id="collapse2">
+    <div class="collapse alert alert-info" id="collapseTwigDocumentation">
         <p>
             Tous les éléments du bordereau peuvent recevoir une expression
             <a href="https://twig.symfony.com/" target="_blank">twig</a> qui sera analysée lors de la génération du

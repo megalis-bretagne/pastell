@@ -283,7 +283,7 @@ if ($infoDocumentEmail) :
 
 <?php if ($is_super_admin) : ?>
     <div class="box">
-        <a class="collapse-link" data-toggle="collapse" href="#collapseExample">
+        <a class="collapse-link" data-bs-toggle="collapse" data-bs-target="#collapseExample">
             <h2><i class="fa fa-plus-square"></i>&nbsp;Administration avancée</h2>
         </a>
 

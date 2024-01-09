@@ -35,23 +35,37 @@ $donnees_menu['Entite/agents'] = 'Agents (Actes)';
 
 <div id="main_gauche" class="ls-on">
 
-    <h3 data-toggle="collapse" data-target="#collapse-0" aria-expanded="false" aria-controls="collapse-0">Administration</h3>
-    <div class="menu collapse <?php hecho(array_key_exists($menu_gauche_select, $admninistration_menu) ? "show" : ""); ?>" id="collapse-0">
+    <h3 data-bs-toggle="collapse"
+        data-bs-target="#collapse-0"
+        aria-expanded="false"
+        aria-controls="collapse-0">Administration</h3>
+    <div id="collapse-0"
+         class="menu collapse <?php hecho(
+             array_key_exists($menu_gauche_select, $admninistration_menu) ? "show" : ""
+         ); ?>">
         <ul>
             <?php foreach ($admninistration_menu as $url => $libelle) : ?>
                 <li>
-                    <a class="<?php echo $menu_gauche_select == $url ? "actif" : "" ?>" href='<?php $this->url(get_hecho($url . "?id_e=$id_e")); ?>'><?php echo $libelle ?></a>
+                    <a class="<?php echo $menu_gauche_select == $url ? "actif" : "" ?>"
+                       href='<?php $this->url(get_hecho($url . "?id_e=$id_e")); ?>'><?php echo $libelle ?></a>
                 </li>
             <?php endforeach; ?>
         </ul>
     </div>
 
-    <h3 data-toggle="collapse" data-target="#collapse-1" aria-expanded="false" aria-controls="collapse-1">Données pour les types de dossier</h3>
-    <div class="menu collapse <?php hecho(array_key_exists($menu_gauche_select, $donnees_menu) ? "show" : ""); ?>" id="collapse-1">
+    <h3 data-bs-toggle="collapse"
+        data-bs-target="#collapse-1"
+        aria-expanded="false"
+        aria-controls="collapse-1">Données pour les types de dossier</h3>
+    <div id="collapse-1"
+         class="menu collapse <?php hecho(
+             array_key_exists($menu_gauche_select, $donnees_menu) ? "show" : ""
+         ); ?>">
         <ul>
             <?php foreach ($donnees_menu as $url => $libelle) : ?>
                 <li>
-                    <a class="<?php echo $menu_gauche_select == $url ? "actif" : "" ?>" href='<?php $this->url(get_hecho($url . "?id_e=$id_e")); ?>'><?php echo $libelle ?></a>
+                    <a class="<?php echo $menu_gauche_select == $url ? "actif" : "" ?>"
+                       href='<?php $this->url(get_hecho($url . "?id_e=$id_e")); ?>'><?php echo $libelle ?></a>
                 </li>
             <?php endforeach; ?>
         </ul>

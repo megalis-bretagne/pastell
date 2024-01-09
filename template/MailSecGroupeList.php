@@ -106,8 +106,8 @@
                     <td><?php hecho($groupe['denomination']); ?></td>
                     <td><?php hecho($groupe['nom']); ?></td>
                     <td
-                        data-toggle="collapse"
-                        data-target="#collapse-more-contacts-<?php
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapse-more-contacts-<?php
                         hecho(str_replace(' ', '-', $groupe['nom'])); ?>"
                         aria-expanded="false"
                         aria-controls="collapse-more-contacts-<?php

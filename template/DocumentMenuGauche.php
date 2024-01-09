@@ -22,8 +22,8 @@ if (empty($type_e_menu) && !empty($this->viewParameter['id_d'])) {
     foreach ($all_module as $type_flux => $les_flux) : ?>
         <?php ++$i; ?>
         <h3
-                data-toggle="collapse"
-                data-target="#collapse-<?php hecho($i); ?>"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapse-<?php hecho($i); ?>"
                 aria-expanded="false"
                 aria-controls="collapse-<?php hecho($i); ?>"
         >
