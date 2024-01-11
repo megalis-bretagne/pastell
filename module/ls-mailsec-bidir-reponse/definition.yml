@@ -1,0 +1,89 @@
+nom: 'Mail sécurisé avec réponse (réponse)'
+type: 'Mail sécurisé'
+description: 'Réponses des destinataires de Mail sécurisé avec réponse'
+connecteur: {  }
+affiche_one: false
+formulaire:
+    Réponse:
+        reponse:
+            name: Réponse
+            type: textarea
+            requis: true
+            multiple: false
+            commentaire: ''
+        document_attache:
+            name: Document(s)
+            type: file
+            requis: false
+            multiple: true
+            commentaire: ''
+champs-affiches:
+    - titre
+    - dernier_etat
+    - date_dernier_etat
+champs-recherche-avancee:
+    - type
+    - id_e
+    - lastetat
+    - last_state_begin
+    - etatTransit
+    - state_begin
+    - notEtatTransit
+    - search
+action:
+    creation:
+        name-action: Créer
+        name: Créé
+        rule:
+            no-last-action: ''
+    modification:
+        name-action: Modifier
+        name: 'En cours de rédaction'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+    supression:
+        name-action: Supprimer
+        name: Supprimé
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - termine
+                - fatal-error
+        action-class: Supprimer
+        warning: 'Êtes-vous sûr ?'
+    importation:
+        name: 'Importation du document'
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+    orientation:
+        name: 'Envoi du document'
+        name-action: 'Envoyer le document'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+            document_is_valide: true
+        action-class: OrientationTypeDossierPersonnalise
+    termine:
+        name: 'Traitement terminé'
+        rule:
+            role_id_e: no-role
+    reouverture:
+        name: 'Rouvrir le dossier'
+        rule:
+            last-action:
+                - termine
+        action-class: Reopen
+    cheminement-change:
+        no-workflow: true
+        rule:
+            role_id_e: 'no-role,'
+        action-class: CheminementChangeTypeDossierPersonnalise
+studio_definition: ewogICJpZF90eXBlX2Rvc3NpZXIiOiAiZHJhZnQtbHMtbWFpbHNlYy1iaWRpci1yZXBvbnNlIiwKICAicGFzdGVsbC12ZXJzaW9uIjogIiVWRVJTSU9OJSIsCiAgInRpbWVzdGFtcCI6IDE3MDQ0NTAwMTAsCiAgInJhd19kYXRhIjogewogICAgImlkX3R5cGVfZG9zc2llciI6ICJkcmFmdC1scy1tYWlsc2VjLWJpZGlyLXJlcG9uc2UiLAogICAgIm5vbSI6ICJNYWlsIHNcdTAwZTljdXJpc1x1MDBlOSBhdmVjIHJcdTAwZTlwb25zZSAoclx1MDBlOXBvbnNlKSIsCiAgICAidHlwZSI6ICJNYWlsIHNcdTAwZTljdXJpc1x1MDBlOSIsCiAgICAiZGVzY3JpcHRpb24iOiAiUlx1MDBlOXBvbnNlcyBkZXMgZGVzdGluYXRhaXJlcyBkZSBNYWlsIHNcdTAwZTljdXJpc1x1MDBlOSBhdmVjIHJcdTAwZTlwb25zZSIsCiAgICAibm9tX29uZ2xldCI6ICJSXHUwMGU5cG9uc2UiLAogICAgImFmZmljaGVfb25lIjogZmFsc2UsCiAgICAicmVzdHJpY3Rpb25fcGFjayI6ICIiLAogICAgImZvcm11bGFpcmVFbGVtZW50IjogWwogICAgICB7CiAgICAgICAgImVsZW1lbnRfaWQiOiAicmVwb25zZSIsCiAgICAgICAgIm5hbWUiOiAiUlx1MDBlOXBvbnNlIiwKICAgICAgICAidHlwZSI6ICJ0ZXh0YXJlYSIsCiAgICAgICAgImNvbW1lbnRhaXJlIjogIiIsCiAgICAgICAgInJlcXVpcyI6ICJvbiIsCiAgICAgICAgImNoYW1wc19hZmZpY2hlcyI6ICIiLAogICAgICAgICJjaGFtcHNfcmVjaGVyY2hlX2F2YW5jZWUiOiAiIiwKICAgICAgICAidGl0cmUiOiAiIiwKICAgICAgICAic2VsZWN0X3ZhbHVlIjogIiIsCiAgICAgICAgInByZWdfbWF0Y2giOiAiIiwKICAgICAgICAiZGVmYXVsdF92YWx1ZSI6ICIiLAogICAgICAgICJwcmVnX21hdGNoX2Vycm9yIjogIiIsCiAgICAgICAgImNvbnRlbnRfdHlwZSI6ICIiCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAiZWxlbWVudF9pZCI6ICJkb2N1bWVudF9hdHRhY2hlIiwKICAgICAgICAibmFtZSI6ICJEb2N1bWVudChzKSIsCiAgICAgICAgInR5cGUiOiAibXVsdGlfZmlsZSIsCiAgICAgICAgImNvbW1lbnRhaXJlIjogIiIsCiAgICAgICAgInJlcXVpcyI6ICIiLAogICAgICAgICJjaGFtcHNfYWZmaWNoZXMiOiAiIiwKICAgICAgICAiY2hhbXBzX3JlY2hlcmNoZV9hdmFuY2VlIjogIiIsCiAgICAgICAgInRpdHJlIjogIiIsCiAgICAgICAgInNlbGVjdF92YWx1ZSI6ICIiLAogICAgICAgICJwcmVnX21hdGNoIjogIiIsCiAgICAgICAgImRlZmF1bHRfdmFsdWUiOiAiIiwKICAgICAgICAicHJlZ19tYXRjaF9lcnJvciI6ICIiLAogICAgICAgICJjb250ZW50X3R5cGUiOiAiIgogICAgICB9CiAgICBdLAogICAgImV0YXBlIjogW10KICB9Cn0=

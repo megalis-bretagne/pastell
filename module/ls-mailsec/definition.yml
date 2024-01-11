@@ -1,0 +1,335 @@
+nom: 'Mail sécurisé'
+type: 'Mail sécurisé'
+description: "Type de dossier permettant d'envoyer des mail sécurisés et de récupérer des réponses des destinataires"
+connecteur:
+    - transformation
+    - mailsec
+    - pdf-relance
+affiche_one: true
+formulaire:
+    Dossier:
+        objet:
+            name: Objet
+            type: text
+            requis: true
+            multiple: false
+            commentaire: ''
+            title: true
+        message:
+            name: Message
+            type: textarea
+            requis: false
+            multiple: false
+            commentaire: ''
+        document_attache:
+            name: Document(s)
+            type: file
+            requis: false
+            multiple: true
+            commentaire: ''
+        metadonnees:
+            name: 'Fichier contenant les métadonnées'
+            type: file
+            requis: false
+            multiple: false
+            commentaire: 'Préférentiellement au format JSON, XML possible'
+    Cheminement:
+        envoi_transformation:
+            name: Transformation
+            type: checkbox
+            onchange: cheminement-change
+            default: checked
+            read-only: true
+        envoi_mailsec:
+            name: 'Mail sécurisé'
+            type: checkbox
+            onchange: cheminement-change
+            default: checked
+            read-only: true
+    Transformation:
+        has_transformation:
+            no-show: true
+            read-only: true
+        transformation_file:
+            name: Transformations
+            type: file
+            visionneuse: Pastell\Viewer\TransformationViewer
+            read-only: true
+            visionneuse-no-link: true
+    'Mail sécurisé':
+        to:
+            name: Destinataire(s)
+            commentaire: 'Plusieurs emails possibles séparés par une virgule'
+            type: mail-list
+            autocomplete: MailSec/getContactAjax
+        cc:
+            name: 'Copie à'
+            commentaire: 'Plusieurs emails possibles séparés par une virgule'
+            type: mail-list
+            autocomplete: MailSec/getContactAjax
+        bcc:
+            name: 'Copie cachée à'
+            commentaire: 'Plusieurs emails possibles séparés par une virgule'
+            type: mail-list
+            autocomplete: MailSec/getContactAjax
+        password:
+            name: 'Mot de passe'
+            type: password
+            may_be_null: true
+        password2:
+            name: 'Mot de passe (confirmation)'
+            type: password
+            may_be_null: true
+            is_equal: password
+            is_equal_error: 'Les mots de passe ne correspondent pas'
+        key:
+            no-show: true
+            read-only: true
+        sent_mail_number:
+            name: Destinataires
+            default: '0'
+            no-show: true
+            read-only: true
+        sent_mail_read:
+            name: 'Mails lus'
+            default: '0'
+            no-show: true
+            read-only: true
+        sent_mail_answered:
+            name: 'Mails répondus'
+            default: '0'
+            no-show: true
+            read-only: true
+champs-affiches:
+    - titre
+    - dernier_etat
+    - date_dernier_etat
+champs-recherche-avancee:
+    - type
+    - id_e
+    - lastetat
+    - last_state_begin
+    - etatTransit
+    - state_begin
+    - notEtatTransit
+    - search
+page-condition:
+    Transformation:
+        has_transformation: true
+    'Mail sécurisé':
+        envoi_mailsec: true
+action:
+    creation:
+        name-action: Créer
+        name: Créé
+        rule:
+            no-last-action: ''
+    modification:
+        name-action: Modifier
+        name: 'En cours de rédaction'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - transformation
+                - send-mailsec-error
+    supression:
+        name-action: Supprimer
+        name: Supprimé
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - termine
+                - fatal-error
+                - transformation-error
+                - send-mailsec-error
+        action-class: Supprimer
+        warning: 'Êtes-vous sûr ?'
+    importation:
+        name: 'Importation du document'
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+    orientation:
+        name: 'Envoi du document'
+        name-action: 'Envoyer le document'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - transformation
+                - reception
+                - non-recu
+            document_is_valide: true
+        action-class: OrientationTypeDossierPersonnalise
+    termine:
+        name: 'Traitement terminé'
+        rule:
+            role_id_e: no-role
+    reouverture:
+        name: 'Rouvrir le dossier'
+        rule:
+            last-action:
+                - termine
+        action-class: Reopen
+    cheminement-change:
+        no-workflow: true
+        rule:
+            role_id_e: 'no-role,'
+        action-class: CheminementChangeTypeDossierPersonnalise
+    preparation-transformation:
+        name: 'Préparation à la transformation'
+        rule:
+            role_id_e: no-role
+        action-automatique: transformation
+    transformation:
+        name-action: 'Transformer le document'
+        name: 'Transformation du document'
+        rule:
+            last-action:
+                - preparation-transformation
+                - transformation-error
+        action-class: StandardAction
+        action-automatique: orientation
+        connecteur-type: transformation
+        connecteur-type-action: TransformationTransform
+        connecteur-type-mapping:
+            transformation_file: transformation_file
+            has_transformation: has_transformation
+        editable-content:
+            - envoi_mailsec
+            - to
+            - cc
+            - bcc
+            - password
+            - password2
+        modification-no-change-etat: true
+    transformation-error:
+        name: 'Erreur lors de la transformation du dossier'
+        rule:
+            role_id_e: no-role
+    preparation-send-mailsec:
+        name: "Préparation de l'envoi par mail sécurisé"
+        rule:
+            role_id_e: no-role
+        action-automatique: send-mailsec
+    send-mailsec:
+        name-action: 'Envoyer le mail sécurisé'
+        name: "Envoi d'un mail sécurisé"
+        rule:
+            last-action:
+                - preparation-send-mailsec
+                - send-mailsec-error
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecEnvoyer
+        connecteur-type-mapping:
+            to: to
+            cc: cc
+            bcc: bcc
+            sent_mail_number: sent_mail_number
+            send-mailsec-error: send-mailsec-error
+        action-automatique: mailsec-relance
+    send-mailsec-error:
+        name: "Erreur d'envoi d'un mail sécurisé"
+        editable-content:
+            - to
+            - cc
+            - bcc
+        rule:
+            role_id_e: no-role
+        modification-no-change-etat: true
+    mailsec-relance:
+        name: Relancé
+        name-action: 'Relancer si nécessaire'
+        rule:
+            last-action:
+                - send-mailsec
+                - renvoi
+                - reception-partielle
+        action-class: StandardAction
+        connecteur-type: pdf-relance
+        connecteur-type-action: MailsecRelance
+        connecteur-type-mapping:
+            reception-partielle: reception-partielle
+            prepare-renvoi: prepare-renvoi
+            non-recu: preparation-non-recu
+            send-mailsec: send-mailsec
+        action-automatique: mailsec-relance
+    prepare-renvoi:
+        name: 'Préparation de la relance du mail'
+        rule:
+            role_id_e: no-role
+        action-automatique: renvoi
+    renvoi:
+        name-action: 'Envoyer à nouveau'
+        name: Renvoyé
+        rule:
+            last-action:
+                - mailsec-relance
+                - send-mailsec
+                - renvoi
+                - reception-partielle
+            role_id_e: editeur
+            document_is_valide: true
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecRenvoyer
+        action-automatique: mailsec-relance
+        action-class: StandardAction
+    reception:
+        name: Reçu
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+    reception-partielle:
+        name: 'Reçu partiellement'
+        rule:
+            role_id_e: no-role
+        action-automatique: mailsec-relance
+    preparation-non-recu:
+        name: 'Préparation au passage comme non reçu'
+        rule:
+            role_id_e: no-role
+        action-automatique: non-recu
+    non-recu:
+        name: 'Non reçu'
+        name-action: 'Définir comme non reçu'
+        warning: ok
+        rule:
+            last-action:
+                - preparation-non-recu
+                - renvoi
+                - send-mailsec
+                - reception-partielle
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecNotReceived
+        action-automatique: orientation
+    reponse:
+        name: 'Une réponse a été enregistrée'
+        rule:
+            no-action:
+                - creation
+    compute_read_mail:
+        name: 'Calcul des mails lus'
+        rule:
+            role_id_e: no-role
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecComputeReadMail
+        connecteur-type-mapping:
+            sent_mail_read: sent_mail_read
+    compute_answered_mail:
+        name: 'Calcul des mails répondus'
+        rule:
+            role_id_e: no-role
+        action-class: StandardAction
+        connecteur-type: mailsec
+        connecteur-type-action: MailsecComputeAnsweredMail
+        connecteur-type-mapping:
+            sent_mail_answered: sent_mail_answered
+studio_definition: ewogICJpZF90eXBlX2Rvc3NpZXIiOiAiZHJhZnQtbHMtbWFpbHNlYyIsCiAgInBhc3RlbGwtdmVyc2lvbiI6ICIlVkVSU0lPTiUiLAogICJ0aW1lc3RhbXAiOiAxNzA0NDUwMDAxLAogICJyYXdfZGF0YSI6IHsKICAgICJpZF90eXBlX2Rvc3NpZXIiOiAiZHJhZnQtbHMtbWFpbHNlYyIsCiAgICAibm9tIjogIk1haWwgc1x1MDBlOWN1cmlzXHUwMGU5IGF2ZWMgclx1MDBlOXBvbnNlIiwKICAgICJ0eXBlIjogIk1haWwgc1x1MDBlOWN1cmlzXHUwMGU5IiwKICAgICJkZXNjcmlwdGlvbiI6ICJUeXBlIGRlIGRvc3NpZXIgcGVybWV0dGFudCBkJ2Vudm95ZXIgZGVzIG1haWwgc1x1MDBlOWN1cmlzXHUwMGU5cyBldCBkZSByXHUwMGU5Y3VwXHUwMGU5cmVyIGRlcyByXHUwMGU5cG9uc2VzIGRlcyBkZXN0aW5hdGFpcmVzIiwKICAgICJub21fb25nbGV0IjogIkRvc3NpZXIiLAogICAgImFmZmljaGVfb25lIjogdHJ1ZSwKICAgICJyZXN0cmljdGlvbl9wYWNrIjogIiIsCiAgICAiZm9ybXVsYWlyZUVsZW1lbnQiOiBbCiAgICAgIHsKICAgICAgICAiZWxlbWVudF9pZCI6ICJvYmpldCIsCiAgICAgICAgIm5hbWUiOiAiT2JqZXQiLAogICAgICAgICJ0eXBlIjogInRleHQiLAogICAgICAgICJjb21tZW50YWlyZSI6ICIiLAogICAgICAgICJyZXF1aXMiOiAib24iLAogICAgICAgICJjaGFtcHNfYWZmaWNoZXMiOiAiIiwKICAgICAgICAiY2hhbXBzX3JlY2hlcmNoZV9hdmFuY2VlIjogIiIsCiAgICAgICAgInRpdHJlIjogIm9uIiwKICAgICAgICAic2VsZWN0X3ZhbHVlIjogIiIsCiAgICAgICAgInByZWdfbWF0Y2giOiAiIiwKICAgICAgICAiZGVmYXVsdF92YWx1ZSI6ICIiLAogICAgICAgICJwcmVnX21hdGNoX2Vycm9yIjogIiIsCiAgICAgICAgImNvbnRlbnRfdHlwZSI6ICIiCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAiZWxlbWVudF9pZCI6ICJtZXNzYWdlIiwKICAgICAgICAibmFtZSI6ICJNZXNzYWdlIiwKICAgICAgICAidHlwZSI6ICJ0ZXh0YXJlYSIsCiAgICAgICAgImNvbW1lbnRhaXJlIjogIiIsCiAgICAgICAgInJlcXVpcyI6ICIiLAogICAgICAgICJjaGFtcHNfYWZmaWNoZXMiOiAiIiwKICAgICAgICAiY2hhbXBzX3JlY2hlcmNoZV9hdmFuY2VlIjogIiIsCiAgICAgICAgInRpdHJlIjogZmFsc2UsCiAgICAgICAgInNlbGVjdF92YWx1ZSI6ICIiLAogICAgICAgICJwcmVnX21hdGNoIjogIiIsCiAgICAgICAgImRlZmF1bHRfdmFsdWUiOiAiIiwKICAgICAgICAicHJlZ19tYXRjaF9lcnJvciI6ICIiLAogICAgICAgICJjb250ZW50X3R5cGUiOiAiIgogICAgICB9LAogICAgICB7CiAgICAgICAgImVsZW1lbnRfaWQiOiAiZG9jdW1lbnRfYXR0YWNoZSIsCiAgICAgICAgIm5hbWUiOiAiRG9jdW1lbnQocykiLAogICAgICAgICJ0eXBlIjogIm11bHRpX2ZpbGUiLAogICAgICAgICJjb21tZW50YWlyZSI6ICIiLAogICAgICAgICJyZXF1aXMiOiAiIiwKICAgICAgICAiY2hhbXBzX2FmZmljaGVzIjogIiIsCiAgICAgICAgImNoYW1wc19yZWNoZXJjaGVfYXZhbmNlZSI6ICIiLAogICAgICAgICJ0aXRyZSI6ICIiLAogICAgICAgICJzZWxlY3RfdmFsdWUiOiAiIiwKICAgICAgICAicHJlZ19tYXRjaCI6ICIiLAogICAgICAgICJkZWZhdWx0X3ZhbHVlIjogIiIsCiAgICAgICAgInByZWdfbWF0Y2hfZXJyb3IiOiAiIiwKICAgICAgICAiY29udGVudF90eXBlIjogIiIKICAgICAgfSwKICAgICAgewogICAgICAgICJlbGVtZW50X2lkIjogIm1ldGFkb25uZWVzIiwKICAgICAgICAibmFtZSI6ICJGaWNoaWVyIGNvbnRlbmFudCBsZXMgbVx1MDBlOXRhZG9ublx1MDBlOWVzIiwKICAgICAgICAidHlwZSI6ICJmaWxlIiwKICAgICAgICAiY29tbWVudGFpcmUiOiAiUHJcdTAwZTlmXHUwMGU5cmVudGllbGxlbWVudCBhdSBmb3JtYXQgSlNPTiwgWE1MIHBvc3NpYmxlIiwKICAgICAgICAicmVxdWlzIjogIiIsCiAgICAgICAgImNoYW1wc19hZmZpY2hlcyI6ICIiLAogICAgICAgICJjaGFtcHNfcmVjaGVyY2hlX2F2YW5jZWUiOiAiIiwKICAgICAgICAidGl0cmUiOiBmYWxzZSwKICAgICAgICAic2VsZWN0X3ZhbHVlIjogIiIsCiAgICAgICAgInByZWdfbWF0Y2giOiAiIiwKICAgICAgICAiZGVmYXVsdF92YWx1ZSI6ICIiLAogICAgICAgICJwcmVnX21hdGNoX2Vycm9yIjogIiIsCiAgICAgICAgImNvbnRlbnRfdHlwZSI6ICIiCiAgICAgIH0KICAgIF0sCiAgICAiZXRhcGUiOiBbCiAgICAgIHsKICAgICAgICAibnVtX2V0YXBlIjogMCwKICAgICAgICAidHlwZSI6ICJ0cmFuc2Zvcm1hdGlvbiIsCiAgICAgICAgImxhYmVsIjogIlRyYW5zZm9ybWF0aW9uIiwKICAgICAgICAiZGVmYXVsdENoZWNrZWQiOiBmYWxzZSwKICAgICAgICAicmVxdWlzIjogIm9uIiwKICAgICAgICAiYXV0b21hdGlxdWUiOiAib24iLAogICAgICAgICJzcGVjaWZpY190eXBlX2luZm8iOiBbXSwKICAgICAgICAibnVtX2V0YXBlX3NhbWVfdHlwZSI6IDAsCiAgICAgICAgImV0YXBlX3dpdGhfc2FtZV90eXBlX2V4aXN0cyI6IGZhbHNlCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAibnVtX2V0YXBlIjogMSwKICAgICAgICAidHlwZSI6ICJtYWlsc2VjIiwKICAgICAgICAibGFiZWwiOiAiIiwKICAgICAgICAiZGVmYXVsdENoZWNrZWQiOiB0cnVlLAogICAgICAgICJyZXF1aXMiOiAib24iLAogICAgICAgICJhdXRvbWF0aXF1ZSI6ICJvbiIsCiAgICAgICAgInNwZWNpZmljX3R5cGVfaW5mbyI6IFtdLAogICAgICAgICJudW1fZXRhcGVfc2FtZV90eXBlIjogMCwKICAgICAgICAiZXRhcGVfd2l0aF9zYW1lX3R5cGVfZXhpc3RzIjogZmFsc2UKICAgICAgfQogICAgXQogIH0KfQ==

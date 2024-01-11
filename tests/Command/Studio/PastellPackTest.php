@@ -13,8 +13,16 @@ use TypeDossierException;
 class PastellPackTest extends PastellTestCase
 {
     private array $moduleDefinition = [
-        'dossier-wgfc' => ['', 'gfc-dossier', 'Dossier GFC'],
-        'dossier-wgfc-destinataire' => ['', 'gfc-dossier-destinataire', 'Dossier GFC (destinataire)'],
+        'dossier-wgfc' => [
+            '',
+            'gfc-dossier',
+            'Dossier GFC'
+        ],
+        'dossier-wgfc-destinataire' => [
+            '',
+            'gfc-dossier-destinataire',
+            'Dossier GFC (destinataire)'
+        ],
         'dossier-autorisation-urba-draft' => [
             'pack_urbanisme',
             'dossier-autorisation-urbanisme',
@@ -80,17 +88,47 @@ class PastellPackTest extends PastellTestCase
             'ls-document-pdf',
             'Document PDF',
         ],
+        'ls-document-pdf-draft-destinataire' => [
+            '',
+            'ls-document-pdf-destinataire',
+            'Document PDF (destinataire)',
+        ],
         'ls-recup-parapheur-draft' =>
         [
             '',
             'ls-recup-parapheur',
             'Récupération parapheur',
         ],
-        'ls-document-pdf-draft-destinataire' => [
+        'draft-ls-mailsec' =>
+            [
+                '',
+                'ls-mailsec',
+                'Mail sécurisé',
+            ],
+        'draft-ls-mailsec-destinataire' =>
+            [
+                '',
+                'ls-mailsec-destinataire',
+                'Mail sécurisé (destinataire)',
+            ],
+        'draft-ls-mailsec-bidir' =>
+        [
             '',
-            'ls-document-pdf-destinataire',
-            'Document PDF (destinataire)',
+            'ls-mailsec-bidir',
+            'Mail sécurisé avec réponse',
         ],
+        'draft-ls-mailsec-bidir-destinataire' =>
+            [
+                '',
+                'ls-mailsec-bidir-destinataire',
+                'Mail sécurisé avec réponse (destinataire)',
+            ],
+        'draft-ls-mailsec-bidir-reponse' =>
+            [
+                '',
+                'ls-mailsec-bidir-reponse',
+                'Mail sécurisé avec réponse (réponse)',
+            ],
     ];
 
     public function jsonProvider(): array

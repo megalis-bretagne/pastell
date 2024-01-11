@@ -19,6 +19,11 @@
 
 - Correction des entités affichées dans la liste déroulantes de l'entête pour les utilisateurs ayant un rôle 'aucun droit' #1919
 
+## Dépréciations
+
+- Le flux generique "Mail sécurisé" `mailsec` est remplacé par le flux studio `ls-mailsec` #1978
+- Le flux generique "Mail sécurisé avec réponse" `mailsec-bidir` est remplacé par le flux studio `ls-mailsec-bidir` #1978
+
 # [4.0.10] - 2023-12-11
 
 ***Cette version nécessite une mise à jour du générateur SEDA en 1.0.2***

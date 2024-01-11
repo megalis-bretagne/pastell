@@ -1,0 +1,92 @@
+{
+  "id_type_dossier": "draft-ls-mailsec-destinataire",
+  "pastell-version": "%VERSION%",
+  "timestamp": 1704450012,
+  "raw_data": {
+    "id_type_dossier": "draft-ls-mailsec-destinataire",
+    "nom": "Mail s\u00e9curis\u00e9 (destinataire)",
+    "type": "Mail s\u00e9curis\u00e9",
+    "description": "Formulaire pour les destinataires de Mail s\u00e9curis\u00e9",
+    "nom_onglet": "Message",
+    "affiche_one": false,
+    "restriction_pack": "",
+    "formulaireElement": [
+      {
+        "element_id": "to",
+        "name": "Destinataire(s)",
+        "type": "text",
+        "commentaire": "",
+        "requis": "",
+        "champs_affiches": "",
+        "champs_recherche_avancee": "",
+        "titre": "",
+        "select_value": "",
+        "preg_match": "",
+        "default_value": "",
+        "preg_match_error": "",
+        "content_type": ""
+      },
+      {
+        "element_id": "cc",
+        "name": "Copie \u00e0",
+        "type": "text",
+        "commentaire": "",
+        "requis": "",
+        "champs_affiches": "",
+        "champs_recherche_avancee": "",
+        "titre": "",
+        "select_value": "",
+        "preg_match": "",
+        "default_value": "",
+        "preg_match_error": "",
+        "content_type": ""
+      },
+      {
+        "element_id": "objet",
+        "name": "Objet",
+        "type": "text",
+        "commentaire": "",
+        "requis": "",
+        "champs_affiches": "",
+        "champs_recherche_avancee": "",
+        "titre": "on",
+        "select_value": "",
+        "preg_match": "",
+        "default_value": "",
+        "preg_match_error": "",
+        "content_type": ""
+      },
+      {
+        "element_id": "message",
+        "name": "Message",
+        "type": "textarea",
+        "commentaire": "",
+        "requis": "",
+        "champs_affiches": "",
+        "champs_recherche_avancee": "",
+        "titre": "",
+        "select_value": "",
+        "preg_match": "",
+        "default_value": "",
+        "preg_match_error": "",
+        "content_type": ""
+      },
+      {
+        "element_id": "document_attache",
+        "name": "Document(s)",
+        "type": "multi_file",
+        "commentaire": "",
+        "requis": "",
+        "champs_affiches": "",
+        "champs_recherche_avancee": "",
+        "titre": "",
+        "select_value": "",
+        "preg_match": "",
+        "default_value": "",
+        "preg_match_error": "",
+        "content_type": ""
+      }
+    ],
+    "etape": []
+  }
+}
