@@ -2,21 +2,34 @@
 
 class TypeDossierHeliosEtape implements TypeDossierEtapeSetSpecificInformation
 {
-    public function setSpecificInformation(TypeDossierEtapeProperties $typeDossierEtape, array $result, StringMapper $stringMapper): array
-    {
+    public const FICHIER_PES = 'fichier_pes';
+    public const MAX_SIZE_PES = '128000000';
+    public const VISIONNEUSE_PES = 'PESViewerVisionneuse';
 
-        $send_tdt = $stringMapper->get('send-tdt');
-        $verif_tdt = $stringMapper->get('verif-tdt');
-        $helios_extraction = $stringMapper->get('helios-extraction');
+    public function setSpecificInformation(
+        TypeDossierEtapeProperties $typeDossierEtape,
+        array $result,
+        StringMapper $stringMapper
+    ): array {
+
+        $sendTdtAction = $stringMapper->get('send-tdt');
+        $verifTdtAction = $stringMapper->get('verif-tdt');
+        $heliosExtraction = $stringMapper->get('helios-extraction');
 
         if (!empty($typeDossierEtape->specific_type_info['fichier_pes'])) {
-            $result['action'][$send_tdt]['connecteur-type-mapping']['fichier_pes'] = $typeDossierEtape->specific_type_info['fichier_pes'];
-            $result['action'][$verif_tdt]['connecteur-type-mapping']['fichier_pes'] = $typeDossierEtape->specific_type_info['fichier_pes'];
-            $result['action'][$helios_extraction]['connecteur-type-mapping']['fichier_pes'] = $typeDossierEtape->specific_type_info['fichier_pes'];
+            $result[DocumentType::ACTION][$sendTdtAction][Action::CONNECTEUR_TYPE_MAPPING][self::FICHIER_PES]
+                = $typeDossierEtape->specific_type_info[self::FICHIER_PES];
+            $result[DocumentType::ACTION][$verifTdtAction][Action::CONNECTEUR_TYPE_MAPPING][self::FICHIER_PES]
+                = $typeDossierEtape->specific_type_info[self::FICHIER_PES];
+            $result[DocumentType::ACTION][$heliosExtraction][Action::CONNECTEUR_TYPE_MAPPING][self::FICHIER_PES]
+                = $typeDossierEtape->specific_type_info[self::FICHIER_PES];
 
-            reset($result['formulaire']);
-            $onglet1 = key($result['formulaire']);
-            $result['formulaire'][$onglet1][$typeDossierEtape->specific_type_info['fichier_pes']]['visionneuse'] = "PESViewerVisionneuse";
+            reset($result[DocumentType::FORMULAIRE]);
+            $onglet1 = key($result[DocumentType::FORMULAIRE]);
+            $result[DocumentType::FORMULAIRE][$onglet1][$typeDossierEtape->specific_type_info[self::FICHIER_PES]]
+            ['max_file_size'] = self::MAX_SIZE_PES;
+            $result[DocumentType::FORMULAIRE][$onglet1][$typeDossierEtape->specific_type_info[self::FICHIER_PES]]
+            ['visionneuse'] = self::VISIONNEUSE_PES;
         }
 
         if ($typeDossierEtape->specific_type_info['ajout_champs_affiche']) {
@@ -27,8 +40,6 @@ class TypeDossierHeliosEtape implements TypeDossierEtapeSetSpecificInformation
                 $result['champs-recherche-avancee'][] = $stringMapper->get($champs_id);
             }
         }
-
-
         return $result;
     }
 }

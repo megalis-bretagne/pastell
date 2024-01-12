@@ -19,6 +19,7 @@ formulaire:
             requis: true
             multiple: false
             commentaire: ''
+            max_file_size: '128000000'
             visionneuse: PESViewerVisionneuse
     Cheminement:
         envoi_tdt_helios:

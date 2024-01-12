@@ -530,3 +530,7 @@ action:
         name: 'Erreur irrécupérable lors du dépôt'
         rule:
             role_id_e: no-role
+threshold_size: '157286400'
+threshold_fields:
+    - document
+    - annexe

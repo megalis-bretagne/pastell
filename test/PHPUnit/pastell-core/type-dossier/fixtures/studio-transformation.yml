@@ -684,3 +684,6 @@ action:
             type_piece_fichier: type_piece_fichier
             acte_nature: acte_nature
             arrete: fichier
+threshold_size: '157286400'
+threshold_fields:
+    - fichier
