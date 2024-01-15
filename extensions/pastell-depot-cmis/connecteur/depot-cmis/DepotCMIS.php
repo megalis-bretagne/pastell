@@ -49,7 +49,7 @@ class DepotCMIS extends DepotConnecteur
         $this->no_proxy = $no_proxy;
         $this->client = new Client();
     }
-    
+
     /**
      * The version of Guzzle is not compatible with PHP 8.1
      * @return void
