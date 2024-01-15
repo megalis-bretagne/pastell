@@ -25,6 +25,7 @@ formulaire:
             multiple: false
             commentaire: 'Format XML'
             content-type: application/xml
+            max_file_size: '128000000'
             visionneuse: PESViewerVisionneuse
         metadonnees:
             name: 'Fichier contenant les métadonnées'
