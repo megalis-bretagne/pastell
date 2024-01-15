@@ -36,7 +36,7 @@ abstract class Connecteur
 
     public function hasDocDonneesFormulaire(): bool
     {
-        return ! empty($this->docDonneesFormulaire);
+        return !empty($this->docDonneesFormulaire);
     }
 
     /**
