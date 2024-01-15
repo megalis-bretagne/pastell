@@ -1,3 +1,9 @@
+# [4.0.12]
+
+## Évolutions
+
+- Possibilité de mettre un type de document spécifique ainsi que des métadonnées GED sur les dépots CMIS #1503 
+
 # [4.0.11] - 2024-01-15
 
 ## Corrections 
