@@ -83,6 +83,11 @@ class PastellPackTest extends PastellTestCase
             'ls-dossier-seance',
             'Dossier de séance (archivage)',
         ],
+        'draft-ls-helios' => [
+            '',
+            'ls-helios',
+            'Helios',
+        ],
         'ls-document-pdf-draft' => [
             '',
             'ls-document-pdf',

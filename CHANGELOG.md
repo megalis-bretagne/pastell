@@ -26,6 +26,7 @@
 - Le flux `mailsec` est remplacé par le flux studio `ls-mailsec` #1978
 - Le flux `mailsec-bidir` est remplacé par le flux studio `ls-mailsec-bidir` #1978
 - Le flux `commande-generique` est remplacé par le flux studio `ls-commande` #1968
+- Les flux `helios-generique` et `helios-automatique` sont remplacés par le flux studio `ls-helios` #1969
 
 ## Évolutions
 
@@ -55,6 +56,10 @@
 - Il y avait un caractère \r à la fin des valeurs des champs de type liste déroulante générés via le studio #1890
 - Définition de studio: 
 il n'était pas possible de sélectionner une valeur par défaut lorsque la liste déroulante était définie sans clés #1890
+
+## Évolutions
+
+- Prise en compte des valeurs par defaut pour les connecteurs #1938
 
 # [4.0.9] - 2023-11-13
 

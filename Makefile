@@ -95,6 +95,9 @@ module-pack-actes: docker-compose-up ## Run make-module pack_actes
 	$(MAKE_MODULE) ./pack-json/pack-actes/ls-actes-publication-draft.json ./module/ --id ls-actes-publication --name "Actes publication"
 	$(MAKE_MODULE) ./pack-json/pack-actes/ls-dossier-seance-draft.json ./module/ --id ls-dossier-seance --name "Dossier de séance (archivage)"
 
+module-pack-helios: docker-compose-up ## Run make-module pack_helios
+	$(MAKE_MODULE) ./pack-json/pack-helios/draft-ls-helios.json ./module/ --id ls-helios --name "Helios"
+
 module-pack-document: docker-compose-up ## Run make-module pack_document
 	$(MAKE_MODULE) ./pack-json/pack-document/ls-document-pdf-draft.json ./module/ --id ls-document-pdf --name "Document PDF"
 	$(MAKE_MODULE) ./pack-json/pack-document/ls-document-pdf-draft-destinataire.json ./module/ --id ls-document-pdf-destinataire --name "Document PDF (destinataire)"
@@ -109,7 +112,7 @@ module-pack-mailsec: docker-compose-up ## Run make-module pack_mailsec
 	$(MAKE_MODULE) ./pack-json/pack-mailsec/draft-ls-mailsec-bidir-destinataire.json ./module/ --id ls-mailsec-bidir-destinataire --name "Mail sécurisé avec réponse (destinataire)"
 	$(MAKE_MODULE) ./pack-json/pack-mailsec/draft-ls-mailsec-bidir-reponse.json ./module/ --id ls-mailsec-bidir-reponse --name "Mail sécurisé avec réponse (réponse)"
 
-all-module: module-pack-gfc module-pack-urbanisme module-pack-rh module-pack-actes module-pack-document module-pack-mailsec
+all-module: module-pack-gfc module-pack-urbanisme module-pack-rh module-pack-actes module-pack-helios module-pack-document module-pack-mailsec
 
 build-extensions: ## Build extensions
 	$(EXEC_COMPOSER) composer install --ignore-platform-reqs --working-dir=./extensions/pastell-depot-cmis/

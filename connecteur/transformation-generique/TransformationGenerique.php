@@ -107,14 +107,15 @@ class TransformationGenerique extends TransformationConnecteur
 
         foreach ($transformation_data as $element_id => $expression) {
             try {
-                $transformation_data[$element_id] = $this->simpleTwigRenderer->render(
+                $transformation_data[$element_id] = trim($this->simpleTwigRenderer->render(
                     $expression,
                     $donneesFormulaire,
                     $other_metadata
-                );
+                ));
             } catch (Exception $e) {
                 throw new UnrecoverableException(
-                    "Erreur lors de la transformation pour générer l'élement <b>$element_id</b> :<br/><br/> " . $e->getMessage()
+                    "Erreur lors de la transformation pour générer l'élement <b>$element_id</b> :
+                        <br/><br/> " . $e->getMessage()
                 );
             }
         }
