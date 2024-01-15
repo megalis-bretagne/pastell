@@ -77,8 +77,8 @@ Number: 0123-4567-8910
 
         $expression = "{{ $this->method('json', '$.toto') }}";
 
-        $this->expectException(Error::class);
-        $this->expectExceptionMessage('Object of class Flow\JSONPath\JSONPath could not be converted to string');
+        $this->expectException(UnrecoverableException::class);
+        $this->expectExceptionMessage("Erreur sur le template $expression");
         $this->twigRenderer()->render($expression, $form);
     }
 }
