@@ -26,6 +26,17 @@
 - Le flux generique "Mail sécurisé" `mailsec` est remplacé par le flux studio `ls-mailsec` #1978
 - Le flux generique "Mail sécurisé avec réponse" `mailsec-bidir` est remplacé par le flux studio `ls-mailsec-bidir` #1978
 
+## Évolutions
+
+- Prise en compte des valeurs par défaut pour les connecteurs #1938
+
+# [4.0.11] - 2024-01-15
+
+## Corrections 
+
+- Correction d'erreur à l'importation de configuration d'une entité comportant des connecteurs globaux #1961
+- Permettre la modification du niveau d'entropie des mots de passe #1985
+
 # [4.0.10] - 2023-12-11
 
 ***Cette version nécessite une mise à jour du générateur SEDA en 1.0.2***
@@ -42,10 +53,6 @@
 - Il y avait un caractère \r à la fin des valeurs des champs de type liste déroulante générés via le studio #1890
 - Définition de studio: 
 il n'était pas possible de sélectionner une valeur par défaut lorsque la liste déroulante était définie sans clés #1890
-
-## Évolutions
-
-- Prise en compte des valeurs par defaut pour les connecteurs #1938
 
 # [4.0.9] - 2023-11-13
 

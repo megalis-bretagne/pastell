@@ -61,6 +61,7 @@ services:
             PACK_TEST: ${PACK_TEST:-false}
             PACK_LIBERSIGN: ${PACK_LIBERSIGN:-false}
             PACK_RECUP_PARAPHEUR_CORBEILLE_CONNECTOR: ${PACK_RECUP_PARAPHEUR_CORBEILLE_CONNECTOR:-false}
+            PACK_RECUP_FIN_PARAPHEUR: ${PACK_RECUP_FIN_PARAPHEUR:-false}
             TIMEZONE: ${TIMEZONE:-Europe/Paris}
             NB_WORKERS: ${NB_WORKERS:-5}
             JOURNAL_MAX_AGE_IN_MONTHS: ${JOURNAL_MAX_AGE_IN_MONTHS:-2}
@@ -72,6 +73,7 @@ services:
             TOGGLE_CertificateAuthentication: ${TOGGLE_CertificateAuthentication:-false}
             OPENSSL_CIPHER_STRING_SECURITY_LEVEL: ${OPENSSL_CIPHER_STRING_SECURITY_LEVEL:-2}
             USE_UUID_FOR_DOCUMENT: ${USE_UUID_FOR_DOCUMENT:-false}
+            PASSWORD_MIN_ENTROPY: ${PASSWORD_MIN_ENTROPY:-80}
         ports:
             - "${WEB_HTTP_PORT:-8000}:80"
             - "${WEB_HTTPS_PORT:-8443}:443"

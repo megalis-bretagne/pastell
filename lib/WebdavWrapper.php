@@ -72,7 +72,7 @@ class WebdavWrapper
     }
 
     /**
-     * @throws ClientHttpException
+     * @param int<0,1> $depth
      */
     public function propfind(string $folder, array $properties = ['{DAV:}displayname'], int $depth = 0): array
     {

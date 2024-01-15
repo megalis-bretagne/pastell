@@ -9,9 +9,10 @@ class PremisObject
     #[SerializedName('@xsi:type')]
     public Type $type;
 
-    public string $originalName;
-
     public ObjectIdentifier $objectIdentifier;
 
-    public PreservationLevel $preservationLevel;
+    /** @var SignificantProperties[] $significantProperties */
+    public array $significantProperties;
+
+    public string $originalName;
 }

@@ -1,4 +1,5 @@
 .dockerignore
+auth.json
 Dockerfile
 /docker/docker-compose.override.yml
 /docker/docker-compose.yml

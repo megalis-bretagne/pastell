@@ -32,14 +32,16 @@ build:
   tags:
     - docker-build
   variables:
+    DOCKER_BUILDKIT: 1
     GITHUB_API_TOKEN: "${GITHUB_API_TOKEN}"
   script:
     - date=$(date)
     - sed -i "s/%CI_BUILD_ID%/${CI_PIPELINE_ID}/" ./manifest.yml
     - sed -i "s/%BUILD_DATE%/$date/" ./manifest.yml
     - sed -i "s/%VERSION%/${CI_COMMIT_REF_NAME}/" ./manifest.yml
+    - sed -i "s/%GITHUB_API_TOKEN%/${GITHUB_API_TOKEN}/" ./docker/github/auth.json
     - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
-    - docker build --build-arg GITHUB_API_TOKEN=$GITHUB_API_TOKEN --target pastell_dev --pull -t ${CONTAINER_IMAGE} .
+    - docker build --secret id=composer_auth,src=./docker/github/auth.json --target pastell_dev --pull -t ${CONTAINER_IMAGE} .
     - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
     - docker push ${CONTAINER_IMAGE}
 

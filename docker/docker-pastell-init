@@ -70,6 +70,10 @@ if (${PACK_RECUP_PARAPHEUR_CORBEILLE_CONNECTOR:-false}) {
   \$packs["pack_recup_parapheur_corbeille_connector"]=true;
 }
 
+if (${PACK_RECUP_FIN_PARAPHEUR:-false}) {
+  \$packs["pack_recup_fin_parapheur"]=true;
+}
+
 define("LIST_PACK", \$packs);
 
 define("NB_WORKERS", "${NB_WORKERS:-5}");
@@ -78,6 +82,7 @@ define("UNLOK_JOB_ERROR_AT_STARTUP", "${UNLOK_JOB_ERROR_AT_STARTUP:-false}");
 define("NB_JOB_PAR_VERROU", "${NB_JOB_PAR_VERROU:-1}");
 define("HTTP_PROXY_URL", "${HTTP_PROXY_URL:-}");
 define("NO_PROXY", "${NO_PROXY:-localhost,127.0.0.1,::1,seda-generator,pes-viewer}");
+define("PASSWORD_MIN_ENTROPY", "${PASSWORD_MIN_ENTROPY:-80}");
 
 define("USE_UUID_FOR_DOCUMENT", ${USE_UUID_FOR_DOCUMENT:-false});
 

@@ -95,7 +95,7 @@ class PastellPackTest extends PastellTestCase
         ],
         'ls-recup-parapheur-draft' =>
         [
-            '',
+            'pack_recup_fin_parapheur',
             'ls-recup-parapheur',
             'Récupération parapheur',
         ],
