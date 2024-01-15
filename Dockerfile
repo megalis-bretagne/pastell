@@ -1,10 +1,10 @@
-FROM node:14-slim as node_modules
+FROM node:14-slim AS node_modules
 WORKDIR /var/www/pastell/
 COPY package*.json ./
 RUN npm install
 
 # TODO il faudra passer en PHP 8.1 une fois que scoper suportera cette version
-FROM php:7.4-cli as extensions_builder
+FROM php:7.4-cli AS extensions_builder
 WORKDIR /app
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
@@ -26,9 +26,8 @@ RUN composer install --ignore-platform-reqs \
     && php-scoper add-prefix --force \
     && composer dump-autoload --working-dir=build
 
-FROM ubuntu:22.04 as pastell_base
+FROM ubuntu:22.04 AS pastell_base
 
-ARG GITHUB_API_TOKEN
 ARG UID=33
 ARG GID=33
 ARG USERNAME=www-data
@@ -59,10 +58,9 @@ COPY --chown=${USERNAME}:${GROUPNAME} --from=node_modules /var/www/pastell/node_
 
 # Composer stuff
 COPY ./composer.* /var/www/pastell/
-RUN /bin/bash /var/www/pastell/docker/github/create-auth-file.sh && \
+RUN --mount=type=secret,id=composer_auth,dst=/var/www/pastell/auth.json \
     /bin/bash -c 'mkdir -p /var/www/pastell/{web,web-mailsec}' && \
-    composer install --no-dev --no-autoloader && \
-    rm -rf /root/.composer/
+    composer install --no-dev --no-autoloader
 
 # Pastell sources
 COPY --chown=${USERNAME}:${GROUPNAME} ./ /var/www/pastell/
@@ -79,7 +77,7 @@ HEALTHCHECK CMD curl --fail -k https://localhost/ || exit 1
 ENTRYPOINT ["docker-pastell-entrypoint"]
 CMD ["/usr/bin/supervisord"]
 
-FROM pastell_base as pastell_dev
+FROM pastell_base AS pastell_dev
 
 ARG UID=33
 ARG GID=33
@@ -89,4 +87,4 @@ ARG GROUPNAME=www-data
 USER root
 RUN /bin/bash /var/www/pastell/docker/install-dev-requirements.sh
 USER "${USERNAME}"
-FROM pastell_base as pastell_prod
+FROM pastell_base AS pastell_prod

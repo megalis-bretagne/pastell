@@ -82,7 +82,7 @@ class ForceDeleteModuleCommand extends Command
         $associationPerEntity = [];
         foreach ($associations as $association) {
             if (isset($associationPerEntity[$association[self::ID_E]])) {
-                $associationPerEntity[$association[self::ID_E]] ++;
+                $associationPerEntity[$association[self::ID_E]]++;
             } else {
                 $associationPerEntity[$association[self::ID_E]] = 1;
             }

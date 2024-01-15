@@ -115,7 +115,15 @@ final class ImportConfigService
                 $this->lastErrors[] = "Le connecteur {$connecteurInfo['libelle']} est attaché à une entité inconnue : il sera attaché à l'entité $id_e_root.";
                 $id_e_mapping[$connecteurInfo['id_e']] = $id_e_root;
             }
-            $connecteurInfo['id_e'] = $id_e_mapping[$connecteurInfo['id_e']];
+            if ($connecteurInfo['id_e'] === 0) {
+                if ($id_e_root !== 0) {
+                    $this->lastErrors[] = "Le connecteur global {$connecteurInfo['libelle']} ne peut pas être importé sur une entité fille : il n'a pas été importé.";
+                    continue;
+                }
+                $connecteurInfo['id_e'] = 0;
+            } else {
+                $connecteurInfo['id_e'] = $id_e_mapping[$connecteurInfo['id_e']];
+            }
             $id_ce = $this->connecteurCreationService->createConnecteur(
                 $connecteurInfo['id_connecteur'],
                 $connecteurInfo['type'],

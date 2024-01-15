@@ -7,26 +7,12 @@
       <objectIdentifierValue>60124458-8687-11ed-b28f-0242c0a8b013</objectIdentifierValue>
     </objectIdentifier>
     <significantProperties>
-      <significantPropertiesType>type</significantPropertiesType>
-      <significantPropertiesExtension>
-        <significantPropertiesType>typeId</significantPropertiesType>
-        <significantPropertiesValue>0de8d65d-fc78-43ee-9292-0a6f23d3ba5b</significantPropertiesValue>
-      </significantPropertiesExtension>
-      <significantPropertiesExtension>
-        <significantPropertiesType>typeName</significantPropertiesType>
-        <significantPropertiesValue>Actes</significantPropertiesValue>
-      </significantPropertiesExtension>
+      <significantPropertiesType>i_Parapheur_reserved_type</significantPropertiesType>
+      <significantPropertiesValue>Actes</significantPropertiesValue>
     </significantProperties>
     <significantProperties>
-      <significantPropertiesType>subtype</significantPropertiesType>
-      <significantPropertiesExtension>
-        <significantPropertiesType>subtypeId</significantPropertiesType>
-        <significantPropertiesValue>bd18ddf7-4dd0-439d-8457-cb5cbd6a2d6c</significantPropertiesValue>
-      </significantPropertiesExtension>
-      <significantPropertiesExtension>
-        <significantPropertiesType>subtypeName</significantPropertiesType>
-        <significantPropertiesValue>Arretés</significantPropertiesValue>
-      </significantPropertiesExtension>
+      <significantPropertiesType>i_Parapheur_reserved_subtype</significantPropertiesType>
+      <significantPropertiesValue>Arretés</significantPropertiesValue>
     </significantProperties>
     <originalName>TEST 1</originalName>
   </object>
@@ -36,9 +22,10 @@
       <objectIdentifierType>documentId</objectIdentifierType>
       <objectIdentifierValue>868fe166-50c2-44ab-a5c7-cfcb2270ea4c</objectIdentifierValue>
     </objectIdentifier>
-    <preservationLevel>
-      <preservationLevelValue>mainDocument</preservationLevelValue>
-    </preservationLevel>
+    <significantProperties>
+      <significantPropertiesType>i_Parapheur_reserved_mainDocument</significantPropertiesType>
+      <significantPropertiesValue>true</significantPropertiesValue>
+    </significantProperties>
     <objectCharacteristics>
       <fixity>
         <messageDigestAlgorithm>SHA-256</messageDigestAlgorithm>

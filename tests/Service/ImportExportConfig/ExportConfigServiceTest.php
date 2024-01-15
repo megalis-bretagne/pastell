@@ -251,6 +251,69 @@ class ExportConfigServiceTest extends PastellTestCase
         self::assertEquals('Foo', $entiteSQL->getFille(1)[1]['denomination']);
     }
 
+    /**
+     * @throws \DonneesFormulaireException
+     * @throws \JsonException
+     */
+    public function testWhenImportingGlobalConnectorOnRoot(): void
+    {
+        /** @var \ConnecteurEntiteSQL $connecteurEntiteSQL */
+        $connecteurEntiteSQL = $this->getObjectInstancier()->getInstance(\ConnecteurEntiteSQL::class);
+        $numberOfConnectors = count($connecteurEntiteSQL->getAllLocal());
+        $importConfigService = $this->getObjectInstancier()->getInstance(ImportConfigService::class);
+        $importConfigService->import(
+            [
+                ExportConfigService::CONNECTOR_INFO => [
+                    [
+                        'id_e' => 0,
+                        'libelle' => 'Bar',
+                        'id_connecteur' => 'test',
+                        'type' => 'test',
+                        'id_ce' => 42,
+                        'data' => json_encode(['metadata' => ['champs1' => 'Foo']], JSON_THROW_ON_ERROR),
+                    ]
+                ]
+            ],
+            0
+        );
+        static::assertCount($numberOfConnectors, $connecteurEntiteSQL->getAllLocal());
+    }
+
+    /**
+     * @throws \DonneesFormulaireException
+     * @throws \JsonException
+     */
+    public function testWhenImportingGlobalConnectorOnChild(): void
+    {
+        /** @var \ConnecteurEntiteSQL $connecteurEntiteSQL */
+        $connecteurEntiteSQL = $this->getObjectInstancier()->getInstance(\ConnecteurEntiteSQL::class);
+        $numberOfConnectors = count($connecteurEntiteSQL->getAllLocal());
+        $importConfigService = $this->getObjectInstancier()->getInstance(ImportConfigService::class);
+        $importConfigService->import(
+            [
+                ExportConfigService::CONNECTOR_INFO => [
+                    [
+                        'id_e' => 0,
+                        'libelle' => 'Bar',
+                        'id_connecteur' => 'test',
+                        'type' => 'test',
+                        'id_ce' => 42,
+                        'data' => json_encode(['metadata' => ['champs1' => 'Foo']], JSON_THROW_ON_ERROR),
+                    ]
+                ]
+            ],
+            1
+        );
+        static::assertCount($numberOfConnectors, $connecteurEntiteSQL->getAllLocal());
+        static::assertSame(
+            [0 => "Le connecteur global Bar ne peut pas être importé sur une entité fille : il n'a pas été importé."],
+            $importConfigService->getLastErrors()
+        );
+    }
+
+    /**
+     * @throws \DonneesFormulaireException
+     */
     public function testWhenImportOnlyEntiteConnector(): void
     {
         $importConfigService = $this->getObjectInstancier()->getInstance(ImportConfigService::class);

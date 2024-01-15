@@ -58,10 +58,11 @@ final class SimpleTwigJsonPathTest extends PastellTestCase
             'test.json',
             $this->json_file
         );
+
         $expression = "{{ $this->method('json', '$.phoneNumbers') }}";
 
-        $this->expectException(Error::class);
-        $this->expectExceptionMessage('Object of class Flow\JSONPath\JSONPath could not be converted to string');
+        $this->expectException(UnrecoverableException::class);
+        $this->expectExceptionMessage("Erreur sur le template $expression");
         $this->twigRenderer()->render($expression, $form);
     }
 
