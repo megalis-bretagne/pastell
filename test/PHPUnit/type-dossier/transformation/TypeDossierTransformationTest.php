@@ -285,4 +285,33 @@ class TypeDossierTransformationTest extends PastellTestCase
         );
         $this->assertLastMessage('Transformation terminée');
     }
+    /**
+     * @throws TypeDossierException
+     * @throws DonneesFormulaireException
+     * @throws NotFoundException
+     * @throws Exception
+     */
+    public function testTransformationWithoutConnector(): void
+    {
+        $this->typeDossierLoader->createTypeDossierDefinitionFile(self::TRANSFORMATION);
+
+        $document = $this->createDocument(self::TRANSFORMATION);
+        $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($document['id_d']);
+        $donneesFormulaire->setTabData([
+            'titre' => 'Foo',
+            'envoi_transformation' => true,
+        ]);
+
+        $this->assertTrue(
+            $this->triggerActionOnDocument($document['id_d'], 'orientation')
+        );
+        $this->assertLastMessage("sélection automatique de l'action suivante");
+
+        $this->assertTrue(
+            $this->triggerActionOnDocument($document['id_d'], 'transformation')
+        );
+        $this->assertLastMessage(
+            "Il n'y a pas de connecteur de transformation associé. Poursuite du cheminement"
+        );
+    }
 }
