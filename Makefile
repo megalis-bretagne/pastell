@@ -98,6 +98,8 @@ module-pack-actes: docker-compose-up ## Run make-module pack_actes
 module-pack-document: docker-compose-up ## Run make-module pack_document
 	$(MAKE_MODULE) ./pack-json/pack-document/ls-document-pdf-draft.json ./module/ --id ls-document-pdf --name "Document PDF"
 	$(MAKE_MODULE) ./pack-json/pack-document/ls-document-pdf-draft-destinataire.json ./module/ --id ls-document-pdf-destinataire --name "Document PDF (destinataire)"
+	$(MAKE_MODULE) ./pack-json/pack-document/draft-ls-commande.json ./module/ --id ls-commande --name "Commande"
+	$(MAKE_MODULE) ./pack-json/pack-document/draft-ls-commande-destinataire.json ./module/ --id ls-commande-destinataire --name "Commande (destinataire)"
 	$(MAKE_MODULE) ./pack-json/pack-document/ls-recup-parapheur-draft.json ./module/ --id ls-recup-parapheur --name "Récupération parapheur" --restriction_pack 'pack_recup_fin_parapheur'
 
 module-pack-mailsec: docker-compose-up ## Run make-module pack_mailsec

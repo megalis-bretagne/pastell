@@ -93,6 +93,16 @@ class PastellPackTest extends PastellTestCase
             'ls-document-pdf-destinataire',
             'Document PDF (destinataire)',
         ],
+        'draft-ls-commande' => [
+            '',
+            'ls-commande',
+            'Commande',
+        ],
+        'draft-ls-commande-destinataire' => [
+            '',
+            'ls-commande-destinataire',
+            'Commande (destinataire)',
+        ],
         'ls-recup-parapheur-draft' =>
         [
             'pack_recup_fin_parapheur',
