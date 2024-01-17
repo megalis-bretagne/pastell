@@ -18,7 +18,9 @@ class TransformationTransform extends ConnecteurTypeActionExecutor
     public function go(): bool
     {
         $donneesFormulaire = $this->getDonneesFormulaire();
+
         try {
+            /** @var TransformationConnecteur $transformationConnecteur */
             $transformationConnecteur = $this->getConnecteur("transformation");
         } catch (Exception $e) {
             $message = "Il n'y a pas de connecteur de transformation associé. Poursuite du cheminement";
