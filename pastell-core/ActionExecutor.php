@@ -223,15 +223,6 @@ abstract class ActionExecutor
         return $this->getDocumentType()->getAction()->getActionName($this->action);
     }
 
-    public function hasConnecteur(string $typeConnecteur, int $numSameConnecteur = 0): bool
-    {
-        $numSameConnecteur = $this->getDocumentType()
-            ->getAction()
-            ->getProperties($this->action, 'num-same-connecteur') ?: $numSameConnecteur;
-
-        return $this->getConnecteurFactory()
-            ->getConnecteurId($this->id_e, $this->type, $typeConnecteur, $numSameConnecteur);
-    }
 
     /**
      * @param $type_connecteur
@@ -251,6 +242,7 @@ abstract class ActionExecutor
         }
         return $id_ce;
     }
+
 
     /**
      * @param $type_connecteur
