@@ -2,6 +2,7 @@
 
 class TypeDossierHeliosEtape implements TypeDossierEtapeSetSpecificInformation
 {
+    public const OBJET_PES = 'objet_pes';
     public const FICHIER_PES = 'fichier_pes';
     public const MAX_SIZE_PES = '128000000';
     public const VISIONNEUSE_PES = 'PESViewerVisionneuse';
@@ -15,13 +16,20 @@ class TypeDossierHeliosEtape implements TypeDossierEtapeSetSpecificInformation
         $sendTdtAction = $stringMapper->get('send-tdt');
         $verifTdtAction = $stringMapper->get('verif-tdt');
         $heliosExtraction = $stringMapper->get('helios-extraction');
+        $fichierPESChange = $stringMapper->get('fichier-pes-change');
 
-        if (!empty($typeDossierEtape->specific_type_info['fichier_pes'])) {
+        if (!empty($typeDossierEtape->specific_type_info[self::OBJET_PES])) {
+            $result[DocumentType::ACTION][$fichierPESChange][Action::CONNECTEUR_TYPE_MAPPING][self::OBJET_PES]
+                = $typeDossierEtape->specific_type_info[self::OBJET_PES];
+        }
+        if (!empty($typeDossierEtape->specific_type_info[self::FICHIER_PES])) {
             $result[DocumentType::ACTION][$sendTdtAction][Action::CONNECTEUR_TYPE_MAPPING][self::FICHIER_PES]
                 = $typeDossierEtape->specific_type_info[self::FICHIER_PES];
             $result[DocumentType::ACTION][$verifTdtAction][Action::CONNECTEUR_TYPE_MAPPING][self::FICHIER_PES]
                 = $typeDossierEtape->specific_type_info[self::FICHIER_PES];
             $result[DocumentType::ACTION][$heliosExtraction][Action::CONNECTEUR_TYPE_MAPPING][self::FICHIER_PES]
+                = $typeDossierEtape->specific_type_info[self::FICHIER_PES];
+            $result[DocumentType::ACTION][$fichierPESChange][Action::CONNECTEUR_TYPE_MAPPING][self::FICHIER_PES]
                 = $typeDossierEtape->specific_type_info[self::FICHIER_PES];
 
             reset($result[DocumentType::FORMULAIRE]);
@@ -30,6 +38,8 @@ class TypeDossierHeliosEtape implements TypeDossierEtapeSetSpecificInformation
             ['max_file_size'] = self::MAX_SIZE_PES;
             $result[DocumentType::FORMULAIRE][$onglet1][$typeDossierEtape->specific_type_info[self::FICHIER_PES]]
             ['visionneuse'] = self::VISIONNEUSE_PES;
+            $result[DocumentType::FORMULAIRE][$onglet1][$typeDossierEtape->specific_type_info[self::FICHIER_PES]]
+            ['onchange'] = $fichierPESChange;
         }
 
         if ($typeDossierEtape->specific_type_info['ajout_champs_affiche']) {

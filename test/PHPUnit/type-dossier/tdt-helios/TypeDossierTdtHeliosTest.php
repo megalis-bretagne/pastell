@@ -37,13 +37,14 @@ class TypeDossierTdtHeliosTest extends PastellTestCase
 
         $info = $this->createDocument(self::TDT_HELIOS_ONLY);
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($info['id_d']);
-        $donneesFormulaire->setTabData(['objet' => 'Foo']);
         $donneesFormulaire->addFileFromCopy(
             'pes_aller',
             'fichier.xml',
             __DIR__ . "/../../module/helios-generique/fixtures/HELIOS_SIMU_ALR2_1496987735_826268894.xml"
         );
-
+        $this->assertTrue(
+            $this->triggerActionOnDocument($info['id_d'], "fichier-pes-change")
+        );
         $this->assertTrue(
             $this->triggerActionOnDocument($info['id_d'], "orientation")
         );
@@ -57,7 +58,7 @@ class TypeDossierTdtHeliosTest extends PastellTestCase
         $this->assertLastMessage("Les données ont été extraites du fichier PES ALLER");
 
         $this->assertEquals([
-            'objet' => 'Foo',
+            'objet' => 'HELIOS_SIMU_ALR2_1496987735_826268894.xml',
             'pes_aller' =>
                  [
                     0 => 'fichier.xml',
