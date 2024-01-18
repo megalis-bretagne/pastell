@@ -1,8 +1,12 @@
-# [4.0.12]
+# [4.0.12] - 2024-02-12
 
 ## Évolutions
 
 - Possibilité de mettre un type de document spécifique ainsi que des métadonnées GED sur les dépots CMIS #1503 
+
+## Corrections
+
+- Certains rapports d'acquittement Helios ne pouvaient pas être ouverts #1993
 
 # [4.0.11] - 2024-01-15
 
