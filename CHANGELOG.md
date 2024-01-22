@@ -58,10 +58,6 @@
 - Définition de studio: 
 il n'était pas possible de sélectionner une valeur par défaut lorsque la liste déroulante était définie sans clés #1890
 
-## Évolutions
-
-- Prise en compte des valeurs par defaut pour les connecteurs #1938
-
 # [4.0.9] - 2023-11-13
 
 ## Évolutions
