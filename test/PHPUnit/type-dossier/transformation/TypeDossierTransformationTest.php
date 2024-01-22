@@ -287,7 +287,6 @@ class TypeDossierTransformationTest extends PastellTestCase
     }
     /**
      * @throws TypeDossierException
-     * @throws DonneesFormulaireException
      * @throws NotFoundException
      * @throws Exception
      */

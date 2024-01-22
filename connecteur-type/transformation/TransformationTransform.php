@@ -20,7 +20,7 @@ class TransformationTransform extends ConnecteurTypeActionExecutor
         try {
             /** @var TransformationConnecteur $transformationConnecteur */
             $transformationConnecteur = $this->getConnecteur("transformation");
-        } catch (Exception $e) {
+        } catch (Exception) {
             $message = "Il n'y a pas de connecteur de transformation associé. Poursuite du cheminement";
             $this->addActionOK($message);
             $this->notify($this->action, $this->type, $message);
