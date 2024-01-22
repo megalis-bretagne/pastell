@@ -17,13 +17,21 @@ class TransformationTransform extends ConnecteurTypeActionExecutor
      */
     public function go(): bool
     {
-        $donneesFormulaire = $this->getDonneesFormulaire();
-        /** @var TransformationConnecteur $transformationConnecteur */
-        $transformationConnecteur = $this->getConnecteur("transformation");
+        try {
+            /** @var TransformationConnecteur $transformationConnecteur */
+            $transformationConnecteur = $this->getConnecteur("transformation");
+        } catch (Exception) {
+            $message = "Il n'y a pas de connecteur de transformation associé. Poursuite du cheminement";
+            $this->addActionOK($message);
+            $this->notify($this->action, $this->type, $message);
+            $this->setLastMessage($message);
+            return true;
+        }
 
         $transformation_file_element = $this->getMappingValue('transformation_file');
         $has_transformation_element = $this->getMappingValue('has_transformation');
 
+        $donneesFormulaire = $this->getDonneesFormulaire();
         $modified_fields = $transformationConnecteur->transform($donneesFormulaire);
 
         try {

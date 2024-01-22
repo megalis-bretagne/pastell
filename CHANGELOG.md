@@ -30,6 +30,7 @@
 ## Évolutions
 
 - Prise en compte des valeurs par défaut pour les connecteurs #1938
+- Le dossier poursuit son cheminement même s'il n'y a pas de connecteur associé pour une étape de transformation #1981
 
 # [4.0.11] - 2024-01-15
 
