@@ -114,7 +114,8 @@ class TransformationGenerique extends TransformationConnecteur
                 );
             } catch (Exception $e) {
                 throw new UnrecoverableException(
-                    "Erreur lors de la transformation pour générer l'élement <b>$element_id</b> :<br/><br/> " . $e->getMessage()
+                    "Erreur lors de la transformation pour générer l'élement <b>$element_id</b> :
+                        <br/><br/> " . $e->getMessage()
                 );
             }
         }

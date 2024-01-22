@@ -21,6 +21,7 @@ formulaire:
             commentaire: ''
             max_file_size: '128000000'
             visionneuse: PESViewerVisionneuse
+            onchange: fichier-pes-change
     Cheminement:
         envoi_tdt_helios:
             name: 'Envoi à la trésorerie (via un Tdt)'
@@ -251,3 +252,13 @@ action:
         name: 'Erreur sur le TdT'
         rule:
             role_id_e: no-role
+    fichier-pes-change:
+        no-workflow: true
+        rule:
+            role_id_e: no-role
+        action-class: StandardAction
+        connecteur-type: TdT
+        connecteur-type-action: TdTFichierPESChange
+        connecteur-type-mapping:
+            objet_pes: objet
+            fichier_pes: pes_aller
