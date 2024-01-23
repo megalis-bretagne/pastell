@@ -182,11 +182,11 @@ use Pastell\Utilities\Certificate;
     <?php if ($utilisateur_edition && $role_authorized) : ?>
         <h3>Ajouter un rôle</h3>
 
-        <form action='Utilisateur/ajoutRole' method='post' class='form-inline'>
+        <form action='Utilisateur/ajoutRole' method='post' class='d-flex flex-row align-items-center'>
             <?php $this->displayCSRFInput(); ?>
             <input type='hidden' name='id_u' value='<?php echo $id_u ?>'/>
 
-            <select name='role' class='select2_role form-control col-md-1'>
+            <select name='role' class='select2_role p-0'>
                 <option value=''>...</option>
                 <?php foreach ($role_authorized as $role_info) : ?>
                     <option value='<?php hecho($role_info['role']); ?>'>

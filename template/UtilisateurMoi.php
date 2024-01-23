@@ -161,20 +161,22 @@ use Pastell\Utilities\Certificate;
                         echo $infoNotification['id_e']; ?>&type=<?php
                         echo $infoNotification['type']; ?>'
                     >
-                            <i class="fa fa-pencil"></i>&nbsp;Modifier
-                        </a>
+                        <i class="fa fa-pencil"></i>&nbsp;Modifier
+                    </a>
 
-                        <a class='btn btn-danger'
-                           href='Utilisateur/notificationSuppression?id_n=<?php echo $infoNotification['id_n']; ?>'
-                        >
-                            <i class="fa fa-trash"></i>&nbsp;Supprimer
-                        </a>
+                    <a class='btn btn-danger'
+                       href='Utilisateur/notificationSuppression?id_n=<?php echo $infoNotification['id_n']; ?>'
+                    >
+                        <i class="fa fa-trash"></i>&nbsp;Supprimer
+                    </a>
                 </td>
             </tr>
         <?php endforeach; ?>
     </table>
-        <h3>Ajouter une notification</h3>
-        <form action='Utilisateur/notificationAjout' method='post' class='form-inline'>
+    <h3>Ajouter une notification</h3>
+    <div class="row">
+
+        <form action='Utilisateur/notificationAjout' method='post' class='input-group align-items-center'>
             <?php $this->displayCSRFInput(); ?>
 
             <select name='id_e' class='select2_entite'>
@@ -190,13 +192,14 @@ use Pastell\Utilities\Certificate;
             </select>
 
             <?php $this->getDocumentTypeHtml()->displaySelectWithCollectivite($all_module); ?>
-            <select name='daily_digest' class="form-control col-md-2 mr-2">
+            <select name='daily_digest' class="form-control col-md-2 me-2">
                 <option value=''>Envoi à chaque événement</option>
                 <option value='1'>Résumé journalier</option>
             </select>
 
             <button type='submit' class='btn btn-primary'><i class="fa fa-plus-circle"></i>&nbsp;Ajouter</button>
         </form>
+    </div>
 </div>
 
 
@@ -224,18 +227,18 @@ use Pastell\Utilities\Certificate;
                 </td>
                 <td>
                     <a
-                            class='btn btn-warning'
-                            href='Utilisateur/renewToken?id=<?php echo $token['id']; ?>'
-                            onclick="return confirm(
+                        class='btn btn-warning'
+                        href='Utilisateur/renewToken?id=<?php echo $token['id']; ?>'
+                        onclick="return confirm(
                                 'Êtes-vous certain de vouloir renouveler ce jeton (l\'ancien token sera perdu) ?'
                                 )"
                     >
                         <i class="fa fa-refresh"></i>&nbsp;Renouveler
                     </a>
                     <a
-                            class='btn btn-danger'
-                            href='Utilisateur/deleteToken?id=<?php echo $token['id']; ?>'
-                            onclick="return confirm('Êtes-vous certain de vouloir supprimer définitivement ce jeton ?')"
+                        class='btn btn-danger'
+                        href='Utilisateur/deleteToken?id=<?php echo $token['id']; ?>'
+                        onclick="return confirm('Êtes-vous certain de vouloir supprimer définitivement ce jeton ?')"
                     >
                         <i class="fa fa-trash"></i>&nbsp;Supprimer
                     </a>
