@@ -18,8 +18,8 @@
 
 ## Évolutions
 
-- Ajout du suppl_recup_fin_parapheur (connecteur recup-fin-parapheur et type de dossier ls-recup-parapheur)
-- Ajout du suppl_recup_parapheur_corbeille_connector (connecteur recup-parapheur-corbeille)
+- Ajout du suppl_recup_fin_parapheur : Connecteur recup-fin-parapheur et type de dossier ls-recup-parapheur (iparapheur >=v5.0.21)
+- Ajout du suppl_recup_parapheur_corbeille_connector : Connecteur recup-parapheur-corbeille (iparapheur >=v5.0.21)
 
 # [4.0.10] - 2023-12-11
 
