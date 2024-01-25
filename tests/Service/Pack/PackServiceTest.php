@@ -9,29 +9,29 @@ class PackServiceTest extends PastellTestCase
 {
     protected function tearDown(): void
     {
-        $this->setListPack(["pack_chorus_pro" => true, "pack_marche" => true, "pack_test" => true]);
+        $this->setListPack(["pack_chorus_pro" => true, "pack_marche" => true, "suppl_test" => true]);
     }
 
     public function testNoRestrictionPack()
     {
         $restriction_pack = [];
-        $this->setListPack(["pack_test" => false]);
+        $this->setListPack(["suppl_test" => false]);
         $packService = $this->getObjectInstancier()->getInstance(PackService::class);
         $this->assertTrue($packService->hasOneOrMorePackEnabled($restriction_pack));
     }
 
     public function testHasRestrictionPackWithDisabledPack()
     {
-        $restriction_pack = ['pack_chorus_pro', 'pack_marche', 'pack_test'];
-        $this->setListPack(["pack_chorus_pro" => false, "pack_marche" => false, "pack_test" => false]);
+        $restriction_pack = ['pack_chorus_pro', 'pack_marche', 'suppl_test'];
+        $this->setListPack(["pack_chorus_pro" => false, "pack_marche" => false, "suppl_test" => false]);
         $packService = $this->getObjectInstancier()->getInstance(PackService::class);
         $this->assertFalse($packService->hasOneOrMorePackEnabled($restriction_pack));
     }
 
     public function testHasRestrictionPackWithEnabledPack()
     {
-        $restriction_pack = ['pack_chorus_pro', 'pack_marche', 'pack_test'];
-        $this->setListPack(["pack_chorus_pro" => false, "pack_marche" => false, "pack_test" => true]);
+        $restriction_pack = ['pack_chorus_pro', 'pack_marche', 'suppl_test'];
+        $this->setListPack(["pack_chorus_pro" => false, "pack_marche" => false, "suppl_test" => true]);
         $packService = $this->getObjectInstancier()->getInstance(PackService::class);
         $this->assertTrue($packService->hasOneOrMorePackEnabled($restriction_pack));
     }
