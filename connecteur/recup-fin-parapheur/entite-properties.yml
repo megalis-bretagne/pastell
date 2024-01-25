@@ -14,34 +14,34 @@ formulaire:
         password:
             name: Mot de passe
             type: password
-        pastell_module_id:
-            name: Identifiant du type de dossier Pastell
-            commentaire: Le dossier doit être un dossier studio. Par défaut, le type de dossier ls-recup-parapheur est selectionné
-            read-only: true
-            default: ls-recup-parapheur
-        pastell_module_name:
-            name: Nom du type de dossier Pastell
-            commentaire: Le dossier doit être un dossier studio. Par défaut, le type de dossier ls-recup-parapheur est selectionné
-            type: externalData
-            choice-action: pastell_module_name
-            link_name: 'Sélectionner le type de dossier'
-            default: Récupération parapheur
-        tenant_id:
-            name: Identifiant de l'entité iparapheur
-            read-only: true
         tenant_name:
             name: Nom de l'entité iparapheur
             type: externalData
             choice-action: tenant_name
             link_name: "Sélectionner l'entité"
-        desk_id:
-            name: Identifiant du bureau iparapheur
+        tenant_id:
+            name: Identifiant de l'entité iparapheur
             read-only: true
         desk_name:
             name: Nom du bureau iparapheur
             type: externalData
             choice-action: desk_name
             link_name: "Sélectionner le bureau"
+        desk_id:
+            name: Identifiant du bureau iparapheur
+            read-only: true
+        pastell_module_name:
+            name: Nom du type de dossier Pastell
+            commentaire: Le dossier doit être un dossier studio. Par défaut, le type de dossier ls-recup-parapheur est sélectionné
+            type: externalData
+            choice-action: pastell_module_name
+            link_name: 'Sélectionner le type de dossier'
+            default: Récupération parapheur
+        pastell_module_id:
+            name: Identifiant du type de dossier Pastell
+            commentaire: Le dossier doit être un dossier studio. Par défaut, le type de dossier ls-recup-parapheur est sélectionné
+            read-only: true
+            default: ls-recup-parapheur
         pastell_dictionnary:
             name: Correspondance des identifiants Pastell
             type: textarea
