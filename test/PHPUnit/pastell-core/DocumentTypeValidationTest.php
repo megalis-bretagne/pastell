@@ -90,7 +90,7 @@ class DocumentTypeValidationTest extends PHPUnit\Framework\TestCase
             $this->documentTypeValidation->validate(__DIR__ . "/fixtures/definition-with-wrong_restriction-pack.yml")
         );
         $this->assertEquals(
-            "restriction_pack:<b>pack_wrong_pack</b> n'est pas défini dans la liste des suppléments",
+            "restriction_pack :<b>pack_wrong_pack</b> n'est pas défini dans la liste des suppléments",
             $this->documentTypeValidation->getLastError()[0]
         );
     }
