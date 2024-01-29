@@ -16,6 +16,11 @@
 - Correction d'erreur à l'importation de configuration d'une entité comportant des connecteurs globaux #1961
 - Permettre la modification du niveau d'entropie des mots de passe #1985
 
+## Évolutions
+
+- Ajout du suppl_recup_fin_parapheur : Connecteur recup-fin-parapheur et type de dossier ls-recup-parapheur (iparapheur >=v5.0.21)
+- Ajout du suppl_recup_parapheur_corbeille_connector : Connecteur recup-parapheur-corbeille (iparapheur >=v5.0.21)
+
 # [4.0.10] - 2023-12-11
 
 ***Cette version nécessite une mise à jour du générateur SEDA en 1.0.2***
