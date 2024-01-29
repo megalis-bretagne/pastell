@@ -7,6 +7,7 @@
 ## Corrections
 
 - Certains rapports d'acquittement Helios ne pouvaient pas être ouverts #1993
+- Notion de Supplément `suppl_` pour les "non pack" #1998
 
 # [4.0.11] - 2024-01-15
 

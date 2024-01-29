@@ -60,7 +60,7 @@ if (${PACK_RH:-false}) {
   \$packs["pack_rh"]=true;
 }
 if (${PACK_TEST:-false}) {
-  \$packs["pack_test"]=true;
+  \$packs["suppl_test"]=true;
 }
 if (${PACK_LIBERSIGN:-false}) {
   \$packs["pack_libersign"]=true;

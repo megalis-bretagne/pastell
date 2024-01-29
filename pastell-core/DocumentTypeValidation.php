@@ -308,7 +308,7 @@ class DocumentTypeValidation
         $result = true;
         foreach ($restriction_pack_list as $restriction_pack) {
             if (!array_key_exists($restriction_pack, $list_pack)) {
-                $this->last_error[] = "restriction_pack:<b>$restriction_pack</b> n'est pas défini dans la liste des packs";
+                $this->last_error[] = "restriction_pack :<b>$restriction_pack</b> n'est pas défini dans la liste des suppléments";
                 $result = false;
             }
         }

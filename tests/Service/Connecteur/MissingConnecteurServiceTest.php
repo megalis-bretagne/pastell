@@ -12,7 +12,7 @@ class MissingConnecteurServiceTest extends PastellTestCase
 {
     protected function tearDown(): void
     {
-        $this->setListPack(["pack_test" => true]);
+        $this->setListPack(["suppl_test" => true]);
     }
 
     private function getMissingConnecteurService()
@@ -53,7 +53,7 @@ class MissingConnecteurServiceTest extends PastellTestCase
      */
     public function testExportAllWithRestricted()
     {
-        $this->setListPack(["pack_test" => false]);
+        $this->setListPack(["suppl_test" => false]);
 
         $this->getObjectInstancier()->setInstance("workspacePath", "/tmp/");
 
@@ -72,6 +72,6 @@ class MissingConnecteurServiceTest extends PastellTestCase
         $this->assertContains("connecteur_13.json", $tmp_folder_content);
 
         $tmpFolder->delete($tmp_folder);
-        $this->setListPack(["pack_test" => true]);
+        $this->setListPack(["suppl_test" => true]);
     }
 }
