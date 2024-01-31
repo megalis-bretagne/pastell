@@ -144,6 +144,7 @@ action:
                 - termine
                 - fatal-error
                 - rejet-iparapheur
+                - send-signature-error
                 - erreur-verif-iparapheur
         action-class: Supprimer
         warning: 'Êtes-vous sûr ?'
@@ -209,6 +210,7 @@ action:
     send-signature-error:
         name: "Erreur lors de l'envoi du dossier à la signature"
         editable-content:
+            - iparapheur_sous_type
             - fast_parapheur_circuit
             - fast_parapheur_circuit_configuration
             - fast_parapheur_email_destinataire

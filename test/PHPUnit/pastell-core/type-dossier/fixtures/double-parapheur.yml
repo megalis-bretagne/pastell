@@ -252,8 +252,10 @@ action:
                 - termine
                 - fatal-error
                 - rejet-iparapheur_1
+                - send-signature-error_1
                 - erreur-verif-iparapheur_1
                 - rejet-iparapheur_2
+                - send-signature-error_2
                 - erreur-verif-iparapheur_2
         action-class: Supprimer
         warning: 'Êtes-vous sûr ?'
@@ -326,6 +328,10 @@ action:
     send-signature-error_1:
         name: "Erreur lors de l'envoi du dossier à la signature #1"
         editable-content:
+            - iparapheur_sous_type_1
+            - json_metadata_1
+            - has_date_limite_1
+            - date_limite_1
             - fast_parapheur_circuit_1
             - fast_parapheur_circuit_configuration_1
             - fast_parapheur_email_destinataire_1
@@ -442,6 +448,10 @@ action:
     send-signature-error_2:
         name: "Erreur lors de l'envoi du dossier à la signature #2"
         editable-content:
+            - iparapheur_sous_type_2
+            - json_metadata_2
+            - has_date_limite_2
+            - date_limite_2
             - fast_parapheur_circuit_2
             - fast_parapheur_circuit_configuration_2
             - fast_parapheur_email_destinataire_2

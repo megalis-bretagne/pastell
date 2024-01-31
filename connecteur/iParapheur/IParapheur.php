@@ -396,6 +396,7 @@ class IParapheur extends SignatureConnecteur
     /**
      * @param FileToSign $fileToSign
      * @return bool|string
+     * @throws SignatureException
      * @throws Exception
      */
     public function sendDossier(FileToSign $fileToSign)
@@ -501,10 +502,14 @@ class IParapheur extends SignatureConnecteur
         );
 
         $messageRetour = $result->MessageRetour;
-        $message = "[{$messageRetour->severite}] {$messageRetour->message}";
+        $message = sprintf(
+            "[%s] %s",
+            $messageRetour->severite,
+            $messageRetour->message
+        );
+
         if ($messageRetour->codeRetour == 'KO') {
-            $this->lastError = $message;
-            return false;
+            throw new SignatureException($message);
         } elseif ($messageRetour->codeRetour == 'OK') {
             return $fileToSign->dossierId;
         } else {
