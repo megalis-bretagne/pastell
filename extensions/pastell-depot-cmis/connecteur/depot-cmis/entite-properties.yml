@@ -26,7 +26,7 @@ formulaire:
 
         depot_cmis_object_type_id:
             name: Type des objets CMIS
-            commentaire: Appliquer sur tous les fichiers à déposer, il s'agit du type défini par cmis:objectTypeId. Par défaut, `cmis:document`. (Ex pour Alfresco, `D:guichetrh:document`).
+            commentaire: "Appliquer sur tous les fichiers à déposer, il s'agit du type défini par cmis:objectTypeId. Par défaut, `cmis:document`. Sur Alfresco, il faut ajouter un D: avant le type (Ex, `D:guichetrh:document`)".
 
         depot_cmis_properties:
             name: Propriétés à ajouter aux fichiers
