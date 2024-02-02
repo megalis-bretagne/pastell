@@ -8,7 +8,7 @@
 
 - Certains rapports d'acquittement Helios ne pouvaient pas être ouverts #1993
 - Passage en état `send-signature-error` s'il y a une erreur lors de l'envoi d'un dossier au iparapheur #2000
-- Studio : Les editable-content n'était pas corrects dans le cas de plusieurs étapes signature #2000
+- Studio : Les editable-content n'étaient pas corrects dans le cas de plusieurs étapes signature #2000
 - Notion de Supplément `suppl_` pour les "non pack" #1998
 
 # [4.0.11] - 2024-01-15

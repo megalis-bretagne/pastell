@@ -280,7 +280,7 @@ class IParapheurUnitTest extends PastellTestCase
      * @param array $expectedDataArray
      * @throws Exception
      */
-    public function testSendDossierWithWrongType($fileToSign, $expectedDataArray)
+    public function testSendDossierWithWrongType(FileToSign $fileToSign, array $expectedDataArray): void
     {
         $soapClient = $this->createMock(SoapClient::class);
         $soapClient->expects($this->any())
