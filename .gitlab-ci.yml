@@ -8,7 +8,11 @@ include:
   - project: "libriciel/integration-continue/templates"
     ref: publish-compose-to-nexus@0.1.4
     file: '/jobs/publish-compose-to-nexus/publish-compose-to-nexus.yml'
-
+  - template: Code-Quality.gitlab-ci.yml
+  - template: Jobs/SAST.gitlab-ci.yml
+  - template: Jobs/Secret-Detection.gitlab-ci.yml
+  - template: Security/Dependency-Scanning.gitlab-ci.yml
+  - template: Security/Container-Scanning.gitlab-ci.yml
 stages:
     - build
     - static-analysis
@@ -166,3 +170,11 @@ publish-compose-to-nexus:
   before_script:
     - sed -i "s/canary/${CI_COMMIT_REF_NAME}/" docker/docker-compose.yml
   needs: [ "publish-container-to-registry" ]
+
+code_quality:
+  tags:
+    - cq-sans-dind
+
+container_scanning:
+  variables:
+    CS_IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_BRANCH
