@@ -274,6 +274,38 @@ class IParapheurUnitTest extends PastellTestCase
         $this->assertSame('1234-abcd', $iParapheur->sendDossier($fileToSign));
     }
 
+    /**
+     * @dataProvider sendDossierProvider
+     * @param FileToSign $fileToSign
+     * @param array $expectedDataArray
+     * @throws Exception
+     */
+    public function testSendDossierWithWrongType(FileToSign $fileToSign, array $expectedDataArray): void
+    {
+        $soapClient = $this->createMock(SoapClient::class);
+        $soapClient->expects($this->any())
+            ->method('__call')
+            ->willReturnCallback(function ($soapMethod, $arguments) use ($expectedDataArray) {
+                $this->assertSame([$expectedDataArray], $arguments);
+                return json_decode(
+                    json_encode(
+                        [
+                        'MessageRetour' => [
+                        'severite' => 'ERROR',
+                            'message' => "Le sous-type SOUS-TYPE n'existe pas pour le type 'Document'",
+                            'codeRetour' => 'KO'
+                        ]
+                        ]
+                    )
+                );
+            });
+        $iParapheur = $this->getIParapheurConnecteur($soapClient);
+        $this->expectException(SignatureException::class);
+        $this->expectExceptionMessage("[ERROR] Le sous-type SOUS-TYPE n'existe pas pour le type 'Document'");
+        $iParapheur->sendDossier($fileToSign);
+    }
+
+
     public function testGestSousType()
     {
         $soapClient = $this->createMock(SoapClient::class);

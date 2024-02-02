@@ -7,6 +7,8 @@
 ## Corrections
 
 - Certains rapports d'acquittement Helios ne pouvaient pas être ouverts #1993
+- Passage en état `send-signature-error` s'il y a une erreur lors de l'envoi d'un dossier au iparapheur #2000
+- Studio : Les editable-content n'étaient pas corrects dans le cas de plusieurs étapes signature #2000
 - Notion de Supplément `suppl_` pour les "non pack" #1998
 
 # [4.0.11] - 2024-01-15
@@ -18,8 +20,8 @@
 
 ## Évolutions
 
-- Ajout du suppl_recup_fin_parapheur : Connecteur recup-fin-parapheur et type de dossier ls-recup-parapheur (iparapheur >=v5.0.21)
-- Ajout du suppl_recup_parapheur_corbeille_connector : Connecteur recup-parapheur-corbeille (iparapheur >=v5.0.21)
+- Ajout du `suppl_recup_fin_parapheur` : Connecteur `recup-fin-parapheur` et type de dossier `ls-recup-parapheur` (iparapheur >=v5.0.20)
+- Ajout du `suppl_recup_parapheur_corbeille_connector` : Connecteur `recup-parapheur-corbeille` (iparapheur >=v5.0.20)
 
 # [4.0.10] - 2023-12-11
 
