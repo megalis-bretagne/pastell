@@ -32,15 +32,15 @@ spostion la facture num=C3=A9ro <b></b>.</p>
 
 <p><a href=3D'ht=
 tps://localhost:8443/mail/NOTTESTABLE
-=C3=A9rer la facture</a></p>
+=A9cup=C3=A9rer la facture</a></p>
 
 
 <p>Cordialement.</p>
 
-<img src=3D'=
-cid:image0' alt=3D''/>
+<img s=
+rc=3D'cid:image0' alt=3D''/>
 <img src=3D'cid:image1' alt=3D''/>
 
-</body>
-=
+</bo=
+dy>
 </html>

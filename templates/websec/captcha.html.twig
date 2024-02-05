@@ -1,0 +1,12 @@
+{% extends 'websec/base.html.twig' %}
+
+{% block main %}
+    <div class="box">
+        Cliquez sur ce bouton pour consulter le contenu du mail sécurisé
+    </div>
+    <div>
+        <a href="{{ mail_url }}" class="btn btn-primary">
+            Consulter le mail
+        </a>
+    </div>
+{% endblock %}

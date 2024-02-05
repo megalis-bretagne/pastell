@@ -142,7 +142,7 @@ class MailSec extends MailsecConnecteur
     private function send(string $to, $mailPastellId = ''): void
     {
         $link = \sprintf(
-            '%s/mail/%s',
+            '%s/mail/%s/captcha',
             \rtrim($this->websec_base, '/'),
             $mailPastellId
         );
