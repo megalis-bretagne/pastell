@@ -209,6 +209,15 @@ formulaire:
             default: '0'
             no-show: true
             read-only: true
+    'Accusé de lecture':
+        lecture_mail:
+            no-show: true
+            read-only: true
+        accuse_lecture:
+            name: 'Accusé de lecture'
+            commentaire: 'Format pdf'
+            type: file
+            read-only: true
     'Retour GED':
         has_ged_document_id:
             no-show: true
@@ -277,6 +286,8 @@ page-condition:
         has_signature: true
     'Mail sécurisé':
         envoi_mailsec: true
+    'Accusé de lecture':
+        lecture_mail: true
     'Retour GED':
         has_ged_document_id: true
     SAE:
