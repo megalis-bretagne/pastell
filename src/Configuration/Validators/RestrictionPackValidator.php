@@ -23,7 +23,7 @@ class RestrictionPackValidator implements ValidatorInterface
         foreach ($allRestrictionPack as $restrictionPack) {
             if (!array_key_exists($restrictionPack, $this->packService->getListPack())) {
                 $this->errors[] = "restriction_pack:<b>$restrictionPack</b> "
-                    . "n'est pas défini dans la liste des packs";
+                    . "n'est pas défini dans la liste des suppléments";
             }
         }
         return count($this->errors) === 0;

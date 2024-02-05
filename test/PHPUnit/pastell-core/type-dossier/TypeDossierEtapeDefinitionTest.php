@@ -448,6 +448,10 @@ Uniquement avec le mode "circuit à la volée"',
                 'send-signature-error_2' => [
                     'name' => "Erreur lors de l'envoi du dossier à la signature #2",
                     'editable-content' => [
+                        'iparapheur_sous_type_2',
+                        'json_metadata_2',
+                        'has_date_limite_2',
+                        'date_limite_2',
                         'fast_parapheur_circuit_2',
                         'fast_parapheur_circuit_configuration_2',
                         'fast_parapheur_email_destinataire_2',

@@ -291,6 +291,7 @@ action:
                 - affectation-orientation
                 - importation-erreur
                 - erreur-orientation
+                - send-signature-error
                 - recu-iparapheur
     suppression:
         name-action: Supprimer
@@ -306,6 +307,7 @@ action:
                 - recu-iparapheur
                 - rejet-iparapheur
                 - erreur-verif-iparapheur
+                - send-signature-error
                 - send-ged
                 - error-ged
                 - termine
@@ -400,6 +402,7 @@ action:
         rule:
             last-action:
                 - preparation-send-iparapheur
+                - send-signature-error
         action-class: StandardAction
         connecteur-type: signature
         connecteur-type-action: SignatureEnvoie
@@ -409,6 +412,16 @@ action:
             iparapheur_date_limite: date_limite
             autre_document_attache: annexe
         action-automatique: verif-iparapheur
+    send-signature-error:
+        name: Erreur lors de l'envoi du dossier à la signature
+        editable-content:
+            - iparapheur_sous_type
+            - json_metadata
+            - has_date_limite
+            - date_limite
+            - metadonnee_iparapheur
+        rule:
+            role_id_e: no-role
     verif-iparapheur:
         name-action: 'Vérifier le statut de signature'
         name: 'Vérification de la signature'

@@ -412,6 +412,7 @@ action:
                 - fatal-error
                 - transformation-error
                 - rejet-iparapheur
+                - send-signature-error
                 - erreur-verif-iparapheur
                 - send-mailsec-error
                 - error-ged
@@ -549,6 +550,9 @@ action:
     send-signature-error:
         name: "Erreur lors de l'envoi du dossier à la signature"
         editable-content:
+            - iparapheur_sous_type
+            - has_date_limite
+            - date_limite
             - fast_parapheur_circuit
             - fast_parapheur_circuit_configuration
             - fast_parapheur_email_destinataire

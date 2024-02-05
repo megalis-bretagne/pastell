@@ -1,7 +1,7 @@
 nom: Test
 description: 'Type de dossier de test, ne pas utiliser.'
 restriction_pack:
-    - pack_test
+    - suppl_test
 connecteur:
     - SAE
     - test

@@ -34,12 +34,31 @@
 - Prise en compte des valeurs par défaut pour les connecteurs #1938
 - Le dossier poursuit son cheminement même s'il n'y a pas de connecteur associé pour une étape de transformation #1981
 
+# [4.0.12] - 2024-02-12
+
+## Évolutions
+
+- Possibilité de mettre un type de document spécifique ainsi que des métadonnées GED sur les dépots CMIS #1503 
+
+## Corrections
+
+- Certains rapports d'acquittement Helios ne pouvaient pas être ouverts #1993
+- `commande-generique`, le document passe en état `termine` après l'acceptation du SAE #2006
+- Passage en état `send-signature-error` s'il y a une erreur lors de l'envoi d'un dossier au iparapheur #2000
+- Studio : Les editable-content n'étaient pas corrects dans le cas de plusieurs étapes signature #2000
+- Notion de Supplément `suppl_` pour les "non pack" #1998
+
 # [4.0.11] - 2024-01-15
 
 ## Corrections
 
 - Correction d'erreur à l'importation de configuration d'une entité comportant des connecteurs globaux #1961
 - Permettre la modification du niveau d'entropie des mots de passe #1985
+
+## Évolutions
+
+- Ajout du `suppl_recup_fin_parapheur` : Connecteur `recup-fin-parapheur` et type de dossier `ls-recup-parapheur` (iparapheur >=v5.0.20)
+- Ajout du `suppl_recup_parapheur_corbeille_connector` : Connecteur `recup-parapheur-corbeille` (iparapheur >=v5.0.20)
 
 # [4.0.10] - 2023-12-11
 

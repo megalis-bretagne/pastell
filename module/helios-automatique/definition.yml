@@ -289,6 +289,7 @@ action:
                 - modification
                 - importation
                 - send-signature-local
+                - send-signature-error
                 - recu-iparapheur
                 - rejet-iparapheur
                 - info-tdt
@@ -371,6 +372,7 @@ action:
     send-signature-error:
         name: "Erreur lors de l'envoi du dossier à la signature"
         editable-content:
+            - iparapheur_sous_type
             - fast_parapheur_circuit
             - fast_parapheur_circuit_configuration
             - fast_parapheur_email_destinataire

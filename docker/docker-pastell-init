@@ -60,18 +60,18 @@ if (${PACK_RH:-false}) {
   \$packs["pack_rh"]=true;
 }
 if (${PACK_TEST:-false}) {
-  \$packs["pack_test"]=true;
+  \$packs["suppl_test"]=true;
 }
 if (${PACK_LIBERSIGN:-false}) {
   \$packs["pack_libersign"]=true;
 }
 
 if (${PACK_RECUP_PARAPHEUR_CORBEILLE_CONNECTOR:-false}) {
-  \$packs["pack_recup_parapheur_corbeille_connector"]=true;
+  \$packs["suppl_recup_parapheur_corbeille_connector"]=true;
 }
 
 if (${PACK_RECUP_FIN_PARAPHEUR:-false}) {
-  \$packs["pack_recup_fin_parapheur"]=true;
+  \$packs["suppl_recup_fin_parapheur"]=true;
 }
 
 define("LIST_PACK", \$packs);
