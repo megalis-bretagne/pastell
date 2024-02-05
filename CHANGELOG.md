@@ -2,24 +2,25 @@
 
 ## Ajouts
 
-- Ajout de la fonction jsonpath_array pour récuperer des listes de données #1376
-- Ajout de l'option de co-signature pour les flux studios #684
-- Ajout du flux Dossier de séance (archivage) 'ls-dossier-seance' #1946
+- Ajout de la fonction jsonpath_array pour récupérer des listes de données #1376
+- Ajout du flux Dossier de séance (archivage) `ls-dossier-seance` #1946
 - Ajout d'un fichier pdf 'Accusé de lecture' pour les mails sécurisés des flux studio #1128
+- Ajout d'un captcha avant la lecture d'un mail sécurisé #942
+- Ajout de l'option de co-signature pour les flux studios #684
 - Ajout des champs annotations publiques et privées pour l'envoi vers iParapheur pour les flux studios #1883
 - Ajout de la récupération du bordereau de signature pour Fast Parapheur pour les flux studios #1925
-- Studio, étape tdt_actes, ajout du contôle sur le total des fichiers Acte et Annexes < 157.29 MB #1602
+- Ajout du champ 'Date de dernière signature' sur l'onglet Signature pour les flux studios #2005
+- Studio, étape tdt_actes, ajout du contrôle sur le total des fichiers Acte et Annexes < 157.29 MB #1602
 - Studio, étape tdt_helios, ajout du contrôle sur la taille du fichier PES ALLER < 128 MB #1602
 - Studio, étape tdt_helios, ajout de la possibilité de définir le champ "Objet PES ALLER" (prend la valeur NomFic du Fichier PES) #1969
 - Possibilité de créer un utilisateur exclusivement API et de gérer ses tokens via l'administrateur de son entité #1943
 - Possibilité de sélectionner une entité et ses entités filles dans le connecteur de purge global #1704
-- Possibilité d'afficher le contennu d'un type de dossier studio sur un seul onglet #1980
+- Possibilité d'afficher le contenu d'un type de dossier studio sur un seul onglet #1980
 - Ajout de la récupération via l'API Fast des circuits disponibles pour Fast Parapheur #1912
 - Récupération de l'acte tamponné pour les Tdt Fast #1558
 - Possibilité d'envoyer en mode préparation vers Fast-tdt #1541
 - Permettre la configuration des attributs LDAP : nom, prénom et email #1975
 - Ajustement de la zone de séléction dans la gestion d'éléments studio #1281
-- Ajout d'un captcha avant la lecture d'un mail sécurisé #942
 
 ## Corrections
 

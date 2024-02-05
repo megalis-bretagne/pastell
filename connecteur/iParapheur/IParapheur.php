@@ -6,7 +6,17 @@ class IParapheur extends SignatureConnecteur
 
     public const ARCHIVAGE_ACTION_EFFACER = "EFFACER";
 
-    private const REJECTED_STATE = ['RejetVisa', 'RejetSignataire','RejetCachet', 'RejetMailSecPastell', 'RejetSignataireExterne'];
+    private const REJECTED_STATE = [
+        'RejetVisa',
+        'RejetSignataire',
+        'RejetCachet',
+        'RejetMailSecPastell',
+        'RejetSignataireExterne'
+    ];
+    private const SIGN_STATE = [
+        'Signe',
+        'SignatairePapier'
+    ];
 
     private $wsdl;
     private $login_http;
@@ -342,15 +352,37 @@ class IParapheur extends SignatureConnecteur
         }
     }
 
-    public function getLastHistorique($all_historique)
+    public function getLastHistorique($history): string
     {
-        if (isset($all_historique->LogDossier->timestamp)) {
-            $lastLog = $all_historique->LogDossier;
+        if (isset($history->LogDossier->timestamp)) {
+            $lastLog = $history->LogDossier;
         } else {
-            $lastLog = end($all_historique->LogDossier);
+            $lastLog = end($history->LogDossier);
         }
-        $date = date("d/m/Y H:i:s", strtotime($lastLog->timestamp));
-        return $date . " : [" . $lastLog->status . "] " . $lastLog->annotation;
+        return sprintf(
+            "%s : [%s] %s",
+            date("d/m/Y H:i:s", strtotime($lastLog->timestamp)),
+            $lastLog->status,
+            $lastLog->annotation
+        );
+    }
+
+    public function getDateSignature($history): string
+    {
+        if (
+            isset($history->LogDossier->status)
+            && (in_array($history->LogDossier->status, self::SIGN_STATE))
+        ) {
+            $logSignature = $history->LogDossier;
+        } else {
+            foreach (array_reverse($history->LogDossier) as $log) {
+                if (in_array($log->status, self::SIGN_STATE)) {
+                    $logSignature = $log;
+                    break;
+                }
+            }
+        }
+        return isset($logSignature) ? date("Y-m-d", strtotime($logSignature->timestamp)) : "";
     }
 
     public function getHistorique($dossierID)

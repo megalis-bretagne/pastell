@@ -61,7 +61,9 @@ class FakeIparapheur extends SignatureConnecteur
     public function sendDossier(FileToSign $dossier)
     {
         if ($this->iparapheur_envoi_status == 'error') {
-            throw new Exception("Erreur déclenchée par le connecteur fake Iparapheur (iparapheur_envoi_status configuré à 'error')");
+            throw new Exception(
+                "Erreur déclenchée par le connecteur fake Iparapheur (iparapheur_envoi_status configuré à 'error')"
+            );
         }
         return "Dossier déposé pour signature";
     }
@@ -127,13 +129,20 @@ class FakeIparapheur extends SignatureConnecteur
         throw new Exception("Erreur provoquée par le simulateur du iParapheur");
     }
 
-    public function getLastHistorique($dossierID)
+    public function getLastHistorique($history): string
     {
-
         if ($this->retour == 'Archive') {
             return "[Archive]";
         }
         return "[RejetVisa]";
+    }
+
+    public function getDateSignature($history): string
+    {
+        if ($this->retour == 'Archive') {
+            return date("Y-m-d");
+        }
+        return "";
     }
 
     public function effacerDossierRejete($dossierID)

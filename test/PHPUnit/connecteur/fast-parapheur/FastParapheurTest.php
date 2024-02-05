@@ -360,6 +360,40 @@ class FastParapheurTest extends PastellTestCase
         );
     }
 
+    public function testDateSignature()
+    {
+        $this->fastParapheur = $this->getFastParapheur();
+
+        $history = json_decode(json_encode(
+            [
+                [
+                    'userFullName' => 'Agent',
+                    'date' => '2019-04-03T14:46:49.274+01:00',
+                    'stateName' => 'Préparé'
+                ],
+                [
+                    'userFullName' => 'Agent',
+                    'date' => '2019-05-03T14:46:49.274+01:00',
+                    'stateName' => 'Signé'
+                ],
+                [
+                    'userFullName' => 'Agent',
+                    'date' => '2019-06-03T14:46:49.274+01:00',
+                    'stateName' => 'Signé'
+                ],
+                [
+                    'userFullName' => 'Agent',
+                    'date' => '2019-07-03T15:35:03.449+01:00',
+                    'stateName' => 'Classé'
+                ]
+            ]
+        ));
+        $this->assertSame(
+            "2019-06-03",
+            $this->fastParapheur->getDateSignature($history)
+        );
+    }
+
     /**
      * When getting the signed document
      *
