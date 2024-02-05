@@ -30,22 +30,11 @@
     </div>
 
     <div class="box">
-        <h2 id="desc-pack-list-table">Liste des Packs</h2>
+        <h2 id="desc-pack-list-table">Liste des suppléments activés</h2>
         <table class='table table-striped' aria-labelledby="desc-pack-list-table">
             {% for pack,enabled in listPack %}
                 <tr>
                     <th class="w140" scope="row">{{ pack }}</th>
-                    <td>
-                        {% if enabled %}
-                            <p class="alert alert-success">
-                                <strong>Activé</strong>
-                            </p>
-                        {% else %}
-                            <p class="alert alert-warning">
-                                <strong>Inactif</strong>
-                            </p>
-                        {% endif %}
-                    </td>
                 </tr>
             {% endfor %}
         </table>

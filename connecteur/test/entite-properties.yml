@@ -2,7 +2,7 @@ nom: Test
 type: test
 description: "Il s'agit d'un connecteur d'entité de test qui ne fait rien"
 restriction_pack:
-    - pack_test
+    - suppl_test
 formulaire:
     page0:
         champs1:

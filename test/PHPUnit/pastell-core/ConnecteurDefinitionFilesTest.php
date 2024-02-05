@@ -14,7 +14,7 @@ class ConnecteurDefinitionFilesTest extends PastellTestCase
 
     protected function tearDown(): void
     {
-        $this->setListPack(["pack_test" => true]);
+        $this->setListPack(["suppl_test" => true]);
     }
 
     public function testGetAllType()
@@ -35,13 +35,13 @@ class ConnecteurDefinitionFilesTest extends PastellTestCase
 
     public function testGetAllRestricted()
     {
-        $this->setListPack(["pack_test" => false]);
+        $this->setListPack(["suppl_test" => false]);
         $result = $this->connecteurDefinitionFiles->getAllRestricted();
         $this->assertContains("test", $result);
         $result = $this->connecteurDefinitionFiles->getAllRestricted(true);
         $this->assertContains("test", $result);
 
-        $this->setListPack(["pack_test" => true]);
+        $this->setListPack(["suppl_test" => true]);
         $result = $this->connecteurDefinitionFiles->getAllRestricted();
         $this->assertEmpty($result);
         $result = $this->connecteurDefinitionFiles->getAllRestricted(true);

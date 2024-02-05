@@ -196,6 +196,7 @@ action:
             last-action:
                 - creation
                 - modification
+                - send-signature-error
                 - recu-iparapheur
                 - recu-iparapheur-etat
                 - envoi-mail
@@ -212,6 +213,7 @@ action:
             last-action:
                 - creation
                 - modification
+                - send-signature-error
                 - recu-iparapheur
                 - recu-iparapheur-etat
                 - rejet-iparapheur
@@ -251,6 +253,8 @@ action:
             last-action:
                 - creation
                 - modification
+                - prepare-iparapheur
+                - send-signature-error
             document_is_valide: true
             content:
                 envoi_signature: true
@@ -263,6 +267,12 @@ action:
         connecteur-type-mapping:
             objet: libelle
             document: commande
+    send-signature-error:
+        name: Erreur lors de l'envoi du dossier à la signature
+        editable-content:
+            - iparapheur_sous_type
+        rule:
+            role_id_e: no-role
     verif-iparapheur:
         name-action: 'Vérifier le statut de signature'
         name: 'Vérification de la signature'

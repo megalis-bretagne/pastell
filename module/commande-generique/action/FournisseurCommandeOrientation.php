@@ -65,6 +65,15 @@ class FournisseurCommandeOrientation extends ActionExecutor
             }
             return "termine";
         }
+        if ($action == 'send-ged') {
+            if ($this->getDonneesFormulaire()->get('envoi_sae')) {
+                return 'preparation-send-sae';
+            }
+            return "termine";
+        }
+        if ($action == 'accepter-sae') {
+            return "termine";
+        }
         throw new Exception("L'action suivante de $action n'est pas défini. Arret du flux");
     }
 
@@ -82,6 +91,9 @@ class FournisseurCommandeOrientation extends ActionExecutor
         }
         if ($action == 'send-ged') {
             return "send-ged-etat";
+        }
+        if ($action == 'accepter-sae') {
+            return "termine";
         }
         throw new Exception("L'action suivante de $action n'est pas défini. Arret du flux");
     }

@@ -337,6 +337,7 @@ action:
                 - recu-iparapheur
                 - rejet-iparapheur
                 - send-iparapheur-annule
+                - send-signature-error
                 - send-ged
                 - send-ged-annule
                 - termine
@@ -540,6 +541,7 @@ action:
                 - cpp-modif-statut-ok
                 - cpp-modif-statut-erreur
                 - prepare-iparapheur
+                - send-signature-error
             no-action:
                 - send-iparapheur
             document_is_valide: true
@@ -548,6 +550,13 @@ action:
         connecteur-type: signature
         action-class: FactureCPPIparapheurEnvoie
         action-automatique: verif-iparapheur
+    send-signature-error:
+        name: Erreur lors de l'envoi du dossier à la signature
+        editable-content:
+            - iparapheur_sous_type
+            - json_metadata
+        rule:
+            role_id_e: no-role
     send-iparapheur-annule:
         name: 'Transmis pour visa annulé'
         rule:
@@ -876,6 +885,7 @@ action:
                         - recu-iparapheur
                         - rejet-iparapheur
                         - erreur-verif-iparapheur
+                        - send-signature-error
                         - send-ged
                         - error-ged
                         - erreur-envoie-sae
