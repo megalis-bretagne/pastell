@@ -7,13 +7,14 @@
 - Ajout du flux Dossier de séance (archivage) 'ls-dossier-seance' #1946
 - Ajout d'un fichier pdf 'Accusé de lecture' pour les mails sécurisés des flux studio #1128
 - Ajout des champs annotations publiques et privées pour l'envoi vers iParapheur pour les flux studios #1883
+- Ajout de la récupération du bordereau de signature pour Fast Parapheur #1925
 - Studio, étape tdt_actes, ajout du contôle sur le total des fichiers Acte et Annexes < 157.29 MB #1602
 - Studio, étape tdt_helios, ajout du contrôle sur la taille du fichier PES ALLER < 128 MB #1602
 - Studio, étape tdt_helios, ajout de la possibilité de définir le champ "Objet PES ALLER" (prend la valeur NomFic du Fichier PES) #1969
 - Possibilité de créer un utilisateur exclusivement API et de gérer ses tokens via l'administrateur de son entité #1943
 - Possibilité de sélectionner une entité et ses entités filles dans le connecteur de purge global #1704
 - Possibilité d'afficher le contennu d'un type de dossier studio sur un seul onglet #1980
-- Ajout de la récupération via l'API Fast des circuits disponibles pour Fast Parapheur #1925
+- Ajout de la récupération via l'API Fast des circuits disponibles pour Fast Parapheur #1912
 - Récupération de l'acte tamponné pour les Tdt Fast #1558
 - Possibilité d'envoyer en mode préparation vers Fast-tdt #1541
 - Permettre la configuration des attributs LDAP : nom, prénom et email #1975
