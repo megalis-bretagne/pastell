@@ -73,7 +73,7 @@
     <?php endif;?>
     <?php if ($droitConnecteurEdition) : ?>
         <h2>Configurer un nouveau type de dossier</h2>
-        <form action='Flux/detail' method='get' class='form-inline'>
+        <form action='Flux/detail' method='get'>
             <input type='hidden' name='id_e' value='<?php hecho($id_e); ?>'/>
             <table class='table table-striped' aria-labelledby="desc-module-type-table">
                 <tr id="tr_type_document">

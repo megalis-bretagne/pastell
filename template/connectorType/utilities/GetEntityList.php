@@ -10,7 +10,7 @@
 
 ?>
 
-<form action='Connecteur/doExternalData' method='post' class='form-inline'>
+<form action='Connecteur/doExternalData' method='post'>
     <input type='hidden' name='id_ce' value='<?php hecho((string)$id_ce); ?>'/>
     <input type='hidden' name='field' value='<?php hecho($field); ?>'/>
     <?php $this->displayCSRFInput(); ?>

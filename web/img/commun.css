@@ -484,11 +484,6 @@ color: #B2B2B2;
     box-shadow: 0 0 10px var(--bs-ls-primary-300) !important;
 }
 
-html body .form-inline{
-    align-items: inherit;
-    margin-right: 4px;
-}
-
 .date{
 width: 150px;
 }
