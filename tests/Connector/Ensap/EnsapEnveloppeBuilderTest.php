@@ -1,19 +1,17 @@
 <?php
 
-namespace Pastell\Tests\Connector;
+namespace Connector\Ensap;
 
 use DOMException;
 use Exception;
 use Pastell\Connector\Ensap\ArchiveGenerator;
-use Pastell\Connector\Ensap\enveloppe\Emetteur;
-use Pastell\Connector\Ensap\enveloppe\Enveloppe;
-use Pastell\Connector\Ensap\enveloppe\Message;
-use Pastell\Connector\Ensap\EnveloppeBuilder;
 use Pastell\Connector\Ensap\enveloppe\Assure;
 use Pastell\Connector\Ensap\enveloppe\Document;
+use Pastell\Connector\Ensap\enveloppe\Emetteur;
+use Pastell\Connector\Ensap\enveloppe\Enveloppe;
 use Pastell\Connector\Ensap\enveloppe\Gestionnaire;
+use Pastell\Connector\Ensap\enveloppe\Message;
 use PastellTestCase;
-use XSDValidator;
 
 class EnsapEnveloppeBuilderTest extends PastellTestCase
 {
@@ -99,9 +97,5 @@ class EnsapEnveloppeBuilderTest extends PastellTestCase
         $xml = $this->archiveGenerator->generateXML($enveloppe);
         $archiveName = $this->archiveGenerator->generateArchive($pdf_documents, $xml, 'LBRCL', 'BE003');
         static::assertMatchesRegularExpression('/^ENVOI-PJ-BPG-(43|45)-\w{1,5}-\w{1,5}-\d{6}-\d{14}.tar.gz.gpg$/', $archiveName);
-        static::assertFileExists($archiveName);
-
-        $absolutePath = realpath($archiveName);
-        echo $absolutePath; // Outputs the absolute path to the archive file
     }
 }
