@@ -2,6 +2,7 @@
 
 ## Ajouts
 
+- Ajout du flux Train de bulletins de salaire pour l'envoi en CFN Ensap #2010
 - Ajout de la fonction jsonpath_array pour récupérer des listes de données #1376
 - Ajout du flux Dossier de séance (archivage) `ls-dossier-seance` #1946
 - Ajout d'un fichier pdf 'Accusé de notification' pour les mails sécurisés des flux studio #1128

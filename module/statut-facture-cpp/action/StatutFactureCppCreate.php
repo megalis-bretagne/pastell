@@ -19,7 +19,7 @@ class StatutFactureCppCreate extends ActionExecutor
         $schemaPath = $this->objectInstancier->getInstance(ChorusProXSDStatutPivot::class)->getSchemaPath();
         $xsdValidator = new XSDValidator();
         try {
-            $xsdValidator->schemaValidate($schemaPath, $filePath);
+            $xsdValidator->schemaValidateFromPath($schemaPath, $filePath);
         } catch (Exception $e) {
             $errorMessage = "Le fichier CPPStatutPivot est incorrect: " . $e->getMessage();
             $this->getActionCreator()

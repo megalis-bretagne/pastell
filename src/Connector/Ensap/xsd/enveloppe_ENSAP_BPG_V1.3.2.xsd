@@ -1,0 +1,207 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+ 
+ 
+<xs:simpleType name="TypeNumOrdre">
+    <xs:restriction base="xs:string">
+        <xs:minLength value="1"/>
+        <xs:maxLength value="10"/>
+    </xs:restriction>
+</xs:simpleType>
+ 
+<xs:simpleType name="TypeNir">
+<xs:restriction base="xs:string">
+        <xs:minLength value="13"/>
+        <xs:maxLength value="15"/>
+    </xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="TypeNir2">
+    <xs:restriction base="xs:string">
+    <xs:pattern value="(\w{13,15}|)" />
+    </xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="TypeNomNais">
+    <xs:restriction base="xs:string">        
+    <xs:pattern value="[AÁÀÂÄÃÅĄÆBCÇČĆDĎEÉÈÊËẼĘFGǴHIÌÎÏĮJKLĹŁMNÑŇŃOÓÒÔÖÕØŒPQRŘŔSŚŠTŤUÚÙÛÜŮŲVWXYÝŶŸZŽŹŻaáàâäãåąæbcçčćdďeéèêëẽęfgǵhiìîïįjklĺłmnñňńoóòôöõøœpqrřŕsšśtťuúùûüůųvwxyýŷÿzźžż \-']*"/>           <xs:minLength value="1"/>
+        <xs:maxLength value="65"/>
+    </xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="TypeSexe">
+    <xs:restriction base="xs:string">
+        <xs:maxLength value="1"/>
+    </xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="Type40AN">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="40"/>
+    </xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="Type40ANF">
+    <xs:restriction base="xs:string">
+        <xs:maxLength value="40"/>
+    </xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="Type20ANF">
+    <xs:restriction base="xs:string">
+        <xs:maxLength value="20"/>
+    </xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="TypeEmetteur">
+    <xs:restriction base="xs:string">
+        <xs:minLength value="1"/>
+        <xs:maxLength value="20"/>
+    </xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="Type10AN">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="Type10ANF">
+    <xs:restriction base="xs:string">
+        <xs:maxLength value="10"/>
+    </xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="Type5AN">
+    <xs:restriction base="xs:string">
+        <xs:minLength value="1"/>
+        <xs:maxLength value="5"/>
+    </xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="TypeNomFichier">
+    <xs:restriction  base="xs:string">
+        <xs:minLength value="1"/>
+        <xs:maxLength value="80"/>
+    </xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="TypeIban">
+    <xs:restriction base="xs:string">
+        <xs:maxLength value="40"/>
+    </xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="TypeStatut">
+    <xs:restriction base="xs:string">
+       <xs:minLength value="0"/>
+       <xs:maxLength value="5"/>
+    </xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="Date">
+    <xs:restriction base="xs:string">
+        <xs:pattern value="(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])\d{4}"/>
+    </xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="Date2">
+    <xs:restriction base="xs:string">
+        <xs:pattern value="[0-9]{8}"/>
+    </xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="TypeCFT">
+    <xs:restriction base="xs:string">
+        <xs:maxLength value="4"/>
+    </xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="TypeMontant">
+    <xs:restriction base="xs:int">
+    </xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="TypeId_piece">
+    <xs:restriction base="xs:string">
+        <xs:minLength value="0"/>
+    </xs:restriction>
+</xs:simpleType>
+ <xs:simpleType name="TypePoids_fichier">
+    <xs:restriction base="xs:string">
+         <xs:pattern value="[0-9]+"/>
+    </xs:restriction>
+</xs:simpleType>
+  <xs:complexType name="messageType">
+    <xs:sequence>
+      <xs:element name="version_fichier" minOccurs="1" maxOccurs="1">
+       <xs:simpleType>
+        <xs:restriction base="Type5AN">
+         <xs:enumeration value="01.00"/>
+        </xs:restriction>
+       </xs:simpleType>  
+      </xs:element>
+      <xs:element name="nature_flux" minOccurs="1" maxOccurs="1">
+       <xs:simpleType>
+        <xs:restriction base="Type40AN">
+        <xs:enumeration value="ENVOI-BP-GENERIQUE"/>
+        </xs:restriction>
+       </xs:simpleType>  
+      </xs:element>
+      <xs:element type="TypeNomFichier" name="nom_fichier" minOccurs="1" maxOccurs="1"/>
+      <xs:element type="Date" name="date_traitement" minOccurs="1" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+   
+  <xs:complexType name="emetteurType">
+    <xs:sequence>
+      <xs:element type="TypeEmetteur" name="code_emetteur" minOccurs="1" maxOccurs="1"/>
+      <xs:element type="TypeEmetteur" name="code_employeur" minOccurs="0" maxOccurs="1"/>
+      <xs:element type="TypeCFT" name="code_CFT" minOccurs="1" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+   
+  <xs:complexType name="documentType">
+    <xs:sequence>
+      <xs:element name="theme" minOccurs="1" maxOccurs="1">
+       <xs:simpleType>
+        <xs:restriction base="xs:int">
+         <xs:enumeration value="8"/>
+        </xs:restriction>
+       </xs:simpleType>  
+      </xs:element>
+      <xs:element name="sstheme" minOccurs="1" maxOccurs="1">
+       <xs:simpleType>
+        <xs:restriction base="xs:int">
+         <xs:enumeration value="43"/>
+         <xs:enumeration value="45"/>
+         <xs:enumeration value="146"/>
+        </xs:restriction>
+       </xs:simpleType>
+      </xs:element>
+      <xs:element type="Date" name="date_document" minOccurs="1" maxOccurs="1"/>
+      <xs:element type="TypeMontant" name="montant" minOccurs="0" maxOccurs="1"/>
+      <xs:element type="TypeId_piece" name="id_piece" minOccurs="0" maxOccurs="1"/>
+      <xs:element type="TypeNomFichier" name="nom_fichier" minOccurs="1" maxOccurs="1"/>
+      <xs:element type="TypePoids_fichier" name="poids_fichier" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="gestionnaireType">
+    <xs:sequence>
+      <xs:element type="Type10ANF" name="code_gestion" minOccurs="0" maxOccurs="1"/>
+      <xs:element type="Type10ANF" name="code_poste" minOccurs="0" maxOccurs="1"/>
+      <xs:element type="Type20ANF" name="siret" minOccurs="1" maxOccurs="1"/>
+      <xs:element type="documentType" name="document" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+   
+  <xs:complexType name="assureType">
+    <xs:sequence>
+      <xs:element type="Type10ANF" name="numero_dossier" minOccurs="1" maxOccurs="1"/>
+      <xs:element type="TypeNumOrdre" name="numero_ordre" minOccurs="1" maxOccurs="1"/>
+      <xs:element type="TypeNir" name="nir" minOccurs="1" maxOccurs="1"/>
+      <xs:element type="TypeNir2" name="nir_modifie" minOccurs="0" maxOccurs="1"/>
+      <xs:element type="TypeNomNais" name="nom_naissance" minOccurs="1" maxOccurs="1"/>
+      <xs:element type="TypeSexe" name="sexe" minOccurs="1" maxOccurs="1"/>
+      <xs:element type="Date2" name="date_naissance" minOccurs="1" maxOccurs="1"/>
+      <xs:element type="TypeIban" name="iban" minOccurs="1" maxOccurs="1"/>
+      <xs:element type="TypeStatut" name="statut" minOccurs="1" maxOccurs="1"/>
+      <xs:element type="Type40ANF" name="reference_emetteur" minOccurs="0" maxOccurs="1"/>
+      <xs:element type="gestionnaireType" name="gestionnaire" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+   
+  <xs:complexType name="envoi-BP-GeneriqueType">
+    <xs:sequence>
+      <xs:element type="messageType" name="message"  minOccurs="1" maxOccurs="1"/>
+      <xs:element type="emetteurType" name="emetteur" minOccurs="1" maxOccurs="1"/>
+      <xs:element type="assureType" name="assure" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+   
+   <xs:element name="envoi-BP-Generique" type="envoi-BP-GeneriqueType"/>
+</xs:schema>

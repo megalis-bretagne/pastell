@@ -1,19 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 class XSDValidator
 {
     /**
-     * @param string $schema The path to the schema file
-     * @param string $file The path to the file to validate against the schema
+     * @param $schemaPath
+     * @param DOMDocument $dom
      * @return bool
-     * @throws Exception
      */
-    public function schemaValidate($schema, $file)
+    private function schemaValidateCommon($schemaPath, DOMDocument $dom): bool
     {
         $previous = libxml_use_internal_errors(true);
-        $dom = new DOMDocument();
-        $dom->load($file);
-        $err = $dom->schemaValidate($schema);
+        $err = $dom->schemaValidate($schemaPath);
         if (!$err) {
             $last_error = libxml_get_errors();
             $msg = ' ';
@@ -21,9 +20,29 @@ class XSDValidator
                 $msg .= "[Erreur #{$err->code}] " . $err->message . "\n";
             }
             libxml_use_internal_errors($previous);
-            throw new Exception($msg);
+            throw new RuntimeException($msg);
         }
         libxml_use_internal_errors($previous);
         return true;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function schemaValidateFromPath($schemaPath, $filePath): bool
+    {
+        $dom = new DOMDocument();
+        $dom->load($filePath);
+        return $this->schemaValidateCommon($schemaPath, $dom);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function schemaValidateFromContent($schemaPath, $xmlContent): bool
+    {
+        $dom = new DOMDocument();
+        $dom->loadXML($xmlContent);
+        return $this->schemaValidateCommon($schemaPath, $dom);
     }
 }

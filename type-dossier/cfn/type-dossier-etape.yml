@@ -1,0 +1,53 @@
+libelle: 'Coffre fort numérique'
+connecteur_type:
+    - CFN
+configuration_etape_formulaire:
+    archive_bp:
+        name: 'Archive compressée de bulletins de salaire'
+        commentaire: 'Format ZIP'
+        type: file
+        requis: true
+    fichier_de_description:
+        name: 'Fichier de description'
+        commentaire: 'Format XML'
+        type: file
+        requis: true
+formulaire:
+    'Retour CFN':
+        retour_cfn:
+            name: 'Retour du coffre-fort numérique'
+            commentaire: 'Format tar.gz'
+            type: file
+            read-only: true
+page-condition:
+    'Retour CFN':
+        envoi_cfn: true
+action:
+    preparation-send-cfn:
+        name: "Préparation de l'envoi au coffre-fore numérique"
+        rule:
+            role_id_e: no-role
+            content:
+                envoi_cfn: true
+        action-automatique: send-cfn
+    send-cfn:
+        name-action: 'Verser au CFN'
+        name: 'Versé au CFN'
+        action-class: StandardAction
+        connecteur-type: CFN
+        connecteur-type-action: CFNEnvoyer
+        connecteur-type-mapping:
+            archive_bp: archive_bp
+            fichier_de_description: fichier_de_description
+        rule:
+            content:
+                envoi_cfn: true
+            last-action:
+                - preparation-send-cfn
+    recu-cfn:
+        name: 'Archive récupérée'
+        rule:
+            role_id_e: no-role
+            content:
+                envoi_cfn: true
+        action-automatique: orientation
