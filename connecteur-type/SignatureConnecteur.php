@@ -15,15 +15,13 @@ abstract class SignatureConnecteur extends Connecteur
      */
     abstract public function sendDossier(FileToSign $dossier);
 
-    abstract public function getHistorique($dossierID);
-
     abstract public function getSignature($dossierID, $archive = true);
 
     abstract public function getAllHistoriqueInfo($dossierID);
 
     abstract public function getLastHistorique($history): string;
 
-    abstract public function getDateSignature($history): string;
+    abstract public function getDateSignature(stdClass|array $history): string;
 
     abstract public function effacerDossierRejete($dossierID);
 

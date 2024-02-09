@@ -68,23 +68,6 @@ class FakeIparapheur extends SignatureConnecteur
         return "Dossier déposé pour signature";
     }
 
-    public function getHistorique($dossierID)
-    {
-        if ($this->retour == 'Fatal') {
-            trigger_error("Fatal error", E_USER_ERROR);
-        }
-        sleep($this->iparapheur_temps_reponse);
-        $date = date("d/m/Y H:i:s");
-        if ($this->retour == 'Archive') {
-            return $date . " : [Archive] Dossier signé (simulation de parapheur)!";
-        }
-        if ($this->retour == 'Rejet') {
-            return $date . " : [RejetVisa] Dossier rejeté (simulation parapheur)!";
-        }
-
-        throw new Exception("Erreur provoquée par le simulateur du iParapheur");
-    }
-
     public function getSignature($dossierID, $archive = true)
     {
         $info['document'] = "Document";
@@ -112,37 +95,79 @@ class FakeIparapheur extends SignatureConnecteur
         return $info;
     }
 
+    /**
+     * @throws JsonException
+     */
     public function getAllHistoriqueInfo($dossierID)
     {
-        if ($this->retour == 'Fatal') {
-            trigger_error("Fatal error", E_USER_ERROR);
+        if ($this->retour === 'Fatal') {
+            trigger_error('Fatal error', E_USER_ERROR);
         }
         sleep($this->iparapheur_temps_reponse);
-        $date = date("d/m/Y H:i:s");
-        if ($this->retour == 'Archive') {
-            return [$date . " : [Archive] Dossier signé (simulation de parapheur)!"];
+        $timestamp = date(DATE_ATOM);
+        $user = 'simulation de parapheur!';
+        if ($this->retour === 'Archive') {
+            return json_decode(json_encode([
+                'LogDossier' => [
+                    0 => [
+                        'timestamp' => $timestamp,
+                        'nom' => $user,
+                        'status' => 'Signe',
+                    ],
+                    1 => [
+                        'timestamp' => $timestamp,
+                        'nom' => $user,
+                        'status' => 'Archive',
+                        'annotation' => sprintf('Circuit terminé, dossier archivable (%s)', $user),
+                    ],
+                ],
+                'MessageRetour' => [
+                    'codeRetour' => 'OK',
+                    'message' => '',
+                    'severite' => 'INFO'
+                ]
+            ], JSON_THROW_ON_ERROR), false, 512, JSON_THROW_ON_ERROR);
         }
-        if ($this->retour == 'Rejet') {
-            return [$date . " : [RejetVisa] Dossier rejeté (simulation parapheur)!"];
+        if ($this->retour === 'Rejet') {
+            return json_decode(json_encode([
+                'LogDossier' => [
+                    0 => [
+                        'timestamp' => $timestamp,
+                        'nom' => $user,
+                        'status' => 'RejetVisa',
+                        'annotation' => sprintf('(%s)', $user),
+                    ],
+                ],
+                'MessageRetour' => [
+                    'codeRetour' => 'OK',
+                    'message' => '',
+                    'severite' => 'INFO'
+                ]
+            ], JSON_THROW_ON_ERROR), false, 512, JSON_THROW_ON_ERROR);
         }
-
-        throw new Exception("Erreur provoquée par le simulateur du iParapheur");
+        throw new Exception('Erreur provoquée par le simulateur du iParapheur');
     }
 
     public function getLastHistorique($history): string
     {
-        if ($this->retour == 'Archive') {
-            return "[Archive]";
-        }
-        return "[RejetVisa]";
+        $lastLog = end($history->LogDossier);
+        return sprintf(
+            '%s : [%s] %s',
+            date('d/m/Y H:i:s', strtotime($lastLog->timestamp)),
+            $lastLog->status,
+            $lastLog->annotation
+        );
     }
 
-    public function getDateSignature($history): string
+    public function getDateSignature(stdClass|array $history): string
     {
-        if ($this->retour == 'Archive') {
-            return date("Y-m-d");
+        foreach (array_reverse($history->LogDossier) as $log) {
+            if ($log->status === 'Signe') {
+                $logSignature = $log;
+                break;
+            }
         }
-        return "";
+        return isset($logSignature) ? date('Y-m-d', strtotime($logSignature->timestamp)) : '';
     }
 
     public function effacerDossierRejete($dossierID)

@@ -57,16 +57,23 @@ class FactureCPPIparapheurRecupTest extends ExtensionCppTestCase
                 if ($soapMethod === 'GetHistoDossier') {
                     return json_decode(json_encode([
                         'LogDossier' => [
-                            [
+                            0 => [
                                 'timestamp' => 1,
                                 'annotation' => 'annotation',
                                 'status' => 'RejetVisa'
-                            ]
+                            ],
                         ]
-                    ]), false);
+                    ], JSON_THROW_ON_ERROR), false, 512, JSON_THROW_ON_ERROR);
                 }
-                return json_decode('{"MetaDonnees":[{"nom":"ph:dossierTitre","valeur":"20191125160915_1449812468"},{"nom":"chorusproStatutRejet","valeur":"SUSPENDUE"}],
-                    "MessageRetour":{"codeRetour":"OK","message":"message.","severite":"INFO"}}', false);
+                return json_decode(
+                    '{"MetaDonnees":
+                    [{"nom":"ph:dossierTitre","valeur":"20191125160915_1449812468"},
+                    {"nom":"chorusproStatutRejet","valeur":"SUSPENDUE"}],
+                     "MessageRetour":{"codeRetour":"OK","message":"message.","severite":"INFO"}}',
+                    false,
+                    512,
+                    JSON_THROW_ON_ERROR
+                );
             }
         );
 

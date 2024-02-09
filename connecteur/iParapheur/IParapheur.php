@@ -13,7 +13,7 @@ class IParapheur extends SignatureConnecteur
         'RejetMailSecPastell',
         'RejetSignataireExterne'
     ];
-    private const SIGN_STATE = [
+    private const SIGNED_STATE = [
         'Signe',
         'SignatairePapier'
     ];
@@ -337,7 +337,7 @@ class IParapheur extends SignatureConnecteur
         }
     }
 
-    public function getAllHistoriqueInfo($dossierID)
+    public function getAllHistoriqueInfo($dossierID): bool|stdClass
     {
         try {
             $result =  $this->getClient()->GetHistoDossier($dossierID);
@@ -354,51 +354,24 @@ class IParapheur extends SignatureConnecteur
 
     public function getLastHistorique($history): string
     {
-        if (isset($history->LogDossier->timestamp)) {
-            $lastLog = $history->LogDossier;
-        } else {
-            $lastLog = end($history->LogDossier);
-        }
+        $lastLog = end($history->LogDossier);
         return sprintf(
-            "%s : [%s] %s",
-            date("d/m/Y H:i:s", strtotime($lastLog->timestamp)),
+            '%s : [%s] %s',
+            date('d/m/Y H:i:s', strtotime($lastLog->timestamp)),
             $lastLog->status,
             $lastLog->annotation
         );
     }
 
-    public function getDateSignature($history): string
+    public function getDateSignature(stdClass|array $history): string
     {
-        if (
-            isset($history->LogDossier->status)
-            && (in_array($history->LogDossier->status, self::SIGN_STATE))
-        ) {
-            $logSignature = $history->LogDossier;
-        } else {
-            foreach (array_reverse($history->LogDossier) as $log) {
-                if (in_array($log->status, self::SIGN_STATE)) {
-                    $logSignature = $log;
-                    break;
-                }
+        foreach (array_reverse($history->LogDossier) as $log) {
+            if (in_array($log->status, self::SIGNED_STATE, true)) {
+                $logSignature = $log;
+                break;
             }
         }
-        return isset($logSignature) ? date("Y-m-d", strtotime($logSignature->timestamp)) : "";
-    }
-
-    public function getHistorique($dossierID)
-    {
-        try {
-            $result =  $this->getClient()->GetHistoDossier($dossierID);
-
-            if (empty($result->LogDossier)) {
-                $this->lastError = "Le dossier n'a pas été trouvé";
-                return false;
-            }
-            return $this->getLastHistorique($result);
-        } catch (Exception $e) {
-            $this->lastError = $e->getMessage();
-            return false;
-        }
+        return isset($logSignature) ? date('Y-m-d', strtotime($logSignature->timestamp)) : '';
     }
 
     public function setSendingMetadata(DonneesFormulaire $donneesFormulaire)

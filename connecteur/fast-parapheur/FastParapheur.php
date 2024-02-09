@@ -7,7 +7,7 @@ class FastParapheur extends SignatureConnecteur
     public const REST_URI = '/parapheur-ws/rest/v1/';
     public const CIRCUIT_ON_THE_FLY_URI = self::REST_URI . '/documents/ondemand/%s/upload';
 
-    private const SIGN_STATE = ['Signé'];
+    private const SIGNED_STATE = ['Signé'];
 
     private $url;
 
@@ -259,11 +259,6 @@ class FastParapheur extends SignatureConnecteur
         }
     }
 
-    public function getHistorique($dossierID)
-    {
-        // TODO: Implement getHistorique() method.
-    }
-
     public function getSignature($documentId, $archive = true)
     {
         try {
@@ -274,35 +269,39 @@ class FastParapheur extends SignatureConnecteur
         }
     }
 
-    public function getAllHistoriqueInfo($documentId)
+    public function getAllHistoriqueInfo($dossierID): bool|array
     {
         try {
-            return $this->getClient()->history($documentId);
+            return $this->getClient()->history($dossierID);
         } catch (Exception $e) {
             $this->lastError = $e->getMessage();
             return false;
         }
     }
 
+    /**
+     * @param $history
+     * @return string
+     */
     public function getLastHistorique($history): string
     {
         $lastLog = end($history);
         return sprintf(
-            "%s : [%s]",
-            date("d/m/Y H:i:s", strtotime($lastLog->date)),
+            '%s : [%s]',
+            date('d/m/Y H:i:s', strtotime($lastLog->date)),
             $lastLog->stateName
         );
     }
 
-    public function getDateSignature($history): string
+    public function getDateSignature(stdClass|array $history): string
     {
         foreach (array_reverse($history) as $log) {
-            if (in_array($log->stateName, self::SIGN_STATE)) {
+            if (in_array($log->stateName, self::SIGNED_STATE, true)) {
                 $logSignature = $log;
                 break;
             }
         }
-        return isset($logSignature) ? date("Y-m-d", strtotime($logSignature->date)) : "";
+        return isset($logSignature) ? date('Y-m-d', strtotime($logSignature->date)) : '';
     }
 
     public function effacerDossierRejete($documentId)

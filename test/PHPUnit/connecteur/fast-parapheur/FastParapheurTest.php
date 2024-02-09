@@ -336,12 +336,15 @@ class FastParapheurTest extends PastellTestCase
         $this->assertSame("L'historique du document n'a pas été trouvé", $this->fastParapheur->getLastError());
     }
 
-    public function testLastHistorique()
+    /**
+     * @throws JsonException
+     */
+    public function testLastHistorique(): void
     {
         $this->fastParapheur = $this->getFastParapheur();
 
-        $history = json_decode(json_encode(
-            [
+        $history = json_decode(
+            json_encode([
                 [
                     'userFullName' => 'Agent',
                     'date' => '2019-04-03T14:46:49.274+01:00',
@@ -352,20 +355,26 @@ class FastParapheurTest extends PastellTestCase
                     'date' => '2019-04-03T15:35:03.449+01:00',
                     'stateName' => 'Classé'
                 ]
-            ]
-        ));
-        $this->assertSame(
-            "03/04/2019 16:35:03 : [Classé]",
+            ], JSON_THROW_ON_ERROR),
+            false,
+            512,
+            JSON_THROW_ON_ERROR
+        );
+        static::assertSame(
+            '03/04/2019 16:35:03 : [Classé]',
             $this->fastParapheur->getLastHistorique($history)
         );
     }
 
-    public function testDateSignature()
+    /**
+     * @throws JsonException
+     */
+    public function testDateSignature(): void
     {
         $this->fastParapheur = $this->getFastParapheur();
 
-        $history = json_decode(json_encode(
-            [
+        $history = json_decode(
+            json_encode([
                 [
                     'userFullName' => 'Agent',
                     'date' => '2019-04-03T14:46:49.274+01:00',
@@ -386,10 +395,13 @@ class FastParapheurTest extends PastellTestCase
                     'date' => '2019-07-03T15:35:03.449+01:00',
                     'stateName' => 'Classé'
                 ]
-            ]
-        ));
-        $this->assertSame(
-            "2019-06-03",
+            ], JSON_THROW_ON_ERROR),
+            false,
+            512,
+            JSON_THROW_ON_ERROR
+        );
+        static::assertSame(
+            '2019-06-03',
             $this->fastParapheur->getDateSignature($history)
         );
     }

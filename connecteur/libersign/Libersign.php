@@ -99,11 +99,6 @@ class Libersign extends SignatureConnecteur
         throw new BadMethodCallException("Not implemented");
     }
 
-    public function getHistorique($dossierID)
-    {
-        throw new Exception("Not implemented");
-    }
-
     public function getSignature($dossierID, $archive = true)
     {
         throw new Exception("Not implemented");
@@ -114,7 +109,12 @@ class Libersign extends SignatureConnecteur
         throw new Exception("Not implemented");
     }
 
-    public function getLastHistorique($dossierID)
+    public function getLastHistorique($history): string
+    {
+        throw new Exception("Not implemented");
+    }
+
+    public function getDateSignature(stdClass|array $history): string
     {
         throw new Exception("Not implemented");
     }
