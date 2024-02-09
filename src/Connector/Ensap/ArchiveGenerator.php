@@ -34,6 +34,15 @@ class ArchiveGenerator
         $this->enveloppeData = $enveloppeData;
     }
 
+    public function getEnveloppe(): Enveloppe
+    {
+        $this->enveloppeBuilder->setMessage($this->enveloppeData['message'])->setEmetteur($this->enveloppeData['emetteur']);
+        foreach ($this->enveloppeData['assures'] as $assure) {
+            $this->enveloppeBuilder->addAssure($assure);
+        }
+        return $this->enveloppeBuilder->build();
+    }
+
     /**
      * @throws DOMException
      */
@@ -116,15 +125,6 @@ class ArchiveGenerator
         } catch (Exception $e) {
             throw new InvalidArgumentException($e->getMessage(), 0, $e);
         }
-    }
-
-    public function getEnveloppe(): Enveloppe
-    {
-        $this->enveloppeBuilder->setMessage($this->enveloppeData['message'])->setEmetteur($this->enveloppeData['emetteur']);
-        foreach ($this->enveloppeData['assures'] as $assure) {
-            $this->enveloppeBuilder->addAssure($assure);
-        }
-        return $this->enveloppeBuilder->build();
     }
 
     /**
