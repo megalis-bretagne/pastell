@@ -29,6 +29,7 @@
 - Le flux `mailsec` est remplacé par le flux studio `ls-mailsec` #1978
 - Le flux `mailsec-bidir` est remplacé par le flux studio `ls-mailsec-bidir` #1978
 - Le flux `commande-generique` est remplacé par le flux studio `ls-commande` #1968
+- Les flux `pdf-generique` et `document-a-signer` sont remplacés par le flux studio `ls-document-pdf` #1870
 - Les flux `helios-generique` et `helios-automatique` sont remplacés par le flux studio `ls-helios` #1969
 
 ## Évolutions
