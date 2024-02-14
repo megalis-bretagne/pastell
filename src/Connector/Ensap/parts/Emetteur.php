@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Pastell\Connector\Ensap\enveloppe;
+namespace Pastell\Connector\Ensap\parts;
 
 class Emetteur
 {

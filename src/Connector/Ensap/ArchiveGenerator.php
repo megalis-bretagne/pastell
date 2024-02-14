@@ -2,25 +2,30 @@
 
 namespace Pastell\Connector\Ensap;
 
-use Pastell\Connector\Ensap\enveloppe\Assure;
-use Pastell\Connector\Ensap\enveloppe\Document;
-use Pastell\Connector\Ensap\enveloppe\Enveloppe;
-use Pastell\Connector\Ensap\enveloppe\Gestionnaire;
-use DateTime;
 use DOMDocument;
 use DOMException;
+use DonneesFormulaire;
 use Exception;
 use InvalidArgumentException;
+use Pastell\Connector\Ensap\builders\AssureBuilder;
+use Pastell\Connector\Ensap\builders\DocumentBuilder;
+use Pastell\Connector\Ensap\builders\EmetteurBuilder;
+use Pastell\Connector\Ensap\builders\EnveloppeBuilder;
+use Pastell\Connector\Ensap\builders\GestionnaireBuilder;
+use Pastell\Connector\Ensap\builders\MessageBuilder;
+use Pastell\Connector\Ensap\parts\Assure;
+use Pastell\Connector\Ensap\parts\Document;
+use Pastell\Connector\Ensap\parts\Enveloppe;
+use Pastell\Connector\Ensap\parts\Gestionnaire;
+use Phar;
+use PharData;
 use RuntimeException;
-use SimpleXMLElement;
 use TmpFolder;
 use XSDValidator;
-use ZipArchive;
 
 class ArchiveGenerator
 {
     private const XSD_SCHEMA_PATH = __DIR__ . '/xsd/enveloppe_ENSAP_BPG_V1.3.xsd';
-    private array $enveloppeData;
 
     public function __construct(
         private readonly EnveloppeBuilder $enveloppeBuilder,
@@ -29,18 +34,77 @@ class ArchiveGenerator
     ) {
     }
 
-    public function setData(array $enveloppeData): void
+    /**
+     * @throws Exception
+     */
+    public function generateArchive(DonneesFormulaire $donneesFormulaire): string
     {
-        $this->enveloppeData = $enveloppeData;
+        try {
+            $tmpFolder = $this->tmpFolder->create();
+        } catch (Exception $e) {
+            throw new RuntimeException('Cannot create temporary directory : ' . $e->getMessage());
+        }
+
+        $archiveName = $this->generateArchiveName($donneesFormulaire);
+        $enveloppe = $this->generateEnveloppe($donneesFormulaire);
+        $xml = $this->generateXML($enveloppe);
+        $archiveName = $this->createTarGzArchive($archiveName, $donneesFormulaire->get('document'), $xml, $tmpFolder);
+        return (new GPGEncryptor())->encrypt($archiveName, $tmpFolder);
     }
 
-    public function getEnveloppe(): Enveloppe
-    {
-        $this->enveloppeBuilder->setMessage($this->enveloppeData['message'])->setEmetteur($this->enveloppeData['emetteur']);
-        foreach ($this->enveloppeData['assures'] as $assure) {
-            $this->enveloppeBuilder->addAssure($assure);
+    public function generateArchiveName(
+        DonneesFormulaire $donneesFormulaire,
+    ): string {
+        $archiveName = 'ENVOI-PJ-BPG-' .
+            $donneesFormulaire->get('sstheme') . '-' .
+            $donneesFormulaire->get('nom_emetteurSRE') . '-' .
+            $donneesFormulaire->get('code_emetteurSRE') . '-' .
+            date('Ym') . '-' .
+            date('YmdHis');
+        if (!preg_match('/^ENVOI-PJ-BPG-(43|45)-\w{1,5}-\w{1,5}-\d{6}-\d{14}$/', $archiveName)) {
+            throw new InvalidArgumentException("Invalid archive name: $archiveName");
         }
-        return $this->enveloppeBuilder->build();
+        return $archiveName;
+    }
+
+    public function generateEnveloppe(DonneesFormulaire $donneesFormulaire): Enveloppe
+    {
+        $documentBuilder = new DocumentBuilder();
+        $document = $documentBuilder->setDateDocument($donneesFormulaire->get('date_document'))
+            ->setNomFichier($donneesFormulaire->get('titre_document'))
+            ->build();
+
+        $gestionnaireBuilder = new GestionnaireBuilder();
+        $gestionnaire = $gestionnaireBuilder->setSiret($donneesFormulaire->get('siret_collectivite'))
+            ->addDocument($document)
+            ->build();
+
+        $assureBuilder = new AssureBuilder();
+        $assure = $assureBuilder->setNumeroDossier($donneesFormulaire->get('matricule_agent'))
+            ->setNumeroOrdre('1')
+            ->setNir('MANQUANT')
+            ->setNomNaissance($donneesFormulaire->get('nom_naissance_agent'))
+            ->setSexe('MANQUANT')
+            ->setDateNaissance($donneesFormulaire->get('date_naissance_agent'))
+            ->setStatut($donneesFormulaire->get('statut_agent'))
+            ->setReferenceEmetteur($donneesFormulaire->get('matricule_agent'))
+            ->addGestionnaire($gestionnaire)
+            ->build();
+
+        $emetteurBuilder = new EmetteurBuilder();
+        $emetteur = $emetteurBuilder->setCodeEmetteur($donneesFormulaire->get('siret_collectivite'))
+            ->build();
+
+        $messageBuilder = new MessageBuilder();
+        $message = $messageBuilder->setDateTraitement(date('dmY'))
+            ->setNomFichier($this->generateArchiveName($donneesFormulaire))
+            ->build();
+
+        $enveloppeBuilder = new EnveloppeBuilder();
+        return $enveloppeBuilder->setMessage($message)
+            ->setEmetteur($emetteur)
+            ->addAssure($assure)
+            ->build();
     }
 
     /**
@@ -118,6 +182,7 @@ class ArchiveGenerator
         $dom->appendChild($envoiBPGenerique);
         return $dom->saveXML();
     }
+
     public function validateXML(string $xml): bool
     {
         try {
@@ -127,39 +192,17 @@ class ArchiveGenerator
         }
     }
 
-    /**
-     * @throws Exception
-     */
-    public function generateArchive(array $pdf_documents, string $xml, string $emitterName, string $emitterCode): string
-    {
-        $xmlElement = new SimpleXMLElement($xml);
-        $subTheme = $xmlElement->assure->gestionnaire->document->sstheme ?? null;
-        //$emitterCode = $xmlElement->emetteur->code_emetteur ?? null;
-        $period = $xmlElement->assure->gestionnaire->document->date_document ?? null;
-        $formatedDate = DateTime::createFromFormat('dmY', (string)$period)->format('Ym');
-        $timestamp = date('YmdHis');
-
-        $archiveName = "ENVOI-PJ-BPG-{$subTheme}-{$emitterName}-{$emitterCode}-{$formatedDate}-{$timestamp}.tar.gz.gpg";
-        if (!preg_match('/^ENVOI-PJ-BPG-(43|45)-\w{1,5}-\w{1,5}-\d{6}-\d{14}.tar.gz.gpg$/', $archiveName)) {
-            throw new InvalidArgumentException("Invalid archive name: $archiveName");
-        }
-
-        try {
-            $zipDirectory = $this->tmpFolder->create();
-        } catch (Exception $e) {
-            throw new RuntimeException('Cannot create temporary directory : ' . $e->getMessage());
-        }
-
-        $zip = new ZipArchive();
-        if ($zip->open("$zipDirectory/$archiveName", ZipArchive::CREATE) === true) {
-            foreach ($pdf_documents as $name => $content) {
-                $zip->addFromString($name, $content);
-            }
-            $zip->addFromString('document.xml', $xml);
-            $zip->close();
-        } else {
-            throw new RuntimeException("Cannot open archive: $archiveName");
-        }
-        return $archiveName;
+    public function createTarGzArchive(
+        string $archiveName,
+        string $documentContent,
+        string $xmlContent,
+        string $tmpFolder
+    ): string {
+        $tar = new PharData("$tmpFolder/$archiveName.tar");
+        $tar->addFromString('document.txt', $documentContent);
+        $tar->addFromString('index.xml', $xmlContent);
+        $tar->compress(Phar::GZ);
+        unlink("$tmpFolder/$archiveName.tar");
+        return "$archiveName.tar.gz";
     }
 }

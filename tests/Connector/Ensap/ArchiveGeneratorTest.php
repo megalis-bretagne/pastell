@@ -3,17 +3,19 @@
 namespace Connector\Ensap;
 
 use DOMException;
+use DonneesFormulaire;
+use DonneesFormulaireFactory;
 use Exception;
 use Pastell\Connector\Ensap\ArchiveGenerator;
-use Pastell\Connector\Ensap\enveloppe\Assure;
-use Pastell\Connector\Ensap\enveloppe\Document;
-use Pastell\Connector\Ensap\enveloppe\Emetteur;
-use Pastell\Connector\Ensap\enveloppe\Enveloppe;
-use Pastell\Connector\Ensap\enveloppe\Gestionnaire;
-use Pastell\Connector\Ensap\enveloppe\Message;
+use Pastell\Connector\Ensap\parts\Assure;
+use Pastell\Connector\Ensap\parts\Document;
+use Pastell\Connector\Ensap\parts\Emetteur;
+use Pastell\Connector\Ensap\parts\Enveloppe;
+use Pastell\Connector\Ensap\parts\Gestionnaire;
+use Pastell\Connector\Ensap\parts\Message;
 use PastellTestCase;
 
-class EnsapEnveloppeBuilderTest extends PastellTestCase
+class ArchiveGeneratorTest extends PastellTestCase
 {
     private ArchiveGenerator $archiveGenerator;
     public function __construct($name = null, array $data = [], $dataName = '')
@@ -24,39 +26,19 @@ class EnsapEnveloppeBuilderTest extends PastellTestCase
 
     public function createEnveloppe(): Enveloppe
     {
-        $document = new Document();
-        $document->theme = 8;
-        $document->sstheme = 43;
-        $document->dateDocument = '01092021';
-        $document->montant = '200055';
-        $document->nomFichier = '1870194035088_13000920600010_BPaie_01092021.pdf';
+        $donneesFormulaire = $this->getObjectInstancier()->getInstance(DonneesFormulaireFactory::class)->get();
+        $donneesFormulaire->setData('date_document', '01092021');
+        $donneesFormulaire->setData('titre_document', '1870194035088_13000920600010_BPaie_01092021.pdf');
+        $donneesFormulaire->setData('siret_collectivite', '13000920600010');
+        $donneesFormulaire->setData('matricule_agent', '12589');
+        $donneesFormulaire->setData('nom_naissance_agent', 'BERNARD');
+        $donneesFormulaire->setData('date_naissance_agent', '11121964');
+        $donneesFormulaire->setData('statut_agent', 'T');
 
-        $gestionnaire = new Gestionnaire();
-        $gestionnaire->siret = '13000920600010';
-        $gestionnaire->documents = [$document];
-
-        $assure = new Assure();
-        $assure->numeroDossier = '12589';
-        $assure->numeroOrdre = '2';
-        $assure->nir = '1641275074060';
-        $assure->nomNaissance = 'BERNARD';
-        $assure->dateNaissance = '11121964';
-        $assure->iban = 'IBAN à insérer';
-        $assure->statut = 'T';
-        $assure->gestionnaires = [$gestionnaire];
-
-        $emetteur = new Emetteur();
-        $emetteur->codeEmetteur = '13000920600022';
-        $emetteur->codeCFT = '';
-
-        $message = new Message();
-        $message->versionFichier = '01.00';
-        $message->natureFlux = 'ENVOI-BP-GENERIQUE';
-        $message->nomFichier = 'ENVOI-PJ-BPG-43-XXXXX-PXXXX-202109-290921113858';
-        $message->dateTraitement = '29092021';
-
-        $this->archiveGenerator->setData(['emetteur' => $emetteur, 'assures' => [$assure], 'message' => $message]);
-        return $this->archiveGenerator->getEnveloppe();
+        $donneesFormulaire->setData('sstheme', '43');
+        $donneesFormulaire->setData('nom_emetteurSRE', 'LBRCL');
+        $donneesFormulaire->setData('code_emetteurSRE', 'LBRCL');
+        return $this->archiveGenerator->generateEnveloppe($donneesFormulaire);
     }
 
     /**

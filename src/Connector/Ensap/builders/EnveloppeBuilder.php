@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Pastell\Connector\Ensap;
+namespace Pastell\Connector\Ensap\builders;
 
-use Pastell\Connector\Ensap\enveloppe\Assure;
-use Pastell\Connector\Ensap\enveloppe\Emetteur;
-use Pastell\Connector\Ensap\enveloppe\Enveloppe;
-use Pastell\Connector\Ensap\enveloppe\Message;
+use Pastell\Connector\Ensap\parts\Assure;
+use Pastell\Connector\Ensap\parts\Emetteur;
+use Pastell\Connector\Ensap\parts\Enveloppe;
+use Pastell\Connector\Ensap\parts\Message;
 
 class EnveloppeBuilder
 {
@@ -39,5 +39,15 @@ class EnveloppeBuilder
     public function build(): Enveloppe
     {
         return $this->enveloppe;
+    }
+
+    public function getEnveloppe(array $enveloppeData): Enveloppe
+    {
+        $this->setMessage($enveloppeData['message'])
+            ->setEmetteur($enveloppeData['emetteur']);
+        foreach ($enveloppeData['assures'] as $assure) {
+            $this->addAssure($assure);
+        }
+        return $this->build();
     }
 }
