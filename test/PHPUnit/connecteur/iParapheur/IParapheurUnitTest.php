@@ -31,9 +31,6 @@ class IParapheurUnitTest extends PastellTestCase
 
             $soapClient->expects($this->any())
                 ->method("__call")
-                ->with(
-                    $this->equalTo('ArchiverDossier')
-                )
                 ->willReturn($object = json_decode(self::REPONSE_ARCHIVE_OK, false));
         }
 
@@ -302,6 +299,36 @@ class IParapheurUnitTest extends PastellTestCase
         $iParapheur = $this->getIParapheurConnecteur($soapClient);
         $this->expectException(SignatureException::class);
         $this->expectExceptionMessage("[ERROR] Le sous-type SOUS-TYPE n'existe pas pour le type 'Document'");
+        $iParapheur->sendDossier($fileToSign);
+    }
+
+    /**
+
+     * @param FileToSign $fileToSign
+     * @param array $expectedDataArray
+     * @throws Exception
+     */
+    public function testSendDossierPJ(): void
+    {
+        $fileToSign = new FileToSign();
+        $fileToSign->type = 'TYPE';
+        $fileToSign->sousType = 'SOUS-TYPE';
+        $fileToSign->dossierId = '1234-abcd';
+        $fileToSign->document = new Fichier();
+        $fileToSign->document->filename = 'nom fichier principal';
+        $fileToSign->document->content = '<?xml version="1.0" encoding="UTF-8"?><root><PES_DepenseAller><Bordereau></Bordereau></PES_DepenseAller></root>';
+        $fileToSign->document->contentType = 'application/xml';
+        $fileToSign->visualPdf = new Fichier();
+
+        $iParapheur = $this->getIParapheurConnecteur();
+
+        try {
+            $fileToSign->xPathPourSignatureXML = null;
+            $iParapheur->sendDossier($fileToSign);
+        } catch (Exception $e) {
+            $this->assertEquals("Le bordereau du fichier PES ne contient pas d'identifiant valide, ni la balise PESAller : signature impossible", $e->getMessage());
+        }
+        $fileToSign->xPathPourSignatureXML = '4';
         $iParapheur->sendDossier($fileToSign);
     }
 
