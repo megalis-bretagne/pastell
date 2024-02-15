@@ -452,7 +452,6 @@ class IParapheur extends SignatureConnecteur
             && !$fileToSign->xPathPourSignatureXML
             && $this->xPathPourSignatureXML !== '4'
         ) {
-            dump("tonpere");
             $fileToSign->xPathPourSignatureXML = $this->getXPathPourSignatureXML($fileToSign->document->content);
         }
 

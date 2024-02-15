@@ -302,13 +302,7 @@ class IParapheurUnitTest extends PastellTestCase
         $iParapheur->sendDossier($fileToSign);
     }
 
-    /**
-
-     * @param FileToSign $fileToSign
-     * @param array $expectedDataArray
-     * @throws Exception
-     */
-    public function testSendDossierPJ(): void
+    public function sendDossierPJProvider()
     {
         $fileToSign = new FileToSign();
         $fileToSign->type = 'TYPE';
@@ -320,16 +314,42 @@ class IParapheurUnitTest extends PastellTestCase
         $fileToSign->document->contentType = 'application/xml';
         $fileToSign->visualPdf = new Fichier();
 
-        $iParapheur = $this->getIParapheurConnecteur();
-
+        return [
+            [
+                $fileToSign
+            ]
+        ];
+    }
+    /**
+     * @dataProvider sendDossierPJProvider
+     * @param FileToSign $fileToSign
+     * @throws Exception
+     */
+    public function testSendDossierPJ(FileToSign $fileToSign): void
+    {
+        $soapClient = $this->createMock(SoapClient::class);
+        $soapClient->expects($this->any())
+            ->method('__call')
+            ->willReturnCallback(function () {
+                return json_decode(
+                    json_encode(
+                        ['MessageRetour' => ['severite' => 'severite', 'message' => 'message', 'codeRetour' => 'OK']],
+                        JSON_THROW_ON_ERROR
+                    ),
+                    false,
+                    512,
+                    JSON_THROW_ON_ERROR
+                );
+            });
+        $iParapheur = $this->getIParapheurConnecteur($soapClient);
         try {
             $fileToSign->xPathPourSignatureXML = null;
             $iParapheur->sendDossier($fileToSign);
         } catch (Exception $e) {
-            $this->assertEquals("Le bordereau du fichier PES ne contient pas d'identifiant valide, ni la balise PESAller : signature impossible", $e->getMessage());
+            static::assertEquals("Le bordereau du fichier PES ne contient pas d'identifiant valide, ni la balise PESAller : signature impossible", $e->getMessage());
         }
         $fileToSign->xPathPourSignatureXML = '4';
-        $iParapheur->sendDossier($fileToSign);
+        static::assertEquals('1234-abcd', $iParapheur->sendDossier($fileToSign));
     }
 
 
