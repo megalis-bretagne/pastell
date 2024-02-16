@@ -15,6 +15,6 @@ rm -r /var/lib/apt/lists/*
 
 phpenmod xdebug pcov
 
-composer install
+COMPOSER_ALLOW_SUPERUSER=1 composer install
 
 cp /var/www/pastell/docker/bash_completion.d/* /etc/bash_completion.d/
