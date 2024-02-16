@@ -60,7 +60,7 @@ COPY --chown=${USERNAME}:${GROUPNAME} --from=node_modules /var/www/pastell/node_
 COPY ./composer.* /var/www/pastell/
 RUN --mount=type=secret,id=composer_auth,dst=/var/www/pastell/auth.json \
     /bin/bash -c 'mkdir -p /var/www/pastell/{web,web-mailsec}' && \
-    composer install --no-dev --no-autoloader
+    COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev --no-autoloader
 
 # Pastell sources
 COPY --chown=${USERNAME}:${GROUPNAME} ./ /var/www/pastell/
