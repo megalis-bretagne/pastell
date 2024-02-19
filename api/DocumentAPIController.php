@@ -27,7 +27,7 @@ class DocumentAPIController extends BaseAPIController
         if ($id_e && ! $this->entiteSQL->getInfo($id_e)) {
             throw new NotFoundException("L'entité $id_e n'existe pas");
         }
-        $this->checkDroit($id_e, "entite:lecture");
+        $this->checkDroit($id_e, 'entite:lecture');
         return $id_e;
     }
 
@@ -72,9 +72,9 @@ class DocumentAPIController extends BaseAPIController
         }
 
         if (! $id_e) {
-            throw new Exception("id_e est obligatoire");
+            throw new Exception('id_e est obligatoire');
         }
-        $this->checkDroit($id_e, "entite:lecture");
+        $this->checkDroit($id_e, 'entite:lecture');
 
         $allDroitEntite = $this->getDroitService()->getAllDocumentLecture($this->getUtilisateurId(), $id_e);
 
@@ -125,12 +125,12 @@ class DocumentAPIController extends BaseAPIController
         $type = $this->getFromRequest('type');
 
         if ($id_e === false || $type === false) {
-            throw new Exception("Les paramètres id_e et type sont obligatoires.");
+            throw new Exception('Les paramètres id_e et type sont obligatoires.');
         }
 
         // verifier les droits
-        $this->checkDroit($id_e, "entite:lecture");
-        $this->checkDroit($id_e, $type . ":lecture");
+        $this->checkDroit($id_e, 'entite:lecture');
+        $this->checkDroit($id_e, $type . ':lecture');
 
         $req = $this->getRequest();
         unset($req['id_e']);
@@ -180,7 +180,7 @@ class DocumentAPIController extends BaseAPIController
         }
         $result['info'] = $info;
 
-        $this->checkDroit($id_e, $info['type'] . ":edition");
+        $this->checkDroit($id_e, $info['type'] . ':edition');
         $my_role = $this->documentEntite->getRole($id_e, $id_d);
         if (! $my_role) {
             throw new NotFoundException("Le document $id_d n'appartient pas à l'entité $id_e");
@@ -215,7 +215,7 @@ class DocumentAPIController extends BaseAPIController
     public function getAll($id_e, $all_id_d)
     {
         if (!is_array($all_id_d)) {
-            throw new Exception("Le paramètre id_d[] ne semble pas valide");
+            throw new Exception('Le paramètre id_d[] ne semble pas valide');
         }
 
         $max_execution_time = ini_get('max_execution_time');
@@ -241,6 +241,10 @@ class DocumentAPIController extends BaseAPIController
 
         $id_d = $this->getFromQueryArgs(2);
         if ($id_d) {
+            $file_type = $this->getFromQueryArgs(3);
+            if ($file_type === 'chunk') {
+                return $this->postChunk($id_e, $id_d);
+            }
             return $this->postFile($id_e, $id_d);
         }
 
@@ -284,7 +288,7 @@ class DocumentAPIController extends BaseAPIController
         if (!$result['formulaire_ok']) {
             $result['message'] = $donneesFormulaire->getLastError();
         } else {
-            $result['message'] = "";
+            $result['message'] = '';
         }
         return $result;
     }
@@ -326,7 +330,7 @@ class DocumentAPIController extends BaseAPIController
             $this->getRequest()
         );
         $result = $this->internalDetail($id_e, $id_d);
-        $result['result'] = "ok"; //Compat V1
+        $result['result'] = 'ok'; //Compat V1
         return $result;
     }
 
@@ -371,16 +375,17 @@ class DocumentAPIController extends BaseAPIController
         }
 
         $infoUtilisateur = $this->utilisateur->getInfo($this->getUtilisateurId());
-        $nom = $infoUtilisateur['prenom'] . " " . $infoUtilisateur['nom'];
+        $nom = $infoUtilisateur['prenom'] . ' ' . $infoUtilisateur['nom'];
 
-        $this->journal->add(Journal::DOCUMENT_CONSULTATION, $id_e, $id_d, "Consulté", "$nom a consulté le document $file_name");
+        $this->journal->add(Journal::DOCUMENT_CONSULTATION, $id_e, $id_d,
+            'Consulté', "$nom a consulté le document $file_name");
 
 
-        header_wrapper("Content-type: " . mime_content_type($file_path));
+        header_wrapper('Content-type: ' . mime_content_type($file_path));
         header_wrapper("Content-disposition: attachment; filename=\"$file_name\"");
-        header_wrapper("Expires: 0");
-        header_wrapper("Cache-Control: must-revalidate, post-check=0,pre-check=0");
-        header_wrapper("Pragma: public");
+        header_wrapper('Expires: 0');
+        header_wrapper('Cache-Control: must-revalidate, post-check=0,pre-check=0');
+        header_wrapper('Pragma: public');
 
         readfile($file_path);
 
@@ -396,7 +401,7 @@ class DocumentAPIController extends BaseAPIController
      */
     public function postFile($id_e, $id_d)
     {
-        if ("action" == $this->getFromQueryArgs(3)) {
+        if ('action' == $this->getFromQueryArgs(3)) {
             return $this->actionAction($id_e, $id_d);
         }
 
@@ -418,7 +423,7 @@ class DocumentAPIController extends BaseAPIController
         $tmpFolder = new TmpFolder();
         $tmp_folder = $tmpFolder->create();
 
-        file_put_contents($tmp_folder . "/tmp_file", $file_content);
+        file_put_contents($tmp_folder . '/tmp_file', $file_content);
 
         $this->documentModificationService->addFile(
             $id_e,
@@ -427,7 +432,7 @@ class DocumentAPIController extends BaseAPIController
             $field_name,
             $file_number,
             $file_name,
-            $tmp_folder . "/tmp_file"
+            $tmp_folder . '/tmp_file'
         );
         $tmpFolder->delete($tmp_folder);
         $result['content'] = $this->internalDetail($id_e, $id_d);
@@ -438,7 +443,7 @@ class DocumentAPIController extends BaseAPIController
         if (!$result['formulaire_ok']) {
             $result['message'] = $donneesFormulaire->getLastError();
         } else {
-            $result['message'] = "";
+            $result['message'] = '';
         }
         return $result;
     }
@@ -541,5 +546,78 @@ class DocumentAPIController extends BaseAPIController
         );
 
         return $this->internalDetail($entityId, $documentId);
+    }
+
+    /**
+     * @param $id_e
+     * @param $id_d
+     * @return array|mixed
+     * @throws ForbiddenException
+     * @throws Exception
+     */
+    public function postChunk($id_e, $id_d)
+    {
+        if (!$this->actionPossible->isActionPossible($id_e, $this->getUtilisateurId(), $id_d, 'modification')) {
+            throw new Exception("L'action « modification »  n'est pas permise");
+        }
+
+        $field_name = $this->getFromQueryArgs(4);
+        $chunk_number = $this->getFromQueryArgs(5);
+        $total_chunks = $this->getFromQueryArgs(6);
+        //$chunk_size = $this->getFromQueryArgs(7);
+
+        $file_name = $this->getFromRequest('file_name');
+
+        $fileUploader = $this->getFileUploader();
+        $file_content = $fileUploader->getFileContent('file_content');
+        if (! $file_content) {
+            $file_content = $this->getFromRequest('file_content');
+        }
+
+
+        $tmpFolder = new TmpFolder();
+        // Create a temporary folder only for the first chunk
+        if ((int)$chunk_number === 1) {
+            $tmp_folder = $tmpFolder->create();
+            // Store the temporary folder path in the session
+            $_SESSION['tmp_folder'] = $tmp_folder;
+        } else {
+            // Retrieve the temporary folder path from the session
+            $tmp_folder = $_SESSION['tmp_folder'];
+        }
+
+        // Append the chunk to the temporary file
+        file_put_contents($tmp_folder . '/tmp_file', $file_content, FILE_APPEND);
+        dump($tmp_folder);
+        die();
+        // If this is the last chunk, add the file to the document
+        if ($chunk_number === $total_chunks) {
+            $this->documentModificationService->addFile(
+                $id_e,
+                $this->getUtilisateurId(),
+                $id_d,
+                $field_name,
+                $chunk_number,
+                $file_name,
+                $tmp_folder . '/tmp_file'
+            );
+
+            $tmpFolder->delete($tmp_folder);
+            // Clear the temporary folder path from the session
+            unset($_SESSION['tmp_folder']);
+        }
+
+        $result['content'] = $this->internalDetail($id_e, $id_d);
+        $result['result'] = self::RESULT_OK;
+
+        $donneesFormulaire = $this->donneesFormulaireFactory->get($id_d);
+        $result['formulaire_ok'] = $donneesFormulaire->isValidable() ? 1 : 0;
+        if (!$result['formulaire_ok']) {
+            $result['message'] = $donneesFormulaire->getLastError();
+        } else {
+            $result['message'] = '';
+        }
+
+        return $result;
     }
 }
