@@ -404,11 +404,6 @@ class FastParapheur extends SignatureConnecteur
         return $return;
     }
 
-    public function hasBordereau()
-    {
-        return true;
-    }
-
     /**
      * @param $dossierID
      */
