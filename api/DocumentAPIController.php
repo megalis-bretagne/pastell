@@ -564,7 +564,7 @@ class DocumentAPIController extends BaseAPIController
         $field_name = $this->getFromQueryArgs(4);
         $chunk_number = $this->getFromQueryArgs(5);
         $total_chunks = $this->getFromQueryArgs(6);
-        //$chunk_size = $this->getFromQueryArgs(7);
+        $file_number = $this->getFromQueryArgs(7);
 
         $file_name = $this->getFromRequest('file_name');
 
@@ -574,36 +574,26 @@ class DocumentAPIController extends BaseAPIController
             $file_content = $this->getFromRequest('file_content');
         }
 
-
         $tmpFolder = new TmpFolder();
-        // Create a temporary folder only for the first chunk
         if ((int)$chunk_number === 1) {
             $tmp_folder = $tmpFolder->create();
-            // Store the temporary folder path in the session
             $_SESSION['tmp_folder'] = $tmp_folder;
         } else {
-            // Retrieve the temporary folder path from the session
             $tmp_folder = $_SESSION['tmp_folder'];
         }
-
-        // Append the chunk to the temporary file
-        file_put_contents($tmp_folder . '/tmp_file', $file_content, FILE_APPEND);
-        dump($tmp_folder);
-        die();
-        // If this is the last chunk, add the file to the document
+        $file_path = $tmp_folder . '/' . $file_name;
+        file_put_contents($file_path, $file_content, FILE_APPEND);
         if ($chunk_number === $total_chunks) {
             $this->documentModificationService->addFile(
                 $id_e,
                 $this->getUtilisateurId(),
                 $id_d,
                 $field_name,
-                $chunk_number,
+                $file_number,
                 $file_name,
-                $tmp_folder . '/tmp_file'
+                $file_path
             );
-
             $tmpFolder->delete($tmp_folder);
-            // Clear the temporary folder path from the session
             unset($_SESSION['tmp_folder']);
         }
 
