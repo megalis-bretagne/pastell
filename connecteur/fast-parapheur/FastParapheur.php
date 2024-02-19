@@ -395,7 +395,7 @@ class FastParapheur extends SignatureConnecteur
     {
         try {
             $return = new Fichier();
-            $return->filename = 'fichier-de-circulation.pdf';
+            $return->filename = 'fichier_de_circulation.pdf';
             $return->content = $this->getClient()->getFdc($documentId);
         } catch (Exception $e) {
             $this->lastError = $e->getMessage();
