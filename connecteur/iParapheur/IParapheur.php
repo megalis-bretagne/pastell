@@ -814,10 +814,10 @@ class IParapheur extends SignatureConnecteur
      * Workaround because it is embedded in IParapheur::getSignature()
      *
      * @param $signature
-     * @param string $documentId
-     * @return Fichier
+     * @param string|null $dossierID
+     * @return ?Fichier
      */
-    public function getBordereauFromSignature($signature, string $documentId = ''): ?Fichier
+    public function getBordereauFromSignature($signature, string $dossierID = null): ?Fichier
     {
         $file = new Fichier();
         $file->filename = $signature['nom_document'];

@@ -85,9 +85,10 @@ abstract class SignatureConnecteur extends Connecteur
      * Workaround because it is embedded in IParapheur::getSignature()
      *
      * @param $signature
-     * @return Fichier
+     * @param string|null $dossierID
+     * @return Fichier|null
      */
-    abstract public function getBordereauFromSignature($signature): ?Fichier;
+    abstract public function getBordereauFromSignature($signature, string $dossierID = null): ?Fichier;
 
     /**
      * @param $info_from_get_signature
