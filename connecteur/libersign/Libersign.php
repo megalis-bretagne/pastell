@@ -178,10 +178,10 @@ class Libersign extends SignatureConnecteur
      * Workaround because it is embedded in IParapheur::getSignature()
      *
      * @param $signature
-     * @param string|null $dossierID
-     * @return Fichier|null
+     * @param string|null $documentId
+     * @return ?Fichier
      */
-    public function getBordereauFromSignature($signature, string $dossierID = null): ?Fichier
+    public function getBordereauFromSignature($signature, string $documentId = null): ?Fichier
     {
         throw new BadMethodCallException('Not implemented');
     }
