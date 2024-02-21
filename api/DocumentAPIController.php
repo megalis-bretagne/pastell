@@ -1,5 +1,9 @@
 <?php
 
+use Flow\Basic;
+use Flow\Config;
+use Flow\Request;
+
 class DocumentAPIController extends BaseAPIController
 {
     public function __construct(
@@ -370,16 +374,20 @@ class DocumentAPIController extends BaseAPIController
         }
         $file_name = $file_name_array[$num];
 
-        if (! file_exists($file_path)) {
+        if (!file_exists($file_path)) {
             throw new Exception("Ce fichier n'existe pas");
         }
 
         $infoUtilisateur = $this->utilisateur->getInfo($this->getUtilisateurId());
         $nom = $infoUtilisateur['prenom'] . ' ' . $infoUtilisateur['nom'];
 
-        $this->journal->add(Journal::DOCUMENT_CONSULTATION, $id_e, $id_d,
-            'Consulté', "$nom a consulté le document $file_name");
-
+        $this->journal->add(
+            Journal::DOCUMENT_CONSULTATION,
+            $id_e,
+            $id_d,
+            'Consulté',
+            "$nom a consulté le document $file_name"
+        );
 
         header_wrapper('Content-type: ' . mime_content_type($file_path));
         header_wrapper("Content-disposition: attachment; filename=\"$file_name\"");
@@ -551,21 +559,21 @@ class DocumentAPIController extends BaseAPIController
     /**
      * @param $id_e
      * @param $id_d
-     * @return array|mixed
+     * @return array
      * @throws ForbiddenException
      * @throws Exception
      */
-    public function postChunk($id_e, $id_d)
+    public function postChunk($id_e, $id_d): array
     {
         if (!$this->actionPossible->isActionPossible($id_e, $this->getUtilisateurId(), $id_d, 'modification')) {
-            throw new Exception("L'action « modification »  n'est pas permise");
+            throw new RuntimeException("L'action « modification »  n'est pas permise");
         }
 
         $field_name = $this->getFromQueryArgs(4);
-        $chunk_number = $this->getFromQueryArgs(5);
-        $total_chunks = $this->getFromQueryArgs(6);
-        $file_number = $this->getFromQueryArgs(7);
+        $file_number = $this->getFromQueryArgs(5);
 
+        $chunk_index = $this->getFromRequest('chunk_index');
+        $total_chunks = $this->getFromRequest('total_chunks');
         $file_name = $this->getFromRequest('file_name');
 
         $fileUploader = $this->getFileUploader();
@@ -575,15 +583,27 @@ class DocumentAPIController extends BaseAPIController
         }
 
         $tmpFolder = new TmpFolder();
-        if ((int)$chunk_number === 1) {
-            $tmp_folder = $tmpFolder->create();
-            $_SESSION['tmp_folder'] = $tmp_folder;
-        } else {
-            $tmp_folder = $_SESSION['tmp_folder'];
+        if ((int)$chunk_index === 1) {
+            $config = new Config();
+            $config->setTempDir(UPLOAD_CHUNK_DIRECTORY);
         }
-        $file_path = $tmp_folder . '/' . $file_name;
+
+        $request = new Request();
+        $upload_filepath = \sprintf(
+            '%s/%s_%s_%s_%s_%s',
+            UPLOAD_CHUNK_DIRECTORY,
+            $id_e,
+            $id_d,
+            $field_name,
+            time(),
+            random_int(0, mt_getrandmax())
+        );
+
+        if (Basic::save($upload_filepath, $config, $request)) {
+
+        }
         file_put_contents($file_path, $file_content, FILE_APPEND);
-        if ($chunk_number === $total_chunks) {
+        if ($chunk_index === $total_chunks) {
             $this->documentModificationService->addFile(
                 $id_e,
                 $this->getUtilisateurId(),
@@ -602,10 +622,10 @@ class DocumentAPIController extends BaseAPIController
 
         $donneesFormulaire = $this->donneesFormulaireFactory->get($id_d);
         $result['formulaire_ok'] = $donneesFormulaire->isValidable() ? 1 : 0;
-        if (!$result['formulaire_ok']) {
-            $result['message'] = $donneesFormulaire->getLastError();
-        } else {
+        if ($result['formulaire_ok']) {
             $result['message'] = '';
+        } else {
+            $result['message'] = $donneesFormulaire->getLastError();
         }
 
         return $result;
