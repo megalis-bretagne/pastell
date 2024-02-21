@@ -30,7 +30,10 @@ class IParapheurUnitTest extends PastellTestCase
             $soapClient = $this->createMock(SoapClient::class);
 
             $soapClient->expects($this->any())
-                ->method("__call")
+                ->method("__call")                
+                ->with(
+                    $this->equalTo('ArchiverDossier')
+                )
                 ->willReturn($object = json_decode(self::REPONSE_ARCHIVE_OK, false));
         }
 
