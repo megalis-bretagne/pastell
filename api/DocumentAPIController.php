@@ -3,6 +3,7 @@
 use Flow\Basic;
 use Flow\Config;
 use Flow\Request;
+use Flow\Uploader;
 
 class DocumentAPIController extends BaseAPIController
 {
@@ -560,7 +561,6 @@ class DocumentAPIController extends BaseAPIController
      * @param $id_e
      * @param $id_d
      * @return array
-     * @throws ForbiddenException
      * @throws Exception
      */
     public function postChunk($id_e, $id_d): array
@@ -570,23 +570,11 @@ class DocumentAPIController extends BaseAPIController
         }
 
         $field_name = $this->getFromQueryArgs(4);
-        $file_number = $this->getFromQueryArgs(5);
-
-        $chunk_index = $this->getFromRequest('chunk_index');
-        $total_chunks = $this->getFromRequest('total_chunks');
+        $file_number = $this->getFromQueryArgs(5) ? : '';
         $file_name = $this->getFromRequest('file_name');
 
-        $fileUploader = $this->getFileUploader();
-        $file_content = $fileUploader->getFileContent('file_content');
-        if (! $file_content) {
-            $file_content = $this->getFromRequest('file_content');
-        }
-
-        $tmpFolder = new TmpFolder();
-        if ((int)$chunk_index === 1) {
-            $config = new Config();
-            $config->setTempDir(UPLOAD_CHUNK_DIRECTORY);
-        }
+        $config = new Config();
+        $config->setTempDir(UPLOAD_CHUNK_DIRECTORY);
 
         $request = new Request();
         $upload_filepath = \sprintf(
@@ -600,10 +588,6 @@ class DocumentAPIController extends BaseAPIController
         );
 
         if (Basic::save($upload_filepath, $config, $request)) {
-
-        }
-        file_put_contents($file_path, $file_content, FILE_APPEND);
-        if ($chunk_index === $total_chunks) {
             $this->documentModificationService->addFile(
                 $id_e,
                 $this->getUtilisateurId(),
@@ -611,23 +595,18 @@ class DocumentAPIController extends BaseAPIController
                 $field_name,
                 $file_number,
                 $file_name,
-                $file_path
+                $upload_filepath,
             );
-            $tmpFolder->delete($tmp_folder);
-            unset($_SESSION['tmp_folder']);
-        }
-
-        $result['content'] = $this->internalDetail($id_e, $id_d);
-        $result['result'] = self::RESULT_OK;
-
-        $donneesFormulaire = $this->donneesFormulaireFactory->get($id_d);
-        $result['formulaire_ok'] = $donneesFormulaire->isValidable() ? 1 : 0;
-        if ($result['formulaire_ok']) {
-            $result['message'] = '';
+            unlink($upload_filepath);
+            header('HTTP/1.1 201 Created');
+            $response = ['result' => 'success', 'message' => 'File uploaded'];
         } else {
-            $result['message'] = $donneesFormulaire->getLastError();
+            header('HTTP/1.1 200 Ok');
+            $response =  ['result' => 'success', 'message' => 'Chunk uploaded'];
         }
-
-        return $result;
+        if (random_int(1, 100) === 1) {
+            Uploader::pruneChunks(UPLOAD_CHUNK_DIRECTORY);
+        }
+        return $response;
     }
 }
