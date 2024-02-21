@@ -2,6 +2,7 @@
 
 use Flow\Basic;
 use Flow\Config;
+use Flow\FileOpenException;
 use Flow\Request;
 use Flow\Uploader;
 
@@ -558,23 +559,22 @@ class DocumentAPIController extends BaseAPIController
     }
 
     /**
-     * @param $id_e
-     * @param $id_d
-     * @return array
+     * @throws FileOpenException
      * @throws Exception
      */
-    public function postChunk($id_e, $id_d): array
+    public function postChunk(int $id_e, int $id_d): array
     {
         if (!$this->actionPossible->isActionPossible($id_e, $this->getUtilisateurId(), $id_d, 'modification')) {
             throw new RuntimeException("L'action « modification »  n'est pas permise");
         }
-
+        //facto
         $field_name = $this->getFromQueryArgs(4);
         $file_number = $this->getFromQueryArgs(5) ? : '';
         $file_name = $this->getFromRequest('file_name');
 
         $config = new Config();
         $config->setTempDir(UPLOAD_CHUNK_DIRECTORY);
+        //init.php
 
         $request = new Request();
         $upload_filepath = \sprintf(
@@ -598,10 +598,10 @@ class DocumentAPIController extends BaseAPIController
                 $upload_filepath,
             );
             unlink($upload_filepath);
-            header('HTTP/1.1 201 Created');
+            header_wrapper('HTTP/1.1 201 Created');
             $response = ['result' => 'success', 'message' => 'File uploaded'];
         } else {
-            header('HTTP/1.1 200 Ok');
+            header_wrapper('HTTP/1.1 200 Ok');
             $response =  ['result' => 'success', 'message' => 'Chunk uploaded'];
         }
         if (random_int(1, 100) === 1) {
