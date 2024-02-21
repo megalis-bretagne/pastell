@@ -136,7 +136,7 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor
             return false;
         }
 
-        $bordereau = $signature->getBordereauFromSignature($info);
+        $bordereau = $signature->getBordereauFromSignature($info, $dossierID);
         if ($bordereau) {
             $this->getDonneesFormulaire()
                 ->addFileFromData($bordereau_element, $bordereau->filename, $bordereau->content);
@@ -248,7 +248,7 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor
             }
         }
 
-        $bordereau = $signature->getBordereauFromSignature($info);
+        $bordereau = $signature->getBordereauFromSignature($info, $dossierID);
         if ($bordereau) {
             $donneesFormulaire->addFileFromData($bordereau_element, $bordereau->filename, $bordereau->content);
         }
