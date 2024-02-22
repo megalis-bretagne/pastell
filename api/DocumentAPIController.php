@@ -1,10 +1,6 @@
 <?php
 
-use Flow\Basic;
-use Flow\Config;
-use Flow\FileOpenException;
-use Flow\Request;
-use Flow\Uploader;
+use Pastell\File\ChunkUploader;
 
 class DocumentAPIController extends BaseAPIController
 {
@@ -24,13 +20,14 @@ class DocumentAPIController extends BaseAPIController
         private DocumentModificationService $documentModificationService,
         private DocumentEmail $documentEmail,
         private DocumentEmailReponseSQL $documentEmailReponseSQL,
+        private ChunkUploader $chunkUploader,
     ) {
     }
 
     private function checkedEntite()
     {
         $id_e = $this->getFromQueryArgs(0) ?: 0;
-        if ($id_e && ! $this->entiteSQL->getInfo($id_e)) {
+        if ($id_e && !$this->entiteSQL->getInfo($id_e)) {
             throw new NotFoundException("L'entité $id_e n'existe pas");
         }
         $this->checkDroit($id_e, 'entite:lecture');
@@ -61,7 +58,7 @@ class DocumentAPIController extends BaseAPIController
         $lastEtat = $this->getFromRequest('lastetat');
         $last_state_begin = $this->getFromRequest('last_state_begin');
         $last_state_end = $this->getFromRequest('last_state_end');
-        $tri =  $this->getFromRequest('tri', 'date_dernier_etat');
+        $tri = $this->getFromRequest('tri', 'date_dernier_etat');
         $etatTransit = $this->getFromRequest('etatTransit');
         $state_begin = $this->getFromRequest('state_begin');
         $state_end = $this->getFromRequest('state_end');
@@ -77,7 +74,7 @@ class DocumentAPIController extends BaseAPIController
             $state_end = getDateIso($state_end);
         }
 
-        if (! $id_e) {
+        if (!$id_e) {
             throw new Exception('id_e est obligatoire');
         }
         $this->checkDroit($id_e, 'entite:lecture');
@@ -188,7 +185,7 @@ class DocumentAPIController extends BaseAPIController
 
         $this->checkDroit($id_e, $info['type'] . ':edition');
         $my_role = $this->documentEntite->getRole($id_e, $id_d);
-        if (! $my_role) {
+        if (!$my_role) {
             throw new NotFoundException("Le document $id_d n'appartient pas à l'entité $id_e");
         }
         $donneesFormulaire = $this->donneesFormulaireFactory->get($id_d, $info['type']);
@@ -302,7 +299,6 @@ class DocumentAPIController extends BaseAPIController
 
     public function externalDataAction($id_e, $id_d)
     {
-
         $field = $this->getFromQueryArgs(4);
 
         $info = $this->document->getInfo($id_d);
@@ -318,7 +314,14 @@ class DocumentAPIController extends BaseAPIController
         }
 
         $action_name = $theField->getProperties('choice-action');
-        return $this->actionExecutorFactory->displayChoice($id_e, $this->getUtilisateurId(), $id_d, $action_name, true, $field);
+        return $this->actionExecutorFactory->displayChoice(
+            $id_e,
+            $this->getUtilisateurId(),
+            $id_d,
+            $action_name,
+            true,
+            $field
+        );
     }
 
     public function patchExternalData($id_e, $id_d)
@@ -426,7 +429,7 @@ class DocumentAPIController extends BaseAPIController
 
         $fileUploader = $this->getFileUploader();
         $file_content = $fileUploader->getFileContent('file_content');
-        if (! $file_content) {
+        if (!$file_content) {
             $file_content = $this->getFromRequest('file_content');
         }
 
@@ -559,27 +562,25 @@ class DocumentAPIController extends BaseAPIController
     }
 
     /**
-     * @throws FileOpenException
      * @throws Exception
      */
     public function postChunk(int $id_e, int $id_d): array
     {
         if (!$this->actionPossible->isActionPossible($id_e, $this->getUtilisateurId(), $id_d, 'modification')) {
-            throw new RuntimeException("L'action « modification »  n'est pas permise");
+            throw new ForbiddenException("L'action « modification »  n'est pas permise");
         }
-        //facto
+
         $field_name = $this->getFromQueryArgs(4);
-        $file_number = $this->getFromQueryArgs(5) ? : '';
+        $file_number = $this->getFromQueryArgs(5) ?: '';
         $file_name = $this->getFromRequest('file_name');
 
-        $config = new Config();
-        $config->setTempDir(UPLOAD_CHUNK_DIRECTORY);
-        //init.php
+        if (!isset($field_name, $file_name)) {
+            throw new BadRequestException('Les paramètres field_name et file_name sont obligatoires');
+        }
 
-        $request = new Request();
-        $upload_filepath = \sprintf(
-            '%s/%s_%s_%s_%s_%s',
-            UPLOAD_CHUNK_DIRECTORY,
+        $upload_filepath = sprintf(
+            '%s/%d_%d_%s_%s_%s',
+            $this->chunkUploader->getUploadChunkDirectory(),
             $id_e,
             $id_d,
             $field_name,
@@ -587,26 +588,24 @@ class DocumentAPIController extends BaseAPIController
             random_int(0, mt_getrandmax())
         );
 
-        if (Basic::save($upload_filepath, $config, $request)) {
-            $this->documentModificationService->addFile(
-                $id_e,
-                $this->getUtilisateurId(),
-                $id_d,
-                $field_name,
-                $file_number,
-                $file_name,
-                $upload_filepath,
-            );
-            unlink($upload_filepath);
-            header_wrapper('HTTP/1.1 201 Created');
-            $response = ['result' => 'success', 'message' => 'File uploaded'];
+        if ($this->chunkUploader->uploadChunk($upload_filepath)) {
+            try {
+                $this->documentModificationService->addFile(
+                    $id_e,
+                    $this->getUtilisateurId(),
+                    $id_d,
+                    $field_name,
+                    $file_number,
+                    $file_name,
+                    $upload_filepath,
+                );
+            } finally {
+                $response = $this->chunkUploader->createdChunk($upload_filepath);
+            }
         } else {
-            header_wrapper('HTTP/1.1 200 Ok');
-            $response =  ['result' => 'success', 'message' => 'Chunk uploaded'];
+            $response = $this->chunkUploader->continueChunk();
         }
-        if (random_int(1, 100) === 1) {
-            Uploader::pruneChunks(UPLOAD_CHUNK_DIRECTORY);
-        }
+        $this->chunkUploader->pruneChunks();
         return $response;
     }
 }
