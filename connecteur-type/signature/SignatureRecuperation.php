@@ -130,18 +130,16 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor
         /** @var SignatureConnecteur $signature */
         $signature = $this->getConnecteur('signature');
 
-        if ($signature->hasBordereau()) {
-            $info = $signature->getSignature($dossierID, false);
-            if (!$info) {
-                $this->setLastMessage("Le bordereau n'a pas pu être récupéré : " . $signature->getLastError());
-                return false;
-            }
+        $info = $signature->getSignature($dossierID, false);
+        if (!$info) {
+            $this->setLastMessage("Le bordereau n'a pas pu être récupéré : " . $signature->getLastError());
+            return false;
+        }
 
-            $bordereau = $signature->getBordereauFromSignature($info);
-            if ($bordereau) {
-                $this->getDonneesFormulaire()
-                    ->addFileFromData($bordereau_element, $bordereau->filename, $bordereau->content);
-            }
+        $bordereau = $signature->getBordereauFromSignature($info, $dossierID);
+        if ($bordereau) {
+            $this->getDonneesFormulaire()
+                ->addFileFromData($bordereau_element, $bordereau->filename, $bordereau->content);
         }
 
         $signature->effacerDossierRejete($dossierID);
@@ -250,11 +248,9 @@ class SignatureRecuperation extends ConnecteurTypeActionExecutor
             }
         }
 
-        if ($signature->hasBordereau()) {
-            $bordereau = $signature->getBordereauFromSignature($info);
-            if ($bordereau) {
-                $donneesFormulaire->addFileFromData($bordereau_element, $bordereau->filename, $bordereau->content);
-            }
+        $bordereau = $signature->getBordereauFromSignature($info, $dossierID);
+        if ($bordereau) {
+            $donneesFormulaire->addFileFromData($bordereau_element, $bordereau->filename, $bordereau->content);
         }
 
         if (!$signature->archiver($dossierID)) {
