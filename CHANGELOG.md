@@ -7,7 +7,7 @@
 - Ajout du flux Dossier de séance (archivage) 'ls-dossier-seance' #1946
 - Ajout d'un fichier pdf 'Accusé de lecture' pour les mails sécurisés des flux studio #1128
 - Ajout des champs annotations publiques et privées pour l'envoi vers iParapheur pour les flux studios #1883
-- Ajout de la récupération du bordereau de signature pour Fast Parapheur #1925
+- Ajout de la récupération du bordereau de signature pour Fast Parapheur pour les flux studios #1925
 - Studio, étape tdt_actes, ajout du contôle sur le total des fichiers Acte et Annexes < 157.29 MB #1602
 - Studio, étape tdt_helios, ajout du contrôle sur la taille du fichier PES ALLER < 128 MB #1602
 - Studio, étape tdt_helios, ajout de la possibilité de définir le champ "Objet PES ALLER" (prend la valeur NomFic du Fichier PES) #1969
