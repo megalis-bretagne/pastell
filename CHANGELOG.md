@@ -4,7 +4,7 @@
 
 - Ajout de la fonction jsonpath_array pour récupérer des listes de données #1376
 - Ajout du flux Dossier de séance (archivage) `ls-dossier-seance` #1946
-- Ajout d'un fichier pdf 'Accusé de lecture' pour les mails sécurisés des flux studio #1128
+- Ajout d'un fichier pdf 'Accusé de notification' pour les mails sécurisés des flux studio #1128
 - Ajout d'un captcha avant la lecture d'un mail sécurisé #942
 - Ajout de l'option de co-signature pour les flux studios #684
 - Ajout des champs annotations publiques et privées pour l'envoi vers iParapheur pour les flux studios #1883
@@ -39,7 +39,6 @@
 
 - Prise en compte des valeurs par défaut pour les connecteurs #1938
 - Le dossier poursuit son cheminement même s'il n'y a pas de connecteur associé pour une étape de transformation #1981
-- Harmonisation des libellés des types de dossiers et de leurs classements #1897
 
 # [4.0.12] - 2024-02-12
 
