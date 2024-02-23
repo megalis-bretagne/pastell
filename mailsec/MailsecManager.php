@@ -144,7 +144,7 @@ final class MailsecManager
             $odtFile = $this->updateReceipt($mailSecInfo);
             $config = new CloudoooServiceConfiguration();
             $pdfFile = (new CloudoooStrategy($config))->conversion($odtFile);
-            $mailSecInfo->donneesFormulaire->addFileFromData('accuse_lecture', 'accuse_lecture.pdf', $pdfFile);
+            $mailSecInfo->donneesFormulaire->addFileFromData('accuse_notification', 'accuse_notification.pdf', $pdfFile);
             $mailSecInfo->donneesFormulaire->setData('lecture_mail', true);
         } catch (ConnectionException) {
         }
@@ -314,11 +314,36 @@ final class MailsecManager
                 $use_template_reponse = true;
             }
         }
+        $fieldDataList = $info->donneesFormulaire->getFieldDataList('admin');
+        $documents_list = [];
+        foreach ($fieldDataList as $fieldData) {
+            if ($fieldData->properties->type === 'file') {
+                if ($fieldData->properties->multiple) {
+                    foreach ($fieldData->value as $titre_document) {
+                        $empreinte_document = hash_file('sha256', "PATH A METTRE/$titre_document");
+                        $empreinte_document = 'empreinte';
+                        $documents_list[] = [
+                            'champ_document' => $fieldData->field->fieldName,
+                            'titre_document' => $titre_document,
+                            'empreinte_document' => $empreinte_document,
+                        ];
+                    }
+                } else {
+                    $empreinte_document = hash_file('sha256', "PATH A METTRE/$fieldData->value");
+                    $empreinte_document = 'empreinte';
+                    $documents_list[] = [
+                        'champ_document' => $fieldData->field->fieldName,
+                        'titre_document' => $fieldData->value,
+                        'empreinte_document' => $empreinte_document,
+                    ];
+                }
+            }
+        }
 
         if ($use_template_reponse) {
-            $template_path = $this->objectInstancier->getInstance('data_dir') . '/connector/mailsec/accuse_lecture_reponse_template.odt';
+            $template_path = $this->objectInstancier->getInstance('data_dir') . '/connector/mailsec/accuse_notification_reponse_template.odt';
         } else {
-            $template_path = $this->objectInstancier->getInstance('data_dir') . '/connector/mailsec/accuse_lecture_simple_template.odt';
+            $template_path = $this->objectInstancier->getInstance('data_dir') . '/connector/mailsec/accuse_notification_simple_template.odt';
         }
         $main = new PartType();
         $main->addElement(
@@ -330,7 +355,20 @@ final class MailsecManager
         );
         $main->addElement(new FieldType('type_document', $info->type_document, 'text'));
         $main->addElement(new FieldType('entite', $info->denomination_entite, 'text'));
-        $section = new IterationType('table_destinataires');
+
+        if (count($documents_list) > 0) {
+            $section_documents = new IterationType('table_documents');
+            foreach ($documents_list as $document_data) {
+                $part = new PartType();
+                $part->addElement(new FieldType('champ_document', $document_data['champ_document'], 'text'));
+                $part->addElement(new FieldType('titre_document', $document_data['titre_document'], 'text'));
+                $part->addElement(new FieldType('empreinte_document', $document_data['empreinte_document'], 'text'));
+                $section_documents->addPart($part);
+            }
+            $main->addElement($section_documents);
+        }
+
+        $section_destinaires = new IterationType('table_destinataires');
         foreach ($recipient_list as $id_de) {
             $infoRecipient = $documentEmail->getInfoFromPK($id_de);
             $part = new PartType();
@@ -351,15 +389,15 @@ final class MailsecManager
                     )
                 );
             }
-            $section->addPart($part);
+            $section_destinaires->addPart($part);
         }
-        $main->addElement($section);
+        $main->addElement($section_destinaires);
 
         $main->addElement(new FieldType('date', date('Y-m-d H:i:s'), 'date'));
         $main->addElement(
             new ContentType(
                 'odt_content',
-                'accuse_lecture.odt',
+                'accuse_notification.odt',
                 'application/vnd.oasis.opendocument.text',
                 'binary',
                 file_get_contents($template_path)

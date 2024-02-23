@@ -2,11 +2,10 @@
 
 ## Ajouts
 
-- Ajout de la fonction jsonpath_array pour récupérer des listes de données #1376
-- Ajout du flux Dossier de séance (archivage) `ls-dossier-seance` #1946
-- Ajout d'un fichier pdf 'Accusé de lecture' pour les mails sécurisés des flux studio #1128
-- Ajout d'un captcha avant la lecture d'un mail sécurisé #942
+- Ajout de la fonction jsonpath_array pour récuperer des listes de données #1376
 - Ajout de l'option de co-signature pour les flux studios #684
+- Ajout du flux Dossier de séance (archivage) 'ls-dossier-seance' #1946
+- Ajout d'un fichier pdf 'Accusé de notification' pour les mails sécurisés des flux studio #1128
 - Ajout des champs annotations publiques et privées pour l'envoi vers iParapheur pour les flux studios #1883
 - Ajout de la récupération du bordereau de signature pour Fast Parapheur pour les flux studios #1925
 - Ajout du champ 'Date de dernière signature' sur l'onglet Signature pour les flux studios #2005

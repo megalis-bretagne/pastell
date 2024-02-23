@@ -195,12 +195,12 @@ formulaire:
             default: '0'
             no-show: true
             read-only: true
-    'Accusé de lecture':
+    'Accusé de notifaction':
         lecture_mail:
             no-show: true
             read-only: true
-        accuse_lecture:
-            name: 'Accusé de lecture'
+        accuse_notification:
+            name: 'Accusé de notifaction'
             commentaire: 'Format pdf'
             type: file
             read-only: true
@@ -333,7 +333,7 @@ page-condition:
         has_ged_document_id: true
     'Mail sécurisé':
         envoi_mailsec: true
-    'Accusé de lecture':
+    'Accusé de notifaction':
         lecture_mail: true
     Acte:
         envoi_tdt_actes: true
