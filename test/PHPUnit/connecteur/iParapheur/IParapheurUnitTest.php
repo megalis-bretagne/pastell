@@ -325,7 +325,6 @@ class IParapheurUnitTest extends PastellTestCase
     }
     /**
      * @dataProvider sendDossierPJProvider
-     * @param FileToSign $fileToSign
      * @throws Exception
      */
     public function testSendDossierPJ(FileToSign $fileToSign): void
