@@ -2,8 +2,10 @@
 
 namespace Pastell\File;
 
+use Exception;
 use Flow\Basic;
 use Flow\Config;
+use Flow\FileOpenException;
 use Flow\Request;
 use Flow\Uploader;
 
@@ -39,6 +41,7 @@ class ChunkUploader
 
     /**
      * @throws Exception
+     * @throws FileOpenException
      */
     public function pruneChunks(): void
     {
