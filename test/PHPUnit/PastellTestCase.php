@@ -67,6 +67,8 @@ abstract class PastellTestCase extends TestCase
         $this->objectInstancier->setInstance('redis_port', 0);
         $this->objectInstancier->setInstance('disable_journal_horodatage', false);
 
+        $this->objectInstancier->setInstance('upload_chunk_directory', UPLOAD_CHUNK_DIRECTORY);
+
         $this->objectInstancier->setInstance(LockFactory::class, new LockFactory(new InMemoryStore()));
 
         $this->getObjectInstancier()->setInstance(

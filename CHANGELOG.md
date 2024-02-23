@@ -20,6 +20,7 @@
 - Permettre la configuration des attributs LDAP : nom, prénom et email #1975
 - Ajustement de la zone de séléction dans la gestion d'éléments studio #1281
 - Ajout d'un captcha avant la lecture d'un mail sécurisé #942
+- Possibilité d'envoyer des fichiers lourds en chunk par API #1350
 
 ## Corrections
 
