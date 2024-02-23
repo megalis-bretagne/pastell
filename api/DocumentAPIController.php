@@ -20,7 +20,7 @@ class DocumentAPIController extends BaseAPIController
         private DocumentModificationService $documentModificationService,
         private DocumentEmail $documentEmail,
         private DocumentEmailReponseSQL $documentEmailReponseSQL,
-        private ChunkUploader $chunkUploader,
+        private readonly ChunkUploader $chunkUploader,
     ) {
     }
 
@@ -564,7 +564,7 @@ class DocumentAPIController extends BaseAPIController
     /**
      * @throws Exception
      */
-    public function postChunk(int $id_e, int $id_d): array
+    public function postChunk(string $id_e, string $id_d): array
     {
         if (!$this->actionPossible->isActionPossible($id_e, $this->getUtilisateurId(), $id_d, 'modification')) {
             throw new ForbiddenException("L'action « modification »  n'est pas permise");
@@ -600,10 +600,13 @@ class DocumentAPIController extends BaseAPIController
                     $upload_filepath,
                 );
             } finally {
-                $response = $this->chunkUploader->createdChunk($upload_filepath);
+                unlink($upload_filepath);
+                header_wrapper('HTTP/1.1 201 Created');
+                $response = ['result' => 'success', 'message' => 'File uploaded', 'file_path' => $upload_filepath];
             }
         } else {
-            $response = $this->chunkUploader->continueChunk();
+            header_wrapper('HTTP/1.1 200 Ok');
+            $response = ['result' => 'success', 'message' => 'Chunk uploaded'];
         }
         $this->chunkUploader->pruneChunks();
         return $response;

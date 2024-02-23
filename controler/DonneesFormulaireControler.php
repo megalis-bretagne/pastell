@@ -1,15 +1,10 @@
 <?php
 
-use Flow\Basic;
-use Flow\Config;
-use Flow\Request;
-use Flow\Uploader;
 use Pastell\File\ChunkUploader;
 use Pastell\Viewer\ViewerFactory;
 
 class DonneesFormulaireControler extends PastellControler
 {
-
     /**
      * @param $id_e
      * @param $id_d

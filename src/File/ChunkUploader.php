@@ -2,7 +2,6 @@
 
 namespace Pastell\File;
 
-use Exception;
 use Flow\Basic;
 use Flow\Config;
 use Flow\Request;
@@ -11,7 +10,7 @@ use Flow\Uploader;
 class ChunkUploader
 {
     public function __construct(
-        private readonly string $uploadChunkDirectory,
+        private readonly string $upload_chunk_directory,
         private readonly Config $config,
         private readonly Request $request,
     ) {
@@ -19,7 +18,7 @@ class ChunkUploader
 
     public function getUploadChunkDirectory(): string
     {
-        return $this->uploadChunkDirectory;
+        return $this->upload_chunk_directory;
     }
 
     public function getConfig(): Config
@@ -34,21 +33,8 @@ class ChunkUploader
 
     public function uploadChunk($upload_filepath): bool
     {
-        $this->config->setTempDir($this->uploadChunkDirectory);
+        $this->config->setTempDir($this->upload_chunk_directory);
         return Basic::save($upload_filepath, $this->config, $this->request);
-    }
-
-    public function continueChunk(): array
-    {
-        header_wrapper('HTTP/1.1 200 Ok');
-        return ['result' => 'success', 'message' => 'Chunk uploaded'];
-    }
-
-    public function createdChunk($upload_filepath): array
-    {
-        unlink($upload_filepath);
-        header_wrapper('HTTP/1.1 201 Created');
-        return ['result' => 'success', 'message' => 'File uploaded'];
     }
 
     /**
@@ -57,7 +43,7 @@ class ChunkUploader
     public function pruneChunks(): void
     {
         if (random_int(1, 100) === 1) {
-            Uploader::pruneChunks($this->uploadChunkDirectory);
+            Uploader::pruneChunks($this->upload_chunk_directory);
         }
     }
 }
