@@ -313,13 +313,14 @@ class UtilisateurControler extends PastellControler
     }
 
     /**
+     * @throws JsonException
      * @throws LastErrorException
      * @throws LastMessageException
      * @throws NotFoundException
      */
-    public function detailAction()
+    public function detailAction(): void
     {
-        $recuperateur = new Recuperateur($_GET);
+        $recuperateur = $this->getGetInfo();
         $id_u = $recuperateur->get('id_u');
 
         $info = $this->getUtilisateur()->getInfo($id_u);
@@ -348,7 +349,12 @@ class UtilisateurControler extends PastellControler
         }
 
         if (!$this->getRoleUtilisateur()->hasDroit($this->getId_u(), 'utilisateur:lecture', $info['id_e'])) {
-            $this->setLastError("Vous n'avez pas les droits nécessaires (" . $info['id_e'] . ':utilisateur:lecture) pour accéder à cette page');
+            $this->setLastError(
+                \sprintf(
+                    "Vous n'avez pas les droits nécessaires (%s:utilisateur:lecture) pour accéder à cette page",
+                    $info['id_e']
+                )
+            );
             $this->redirect();
         }
         $this->setViewParameter(
@@ -384,8 +390,38 @@ class UtilisateurControler extends PastellControler
             'arbre',
             $this->getRoleUtilisateur()->getArbreFille($this->getId_u(), 'entite:edition')
         );
+
+        $tree = $this->getRoleUtilisateur()->getEntityTree($this->getId_u(), 'entite:edition');
+
+        $this->replaceArrayKeyRecursive($tree, 'denomination', 'name');
+        $this->replaceArrayKeyRecursive($tree, 'id_e', 'value');
+        array_unshift($tree, [
+            'name' => 'Entité Racine',
+            'value' => '0',
+        ]);
+        $this->setViewParameter(
+            'tree',
+            \json_encode($tree, \JSON_THROW_ON_ERROR)
+        );
+
         $this->setViewParameter('template_milieu', 'UtilisateurDetail');
         $this->renderDefault();
+    }
+
+    private function replaceArrayKeyRecursive(array &$array, string $oldName, string $newName): void
+    {
+        foreach ($array as &$element) {
+            if (\is_array($element)) {
+                $this->replaceArrayKeyRecursive($element, $oldName, $newName);
+            }
+            if (isset($element[$oldName])) {
+                $element[$newName] = $element[$oldName];
+                unset($element[$oldName]);
+            }
+            if (isset($element['children']) && \is_array($element['children'])) {
+                $this->replaceArrayKeyRecursive($element['children'], $oldName, $newName);
+            }
+        }
     }
 
     private function getNotificationList($id_u)
