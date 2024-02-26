@@ -14,7 +14,6 @@ use DocumentSQL;
 use DocumentTypeFactory;
 use DonneesFormulaireFactory;
 use EntiteSQL;
-use http\Exception\RuntimeException;
 use Journal;
 use Libriciel\OfficeClients\Conversion\Client\Configuration\CloudoooServiceConfiguration;
 use Libriciel\OfficeClients\Conversion\Client\Strategy\CloudoooStrategy;
@@ -32,11 +31,9 @@ use Mailsec\Exception\MissingPasswordException;
 use Mailsec\Exception\NotEditableResponseException;
 use Mailsec\Exception\UnableToExecuteActionException;
 use MailSecInfo;
-use mysql_xdevapi\Exception;
 use NotFoundException;
 use NotificationMail;
 use ObjectInstancier;
-use phpDocumentor\Reflection\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use UnrecoverableException;
@@ -300,6 +297,7 @@ final class MailsecManager
     /**
      * @throws ConnectionException
      * @throws InvalidTemplateException
+     * @throws UnrecoverableException
      */
     public function updateReceipt(MailSecInfo $info): string
     {
@@ -314,37 +312,48 @@ final class MailsecManager
                 $use_template_reponse = true;
             }
         }
-        $fieldDataList = $info->donneesFormulaire->getFieldDataList('admin');
-        $documents_list = [];
-        foreach ($fieldDataList as $fieldData) {
-            if ($fieldData->properties->type === 'file') {
-                if ($fieldData->properties->multiple) {
-                    foreach ($fieldData->value as $titre_document) {
-                        $empreinte_document = hash_file('sha256', "PATH A METTRE/$titre_document");
-                        $empreinte_document = 'empreinte';
-                        $documents_list[] = [
-                            'champ_document' => $fieldData->field->fieldName,
-                            'titre_document' => $titre_document,
-                            'empreinte_document' => $empreinte_document,
-                        ];
-                    }
-                } else {
-                    $empreinte_document = hash_file('sha256', "PATH A METTRE/$fieldData->value");
-                    $empreinte_document = 'empreinte';
-                    $documents_list[] = [
-                        'champ_document' => $fieldData->field->fieldName,
-                        'titre_document' => $fieldData->value,
-                        'empreinte_document' => $empreinte_document,
-                    ];
-                }
-            }
-        }
-
         if ($use_template_reponse) {
             $template_path = $this->objectInstancier->getInstance('data_dir') . '/connector/mailsec/accuse_notification_reponse_template.odt';
         } else {
             $template_path = $this->objectInstancier->getInstance('data_dir') . '/connector/mailsec/accuse_notification_simple_template.odt';
         }
+
+        $fieldDataList = $info->donneesFormulaire->getFormulaire()->getAllFields();
+        $documents_list = [];
+        foreach ($fieldDataList as $fieldData) {
+            if ($fieldData->getProperties('type') === 'file') {
+                if ($fieldData->getProperties('multiple')) {
+                    foreach (
+                        $info->donneesFormulaire->getFieldData($fieldData->getName())->getValue() as $i=>$titre_document
+                    ) {
+                        $empreinte_document = hash_file(
+                            'sha256',
+                            $info->donneesFormulaire->getFilePath($fieldData->getName(), $i)
+                        );
+                        if ($titre_document) {
+                            $documents_list[] = [
+                                'champ_document' => $fieldData->getName(),
+                                'titre_document' => $titre_document,
+                                'empreinte_document' => $empreinte_document,
+                            ];
+                        }
+                    }
+                } else {
+                    $empreinte_document = hash_file('sha256', $info->donneesFormulaire->getFilePath($fieldData->getName()));
+                    $titre_document = $info->donneesFormulaire->getFieldData($fieldData->getName())->getValue();
+                    if ($titre_document) {
+                        $documents_list[] = [
+                            'champ_document' => $fieldData->getName(),
+                            'titre_document' => $titre_document,
+                            'empreinte_document' => $empreinte_document,
+                        ];
+                    }
+                }
+            }
+        }
+        $document_number = count($documents_list);
+
+
         $main = new PartType();
         $main->addElement(
             new FieldType(
@@ -356,16 +365,19 @@ final class MailsecManager
         $main->addElement(new FieldType('type_document', $info->type_document, 'text'));
         $main->addElement(new FieldType('entite', $info->denomination_entite, 'text'));
 
-        if (count($documents_list) > 0) {
-            $section_documents = new IterationType('table_documents');
+        $main->addElement(new FieldType('nombre_documents', (string) $document_number, 'text'));
+        if ($document_number > 0) {
+            $table_documents = new IterationType('table_documents');
             foreach ($documents_list as $document_data) {
                 $part = new PartType();
                 $part->addElement(new FieldType('champ_document', $document_data['champ_document'], 'text'));
                 $part->addElement(new FieldType('titre_document', $document_data['titre_document'], 'text'));
                 $part->addElement(new FieldType('empreinte_document', $document_data['empreinte_document'], 'text'));
-                $section_documents->addPart($part);
+                $table_documents->addPart($part);
             }
-            $main->addElement($section_documents);
+            $main->addElement($table_documents);
+        } else {
+            $main->addElement(new IterationType('documents'));
         }
 
         $section_destinaires = new IterationType('table_destinataires');
