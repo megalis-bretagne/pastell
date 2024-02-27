@@ -322,16 +322,14 @@ final class MailsecManager
         $documents_list = [];
         foreach ($fieldDataList as $fieldData) {
             if ($fieldData->getProperties('type') === 'file') {
-                if ($fieldData->getProperties('multiple')) {
-                    $empreinte_document = hash_file('sha256', $info->donneesFormulaire->getFilePath($fieldData->getName()));
-                    $titre_document = $info->donneesFormulaire->getFieldData($fieldData->getName())->getValue();
-                    if ($titre_document) {
-                        $documents_list[] = [
-                            'champ_document' => $fieldData->getName(),
-                            'libelle' => $fieldData->getProperties('name'),
-                            'value' => $info->donneesFormulaire->getFieldData($fieldData->getName())->getValue()
-                        ];
-                    }
+                //champs personnalisés studio marchent pas, checker $info pour details
+                $value = $info->donneesFormulaire->getFieldData($fieldData->getName())->getValue();
+                if ($value[0]) {
+                    $documents_list[] = [
+                        'champ_document' => $fieldData->getName(),
+                        'libelle' => $fieldData->getProperties('name'),
+                        'value' => $value
+                    ];
                 }
             }
         }
@@ -348,37 +346,34 @@ final class MailsecManager
         $main->addElement(new FieldType('type_document', $info->type_document, 'text'));
         $main->addElement(new FieldType('entite', $info->denomination_entite, 'text'));
 
-        $main->addElement(new FieldType('nombre_documents', (string) $document_number, 'text'));
+        $main->addElement(new FieldType('nombre_documents', (string)$document_number, 'text'));
         if ($document_number > 0) {
             $table_documents = new IterationType('table_documents');
-            for ($y = 0; $y < 3; $y++) {
-                foreach ($documents_list as $document_data) {
-                    $champPart = new PartType();
-                    $champPart->addElement(
-                        new FieldType('champ_document', $document_data['libelle'] . ' : ', 'text')
+            foreach ($documents_list as $document_data) {
+                $champPart = new PartType();
+                $champPart->addElement(
+                    new FieldType('champ_document', $document_data['libelle'] . ' : ', 'text')
+                );
+                $table_documents->addPart($champPart);
+                foreach ($document_data['value'] as $i => $titre_document) {
+                    $valuePart = new PartType();
+                    $valuePart->addElement(new FieldType('titre_document', $titre_document, 'text'));
+                    $valuePart->addElement(
+                        new FieldType(
+                            'empreinte_document',
+                            hash_file(
+                                'sha256',
+                                $info->donneesFormulaire->getFilePath($document_data['champ_document'], $i)
+                            ),
+                            'text'
+                        )
                     );
-                    $table_documents->addPart($champPart);
-                    foreach ($document_data['value'] as $i => $titre_document) {
-                        $valuePart = new PartType();
-                        $valuePart->addElement(new FieldType('titre_document', $titre_document, 'text'));
-                        $valuePart->addElement(
-                            new FieldType(
-                                'empreinte_document',
-                                hash_file(
-                                    'sha256',
-                                    $info->donneesFormulaire->getFilePath($document_data['champ_document'], $i)
-                                ),
-                                'text'
-                            )
-                        );
-                        $table_documents->addPart($valuePart);
-                    }
-
-//                    $newLine = new PartType();
-//                    $table_documents->addPart($newLine);
+                    $table_documents->addPart($valuePart);
                 }
-            }
 
+                $newLine = new PartType();
+                $table_documents->addPart($newLine);
+            }
             $main->addElement($table_documents);
         } else {
             $main->addElement(new IterationType('documents'));
