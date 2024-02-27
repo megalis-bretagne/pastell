@@ -323,36 +323,19 @@ final class MailsecManager
         foreach ($fieldDataList as $fieldData) {
             if ($fieldData->getProperties('type') === 'file') {
                 if ($fieldData->getProperties('multiple')) {
-                    foreach (
-                        $info->donneesFormulaire->getFieldData($fieldData->getName())->getValue() as $i=>$titre_document
-                    ) {
-                        $empreinte_document = hash_file(
-                            'sha256',
-                            $info->donneesFormulaire->getFilePath($fieldData->getName(), $i)
-                        );
-                        if ($titre_document) {
-                            $documents_list[] = [
-                                'champ_document' => $fieldData->getName(),
-                                'titre_document' => $titre_document,
-                                'empreinte_document' => $empreinte_document,
-                            ];
-                        }
-                    }
-                } else {
                     $empreinte_document = hash_file('sha256', $info->donneesFormulaire->getFilePath($fieldData->getName()));
                     $titre_document = $info->donneesFormulaire->getFieldData($fieldData->getName())->getValue();
                     if ($titre_document) {
                         $documents_list[] = [
                             'champ_document' => $fieldData->getName(),
-                            'titre_document' => $titre_document,
-                            'empreinte_document' => $empreinte_document,
+                            'libelle' => $fieldData->getProperties('name'),
+                            'value' => $info->donneesFormulaire->getFieldData($fieldData->getName())->getValue()
                         ];
                     }
                 }
             }
         }
         $document_number = count($documents_list);
-
 
         $main = new PartType();
         $main->addElement(
@@ -368,13 +351,34 @@ final class MailsecManager
         $main->addElement(new FieldType('nombre_documents', (string) $document_number, 'text'));
         if ($document_number > 0) {
             $table_documents = new IterationType('table_documents');
-            foreach ($documents_list as $document_data) {
-                $part = new PartType();
-                $part->addElement(new FieldType('champ_document', $document_data['champ_document'], 'text'));
-                $part->addElement(new FieldType('titre_document', $document_data['titre_document'], 'text'));
-                $part->addElement(new FieldType('empreinte_document', $document_data['empreinte_document'], 'text'));
-                $table_documents->addPart($part);
+            for ($y = 0; $y < 3; $y++) {
+                foreach ($documents_list as $document_data) {
+                    $champPart = new PartType();
+                    $champPart->addElement(
+                        new FieldType('champ_document', $document_data['libelle'] . ' : ', 'text')
+                    );
+                    $table_documents->addPart($champPart);
+                    foreach ($document_data['value'] as $i => $titre_document) {
+                        $valuePart = new PartType();
+                        $valuePart->addElement(new FieldType('titre_document', $titre_document, 'text'));
+                        $valuePart->addElement(
+                            new FieldType(
+                                'empreinte_document',
+                                hash_file(
+                                    'sha256',
+                                    $info->donneesFormulaire->getFilePath($document_data['champ_document'], $i)
+                                ),
+                                'text'
+                            )
+                        );
+                        $table_documents->addPart($valuePart);
+                    }
+
+//                    $newLine = new PartType();
+//                    $table_documents->addPart($newLine);
+                }
             }
+
             $main->addElement($table_documents);
         } else {
             $main->addElement(new IterationType('documents'));
@@ -415,7 +419,6 @@ final class MailsecManager
                 file_get_contents($template_path)
             )
         );
-
         $config = new RestServiceConfiguration('http://flow:8080');
         return (new RestStrategy($config))->fusion($template_path, $main);
     }
