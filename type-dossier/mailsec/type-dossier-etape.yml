@@ -48,7 +48,7 @@ formulaire:
             no-show: true
             read-only: true
 
-    'Accusé de notifaction':
+    'Accusé de notification':
         lecture_mail:
             no-show: true
             read-only: true
@@ -60,7 +60,7 @@ formulaire:
 page-condition:
     'Mail sécurisé':
         envoi_mailsec: true
-    'Accusé de notifaction':
+    'Accusé de notification':
         lecture_mail: true
 champs-affiches:
     - sent_mail_number
