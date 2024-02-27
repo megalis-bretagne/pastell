@@ -100,12 +100,12 @@ formulaire:
             default: '0'
             no-show: true
             read-only: true
-    'Accusé de notifaction':
+    'Accusé de notification':
         lecture_mail:
             no-show: true
             read-only: true
         accuse_notification:
-            name: 'Accusé de notifaction'
+            name: 'Accusé de notification'
             commentaire: 'Format pdf'
             type: file
             read-only: true
@@ -127,7 +127,7 @@ page-condition:
         has_transformation: true
     'Mail sécurisé':
         envoi_mailsec: true
-    'Accusé de notifaction':
+    'Accusé de notification':
         lecture_mail: true
 action:
     creation:
