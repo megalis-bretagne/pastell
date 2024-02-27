@@ -322,7 +322,6 @@ final class MailsecManager
         $documents_list = [];
         foreach ($fieldDataList as $fieldData) {
             if ($fieldData->getProperties('type') === 'file') {
-                //champs personnalisés studio marchent pas, checker $info pour details
                 $value = $info->donneesFormulaire->getFieldData($fieldData->getName())->getValue();
                 if ($value[0]) {
                     $documents_list[] = [
@@ -350,13 +349,11 @@ final class MailsecManager
         if ($document_number > 0) {
             $table_documents = new IterationType('table_documents');
             foreach ($documents_list as $document_data) {
-                $champPart = new PartType();
-                $champPart->addElement(
-                    new FieldType('champ_document', $document_data['libelle'] . ' : ', 'text')
-                );
-                $table_documents->addPart($champPart);
                 foreach ($document_data['value'] as $i => $titre_document) {
                     $valuePart = new PartType();
+                    $valuePart->addElement(
+                        new FieldType('champ_document', $document_data['libelle'], 'text')
+                    );
                     $valuePart->addElement(new FieldType('titre_document', $titre_document, 'text'));
                     $valuePart->addElement(
                         new FieldType(
@@ -370,9 +367,6 @@ final class MailsecManager
                     );
                     $table_documents->addPart($valuePart);
                 }
-
-                $newLine = new PartType();
-                $table_documents->addPart($newLine);
             }
             $main->addElement($table_documents);
         } else {
@@ -383,8 +377,8 @@ final class MailsecManager
         foreach ($recipient_list as $id_de) {
             $infoRecipient = $documentEmail->getInfoFromPK($id_de);
             $part = new PartType();
-            $part->addElement(new FieldType('email', $infoRecipient['email'], 'text'));
-            $part->addElement(new FieldType('type', $infoRecipient['type_destinataire'], 'text'));
+            $part->addElement(new FieldType('email_destinataire', $infoRecipient['email'], 'text'));
+            $part->addElement(new FieldType('type_destinataire', $infoRecipient['type_destinataire'], 'text'));
             $part->addElement(new FieldType('date_envoi', $infoRecipient['date_envoie'], 'date'));
             $part->addElement(new FieldType('dernier_envoi', $infoRecipient['date_renvoi'], 'date'));
             $part->addElement(new FieldType('nombre_envois', (string)$infoRecipient['nb_renvoi'], 'text'));
