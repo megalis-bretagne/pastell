@@ -6,7 +6,7 @@ use Pastell\Connector\Ensap\parts\Document;
 
 class DocumentBuilder
 {
-    private const THEME = 43;
+    private const THEME = 8;
     private const SSTHEME = 45;
     private Document $document;
 

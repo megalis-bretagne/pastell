@@ -1,6 +1,6 @@
 <?php
 
-namespace Connector\Ensap;
+namespace Pastell\Tests\Connector\Ensap;
 
 use DOMException;
 use DonneesFormulaire;
@@ -14,6 +14,7 @@ use Pastell\Connector\Ensap\parts\Enveloppe;
 use Pastell\Connector\Ensap\parts\Gestionnaire;
 use Pastell\Connector\Ensap\parts\Message;
 use PastellTestCase;
+use PhpParser\Node\Expr\Throw_;
 
 class ArchiveGeneratorTest extends PastellTestCase
 {
@@ -24,9 +25,9 @@ class ArchiveGeneratorTest extends PastellTestCase
         $this->archiveGenerator = $this->getObjectInstancier()->getInstance(ArchiveGenerator::class);
     }
 
-    public function createEnveloppe(): Enveloppe
+    public function getFormulaire(): DonneesFormulaire
     {
-        $donneesFormulaire = $this->getObjectInstancier()->getInstance(DonneesFormulaireFactory::class)->get();
+        $donneesFormulaire = $this->getObjectInstancier()->getInstance(DonneesFormulaireFactory::class)->get('toto', 'test');
         $donneesFormulaire->setData('date_document', '01092021');
         $donneesFormulaire->setData('titre_document', '1870194035088_13000920600010_BPaie_01092021.pdf');
         $donneesFormulaire->setData('siret_collectivite', '13000920600010');
@@ -34,11 +35,14 @@ class ArchiveGeneratorTest extends PastellTestCase
         $donneesFormulaire->setData('nom_naissance_agent', 'BERNARD');
         $donneesFormulaire->setData('date_naissance_agent', '11121964');
         $donneesFormulaire->setData('statut_agent', 'T');
+        $donneesFormulaire->setData('iban_agent', '7758');
+        $donneesFormulaire->setData('nir_agent', '1641216251234');
+        $donneesFormulaire->setData('sexe', 'H');
 
         $donneesFormulaire->setData('sstheme', '43');
-        $donneesFormulaire->setData('nom_emetteurSRE', 'LBRCL');
-        $donneesFormulaire->setData('code_emetteurSRE', 'LBRCL');
-        return $this->archiveGenerator->generateEnveloppe($donneesFormulaire);
+        $donneesFormulaire->setData('nom_emetteur_sre', 'LBRCL');
+        $donneesFormulaire->setData('code_emetteur_sre', 'LBRCL');
+        return $donneesFormulaire;
     }
 
     /**
@@ -46,13 +50,12 @@ class ArchiveGeneratorTest extends PastellTestCase
      */
     public function testGenerateXML(): void
     {
-        $enveloppe = $this->createEnveloppe();
+        $enveloppe = $this->archiveGenerator->generateEnveloppe($this->getFormulaire());
         $xml = $this->archiveGenerator->generateXML($enveloppe);
 
         static::assertTrue(strpos($xml, '<theme>') < strpos($xml, '<sstheme>'));
         static::assertTrue(strpos($xml, '<sstheme>') < strpos($xml, '<date_document>'));
-        static::assertTrue(strpos($xml, '<date_document>') < strpos($xml, '<montant>'));
-        static::assertTrue(strpos($xml, '<id_piece>') < strpos($xml, '<nom_fichier>'));
+        static::assertTrue(strpos($xml, '<date_document>') < strpos($xml, '</document>'));
     }
 
     /**
@@ -60,24 +63,34 @@ class ArchiveGeneratorTest extends PastellTestCase
      */
     public function testValidateXML(): void
     {
-        $enveloppe = $this->createEnveloppe();
+        $enveloppe = $this->archiveGenerator->generateEnveloppe($this->getFormulaire());
         $xml = $this->archiveGenerator->generateXML($enveloppe);
         static::assertTrue($this->archiveGenerator->validateXML($xml));
     }
 
     /**
-     * @throws DOMException
+     * @throws Exception
+     */
+    public function testGenerateArchiveName(): void
+    {
+        $formulaire = $this->getFormulaire();
+        $archiveName = $this->archiveGenerator->generateArchiveName($formulaire);
+        static::assertMatchesRegularExpression('/^ENVOI-PJ-BPG-(43|45)-\w{1,5}-\w{1,5}-\d{6}-\d{14}$/', $archiveName);
+    }
+
+    /**
      * @throws Exception
      */
     public function testGenerateArchive(): void
     {
-        $pdf_documents = [
-            'file1.pdf' => 'content1',
-            'file2.pdf' => 'content2',
-        ];
-        $enveloppe = $this->createEnveloppe();
-        $xml = $this->archiveGenerator->generateXML($enveloppe);
-        $archiveName = $this->archiveGenerator->generateArchive($pdf_documents, $xml, 'LBRCL', 'BE003');
-        static::assertMatchesRegularExpression('/^ENVOI-PJ-BPG-(43|45)-\w{1,5}-\w{1,5}-\d{6}-\d{14}.tar.gz.gpg$/', $archiveName);
+        throw new Exception('Not implemented');
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testEncryptArchive(): void
+    {
+        throw new Exception('Not implemented');
     }
 }

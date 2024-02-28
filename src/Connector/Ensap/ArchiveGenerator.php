@@ -57,8 +57,8 @@ class ArchiveGenerator
     ): string {
         $archiveName = 'ENVOI-PJ-BPG-' .
             $donneesFormulaire->get('sstheme') . '-' .
-            $donneesFormulaire->get('nom_emetteurSRE') . '-' .
-            $donneesFormulaire->get('code_emetteurSRE') . '-' .
+            $donneesFormulaire->get('nom_emetteur_sre') . '-' .
+            $donneesFormulaire->get('code_emetteur_sre') . '-' .
             date('Ym') . '-' .
             date('YmdHis');
         if (!preg_match('/^ENVOI-PJ-BPG-(43|45)-\w{1,5}-\w{1,5}-\d{6}-\d{14}$/', $archiveName)) {
@@ -82,11 +82,12 @@ class ArchiveGenerator
         $assureBuilder = new AssureBuilder();
         $assure = $assureBuilder->setNumeroDossier($donneesFormulaire->get('matricule_agent'))
             ->setNumeroOrdre('1')
-            ->setNir('MANQUANT')
+            ->setNir($donneesFormulaire->get('nir_agent'))
             ->setNomNaissance($donneesFormulaire->get('nom_naissance_agent'))
-            ->setSexe('MANQUANT')
+            ->setSexe($donneesFormulaire->get('sexe_agent'))
             ->setDateNaissance($donneesFormulaire->get('date_naissance_agent'))
             ->setStatut($donneesFormulaire->get('statut_agent'))
+            ->setIban($donneesFormulaire->get('iban_agent'))
             ->setReferenceEmetteur($donneesFormulaire->get('matricule_agent'))
             ->addGestionnaire($gestionnaire)
             ->build();
@@ -124,7 +125,7 @@ class ArchiveGenerator
 
         $emetteur = $dom->createElement('emetteur');
         $emetteur->appendChild($dom->createElement('code_emetteur', $enveloppe->emetteur->codeEmetteur));
-        $emetteur->appendChild($dom->createElement('code_CFT', $enveloppe->emetteur->codeCFT));
+        $emetteur->appendChild($dom->createElement('code_CFT', $enveloppe->emetteur->codeCFT ?? null));
         $envoiBPGenerique->appendChild($emetteur);
 
         /** @var Assure $assure */
@@ -135,11 +136,7 @@ class ArchiveGenerator
             $assureElement->appendChild($dom->createElement('numero_ordre', $assure->numeroOrdre));
             $assureElement->appendChild($dom->createElement('nir', $assure->nir));
             $assureElement->appendChild($dom->createElement('nom_naissance', $assure->nomNaissance));
-
-            if (isset($assure->sexe)) {
-                $assureElement->appendChild($dom->createElement('sexe', $assure->sexe));
-            }
-
+            $assureElement->appendChild($dom->createElement('sexe', $assure->sexe));
             $assureElement->appendChild($dom->createElement('date_naissance', $assure->dateNaissance));
             $assureElement->appendChild($dom->createElement('iban', $assure->iban));
             $assureElement->appendChild($dom->createElement('statut', $assure->statut));
