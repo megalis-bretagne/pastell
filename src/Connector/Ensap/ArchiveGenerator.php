@@ -101,8 +101,7 @@ class ArchiveGenerator
             ->setNomFichier($this->generateArchiveName($donneesFormulaire))
             ->build();
 
-        $enveloppeBuilder = new EnveloppeBuilder();
-        return $enveloppeBuilder->setMessage($message)
+        return $this->enveloppeBuilder->setMessage($message)
             ->setEmetteur($emetteur)
             ->addAssure($assure)
             ->build();
