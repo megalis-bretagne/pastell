@@ -33,7 +33,7 @@ class DocumentBuilder
         return $this;
     }
 
-    public function setMontant(?float $montant): self
+    public function setMontant(?string $montant): self
     {
         $this->document->montant = $montant;
         return $this;

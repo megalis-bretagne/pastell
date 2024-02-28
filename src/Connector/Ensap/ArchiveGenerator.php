@@ -49,7 +49,8 @@ class ArchiveGenerator
         $enveloppe = $this->generateEnveloppe($donneesFormulaire);
         $xml = $this->generateXML($enveloppe);
         $archiveName = $this->createTarGzArchive($archiveName, $donneesFormulaire->get('document'), $xml, $tmpFolder);
-        return (new GPGEncryptor())->encrypt($archiveName, $tmpFolder);
+//        return (new GPGEncryptor())->encryptArchive($archiveName, $tmpFolder, 'key');
+        throw new Exception('Not implemented');
     }
 
     public function generateArchiveName(
