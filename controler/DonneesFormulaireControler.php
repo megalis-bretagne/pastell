@@ -160,7 +160,7 @@ class DonneesFormulaireControler extends PastellControler
         $chunkUploader = $this->getObjectInstancier()->getInstance(ChunkUploader::class);
         $upload_filepath = \sprintf(
             '%s/%s_%s_%s_%s_%s_%s',
-            UPLOAD_CHUNK_DIRECTORY,
+            $chunkUploader->getUploadChunkDirectory(),
             $id_e,
             $id_d,
             $id_ce,
