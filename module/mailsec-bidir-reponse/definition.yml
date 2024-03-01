@@ -1,4 +1,5 @@
 nom: 'Mail sécurisé  (réponse)'
+type: 'Mails sécurisés'
 description: 'Type de dossier complémentaire'
 formulaire:
     Réponse:

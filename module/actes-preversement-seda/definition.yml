@@ -1,4 +1,5 @@
 nom: 'Actes préversement SEDA'
+type: 'Actes administratifs'
 description: "Ce type de dossier permet de verser les documents issue d'un Tdt en vu de les envoyer vers un document actes-automatique pour\nversement SEDA"
 formulaire:
     Données:

@@ -1,4 +1,5 @@
-nom: 'Mail sécurisé'
+nom: 'Mail sécurisé - déprécié'
+type: 'Mails sécurisés'
 description: "Mail sécurisé permettant l'envoi de message avec attachement qui ne peut être lu que sur la plateforme. Il est possible de protéger les fichiers via un mot de passe."
 connecteur:
     - mailsec

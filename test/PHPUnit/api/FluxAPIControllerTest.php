@@ -7,8 +7,8 @@ class FluxAPIControllerTest extends PastellTestCase
         $list = $this->getInternalAPI()->get('/flux');
         static::assertSame(
             [
-                'type' => 'Types de dossier génériques',
-                'nom' => 'Mail sécurisé',
+                'type' => 'Mails sécurisés',
+                'nom' => 'Mail sécurisé - déprécié',
             ],
             $list['mailsec']
         );

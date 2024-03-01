@@ -5,7 +5,7 @@
   "raw_data": {
     "id_type_dossier": "ls-recup-parapheur-draft",
     "nom": "R\u00e9cup\u00e9ration parapheur",
-    "type": "Types de dossier Document",
+    "type": "Documents divers",
     "description": "Type de dossier permettant la connexion \u00e0 un parapheur pour r\u00e9cup\u00e9rer les dossiers",
     "nom_onglet": "Information",
     "restriction_pack": "",

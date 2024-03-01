@@ -1,6 +1,6 @@
-nom: 'Mail sécurisé (destinataire)'
+nom: 'Pièces de marché (destinataire)'
+type: 'Commande publique'
 description: 'Type de dossier complémentaire du type de dossier mailsec permettant aux destinataires des mails sécurisés de pouvoir les lire'
-type: 'Types de dossier marché'
 restriction_pack:
     - pack_marche
 formulaire:

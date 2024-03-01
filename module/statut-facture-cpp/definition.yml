@@ -1,5 +1,5 @@
 nom: 'Statut Facture Chorus Pro'
-type: 'Types de dossier Facture Chorus Pro'
+type: 'Finances'
 description: "Permet de changer le statut d'une facture sur Chorus Pro"
 restriction_pack:
     - pack_chorus_pro

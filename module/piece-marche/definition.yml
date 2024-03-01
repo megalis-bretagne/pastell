@@ -1,5 +1,5 @@
 nom: 'Pièces de marché'
-type: 'Types de dossier marché'
+type: 'Commande publique'
 description: "Types de dossier permettant le cheminement d'un dossier de type pièce de marché"
 restriction_pack:
     - pack_marche

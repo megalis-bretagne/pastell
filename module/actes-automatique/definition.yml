@@ -1,4 +1,5 @@
-nom: 'Actes automatique'
+nom: 'Actes automatique - déprécié'
+type: 'Actes administratifs'
 threshold_size: '157286400'
 threshold_fields:
     - arrete

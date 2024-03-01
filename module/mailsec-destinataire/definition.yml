@@ -1,4 +1,5 @@
 nom: 'Mail sécurisé (destinataire)'
+type: 'Mails sécurisés'
 description: 'Type de dossier complémentaire du type de dossier mailsec permettant aux destinataires des mails sécurisés de pouvoir les lire'
 formulaire:
     Message:

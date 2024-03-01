@@ -1,4 +1,5 @@
 nom: 'Document à faire signer'
+type: 'Documents divers'
 threshold_size: '150000000'
 threshold_fields:
     - document
