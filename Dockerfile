@@ -68,7 +68,7 @@ COPY --chown=${USERNAME}:${GROUPNAME} --from=extensions_builder /app/build /var/
 
 RUN chown ${USERNAME}:${GROUPNAME} /var/www/pastell/
 
-RUN composer dump-autoload --no-dev --optimize
+RUN COMPOSER_ALLOW_SUPERUSER=1 composer dump-autoload --no-dev --optimize
 
 USER "${USERNAME}"
 
