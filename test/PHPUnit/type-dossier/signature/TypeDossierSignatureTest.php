@@ -121,8 +121,10 @@ class TypeDossierSignatureTest extends PastellTestCase
         $this->assertTrue(
             $this->triggerActionOnDocument($info['id_d'], 'verif-iparapheur')
         );
-
-        $this->assertLastMessage('[RejetVisa]');
+        self::assertStringContainsString(
+            '[RejetVisa] (simulation de parapheur!)',
+            $this->getObjectInstancier()->getInstance(ActionExecutorFactory::class)->getLastMessage(),
+        );
         $this->assertLastDocumentAction('rejet-iparapheur', $info['id_d']);
 
         $this->assertTrue(
@@ -261,14 +263,13 @@ class TypeDossierSignatureTest extends PastellTestCase
             'iparapheur_historique_2.xml',
             $donneesFormulaire->getFileName('iparapheur_historique_2')
         );
-
-        $this->assertSame(
-            '[Archive]',
-            $donneesFormulaire->get('parapheur_last_message_1')
+        self::assertStringContainsString(
+            '[Archive] Circuit terminé, dossier archivable (simulation de parapheur!)',
+            $donneesFormulaire->get('parapheur_last_message_1'),
         );
-        $this->assertSame(
-            '[Archive]',
-            $donneesFormulaire->get('parapheur_last_message_2')
+        self::assertStringContainsString(
+            '[Archive] Circuit terminé, dossier archivable (simulation de parapheur!)',
+            $donneesFormulaire->get('parapheur_last_message_2'),
         );
     }
 }

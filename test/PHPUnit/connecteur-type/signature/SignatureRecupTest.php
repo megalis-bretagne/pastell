@@ -14,20 +14,22 @@ class SignatureRecupTest extends PastellTestCase
             function ($soapMethod, $arguments) {
                 if ($soapMethod === 'CreerDossier') {
                     return json_decode(
-                        '{"MessageRetour":{"codeRetour":"OK","message":"","severite":"INFO"}}'
+                        '{"MessageRetour":{"codeRetour":"OK","message":"","severite":"INFO"}}',
+                        false,
+                        512,
+                        JSON_THROW_ON_ERROR
                     );
                 }
                 if ($soapMethod === 'GetHistoDossier') {
                     return json_decode(json_encode([
                         'LogDossier' => [
-                            [
+                            0 => [
                                 'timestamp' => 1,
                                 'annotation' => 'annotation',
                                 'status' => 'Archive'
-
-                            ]
+                            ],
                         ]
-                    ]), false);
+                    ], JSON_THROW_ON_ERROR), false, 512, JSON_THROW_ON_ERROR);
                 }
                 return json_decode(json_encode([
                     'DocPrincipal' => [
@@ -38,7 +40,7 @@ class SignatureRecupTest extends PastellTestCase
                     'MessageRetour' => [
                         'codeRetour' => 'OK'
                     ]
-                ]), false);
+                ], JSON_THROW_ON_ERROR), false, 512, JSON_THROW_ON_ERROR);
             }
         );
 
@@ -88,20 +90,22 @@ class SignatureRecupTest extends PastellTestCase
             function ($soapMethod, $arguments) {
                 if ($soapMethod === 'CreerDossier') {
                     return json_decode(
-                        '{"MessageRetour":{"codeRetour":"OK","message":"","severite":"INFO"}}'
+                        '{"MessageRetour":{"codeRetour":"OK","message":"","severite":"INFO"}}',
+                        false,
+                        512,
+                        JSON_THROW_ON_ERROR
                     );
                 }
                 if ($soapMethod === 'GetHistoDossier') {
                     return json_decode(json_encode([
                         'LogDossier' => [
-                            [
+                            0 => [
                                 'timestamp' => 1,
                                 'annotation' => 'annotation',
                                 'status' => 'Archive'
-
-                            ]
+                            ],
                         ]
-                    ]), false);
+                    ], JSON_THROW_ON_ERROR), false, 512, JSON_THROW_ON_ERROR);
                 }
                 return json_decode(json_encode([
                     'DocPrincipal' => [
@@ -148,7 +152,7 @@ class SignatureRecupTest extends PastellTestCase
                     'MessageRetour' => [
                         'codeRetour' => 'OK'
                     ]
-                ]), false);
+                ], JSON_THROW_ON_ERROR), false, 512, JSON_THROW_ON_ERROR);
             }
         );
 
@@ -220,20 +224,22 @@ class SignatureRecupTest extends PastellTestCase
             function ($soapMethod, $arguments) {
                 if ($soapMethod === 'CreerDossier') {
                     return json_decode(
-                        '{"MessageRetour":{"codeRetour":"OK","message":"","severite":"INFO"}}'
+                        '{"MessageRetour":{"codeRetour":"OK","message":"","severite":"INFO"}}',
+                        false,
+                        512,
+                        JSON_THROW_ON_ERROR
                     );
                 }
                 if ($soapMethod === 'GetHistoDossier') {
                     return json_decode(json_encode([
                         'LogDossier' => [
-                            [
+                            0 => [
                                 'timestamp' => 1,
                                 'annotation' => 'annotation',
                                 'status' => 'Archive'
-
-                            ]
+                            ],
                         ]
-                    ]), false);
+                    ], JSON_THROW_ON_ERROR), false, 512, JSON_THROW_ON_ERROR);
                 }
                 return json_decode(json_encode([
                     'DocPrincipal' => [
@@ -262,7 +268,7 @@ class SignatureRecupTest extends PastellTestCase
                     'MessageRetour' => [
                         'codeRetour' => 'OK'
                     ]
-                ]), false);
+                ], JSON_THROW_ON_ERROR), false, 512, JSON_THROW_ON_ERROR);
             }
         );
 

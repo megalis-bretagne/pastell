@@ -164,6 +164,7 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
             'annotation_publique' => 'annotation_publique_2',
             'annotation_privee' => 'annotation_privee_2',
             'primo_signature_detachee' => 'primo_signature_detachee_2',
+            'parapheur_date_signature' => 'parapheur_date_signature_2',
         ], $mapping);
     }
 
@@ -301,6 +302,12 @@ class TypeDossierEtapeDefinitionTest extends PastellTestCase
                             'multiple' => true,
                             'read-only' => true,
                         ],
+                    'parapheur_date_signature_2' =>
+                        [
+                            'name' => 'Date de dernière signature',
+                            'type' => 'date',
+                            'read-only' => true,
+                        ],
                 ],
             'Parapheur FAST #2' => [
                 'envoi_fast_2' => [
@@ -410,7 +417,8 @@ Uniquement avec le mode "circuit à la volée"',
                         'recu-iparapheur' => 'recu-iparapheur_2',
                         'rejet-iparapheur' => 'rejet-iparapheur_2',
                         'erreur-verif-iparapheur' => 'erreur-verif-iparapheur_2',
-                        'parapheur_last_message' => 'parapheur_last_message_2'
+                        'parapheur_last_message' => 'parapheur_last_message_2',
+                        'parapheur_date_signature' => 'parapheur_date_signature_2'
                     ],
                 ],
                 'erreur-verif-iparapheur_2' => [

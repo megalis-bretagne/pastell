@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<iparapheur_historique>
+  <LogDossier>
+    <LogDossier id="0">
+      <timestamp>2024-02-23T15:22:30.003Z</timestamp>
+      <nom>WS User</nom>
+      <status>NonLu</status>
+      <annotation>Création de dossier</annotation>
+    </LogDossier>
+    <LogDossier id="1">
+      <timestamp>2024-02-23T15:22:30.003Z</timestamp>
+      <nom>WS User</nom>
+      <status>NonLu</status>
+      <annotation>Emission du dossier</annotation>
+    </LogDossier>
+    <LogDossier id="2">
+      <timestamp>2024-02-23T15:22:30.003Z</timestamp>
+      <nom>WS User</nom>
+      <status>PretCachet</status>
+      <annotation>Dossier déposé sur le bureau User pour cachet serveur.</annotation>
+    </LogDossier>
+    <LogDossier id="3">
+      <timestamp>2024-02-23T15:22:30.150Z</timestamp>
+      <nom>Signe1 User</nom>
+      <status>RejetCachet</status>
+      <annotation>test rejet cachet</annotation>
+    </LogDossier>
+  </LogDossier>
+  <MessageRetour>
+    <codeRetour>OK</codeRetour>
+    <message/>
+    <severite>INFO</severite>
+  </MessageRetour>
+</iparapheur_historique>

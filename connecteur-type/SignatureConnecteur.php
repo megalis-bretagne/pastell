@@ -15,13 +15,13 @@ abstract class SignatureConnecteur extends Connecteur
      */
     abstract public function sendDossier(FileToSign $dossier);
 
-    abstract public function getHistorique($dossierID);
-
     abstract public function getSignature($dossierID, $archive = true);
 
     abstract public function getAllHistoriqueInfo($dossierID);
 
-    abstract public function getLastHistorique($dossierID);
+    abstract public function getLastHistorique($history): string;
+
+    abstract public function getDateSignature(stdClass|array $history): string;
 
     abstract public function effacerDossierRejete($dossierID);
 
@@ -33,7 +33,8 @@ abstract class SignatureConnecteur extends Connecteur
     }
 
     /**
-    * Indique si le connecteur est un connecteur de signature "locale", c'est à dire par applet sur le navigateur et sans appel à un serveur de signature externe
+    * Indique si le connecteur est un connecteur de signature "locale",
+    * c'est à dire par applet sur le navigateur et sans appel à un serveur de signature externe
     * @return boolean
     */
     public function isLocalSignature()

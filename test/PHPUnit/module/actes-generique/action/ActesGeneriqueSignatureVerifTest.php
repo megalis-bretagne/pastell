@@ -30,22 +30,22 @@ class ActesGeneriqueSignatureVerifTest extends PastellTestCase
                 }
 
                 if ($soapMethod === 'GetHistoDossier') {
-                    // EP : j'arrive pas à faire ça.... je comprends pas comment soap transforme ces trucs-là...
-                    /*$xml = simplexml_load_file(__DIR__."/fixtures/iparapheur-histo-dossier-incomplete.xml");
-                    $json = json_encode($xml);
-                    return json_decode($json,false);*/
                     return json_decode(json_encode([
                         'LogDossier' => [
-                            [
+                            0 => [
                                 'timestamp' => 1,
                                 'annotation' => 'annotation',
                                 'status' => 'Archive'
-
-                            ]
+                            ],
                         ]
-                    ]), false);
+                    ], JSON_THROW_ON_ERROR), false, 512, JSON_THROW_ON_ERROR);
                 }
-                return json_decode('{"MessageRetour":{"codeRetour":"OK","message":"message.","severite":"INFO"}}', false);
+                return json_decode(
+                    '{"MessageRetour":{"codeRetour":"OK","message":"message.","severite":"INFO"}}',
+                    false,
+                    512,
+                    JSON_THROW_ON_ERROR
+                );
             }
         );
 
@@ -105,13 +105,28 @@ class ActesGeneriqueSignatureVerifTest extends PastellTestCase
                         $arguments[0]
                     );
                 }
-
                 if ($soapMethod === 'GetHistoDossier') {
-                    $xml = simplexml_load_file(__DIR__ . "/fixtures/iparapheur-histo-dossier-incomplete.xml");
-                    $json = json_encode($xml);
-                    return json_decode($json, false);
+                    return json_decode(json_encode([
+                        'LogDossier' => [
+                            0 => [
+                                'timestamp' => '2019-07-23T15:58:16.459+02:00',
+                                'annotation' => 'Création de dossier',
+                                'status' => 'NonLu'
+                            ],
+                        ],
+                        'MessageRetour' => [
+                            'codeRetour' => 'OK',
+                            'message' => '',
+                            'severite' => 'INFO'
+                        ]
+                    ], JSON_THROW_ON_ERROR), false, 512, JSON_THROW_ON_ERROR);
                 }
-                return json_decode('{"MessageRetour":{"codeRetour":"OK","message":"message.","severite":"INFO"}}', false);
+                return json_decode(
+                    '{"MessageRetour":{"codeRetour":"OK","message":"message.","severite":"INFO"}}',
+                    false,
+                    512,
+                    JSON_THROW_ON_ERROR
+                );
             }
         );
 

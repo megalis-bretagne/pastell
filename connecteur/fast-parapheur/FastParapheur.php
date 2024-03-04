@@ -7,6 +7,8 @@ class FastParapheur extends SignatureConnecteur
     public const REST_URI = '/parapheur-ws/rest/v1/';
     public const CIRCUIT_ON_THE_FLY_URI = self::REST_URI . '/documents/ondemand/%s/upload';
 
+    private const SIGNED_STATE = ['Signé'];
+
     private $url;
 
     private $subscriberNumber;
@@ -257,11 +259,6 @@ class FastParapheur extends SignatureConnecteur
         }
     }
 
-    public function getHistorique($dossierID)
-    {
-        // TODO: Implement getHistorique() method.
-    }
-
     public function getSignature($documentId, $archive = true)
     {
         try {
@@ -272,21 +269,35 @@ class FastParapheur extends SignatureConnecteur
         }
     }
 
-    public function getAllHistoriqueInfo($documentId)
+    public function getAllHistoriqueInfo($dossierID): bool|array
     {
         try {
-            return $this->getClient()->history($documentId);
+            return $this->getClient()->history($dossierID);
         } catch (Exception $e) {
             $this->lastError = $e->getMessage();
             return false;
         }
     }
 
-    public function getLastHistorique($history)
+    public function getLastHistorique($history): string
     {
         $lastLog = end($history);
-        $date = date("d/m/Y H:i:s", strtotime($lastLog->date));
-        return $date . " : [" . $lastLog->stateName . "]";
+        return sprintf(
+            '%s : [%s]',
+            date('d/m/Y H:i:s', strtotime($lastLog->date)),
+            $lastLog->stateName
+        );
+    }
+
+    public function getDateSignature(stdClass|array $history): string
+    {
+        foreach (array_reverse($history) as $log) {
+            if (in_array($log->stateName, self::SIGNED_STATE, true)) {
+                $logSignature = $log;
+                break;
+            }
+        }
+        return isset($logSignature) ? date('Y-m-d', strtotime($logSignature->date)) : '';
     }
 
     public function effacerDossierRejete($documentId)
@@ -345,15 +356,15 @@ class FastParapheur extends SignatureConnecteur
 
     public function isFinalState(string $lastState): bool
     {
-        return strpos($lastState, '[Classé]') !== false
-            || strpos($lastState, '[Signé]') !== false
-            || strpos($lastState, '[Archivé]') !== false;
+        return str_contains($lastState, '[Classé]')
+            || str_contains($lastState, '[Signé]')
+            || str_contains($lastState, '[Archivé]');
     }
 
     public function isRejected(string $lastState): bool
     {
-        return strpos($lastState, '[Refusé]') !== false
-            || strpos($lastState, '[Visa désapprouvé]') !== false;
+        return str_contains($lastState, '[Refusé]')
+            || str_contains($lastState, '[Visa désapprouvé]');
     }
 
     public function isDetached($signature): bool

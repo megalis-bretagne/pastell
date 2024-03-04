@@ -1,10 +1,13 @@
 <?php
 
-class IParapheurRejetTest extends PastellTestCase
+class IParapheurDateSignatureTest extends PastellTestCase
 {
     use SoapUtilitiesTestTrait;
 
-    public function testRejet()
+    /**
+     * @throws NotFoundException
+     */
+    public function testSigne(): void
     {
         $this->mockSoapClient(function ($soapMethod) {
             if ($soapMethod === 'CreerDossier') {
@@ -19,28 +22,50 @@ class IParapheurRejetTest extends PastellTestCase
                 return json_decode(json_encode([
                     'LogDossier' => [
                         0 => [
-                            'timestamp' => '2024-02-23T15:22:30.003Z',
+                            'timestamp' => '2024-02-07T13:22:54.380Z',
                             'nom' => 'WS User',
                             'status' => 'NonLu',
                             'annotation' => 'Création de dossier',
                         ],
                         1 => [
-                            'timestamp' => '2024-02-23T15:22:30.003Z',
+                            'timestamp' => '2024-02-07T13:22:54.380Z',
                             'nom' => 'WS User',
                             'status' => 'NonLu',
                             'annotation' => 'Emission du dossier',
                         ],
                         2 => [
-                            'timestamp' => '2024-02-23T15:22:30.003Z',
+                            'timestamp' => '2024-02-07T13:22:54.380Z',
                             'nom' => 'WS User',
-                            'status' => 'PretCachet',
-                            'annotation' => 'Dossier déposé sur le bureau User pour cachet serveur.',
+                            'status' => 'NonLu',
+                            'annotation' => 'Dossier déposé sur le bureau Bureau Signature 1 pour signature',
                         ],
                         3 => [
-                            'timestamp' => '2024-02-23T15:22:30.150Z',
+                            'timestamp' => '2024-02-07T13:22:54.582Z',
                             'nom' => 'Signe1 User',
-                            'status' => 'RejetCachet',
-                            'annotation' => 'test rejet cachet',
+                            'status' => 'Lu',
+                            'annotation' => 'Dossier lu et prêt pour la signature',
+                        ],
+                        4 => [
+                            'timestamp' => '2024-02-07T13:22:54.582Z',
+                            'nom' => 'Signe1 User',
+                            'status' => 'Signe',
+                        ],
+                        5 => [
+                            'timestamp' => '2024-02-08T13:25:58.219Z',
+                            'nom' => 'Signe2 User',
+                            'status' => 'Lu',
+                            'annotation' => 'Dossier lu et prêt pour la signature',
+                        ],
+                        6 => [
+                            'timestamp' => '2024-02-08T13:25:58.219Z',
+                            'nom' => 'Signe2 User',
+                            'status' => 'Signe',
+                        ],
+                        7 => [
+                            'timestamp' => '2024-02-08T13:25:58.219Z',
+                            'nom' => 'Signe2 User',
+                            'status' => 'Archive',
+                            'annotation' => 'Circuit terminé, dossier archivable',
                         ],
                     ],
                     'MessageRetour' => [
@@ -50,27 +75,16 @@ class IParapheurRejetTest extends PastellTestCase
                     ]
                 ], JSON_THROW_ON_ERROR), false, 512, JSON_THROW_ON_ERROR);
             }
-            if ($soapMethod === 'GetDossier') {
-                return json_decode(json_encode([
-                    'DocPrincipal' => [
-                        '_' => '%PDF1-4',
-                        'contentType' => 'application/pdf'
-                    ],
-                    'NomDocPrincipal' => 'test éàê accent.pdf',
-                    'MessageRetour' => [
-                        'codeRetour' => 'OK'
-                    ]
-                ], JSON_THROW_ON_ERROR), false, 512, JSON_THROW_ON_ERROR);
-            }
-            if ($soapMethod === 'EffacerDossierRejete') {
-                return json_decode(
-                    '{"MessageRetour":{"codeRetour":"OK","message":"message.","severite":"INFO"}}',
-                    false,
-                    512,
-                    JSON_THROW_ON_ERROR
-                );
-            }
-            throw new UnrecoverableException("unknow $soapMethod call");
+            return json_decode(json_encode([
+                'DocPrincipal' => [
+                    '_' => '%PDF1-4',
+                    'contentType' => 'application/pdf'
+                ],
+                'NomDocPrincipal' => 'test éàê accent.pdf',
+                'MessageRetour' => [
+                    'codeRetour' => 'OK'
+                ]
+            ], JSON_THROW_ON_ERROR), false, 512, JSON_THROW_ON_ERROR);
         });
 
         $id_ce = $this->createConnector('iParapheur', "i-parapheur")['id_ce'];
@@ -93,9 +107,7 @@ class IParapheurRejetTest extends PastellTestCase
         $this->assertLastMessage('Le document a été envoyé au parapheur électronique');
 
         $this->triggerActionOnDocument($id_d, 'verif-iparapheur');
-
-        $this->assertLastDocumentAction('rejet-iparapheur', $id_d);
-        $this->assertLastMessage('23/02/2024 16:22:30 : [RejetCachet] test rejet cachet');
+        $this->assertLastMessage('La signature a été récupérée');
 
         $donnesFormulaire = $this->getDonneesFormulaireFactory()->get($id_d);
 
@@ -105,8 +117,10 @@ class IParapheurRejetTest extends PastellTestCase
         $domDocument->loadXML($donneesFormulaire->getFileContent('iparapheur_historique'));
 
         static::assertStringEqualsFile(
-            __DIR__ . '/fixtures/iparapheur-historique-rejetCachet.xml',
+            __DIR__ . '/fixtures/iparapheur-historique-Signe-2X.xml',
             $domDocument->saveXML()
         );
+
+        static::assertSame('2024-02-08', $donnesFormulaire->get('parapheur_date_signature'));
     }
 }

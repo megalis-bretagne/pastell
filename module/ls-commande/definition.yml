@@ -236,6 +236,10 @@ formulaire:
         parapheur_last_message:
             name: 'Dernier message reçu du parapheur'
             read-only: true
+        parapheur_date_signature:
+            name: 'Date de dernière signature'
+            type: date
+            read-only: true
         has_signature:
             no-show: true
             read-only: true
@@ -586,6 +590,7 @@ action:
         connecteur-type-mapping:
             iparapheur_historique: iparapheur_historique
             parapheur_last_message: parapheur_last_message
+            parapheur_date_signature: parapheur_date_signature
             has_signature: has_signature
             signature: signature
             document_original: document_original

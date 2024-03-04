@@ -12,19 +12,23 @@ class FournisseurCommandeReceptionParapheurTest extends PastellTestCase
         $this->mockSoapClient(
             function ($soapMethod, $arguments) {
                 if ($soapMethod === 'CreerDossier') {
-                    return json_decode('{"MessageRetour":{"codeRetour":"OK","message":"message.","severite":"INFO"}}', false);
+                    return json_decode(
+                        '{"MessageRetour":{"codeRetour":"OK","message":"message.","severite":"INFO"}}',
+                        false,
+                        512,
+                        JSON_THROW_ON_ERROR
+                    );
                 }
                 if ($soapMethod === 'GetHistoDossier') {
                     return json_decode(json_encode([
                         'LogDossier' => [
-                            [
+                            0 => [
                                 'timestamp' => 1,
                                 'annotation' => 'annotation',
                                 'status' => 'status'
-
                             ],
                         ]
-                    ]), false);
+                    ], JSON_THROW_ON_ERROR), false, 512, JSON_THROW_ON_ERROR);
                 }
                 throw new UnrecoverableException("Unexpected call to SOAP method : $soapMethod");
             }
