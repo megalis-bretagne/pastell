@@ -31,13 +31,17 @@ $search = get_hecho($search);
             (fichier CSV)</a>
     <?php endif; ?>
 
-    <form action='<?php $this->url('Entite/detail') ?>' method='get' class="form-inline form-search">
-        <input type='text' name='search' id='search'
-               value='<?php echo $search ?>' class="form-control input-search col-md-3"
-               placeholder="Rechercher par dénomination"/>
-        <button type='submit' class='btn btn-primary btn-search' id="search-entite"><i class='fa fa-search'></i>
-        </button>
-    </form>
+    <div class="row">
+        <form action='<?php $this->url('Entite/detail') ?>' method='get' class="pt-3 input-group col-md-4">
+            <input type='text' name='search' id='search'
+                   value='<?php echo $search; ?>' class="form-control"
+                   placeholder="Rechercher par dénomination"/>
+            <button type='submit' class='btn btn-primary btn-search' id="search-entite"><i class='fa fa-search'></i>
+            </button>
+            <div class="col-md-8"></div>
+        </form>
+
+    </div>
 
     <?php $this->SuivantPrecedent($offset, 20, $nbCollectivite, "Entite/detail?search=$search"); ?>
     <h3 id="title-result" class="ls-off title-result">Résultat(s) de la recherche</h3>
@@ -62,11 +66,11 @@ $search = get_hecho($search);
                 <?php endif; ?>
                 <td>
                     <?php if ($info['is_active']) : ?>
-                        <p class="badge badge-info">
+                        <p class="badge bg-info">
                             Activée
                         </p>
                     <?php else : ?>
-                        <p class="badge badge-danger">
+                        <p class="badge bg-danger">
                             Désactivée
                         </p>
                     <?php endif ?>

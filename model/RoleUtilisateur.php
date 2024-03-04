@@ -238,25 +238,53 @@ class RoleUtilisateur extends SQL
         return $this->query($sql, $id_u, $droit);
     }
 
-
-    public function getArbreFille($id_u, $droit)
+    public function getArbreFille(int $userId, string $permission): array
     {
-        $sql = "SELECT DISTINCT entite.id_e,entite.denomination,entite.entite_mere FROM entite_ancetre " .
-                " JOIN utilisateur_role ON entite_ancetre.id_e_ancetre = utilisateur_role.id_e " .
-                " JOIN role_droit ON utilisateur_role.role=role_droit.role " .
-                " JOIN entite ON entite_ancetre.id_e=entite.id_e " .
-                " WHERE utilisateur_role.id_u=? AND droit=? " .
-                " ORDER BY entite_mere,denomination";
-                $result = [];
-        $db_result = $this->query($sql, $id_u, $droit);
+        $query = <<<SQL
+SELECT DISTINCT entite.id_e,entite.denomination,entite.entite_mere
+FROM entite_ancetre
+    JOIN utilisateur_role ON entite_ancetre.id_e_ancetre = utilisateur_role.id_e
+    JOIN role_droit ON utilisateur_role.role=role_droit.role
+    JOIN entite ON entite_ancetre.id_e=entite.id_e
+WHERE utilisateur_role.id_u=? AND droit=?
+ORDER BY entite_mere,denomination;
+SQL;
+        $db_result = $this->query($query, $userId, $permission);
+        $result = [];
 
         foreach ($db_result as $line) {
             $result[$line['entite_mere']][] = [
-                                                'id_e' => $line['id_e'],
-                                                'denomination' => $line['denomination'],
-                                                ];
+                'id_e' => $line['id_e'],
+                'denomination' => $line['denomination'],
+            ];
         }
+
         return $this->linearizeTab($result);
+    }
+
+    public function getEntityTree(int $userId, string $permission): array
+    {
+        $data = $this->getArbreFille($userId, $permission);
+        $hierarchy = [];
+
+        foreach ($data as $entry) {
+            $depth = $entry['profondeur'];
+
+            if ($depth === 0) {
+                // Root element
+                $hierarchy[] = $entry;
+            } else {
+                // Find parent and attach as child
+                $parent = &$hierarchy;
+                for ($i = 0; $i < $depth; ++$i) {
+                    $parent = &$parent[\count($parent) - 1]['children'];
+                }
+                $parent[] = $entry;
+                unset($parent);
+            }
+        }
+
+        return $hierarchy;
     }
 
     public function getEntiteWithDenomination($id_u, $droit)

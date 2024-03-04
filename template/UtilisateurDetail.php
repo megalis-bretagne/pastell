@@ -15,6 +15,7 @@
  * @var bool $enable_certificate_authentication
  * @var Authentification $authentification
  * @var array $tokens
+ * @var array $tree
  */
 
 use Pastell\Utilities\Certificate;
@@ -182,11 +183,12 @@ use Pastell\Utilities\Certificate;
     <?php if ($utilisateur_edition && $role_authorized) : ?>
         <h3>Ajouter un rôle</h3>
 
-        <form action='Utilisateur/ajoutRole' method='post' class='form-inline'>
+        <form action='Utilisateur/ajoutRole' method='post' class='d-flex flex-row align-items-center'>
             <?php $this->displayCSRFInput(); ?>
             <input type='hidden' name='id_u' value='<?php echo $id_u ?>'/>
+            <input id='role-entity_id' type='hidden' name='id_e' value=''/>
 
-            <select name='role' class='select2_role form-control col-md-1'>
+            <select name='role' class='select2_role p-0'>
                 <option value=''>...</option>
                 <?php foreach ($role_authorized as $role_info) : ?>
                     <option value='<?php hecho($role_info['role']); ?>'>
@@ -195,29 +197,7 @@ use Pastell\Utilities\Certificate;
                 <?php endforeach; ?>
             </select>
 
-            <div class="dropdown hierarchy-select mr-2" id="entity-selection-for-role">
-                <i class="fa fa-caret-down position-absolute" style="right:2%; top:30%; color:#7f8686"></i>
-                <button type="button" style="background-color: #ffffff; color: #474d4d; border-color:#a4adad;"
-                        class="text-left btn btn-outline-secondary btn-block" id="hierarchy-select-button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                </button>
-                <div class="dropdown-menu" aria-labelledby="hierarchy-select-button">
-                    <div class="hs-searchbox">
-                        <input type="text" class="form-control w-100" autocomplete="off" aria-label="Recherche entité">
-                    </div>
-                    <div class="hs-menu-inner">
-                        <a  class="dropdown-item" data-value="0" data-level="0">Entité racine</a>
-                        <?php foreach ($arbre as $entiteInfo) : ?>
-                            <a class="dropdown-item" data-value='<?php echo $entiteInfo['id_e'] ?>'
-                               data-level="<?php echo $entiteInfo['profondeur'] + 2; ?>">
-                                <?php hecho($entiteInfo['denomination']); ?>
-                            </a>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-                <input class="d-none" name="id_e" readonly="readonly"
-                       aria-hidden="true" type="text" aria-label="Entité"/>
-            </div>
+            <div class="treeselect-role-entity p-2"></div>
 
             <button type='submit' class='btn btn-primary'>
                 <i class="fa fa-plus-circle"></i>&nbsp;Ajouter
@@ -390,8 +370,19 @@ if ($id_u == $id_current_u || ($utilisateur_edition && $info['is_api'])) : ?>
     </div>
 <?php endif; ?>
 
-<script>
-    $('#entity-selection-for-role').hierarchySelect({
-        width: "auto"
-    });
+
+<script type="module">
+    const domElement = document.querySelector('.treeselect-role-entity')
+    const treeselect = new Treeselect({
+        placeholder: 'Sélectionner une entité',
+        parentHtmlContainer: domElement,
+        options: <?php echo $tree; ?>,
+        isSingleSelect: true,
+        showTags: false,
+        openLevel: 3
+    })
+
+    treeselect.srcElement.addEventListener('input', (e) => {
+        document.getElementById('role-entity_id').value = e.detail;
+    })
 </script>

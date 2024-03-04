@@ -31,7 +31,7 @@
         <div class="card">
             <a id="headingOne"
                class="card-header ls-accordion"
-               data-toggle="collapse" data-target="#collapseOne"
+               data-bs-toggle="collapse" data-bs-target="#collapseOne"
                aria-expanded="true" aria-controls="collapseOne"
             >
                 <i class="fa fa-search"></i> Recherche avancée

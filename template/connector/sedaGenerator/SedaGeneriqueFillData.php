@@ -68,14 +68,13 @@
 
 <?php if ($flux) : ?>
     <div class="box" >
-        <a class="collapse-link" data-toggle="collapse" href="#collapseExample">
+        <a class="collapse-link" data-bs-toggle="collapse" data-bs-target="#collapseModuleElements">
             <h2> <i class="fa fa-plus-square"></i>Liste des éléments du flux <b><?php hecho($flux) ?></b> possibles</h2>
         </a>
 
-        <div class="collapse"   id="collapseExample">
+        <div class="collapse" id="collapseModuleElements">
 
-
-            <table class="table table-striped ">
+            <table class="table table-striped">
                 <tr>
                     <th class="w200">Identifiant</th>
                     <th class="w200">Libellé</th>

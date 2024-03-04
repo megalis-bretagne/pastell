@@ -136,9 +136,9 @@
         <h2>Extensions PHP</h2>
         {% for extension in checkPhpExtensions %}
             {% if extension.isSuccess() %}
-                <p class="badge badge-success">{{ extension.result }}</p>
+                <p class="badge bg-success">{{ extension.result }}</p>
             {% else %}
-                <p class="badge badge-danger">{{ extension.result }}</p>
+                <p class="badge bg-danger">{{ extension.result }}</p>
             {% endif %}
         {% endfor %}
     </div>
@@ -242,17 +242,17 @@
                         <td>{{ featureProperties.description }}</td>
                         <td>
                             {% if featureProperties.is_enabled %}
-                                <p class="badge badge-success">Activé</p>
+                                <p class="badge bg-success">Activé</p>
                             {% else %}
-                                <p class="badge badge-info">Désactivé</p>
+                                <p class="badge bg-info">Désactivé</p>
                             {% endif %}
                         </td>
                         <td>
                             {% if featureProperties.is_enabled_by_default %}
 
-                                <p class="badge badge-success">Activé</p>
+                                <p class="badge bg-success">Activé</p>
                             {% else %}
-                                <p class="badge badge-info">Désactivé</p>
+                                <p class="badge bg-info">Désactivé</p>
                             {% endif %}
                         </td>
                     </tr>

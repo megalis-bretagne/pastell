@@ -25,12 +25,12 @@
                 </td>
                 <td>
                     <?php if ($connecteur['is_valid']) : ?>
-                        <p class="badge badge-success">
+                        <p class="badge bg-success">
                             Valide
                         </p>
                     <?php else : ?>
                         <a href="<?php $this->url("/System/connecteurDetail?id_connecteur=$id_connecteur&scope=global")?>">
-                            <p class="badge badge-danger">
+                            <p class="badge bg-danger">
                                     Erreur
                             </p>
                         </a>
@@ -64,12 +64,12 @@
                 </td>
                 <td>
                     <?php if ($connecteur['is_valid']) : ?>
-                        <p class="badge badge-success">
+                        <p class="badge bg-success">
                             Valide
                         </p>
                     <?php else : ?>
                         <a href="<?php $this->url("/System/connecteurDetail?id_connecteur=$id_connecteur&scope=entite")?>">
-                            <p class="badge badge-danger">
+                            <p class="badge bg-danger">
                                 Erreur
                             </p>
                         </a>

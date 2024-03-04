@@ -74,17 +74,30 @@ if ($node_id) {
                                             name='expression_<?php hecho($file['id']) ?>'
                                             id='expression_<?php hecho($file['id']); ?>'
                                             cols="40"
-                                            rows="<?php echo max(1, substr_count($file['field_expression'], "\n") + 1); ?>"
+                                            rows="
+                                            <?php echo max(
+                                                1,
+                                                substr_count($file['field_expression'], "\n") + 1
+                                            ); ?>"
                                             class="form-control"><?php hecho($file['field_expression']); ?></textarea>
                                 </td>
                                 <td>
-                                    <button type="submit" class="btn btn-primary inline" name="up" value="<?php hecho($file['id']) ?>">
-                                        <i class="fa  fa-caret-square-o-up"></i>
+                                    <button type="submit"
+                                            class="btn btn-primary inline"
+                                            name="up"
+                                            value="<?php hecho($file['id']) ?>">
+                                        <i class="fa fa-caret-square-o-up"></i>
                                     </button>
-                                    <button type="submit" class="btn btn-primary inline" name="down" value="<?php hecho($file['id']) ?>">
-                                        <i class="fa  fa-caret-square-o-down"></i>
+                                    <button type="submit"
+                                            class="btn btn-primary inline"
+                                            name="down"
+                                            value="<?php hecho($file['id']) ?>">
+                                        <i class="fa fa-caret-square-o-down"></i>
                                     </button>
-                                    <button type="submit" class="btn btn-danger inline" name="delete-file" value="<?php hecho($file['id']) ?>">
+                                    <button type="submit"
+                                            class="btn btn-danger inline"
+                                            name="delete-file"
+                                            value="<?php hecho($file['id']) ?>">
                                         <i class="fa fa-trash"></i>&nbsp;Supprimer
                                     </button>
                                 </td>
@@ -94,8 +107,10 @@ if ($node_id) {
                                     <input style="width: 10px"
                                            type='checkbox'
                                            name="do_not_put_mime_type_<?php hecho($file['id']) ?>"
-                                        <?php echo (!empty($file['do_not_put_mime_type'])) ? "checked='checked'" : "" ?>/>
-                                    <label for="do_not_put_mime_type_<?php hecho($file['id']) ?>">Ne pas inclure le MimeType lors de la création du bordereau</label>
+                                        <?php echo (!empty($file['do_not_put_mime_type'])) ? "checked='checked'" : "" ?>
+                                    />
+                                    <label for="do_not_put_mime_type_<?php hecho($file['id']) ?>"
+                                    >Ne pas inclure le MimeType lors de la création du bordereau</label>
                                 </td>
                             </tr>
                         <?php endforeach ?>
@@ -161,13 +176,17 @@ if ($node_id) {
 
             <?php if ($node_id) : ?>
                 <div class="box">
-                    <a class="collapse-link" data-toggle="collapse" href="#collapseProperties">
+                    <a class="collapse-link" data-bs-toggle="collapse" data-bs-target="#collapseProperties">
                         <h2><i class="fa fa-plus-square"></i>Propriétés spécifiques des objets d'archives</h2>
                     </a>
 
                     <div class="collapse" id="collapseProperties">
                         <table class="table table-striped">
-                            <?php foreach ($generateurSedaFillFiles->getArchiveUnitSpecificInfoDefinition() as $specificInfoId => $specifInfo) : ?>
+                            <?php
+                            foreach (
+                                $generateurSedaFillFiles
+                                    ->getArchiveUnitSpecificInfoDefinition() as $specificInfoId => $specifInfo
+                            ) : ?>
                                 <tr>
                                     <th class="w500">
                                         <?php hecho($specifInfo['libelle']) ?>
@@ -182,7 +201,11 @@ if ($node_id) {
                                                 class="form-control col-md-12"
                                                 name="<?php hecho($specificInfoId) ?>"
                                                 cols="40"
-                                                rows="<?php echo max(1, substr_count($specific_info[$specificInfoId], "\n") + 1); ?>"
+                                                rows="
+                                                <?php echo max(
+                                                    1,
+                                                    substr_count($specific_info[$specificInfoId], "\n") + 1
+                                                ); ?>"
                                         ><?php hecho($specific_info[$specificInfoId]); ?></textarea>
                                     </td>
                                 </tr>
@@ -205,12 +228,12 @@ if ($node_id) {
 
 <?php if ($flux) : ?>
     <div class="box">
-        <a class="collapse-link" data-toggle="collapse" href="#collapseExample">
+        <a class="collapse-link" data-bs-toggle="collapse" data-bs-target="#collapseModuleElements">
             <h2><i class="fa fa-plus-square"></i>Liste des éléments du flux <b><?php hecho($flux) ?></b> possibles</h2>
         </a>
 
-        <div class="collapse" id="collapseExample">
-            <table class="table table-striped ">
+        <div class="collapse" id="collapseModuleElements">
+            <table class="table table-striped">
                 <tr>
                     <th class="w200">Identifiant</th>
                     <th class="w200">Libellé</th>
