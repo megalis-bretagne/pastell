@@ -279,10 +279,6 @@ class FastParapheur extends SignatureConnecteur
         }
     }
 
-    /**
-     * @param $history
-     * @return string
-     */
     public function getLastHistorique($history): string
     {
         $lastLog = end($history);
