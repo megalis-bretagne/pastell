@@ -128,7 +128,7 @@ class InstanceConnecteurCest
         $I->sendPOST("/entite/1/connecteur?id_connecteur=purge&libelle=purge1");
         $id_ce = $I->grabDataFromResponseByJsonPath('$.id_ce')[0];
         $I->sendGET("/entite/1/connecteur/$id_ce/externalData/document_type_libelle");
-        $I->verifyJsonResponseOK(['actes-generique' => ['nom' => 'Actes (générique)']]);
+        $I->verifyJsonResponseOK(['actes-generique' => ['nom' => 'Actes (générique) - déprécié']]);
     }
 
     public function selectExternalData(NoGuy $I)
