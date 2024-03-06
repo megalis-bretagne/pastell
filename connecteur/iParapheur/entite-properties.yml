@@ -38,6 +38,7 @@ formulaire:
                 1: 'Bordereau si possible ou PES_Aller sinon (defaut)'
                 2: Bordereau
                 3: PES_Aller
+                4: 'Pièce jointe'
         iparapheur_metadata:
             name: 'Métadonnées à envoyer au iparapheur'
             commentaire: "De la forme : nom_element_pastell_1:nom_metadonne_parapheur_1, nom_element_pastell_2:nom_metadonne_parapheur_2, ..\nAttention, il faut que le flux le supporte !"

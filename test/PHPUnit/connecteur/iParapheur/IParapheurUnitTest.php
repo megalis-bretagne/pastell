@@ -305,6 +305,55 @@ class IParapheurUnitTest extends PastellTestCase
         $iParapheur->sendDossier($fileToSign);
     }
 
+    public function sendDossierPJProvider()
+    {
+        $fileToSign = new FileToSign();
+        $fileToSign->type = 'TYPE';
+        $fileToSign->sousType = 'SOUS-TYPE';
+        $fileToSign->dossierId = '1234-abcd';
+        $fileToSign->document = new Fichier();
+        $fileToSign->document->filename = 'nom fichier principal';
+        $fileToSign->document->content = '<?xml version="1.0" encoding="UTF-8"?><root><PES_DepenseAller><Bordereau></Bordereau></PES_DepenseAller></root>';
+        $fileToSign->document->contentType = 'application/xml';
+        $fileToSign->visualPdf = new Fichier();
+
+        return [
+            [
+                $fileToSign
+            ]
+        ];
+    }
+    /**
+     * @dataProvider sendDossierPJProvider
+     * @throws Exception
+     */
+    public function testSendDossierPJ(FileToSign $fileToSign): void
+    {
+        $soapClient = $this->createMock(SoapClient::class);
+        $soapClient->expects($this->any())
+            ->method('__call')
+            ->willReturnCallback(function () {
+                return json_decode(
+                    json_encode(
+                        ['MessageRetour' => ['severite' => 'severite', 'message' => 'message', 'codeRetour' => 'OK']],
+                        JSON_THROW_ON_ERROR
+                    ),
+                    false,
+                    512,
+                    JSON_THROW_ON_ERROR
+                );
+            });
+        $iParapheur = $this->getIParapheurConnecteur($soapClient);
+        try {
+            $fileToSign->xPathPourSignatureXML = null;
+            $iParapheur->sendDossier($fileToSign);
+        } catch (Exception $e) {
+            static::assertSame("Le bordereau du fichier PES ne contient pas d'identifiant valide, ni la balise PESAller : signature impossible", $e->getMessage());
+        }
+        $fileToSign->xPathPourSignatureXML = '4';
+        static::assertSame('1234-abcd', $iParapheur->sendDossier($fileToSign));
+    }
+
 
     public function testGestSousType()
     {

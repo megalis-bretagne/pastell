@@ -447,7 +447,11 @@ class IParapheur extends SignatureConnecteur
             ];
         }
 
-        if ($fileToSign->document->contentType == 'application/xml' && !$fileToSign->xPathPourSignatureXML) {
+        if (
+            $fileToSign->document->contentType === 'application/xml'
+            && !$fileToSign->xPathPourSignatureXML
+            && $this->xPathPourSignatureXML !== '4'
+        ) {
             $fileToSign->xPathPourSignatureXML = $this->getXPathPourSignatureXML($fileToSign->document->content);
         }
 
