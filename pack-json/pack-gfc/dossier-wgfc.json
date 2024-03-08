@@ -5,7 +5,7 @@
   "raw_data": {
     "id_type_dossier": "dossier-wgfc",
     "nom": "Dossier GFC",
-    "type": "Types de dossier Gestion de Flux Citoyen",
+    "type": "Relation citoyens",
     "description": "",
     "nom_onglet": "Information",
     "restriction_pack": "",

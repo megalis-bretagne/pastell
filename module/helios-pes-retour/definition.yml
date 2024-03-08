@@ -1,4 +1,5 @@
 nom: 'Helios PES Retour'
+type: 'Finances'
 description: "Type de dossier Hélios PES Retour permettant de traiter les réponses d'hélios.\nPermet de les envoyer à une GED."
 connecteur:
     - TdT

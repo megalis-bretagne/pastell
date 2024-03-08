@@ -1,6 +1,6 @@
 nom: 'Dossier de marché (archivage)'
+type: 'Commande publique'
 description: "Versement de toute les pièces d'un marché dans un SAE"
-type: 'Types de dossier marché'
 restriction_pack:
     - pack_marche
 connecteur:

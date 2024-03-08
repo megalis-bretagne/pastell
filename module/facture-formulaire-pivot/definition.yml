@@ -1,5 +1,5 @@
 nom: 'Facture Formulaire PIVOT'
-type: 'Types de dossier Facture Chorus Pro'
+type: 'Finances'
 description: "Le type de dossier Facture Formulaire PIVOT fonctionne de la manière suivante :\n- saisie des paramètres et données de la facture et ajout des pièces jointes\n- action \"Affecter les valeurs par défaut\" (le type de dossier doit être associé au connecteur de Parametrage)\n- action \"Créer le fichier facture pivot\" (le type de dossier doit être associé au connecteur Facture Fichier Pivot)\n- action \"Intégrer au type de dossier Facture Chorus Pro\""
 restriction_pack:
     - pack_chorus_pro

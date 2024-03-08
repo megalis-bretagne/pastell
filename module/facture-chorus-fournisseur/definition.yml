@@ -1,5 +1,5 @@
 nom: 'Facture Chorus fournisseur'
-type: 'Types de dossier Facture Chorus Pro'
+type: 'Finances'
 description: "Permet de créer et d'envoyer des factures vers le portail Chorus Pro"
 restriction_pack:
     - pack_chorus_pro

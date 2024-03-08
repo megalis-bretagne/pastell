@@ -1,4 +1,5 @@
-nom: 'Document PDF (Générique)'
+nom: 'Document PDF (Générique) - déprécié'
+type: 'Documents divers'
 description: "Type de dossier permettant le cheminement d'un document PDF"
 connecteur:
     - signature

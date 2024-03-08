@@ -1,4 +1,5 @@
-nom: 'Helios automatique'
+nom: 'Helios automatique - déprécié'
+type: 'Finances'
 description: "Type de dossier Hélios automatique permettant de traiter les fichiers PES en les envoyant :\nau parapheur, au Tdt (automatiquement si la case est cochée), à une GED (automatiquement si la case est cochée) et à un SAE (automatiquement si la case est cochée) ou à toutes combinaisons de ces quatre systèmes."
 connecteur:
     - signature

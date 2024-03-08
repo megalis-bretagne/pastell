@@ -5,7 +5,7 @@
   "raw_data": {
     "id_type_dossier": "draft-ls-mailsec-bidir-reponse",
     "nom": "Mail s\u00e9curis\u00e9 avec r\u00e9ponse (r\u00e9ponse)",
-    "type": "Mail s\u00e9curis\u00e9",
+    "type": "Mails s\u00e9curis\u00e9s",
     "description": "R\u00e9ponses des destinataires de Mail s\u00e9curis\u00e9 avec r\u00e9ponse",
     "nom_onglet": "R\u00e9ponse",
     "affiche_one": false,

@@ -26,9 +26,9 @@ class FluxDefinitionFilesTest extends PastellTestCase
         $this->assertNotEmpty($flux_list);
     }
 
-    public function testGetInfo()
+    public function testGetInfo(): void
     {
         $flux_info = $this->getFluxDefinitionFiles()->getInfo('mailsec');
-        $this->assertEquals("Mail sécurisé", $flux_info['nom']);
+        static::assertSame('Mail sécurisé - déprécié', $flux_info['nom']);
     }
 }

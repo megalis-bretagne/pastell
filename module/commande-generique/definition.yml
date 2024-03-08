@@ -1,4 +1,5 @@
-nom: 'Commande (générique)'
+nom: 'Commande (générique) - déprécié'
+type: 'Finances'
 description: "Type de dossier permettant l'enregistrement d'une commande au format PDF, puis le passage à la signature,\npuis l'envoi de la facture par mail sécurisé, \npuis l'envoi à la GED et au SAE (facultatif)"
 connecteur:
     - signature

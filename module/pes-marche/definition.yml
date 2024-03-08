@@ -1,5 +1,5 @@
 nom: 'PES marché'
-type: 'Types de dossier marché'
+type: 'Commande publique'
 description: 'Types de dossier PES marché : tdt, GED et SAE'
 restriction_pack:
     - pack_marche

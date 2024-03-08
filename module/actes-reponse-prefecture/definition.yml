@@ -1,4 +1,5 @@
 nom: 'Actes réponse préfecture'
+type: 'Actes administratifs'
 description: 'Flux Actes réponse préfecture permettant de récupérer les réponses de la préfecture.'
 connecteur:
     - TdT

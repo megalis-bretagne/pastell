@@ -1,5 +1,5 @@
 nom: 'Facture Chorus Pro'
-type: 'Types de dossier Facture Chorus Pro'
+type: 'Finances'
 description: "Le type de dossier Facture Chorus Pro générique fonctionne de la manière suivante :\n- création par l'import via un connecteur CPP ou création d'après facture papier via le type de dossier Facture Formulaire Pivot\n- préparation du document, envoi sur des connecteurs annexes (exemple : GED, parapheur)\n- mise à disposition de la GF\n- changement de statut par la GF\n- fin de vie du document, envoi sur des connecteurs annexes (exemple : SAE)"
 restriction_pack:
     - pack_chorus_pro
