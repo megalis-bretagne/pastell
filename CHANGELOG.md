@@ -39,6 +39,7 @@
 
 - Prise en compte des valeurs par défaut pour les connecteurs #1938
 - Le dossier poursuit son cheminement même s'il n'y a pas de connecteur associé pour une étape de transformation #1981
+- Harmonisation des libellés des types de dossiers et de leurs classements #1897
 
 # [4.0.12] - 2024-02-12
 

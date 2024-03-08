@@ -1,4 +1,4 @@
-nom: 'Convocation (destinataire)'
+nom: 'Mail sécurisé avec réponse (destinataire) - déprécié'
 type: 'Mails sécurisés'
 description: 'Type de dossier complémentaire du type de dossier mailsec-bidir'
 formulaire:
