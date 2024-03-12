@@ -1,3 +1,9 @@
+# [4.0.13] - 2024-04-08
+
+## Correction
+
+- Générateur SEDA Asalae : Précision des libellés des propriétés spécifiques des objets d'archives #1745
+
 # [4.0.12] - 2024-02-12
 
 ## Évolutions
