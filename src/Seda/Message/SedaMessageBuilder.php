@@ -30,6 +30,7 @@ class SedaMessageBuilder
     private string $algorithmIdentifier;
     private FluxData $fluxData;
     private SedaMessage $message;
+    private array $filenameList = [];
 
     public function __construct(
         private readonly TmpFolder $tmpFolder,
@@ -375,7 +376,6 @@ class SedaMessageBuilder
         if ($archiveUnitsFromRoot !== []) {
             $archiveUnits = \array_merge($archiveUnits, ...$archiveUnitsFromRoot);
         }
-
         return $archiveUnits;
     }
 
@@ -687,6 +687,17 @@ class SedaMessageBuilder
 
     protected function normalizeUri(string $filepath, string $digest): string
     {
+        $i = 1;
+        $pathInfo = pathinfo($filepath);
+        while (in_array($filepath, $this->filenameList, true)) {
+            $filepath = sprintf(
+                '%s_%d.%s',
+                $pathInfo['filename'],
+                $i++,
+                $pathInfo['extension']
+            );
+        }
+        $this->filenameList[] = $filepath;
         return $filepath;
     }
 }
