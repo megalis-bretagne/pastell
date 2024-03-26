@@ -56,7 +56,7 @@
     "Files": [
         {
             "Id": "NOT_TESTABLE_1",
-            "Filename": "actes.pdf",
+            "Filename": "document.pdf",
             "Uri": "content\/fbc1a9f858ea9e177916964bd88c3d37b91a1e84412765e29950777f265c4b75.pdf",
             "MessageDigest": "fbc1a9f858ea9e177916964bd88c3d37b91a1e84412765e29950777f265c4b75",
             "AlgorithmIdentifier": "SHA-256",
@@ -66,7 +66,7 @@
         },
         {
             "Id": "NOT_TESTABLE_2",
-            "Filename": "annexe1.pdf",
+            "Filename": "document.pdf",
             "Uri": "content\/dbd318c1c462aee872f41109a4dfd3048871a03dedd0fe0e757ced57dad6f2d7.pdf",
             "MessageDigest": "dbd318c1c462aee872f41109a4dfd3048871a03dedd0fe0e757ced57dad6f2d7",
             "AlgorithmIdentifier": "SHA-256",
