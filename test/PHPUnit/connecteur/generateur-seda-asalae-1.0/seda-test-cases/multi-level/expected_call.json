@@ -44,8 +44,8 @@
                                     "Files": [
                                         {
                                             "Id": "NOT_TESTABLE_5",
-                                            "Filename": "actes.pdf",
-                                            "Uri": "actes.pdf",
+                                            "Filename": "document.pdf",
+                                            "Uri": "document.pdf",
                                             "MessageDigest": "fbc1a9f858ea9e177916964bd88c3d37b91a1e84412765e29950777f265c4b75",
                                             "AlgorithmIdentifier": "http:\/\/www.w3.org\/2001\/04\/xmlenc#sha256",
                                             "Size": "7",

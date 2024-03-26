@@ -28,8 +28,8 @@
     "Files": [
         {
             "Id": "NOT_TESTABLE_1",
-            "Filename": "actes.pdf",
-            "Uri": "actes.pdf",
+            "Filename": "document.pdf",
+            "Uri": "document.pdf",
             "MessageDigest": "65019286222ace418f742556366f9b9da5aaf6797527d2f0cba5bfe6b2f8ed24746542a0f2be1da8d63c2477f688b608eb53628993afa624f378b03f10090ce7",
             "AlgorithmIdentifier": "http:\/\/www.w3.org\/2001\/04\/xmlenc#sha512",
             "Size": "7",
@@ -38,8 +38,8 @@
         },
         {
             "Id": "NOT_TESTABLE_2",
-            "Filename": "annexe1.pdf",
-            "Uri": "annexe1.pdf",
+            "Filename": "document.pdf",
+            "Uri": "document_1.pdf",
             "MessageDigest": "bce50343a56f01dc7cf2d4c82127be4fff3a83ddb8b783b1a28fb6574637ceb71ef594b1f03a8e9b7d754341831292bcad1a3cb8a12fd2ded7a57b1b173b3bf7",
             "AlgorithmIdentifier": "http:\/\/www.w3.org\/2001\/04\/xmlenc#sha512",
             "Size": "11",
