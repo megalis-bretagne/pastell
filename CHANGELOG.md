@@ -1,8 +1,14 @@
+# [4.0.13] - 2024-04-15
+
+## Évolutions
+
+- Le titre du dossier est tronqué lors de l'envoi à iparapheur si sa taille dépasse 255 bytes #2012
+
 # [4.0.12] - 2024-02-12
 
 ## Évolutions
 
-- Possibilité de mettre un type de document spécifique ainsi que des métadonnées GED sur les dépots CMIS #1503 
+- Possibilité de mettre un type de document spécifique ainsi que des métadonnées GED sur les dépots CMIS #1503
 
 ## Corrections
 

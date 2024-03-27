@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Utilities\TextTruncator;
+
 class IParapheur extends SignatureConnecteur
 {
     public const IPARAPHEUR_NB_JOUR_MAX_DEFAULT = SignatureConnecteur::PARAPHEUR_NB_JOUR_MAX_DEFAULT;
@@ -7,6 +9,7 @@ class IParapheur extends SignatureConnecteur
     public const ARCHIVAGE_ACTION_EFFACER = "EFFACER";
 
     private const REJECTED_STATE = ['RejetVisa', 'RejetSignataire','RejetCachet', 'RejetMailSecPastell', 'RejetSignataireExterne'];
+    private const MAX_TITLE_LENGTH = 255;
 
     private $wsdl;
     private $login_http;
@@ -424,7 +427,7 @@ class IParapheur extends SignatureConnecteur
         }
 
         if ($fileToSign->dossierTitre) {
-            $data['DossierTitre'] = $fileToSign->dossierTitre;
+            $data['DossierTitre'] = TextTruncator::truncate($fileToSign->dossierTitre, self::MAX_TITLE_LENGTH);
         }
 
         if ($fileToSign->date_limite) {
