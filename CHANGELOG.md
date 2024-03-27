@@ -3,6 +3,7 @@
 ## Évolutions
 
 - flux "Actes publication" `ls-actes-publication` : Ajout des Annexes 'document_annexes' (Fichiers multiples pdf) #1905
+- Le titre du dossier est tronqué lors de l'envoi à iparapheur si sa taille dépasse 255 bytes #2012
 
 ## Correction
 
@@ -15,7 +16,7 @@
 
 ## Évolutions
 
-- Possibilité de mettre un type de document spécifique ainsi que des métadonnées GED sur les dépots CMIS #1503 
+- Possibilité de mettre un type de document spécifique ainsi que des métadonnées GED sur les dépots CMIS #1503
 
 ## Corrections
 
