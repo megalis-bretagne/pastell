@@ -7,6 +7,7 @@
 ## Correction
 
 - Générateur SEDA Asalae : Précision des libellés des propriétés spécifiques des objets d'archives #1745
+- Définition de studio : Il y avait une erreur pour les valeurs par défaut des Zones de texte multilignes #2002
 
 # [4.0.12] - 2024-02-12
 

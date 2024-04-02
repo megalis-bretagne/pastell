@@ -254,7 +254,9 @@
             let objectList = getObjectList();
             for (const [key, value] of Object.entries(objectList)) {
                 let option = document.createElement('option');
-                let defaultValue = '<?php hecho($formulaireElement->default_value) ; ?>';
+                let defaultValue = '<?php echo
+                preg_replace('/\s+/', '\n', $formulaireElement->default_value ?? '');
+                ?>';
                 if (defaultValue === key) {
                     option.selected = true;
                 }
