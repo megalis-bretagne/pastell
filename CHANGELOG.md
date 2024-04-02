@@ -1,3 +1,9 @@
+# [4.0.13] - 2024-04-08
+
+## Évolutions
+
+- flux "Actes publication" `ls-actes-publication` : Ajout des Annexes 'document_annexes' (Fichiers multiples pdf) #1905
+
 # [4.0.12] - 2024-02-12
 
 ## Évolutions

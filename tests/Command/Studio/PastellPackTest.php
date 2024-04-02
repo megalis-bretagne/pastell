@@ -65,7 +65,7 @@ class PastellPackTest extends PastellTestCase
             'rh-archivage-collectif-zip',
             'Données de gestion collective (fichier compressé) (archivage)'
         ],
-        'ls-actes-publication-draft' => [
+        'draft-ls-actes-publication' => [
             '',
             'ls-actes-publication',
             'Actes publication',
