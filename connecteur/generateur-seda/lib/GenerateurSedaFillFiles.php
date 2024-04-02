@@ -302,11 +302,11 @@ class GenerateurSedaFillFiles
             ],
             'DescriptionLevel' => [
                 'libelle' => 'Niveau de description',
-                'commentaire' => 'forme attendue : class, collection, file, fonds, item, recordgrp, series, subfonds, subgrp, subseries',
+                'commentaire' => 'forme attendue : class, collection, file, ... (seda 1.0) /  Fonds, Subfonds, Class, ... (seda 2.1)',
             ],
             'Language' => [
                 'libelle' => 'Langue de la description',
-                'commentaire' => 'forme attendue : fra',
+                'commentaire' => 'forme attendue : fra (seda 1.0) / fr (seda 2.1)',
             ],
             'CustodialHistory' => [
                 'libelle' => 'Historique de conservation',
@@ -316,7 +316,8 @@ class GenerateurSedaFillFiles
                 'libelle' => 'Mots-clés',
                 'commentaire' =>
                     "Un mot clé par ligne de la forme : 'Contenu du mot-clé','KeywordReference','KeywordType'
-                  <br/><br/>Attention, si un élément contient une virgule, il est nécessaire d'entourer l'expression par des 'guillemets'
+                  <br/><br/>Attention, si un élément contient une virgule, il est nécessaire d'entourer 
+                  l'expression par des 'guillemets'
                   <br/><br/>L'ensemble du champ est analysé avec Twig, puis les lignes sont lues comme des lignes CSV
                   ( , comme séparateur de champs, \" comme clôture de champs et \ comme caractère d'échappement)
                   <br/><br/>Les mots clés sont mis dans le bordereau au niveau 
@@ -333,7 +334,8 @@ class GenerateurSedaFillFiles
             ],
             'ArchiveUnit_AppraisalRule_Rule' => [
                 'libelle' => "Durée d'utilité administrative (DUA)",
-                'commentaire' => 'ex : P10Y',
+                'commentaire' => 'forme attendue encoder en xsd:duration, 
+                    voir http://www.datypic.com/sc/xsd/t-xsd_duration.html',
             ],
             'ArchiveUnit_AppraisalRule_StartDate' => [
                 'libelle' => 'Date de départ de la DUA',
@@ -341,7 +343,8 @@ class GenerateurSedaFillFiles
             ],
             'ArchiveUnit_AppraisalRule_FinalAction' => [
                 'libelle' => 'Sort final',
-                'commentaire' => 'forme attendue : detruire ou conserver',
+                'commentaire' => 'AppraisalRule - Code (seda 1.0) (conserver OU detruire) / 
+                    AppraisalRule - FinalAction (seda 2.1) (Keep OU Destroy)',
             ],
         ];
     }
