@@ -7,6 +7,8 @@
 ## Correction
 
 - Générateur SEDA Asalae : Précision des libellés des propriétés spécifiques des objets d'archives #1745
+- La visionneuse PESViewerVisionneuse n'était plus fonctionnelle pour les documents (Fichier PES de flux studio).
+  (regression de la version 4.0.0) #2030
 
 # [4.0.12] - 2024-02-12
 
