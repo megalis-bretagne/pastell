@@ -98,10 +98,10 @@ abstract class AbstractSedaGeneratorConnectorTestCase extends PastellTestCase
             'classification' => '1.1 Titulaire de la fonction publique territoriale',
             'objet' => 'Nomination du colonel Moutarde',
         ]);
-        $donneesFormulaire->addFileFromData('arrete', 'actes.pdf', 'foo bar');
+        $donneesFormulaire->addFileFromData('arrete', 'document.pdf', 'foo bar');
         $donneesFormulaire->addFileFromData(
             'autre_document_attache',
-            'annexe1.pdf',
+            'document.pdf',
             'foo bar baz',
             0
         );
