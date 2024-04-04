@@ -212,12 +212,21 @@ final class ImportConfigService
             return;
         }
         foreach ($exportedData[ExportConfigService::ASSOCIATION_HERITAGE_INFO] as $id_e => $heritage_list) {
-            if (empty($id_e_mapping[$id_e])) {
+            if (!isset($id_e_mapping[$id_e])) {
                 if ($id_e_root === 0) {
-                    $this->lastErrors[] = "L'entité du fichier d'import id_e=$id_e n'est pas présente : les héritages d'associations n'ont pas été importées.";
+                    $this->lastErrors[] = \sprintf(
+                        "L'entité du fichier d'import id_e=%s n'est pas présente : " .
+                        "les héritages d'associations n'ont pas été importées.",
+                        $id_e
+                    );
                     continue;
                 }
-                $this->lastErrors[] = "L'entité du fichier d'import id_e=$id_e n'est pas présente : les héritages d'associations sont importées sur $id_e_root.";
+                $this->lastErrors[] = \sprintf(
+                    "L'entité du fichier d'import id_e=%s n'est pas présente : " .
+                    "les héritages d'associations sont importées sur %s.",
+                    $id_e,
+                    $id_e_root
+                );
                 $id_e_mapping[$id_e] = $id_e_root;
             }
             foreach ($heritage_list as $flux) {
