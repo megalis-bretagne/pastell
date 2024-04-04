@@ -95,7 +95,8 @@
     "allow-plugins": {
       "symfony/runtime": true,
       "symfony/flex": true,
-      "php-http/discovery": true
+      "php-http/discovery": true,
+      "composer/installers": true
     }
   },
   "scripts": {
