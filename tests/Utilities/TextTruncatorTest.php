@@ -11,9 +11,9 @@ class TextTruncatorTest extends TestCase
 {
     public function truncateProvider(): \Generator
     {
-        yield ['abcdefgh', 4, 'ab…gh'];
-        yield ['aébècêdë', 5, 'a…ë'];
-        yield ['👋aébècêdë', 8, '👋…êdë'];
+        yield ['abcdefgh', 6, 'a…h'];
+        yield ['aébècêdë', 8, 'a…ë'];
+        yield ['👋aébècêdë', 12, '👋…dë'];
     }
 
     /**
@@ -21,6 +21,8 @@ class TextTruncatorTest extends TestCase
      */
     public function testTruncate(string $text, int $bytes, string $expectedResult): void
     {
-        self::assertSame($expectedResult, TextTruncator::truncate($text, $bytes));
+        $textTruncated = TextTruncator::truncate($text, $bytes);
+        self::assertSame($expectedResult, $textTruncated);
+        self::assertLessThanOrEqual($bytes, \strlen($textTruncated));
     }
 }

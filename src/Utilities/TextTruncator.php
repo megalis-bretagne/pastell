@@ -6,16 +6,31 @@ namespace Pastell\Utilities;
 
 final class TextTruncator
 {
+    private const MIDDLE_DELIMITER = '…';
+
     public static function truncate(string $text, int $expectedBytes): string
     {
         $bytesInText = \strlen($text);
-        if ($expectedBytes > $bytesInText) {
+        if ($expectedBytes >= $bytesInText) {
             return $text;
         }
-        $half = (int)\floor($expectedBytes / 2);
+        $middleDelimiterHalfLength = (int)\ceil(\strlen(self::MIDDLE_DELIMITER) / 2);
+        $halfLength = (int)\floor($expectedBytes / 2) - $middleDelimiterHalfLength;
 
-        $firstPart = \mb_strcut($text, 0, $half);
-        $lastPart = \mb_strcut($text, $bytesInText - $half, $bytesInText);
-        return $firstPart . '…' . $lastPart;
+        $firstPart = '';
+        $length = 0;
+        while (\strlen(\mb_strcut($text, 0, $length)) <= ($halfLength)) {
+            $firstPart = \mb_strcut($text, 0, $length);
+            ++$length;
+        }
+
+        $lastPart = '';
+        $length = 0;
+        while (\strlen(\mb_strcut($text, $bytesInText - $length, $bytesInText)) <= ($halfLength)) {
+            $lastPart = \mb_strcut($text, $bytesInText - $length, $bytesInText);
+            ++$length;
+        }
+
+        return $firstPart . self::MIDDLE_DELIMITER . $lastPart;
     }
 }
