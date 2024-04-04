@@ -336,4 +336,109 @@ class ExportConfigServiceTest extends PastellTestCase
             ->getConnecteurConfig(14);
         self::assertEquals('Foo', $connectorConfig->get('champs1'));
     }
+
+    /**
+     * @throws \DonneesFormulaireException
+     */
+    public function testWhenImportingGlobalConnectorAndAssociations(): void
+    {
+        $importConfigService = $this->getObjectInstancier()->getInstance(ImportConfigService::class);
+        $importConfigService->import(
+            [
+                ExportConfigService::CONNECTOR_INFO => [
+                    [
+                        'id_ce' => 2,
+                        'id_e' => 0,
+                        'libelle' => 'bar',
+                        'id_connecteur' => 'cloudooo',
+                        'type' => 'convertisseur-office-pdf',
+                        'data' => '{"metadata":{"cloudooo_hostname":"cloudooo","cloudooo_port":"8011"}}',
+                    ],
+                ],
+                ExportConfigService::ASSOCIATION_INFO => [
+                    0 => [
+                        'global' => [
+                            'convertisseur-office-pdf' => [
+                                [
+                                    'id_fe' => 2,
+                                    'id_e' => 0,
+                                    'flux' => 'global',
+                                    'id_ce' => 2,
+                                    'type' => 'convertisseur-office-pdf',
+                                    'num_same_type' => 0,
+                                    'libelle' => 'Conversion Office PDF',
+                                    'id_connecteur' => 'cloudooo',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            0
+        );
+
+        static::assertSame(
+            [],
+            $importConfigService->getLastErrors()
+        );
+
+        $globalConnector = $this->getObjectInstancier()
+            ->getInstance(\ConnecteurFactory::class)
+            ->getGlobalConnecteur('convertisseur-office-pdf');
+        self::assertSame(
+            $globalConnector->getConnecteurInfo()['libelle'],
+            'bar'
+        );
+    }
+
+    /**
+     * @throws \DonneesFormulaireException
+     */
+    public function testWhenImportingUnknownAssociation(): void
+    {
+        $importConfigService = $this->getObjectInstancier()->getInstance(ImportConfigService::class);
+        $importConfigService->import(
+            [
+                    ExportConfigService::ENTITY_INFO => [
+                        'denomination' => 'Foo',
+                        'id_e' => 12,
+                        'siren' => '000000000',
+                        'entite_mere' => 0,
+                        'type' => 'collectivite',
+                    ],
+                    ExportConfigService::CONNECTOR_INFO => [
+                        [
+                            'id_ce' => 2,
+                            'id_e' => 12,
+                            'libelle' => 'bar',
+                            'id_connecteur' => 'generateur-seda',
+                            'type' => 'Bordereau SEDA',
+                            'data' => '{"metadata":{"seda_generator_url":"http:\/\/seda-generator"}}',
+                        ],
+                    ],
+                    ExportConfigService::ASSOCIATION_INFO => [
+                        12 => [
+                            'unknown-module' => [
+                                'Bordereau SEDA' => [
+                                    0 => [
+                                        'id_e' => 12,
+                                        'flux' => 'unknown-module',
+                                        'id_ce' => 2,
+                                        'type' => 'Bordereau SEDA',
+                                        'libelle' => '',
+                                        'id_connecteur' => 'Generateur SEDA',
+                                        'num_same_type' => 0,
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+            ],
+            0
+        );
+        static::assertSame(
+            [    0 => "Le type de dossier « unknown-module » n'existe pas."],
+            $importConfigService->getLastErrors()
+        );
+    }
 }

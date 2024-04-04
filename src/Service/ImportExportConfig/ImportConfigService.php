@@ -42,6 +42,7 @@ final class ImportConfigService
         $this->lastErrors = [];
         $id_e_mapping = $this->importEntity($exportedData, $id_e_root);
         $id_e_mapping = $this->importChildEntity($exportedData, $id_e_mapping, $id_e_root);
+        $id_e_mapping[0] = 0;
         $connectorMapping = $this->importConnector($exportedData, $id_e_mapping, $id_e_root);
         $this->importAssociation($exportedData, $id_e_mapping, $connectorMapping, $id_e_root);
         $this->importAssociationInheritance($exportedData, $id_e_mapping, $id_e_root);
@@ -162,20 +163,47 @@ final class ImportConfigService
         }
     }
 
-    private function associateConnector(array $theConnectorInfo, int $id_e, string $flux_name, string $typeFlux, array $connectorMapping): void
-    {
+    /**
+     * @throws Exception
+     */
+    private function associateConnector(
+        array $theConnectorInfo,
+        int $id_e,
+        string $flux_name,
+        string $typeFlux,
+        array $connectorMapping
+    ): void {
         if (empty($connectorMapping[$theConnectorInfo['id_ce']])) {
-            $this->lastErrors[] = "La définition du connecteur id_ce={$theConnectorInfo['id_ce']} n'est pas présente : l'association n'a pas été importée.";
+            $this->lastErrors[] = \sprintf(
+                "La définition du connecteur id_ce=%s n'est pas présente : l'association n'a pas été importée.",
+                $theConnectorInfo['id_ce']
+            );
             return;
         }
-        $this->connecteurAssociationService->addConnecteurAssociation(
-            $id_e,
-            $connectorMapping[$theConnectorInfo['id_ce']],
-            $typeFlux,
-            0,
-            $flux_name,
-            $theConnectorInfo['num_same_type']
-        );
+        try {
+            if ($id_e === 0 && $flux_name === 'global') {
+                $this->connecteurAssociationService->addConnecteurAssociation(
+                    $id_e,
+                    $connectorMapping[$theConnectorInfo['id_ce']],
+                    $typeFlux,
+                );
+            } else {
+                $this->connecteurAssociationService->addConnecteurAssociation(
+                    $id_e,
+                    $connectorMapping[$theConnectorInfo['id_ce']],
+                    $typeFlux,
+                    0,
+                    $flux_name,
+                    $theConnectorInfo['num_same_type']
+                );
+            }
+        } catch (UnrecoverableException $e) {
+            //TODO: have a dedicated exception
+            if (\str_starts_with($e->getMessage(), 'Le type de dossier « ')) {
+                $this->lastErrors[] = $e->getMessage();
+                return;
+            }
+        }
     }
 
     private function importAssociationInheritance(array $exportedData, array $id_e_mapping, int $id_e_root): void
@@ -184,12 +212,21 @@ final class ImportConfigService
             return;
         }
         foreach ($exportedData[ExportConfigService::ASSOCIATION_HERITAGE_INFO] as $id_e => $heritage_list) {
-            if (empty($id_e_mapping[$id_e])) {
+            if (!isset($id_e_mapping[$id_e])) {
                 if ($id_e_root === 0) {
-                    $this->lastErrors[] = "L'entité du fichier d'import id_e=$id_e n'est pas présente : les héritages d'associations n'ont pas été importées.";
+                    $this->lastErrors[] = \sprintf(
+                        "L'entité du fichier d'import id_e=%s n'est pas présente : " .
+                        "les héritages d'associations n'ont pas été importées.",
+                        $id_e
+                    );
                     continue;
                 }
-                $this->lastErrors[] = "L'entité du fichier d'import id_e=$id_e n'est pas présente : les héritages d'associations sont importées sur $id_e_root.";
+                $this->lastErrors[] = \sprintf(
+                    "L'entité du fichier d'import id_e=%s n'est pas présente : " .
+                    "les héritages d'associations sont importées sur %s.",
+                    $id_e,
+                    $id_e_root
+                );
                 $id_e_mapping[$id_e] = $id_e_root;
             }
             foreach ($heritage_list as $flux) {

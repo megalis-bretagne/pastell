@@ -11,6 +11,7 @@
 - La visionneuse PESViewerVisionneuse n'était plus fonctionnelle pour les documents (Fichier PES de flux studio).
   (regression de la version 4.0.0) #2030
 - Générateur SEDA Asalae : Renommage des fichiers en cas de doublon pour éviter l'erreur Asalae #1933
+- L'import des associations sur l'entité racine ne fonctionnait pas #2045
 
 # [4.0.12] - 2024-02-12
 
