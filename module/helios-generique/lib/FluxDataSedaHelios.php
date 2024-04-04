@@ -242,9 +242,10 @@ class FluxDataSedaHelios extends FluxDataSedaDefault
         return $this->info_from_pes_retour;
     }
 
-    private function extractInfoFromPESAller($pes_aller_content)
+    private function extractInfoFromPESAller($pes_aller_content): array
     {
-        $xml =  simplexml_load_string($pes_aller_content, 'SimpleXMLElement', LIBXML_PARSEHUGE);
+        /** @var SimpleXMLElement $xml */
+        $xml =  simplexml_load_string($pes_aller_content, SimpleXMLElement::class, LIBXML_PARSEHUGE);
 
         $info = [];
         $info['nomFic'] =  strval($xml->Enveloppe->Parametres->NomFic['V']);
@@ -273,7 +274,7 @@ class FluxDataSedaHelios extends FluxDataSedaDefault
             foreach ($xml->$pes_Aller->Bordereau as $bordereau) {
                 $info['id_bord'][] = strval($bordereau->BlocBordereau->IdBord['V']);
                 foreach ($bordereau->Piece as $j => $piece) {
-                    if ($piece->BlocPiece->InfoPce->IdPce['V'] != null) {
+                    if (isset($piece->BlocPiece->InfoPce->IdPce['V'])) {
                         $info['id_piece'][] = strval($piece->BlocPiece->InfoPce->IdPce['V']);
                     } else {
                         $info['id_piece'][] = strval($piece->BlocPiece->IdPce['V']);
