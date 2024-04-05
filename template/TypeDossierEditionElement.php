@@ -231,7 +231,7 @@
                 textarea.className= 'form-control col-md-8';
                 textarea.style.height = '150px';
                 textarea.value = '<?php
-                    echo preg_replace('/\s+/', '\n', $formulaireElement->default_value ?? '');
+                    echo preg_replace('/\R/', '\n', $formulaireElement->default_value ?? '');
                 ?>';
                 td.appendChild(textarea);
             } else {
