@@ -14,6 +14,7 @@
 - L'import des associations sur l'entité racine ne fonctionnait pas #2045
 - L'action d'envoi d'un PES à l'archivage renvoyait un warning si la balise `BlocPiece` ne contenait pas de balise
 `InfoPce` (dans le cas de l'utilisation d'un connecteur Bordereau SEDA - seda-ng) #2050
+- Définition de studio : Il y avait une erreur pour les valeurs par défaut des Zones de texte multilignes #2002
 
 # [4.0.12] - 2024-02-12
 
