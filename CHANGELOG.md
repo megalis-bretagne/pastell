@@ -18,6 +18,7 @@
 `InfoPce` (dans le cas de l'utilisation d'un connecteur Bordereau SEDA - seda-ng) #2050
 - Définition de studio : Il y avait une erreur pour les valeurs par défaut des Zones de texte multilignes #2002
 - La balise `MessageDigest` était mal écrite dans les bordereaux SEDA à destination de Vitam #2035
+- Connecteur iPrapheur : Il y avait un warning pour la sélection d'un type en cas de problème de connexion #2027
 
 # [4.0.12] - 2024-02-12
 
