@@ -214,7 +214,13 @@
                 input.id = 'default_value';
                 input.name = 'default_value';
                 input.className = 'form-control col-md-8';
-                input.value = '<?php echo preg_replace('/\s+/', ' ', $formulaireElement->default_value ?? ''); ?>';
+                input.value = '<?php
+                    echo preg_replace(
+                        '/\R/',
+                        '\n',
+                        str_replace("'", "\\'", $formulaireElement->default_value ?? '')
+                    );
+                    ?>';
                 td.appendChild(input);
             } else if (option === 'select') {
                 td.innerHTML = '';
@@ -231,8 +237,12 @@
                 textarea.className= 'form-control col-md-8';
                 textarea.style.height = '150px';
                 textarea.value = '<?php
-                    echo preg_replace('/\R/', '\n', $formulaireElement->default_value ?? '');
-                ?>';
+                    echo preg_replace(
+                        '/\R/',
+                        '\n',
+                        str_replace("'", "\\'", $formulaireElement->default_value ?? '')
+                    );
+                    ?>';
                 td.appendChild(textarea);
             } else {
                 td.innerHTML = '';
@@ -272,9 +282,13 @@
             let objectList = getObjectList();
             for (const [key, value] of Object.entries(objectList)) {
                 let option = document.createElement('option');
-                let defaultValue = '<?php echo
-                preg_replace('/\s+/', '\n', $formulaireElement->default_value ?? '');
-                ?>';
+                let defaultValue = '<?php
+                    echo preg_replace(
+                        '/\R/',
+                        '\n',
+                        str_replace("'", "\\'", $formulaireElement->default_value ?? '')
+                    );
+                    ?>';
                 if (defaultValue === key) {
                     option.selected = true;
                 }
