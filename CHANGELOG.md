@@ -1,5 +1,7 @@
 # [4.0.13] - 2024-04-15
 
+***Cette version nécessite une mise à jour du générateur SEDA en 1.0.3***
+
 ## Évolutions
 
 - flux "Actes publication" `ls-actes-publication` : Ajout des Annexes 'document_annexes' (Fichiers multiples pdf) #1905
