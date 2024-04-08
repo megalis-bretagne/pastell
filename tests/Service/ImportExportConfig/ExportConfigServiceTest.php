@@ -263,7 +263,7 @@ class ExportConfigServiceTest extends PastellTestCase
             ],
             0
         );
-        $this->getObjectInstancier()->getInstance(EntiteSQL::class)->setActive(5, true);
+
         $entiteSQL = $this->getObjectInstancier()->getInstance(EntiteSQL::class);
 
         self::assertSame(
