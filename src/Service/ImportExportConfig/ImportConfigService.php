@@ -76,6 +76,9 @@ final class ImportConfigService
         if (empty($exportedData[ExportConfigService::ENTITY_CHILD])) {
             return $id_e_mapping;
         }
+        usort($exportedData[ExportConfigService::ENTITY_CHILD], static function (array $a, array $b) {
+            return $a['id_e'] < $b['id_e'] ? -1 : 1;
+        });
         foreach ($exportedData[ExportConfigService::ENTITY_CHILD] as $entity_child) {
             if (empty($id_e_mapping[$entity_child['entite_mere']])) {
                 $this->lastErrors[] = "L'entité mère de {$entity_child['denomination']} est inconnue, l'entité sera attachée à l'entité $id_e_root.";
