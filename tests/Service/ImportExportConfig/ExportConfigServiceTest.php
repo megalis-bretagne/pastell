@@ -234,21 +234,67 @@ class ExportConfigServiceTest extends PastellTestCase
         $importConfigService = $this->getObjectInstancier()->getInstance(ImportConfigService::class);
         $importConfigService->import(
             [
+                ExportConfigService::ENTITY_INFO => [
+                    'denomination' => 'Carcassonne',
+                    'id_e' => 10,
+                    'siren' => '000000000',
+                    'entite_mere' => 0,
+                    'type' => 'collectivite',
+                    'is_active' => 1,
+                ],
                 ExportConfigService::ENTITY_CHILD => [
-                    12 =>  [
-                        'denomination' => 'Foo',
+                    0 =>  [
+                        'denomination' => 'Arcachon',
                         'id_e' => 12,
                         'siren' => '000000000',
-                        'entite_mere' => 1,
+                        'entite_mere' => 11,
                         'type' => 'collectivite',
+                        'is_active' => 1,
+                    ],
+                    1 =>  [
+                        'denomination' => 'Biarritz',
+                        'id_e' => 11,
+                        'siren' => '000000000',
+                        'entite_mere' => 10,
+                        'type' => 'collectivite',
+                        'is_active' => 1,
                     ],
                 ],
             ],
-            1
+            0
         );
-
+        $this->getObjectInstancier()->getInstance(EntiteSQL::class)->setActive(5, true);
         $entiteSQL = $this->getObjectInstancier()->getInstance(EntiteSQL::class);
-        self::assertEquals('Foo', $entiteSQL->getFille(1)[1]['denomination']);
+
+        self::assertSame(
+            'Carcassonne (id_e 3) est fille de Entité racine (id_e 0)',
+            sprintf(
+                'Carcassonne (id_e %d) est fille de %s (id_e %d)',
+                $entiteSQL->getIdByDenomination('Carcassonne'),
+                $entiteSQL->getDenomination($entiteSQL->getEntiteMere($entiteSQL->getIdByDenomination('Carcassonne'))),
+                $entiteSQL->getEntiteMere($entiteSQL->getIdByDenomination('Carcassonne'))
+            )
+        );
+        self::assertSame(
+            'Biarritz (id_e 4) est fille de Carcassonne (id_e 3)',
+            sprintf(
+                sprintf(
+                    'Biarritz (id_e %d) est fille de %s (id_e %d)',
+                    $entiteSQL->getIdByDenomination('Biarritz'),
+                    $entiteSQL->getDenomination($entiteSQL->getEntiteMere($entiteSQL->getIdByDenomination('Biarritz'))),
+                    $entiteSQL->getEntiteMere($entiteSQL->getIdByDenomination('Biarritz'))
+                )
+            )
+        );
+        self::assertSame(
+            'Arcachon (id_e 5) est fille de Biarritz (id_e 4)',
+            sprintf(
+                'Arcachon (id_e %d) est fille de %s (id_e %d)',
+                $entiteSQL->getIdByDenomination('Arcachon'),
+                $entiteSQL->getDenomination($entiteSQL->getEntiteMere($entiteSQL->getIdByDenomination('Arcachon'))),
+                $entiteSQL->getEntiteMere($entiteSQL->getIdByDenomination('Arcachon'))
+            )
+        );
     }
 
     /**
