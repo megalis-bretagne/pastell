@@ -14,7 +14,7 @@
   (regression de la version 4.0.0) #2030
 - Générateur SEDA Asalae : Renommage des fichiers en cas de doublon pour éviter l'erreur Asalae #1933
 - L'import des associations sur l'entité racine ne fonctionnait pas #2045
-- L'odre des entités (dénomination au lieu de id_e) lors de l'import provoquait des erreurs 
+- L'ordre des entités (dénomination au lieu de id_e) lors de l'import provoquait des erreurs 
 `L'entité mère est inconnue` #2049
 - L'action d'envoi d'un PES à l'archivage renvoyait un warning si la balise `BlocPiece` ne contenait pas de balise
 `InfoPce` (dans le cas de l'utilisation d'un connecteur Bordereau SEDA - seda-ng) #2050
