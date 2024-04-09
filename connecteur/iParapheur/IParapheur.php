@@ -641,11 +641,15 @@ class IParapheur extends SignatureConnecteur
         return $client;
     }
 
-    public function getType()
+    public function getType(): array
     {
         $result = [];
         try {
-            $type = $this->getClient()->GetListeTypes()->TypeTechnique;
+            $listeType = $this->getClient()->GetListeTypes();
+            if (!isset($listeType->TypeTechnique)) {
+                throw new Exception("Aucun type trouvé");
+            }
+            $type = $listeType->TypeTechnique;
             if (is_array($type)) {
                 foreach ($type as $n => $v) {
                     $result[$n] = $v;
@@ -657,7 +661,7 @@ class IParapheur extends SignatureConnecteur
             return $result;
         } catch (Exception $e) {
             $this->lastError = $e->getMessage();
-            return false;
+            return $result;
         }
     }
 
