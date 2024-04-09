@@ -278,12 +278,10 @@ class ExportConfigServiceTest extends PastellTestCase
         self::assertSame(
             'Biarritz (id_e 4) est fille de Carcassonne (id_e 3)',
             sprintf(
-                sprintf(
-                    'Biarritz (id_e %d) est fille de %s (id_e %d)',
-                    $entiteSQL->getIdByDenomination('Biarritz'),
-                    $entiteSQL->getDenomination($entiteSQL->getEntiteMere($entiteSQL->getIdByDenomination('Biarritz'))),
-                    $entiteSQL->getEntiteMere($entiteSQL->getIdByDenomination('Biarritz'))
-                )
+                'Biarritz (id_e %d) est fille de %s (id_e %d)',
+                $entiteSQL->getIdByDenomination('Biarritz'),
+                $entiteSQL->getDenomination($entiteSQL->getEntiteMere($entiteSQL->getIdByDenomination('Biarritz'))),
+                $entiteSQL->getEntiteMere($entiteSQL->getIdByDenomination('Biarritz'))
             )
         );
         self::assertSame(
