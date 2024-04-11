@@ -1,0 +1,44 @@
+libelle: Transformation Fixe
+configuration_etape_formulaire:
+    transformation:
+        name: Transformation
+        commentaire: 'De la forme "id_element:expression_twig" (sans espace)'
+        type: text
+formulaire:
+    'Transformation Fixe':
+        has_transformation_fixe:
+            no-show: true
+            read-only: true
+        transformation_fixe_file:
+            name: 'Transformations'
+            type: file
+            visionneuse: Pastell\Viewer\TransformationViewer
+            read-only: true
+            visionneuse-no-link: true
+page-condition:
+    'Transformation Fixe':
+        has_transformation_fixe: true
+action:
+    preparation-transformation-fixe:
+        name: 'Préparation à la transformation fixe'
+        rule:
+            role_id_e: no-role
+        action-automatique: transformation-fixe
+    transformation-fixe:
+        name: 'Transformation fixe du document'
+        rule:
+            last-action:
+                - preparation-transformation-fixe
+                - transformation-fixe-error
+        action-class: StandardAction
+        action-automatique: orientation
+        connecteur-type: transformation
+        connecteur-type-action: TransformationFixeTransform
+        connecteur-type-mapping:
+            transformation_fixe_file: transformation_fixe_file
+            has_transformation_fixe: has_transformation_fixe
+            transformation-fixe-error: transformation-fixe-error
+    transformation-fixe-error:
+        name: 'Erreur lors de la transformation fixe du document'
+        rule:
+            role_id_e: no-role
