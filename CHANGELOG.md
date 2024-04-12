@@ -1,3 +1,9 @@
+# [3.1.21] - 2024-04-12
+
+## Corrections
+
+- Mise à jour du service crypto
+
 # [3.1.20] - 2023-07-27
 
 ## Corrections
