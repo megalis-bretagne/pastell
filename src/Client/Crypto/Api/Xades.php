@@ -30,7 +30,7 @@ class Xades
         string $publicCertificate,
         array $payload,
         string $signaturePackaging = 'ENVELOPED',
-        string $xpath = '//Bordereau'
+        string $xpath = ''
     ): string {
         $stream = $this->client->getMultipartStream(
             $filepath,
@@ -58,7 +58,7 @@ class Xades
         string $signatureDateTime,
         array $payload = [],
         string $signaturePackaging = 'ENVELOPED',
-        string $xpath = '//Bordereau'
+        string $xpath = ''
     ): string {
         $stream = $this->client->getMultipartStream(
             $filepath,

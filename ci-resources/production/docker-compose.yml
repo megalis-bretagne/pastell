@@ -41,7 +41,7 @@ services:
       - internal_services
     container_name: crypto
     restart: unless-stopped
-    image: 'registry.libriciel.fr:443/public/signature/crypto:2.3.1'
+    image: 'registry.libriciel.fr:443/public/signature/crypto:3.0.14'
     ports:
       - '127.0.0.1:8030:8080'
     deploy:
