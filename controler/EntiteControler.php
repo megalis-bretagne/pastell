@@ -27,9 +27,12 @@ class EntiteControler extends PastellControler
         $this->setViewParameter('menu_gauche_select', "Entite/detail");
         $this->setDroitLectureOnConnecteur($id_e);
         $this->setDroitImportExportConfig($id_e);
-        $this->setViewParameter('cdg_feature', $this->getObjectInstancier()
-            ->getInstance(FeatureToggleService::class)
-            ->isEnabled(CDGFeature::class));
+        $this->setViewParameter(
+            'cdg_feature',
+            $this->getObjectInstancier()
+                ->getInstance(FeatureToggleService::class)
+                ->isEnabled(CDGFeature::class)
+        );
         $this->setDroitLectureOnUtilisateur($id_e);
     }
 
@@ -79,12 +82,18 @@ class EntiteControler extends PastellControler
         $this->hasUtilisateurDroitLecture($id_e);
 
         $all_role = $this->getRoleSQL()->getAllRole();
-        $all_role[] = ['role' => RoleUtilisateur::AUCUN_DROIT,'libelle' => RoleUtilisateur::AUCUN_DROIT];
+        $all_role[] = ['role' => RoleUtilisateur::AUCUN_DROIT, 'libelle' => RoleUtilisateur::AUCUN_DROIT];
 
         $this->setViewParameter('all_role', $all_role);
-        $this->setViewParameter('droitCreation', $this->getRoleUtilisateur()->hasDroit($this->getId_u(), 'utilisateur:creation', $id_e));
+        $this->setViewParameter(
+            'droitCreation',
+            $this->getRoleUtilisateur()->hasDroit($this->getId_u(), 'utilisateur:creation', $id_e)
+        );
 
-        $this->setViewParameter('nb_utilisateur', $this->getUtilisateurListe()->getNbUtilisateur($id_e, $descendance, $role, $search));
+        $this->setViewParameter(
+            'nb_utilisateur',
+            $this->getUtilisateurListe()->getNbUtilisateur($id_e, $descendance, $role, $search)
+        );
         $listeUtilisateur = $this->getUtilisateurListe()
             ->getAllUtilisateur($id_e, $descendance, $role, $search, $offset);
         foreach ($listeUtilisateur as $key => $utilisateur) {
@@ -117,7 +126,7 @@ class EntiteControler extends PastellControler
         $this->hasUtilisateurDroitLecture($id_e);
 
         $result = [];
-        $result[] = ["id_u","login","prénom","nom","email","collectivité de base","id_e","rôles"];
+        $result[] = ["id_u", "login", "prénom", "nom", "email", "collectivité de base", "id_e", "rôles"];
 
         $allUtilisateur = $this->getUtilisateurListe()->getAllUtilisateur($id_e, $descendance, $the_role, $search, -1);
         foreach ($allUtilisateur as $i => $user) {
@@ -126,9 +135,15 @@ class EntiteControler extends PastellControler
                 $r[] = ($role['libelle'] ?: "Aucun droit") . " - " . ($role['denomination'] ?: 'Entite racine');
             }
             $user['all_role'] = implode(",", $r);
-            $result[]  = [$user['id_u'],$user['login'],
-                $user['prenom'],$user['nom'],$user['email'],
-                $user['denomination'] ?: "Entité racine",$user['id_e'],$user['all_role']
+            $result[] = [
+                $user['id_u'],
+                $user['login'],
+                $user['prenom'],
+                $user['nom'],
+                $user['email'],
+                $user['denomination'] ?: "Entité racine",
+                $user['id_e'],
+                $user['all_role']
             ];
         }
 
@@ -145,18 +160,28 @@ class EntiteControler extends PastellControler
     public function detailEntite()
     {
         $id_e = $this->getGetInfo()->getInt('id_e', 0);
-        if (! $id_e) {
+        if (!$id_e) {
             throw new Exception("L'entité 0 n'existe pas");
         }
         $this->hasEntiteDroitLecture($id_e);
         $info = $this->getEntiteSQL()->getInfo($id_e);
-        if (! $info) {
+        if (!$info) {
             $this->setLastError("Cette entité n'existe pas ou n'existe plus.");
             $this->redirect("/Entite/detail");
         }
 
-        $this->setViewParameter('droit_edition', $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "entite:edition", $id_e));
-        $this->setViewParameter('droit_lecture_cdg', isset($info['cdg']['id_e']) && $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "entite:lecture", $info['cdg']['id_e']));
+        $this->setViewParameter(
+            'droit_edition',
+            $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "entite:edition", $id_e)
+        );
+        $this->setViewParameter(
+            'droit_lecture_cdg',
+            isset($info['cdg']['id_e']) && $this->getRoleUtilisateur()->hasDroit(
+                $this->getId_u(),
+                "entite:lecture",
+                $info['cdg']['id_e']
+            )
+        );
         $this->setViewParameter('entiteExtendedInfo', $this->getEntiteSQL()->getExtendedInfo($id_e));
         $this->setViewParameter('is_supprimable', $this->isSupprimable($id_e));
 
@@ -172,10 +197,13 @@ class EntiteControler extends PastellControler
 
     public function hasManyCollectivite()
     {
-        $liste_collectivite = $this->getRoleUtilisateur()->getEntiteWithDenomination($this->getId_u(), 'entite:lecture');
+        $liste_collectivite = $this->getRoleUtilisateur()->getEntiteWithDenomination(
+            $this->getId_u(),
+            'entite:lecture'
+        );
         $nbCollectivite = count($liste_collectivite);
         if ($nbCollectivite == 1) {
-            return ($liste_collectivite[0]['id_e'] == 0 );
+            return ($liste_collectivite[0]['id_e'] == 0);
         }
         return true;
     }
@@ -224,12 +252,18 @@ class EntiteControler extends PastellControler
         $entite_list = $this->getEntiteListe()->getAllFille($id_e);
         $result = [
             [
-                "ID_E","SIREN","DENOMINATION","TYPE","DATE INSCRIPTION","ACTIVE","CENTRE DE GESTION"
+                "ID_E",
+                "SIREN",
+                "DENOMINATION",
+                "TYPE",
+                "DATE INSCRIPTION",
+                "ACTIVE",
+                "CENTRE DE GESTION"
             ]
         ];
 
         foreach ($entite_list as $i => $entite_info) {
-            $result[]  = [
+            $result[] = [
                 $entite_info['id_e'],
                 $entite_info['siren'],
                 $entite_info['denomination'],
@@ -251,7 +285,7 @@ class EntiteControler extends PastellControler
     {
         $recuperateur = new Recuperateur($_GET);
         $id_e = $recuperateur->getInt('id_e', 0);
-        $page =  (int)$recuperateur->getInt('page', 0);
+        $page = (int)$recuperateur->getInt('page', 0);
         $this->hasDroitEdition($id_e);
         $this->setViewParameter('entite_info', $this->getEntiteSQL()->getInfo($id_e));
         $this->setViewParameter('template_milieu', "EntiteImport");
@@ -262,8 +296,8 @@ class EntiteControler extends PastellControler
             $this->setViewParameter('cdg_selected', false);
         }
 
-        $this->setViewParameter('onglet_tab', ["Collectivités","Agents","Grades"]);
-        $onglet_content = ["EntiteImportCollectivite","EntiteImportAgent","EntiteImportGrade"];
+        $this->setViewParameter('onglet_tab', ["Collectivités", "Agents", "Grades"]);
+        $onglet_content = ["EntiteImportCollectivite", "EntiteImportAgent", "EntiteImportGrade"];
         $this->setViewParameter('template_onglet', $onglet_content[$page]);
         $this->setViewParameter('page', $page);
         $this->setViewParameter('id_e', $id_e);
@@ -293,7 +327,10 @@ class EntiteControler extends PastellControler
             $infoEntite = $this->getEntiteInfoFromLastError();
             if ($entite_mere) {
                 $this->setViewParameter('infoMere', $this->getEntiteSQL()->getInfo($entite_mere));
-                $this->setViewParameter('page_title', "Ajout d'une entité fille pour " . $this->getViewParameterOrObject('infoMere')['denomination']);
+                $this->setViewParameter(
+                    'page_title',
+                    "Ajout d'une entité fille pour " . $this->getViewParameterOrObject('infoMere')['denomination']
+                );
             } else {
                 $this->setViewParameter('page_title', "Ajout d'une entité");
             }
@@ -310,7 +347,16 @@ class EntiteControler extends PastellControler
 
     private function getEntiteInfoFromLastError()
     {
-        $field_list = ["type","denomination","siren","entite_mere","id_e","has_ged","has_archivage","centre_de_gestion"];
+        $field_list = [
+            "type",
+            "denomination",
+            "siren",
+            "entite_mere",
+            "id_e",
+            "has_ged",
+            "has_archivage",
+            "centre_de_gestion"
+        ];
         $infoEntite = [];
         foreach ($field_list as $field) {
             $infoEntite[$field] = $this->getLastError()->getLastInput($field);
@@ -334,7 +380,7 @@ class EntiteControler extends PastellControler
         $this->setViewParameter('type', $recuperateur->get('type', EntiteSQL::TYPE_COLLECTIVITE));
         $this->setViewParameter('liste', $this->getEntiteListe()->getAll($this->getViewParameterByKey('type')));
 
-        if (! $this->getViewParameterByKey('liste')) {
+        if (!$this->getViewParameterByKey('liste')) {
             $this->setLastError(
                 "Aucune entité ({$this->getViewParameterByKey('type')}) n'est disponible pour cette action"
             );
@@ -358,7 +404,7 @@ class EntiteControler extends PastellControler
         $id_e = $recuperateur->getInt('id_e');
         $name = $recuperateur->get('denomination');
         $siren = $recuperateur->get('siren');
-        $entite_mere =  $recuperateur->getInt('entite_mere', 0);
+        $entite_mere = $recuperateur->getInt('entite_mere', 0);
         $type = EntiteSQL::TYPE_COLLECTIVITE;
         $cdg = 0;
 
@@ -424,7 +470,10 @@ class EntiteControler extends PastellControler
         }
         $this->setViewParameter('offset', $offset);
         $this->setViewParameter('page', $page);
-        $this->setViewParameter('droit_edition', $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "entite:edition", $id_e));
+        $this->setViewParameter(
+            'droit_edition',
+            $this->getRoleUtilisateur()->hasDroit($this->getId_u(), "entite:edition", $id_e)
+        );
         $this->setViewParameter('id_e', $id_e);
         $this->setViewParameter('search', $search);
         $this->setPageTitle("Agents");
@@ -440,13 +489,22 @@ class EntiteControler extends PastellControler
         $id_e = $recuperateur->getInt('id_e', 0);
         $this->hasConnecteurDroitLecture($id_e);
         $this->hasEntiteDroitLecture($id_e);
-        $this->setViewParameter('droit_edition', $this->getRoleUtilisateur()->hasDroit($this->getId_u(), 'connecteur:edition', $id_e));
+        $this->setViewParameter(
+            'droit_edition',
+            $this->getRoleUtilisateur()->hasDroit($this->getId_u(), 'connecteur:edition', $id_e)
+        );
         $this->setViewParameter('id_e', $id_e);
         $this->setViewParameter('all_connecteur', $this->getConnecteurEntiteSQL()->getAll($id_e));
         if ($id_e) {
-            $this->setViewParameter('all_connecteur_definition', $this->getObjectInstancier()->getInstance(ConnecteurDefinitionFiles::class)->getAll());
+            $this->setViewParameter(
+                'all_connecteur_definition',
+                $this->getObjectInstancier()->getInstance(ConnecteurDefinitionFiles::class)->getAll()
+            );
         } else {
-            $this->setViewParameter('all_connecteur_definition', $this->getObjectInstancier()->getInstance(ConnecteurDefinitionFiles::class)->getAllGlobal());
+            $this->setViewParameter(
+                'all_connecteur_definition',
+                $this->getObjectInstancier()->getInstance(ConnecteurDefinitionFiles::class)->getAllGlobal()
+            );
         }
         $this->setViewParameter('template_milieu', "ConnecteurList");
         $this->setViewParameter('menu_gauche_select', "Entite/connecteur");
@@ -481,13 +539,19 @@ class EntiteControler extends PastellControler
         $id_e = $recuperateur->getInt('id_e', 0);
         $this->hasDroitEdition($id_e);
 
-        if (! $this->isSupprimable($id_e)) {
+        if (!$this->isSupprimable($id_e)) {
             $this->setLastError("L'entité ne peut pas être supprimée");
             $this->redirect("/Entite/detail?id_e=$id_e");
         }
 
         $info = $this->getEntiteSQL()->getInfo($id_e);
-        $this->getJournal()->add(Journal::MODIFICATION_ENTITE, $info['entite_mere'], $this->getId_u(), "Suppression", "Suppression de l'entité $id_e qui contenait : \n" . implode("\n,", $info));
+        $this->getJournal()->add(
+            Journal::MODIFICATION_ENTITE,
+            $info['entite_mere'],
+            $this->getId_u(),
+            "Suppression",
+            "Suppression de l'entité $id_e qui contenait : \n" . implode("\n,", $info)
+        );
         $this->getEntiteSQL()->delete($id_e);
 
         $this->setLastMessage("L'entité « {$info['denomination']} » a été supprimée");
@@ -523,7 +587,7 @@ class EntiteControler extends PastellControler
 
         $fileUploader = new FileUploader();
         $file_path = $fileUploader->getFilePath('csv_agent');
-        if (! $file_path) {
+        if (!$file_path) {
             $this->setLastError("Impossible de lire le fichier : " . $fileUploader->getLastError());
             $this->redirect("/Entite/import?page=1");
         }
@@ -568,10 +632,9 @@ class EntiteControler extends PastellControler
         $centre_de_gestion = $recuperateur->getInt('centre_de_gestion');
         $this->verifDroit($id_e, 'entite:edition');
 
-
         $fileUploader = new FileUploader();
         $file_path = $fileUploader->getFilePath('csv_col');
-        if (! $file_path) {
+        if (!$file_path) {
             $this->setLastError('Impossible de lire le fichier');
             $this->redirect("/Entite/import?id_e=$id_e");
         }
@@ -581,9 +644,12 @@ class EntiteControler extends PastellControler
 
         $nb_col = 0;
         foreach ($colList as $col) {
+            if (!isset($col[0])) {
+                throw new \RuntimeException('Le format du fichier csv est incorrect.');
+            }
             $this->getInstance(EntityCreationService::class)->create(
-                $col[1],
                 $col[0],
+                $col[1] ?? '',
                 EntiteSQL::TYPE_COLLECTIVITE,
                 $id_e,
                 $centre_de_gestion,
@@ -591,7 +657,9 @@ class EntiteControler extends PastellControler
             $nb_col++;
         }
 
-        $this->setLastMessage("$nb_col collectivités ont été créées");
+        $this->setLastMessage(
+            $nb_col > 1 ? "$nb_col collectivités ont été créées" : "$nb_col collectivité a été créée"
+        );
         $this->redirect("/Entite/detail/?id_e=$id_e");
     }
 
@@ -602,7 +670,7 @@ class EntiteControler extends PastellControler
         $fileUploader = new FileUploader();
         $file_path = $fileUploader->getFilePath('csv_grade');
 
-        if (! $file_path) {
+        if (!$file_path) {
             $this->setLastError("Impossible de lire le fichier : " . $fileUploader->getLastError());
             $this->redirect("/Entite/import?page=1");
         }

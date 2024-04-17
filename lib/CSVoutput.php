@@ -3,7 +3,7 @@
 class CSVoutput
 {
     public const DEFAULT_OUTPUT_FILE = "php://output";
-    public const DEFAULT_DELIMITER = ";";
+    public const DEFAULT_DELIMITER = ",";
 
     private $enableHeader;
     private $outputFile;
