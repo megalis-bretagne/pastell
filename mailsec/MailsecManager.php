@@ -349,12 +349,12 @@ final class MailsecManager
         if ($document_number > 0) {
             $table_documents = new IterationType('table_documents');
             foreach ($documents_list as $document_data) {
-                foreach ($document_data['value'] as $i => $titre_document) {
+                foreach ($document_data['value'] as $i => $nom_document) {
                     $valuePart = new PartType();
                     $valuePart->addElement(
                         new FieldType('champ_document', $document_data['libelle'], 'text')
                     );
-                    $valuePart->addElement(new FieldType('titre_document', $titre_document, 'text'));
+                    $valuePart->addElement(new FieldType('nom_document', $nom_document, 'text'));
                     $valuePart->addElement(
                         new FieldType(
                             'empreinte_document',
