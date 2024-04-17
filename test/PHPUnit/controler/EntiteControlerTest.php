@@ -186,4 +186,14 @@ class EntiteControlerTest extends ControlerTestCase
         $info = $this->getObjectInstancier()->getInstance(EntiteSQL::class)->getInfo(1);
         static::assertSame('TEST ENTITIES', $info['denomination']);
     }
+
+    public function testExport(): void
+    {
+        $this->entiteControler->export();
+    }
+
+    public function testImport(): void
+    {
+        $this->entiteControler->import();
+    }
 }
