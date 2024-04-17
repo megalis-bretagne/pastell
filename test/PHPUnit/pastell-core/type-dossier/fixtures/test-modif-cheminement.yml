@@ -107,12 +107,12 @@ formulaire:
             default: '0'
             no-show: true
             read-only: true
-    'Accusé de lecture':
+    'Accusé de notification':
         lecture_mail:
             no-show: true
             read-only: true
-        accuse_lecture:
-            name: 'Accusé de lecture'
+        accuse_notification:
+            name: 'Accusé de notification'
             commentaire: 'Format pdf'
             type: file
             read-only: true
@@ -147,7 +147,7 @@ page-condition:
         has_ged_document_id_1: true
     'Mail sécurisé':
         envoi_mailsec: true
-    'Accusé de lecture':
+    'Accusé de notification':
         lecture_mail: true
     'Retour GED #2':
         has_ged_document_id_2: true

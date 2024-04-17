@@ -14,7 +14,6 @@ use DocumentSQL;
 use DocumentTypeFactory;
 use DonneesFormulaireFactory;
 use EntiteSQL;
-use http\Exception\RuntimeException;
 use Journal;
 use Libriciel\OfficeClients\Conversion\Client\Configuration\CloudoooServiceConfiguration;
 use Libriciel\OfficeClients\Conversion\Client\Strategy\CloudoooStrategy;
@@ -32,11 +31,9 @@ use Mailsec\Exception\MissingPasswordException;
 use Mailsec\Exception\NotEditableResponseException;
 use Mailsec\Exception\UnableToExecuteActionException;
 use MailSecInfo;
-use mysql_xdevapi\Exception;
 use NotFoundException;
 use NotificationMail;
 use ObjectInstancier;
-use phpDocumentor\Reflection\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use UnrecoverableException;
@@ -144,7 +141,7 @@ final class MailsecManager
             $odtFile = $this->updateReceipt($mailSecInfo);
             $config = new CloudoooServiceConfiguration();
             $pdfFile = (new CloudoooStrategy($config))->conversion($odtFile);
-            $mailSecInfo->donneesFormulaire->addFileFromData('accuse_lecture', 'accuse_lecture.pdf', $pdfFile);
+            $mailSecInfo->donneesFormulaire->addFileFromData('accuse_notification', 'accuse_notification.pdf', $pdfFile);
             $mailSecInfo->donneesFormulaire->setData('lecture_mail', true);
         } catch (ConnectionException) {
         }
@@ -300,6 +297,7 @@ final class MailsecManager
     /**
      * @throws ConnectionException
      * @throws InvalidTemplateException
+     * @throws UnrecoverableException
      */
     public function updateReceipt(MailSecInfo $info): string
     {
@@ -314,12 +312,28 @@ final class MailsecManager
                 $use_template_reponse = true;
             }
         }
-
         if ($use_template_reponse) {
-            $template_path = $this->objectInstancier->getInstance('data_dir') . '/connector/mailsec/accuse_lecture_reponse_template.odt';
+            $template_path = $this->objectInstancier->getInstance('data_dir') . '/connector/mailsec/accuse_notification_reponse_template.odt';
         } else {
-            $template_path = $this->objectInstancier->getInstance('data_dir') . '/connector/mailsec/accuse_lecture_simple_template.odt';
+            $template_path = $this->objectInstancier->getInstance('data_dir') . '/connector/mailsec/accuse_notification_simple_template.odt';
         }
+
+        $fieldDataList = $info->donneesFormulaire->getFormulaire()->getAllFields();
+        $documents_list = [];
+        foreach ($fieldDataList as $fieldData) {
+            if ($fieldData->getProperties('type') === 'file') {
+                $value = $info->donneesFormulaire->getFieldData($fieldData->getName())->getValue();
+                if ($value[0]) {
+                    $documents_list[] = [
+                        'champ_document' => $fieldData->getName(),
+                        'libelle' => $fieldData->getProperties('name'),
+                        'value' => $value
+                    ];
+                }
+            }
+        }
+        $document_number = count($documents_list);
+
         $main = new PartType();
         $main->addElement(
             new FieldType(
@@ -330,12 +344,41 @@ final class MailsecManager
         );
         $main->addElement(new FieldType('type_document', $info->type_document, 'text'));
         $main->addElement(new FieldType('entite', $info->denomination_entite, 'text'));
-        $section = new IterationType('table_destinataires');
+
+        $main->addElement(new FieldType('nombre_documents', (string)$document_number, 'text'));
+        if ($document_number > 0) {
+            $table_documents = new IterationType('table_documents');
+            foreach ($documents_list as $document_data) {
+                foreach ($document_data['value'] as $i => $nom_document) {
+                    $valuePart = new PartType();
+                    $valuePart->addElement(
+                        new FieldType('champ_document', $document_data['libelle'], 'text')
+                    );
+                    $valuePart->addElement(new FieldType('nom_document', $nom_document, 'text'));
+                    $valuePart->addElement(
+                        new FieldType(
+                            'empreinte_document',
+                            hash_file(
+                                'sha256',
+                                $info->donneesFormulaire->getFilePath($document_data['champ_document'], $i)
+                            ),
+                            'text'
+                        )
+                    );
+                    $table_documents->addPart($valuePart);
+                }
+            }
+            $main->addElement($table_documents);
+        } else {
+            $main->addElement(new IterationType('documents'));
+        }
+
+        $section_destinaires = new IterationType('table_destinataires');
         foreach ($recipient_list as $id_de) {
             $infoRecipient = $documentEmail->getInfoFromPK($id_de);
             $part = new PartType();
-            $part->addElement(new FieldType('email', $infoRecipient['email'], 'text'));
-            $part->addElement(new FieldType('type', $infoRecipient['type_destinataire'], 'text'));
+            $part->addElement(new FieldType('email_destinataire', $infoRecipient['email'], 'text'));
+            $part->addElement(new FieldType('type_destinataire', $infoRecipient['type_destinataire'], 'text'));
             $part->addElement(new FieldType('date_envoi', $infoRecipient['date_envoie'], 'date'));
             $part->addElement(new FieldType('dernier_envoi', $infoRecipient['date_renvoi'], 'date'));
             $part->addElement(new FieldType('nombre_envois', (string)$infoRecipient['nb_renvoi'], 'text'));
@@ -351,21 +394,20 @@ final class MailsecManager
                     )
                 );
             }
-            $section->addPart($part);
+            $section_destinaires->addPart($part);
         }
-        $main->addElement($section);
+        $main->addElement($section_destinaires);
 
         $main->addElement(new FieldType('date', date('Y-m-d H:i:s'), 'date'));
         $main->addElement(
             new ContentType(
                 'odt_content',
-                'accuse_lecture.odt',
+                'accuse_notification.odt',
                 'application/vnd.oasis.opendocument.text',
                 'binary',
                 file_get_contents($template_path)
             )
         );
-
         $config = new RestServiceConfiguration('http://flow:8080');
         return (new RestStrategy($config))->fusion($template_path, $main);
     }

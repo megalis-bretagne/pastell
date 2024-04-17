@@ -48,19 +48,19 @@ formulaire:
             no-show: true
             read-only: true
 
-    'Accusé de lecture':
+    'Accusé de notification':
         lecture_mail:
             no-show: true
             read-only: true
-        accuse_lecture:
-            name: 'Accusé de lecture'
+        accuse_notification:
+            name: 'Accusé de notification'
             commentaire: 'Format pdf'
             type: file
             read-only: true
 page-condition:
     'Mail sécurisé':
         envoi_mailsec: true
-    'Accusé de lecture':
+    'Accusé de notification':
         lecture_mail: true
 champs-affiches:
     - sent_mail_number
