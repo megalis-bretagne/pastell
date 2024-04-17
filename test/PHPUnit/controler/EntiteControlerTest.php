@@ -189,11 +189,10 @@ class EntiteControlerTest extends ControlerTestCase
 
     public function testExport(): void
     {
-        $this->entiteControler->export();
-    }
-
-    public function testImport(): void
-    {
-        $this->entiteControler->import();
+        ob_start();
+        $this->entiteControler->exportAction();
+        $result = ob_get_contents();
+        ob_end_clean();
+        static::assertMatchesRegularExpression('/1,000000000,Bourg-en-Bresse,collectivite,"0000-00-00 00:00:00",1,0/', $result);
     }
 }
