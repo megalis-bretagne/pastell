@@ -26,6 +26,7 @@
 ## Corrections
 
 - Correction des entités affichées dans la liste déroulantes de l'entête pour les utilisateurs ayant un rôle 'aucun droit' #1919
+- Correction du format xml d'import et d'export de collectivités #2051
 
 ## Dépréciations
 
