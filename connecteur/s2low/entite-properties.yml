@@ -82,3 +82,6 @@ action:
     recup-reponse-prefecture:
         name: 'Récupérer les réponses de la préfecture'
         action-class: RecupReponsePrefecture
+    recup-actes-archivables:
+        name: 'Récupérer les actes archivables'
+        action-class: RecupActesArchivables

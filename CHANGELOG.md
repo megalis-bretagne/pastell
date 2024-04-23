@@ -16,6 +16,7 @@
 - Possibilité de créer un utilisateur exclusivement API et de gérer ses tokens via l'administrateur de son entité #1943
 - Possibilité de sélectionner une entité et ses entités filles dans le connecteur de purge global #1704
 - Possibilité d'afficher le contenu d'un type de dossier studio sur un seul onglet #1980
+- Possibilité de récuperer l'ensemble des actes à archiver S2low #2057
 - Ajout de la récupération via l'API Fast des circuits disponibles pour Fast Parapheur #1912
 - Récupération de l'acte tamponné pour les Tdt Fast #1558
 - Possibilité d'envoyer en mode préparation vers Fast-tdt #1541

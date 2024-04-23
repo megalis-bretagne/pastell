@@ -184,6 +184,7 @@ class ActionPossibleTest extends PastellTestCase
                 'recup-classification',
                 'recup-pes-retour',
                 'recup-reponse-prefecture',
+                'recup-actes-archivables',
             ],
             $this->actionPossible->getActionPossibleOnConnecteur($id_ce, 1)
         );
