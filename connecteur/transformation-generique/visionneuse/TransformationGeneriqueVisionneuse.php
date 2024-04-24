@@ -12,12 +12,9 @@ class TransformationGeneriqueVisionneuse implements Viewer
      */
     public function display(string $filename, string $filepath): void
     {
-        if (!$filepath) {
+        if (!$filepath || !\is_readable($filepath))  {
             echo "Aucune donnée n'a été renseignée";
-        }
-
-        if (!\is_readable($filepath)) {
-            throw new UnrecoverableException("Aucune donnée n'a été renseignée");
+            return;
         }
 
         $content = \json_decode(\file_get_contents($filepath), true, 512, \JSON_THROW_ON_ERROR);
