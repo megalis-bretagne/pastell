@@ -12,7 +12,7 @@ class TransformationGeneriqueVisionneuse implements Viewer
      */
     public function display(string $filename, string $filepath): void
     {
-        if (!$filepath || !\is_readable($filepath))  {
+        if (!$filepath || !\is_readable($filepath)) {
             echo "Aucune donnée n'a été renseignée";
             return;
         }
