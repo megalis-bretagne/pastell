@@ -21,19 +21,19 @@ class DonneesFormulaireControler extends PastellControler
             $mail_info = $this->getDocumentEmailService()->getDocumentEmailFromIdReponse($id_d);
             $info = (!empty($mail_info)) ? $mail_info : $this->getDocumentSQL()->getInfo($id_d);
             if (
-                ! $this->getDroitService()->hasDroit(
+                !$this->getDroitService()->hasDroit(
                     $this->getId_u(),
                     $this->getDroitService()->getDroitEdition($info['type']),
                     $id_e
                 )
             ) {
-                if (! $this->isDocumentEmailChunkUpload()) {
+                if (!$this->isDocumentEmailChunkUpload()) {
                     echo "KO";
                     exit_wrapper();
                 }
             }
         } elseif ($id_ce) {
-            if (! $this->getDroitService()->hasDroitConnecteurEdition($id_e, $this->getId_u())) {
+            if (!$this->getDroitService()->hasDroitConnecteurEdition($id_e, $this->getId_u())) {
                 echo "KO";
                 exit_wrapper();
             }
@@ -55,19 +55,19 @@ class DonneesFormulaireControler extends PastellControler
             $mail_info = $this->getDocumentEmailService()->getDocumentEmailFromIdReponse($id_d);
             $info = (!empty($mail_info)) ? $mail_info : $this->getDocumentSQL()->getInfo($id_d);
             if (
-                ! $this->getDroitService()->hasDroit(
+                !$this->getDroitService()->hasDroit(
                     $this->getId_u(),
                     $this->getDroitService()->getDroitLecture($info['type']),
                     $id_e
                 )
             ) {
-                if (! $this->isDocumentEmailChunkUpload()) {
+                if (!$this->isDocumentEmailChunkUpload()) {
                     echo "KO";
                     exit_wrapper();
                 }
             }
         } elseif ($id_ce) {
-            if (! $this->getDroitService()->hasDroitConnecteurLecture($id_e, $this->getId_u())) {
+            if (!$this->getDroitService()->hasDroitConnecteurLecture($id_e, $this->getId_u())) {
                 echo "KO";
                 exit_wrapper();
             }
@@ -96,7 +96,6 @@ class DonneesFormulaireControler extends PastellControler
      */
     public function downloadAll($id_e, $id_d, $id_ce, $field)
     {
-
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->getFromDocumentOrConnecteur($id_d, $id_ce);
 
         $tmpFolder = new TmpFolder();
@@ -104,14 +103,26 @@ class DonneesFormulaireControler extends PastellControler
 
         $zipArchive = new ZipArchive();
         $zip_filename = $tmp_folder . "/fichier-{$id_e}-" . ($id_d ?: $id_ce) . "-{$field}.zip";
-        if (! $zipArchive->open($zip_filename, ZIPARCHIVE::CREATE)) {
+        if (!$zipArchive->open($zip_filename, ZIPARCHIVE::CREATE)) {
             throw new Exception("Impossible de créer le fichier d'archive $zip_filename");
         }
 
+        $file_names = [];
         foreach ($donneesFormulaire->get($field) as $i => $fichier) {
             $file_path = $donneesFormulaire->getFilePath($field, $i);
             $file_name = $donneesFormulaire->getFileName($field, $i);
-            if (! $zipArchive->addFile($file_path, $file_name)) {
+
+            $file_dup = 2;
+            $path_parts = pathinfo($file_name);
+            $base_name = $path_parts['filename'];
+            $extension = isset($path_parts['extension']) ? '.' . $path_parts['extension'] : '';
+
+            while (in_array($file_name, $file_names, true)) {
+                $file_name = $base_name . '(' . $file_dup . ')' . $extension;
+                $file_dup++;
+            }
+            $file_names[] = $file_name;
+            if (!$zipArchive->addFile($file_path, $file_name)) {
                 throw new Exception(
                     "Impossible d'ajouter le fichier $file_path ($file_name) dans l'archive $zip_filename"
                 );
@@ -132,7 +143,7 @@ class DonneesFormulaireControler extends PastellControler
         $key = $this->getPostOrGetInfo()->get('key');
         $documentEmail = $this->getObjectInstancier()->getInstance(DocumentEmail::class);
         $mailsec_info = $documentEmail->getInfoFromKey($key);
-        if (! $mailsec_info) {
+        if (!$mailsec_info) {
             return false;
         }
         $documentEmailReponseSQL = $this->getObjectInstancier()->getInstance(DocumentEmailReponseSQL::class);
