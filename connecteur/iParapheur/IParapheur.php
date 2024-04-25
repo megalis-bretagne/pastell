@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Utilities\TextTruncator;
+
 class IParapheur extends SignatureConnecteur
 {
     public const IPARAPHEUR_NB_JOUR_MAX_DEFAULT = SignatureConnecteur::PARAPHEUR_NB_JOUR_MAX_DEFAULT;
@@ -17,6 +19,7 @@ class IParapheur extends SignatureConnecteur
         'Signe',
         'SignatairePapier'
     ];
+    private const MAX_TITLE_LENGTH = 255;
 
     private $wsdl;
     private $login_http;
@@ -429,7 +432,7 @@ class IParapheur extends SignatureConnecteur
         }
 
         if ($fileToSign->dossierTitre) {
-            $data['DossierTitre'] = $fileToSign->dossierTitre;
+            $data['DossierTitre'] = TextTruncator::truncate($fileToSign->dossierTitre, self::MAX_TITLE_LENGTH);
         }
 
         if ($fileToSign->date_limite) {
@@ -647,11 +650,15 @@ class IParapheur extends SignatureConnecteur
         return $client;
     }
 
-    public function getType()
+    public function getType(): array
     {
         $result = [];
         try {
-            $type = $this->getClient()->GetListeTypes()->TypeTechnique;
+            $listeType = $this->getClient()->GetListeTypes();
+            if (!isset($listeType->TypeTechnique)) {
+                throw new Exception("Aucun type trouvé");
+            }
+            $type = $listeType->TypeTechnique;
             if (is_array($type)) {
                 foreach ($type as $n => $v) {
                     $result[$n] = $v;
@@ -663,7 +670,7 @@ class IParapheur extends SignatureConnecteur
             return $result;
         } catch (Exception $e) {
             $this->lastError = $e->getMessage();
-            return false;
+            return $result;
         }
     }
 

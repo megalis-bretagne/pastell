@@ -234,21 +234,65 @@ class ExportConfigServiceTest extends PastellTestCase
         $importConfigService = $this->getObjectInstancier()->getInstance(ImportConfigService::class);
         $importConfigService->import(
             [
+                ExportConfigService::ENTITY_INFO => [
+                    'denomination' => 'Carcassonne',
+                    'id_e' => 10,
+                    'siren' => '000000000',
+                    'entite_mere' => 0,
+                    'type' => 'collectivite',
+                    'is_active' => 1,
+                ],
                 ExportConfigService::ENTITY_CHILD => [
-                    12 =>  [
-                        'denomination' => 'Foo',
+                    0 =>  [
+                        'denomination' => 'Arcachon',
                         'id_e' => 12,
                         'siren' => '000000000',
-                        'entite_mere' => 1,
+                        'entite_mere' => 11,
                         'type' => 'collectivite',
+                        'is_active' => 1,
+                    ],
+                    1 =>  [
+                        'denomination' => 'Biarritz',
+                        'id_e' => 11,
+                        'siren' => '000000000',
+                        'entite_mere' => 10,
+                        'type' => 'collectivite',
+                        'is_active' => 1,
                     ],
                 ],
             ],
-            1
+            0
         );
 
         $entiteSQL = $this->getObjectInstancier()->getInstance(EntiteSQL::class);
-        self::assertEquals('Foo', $entiteSQL->getFille(1)[1]['denomination']);
+
+        self::assertSame(
+            'Carcassonne (id_e 3) est fille de Entité racine (id_e 0)',
+            sprintf(
+                'Carcassonne (id_e %d) est fille de %s (id_e %d)',
+                $entiteSQL->getIdByDenomination('Carcassonne'),
+                $entiteSQL->getDenomination($entiteSQL->getEntiteMere($entiteSQL->getIdByDenomination('Carcassonne'))),
+                $entiteSQL->getEntiteMere($entiteSQL->getIdByDenomination('Carcassonne'))
+            )
+        );
+        self::assertSame(
+            'Biarritz (id_e 4) est fille de Carcassonne (id_e 3)',
+            sprintf(
+                'Biarritz (id_e %d) est fille de %s (id_e %d)',
+                $entiteSQL->getIdByDenomination('Biarritz'),
+                $entiteSQL->getDenomination($entiteSQL->getEntiteMere($entiteSQL->getIdByDenomination('Biarritz'))),
+                $entiteSQL->getEntiteMere($entiteSQL->getIdByDenomination('Biarritz'))
+            )
+        );
+        self::assertSame(
+            'Arcachon (id_e 5) est fille de Biarritz (id_e 4)',
+            sprintf(
+                'Arcachon (id_e %d) est fille de %s (id_e %d)',
+                $entiteSQL->getIdByDenomination('Arcachon'),
+                $entiteSQL->getDenomination($entiteSQL->getEntiteMere($entiteSQL->getIdByDenomination('Arcachon'))),
+                $entiteSQL->getEntiteMere($entiteSQL->getIdByDenomination('Arcachon'))
+            )
+        );
     }
 
     /**
@@ -335,5 +379,110 @@ class ExportConfigServiceTest extends PastellTestCase
         $connectorConfig = $this->getConnecteurFactory()
             ->getConnecteurConfig(14);
         self::assertEquals('Foo', $connectorConfig->get('champs1'));
+    }
+
+    /**
+     * @throws \DonneesFormulaireException
+     */
+    public function testWhenImportingGlobalConnectorAndAssociations(): void
+    {
+        $importConfigService = $this->getObjectInstancier()->getInstance(ImportConfigService::class);
+        $importConfigService->import(
+            [
+                ExportConfigService::CONNECTOR_INFO => [
+                    [
+                        'id_ce' => 2,
+                        'id_e' => 0,
+                        'libelle' => 'bar',
+                        'id_connecteur' => 'cloudooo',
+                        'type' => 'convertisseur-office-pdf',
+                        'data' => '{"metadata":{"cloudooo_hostname":"cloudooo","cloudooo_port":"8011"}}',
+                    ],
+                ],
+                ExportConfigService::ASSOCIATION_INFO => [
+                    0 => [
+                        'global' => [
+                            'convertisseur-office-pdf' => [
+                                [
+                                    'id_fe' => 2,
+                                    'id_e' => 0,
+                                    'flux' => 'global',
+                                    'id_ce' => 2,
+                                    'type' => 'convertisseur-office-pdf',
+                                    'num_same_type' => 0,
+                                    'libelle' => 'Conversion Office PDF',
+                                    'id_connecteur' => 'cloudooo',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            0
+        );
+
+        static::assertSame(
+            [],
+            $importConfigService->getLastErrors()
+        );
+
+        $globalConnector = $this->getObjectInstancier()
+            ->getInstance(\ConnecteurFactory::class)
+            ->getGlobalConnecteur('convertisseur-office-pdf');
+        self::assertSame(
+            $globalConnector->getConnecteurInfo()['libelle'],
+            'bar'
+        );
+    }
+
+    /**
+     * @throws \DonneesFormulaireException
+     */
+    public function testWhenImportingUnknownAssociation(): void
+    {
+        $importConfigService = $this->getObjectInstancier()->getInstance(ImportConfigService::class);
+        $importConfigService->import(
+            [
+                    ExportConfigService::ENTITY_INFO => [
+                        'denomination' => 'Foo',
+                        'id_e' => 12,
+                        'siren' => '000000000',
+                        'entite_mere' => 0,
+                        'type' => 'collectivite',
+                    ],
+                    ExportConfigService::CONNECTOR_INFO => [
+                        [
+                            'id_ce' => 2,
+                            'id_e' => 12,
+                            'libelle' => 'bar',
+                            'id_connecteur' => 'generateur-seda',
+                            'type' => 'Bordereau SEDA',
+                            'data' => '{"metadata":{"seda_generator_url":"http:\/\/seda-generator"}}',
+                        ],
+                    ],
+                    ExportConfigService::ASSOCIATION_INFO => [
+                        12 => [
+                            'unknown-module' => [
+                                'Bordereau SEDA' => [
+                                    0 => [
+                                        'id_e' => 12,
+                                        'flux' => 'unknown-module',
+                                        'id_ce' => 2,
+                                        'type' => 'Bordereau SEDA',
+                                        'libelle' => '',
+                                        'id_connecteur' => 'Generateur SEDA',
+                                        'num_same_type' => 0,
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+            ],
+            0
+        );
+        static::assertSame(
+            [    0 => "Le type de dossier « unknown-module » n'existe pas."],
+            $importConfigService->getLastErrors()
+        );
     }
 }

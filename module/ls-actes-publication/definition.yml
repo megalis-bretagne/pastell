@@ -36,7 +36,14 @@ formulaire:
             requis: true
             multiple: false
             commentaire: ''
-            content-type: 'application/csv,text/plain'
+            content-type: 'application/csv,text/csv,text/plain'
+        document_annexes:
+            name: Annexes
+            type: file
+            requis: false
+            multiple: true
+            commentaire: ''
+            content-type: application/pdf
     Cheminement:
         envoi_transformation:
             name: 'Transformation initiale'
