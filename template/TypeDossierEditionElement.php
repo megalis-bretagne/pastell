@@ -4,6 +4,7 @@
 /** @var array $type_de_dossier_info */
 /** @var TypeDossierFormulaireElementProperties $formulaireElement */
 
+use Pastell\Validator\ElementIdValidator;
 ?>
 
 <div class="box" style="min-height: 500px;">
@@ -29,8 +30,8 @@
                     <input
                             class="form-control col-md-8"
                             type='text'
-                            maxlength="<?php echo TypeDossierFormulaireElementManager::ELEMENT_ID_MAX_LENGTH; ?>"
-                            pattern="<?php echo TypeDossierFormulaireElementManager::ELEMENT_ID_REGEXP; ?>"
+                            maxlength="<?php echo ElementIdValidator::ELEMENT_ID_MAX_LENGTH; ?>"
+                            pattern="<?php echo ElementIdValidator::ELEMENT_ID_REGEXP; ?>"
                             name='element_id'
                             id="element_id"
                             value='<?php hecho($formulaireElement->element_id)?>'

@@ -225,6 +225,9 @@ action_unitaire:
             info: 'Si le flux utilise plusieurs connecteurs du même type, numéro d''ordre du connecteur à utiliser pour l''action considérée (débute à 0)'
             type: string
             default: '0'
+        transformations:
+            info: "Permet de spécifier des transformations, de la forme 'id_element:expression_twig'"
+            type: associative_array
 rule:
     possible_key:
         role_id_e:
@@ -329,6 +332,11 @@ champs-recherche-avancee:
             key_name: champs
             type: string
 connecteur-type-mapping:
+    possible_key:
+        '*':
+            key_name: champs
+            type: string
+transformation-fixe:
     possible_key:
         '*':
             key_name: champs

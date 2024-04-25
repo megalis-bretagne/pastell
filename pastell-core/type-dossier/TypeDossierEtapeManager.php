@@ -190,6 +190,11 @@ class TypeDossierEtapeManager
                     $stringMapper->map($result[$action_id][Action::CONNECTEUR_TYPE_MAPPING][$key]);
                 }
             }
+            if (! empty($action_properties[Action::TRANSFORMATIONS])) {
+                foreach ($action_properties[Action::TRANSFORMATIONS] as $key => $value) {
+                    $stringMapper->map($result[$action_id][Action::TRANSFORMATIONS][$key]);
+                }
+            }
             if (! empty($action_properties[Action::EDITABLE_CONTENT])) {
                 foreach ($action_properties[Action::EDITABLE_CONTENT] as $key => $value) {
                     $stringMapper->map($result[$action_id][Action::EDITABLE_CONTENT][$key]);
@@ -218,10 +223,9 @@ class TypeDossierEtapeManager
         }
     }
 
-
-    public function getConnecteurType($type)
+    public function getConnecteurType(string $type): array
     {
-        return $this->getPart($type, 'connecteur_type') ?: [$type];
+        return $this->getPart($type, 'connecteur_type');
     }
 
     private function getPart($type, $part)

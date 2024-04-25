@@ -492,14 +492,19 @@ abstract class ActionExecutor
 
         $connecteur_type_action = $documentType->getAction()->getProperties($this->action, 'connecteur-type-action');
         if (!$connecteur_type_action) {
-            throw new RecoverableException("Aucune action n'a été défini pour l'action {$this->action} (connecteur-type : $connecteur_type)");
+            throw new RecoverableException(
+                "Aucune action n'a été défini pour l'action {$this->action} (connecteur-type : $connecteur_type)"
+            );
         }
 
         $connecteurTypeFactory = $this->objectInstancier->getInstance(ConnecteurTypeFactory::class);
-        $connecteurTypeActionExecutor = $connecteurTypeFactory->getActionExecutor($connecteur_type, $connecteur_type_action);
+        $connecteurTypeActionExecutor =
+            $connecteurTypeFactory->getActionExecutor($connecteur_type, $connecteur_type_action);
 
         if (!$connecteurTypeActionExecutor) {
-            throw new RecoverableException("Impossible d'instancier une classe pour l'action : $connecteur_type:$connecteur_type_action");
+            throw new RecoverableException(
+                "Impossible d'instancier une classe pour l'action : $connecteur_type:$connecteur_type_action"
+            );
         }
 
         $connecteurTypeActionExecutor->setEntiteId($this->id_e);
@@ -515,10 +520,13 @@ abstract class ActionExecutor
         $connecteurTypeActionExecutor->setIdWorker($this->id_worker);
 
         $connecteurTypeActionExecutor->setMapping($documentType->getAction()->getConnecteurTypeMapping($this->action));
+        $connecteurTypeActionExecutor
+            ->setTransformations($documentType->getAction()->getTransformations($this->action));
 
-        $connecteur_type_data_seda_class_name = $documentType->getAction()->getConnecteurTypeDataSedaClassName($this->action);
+        $connecteur_type_data_seda_class_name
+            = $documentType->getAction()->getConnecteurTypeDataSedaClassName($this->action);
         if (!$connecteur_type_data_seda_class_name) {
-            $connecteur_type_data_seda_class_name = "FluxDataSedaDefault";
+            $connecteur_type_data_seda_class_name = 'FluxDataSedaDefault';
         }
         $connecteurTypeActionExecutor->setDataSedaClassName($connecteur_type_data_seda_class_name);
 
