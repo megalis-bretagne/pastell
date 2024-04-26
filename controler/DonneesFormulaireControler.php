@@ -118,7 +118,7 @@ class DonneesFormulaireControler extends PastellControler
             $extension = isset($path_parts['extension']) ? '.' . $path_parts['extension'] : '';
 
             while (in_array($file_name, $file_names, true)) {
-                $file_name = $base_name . '(' . $file_dup . ')' . $extension;
+                $file_name = $base_name . '_' . $file_dup . $extension;
                 $file_dup++;
             }
             $file_names[] = $file_name;
