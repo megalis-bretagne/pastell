@@ -229,7 +229,7 @@ abstract class AbstractSedaGeneratorConnectorTestCase extends PastellTestCase
         $sedaGeneriqueConnector->setDocDonneesFormulaire($docDonneesFormulaire);
 
         $this->expectExceptionMessage(
-            'Erreur sur le template {{ arrete }} : An exception has been thrown during the rendering of a template ("Array to string conversion")'
+            'Erreur sur le template {{ arrete }} : Array to string conversion'
         );
         $this->expectException(UnrecoverableException::class);
         $sedaGeneriqueConnector->getBordereau(new FluxDataTestSedaGenerique());
