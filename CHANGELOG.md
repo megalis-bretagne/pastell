@@ -42,6 +42,7 @@
 - Prise en compte des valeurs par défaut pour les connecteurs #1938
 - Le dossier poursuit son cheminement même s'il n'y a pas de connecteur associé pour une étape de transformation #1981
 - Harmonisation des libellés des types de dossiers et de leurs classements #1897
+- Affichage des utilisateurs désactivés dans la liste des utilisateurs #2048
 - Renommage des fichiers ayant le même nom dans les champs fichiers multiples lors du téléchargement #2052
 
 # [4.0.13] - 2024-04-15
