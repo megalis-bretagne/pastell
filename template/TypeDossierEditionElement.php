@@ -5,6 +5,7 @@
 /** @var TypeDossierFormulaireElementProperties $formulaireElement */
 
 use Pastell\Validator\ElementIdValidator;
+
 ?>
 
 <div class="box" style="min-height: 500px;">
