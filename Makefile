@@ -92,7 +92,7 @@ module-pack-gfc: docker-compose-up ## Run make-module pack_gfc
 	$(MAKE_MODULE) ./pack-json/pack-gfc/dossier-wgfc-destinataire.json ./module/ --id gfc-dossier-destinataire
 
 module-pack-actes: docker-compose-up ## Run make-module pack_actes
-	$(MAKE_MODULE) ./pack-json/pack-actes/ls-actes-publication-draft.json ./module/ --id ls-actes-publication --name "Actes publication"
+	$(MAKE_MODULE) ./pack-json/pack-actes/draft-ls-actes-publication.json ./module/ --id ls-actes-publication --name "Actes publication"
 	$(MAKE_MODULE) ./pack-json/pack-actes/ls-dossier-seance-draft.json ./module/ --id ls-dossier-seance --name "Dossiers de séances (archivage)"
 
 module-pack-helios: docker-compose-up ## Run make-module pack_helios

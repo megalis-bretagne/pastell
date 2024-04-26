@@ -2,19 +2,24 @@
 
 declare(strict_types=1);
 
-use Pastell\Viewer\ConnectorViewer;
+use Pastell\Viewer\Viewer;
 
-class PESViewerVisionneuse extends ConnectorViewer
+class PESViewerVisionneuse implements Viewer
 {
+    public function __construct(
+        private readonly ConnecteurFactory $connecteurFactory
+    ) {
+    }
+
     /**
      * @throws UnrecoverableException
-     * @throws Exception
      */
     public function display(string $filename, string $filepath): void
     {
-        $visionneusePES = $this->getConnector();
-        if ($visionneusePES) {
-            /** @var PESViewer $visionneusePES */
+        /** @var PESViewer|false $visionneusePES */
+        $visionneusePES = $this->connecteurFactory->getGlobalConnecteur(PESViewer::CONNECTEUR_TYPE_ID);
+
+        if ($visionneusePES !== false) {
             $result = $visionneusePES->getURL($filepath);
             echo '<iframe title="Contenu du PES ALLER" src="' . $result . '" height="600" width="100%"></iframe>';
         } else {

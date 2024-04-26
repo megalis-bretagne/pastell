@@ -41,11 +41,35 @@
 - Le dossier poursuit son cheminement même s'il n'y a pas de connecteur associé pour une étape de transformation #1981
 - Harmonisation des libellés des types de dossiers et de leurs classements #1897
 
+# [4.0.13] - 2024-04-15
+
+***Cette version nécessite une mise à jour du générateur SEDA en 1.0.3***
+
+## Évolutions
+
+- flux "Actes publication" `ls-actes-publication` : Ajout des Annexes 'document_annexes' (Fichiers multiples pdf) #1905
+- Le titre du dossier est tronqué lors de l'envoi à iparapheur si sa taille dépasse 255 bytes #2012
+
+## Correction
+
+- Générateur SEDA Asalae : Précision des libellés des propriétés spécifiques des objets d'archives #1745
+- La visionneuse PESViewerVisionneuse n'était plus fonctionnelle pour les documents (Fichier PES de flux studio).
+  (regression de la version 4.0.0) #2030
+- Générateur SEDA Asalae : Renommage des fichiers en cas de doublon pour éviter l'erreur Asalae #1933
+- L'import des associations sur l'entité racine ne fonctionnait pas #2045
+- L'ordre des entités (dénomination au lieu de id_e) lors de l'import provoquait des erreurs 
+`L'entité mère est inconnue` #2049
+- L'action d'envoi d'un PES à l'archivage renvoyait un warning si la balise `BlocPiece` ne contenait pas de balise
+`InfoPce` (dans le cas de l'utilisation d'un connecteur Bordereau SEDA - seda-ng) #2050
+- Définition de studio : Il y avait une erreur pour les valeurs par défaut des Zones de texte multilignes #2002
+- La balise `MessageDigest` était mal écrite dans les bordereaux SEDA à destination de Vitam #2035
+- Connecteur iParapheur : Il y avait un warning pour la sélection d'un type en cas de problème de connexion #2027
+
 # [4.0.12] - 2024-02-12
 
 ## Évolutions
 
-- Possibilité de mettre un type de document spécifique ainsi que des métadonnées GED sur les dépots CMIS #1503 
+- Possibilité de mettre un type de document spécifique ainsi que des métadonnées GED sur les dépots CMIS #1503
 
 ## Corrections
 
