@@ -134,7 +134,7 @@ class CPPVerifConnectivite extends ActionExecutor
 
             $fichier_csv = $chorusParCsvConfig->getFilePath('fichier_csv_interprete');
             $CSV = new CSV();
-            $colList = $CSV->get($fichier_csv);
+            $colList = $CSV->get($fichier_csv, ';');
 
             if (!$colList) {
                 $message_erreur = "Il n'y a pas de fichier CSV interprété";

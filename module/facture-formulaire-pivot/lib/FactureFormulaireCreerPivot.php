@@ -167,7 +167,7 @@ class FactureFormulaireCreerPivot
             throw new Exception("Le fichier facture lignes csv n'est pas au format .csv");
         }
         $CSV = new CSV();
-        $lignes = $CSV->get($csv_path);
+        $lignes = $CSV->get($csv_path, ';');
         foreach ($lignes as $ligneInfo) {
             $facture_lignes[] = [
                 'ligne_ref_produit' => $ligneInfo[0],

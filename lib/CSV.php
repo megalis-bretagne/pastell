@@ -2,7 +2,7 @@
 
 class CSV
 {
-    public function get($file_path)
+    public function get($file_path, $delimiter): array
     {
         $file = $this->openFile($file_path);
         if (! $file) {
@@ -10,7 +10,7 @@ class CSV
         }
 
         $result = [];
-        while (($data = fgetcsv($file, 1000, ";")) !== false) {
+        while (($data = fgetcsv($file, 1000, $delimiter)) !== false) {
             $result[] = $data ;
         }
         fclose($file);

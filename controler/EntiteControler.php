@@ -603,7 +603,7 @@ class EntiteControler extends PastellControler
             $this->getAgentSQL()->cleanAll();
         }
 
-        $fileContent = $CSV->get($file_path);
+        $fileContent = $CSV->get($file_path, ';');
 
         $nb_agent = 0;
         foreach ($fileContent as $col) {
@@ -640,7 +640,7 @@ class EntiteControler extends PastellControler
         }
 
         $CSV = new CSV();
-        $colList = $CSV->get($file_path);
+        $colList = $CSV->get($file_path, ',');
 
         $nb_col = 0;
         foreach ($colList as $col) {
@@ -679,7 +679,7 @@ class EntiteControler extends PastellControler
         $gradeSQL = new GradeSQL($this->getSQLQuery());
         $gradeSQL->clean();
 
-        $fileContent = $CSV->get($file_path);
+        $fileContent = $CSV->get($file_path, ';');
 
         $nb_grade = 0;
         foreach ($fileContent as $info) {
