@@ -65,7 +65,7 @@ class EntiteControlerTest extends ControlerTestCase
         $this->entiteControler->exportUtilisateurAction();
         $result = ob_get_contents();
         ob_end_clean();
-        $this->assertMatchesRegularExpression('/3;other;;;other@other.other/', $result);
+        $this->assertMatchesRegularExpression('/3,other,,,other@other.other/', $result);
 
         $this->setGetInfo([
             'id_e' => 0,
@@ -79,7 +79,7 @@ class EntiteControlerTest extends ControlerTestCase
         $result = ob_get_contents();
         ob_end_clean();
 
-        $this->assertDoesNotMatchRegularExpression('/3;other;;;other@other.other/', $result);
+        $this->assertDoesNotMatchRegularExpression('/3,other,,,other@other.other/', $result);
     }
 
     public function testNumberOfUsersIsCorrect()
@@ -185,5 +185,14 @@ class EntiteControlerTest extends ControlerTestCase
 
         $info = $this->getObjectInstancier()->getInstance(EntiteSQL::class)->getInfo(1);
         static::assertSame('TEST ENTITIES', $info['denomination']);
+    }
+
+    public function testExport(): void
+    {
+        ob_start();
+        $this->entiteControler->exportAction();
+        $result = ob_get_contents();
+        ob_end_clean();
+        static::assertMatchesRegularExpression('/1,000000000,Bourg-en-Bresse,collectivite,"0000-00-00 00:00:00",1,0/', $result);
     }
 }

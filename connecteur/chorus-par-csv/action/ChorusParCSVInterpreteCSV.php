@@ -15,7 +15,7 @@ class ChorusParCSVInterpreteCSV extends ActionExecutor
         }
 
         $CSV = new CSV();
-        $colList = $CSV->get($fichier_csv);
+        $colList = $CSV->get($fichier_csv, ';');
 
         $fichier_csv_interprete = "chorus-csv-interprete-" . date("YmdHis") . ".csv";
         $fichier_csv_interprete_lines = "";

@@ -37,21 +37,21 @@ class AnnuaireExporterTest extends PastellTestCase
     public function testOne()
     {
         $this->getAnnuaireSQL()->add(1, "Eric Pommateau", "eric@sigmalis.com");
-        $this->assertEquals("eric@sigmalis.com;\"Eric Pommateau\"\n", $this->getCSVContent());
+        $this->assertEquals("eric@sigmalis.com,\"Eric Pommateau\"\n", $this->getCSVContent());
     }
 
     public function testTwo()
     {
         $this->getAnnuaireSQL()->add(1, "Eric Pommateau", "eric@sigmalis.com");
         $this->getAnnuaireSQL()->add(1, "Toto", "toto@sigmalis.com");
-        $this->assertEquals("eric@sigmalis.com;\"Eric Pommateau\"\ntoto@sigmalis.com;Toto\n", $this->getCSVContent());
+        $this->assertEquals("eric@sigmalis.com,\"Eric Pommateau\"\ntoto@sigmalis.com,Toto\n", $this->getCSVContent());
     }
 
     public function testGroupe()
     {
         $id_a = $this->getAnnuaireSQL()->add(1, "Eric Pommateau", "eric@sigmalis.com");
         $this->getAnnuaireGroupsSQL()->addToGroupe(2, $id_a);
-        $this->assertEquals("eric@sigmalis.com;\"Eric Pommateau\";Elu\n", $this->getCSVContent());
+        $this->assertEquals("eric@sigmalis.com,\"Eric Pommateau\",Elu\n", $this->getCSVContent());
     }
 
     public function test2Groupe()
@@ -59,6 +59,6 @@ class AnnuaireExporterTest extends PastellTestCase
         $id_a = $this->getAnnuaireSQL()->add(1, "Eric Pommateau", "eric@sigmalis.com");
         $this->getAnnuaireGroupsSQL()->addToGroupe(1, $id_a);
         $this->getAnnuaireGroupsSQL()->addToGroupe(2, $id_a);
-        $this->assertEquals("eric@sigmalis.com;\"Eric Pommateau\";Elu;\"Mon groupe\"\n", $this->getCSVContent());
+        $this->assertEquals("eric@sigmalis.com,\"Eric Pommateau\",Elu,\"Mon groupe\"\n", $this->getCSVContent());
     }
 }

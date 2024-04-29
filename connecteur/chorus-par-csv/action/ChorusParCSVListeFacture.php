@@ -22,7 +22,7 @@ class ChorusParCSVListeFacture extends ActionExecutor
             throw new Exception("Il n'y a pas de fichier CSV interprété");
         }
         $CSV = new CSV();
-        $colList = $CSV->get($fichier_csv_interprete);
+        $colList = $CSV->get($fichier_csv_interprete, ';');
         $result = "";
 
         foreach ($colList as $col) {

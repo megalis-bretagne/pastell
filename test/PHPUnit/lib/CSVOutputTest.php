@@ -5,7 +5,7 @@ class CSVOutputTest extends PHPUnit\Framework\TestCase
     public function testDisplay()
     {
         $csvOutput  = new CSVoutput();
-        $this->expectOutputString("foo;bar\n");
+        $this->expectOutputString("foo,bar\n");
         $csvOutput->display([["foo","bar"]]);
     }
 
@@ -19,7 +19,7 @@ class CSVOutputTest extends PHPUnit\Framework\TestCase
     public function testReplaceCRLFWithSpaceInMessage()
     {
         $csvOutput  = new CSVoutput();
-        $this->expectOutputString('"foo bar";"fizz buzz"' . "\n");
+        $this->expectOutputString('"foo bar","fizz buzz"' . "\n");
         $csvOutput->display([["message" => "foo\nbar","message_horodate" => "fizz\nbuzz"]]);
     }
 
