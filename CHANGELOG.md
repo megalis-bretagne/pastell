@@ -27,6 +27,7 @@
 
 - Correction des entités affichées dans la liste déroulantes de l'entête pour les utilisateurs ayant un rôle 'aucun droit' #1919
 - Correction du format xml d'import et d'export de collectivités #2051
+- Suppresion de la mention d'erreur lors de l'action voir sur un connecteur de transformation non configuré #1770
 
 ## Dépréciations
 
