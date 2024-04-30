@@ -44,6 +44,7 @@
 - Harmonisation des libellés des types de dossiers et de leurs classements #1897
 - Indicateur des utilisateurs désactivés dans la liste des utilisateurs #2048
 - Renommage des fichiers ayant le même nom dans les champs fichiers multiples lors du téléchargement #2052
+- Modification du type de dossier `gfc-dossier` #1931
 
 # [4.0.13] - 2024-04-15
 

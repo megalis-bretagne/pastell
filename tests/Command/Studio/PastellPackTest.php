@@ -13,12 +13,12 @@ use TypeDossierException;
 class PastellPackTest extends PastellTestCase
 {
     private array $moduleDefinition = [
-        'dossier-wgfc' => [
+        'draft-gfc-dossier' => [
             '',
             'gfc-dossier',
             'Dossier GFC'
         ],
-        'dossier-wgfc-destinataire' => [
+        'draft-gfc-dossier-destinataire' => [
             '',
             'gfc-dossier-destinataire',
             'Dossier GFC (destinataire)'
