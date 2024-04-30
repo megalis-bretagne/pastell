@@ -88,6 +88,7 @@ $exportUserUrl = sprintf(
     <?php if ($descendance) : ?>
         <th>Collectivité de base</th>
     <?php endif;?>
+    <th>Statut</th>
 </tr>
 </thead>
 
@@ -134,6 +135,9 @@ $exportUserUrl = sprintf(
             <?php endforeach;?>
 
         </td>
+        <?php
+           echo $user['is_enabled'] === 0 ? "<td><p class='badge bg-danger'>désactivé</p></td>" : "<td><p class='badge bg-success'>activé</p></td>";
+        ?>
         <?php if ($descendance) : ?>
             <td>
                 <a href='Entite/detail?id_e=<?php echo $user['id_e']?>'

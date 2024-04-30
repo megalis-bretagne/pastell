@@ -73,7 +73,7 @@ class UtilisateurListe extends SQL
     public function getAllUtilisateur($id_e, $with_fille = false, $role = false, $search = false, $offset = 0): array
     {
         $sql = 'SELECT utilisateur.id_u,nom,prenom,login,utilisateur_role.role,' .
-                ' email,utilisateur.id_e,entite.denomination ' .
+                ' email,utilisateur.id_e,entite.denomination, utilisateur.is_enabled ' .
                 ' FROM utilisateur ' .
                 ' LEFT JOIN entite ON entite.id_e=utilisateur.id_e ' .
                 ' JOIN utilisateur_role ON utilisateur.id_u=utilisateur_role.id_u ';
