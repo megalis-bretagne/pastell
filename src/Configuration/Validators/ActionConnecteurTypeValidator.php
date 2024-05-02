@@ -10,7 +10,6 @@ use Pastell\Configuration\ActionElement;
 use Pastell\Configuration\DocumentTypeValidation;
 use Pastell\Configuration\ModuleElement;
 use Pastell\Service\Document\DocumentTransformService;
-use UnrecoverableException;
 
 class ActionConnecteurTypeValidator implements ValidatorInterface
 {
@@ -23,9 +22,6 @@ class ActionConnecteurTypeValidator implements ValidatorInterface
     ) {
     }
 
-    /**
-     * @throws UnrecoverableException
-     */
     public function validate(array $typeDefinition): bool
     {
         $this->errors = [];
@@ -95,9 +91,7 @@ class ActionConnecteurTypeValidator implements ValidatorInterface
             }
         }
     }
-    /**
-     * @throws UnrecoverableException
-     */
+
     private function validateConnecteurTransformations(
         array $actionProperties,
         string $actionName

@@ -5,16 +5,11 @@ declare(strict_types=1);
 namespace Pastell\Tests\Validator;
 
 use Pastell\Validator\ElementIdValidator;
-use PastellTestCase;
+use PHPUnit\Framework\TestCase;
 use UnrecoverableException;
 
-class ElementIdValidatorTest extends PastellTestCase
+class ElementIdValidatorTest extends TestCase
 {
-    public function elementIdValidator(): ElementIdValidator
-    {
-        return $this->getObjectInstancier()->getInstance(ElementIdValidator::class);
-    }
-
     public function elementIdProvider(): \Generator
     {
         yield 'Valid ElementId' => ['objet_document', true , ''];
@@ -49,11 +44,14 @@ class ElementIdValidatorTest extends PastellTestCase
         bool $expectedResult,
         string $exceptionMessage
     ): void {
+
+        $elementIdValidator = new ElementIdValidator();
+
         if (! $expectedResult) {
             $this->expectException(UnrecoverableException::class);
             $this->expectExceptionMessage($exceptionMessage);
-            $this->elementIdValidator()->validate($elementId);
+            $elementIdValidator->validate($elementId);
         }
-        static::assertTrue($this->elementIdValidator()->validate($elementId));
+        static::assertTrue($elementIdValidator->validate($elementId));
     }
 }

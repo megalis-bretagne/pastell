@@ -201,7 +201,7 @@ class Action
         return $this->getProperties($action, self::CONNECTEUR_TYPE_MAPPING) ?: [];
     }
 
-    public function getTransformations($action): array
+    public function getTransformations(string $action): array
     {
         return $this->getProperties($action, self::TRANSFORMATIONS) ?: [];
     }

@@ -22,8 +22,7 @@ class DocumentTransformServiceTest extends PastellTestCase
             [
                 'objet_document' => '{{ objet  ? objet :  "objet par défaut" }}',
                 'envoi_depot' => 'true',
-                'date_de_creation_document' => $this->getObjectInstancier()
-                    ->getInstance(DocumentPastellMetadataService::class)::PA_DOCUMENT_CREATION_DATE
+                'date_de_creation_document' => DocumentPastellMetadataService::PA_DOCUMENT_CREATION_DATE
             ],
             true ,
             ''
