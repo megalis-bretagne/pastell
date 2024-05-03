@@ -1,13 +1,9 @@
 <?php
 
-
 use Pastell\Service\Document\DocumentTransformService;
 
 class TransformationGenerique extends TransformationConnecteur
 {
-    /**
-     * @var DonneesFormulaire
-     */
     private DonneesFormulaire $connecteurConfig;
 
     public function __construct(
