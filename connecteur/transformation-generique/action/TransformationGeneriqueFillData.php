@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Validator\ElementIdValidator;
+
 class TransformationGeneriqueFillData extends ChoiceActionExecutor
 {
     /**
@@ -21,8 +23,9 @@ class TransformationGeneriqueFillData extends ChoiceActionExecutor
             if (! $id_element) {
                 continue;
             }
-            $transformationGeneriqueDefinition->checkElementId($id_element);
-            $data[$id_element] = $definition_array[$i] ?? "";
+            $elementIdValidator = new ElementIdValidator();
+            $elementIdValidator->validate($id_element);
+            $data[$id_element] = $definition_array[$i] ?? '';
         }
 
         $transformationGeneriqueDefinition->setTransformation(
@@ -56,7 +59,7 @@ class TransformationGeneriqueFillData extends ChoiceActionExecutor
         $transformation_data = $transformationGeneriqueDefinition->getData(
             $this->getConnecteurConfig($this->id_ce)
         );
-        $transformation_data[''] = "";
+        $transformation_data[''] = '';
 
         $this->setViewParameter('transformation_data', $transformation_data);
 

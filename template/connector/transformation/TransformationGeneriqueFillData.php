@@ -9,6 +9,9 @@
  * @var Field[] $fieldsList
  */
 
+use Pastell\Service\Document\DocumentPastellMetadataService;
+use Pastell\Validator\ElementIdValidator;
+
 ?>
 <div id='box_signature' class='box'>
 
@@ -29,8 +32,8 @@
                         <input
                                 class="form-control col-md-12"
                                 type="text"
-                                maxlength="<?php echo TransformationGeneriqueDefinition::ELEMENT_ID_MAX_LENGTH; ?>"
-                                pattern="<?php echo TransformationGeneriqueDefinition::ELEMENT_ID_REGEXP; ?>"
+                                maxlength="<?= ElementIdValidator::ELEMENT_ID_MAX_LENGTH ?>"
+                                pattern="<?= ElementIdValidator::ELEMENT_ID_REGEXP ?>"
                                 name="id_element[]"
                                 id="id_element_<?php echo $i; ?>"
                                 value="<?php hecho($element_id) ?>"
@@ -113,7 +116,7 @@
                 <th class="w200">Identifiant</th>
                 <th class="">Explication</th>
             </tr>
-            <?php foreach (TransformationGenerique::getPastellMetadata() as $id => $commentaire) : ?>
+            <?php foreach (DocumentPastellMetadataService::getPastellMetadataDescription() as $id => $commentaire) : ?>
                 <tr>
                     <td><?php hecho($id) ?></td>
                     <td><?php hecho($commentaire) ?></td>
