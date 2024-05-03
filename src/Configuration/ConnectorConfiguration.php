@@ -53,6 +53,7 @@ class ConnectorConfiguration implements ConfigurationInterface
     public const ACTION_CONNECTEUR_TYPE = 'connecteur-type';
     public const ACTION_CONNECTEUR_TYPE_ACTION = 'connecteur-type-action';
     public const ACTION_CONNECTEUR_TYPE_MAPPING = 'connecteur-type-mapping';
+    public const ACTION_TRANSFORMATIONS = 'transformations';
     public const ACTION_NO_SHOW = 'no_show';
     public const ACTION_CONNECTEUR_TYPE_ELEMENT_ID = 'element_id';
 
@@ -223,6 +224,11 @@ EOT)
                         ->booleanNode(self::ACTION_NO_SHOW)
                         ->end()
                         ->arrayNode(self::ACTION_CONNECTEUR_TYPE_MAPPING)
+                            ->useAttributeAsKey(self::ACTION_CONNECTEUR_TYPE_ELEMENT_ID)
+                            ->scalarPrototype()
+                            ->end()
+                        ->end()
+                        ->arrayNode(self::ACTION_TRANSFORMATIONS)
                             ->useAttributeAsKey(self::ACTION_CONNECTEUR_TYPE_ELEMENT_ID)
                             ->scalarPrototype()
                             ->end()

@@ -270,6 +270,7 @@ class DocumentTypeConfiguration implements ConfigurationInterface
                 ->end()
                 ->append($this->addRuleNode())
                 ->append($this->addConnecteurTypeMappingNode())
+                ->append($this->addTransformationsNode())
             ->end();
         return $treeBuilder->getRootNode();
     }
@@ -290,6 +291,18 @@ class DocumentTypeConfiguration implements ConfigurationInterface
         $treeBuilder->getRootNode()
             ->info("Permet de spécifier le mapping entre les noms des éléments du document\n"
                     . "et les noms des éléments attendu par l'action du connecteur type")
+            ->normalizeKeys(false)
+            ->scalarPrototype()
+            ->end();
+        return $treeBuilder->getRootNode();
+    }
+
+    private function addTransformationsNode(): NodeDefinition
+    {
+        $treeBuilder = new TreeBuilder(ActionElement::TRANSFORMATIONS->value);
+        $treeBuilder->getRootNode()
+            ->info("Permet de spécifier des transformations de champs du document\n"
+                . 'par une expression twig')
             ->normalizeKeys(false)
             ->scalarPrototype()
             ->end();

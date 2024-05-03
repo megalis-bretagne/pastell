@@ -10,6 +10,8 @@
 /** @var array $formulaire_etape */
 /** @var array $all_etape_type */
 
+use Pastell\Validator\ElementIdValidator;
+
 ?>
 
 <div class="box" style="min-height: 500px;">
@@ -38,7 +40,7 @@
                     <input
                             class="form-control col-md-8"
                             type='text'
-                            maxlength="<?php echo TypeDossierFormulaireElementManager::ELEMENT_ID_MAX_LENGTH; ?>"
+                            maxlength="<?php echo ElementIdValidator::ELEMENT_ID_MAX_LENGTH; ?>"
                             name='label'
                             id='label'
                             value='<?php hecho($etapeInfo->label); ?>'

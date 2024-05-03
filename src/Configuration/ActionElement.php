@@ -13,6 +13,7 @@ enum ActionElement: string
     case CONNECTEUR_TYPE = 'connecteur-type';
     case CONNECTEUR_TYPE_ACTION = 'connecteur-type-action';
     case CONNECTEUR_TYPE_MAPPING = 'connecteur-type-mapping';
+    case TRANSFORMATIONS = 'transformations';
     case EDITABLE_CONTENT = 'editable-content';
     case MODIFICATION_NO_CHANGE_ETAT = 'modification-no-change-etat';
     case NAME_ACTION = 'name-action';

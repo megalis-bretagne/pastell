@@ -1,5 +1,7 @@
 <?php
 
+use Pastell\Validator\ElementIdValidator;
+
 class TypeDossierFormulaireElementManagerTest extends \PHPUnit\Framework\TestCase
 {
     public function elementIdProvider()
@@ -13,21 +15,21 @@ class TypeDossierFormulaireElementManagerTest extends \PHPUnit\Framework\TestCas
             [
                 'MATRICULE_AGENT',
                 false,
-                "L'identifiant de l'élément ne peut comporter que des chiffres, des lettres minuscules et le caractère _"
+                "L'identifiant de l'élément « MATRICULE_AGENT » ne respecte pas l'expression rationnelle : ^[0-9a-z_]+$"
             ],
             [
                 str_pad(
                     "",
-                    TypeDossierFormulaireElementManager::ELEMENT_ID_MAX_LENGTH + 1,
+                    ElementIdValidator::ELEMENT_ID_MAX_LENGTH + 1,
                     "a"
                 ),
                 false,
-                "La longueur de l'identifiant ne peut dépasser 64 caractères"
+                "L'identifiant de l'élément « aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa » ne doit pas dépasser 64 caractères"
             ],
             [
                 str_pad(
                     "",
-                    TypeDossierFormulaireElementManager::ELEMENT_ID_MAX_LENGTH,
+                    ElementIdValidator::ELEMENT_ID_MAX_LENGTH,
                     "a"
                 ),
                 true,
@@ -36,7 +38,7 @@ class TypeDossierFormulaireElementManagerTest extends \PHPUnit\Framework\TestCas
             [
                 '',
                 false,
-                "L'identifiant ne peut être vide"
+                "L'identifiant de l'élément «  » ne respecte pas l'expression rationnelle : ^[0-9a-z_]+$"
             ]
         ];
     }
@@ -54,7 +56,7 @@ class TypeDossierFormulaireElementManagerTest extends \PHPUnit\Framework\TestCas
         $typeDossierFormulaireElementManager = new TypeDossierFormulaireElementManager();
         $typeDossierFormulaireElement = new TypeDossierFormulaireElementProperties();
         if (! $expected_result) {
-            $this->expectException(TypeDossierException::class);
+            $this->expectException(UnrecoverableException::class);
             $this->expectExceptionMessage(
                 $exception_message
             );

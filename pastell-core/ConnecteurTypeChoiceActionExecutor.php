@@ -3,6 +3,7 @@
 abstract class ConnecteurTypeChoiceActionExecutor extends ChoiceActionExecutor
 {
     protected $mapping;
+    private array $transformations;
     protected $data_seda_class_name;
 
     public function setMapping(array $mapping)
@@ -16,6 +17,15 @@ abstract class ConnecteurTypeChoiceActionExecutor extends ChoiceActionExecutor
             return $key;
         }
         return $this->mapping[$key];
+    }
+
+    public function setTransformations(array $transformations): void
+    {
+        $this->transformations = $transformations;
+    }
+    public function getTransformations(): array
+    {
+        return $this->transformations;
     }
 
     public function setDataSedaClassName($data_seda_class_name)

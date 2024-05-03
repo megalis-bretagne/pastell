@@ -1,13 +1,9 @@
 <?php
 
+use Pastell\Validator\ElementIdValidator;
+
 class TypeDossierFormulaireElementManager
 {
-    //Bon, c'est pas là que ca devrait être défini, mais c'est forcé par la taille du champs indexable
-    public const ELEMENT_ID_MAX_LENGTH = 64;
-
-    //Même remarque
-    public const ELEMENT_ID_REGEXP = "^[0-9a-z_]+$";
-
     public const ELEMENT_ID = "element_id";
     public const NAME = "name";
     public const TYPE = "type";
@@ -92,12 +88,14 @@ class TypeDossierFormulaireElementManager
      * @param Recuperateur $recuperateur
      * @return bool
      * @throws TypeDossierException
+     * @throws UnrecoverableException
      */
     public function edition(
         TypeDossierFormulaireElementProperties $typeDossierFormulaireElement,
         Recuperateur $recuperateur
     ) {
-        $this->verifElementId($recuperateur->get(self::ELEMENT_ID));
+        $elementIdValidator = new ElementIdValidator();
+        $elementIdValidator->validate($recuperateur->get(self::ELEMENT_ID));
         $this->verifType($recuperateur->get(self::TYPE));
         foreach (self::getElementPropertiesId() as $element_formulaire) {
             $typeDossierFormulaireElement->$element_formulaire = $recuperateur->get($element_formulaire);
@@ -106,25 +104,6 @@ class TypeDossierFormulaireElementManager
             $typeDossierFormulaireElement->name = $typeDossierFormulaireElement->element_id;
         }
         return true;
-    }
-
-    /**
-     * @param $element_id
-     * @throws TypeDossierException
-     */
-    private function verifElementId($element_id)
-    {
-        if (! $element_id) {
-            throw new TypeDossierException("L'identifiant ne peut être vide");
-        }
-        if (strlen($element_id) > self::ELEMENT_ID_MAX_LENGTH) {
-            throw new TypeDossierException("La longueur de l'identifiant ne peut dépasser 64 caractères");
-        }
-        if (! preg_match("#" . self::ELEMENT_ID_REGEXP . "#", $element_id)) {
-            throw new TypeDossierException(
-                "L'identifiant de l'élément ne peut comporter que des chiffres, des lettres minuscules et le caractère _"
-            );
-        }
     }
 
     /**
