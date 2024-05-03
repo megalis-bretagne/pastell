@@ -1,6 +1,5 @@
 <?php
 
-
 use Pastell\Service\Document\DocumentTransformService;
 
 class TransformationGenerique extends TransformationConnecteur
