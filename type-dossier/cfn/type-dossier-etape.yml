@@ -19,6 +19,10 @@ formulaire:
             commentaire: 'Format tar.gz'
             type: file
             read-only: true
+        recu_cfn:
+            name: 'Accusé de réception du coffre-fort numérique'
+            no-show: true
+            value: false
 page-condition:
     'Retour CFN':
         envoi_cfn: true

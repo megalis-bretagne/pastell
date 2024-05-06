@@ -34,6 +34,7 @@ class CFNEnvoyer extends ConnecteurTypeActionExecutor
             'Le dossier %s a été versé dans le coffre-fort numérique',
             $this->getDonneesFormulaire()->getTitre()
         );
+        $donneesFormulaire->setData('cfn_envoye', true);
         $this->addActionOK($message);
         $this->notify($this->action, $this->type, $message);
         return true;

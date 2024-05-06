@@ -2,6 +2,7 @@
 
 namespace Pastell\Tests\Connector\Ensap;
 
+use InvalidArgumentException;
 use Exception;
 use Pastell\Connector\Ensap\PdfEnveloppeValidator;
 use PastellTestCase;
@@ -34,7 +35,7 @@ class PdfEnveloppeValidatorTest extends PastellTestCase
      */
     public function testValidatePdfFilesWithDuplicateFileReferenceInXml(): void
     {
-        $this->expectException(RuntimeException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
             'Le fichier 1641275074060_13000920601211_BPaie_01092021.pdf est déjà référencé dans le XML'
         );
@@ -53,7 +54,7 @@ class PdfEnveloppeValidatorTest extends PastellTestCase
      */
     public function testValidatePdfFilesWithFileNotReferencedInXml(): void
     {
-        $this->expectException(RuntimeException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("Le fichier non_existant.pdf n'est pas référencé dans le XML");
 
         $this->files[] = 'non_existant.pdf';
@@ -65,7 +66,7 @@ class PdfEnveloppeValidatorTest extends PastellTestCase
      */
     public function testValidatePdfFilesWithFileNotInProvidedFileList(): void
     {
-        $this->expectException(RuntimeException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
             "Le fichier 1870194035088_13000920600010_BPaie_01092021.pdf n'est pas dans la liste de fichiers fournie"
         );
