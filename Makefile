@@ -73,45 +73,45 @@ stop: ## Stop all services
 stop-minio:  ## Start all services with minio
 	$(DOCKER_COMPOSE) -f docker/docker-compose.minio.yml down
 
-module-pack-urbanisme: docker-compose-up ## Run make-module pack_urbanisme
-	$(MAKE_MODULE) ./pack-json/pack-urbanisme/dossier-autorisation-urba-draft.json ./module/ --id dossier-autorisation-urbanisme --name "Dossiers d'autorisation d'urbanisme (archivage)" --restriction_pack 'pack_urbanisme'
-	$(MAKE_MODULE) ./pack-json/pack-urbanisme/document-autorisation-urba-destinataire-draft.json ./module/ --id document-autorisation-urbanisme-destinataire --name "Document d'autorisation d'urbanisme (destinataire)" --restriction_pack 'pack_urbanisme'
-	$(MAKE_MODULE) ./pack-json/pack-urbanisme/document-autorisation-urba-draft.json ./module/ --id document-autorisation-urbanisme --name "Document d'autorisation d'urbanisme" --restriction_pack 'pack_urbanisme'
+module-json-urbanisme: docker-compose-up ## Run make-module json-urbanisme
+	$(MAKE_MODULE) ./json-studio/json-urbanisme/draft-dossier-autorisation-urbanisme.json ./module/ --id dossier-autorisation-urbanisme --name "Dossiers d'autorisation d'urbanisme (archivage)" --restriction_pack 'pack_urbanisme'
+	$(MAKE_MODULE) ./json-studio/json-urbanisme/draft-document-autorisation-urbanisme.json ./module/ --id document-autorisation-urbanisme --name "Document d'autorisation d'urbanisme" --restriction_pack 'pack_urbanisme'
+	$(MAKE_MODULE) ./json-studio/json-urbanisme/draft-document-autorisation-urbanisme-destinataire.json ./module/ --id document-autorisation-urbanisme-destinataire --name "Document d'autorisation d'urbanisme (destinataire)" --restriction_pack 'pack_urbanisme'
 
-module-pack-rh: docker-compose-up ## Run make-module pack-rh
-	$(MAKE_MODULE) ./pack-json/pack-rh/draft-rh-document-individuel.json ./module/ --id rh-document-individuel --name "Document individuel" --restriction_pack 'pack_rh'
-	$(MAKE_MODULE) ./pack-json/pack-rh/draft-rh-document-individuel-destinataire.json ./module/ --id rh-document-individuel-destinataire --name "Document individuel (destinataire)" --restriction_pack 'pack_rh'
-	$(MAKE_MODULE) ./pack-json/pack-rh/draft-rh-bulletin-salaire.json ./module/ --id rh-bulletin-salaire --name "Bulletin de salaire" --restriction_pack 'pack_rh'
-	$(MAKE_MODULE) ./pack-json/pack-rh/draft-rh-bulletin-salaire-destinataire.json ./module/ --id rh-bulletin-salaire-destinataire --name "Bulletin de salaire (destinataire)" --restriction_pack 'pack_rh'
-	$(MAKE_MODULE) ./pack-json/pack-rh/draft-rh-archivage-dossier-agent.json ./module/ --id rh-archivage-dossier-agent --name "Eléments du dossier individuel de l'agent (archivage)" --restriction_pack 'pack_rh'
-	$(MAKE_MODULE) ./pack-json/pack-rh/draft-rh-archivage-collectif.json ./module/ --id rh-archivage-collectif --name "Données de gestion collective (fichier unitaire) (archivage)" --restriction_pack 'pack_rh'
-	$(MAKE_MODULE) ./pack-json/pack-rh/draft-rh-archivage-collectif-zip.json ./module/ --id rh-archivage-collectif-zip --name "Données de gestion collective (fichier compressé) (archivage)" --restriction_pack 'pack_rh'
+module-json-rh: docker-compose-up ## Run make-module json-rh
+	$(MAKE_MODULE) ./json-studio/json-rh/draft-rh-document-individuel.json ./module/ --id rh-document-individuel --name "Document individuel" --restriction_pack 'pack_rh'
+	$(MAKE_MODULE) ./json-studio/json-rh/draft-rh-document-individuel-destinataire.json ./module/ --id rh-document-individuel-destinataire --name "Document individuel (destinataire)" --restriction_pack 'pack_rh'
+	$(MAKE_MODULE) ./json-studio/json-rh/draft-rh-bulletin-salaire.json ./module/ --id rh-bulletin-salaire --name "Bulletin de salaire" --restriction_pack 'pack_rh'
+	$(MAKE_MODULE) ./json-studio/json-rh/draft-rh-bulletin-salaire-destinataire.json ./module/ --id rh-bulletin-salaire-destinataire --name "Bulletin de salaire (destinataire)" --restriction_pack 'pack_rh'
+	$(MAKE_MODULE) ./json-studio/json-rh/draft-rh-archivage-dossier-agent.json ./module/ --id rh-archivage-dossier-agent --name "Eléments du dossier individuel de l'agent (archivage)" --restriction_pack 'pack_rh'
+	$(MAKE_MODULE) ./json-studio/json-rh/draft-rh-archivage-collectif.json ./module/ --id rh-archivage-collectif --name "Données de gestion collective (fichier unitaire) (archivage)" --restriction_pack 'pack_rh'
+	$(MAKE_MODULE) ./json-studio/json-rh/draft-rh-archivage-collectif-zip.json ./module/ --id rh-archivage-collectif-zip --name "Données de gestion collective (fichier compressé) (archivage)" --restriction_pack 'pack_rh'
 
-module-pack-gfc: docker-compose-up ## Run make-module pack_gfc
-	$(MAKE_MODULE) ./pack-json/pack-gfc/draft-gfc-dossier.json ./module/ --id gfc-dossier
-	$(MAKE_MODULE) ./pack-json/pack-gfc/draft-gfc-dossier-destinataire.json ./module/ --id gfc-dossier-destinataire
+module-json-gfc: docker-compose-up ## Run make-module json-gfc
+	$(MAKE_MODULE) ./json-studio/json-gfc/draft-gfc-dossier.json ./module/ --id gfc-dossier
+	$(MAKE_MODULE) ./json-studio/json-gfc/draft-gfc-dossier-destinataire.json ./module/ --id gfc-dossier-destinataire
 
-module-pack-actes: docker-compose-up ## Run make-module pack_actes
-	$(MAKE_MODULE) ./pack-json/pack-actes/draft-ls-actes-publication.json ./module/ --id ls-actes-publication --name "Actes publication"
-	$(MAKE_MODULE) ./pack-json/pack-actes/ls-dossier-seance-draft.json ./module/ --id ls-dossier-seance --name "Dossiers de séances (archivage)"
+module-json-actes: docker-compose-up ## Run make-module json-actes
+	$(MAKE_MODULE) ./json-studio/json-actes/draft-ls-actes-publication.json ./module/ --id ls-actes-publication --name "Actes publication"
+	$(MAKE_MODULE) ./json-studio/json-actes/draft-ls-dossier-seance.json ./module/ --id ls-dossier-seance --name "Dossiers de séances (archivage)"
 
-module-pack-helios: docker-compose-up ## Run make-module pack_helios
-	$(MAKE_MODULE) ./pack-json/pack-helios/draft-ls-helios.json ./module/ --id ls-helios --name "Helios"
+module-json-helios: docker-compose-up ## Run make-module json-helios
+	$(MAKE_MODULE) ./json-studio/json-helios/draft-ls-helios.json ./module/ --id ls-helios --name "Helios"
 
-module-pack-document: docker-compose-up ## Run make-module pack_document
-	$(MAKE_MODULE) ./pack-json/pack-document/ls-document-pdf-draft.json ./module/ --id ls-document-pdf --name "Document PDF"
-	$(MAKE_MODULE) ./pack-json/pack-document/ls-document-pdf-draft-destinataire.json ./module/ --id ls-document-pdf-destinataire --name "Document PDF (destinataire)"
-	$(MAKE_MODULE) ./pack-json/pack-document/draft-ls-commande.json ./module/ --id ls-commande --name "Commande"
-	$(MAKE_MODULE) ./pack-json/pack-document/draft-ls-commande-destinataire.json ./module/ --id ls-commande-destinataire --name "Commande (destinataire)"
-	$(MAKE_MODULE) ./pack-json/pack-document/ls-recup-parapheur-draft.json ./module/ --id ls-recup-parapheur --name "Récupération parapheur" --restriction_pack 'suppl_recup_fin_parapheur'
+module-json-document: docker-compose-up ## Run make-module json-document
+	$(MAKE_MODULE) ./json-studio/json-document/draft-ls-document-pdf.json ./module/ --id ls-document-pdf --name "Document PDF"
+	$(MAKE_MODULE) ./json-studio/json-document/draft-ls-document-pdf-destinataire.json ./module/ --id ls-document-pdf-destinataire --name "Document PDF (destinataire)"
+	$(MAKE_MODULE) ./json-studio/json-document/draft-ls-commande.json ./module/ --id ls-commande --name "Commande"
+	$(MAKE_MODULE) ./json-studio/json-document/draft-ls-commande-destinataire.json ./module/ --id ls-commande-destinataire --name "Commande (destinataire)"
+	$(MAKE_MODULE) ./json-studio/json-document/draft-ls-recup-parapheur.json ./module/ --id ls-recup-parapheur --name "Récupération parapheur" --restriction_pack 'suppl_recup_fin_parapheur'
 
-module-pack-mailsec: docker-compose-up ## Run make-module pack_mailsec
-	$(MAKE_MODULE) ./pack-json/pack-mailsec/draft-ls-mailsec.json ./module/ --id ls-mailsec --name "Mail sécurisé"
-	$(MAKE_MODULE) ./pack-json/pack-mailsec/draft-ls-mailsec-destinataire.json ./module/ --id ls-mailsec-destinataire --name "Mail sécurisé (destinataire)"
-	$(MAKE_MODULE) ./pack-json/pack-mailsec/draft-ls-mailsec-bidir.json ./module/ --id ls-mailsec-bidir --name "Mail sécurisé avec réponse"
-	$(MAKE_MODULE) ./pack-json/pack-mailsec/draft-ls-mailsec-bidir-destinataire.json ./module/ --id ls-mailsec-bidir-destinataire --name "Mail sécurisé avec réponse (destinataire)"
-	$(MAKE_MODULE) ./pack-json/pack-mailsec/draft-ls-mailsec-bidir-reponse.json ./module/ --id ls-mailsec-bidir-reponse --name "Mail sécurisé avec réponse (réponse)"
-all-module: module-pack-gfc module-pack-urbanisme module-pack-rh module-pack-actes module-pack-helios module-pack-document module-pack-mailsec
+module-json-mailsec: docker-compose-up ## Run make-module json-mailsec
+	$(MAKE_MODULE) ./json-studio/json-mailsec/draft-ls-mailsec.json ./module/ --id ls-mailsec --name "Mail sécurisé"
+	$(MAKE_MODULE) ./json-studio/json-mailsec/draft-ls-mailsec-destinataire.json ./module/ --id ls-mailsec-destinataire --name "Mail sécurisé (destinataire)"
+	$(MAKE_MODULE) ./json-studio/json-mailsec/draft-ls-mailsec-bidir.json ./module/ --id ls-mailsec-bidir --name "Mail sécurisé avec réponse"
+	$(MAKE_MODULE) ./json-studio/json-mailsec/draft-ls-mailsec-bidir-destinataire.json ./module/ --id ls-mailsec-bidir-destinataire --name "Mail sécurisé avec réponse (destinataire)"
+	$(MAKE_MODULE) ./json-studio/json-mailsec/draft-ls-mailsec-bidir-reponse.json ./module/ --id ls-mailsec-bidir-reponse --name "Mail sécurisé avec réponse (réponse)"
+all-module: module-json-gfc module-json-urbanisme module-json-rh module-json-actes module-json-helios module-json-document module-json-mailsec
 
 build-extensions: ## Build extensions
 	$(EXEC_COMPOSER) composer install --ignore-platform-reqs --working-dir=./extensions/pastell-depot-cmis/

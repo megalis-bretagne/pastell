@@ -23,17 +23,17 @@ class PastellPackTest extends PastellTestCase
             'gfc-dossier-destinataire',
             'Dossier GFC (destinataire)'
         ],
-        'dossier-autorisation-urba-draft' => [
+        'draft-dossier-autorisation-urbanisme' => [
             'pack_urbanisme',
             'dossier-autorisation-urbanisme',
             "Dossiers d'autorisation d'urbanisme (archivage)"
         ],
-        'document-autorisation-urba-draft' => [
+        'draft-document-autorisation-urbanisme' => [
             'pack_urbanisme',
             'document-autorisation-urbanisme',
             "Document d'autorisation d'urbanisme"
         ],
-        'document-autorisation-urba-destinataire-draft' => [
+        'draft-document-autorisation-urbanisme-destinataire' => [
             'pack_urbanisme',
             'document-autorisation-urbanisme-destinataire',
             "Document d'autorisation d'urbanisme (destinataire)"
@@ -78,7 +78,7 @@ class PastellPackTest extends PastellTestCase
             'ls-actes-publication',
             'Actes publication',
         ],
-        'ls-dossier-seance-draft' => [
+        'draft-ls-dossier-seance' => [
             '',
             'ls-dossier-seance',
             'Dossiers de séances (archivage)',
@@ -88,12 +88,12 @@ class PastellPackTest extends PastellTestCase
             'ls-helios',
             'Helios',
         ],
-        'ls-document-pdf-draft' => [
+        'draft-ls-document-pdf' => [
             '',
             'ls-document-pdf',
             'Document PDF',
         ],
-        'ls-document-pdf-draft-destinataire' => [
+        'draft-ls-document-pdf-destinataire' => [
             '',
             'ls-document-pdf-destinataire',
             'Document PDF (destinataire)',
@@ -108,7 +108,7 @@ class PastellPackTest extends PastellTestCase
             'ls-commande-destinataire',
             'Commande (destinataire)',
         ],
-        'ls-recup-parapheur-draft' =>
+        'draft-ls-recup-parapheur' =>
         [
             'suppl_recup_fin_parapheur',
             'ls-recup-parapheur',
@@ -150,7 +150,7 @@ class PastellPackTest extends PastellTestCase
     {
         $result = [];
         $finder = new Finder();
-        $paths = $finder->in(__DIR__ . '/../../../pack-json/')->files()->name('*.json');
+        $paths = $finder->in(__DIR__ . '/../../../json-studio/')->files()->name('*.json');
         /** @var SplFileInfo $file */
         foreach ($paths as $file) {
             $data = array_merge(

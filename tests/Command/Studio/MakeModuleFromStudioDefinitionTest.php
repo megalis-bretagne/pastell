@@ -22,7 +22,7 @@ class MakeModuleFromStudioDefinitionTest extends PastellTestCase
         $commandTester = new CommandTester($command);
 
         $commandTester->execute([
-            'source' => __DIR__ . '/fixtures/document-autorisation-urbanisme-draft.json',
+            'source' => __DIR__ . '/fixtures/draft-document-autorisation-urbanisme.json',
             'target' => $tmp_dir,
             '--id' => 'document-autorisation-urbanisme',
             '--name' => "Document d'autorisation d'urbanisme",
@@ -48,7 +48,7 @@ class MakeModuleFromStudioDefinitionTest extends PastellTestCase
         $studio_def = base64_decode($def_array['studio_definition']);
         static::assertJson($studio_def);
         $json = json_decode($studio_def, true, 512, JSON_THROW_ON_ERROR);
-        static::assertEquals('document-autorisation-urbanisme-draft', $json['raw_data']['id_type_dossier']);
+        static::assertEquals('draft-document-autorisation-urbanisme', $json['raw_data']['id_type_dossier']);
         $tmpDir->delete($tmp_dir);
     }
 }
