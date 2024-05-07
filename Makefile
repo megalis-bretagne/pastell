@@ -88,8 +88,8 @@ module-json-rh: docker-compose-up ## Run make-module json-rh
 	$(MAKE_MODULE) ./json-studio/json-rh/draft-rh-archivage-collectif-zip.json ./module/ --id rh-archivage-collectif-zip --name "Données de gestion collective (fichier compressé) (archivage)" --restriction_pack 'pack_rh'
 
 module-json-gfc: docker-compose-up ## Run make-module json-gfc
-	$(MAKE_MODULE) ./json-studio/json-gfc/draft-gfc-dossier.json ./module/ --id gfc-dossier
-	$(MAKE_MODULE) ./json-studio/json-gfc/draft-gfc-dossier-destinataire.json ./module/ --id gfc-dossier-destinataire
+	$(MAKE_MODULE) ./json-studio/json-gfc/draft-gfc-dossier.json ./module/ --id gfc-dossier --name "Dossier GFC"
+	$(MAKE_MODULE) ./json-studio/json-gfc/draft-gfc-dossier-destinataire.json ./module/ --id gfc-dossier-destinataire --name "Dossier GFC (destinataire)"
 
 module-json-actes: docker-compose-up ## Run make-module json-actes
 	$(MAKE_MODULE) ./json-studio/json-actes/draft-ls-actes-publication.json ./module/ --id ls-actes-publication --name "Actes publication"
