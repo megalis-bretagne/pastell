@@ -1,0 +1,74 @@
+{
+  "id_type_dossier": "double-transformation-fixe",
+  "pastell-version": "%VERSION%",
+  "timestamp": 1715067524,
+  "raw_data": {
+    "id_type_dossier": "double-transformation-fixe",
+    "nom": "double-transformation-fixe",
+    "type": "Types de dossier personnalis\u00e9s",
+    "description": "",
+    "nom_onglet": "onglet1",
+    "affiche_one": false,
+    "restriction_pack": "",
+    "formulaireElement": [
+      {
+        "element_id": "objet",
+        "name": "Objet",
+        "type": "text",
+        "commentaire": "",
+        "requis": "",
+        "champs_affiches": "",
+        "champs_recherche_avancee": "",
+        "titre": "",
+        "select_value": "",
+        "preg_match": "",
+        "default_value": "",
+        "preg_match_error": "",
+        "content_type": ""
+      },
+      {
+        "element_id": "champ_majuscule",
+        "name": "Champ en majuscule",
+        "type": "text",
+        "commentaire": "",
+        "requis": "",
+        "champs_affiches": "",
+        "champs_recherche_avancee": "",
+        "titre": "",
+        "select_value": "",
+        "preg_match": "\/^[A-Z]*$\/",
+        "default_value": "",
+        "preg_match_error": "Ce champ ne peut comporter que des majuscules",
+        "content_type": ""
+      }
+    ],
+    "etape": [
+      {
+        "num_etape": 0,
+        "type": "transformation_fixe",
+        "label": "Renseigne objet",
+        "defaultChecked": true,
+        "requis": "",
+        "automatique": "on",
+        "specific_type_info": {
+          "transformations": "objet:{{ objet  ? objet :  'objet transform\u00e9 par fixe sur entit\u00e9 '~pa_entity_name }}"
+        },
+        "num_etape_same_type": 0,
+        "etape_with_same_type_exists": true
+      },
+      {
+        "num_etape": "1",
+        "type": "transformation_fixe",
+        "label": "Renseigne champ_majuscule",
+        "defaultChecked": true,
+        "requis": "",
+        "automatique": "on",
+        "specific_type_info": {
+          "transformations": "champ_majuscule:du texte en minuscule"
+        },
+        "num_etape_same_type": 1,
+        "etape_with_same_type_exists": true
+      }
+    ]
+  }
+}

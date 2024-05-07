@@ -1,6 +1,6 @@
 libelle: Transformation Fixe
 configuration_etape_formulaire:
-    transformation:
+    transformations:
         name: Transformation
         commentaire: 'De la forme "id_element:expression_twig" (sans espace)'
         type: text

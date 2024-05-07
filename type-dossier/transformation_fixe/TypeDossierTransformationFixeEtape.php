@@ -9,7 +9,7 @@ class TypeDossierTransformationFixeEtape implements TypeDossierEtapeSetSpecificI
     ): array {
 
         $transformationFixeAction = $stringMapper->get('transformation-fixe');
-        $transformation = $typeDossierEtape->specific_type_info['transformation'];
+        $transformation = $typeDossierEtape->specific_type_info['transformations'];
 
         if (isset($transformation)) {
             $explodedTransformation = explode(':', trim($transformation), 2);
