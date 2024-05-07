@@ -5,21 +5,17 @@ use Pastell\Service\Document\DocumentTitre;
 class TransformationTransform extends ConnecteurTypeActionExecutor
 {
     /**
-     * @var string
-     */
-    public const TRANSFORMATION_ERROR_STATE = 'transformation-error';
-
-    /**
      * @return bool
      * @throws NotFoundException
      * @throws UnrecoverableException
      * @throws JsonException
+     * @throws Exception
      */
     public function go(): bool
     {
         try {
             /** @var TransformationConnecteur $transformationConnecteur */
-            $transformationConnecteur = $this->getConnecteur("transformation");
+            $transformationConnecteur = $this->getConnecteur('transformation');
         } catch (Exception) {
             $message = "Il n'y a pas de connecteur de transformation associé. Poursuite du cheminement";
             $this->addActionOK($message);
@@ -28,21 +24,21 @@ class TransformationTransform extends ConnecteurTypeActionExecutor
             return true;
         }
 
-        $transformation_file_element = $this->getMappingValue('transformation_file');
-        $has_transformation_element = $this->getMappingValue('has_transformation');
+        $transformationFileElement = $this->getMappingValue('transformation_file');
+        $hasTransformationElement = $this->getMappingValue('has_transformation');
+        $transformationErrorState = $this->getMappingValue('transformation-error');
 
         $donneesFormulaire = $this->getDonneesFormulaire();
-        $modified_fields = $transformationConnecteur->transform($donneesFormulaire);
+        $modifiedFields = $transformationConnecteur->transform($donneesFormulaire);
 
         try {
-            $this->addOnChange($modified_fields);
+            $this->addOnChange($modifiedFields);
         } catch (Exception $e) {
-            $transformationError = $this->getMappingValue(self::TRANSFORMATION_ERROR_STATE);
-            $this->changeAction($transformationError, $e->getMessage());
+            $this->changeAction($transformationErrorState, $e->getMessage());
             $this->notify(
-                $transformationError,
+                $transformationErrorState,
                 $this->type,
-                "Erreur lors de la transformation: " . $e->getMessage()
+                'Erreur lors de la transformation: ' . $e->getMessage()
             );
             return false;
         }
@@ -50,16 +46,16 @@ class TransformationTransform extends ConnecteurTypeActionExecutor
         $documentTitre = $this->objectInstancier->getInstance(DocumentTitre::class);
         $documentTitre->update($this->id_d);
 
-        if (!empty($modified_fields)) {
-            $donneesFormulaire->setData($has_transformation_element, true);
+        if (!empty($modifiedFields)) {
+            $donneesFormulaire->setData($hasTransformationElement, true);
             $donneesFormulaire->addFileFromData(
-                $transformation_file_element,
+                $transformationFileElement,
                 'transformation_file.json',
-                json_encode($modified_fields, JSON_THROW_ON_ERROR)
+                json_encode($modifiedFields, JSON_THROW_ON_ERROR)
             );
         }
 
-        $message = "Transformation terminée";
+        $message = 'Transformation terminée';
         $this->addActionOK($message);
         $this->notify($this->action, $this->type, $message);
         $this->setLastMessage($message);

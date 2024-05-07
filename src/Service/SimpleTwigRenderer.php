@@ -29,8 +29,11 @@ class SimpleTwigRenderer
      * @return string
      * @throws UnrecoverableException
      */
-    public function render(string $template_as_string, DonneesFormulaire $donneesFormulaire, array $other_metadata = []): string
-    {
+    public function render(
+        string $template_as_string,
+        DonneesFormulaire $donneesFormulaire,
+        array $other_metadata = []
+    ): string {
         $policy = new SecurityPolicy(
             self::AUTHORIZED_TWIG_TAGS,
             self::AUTHORIZED_TWIG_FILTERS,
@@ -43,7 +46,7 @@ class SimpleTwigRenderer
         $twigEnvironment = new Environment(new ArrayLoader(), ['autoescape' => false]);
         $twigEnvironment->addExtension($sandbox);
 
-        $function_class_list = ClassHelper::findRecursive("Pastell\Service\SimpleTwigRenderer");
+        $function_class_list = ClassHelper::findRecursive('Pastell\Service\SimpleTwigRenderer');
 
         foreach ($function_class_list as $function_class) {
             if (! is_subclass_of($function_class, ISimpleTwigFunction::class)) {
@@ -61,7 +64,7 @@ class SimpleTwigRenderer
             return array_unique($array);
         }));
 
-        set_error_handler([$this, "twigNoticeAsError"]);
+        set_error_handler([$this, 'twigNoticeAsError']);
         $all_metadata = array_merge($other_metadata, $donneesFormulaire->getRawDataWithoutPassword());
 
         try {
@@ -95,11 +98,11 @@ class SimpleTwigRenderer
     private function getCodeForErrorMessage(SyntaxError $e): string
     {
         if ($e->getSourceContext() === null) {
-            return "Template non disponible";
+            return 'Template non disponible';
         }
         $all_line = explode("\n", $e->getSourceContext()->getCode());
         foreach ($all_line as $i => $line) {
-            $all_line[$i] = sprintf("%d. %s", $i + 1, $line);
+            $all_line[$i] = sprintf('%d. %s', $i + 1, $line);
         }
 
         $all_line[$e->getTemplateLine() - 1] = sprintf(
@@ -107,7 +110,7 @@ class SimpleTwigRenderer
             $all_line[$e->getTemplateLine() - 1],
             $e->getRawMessage()
         );
-        return  implode("", $all_line);
+        return  implode('', $all_line);
     }
 
     /**
