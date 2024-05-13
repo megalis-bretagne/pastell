@@ -8,10 +8,10 @@ use Pastell\Service\Document\DocumentTransformService;
 class TransformationFixeTransform extends ConnecteurTypeActionExecutor
 {
     /**
-     * @throws TypeDossierException
      * @throws UnrecoverableException
      * @throws NotFoundException
      * @throws JsonException
+     * @throws Exception
      */
     public function go(): bool
     {

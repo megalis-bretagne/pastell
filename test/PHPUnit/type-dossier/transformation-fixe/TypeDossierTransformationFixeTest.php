@@ -36,7 +36,7 @@ class TypeDossierTransformationFixeTest extends PastellTestCase
             $this->triggerActionOnDocument($info['id_d'], 'transformation-fixe_1')
         );
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($info['id_d']);
-        static::assertEquals(
+        static::assertSame(
             'objet transformé par fixe sur entité Bourg-en-Bresse',
             $donneesFormulaire->get('objet')
         );
@@ -48,7 +48,7 @@ class TypeDossierTransformationFixeTest extends PastellTestCase
             $this->triggerActionOnDocument($info['id_d'], 'transformation-fixe_2')
         );
         $donneesFormulaire = $this->getDonneesFormulaireFactory()->get($info['id_d']);
-        static::assertEquals(
+        static::assertSame(
             'du texte en minuscule',
             $donneesFormulaire->get('champ_majuscule')
         );
