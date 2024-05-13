@@ -85,6 +85,7 @@ use Pastell\Validator\ElementIdValidator;
                 <tr>
                     <th class="w400">
                         <label for="<?php hecho($element_id) ?>" ><?php hecho($element_info['name']); ?></label>
+                        <p class='form_commentaire'><?php hecho($element_info['commentaire'] ?? ''); ?></p>
                     </th>
 
                     <td>
@@ -151,6 +152,12 @@ use Pastell\Validator\ElementIdValidator;
                                     ><?php hecho($file_field_info->name) ?></option>
                                 <?php endforeach; ?>
                             </select>
+                        <?php elseif ($element_info['type'] === 'text') : ?>
+                            <input class="form-control col-md-8"
+                                   name='<?php hecho($element_id) ?>'
+                                   id='<?php hecho($element_id) ?>'
+                                   value="<?php hecho($etapeInfo->specific_type_info[$element_id])?>"
+                            />
                         <?php else : ?>
                             <input class="form-control col-md-8"
                                    name='<?php hecho($element_id) ?>'

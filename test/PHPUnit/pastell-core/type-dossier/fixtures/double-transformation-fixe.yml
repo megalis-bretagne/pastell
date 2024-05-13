@@ -1,0 +1,192 @@
+nom: double-transformation-fixe
+type: 'Types de dossier personnalisés'
+description: ''
+connecteur: {  }
+affiche_one: false
+formulaire:
+    onglet1:
+        objet:
+            name: Objet
+            type: text
+            requis: false
+            multiple: false
+            commentaire: ''
+        champ_majuscule:
+            name: 'Champ en majuscule'
+            type: text
+            requis: false
+            multiple: false
+            commentaire: ''
+            preg_match: '/^[A-Z]*$/'
+            preg_match_error: 'Ce champ ne peut comporter que des majuscules'
+    Cheminement:
+        envoi_transformation_fixe_1:
+            name: 'Renseigne objet'
+            type: checkbox
+            onchange: cheminement-change
+            default: checked
+            read-only: false
+        envoi_transformation_fixe_2:
+            name: 'Renseigne champ_majuscule'
+            type: checkbox
+            onchange: cheminement-change
+            default: checked
+            read-only: false
+    'Transformation Fixe #1':
+        has_transformation_fixe_1:
+            no-show: true
+            read-only: true
+        transformation_fixe_file_1:
+            name: Transformations
+            type: file
+            visionneuse: Pastell\Viewer\TransformationViewer
+            read-only: true
+            visionneuse-no-link: true
+    'Transformation Fixe #2':
+        has_transformation_fixe_2:
+            no-show: true
+            read-only: true
+        transformation_fixe_file_2:
+            name: Transformations
+            type: file
+            visionneuse: Pastell\Viewer\TransformationViewer
+            read-only: true
+            visionneuse-no-link: true
+champs-affiches:
+    - titre
+    - dernier_etat
+    - date_dernier_etat
+champs-recherche-avancee:
+    - type
+    - id_e
+    - lastetat
+    - last_state_begin
+    - etatTransit
+    - state_begin
+    - notEtatTransit
+    - search
+page-condition:
+    'Transformation Fixe #1':
+        has_transformation_fixe_1: true
+    'Transformation Fixe #2':
+        has_transformation_fixe_2: true
+action:
+    creation:
+        name-action: Créer
+        name: Créé
+        rule:
+            no-last-action: ''
+    modification:
+        name-action: Modifier
+        name: 'En cours de rédaction'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - transformation-fixe_1
+    supression:
+        name-action: Supprimer
+        name: Supprimé
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - termine
+                - fatal-error
+                - transformation-fixe-error_1
+                - transformation-fixe-error_2
+        action-class: Supprimer
+        warning: 'Êtes-vous sûr ?'
+    importation:
+        name: 'Importation du document'
+        rule:
+            role_id_e: no-role
+        action-automatique: orientation
+    orientation:
+        name: 'Envoi du document'
+        name-action: 'Envoyer le document'
+        rule:
+            last-action:
+                - creation
+                - modification
+                - importation
+                - transformation-fixe_1
+                - transformation-fixe_2
+            document_is_valide: true
+        action-class: OrientationTypeDossierPersonnalise
+    termine:
+        name: 'Traitement terminé'
+        rule:
+            role_id_e: no-role
+    reouverture:
+        name: 'Rouvrir le dossier'
+        rule:
+            last-action:
+                - termine
+        action-class: Reopen
+    cheminement-change:
+        no-workflow: true
+        rule:
+            role_id_e: 'no-role,'
+        action-class: CheminementChangeTypeDossierPersonnalise
+    preparation-transformation-fixe_1:
+        name: 'Préparation à la transformation fixe #1'
+        rule:
+            role_id_e: no-role
+        action-automatique: transformation-fixe_1
+        num-same-connecteur: '0'
+    transformation-fixe_1:
+        name: 'Transformation fixe du document #1'
+        rule:
+            last-action:
+                - preparation-transformation-fixe_1
+                - transformation-fixe-error_1
+        action-class: StandardAction
+        action-automatique: orientation
+        connecteur-type: transformation
+        connecteur-type-action: TransformationFixeTransform
+        connecteur-type-mapping:
+            transformation_fixe_file: transformation_fixe_file_1
+            has_transformation_fixe: has_transformation_fixe_1
+            transformation-fixe-error: transformation-fixe-error_1
+        num-same-connecteur: '0'
+        editable-content:
+            - envoi_transformation_fixe_2
+        modification-no-change-etat: true
+        transformations:
+            objet: "{{ objet  ? objet :  'objet transformé par fixe sur entité '~pa_entity_name }}"
+    transformation-fixe-error_1:
+        name: 'Erreur lors de la transformation fixe du document #1'
+        rule:
+            role_id_e: no-role
+        num-same-connecteur: '0'
+    preparation-transformation-fixe_2:
+        name: 'Préparation à la transformation fixe #2'
+        rule:
+            role_id_e: no-role
+        action-automatique: transformation-fixe_2
+        num-same-connecteur: '1'
+    transformation-fixe_2:
+        name: 'Transformation fixe du document #2'
+        rule:
+            last-action:
+                - preparation-transformation-fixe_2
+                - transformation-fixe-error_2
+        action-class: StandardAction
+        action-automatique: orientation
+        connecteur-type: transformation
+        connecteur-type-action: TransformationFixeTransform
+        connecteur-type-mapping:
+            transformation_fixe_file: transformation_fixe_file_2
+            has_transformation_fixe: has_transformation_fixe_2
+            transformation-fixe-error: transformation-fixe-error_2
+        num-same-connecteur: '1'
+        transformations:
+            champ_majuscule: 'du texte en minuscule'
+    transformation-fixe-error_2:
+        name: 'Erreur lors de la transformation fixe du document #2'
+        rule:
+            role_id_e: no-role
+        num-same-connecteur: '1'
