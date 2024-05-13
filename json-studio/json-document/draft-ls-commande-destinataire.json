@@ -1,0 +1,46 @@
+{
+  "id_type_dossier": "draft-ls-commande-destinataire",
+  "pastell-version": "%VERSION%",
+  "timestamp": 1701953631,
+  "raw_data": {
+    "id_type_dossier": "draft-ls-commande-destinataire",
+    "nom": "Commande (destinataire) (Draft)",
+    "type": "Finances",
+    "description": "",
+    "nom_onglet": "Information",
+    "restriction_pack": "",
+    "formulaireElement": [
+      {
+        "element_id": "libelle",
+        "name": "Libell\u00e9",
+        "type": "text",
+        "commentaire": "",
+        "requis": "",
+        "champs_affiches": "",
+        "champs_recherche_avancee": "",
+        "titre": "on",
+        "select_value": "",
+        "preg_match": "",
+        "default_value": false,
+        "preg_match_error": "",
+        "content_type": ""
+      },
+      {
+        "element_id": "document",
+        "name": "Document",
+        "type": "file",
+        "commentaire": "",
+        "requis": "on",
+        "champs_affiches": "",
+        "champs_recherche_avancee": "",
+        "titre": "",
+        "select_value": "",
+        "preg_match": "",
+        "default_value": false,
+        "preg_match_error": "",
+        "content_type": ""
+      }
+    ],
+    "etape": []
+  }
+}

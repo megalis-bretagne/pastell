@@ -1,0 +1,114 @@
+{
+  "id_type_dossier": "draft-ls-actes-publication",
+  "pastell-version": "%VERSION%",
+  "timestamp": 1711013907,
+  "raw_data": {
+    "id_type_dossier": "draft-ls-actes-publication",
+    "nom": "Actes publication (Draft)",
+    "type": "Actes administratifs",
+    "description": "",
+    "nom_onglet": "Informations",
+    "restriction_pack": "",
+    "formulaireElement": [
+      {
+        "element_id": "numero_de_lacte",
+        "name": "Num\u00e9ro de l'acte",
+        "type": "text",
+        "commentaire": "",
+        "requis": "on",
+        "champs_affiches": "",
+        "champs_recherche_avancee": "",
+        "titre": "on",
+        "select_value": "",
+        "preg_match": "\/^[0-9A-Z_]{2,15}$\/",
+        "default_value": false,
+        "preg_match_error": "15 caract\u00e8res maximum (chiffres, lettres en majuscule ou _)",
+        "content_type": ""
+      },
+      {
+        "element_id": "document_acte",
+        "name": "Acte",
+        "type": "file",
+        "commentaire": "",
+        "requis": "on",
+        "champs_affiches": "",
+        "champs_recherche_avancee": "",
+        "titre": false,
+        "select_value": "",
+        "preg_match": "",
+        "default_value": false,
+        "preg_match_error": "",
+        "content_type": "application\/pdf"
+      },
+      {
+        "element_id": "document_json",
+        "name": "data JSON",
+        "type": "file",
+        "commentaire": "",
+        "requis": "on",
+        "champs_affiches": "",
+        "champs_recherche_avancee": "",
+        "titre": false,
+        "select_value": "",
+        "preg_match": "",
+        "default_value": false,
+        "preg_match_error": "",
+        "content_type": "application\/json,text\/plain"
+      },
+      {
+        "element_id": "document_csv",
+        "name": "data CSV",
+        "type": "file",
+        "commentaire": "",
+        "requis": "on",
+        "champs_affiches": "",
+        "champs_recherche_avancee": "",
+        "titre": false,
+        "select_value": "",
+        "preg_match": "",
+        "default_value": false,
+        "preg_match_error": "",
+        "content_type": "application\/csv,text\/csv,text\/plain"
+      },
+      {
+        "element_id": "document_annexes",
+        "name": "Annexes",
+        "type": "multi_file",
+        "commentaire": "",
+        "requis": "",
+        "champs_affiches": "",
+        "champs_recherche_avancee": "",
+        "titre": "",
+        "select_value": "",
+        "preg_match": "",
+        "default_value": "",
+        "preg_match_error": "",
+        "content_type": "application\/pdf"
+      }
+    ],
+    "etape": [
+      {
+        "num_etape": 0,
+        "type": "transformation",
+        "label": "Transformation initiale",
+        "defaultChecked": false,
+        "requis": "on",
+        "automatique": "on",
+        "specific_type_info": [],
+        "num_etape_same_type": 0,
+        "etape_with_same_type_exists": false
+      },
+      {
+        "num_etape": "1",
+        "type": "depot",
+        "label": "D\u00e9p\u00f4t",
+        "defaultChecked": false,
+        "requis": "",
+        "automatique": "on",
+        "specific_type_info": [],
+        "num_etape_same_type": 0,
+        "etape_with_same_type_exists": false
+      }
+    ]
+  }
+}
