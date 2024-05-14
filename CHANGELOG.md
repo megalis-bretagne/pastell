@@ -24,6 +24,7 @@
 - Permettre la configuration des attributs LDAP : nom, prénom et email #1975
 - Ajustement de la zone de séléction dans la gestion d'éléments studio #1281
 - Possibilité d'envoyer des PES PJ autonomes vers iParapheur #644
+- Possibilité de dupliquer un acte #499
 
 ## Corrections
 
