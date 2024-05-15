@@ -103,7 +103,11 @@ class TypeDossierService
             }
         }
 
-        if ($recuperateur->get('type') === ElementType::TEXT->value && $recuperateur->get('default_value') !== '') {
+        if (
+            $recuperateur->get('default_value') !== ''
+            && ($recuperateur->get('type') === ElementType::TEXT->value
+            || $recuperateur->get('type') === ElementType::TEXTAREA->value)
+        ) {
             if (
                 $recuperateur->get('preg_match')
                 && !preg_match($recuperateur->get('preg_match'), $recuperateur->get('default_value'))
