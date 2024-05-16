@@ -38,6 +38,7 @@
 - Le flux `commande-generique` est remplacé par le flux studio `ls-commande` #1968
 - Les flux `pdf-generique` et `document-a-signer` sont remplacés par le flux studio `ls-document-pdf` #1870
 - Les flux `helios-generique` et `helios-automatique` sont remplacés par le flux studio `ls-helios` #1969
+- Les flux `actes-generique` et `actes-automatique` sont remplacés par le flux studio `ls-actes` #1967
 
 ## Évolutions
 

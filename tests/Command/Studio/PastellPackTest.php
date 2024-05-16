@@ -13,6 +13,47 @@ use TypeDossierException;
 class PastellPackTest extends PastellTestCase
 {
     private array $moduleDefinition = [
+        'draft-ls-actes' => [
+            '',
+            'ls-actes',
+            'Actes',
+        ],
+        'draft-ls-actes-publication' => [
+            '',
+            'ls-actes-publication',
+            'Actes publication',
+        ],
+        'draft-ls-dossier-seance' => [
+            '',
+            'ls-dossier-seance',
+            'Dossiers de séances (archivage)',
+        ],
+        'draft-ls-commande' => [
+            '',
+            'ls-commande',
+            'Commande',
+        ],
+        'draft-ls-commande-destinataire' => [
+            '',
+            'ls-commande-destinataire',
+            'Commande (destinataire)',
+        ],
+        'draft-ls-document-pdf' => [
+            '',
+            'ls-document-pdf',
+            'Document PDF',
+        ],
+        'draft-ls-document-pdf-destinataire' => [
+            '',
+            'ls-document-pdf-destinataire',
+            'Document PDF (destinataire)',
+        ],
+        'draft-ls-recup-parapheur' =>
+            [
+                'suppl_recup_fin_parapheur',
+                'ls-recup-parapheur',
+                'Récupération parapheur',
+            ],
         'draft-gfc-dossier' => [
             '',
             'gfc-dossier',
@@ -23,20 +64,65 @@ class PastellPackTest extends PastellTestCase
             'gfc-dossier-destinataire',
             'Dossier GFC (destinataire)'
         ],
-        'draft-dossier-autorisation-urbanisme' => [
-            'pack_urbanisme',
-            'dossier-autorisation-urbanisme',
-            "Dossiers d'autorisation d'urbanisme (archivage)"
+        'draft-ls-helios' => [
+            '',
+            'ls-helios',
+            'Helios',
+        ],
+        'draft-ls-mailsec' =>
+            [
+                '',
+                'ls-mailsec',
+                'Mail sécurisé',
+            ],
+        'draft-ls-mailsec-destinataire' =>
+            [
+                '',
+                'ls-mailsec-destinataire',
+                'Mail sécurisé (destinataire)',
+            ],
+        'draft-ls-mailsec-bidir' =>
+            [
+                '',
+                'ls-mailsec-bidir',
+                'Mail sécurisé avec réponse',
+            ],
+        'draft-ls-mailsec-bidir-destinataire' =>
+            [
+                '',
+                'ls-mailsec-bidir-destinataire',
+                'Mail sécurisé avec réponse (destinataire)',
+            ],
+        'draft-ls-mailsec-bidir-reponse' =>
+            [
+                '',
+                'ls-mailsec-bidir-reponse',
+                'Mail sécurisé avec réponse (réponse)',
+            ],
+        'draft-rh-archivage-collectif' => [
+            'pack_rh',
+            'rh-archivage-collectif',
+            'Données de gestion collective (fichier unitaire) (archivage)'
+        ],
+        'draft-rh-archivage-collectif-zip' => [
+            'pack_rh',
+            'rh-archivage-collectif-zip',
+            'Données de gestion collective (fichier compressé) (archivage)'
+        ],
+        'draft-rh-archivage-dossier-agent' => [
+            'pack_rh',
+            'rh-archivage-dossier-agent',
+            "Eléments du dossier individuel de l'agent (archivage)"
+        ],
+        'draft-rh-bulletin-salaire-destinataire' => [
+            'pack_rh',
+            'rh-bulletin-salaire-destinataire',
+            'Bulletin de salaire (destinataire)',
         ],
         'draft-document-autorisation-urbanisme' => [
             'pack_urbanisme',
             'document-autorisation-urbanisme',
             "Document d'autorisation d'urbanisme"
-        ],
-        'draft-document-autorisation-urbanisme-destinataire' => [
-            'pack_urbanisme',
-            'document-autorisation-urbanisme-destinataire',
-            "Document d'autorisation d'urbanisme (destinataire)"
         ],
         'draft-rh-document-individuel' => [
             'pack_rh',
@@ -53,97 +139,16 @@ class PastellPackTest extends PastellTestCase
             'rh-bulletin-salaire',
             'Bulletin de salaire'
         ],
-        'draft-rh-bulletin-salaire-destinataire' => [
-            'pack_rh',
-            'rh-bulletin-salaire-destinataire',
-            'Bulletin de salaire (destinataire)',
+        'draft-document-autorisation-urbanisme-destinataire' => [
+            'pack_urbanisme',
+            'document-autorisation-urbanisme-destinataire',
+            "Document d'autorisation d'urbanisme (destinataire)"
         ],
-        'draft-rh-archivage-dossier-agent' => [
-            'pack_rh',
-            'rh-archivage-dossier-agent',
-            "Eléments du dossier individuel de l'agent (archivage)"
+        'draft-dossier-autorisation-urbanisme' => [
+            'pack_urbanisme',
+            'dossier-autorisation-urbanisme',
+            "Dossiers d'autorisation d'urbanisme (archivage)"
         ],
-        'draft-rh-archivage-collectif' => [
-            'pack_rh',
-            'rh-archivage-collectif',
-            'Données de gestion collective (fichier unitaire) (archivage)'
-        ],
-        'draft-rh-archivage-collectif-zip' => [
-            'pack_rh',
-            'rh-archivage-collectif-zip',
-            'Données de gestion collective (fichier compressé) (archivage)'
-        ],
-        'draft-ls-actes-publication' => [
-            '',
-            'ls-actes-publication',
-            'Actes publication',
-        ],
-        'draft-ls-dossier-seance' => [
-            '',
-            'ls-dossier-seance',
-            'Dossiers de séances (archivage)',
-        ],
-        'draft-ls-helios' => [
-            '',
-            'ls-helios',
-            'Helios',
-        ],
-        'draft-ls-document-pdf' => [
-            '',
-            'ls-document-pdf',
-            'Document PDF',
-        ],
-        'draft-ls-document-pdf-destinataire' => [
-            '',
-            'ls-document-pdf-destinataire',
-            'Document PDF (destinataire)',
-        ],
-        'draft-ls-commande' => [
-            '',
-            'ls-commande',
-            'Commande',
-        ],
-        'draft-ls-commande-destinataire' => [
-            '',
-            'ls-commande-destinataire',
-            'Commande (destinataire)',
-        ],
-        'draft-ls-recup-parapheur' =>
-        [
-            'suppl_recup_fin_parapheur',
-            'ls-recup-parapheur',
-            'Récupération parapheur',
-        ],
-        'draft-ls-mailsec' =>
-            [
-                '',
-                'ls-mailsec',
-                'Mail sécurisé',
-            ],
-        'draft-ls-mailsec-destinataire' =>
-            [
-                '',
-                'ls-mailsec-destinataire',
-                'Mail sécurisé (destinataire)',
-            ],
-        'draft-ls-mailsec-bidir' =>
-        [
-            '',
-            'ls-mailsec-bidir',
-            'Mail sécurisé avec réponse',
-        ],
-        'draft-ls-mailsec-bidir-destinataire' =>
-            [
-                '',
-                'ls-mailsec-bidir-destinataire',
-                'Mail sécurisé avec réponse (destinataire)',
-            ],
-        'draft-ls-mailsec-bidir-reponse' =>
-            [
-                '',
-                'ls-mailsec-bidir-reponse',
-                'Mail sécurisé avec réponse (réponse)',
-            ],
     ];
 
     public function jsonProvider(): array
