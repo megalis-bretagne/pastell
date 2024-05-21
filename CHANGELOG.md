@@ -1,3 +1,9 @@
+# [4.0.14] - 2024-06-10
+
+## Correction
+
+- Il n'était pas possible de déposer des fichiers de plus de 200MB par API même avec la configuration adéquate #2064
+
 # [4.0.13] - 2024-04-15
 
 ***Cette version nécessite une mise à jour du générateur SEDA en 1.0.3***
