@@ -1,5 +1,7 @@
 # [4.1.0]
 
+***Cette version nécessite une mise à jour du générateur SEDA en 1.0.4***
+
 ## Ajouts
 
 - Ajout de la fonction jsonpath_array pour récupérer des listes de données #1376
@@ -23,6 +25,7 @@
 - Permettre la configuration des attributs LDAP : nom, prénom et email #1975
 - Ajustement de la zone de séléction dans la gestion d'éléments studio #1281
 - Possibilité d'envoyer des PES PJ autonomes vers iParapheur #644
+- Ajout du connecteur Générateur SEDA Vitam (SEDA 2.2) #1984
 
 ## Corrections
 
