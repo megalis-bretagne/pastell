@@ -492,9 +492,9 @@ class FastTdtTest extends PastellTestCase
 
     /**
      * @test
-     * @throws ClientHttpException
+     * @throws ClientHttpException|DonneesFormulaireException
      */
-    public function whenGettingStatusWithActeNumberWithHypen()
+    public function whenGettingStatusWithActeNumberWithHypen(): void
     {
         $connecteurConfig = $this->getDefaultConnecteurConfig();
         $connecteurConfig->addFileFromCopy(
@@ -525,7 +525,7 @@ class FastTdtTest extends PastellTestCase
         $this->fastTdt->setConnecteurConfig($connecteurConfig);
         $this->fastTdt->setDocDonneesFormulaire($this->getDefaultActeDonneesFormulaire(1));
 
-        $this->assertEquals(
+        $this->assertSame(
             TdtConnecteur::STATUS_ACQUITTEMENT_RECU,
             $this->fastTdt->getStatus('999-1234-20190430-Numero-Acte-AI')
         );
