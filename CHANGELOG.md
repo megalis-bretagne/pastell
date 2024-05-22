@@ -10,6 +10,7 @@
 - Ajout des champs annotations publiques et privées pour l'envoi vers iParapheur pour les flux studios #1883
 - Ajout de la récupération du bordereau de signature pour Fast Parapheur pour les flux studios #1925
 - Ajout du champ 'Date de dernière signature' sur l'onglet Signature pour les flux studios #2005
+- Ajout du contrôle d'expression régulière pour valider le format d'un champ textarea dans le studio #1967
 - Studio, étape tdt_actes, ajout du contrôle sur le total des fichiers Acte et Annexes < 157.29 MB #1602
 - Studio, étape tdt_helios, ajout du contrôle sur la taille du fichier PES ALLER < 128 MB #1602
 - Studio, étape tdt_helios, ajout de la possibilité de définir le champ "Objet PES ALLER" (prend la valeur NomFic du Fichier PES) #1969
@@ -37,6 +38,7 @@
 - Le flux `commande-generique` est remplacé par le flux studio `ls-commande` #1968
 - Les flux `pdf-generique` et `document-a-signer` sont remplacés par le flux studio `ls-document-pdf` #1870
 - Les flux `helios-generique` et `helios-automatique` sont remplacés par le flux studio `ls-helios` #1969
+- Les flux `actes-generique` et `actes-automatique` sont remplacés par le flux studio `ls-actes` #1967
 
 ## Évolutions
 

@@ -256,7 +256,7 @@ use Pastell\Validator\ElementIdValidator;
                 document.getElementById('default_value_form_comment').innerText = '';
             }
 
-            if (option === 'text') {
+            if ((option === 'text') || (option === 'textarea')) {
                 $("#preg_match_tr").show();
                 $("#preg_match_error_tr").show();
             } else {
