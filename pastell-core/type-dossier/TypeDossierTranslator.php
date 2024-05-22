@@ -101,8 +101,14 @@ class TypeDossierTranslator
             }
             if (
                 $typeDossierFormulaireElement->preg_match
-                && ($this->getType($typeDossierFormulaireElement) === TypeDossierFormulaireElementManager::TYPE_TEXT
-                || $this->getType($typeDossierFormulaireElement) === TypeDossierFormulaireElementManager::TYPE_TEXTAREA)
+                && in_array(
+                    $this->getType($typeDossierFormulaireElement),
+                    [
+                        TypeDossierFormulaireElementManager::TYPE_TEXT,
+                        TypeDossierFormulaireElementManager::TYPE_TEXTAREA
+                    ],
+                    true
+                )
             ) {
                 $result[DocumentType::FORMULAIRE][$onglet_name][$element_id][TypeDossierFormulaireElementManager::PREG_MATCH] = $typeDossierFormulaireElement->preg_match;
                 $result[DocumentType::FORMULAIRE][$onglet_name][$element_id][TypeDossierFormulaireElementManager::PREG_MATCH_ERROR] = $typeDossierFormulaireElement->preg_match_error;

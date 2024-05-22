@@ -105,8 +105,11 @@ class TypeDossierService
 
         if (
             $recuperateur->get('default_value') !== ''
-            && ($recuperateur->get('type') === ElementType::TEXT->value
-            || $recuperateur->get('type') === ElementType::TEXTAREA->value)
+            && in_array(
+                $recuperateur->get('type'),
+                [ElementType::TEXT->value, ElementType::TEXTAREA->value],
+                true
+            )
         ) {
             if (
                 $recuperateur->get('preg_match')
