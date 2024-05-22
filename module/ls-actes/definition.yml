@@ -33,6 +33,7 @@ formulaire:
             requis: false
             multiple: true
             commentaire: 'Attention ! La taille totale des documents acte + annexes ne peut pas dépasser 150 Mo'
+            onchange: autre_document_attache-change
         metadonnees:
             name: 'Fichier contenant les métadonnées'
             type: file
@@ -555,8 +556,8 @@ action:
             iparapheur_has_date_limite: has_date_limite
             iparapheur_date_limite: date_limite
             objet: objet
-            document: fichier_acte
-            autre_document_attache: annexe
+            document: arrete
+            autre_document_attache: autre_document_attache
         action-automatique: verif-iparapheur
     send-signature-error:
         name: "Erreur lors de l'envoi du dossier à la signature"
@@ -600,8 +601,8 @@ action:
             iparapheur_has_date_limite: has_date_limite
             iparapheur_date_limite: date_limite
             objet: objet
-            document: fichier_acte
-            autre_document_attache: annexe
+            document: arrete
+            autre_document_attache: autre_document_attache
     erreur-verif-iparapheur:
         name: 'Erreur lors de la vérification du statut de signature'
         rule:
@@ -731,8 +732,8 @@ action:
             send-tdt-erreur: send-tdt-erreur
             document-transmis-tdt: document-transmis-tdt
             tedetis_transaction_id: tedetis_transaction_id
-            arrete: fichier_acte
-            autre_document_attache: annexe
+            arrete: arrete
+            autre_document_attache: autre_document_attache
             objet: objet
         action-automatique: verif-tdt
     send-tdt-erreur:
@@ -791,8 +792,8 @@ action:
             acte_tamponne: acte_tamponne
             annexes_tamponnees: annexes_tamponnees
             date_ar: date_ar
-            arrete: fichier_acte
-            autre_document_attache: annexe
+            arrete: arrete
+            autre_document_attache: autre_document_attache
             objet: objet
     erreur-verif-tdt:
         name: "Erreur lors de la vérification du statut de l'acte"
@@ -859,8 +860,8 @@ action:
             annexes_tamponnees: annexes_tamponnees
             date_ar: date_ar
             acte_publication_date: acte_publication_date
-            arrete: fichier_acte
-            autre_document_attache: annexe
+            arrete: arrete
+            autre_document_attache: autre_document_attache
             objet: objet
     verif-annulation-tdt:
         name-action: "Vérifier le statut de la transaction d'annulation"
@@ -891,8 +892,8 @@ action:
         connecteur-type-mapping:
             acte_nature: acte_nature
             classification: classification
-            arrete: fichier_acte
-            autre_document_attache: annexe
+            arrete: arrete
+            autre_document_attache: autre_document_attache
     classification:
         name: 'Classification ACTES'
         no-workflow: true
@@ -919,8 +920,8 @@ action:
             type_piece: type_piece
             type_piece_fichier: type_piece_fichier
             acte_nature: acte_nature
-            arrete: fichier_acte
-            autre_document_attache: annexe
+            arrete: arrete
+            autre_document_attache: autre_document_attache
     preparation-send-ged:
         name: "Préparation de l'envoi à la GED"
         rule:
@@ -1083,6 +1084,6 @@ action:
             role_id_e: no-role
 threshold_size: '157286400'
 threshold_fields:
-    - fichier_acte
-    - annexe
-studio_definition: eyJpZF90eXBlX2Rvc3NpZXIiOiJkcmFmdC1scy1hY3RlcyIsInBhc3RlbGwtdmVyc2lvbiI6IiVWRVJTSU9OJSIsInRpbWVzdGFtcCI6MTcxNjM2MzA3NywicmF3X2RhdGEiOnsiaWRfdHlwZV9kb3NzaWVyIjoiZHJhZnQtbHMtYWN0ZXMiLCJub20iOiJBY3RlcyAoRHJhZnQpIiwidHlwZSI6IkFjdGVzIGFkbWluaXN0cmF0aWZzIiwiZGVzY3JpcHRpb24iOiJUeXBlIGRlIGRvc3NpZXIgcGVybWV0dGFudCBkJ2Vudm95ZXIgZGVzIEFjdGVzIGVuIHNpZ25hdHVyZSwgVERULCBHRUQsIFNBRSIsIm5vbV9vbmdsZXQiOiJJbmZvcm1hdGlvbnMiLCJhZmZpY2hlX29uZSI6ZmFsc2UsInJlc3RyaWN0aW9uX3BhY2siOiIiLCJmb3JtdWxhaXJlRWxlbWVudCI6W3siZWxlbWVudF9pZCI6Im9iamV0IiwibmFtZSI6Ik9iamV0IiwidHlwZSI6InRleHRhcmVhIiwiY29tbWVudGFpcmUiOiJFbnRyZSAxIGV0IDQ5OSBjYXJhY3RcdTAwZThyZXMiLCJyZXF1aXMiOiJvbiIsImNoYW1wc19hZmZpY2hlcyI6IiIsImNoYW1wc19yZWNoZXJjaGVfYXZhbmNlZSI6IiIsInRpdHJlIjoib24iLCJzZWxlY3RfdmFsdWUiOiIiLCJwcmVnX21hdGNoIjoiI14uezEsNDk5fSQjdXMiLCJkZWZhdWx0X3ZhbHVlIjoiIiwicHJlZ19tYXRjaF9lcnJvciI6ImVudHJlIDEgZXQgNDk5IGNhcmFjdFx1MDBlOHJlcyIsImNvbnRlbnRfdHlwZSI6IiJ9LHsiZWxlbWVudF9pZCI6ImFycmV0ZSIsIm5hbWUiOiJGaWNoaWVyIEFjdGUiLCJ0eXBlIjoiZmlsZSIsImNvbW1lbnRhaXJlIjoiRm9ybWF0IFBERiBvdSBYTUwiLCJyZXF1aXMiOiJvbiIsImNoYW1wc19hZmZpY2hlcyI6IiIsImNoYW1wc19yZWNoZXJjaGVfYXZhbmNlZSI6IiIsInRpdHJlIjoiIiwic2VsZWN0X3ZhbHVlIjoiIiwicHJlZ19tYXRjaCI6IiIsImRlZmF1bHRfdmFsdWUiOiIiLCJwcmVnX21hdGNoX2Vycm9yIjoiIiwiY29udGVudF90eXBlIjoiYXBwbGljYXRpb25cL3BkZiwgYXBwbGljYXRpb25cL3htbCJ9LHsiZWxlbWVudF9pZCI6ImF1dHJlX2RvY3VtZW50X2F0dGFjaGUiLCJuYW1lIjoiQW5uZXhlKHMpIiwidHlwZSI6Im11bHRpX2ZpbGUiLCJjb21tZW50YWlyZSI6IkF0dGVudGlvbiAhIExhIHRhaWxsZSB0b3RhbGUgZGVzIGRvY3VtZW50cyBhY3RlICsgYW5uZXhlcyBuZSBwZXV0IHBhcyBkXHUwMGU5cGFzc2VyIDE1MCBNbyIsInJlcXVpcyI6IiIsImNoYW1wc19hZmZpY2hlcyI6IiIsImNoYW1wc19yZWNoZXJjaGVfYXZhbmNlZSI6IiIsInRpdHJlIjoiIiwic2VsZWN0X3ZhbHVlIjoiIiwicHJlZ19tYXRjaCI6IiIsImRlZmF1bHRfdmFsdWUiOiIiLCJwcmVnX21hdGNoX2Vycm9yIjoiIiwiY29udGVudF90eXBlIjoiIn0seyJlbGVtZW50X2lkIjoibWV0YWRvbm5lZXMiLCJuYW1lIjoiRmljaGllciBjb250ZW5hbnQgbGVzIG1cdTAwZTl0YWRvbm5cdTAwZTllcyIsInR5cGUiOiJmaWxlIiwiY29tbWVudGFpcmUiOiJQclx1MDBlOWZcdTAwZTlyZW50aWVsbGVtZW50IGF1IGZvcm1hdCBKU09OLCBYTUwgcG9zc2libGUiLCJyZXF1aXMiOiIiLCJjaGFtcHNfYWZmaWNoZXMiOiIiLCJjaGFtcHNfcmVjaGVyY2hlX2F2YW5jZWUiOiIiLCJ0aXRyZSI6IiIsInNlbGVjdF92YWx1ZSI6IiIsInByZWdfbWF0Y2giOiIiLCJkZWZhdWx0X3ZhbHVlIjoiIiwicHJlZ19tYXRjaF9lcnJvciI6IiIsImNvbnRlbnRfdHlwZSI6IiJ9XSwiZXRhcGUiOlt7Im51bV9ldGFwZSI6MCwidHlwZSI6InRyYW5zZm9ybWF0aW9uIiwibGFiZWwiOiJUcmFuc2Zvcm1hdGlvbiIsImRlZmF1bHRDaGVja2VkIjpmYWxzZSwicmVxdWlzIjoib24iLCJhdXRvbWF0aXF1ZSI6Im9uIiwic3BlY2lmaWNfdHlwZV9pbmZvIjpbXSwibnVtX2V0YXBlX3NhbWVfdHlwZSI6MCwiZXRhcGVfd2l0aF9zYW1lX3R5cGVfZXhpc3RzIjpmYWxzZX0seyJudW1fZXRhcGUiOiIxIiwidHlwZSI6InNpZ25hdHVyZSIsImxhYmVsIjoiU2lnbmF0dXJlIiwiZGVmYXVsdENoZWNrZWQiOmZhbHNlLCJyZXF1aXMiOiIiLCJhdXRvbWF0aXF1ZSI6Im9uIiwic3BlY2lmaWNfdHlwZV9pbmZvIjp7ImxpYmVsbGVfcGFyYXBoZXVyIjoib2JqZXQiLCJkb2N1bWVudF9hX3NpZ25lciI6ImZpY2hpZXJfYWN0ZSIsImFubmV4ZSI6ImFubmV4ZSIsImhhc19kYXRlX2xpbWl0ZSI6Im9uIiwiaGFzX3ByaW1vX3NpZ25hdHVyZSI6Im9uIiwiaGFzX21ldGFkYXRhX2luX2pzb24iOiJvbiIsImNvbnRpbnVlX2FmdGVyX3JlZnVzYWwiOiIifSwibnVtX2V0YXBlX3NhbWVfdHlwZSI6MCwiZXRhcGVfd2l0aF9zYW1lX3R5cGVfZXhpc3RzIjpmYWxzZX0seyJudW1fZXRhcGUiOiIyIiwidHlwZSI6InRyYW5zZm9ybWF0aW9uX2ZpeGUiLCJsYWJlbCI6IlRyYW5zZm9ybWF0aW9uIEZpeGUgKGRhdGUpIiwiZGVmYXVsdENoZWNrZWQiOmZhbHNlLCJyZXF1aXMiOiJvbiIsImF1dG9tYXRpcXVlIjoib24iLCJzcGVjaWZpY190eXBlX2luZm8iOnsidHJhbnNmb3JtYXRpb25zIjoiZGF0ZV9kZV9sYWN0ZTp7eyBwYXJhcGhldXJfZGF0ZV9zaWduYXR1cmUgID8gcGFyYXBoZXVyX2RhdGVfc2lnbmF0dXJlIDogZGF0ZV9kZV9sYWN0ZX19In0sIm51bV9ldGFwZV9zYW1lX3R5cGUiOjAsImV0YXBlX3dpdGhfc2FtZV90eXBlX2V4aXN0cyI6ZmFsc2V9LHsibnVtX2V0YXBlIjoiMyIsInR5cGUiOiJ0ZHRfYWN0ZXMiLCJsYWJlbCI6IlByXHUwMGU5ZmVjdHVyZSAodmlhIFRkdCkiLCJkZWZhdWx0Q2hlY2tlZCI6ZmFsc2UsInJlcXVpcyI6IiIsImF1dG9tYXRpcXVlIjoib24iLCJzcGVjaWZpY190eXBlX2luZm8iOnsib2JqZXRfYWN0ZSI6Im9iamV0IiwiZmljaGllcl9hY3RlIjoiZmljaGllcl9hY3RlIiwiZmljaGllcl9hbm5leGUiOiJhbm5leGUiLCJkcm9pdF9zcGVjaWZpcXVlIjoiIn0sIm51bV9ldGFwZV9zYW1lX3R5cGUiOjAsImV0YXBlX3dpdGhfc2FtZV90eXBlX2V4aXN0cyI6ZmFsc2V9LHsibnVtX2V0YXBlIjo0LCJ0eXBlIjoiZGVwb3QiLCJsYWJlbCI6IiIsImRlZmF1bHRDaGVja2VkIjpmYWxzZSwicmVxdWlzIjoiIiwiYXV0b21hdGlxdWUiOiJvbiIsInNwZWNpZmljX3R5cGVfaW5mbyI6W10sIm51bV9ldGFwZV9zYW1lX3R5cGUiOjAsImV0YXBlX3dpdGhfc2FtZV90eXBlX2V4aXN0cyI6ZmFsc2V9LHsibnVtX2V0YXBlIjoiNSIsInR5cGUiOiJzYWUiLCJsYWJlbCI6bnVsbCwiZGVmYXVsdENoZWNrZWQiOmZhbHNlLCJyZXF1aXMiOiIiLCJhdXRvbWF0aXF1ZSI6Im9uIiwic3BlY2lmaWNfdHlwZV9pbmZvIjp7InNhZV9oYXNfbWV0YWRhdGFfaW5fanNvbiI6IiJ9LCJudW1fZXRhcGVfc2FtZV90eXBlIjowLCJldGFwZV93aXRoX3NhbWVfdHlwZV9leGlzdHMiOmZhbHNlfV19fQ==
+    - arrete
+    - autre_document_attache
+studio_definition: eyJpZF90eXBlX2Rvc3NpZXIiOiJkcmFmdC1scy1hY3RlcyIsInBhc3RlbGwtdmVyc2lvbiI6IiVWRVJTSU9OJSIsInRpbWVzdGFtcCI6MTcxNjM2NTE5OSwicmF3X2RhdGEiOnsiaWRfdHlwZV9kb3NzaWVyIjoiZHJhZnQtbHMtYWN0ZXMiLCJub20iOiJBY3RlcyAoRHJhZnQpIiwidHlwZSI6IkFjdGVzIGFkbWluaXN0cmF0aWZzIiwiZGVzY3JpcHRpb24iOiJUeXBlIGRlIGRvc3NpZXIgcGVybWV0dGFudCBkJ2Vudm95ZXIgZGVzIEFjdGVzIGVuIHNpZ25hdHVyZSwgVERULCBHRUQsIFNBRSIsIm5vbV9vbmdsZXQiOiJJbmZvcm1hdGlvbnMiLCJhZmZpY2hlX29uZSI6ZmFsc2UsInJlc3RyaWN0aW9uX3BhY2siOiIiLCJmb3JtdWxhaXJlRWxlbWVudCI6W3siZWxlbWVudF9pZCI6Im9iamV0IiwibmFtZSI6Ik9iamV0IiwidHlwZSI6InRleHRhcmVhIiwiY29tbWVudGFpcmUiOiJFbnRyZSAxIGV0IDQ5OSBjYXJhY3RcdTAwZThyZXMiLCJyZXF1aXMiOiJvbiIsImNoYW1wc19hZmZpY2hlcyI6IiIsImNoYW1wc19yZWNoZXJjaGVfYXZhbmNlZSI6IiIsInRpdHJlIjoib24iLCJzZWxlY3RfdmFsdWUiOiIiLCJwcmVnX21hdGNoIjoiI14uezEsNDk5fSQjdXMiLCJkZWZhdWx0X3ZhbHVlIjoiIiwicHJlZ19tYXRjaF9lcnJvciI6ImVudHJlIDEgZXQgNDk5IGNhcmFjdFx1MDBlOHJlcyIsImNvbnRlbnRfdHlwZSI6IiJ9LHsiZWxlbWVudF9pZCI6ImFycmV0ZSIsIm5hbWUiOiJGaWNoaWVyIEFjdGUiLCJ0eXBlIjoiZmlsZSIsImNvbW1lbnRhaXJlIjoiRm9ybWF0IFBERiBvdSBYTUwiLCJyZXF1aXMiOiJvbiIsImNoYW1wc19hZmZpY2hlcyI6IiIsImNoYW1wc19yZWNoZXJjaGVfYXZhbmNlZSI6IiIsInRpdHJlIjoiIiwic2VsZWN0X3ZhbHVlIjoiIiwicHJlZ19tYXRjaCI6IiIsImRlZmF1bHRfdmFsdWUiOiIiLCJwcmVnX21hdGNoX2Vycm9yIjoiIiwiY29udGVudF90eXBlIjoiYXBwbGljYXRpb25cL3BkZiwgYXBwbGljYXRpb25cL3htbCJ9LHsiZWxlbWVudF9pZCI6ImF1dHJlX2RvY3VtZW50X2F0dGFjaGUiLCJuYW1lIjoiQW5uZXhlKHMpIiwidHlwZSI6Im11bHRpX2ZpbGUiLCJjb21tZW50YWlyZSI6IkF0dGVudGlvbiAhIExhIHRhaWxsZSB0b3RhbGUgZGVzIGRvY3VtZW50cyBhY3RlICsgYW5uZXhlcyBuZSBwZXV0IHBhcyBkXHUwMGU5cGFzc2VyIDE1MCBNbyIsInJlcXVpcyI6IiIsImNoYW1wc19hZmZpY2hlcyI6IiIsImNoYW1wc19yZWNoZXJjaGVfYXZhbmNlZSI6IiIsInRpdHJlIjoiIiwic2VsZWN0X3ZhbHVlIjoiIiwicHJlZ19tYXRjaCI6IiIsImRlZmF1bHRfdmFsdWUiOiIiLCJwcmVnX21hdGNoX2Vycm9yIjoiIiwiY29udGVudF90eXBlIjoiIn0seyJlbGVtZW50X2lkIjoibWV0YWRvbm5lZXMiLCJuYW1lIjoiRmljaGllciBjb250ZW5hbnQgbGVzIG1cdTAwZTl0YWRvbm5cdTAwZTllcyIsInR5cGUiOiJmaWxlIiwiY29tbWVudGFpcmUiOiJQclx1MDBlOWZcdTAwZTlyZW50aWVsbGVtZW50IGF1IGZvcm1hdCBKU09OLCBYTUwgcG9zc2libGUiLCJyZXF1aXMiOiIiLCJjaGFtcHNfYWZmaWNoZXMiOiIiLCJjaGFtcHNfcmVjaGVyY2hlX2F2YW5jZWUiOiIiLCJ0aXRyZSI6IiIsInNlbGVjdF92YWx1ZSI6IiIsInByZWdfbWF0Y2giOiIiLCJkZWZhdWx0X3ZhbHVlIjoiIiwicHJlZ19tYXRjaF9lcnJvciI6IiIsImNvbnRlbnRfdHlwZSI6IiJ9XSwiZXRhcGUiOlt7Im51bV9ldGFwZSI6MCwidHlwZSI6InRyYW5zZm9ybWF0aW9uIiwibGFiZWwiOiJUcmFuc2Zvcm1hdGlvbiIsImRlZmF1bHRDaGVja2VkIjpmYWxzZSwicmVxdWlzIjoib24iLCJhdXRvbWF0aXF1ZSI6Im9uIiwic3BlY2lmaWNfdHlwZV9pbmZvIjpbXSwibnVtX2V0YXBlX3NhbWVfdHlwZSI6MCwiZXRhcGVfd2l0aF9zYW1lX3R5cGVfZXhpc3RzIjpmYWxzZX0seyJudW1fZXRhcGUiOiIxIiwidHlwZSI6InNpZ25hdHVyZSIsImxhYmVsIjoiU2lnbmF0dXJlIiwiZGVmYXVsdENoZWNrZWQiOmZhbHNlLCJyZXF1aXMiOiIiLCJhdXRvbWF0aXF1ZSI6Im9uIiwic3BlY2lmaWNfdHlwZV9pbmZvIjp7ImxpYmVsbGVfcGFyYXBoZXVyIjoib2JqZXQiLCJkb2N1bWVudF9hX3NpZ25lciI6ImFycmV0ZSIsImFubmV4ZSI6ImF1dHJlX2RvY3VtZW50X2F0dGFjaGUiLCJoYXNfZGF0ZV9saW1pdGUiOiJvbiIsImhhc19wcmltb19zaWduYXR1cmUiOiJvbiIsImhhc19tZXRhZGF0YV9pbl9qc29uIjoib24iLCJjb250aW51ZV9hZnRlcl9yZWZ1c2FsIjoiIn0sIm51bV9ldGFwZV9zYW1lX3R5cGUiOjAsImV0YXBlX3dpdGhfc2FtZV90eXBlX2V4aXN0cyI6ZmFsc2V9LHsibnVtX2V0YXBlIjoiMiIsInR5cGUiOiJ0cmFuc2Zvcm1hdGlvbl9maXhlIiwibGFiZWwiOiJUcmFuc2Zvcm1hdGlvbiBGaXhlIChkYXRlKSIsImRlZmF1bHRDaGVja2VkIjpmYWxzZSwicmVxdWlzIjoib24iLCJhdXRvbWF0aXF1ZSI6Im9uIiwic3BlY2lmaWNfdHlwZV9pbmZvIjp7InRyYW5zZm9ybWF0aW9ucyI6ImRhdGVfZGVfbGFjdGU6e3sgcGFyYXBoZXVyX2RhdGVfc2lnbmF0dXJlICA/IHBhcmFwaGV1cl9kYXRlX3NpZ25hdHVyZSA6IGRhdGVfZGVfbGFjdGV9fSJ9LCJudW1fZXRhcGVfc2FtZV90eXBlIjowLCJldGFwZV93aXRoX3NhbWVfdHlwZV9leGlzdHMiOmZhbHNlfSx7Im51bV9ldGFwZSI6IjMiLCJ0eXBlIjoidGR0X2FjdGVzIiwibGFiZWwiOiJQclx1MDBlOWZlY3R1cmUgKHZpYSBUZHQpIiwiZGVmYXVsdENoZWNrZWQiOmZhbHNlLCJyZXF1aXMiOiIiLCJhdXRvbWF0aXF1ZSI6Im9uIiwic3BlY2lmaWNfdHlwZV9pbmZvIjp7Im9iamV0X2FjdGUiOiJvYmpldCIsImZpY2hpZXJfYWN0ZSI6ImFycmV0ZSIsImZpY2hpZXJfYW5uZXhlIjoiYXV0cmVfZG9jdW1lbnRfYXR0YWNoZSIsImRyb2l0X3NwZWNpZmlxdWUiOiIifSwibnVtX2V0YXBlX3NhbWVfdHlwZSI6MCwiZXRhcGVfd2l0aF9zYW1lX3R5cGVfZXhpc3RzIjpmYWxzZX0seyJudW1fZXRhcGUiOjQsInR5cGUiOiJkZXBvdCIsImxhYmVsIjoiIiwiZGVmYXVsdENoZWNrZWQiOmZhbHNlLCJyZXF1aXMiOiIiLCJhdXRvbWF0aXF1ZSI6Im9uIiwic3BlY2lmaWNfdHlwZV9pbmZvIjpbXSwibnVtX2V0YXBlX3NhbWVfdHlwZSI6MCwiZXRhcGVfd2l0aF9zYW1lX3R5cGVfZXhpc3RzIjpmYWxzZX0seyJudW1fZXRhcGUiOiI1IiwidHlwZSI6InNhZSIsImxhYmVsIjpudWxsLCJkZWZhdWx0Q2hlY2tlZCI6ZmFsc2UsInJlcXVpcyI6IiIsImF1dG9tYXRpcXVlIjoib24iLCJzcGVjaWZpY190eXBlX2luZm8iOnsic2FlX2hhc19tZXRhZGF0YV9pbl9qc29uIjoiIn0sIm51bV9ldGFwZV9zYW1lX3R5cGUiOjAsImV0YXBlX3dpdGhfc2FtZV90eXBlX2V4aXN0cyI6ZmFsc2V9XX19
