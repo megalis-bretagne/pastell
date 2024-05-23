@@ -1,5 +1,9 @@
 # [4.0.14] - 2024-06-10
 
+## Évolutions
+
+- Permettre de récupérer les aractes sur fast même si le numéro d'acte contient un tiret #2061
+
 ## Correction
 
 - Il n'était pas possible de déposer des fichiers de plus de 200MB par API même avec la configuration adéquate #2064
