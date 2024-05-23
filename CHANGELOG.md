@@ -3,6 +3,10 @@
 ## Évolutions
 
 - Permettre de récupérer les aractes sur fast même si le numéro d'acte contient un tiret #2061
+- Permettre de définir la variable de vérification du rate limiter (par défaut, il s'agit de l'IP) #2065
+  - En cas d'utilisation d'un header de la requête, préfixer par `HTTP_`, remplacer les `-` par des `_` et tout mettre 
+  en majuscule.
+  - Exemple : Header `X-Forwarded-For` => `HTTP_X_FORWARDED_FOR`
 
 ## Correction
 
