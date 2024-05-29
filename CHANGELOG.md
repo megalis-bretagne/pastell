@@ -7,6 +7,9 @@
 ## Correction
 
 - Il n'était pas possible de déposer des fichiers de plus de 200MB par API même avec la configuration adéquate #2064
+- Connecteur `recup-parapheur` : L'ajout de nouvelles métadonnées pour la balise `<significantPropertiesType>` dans le 
+fichier premis du iparapheur à partir des versions 5.0.25 et 5.1.3 est ignoré et ne génère pas le message d'erreur 
+"The data must belong to a backed enumeration of type Pastell\Client\IparapheurV5\Model\SignificantPropertyType" #2068
 
 # [4.0.13] - 2024-04-15
 
