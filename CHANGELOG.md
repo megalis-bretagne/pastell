@@ -7,6 +7,8 @@
   - En cas d'utilisation d'un header de la requête, préfixer par `HTTP_`, remplacer les `-` par des `_` et tout mettre 
   en majuscule.
   - Exemple : Header `X-Forwarded-For` => `HTTP_X_FORWARDED_FOR`
+- Mise à jour du service seda-generator en version 1.0.4
+  (Permettre d'utiliser "SystemId" pour les rattachements des AU sur vitam)
 
 ## Correction
 
